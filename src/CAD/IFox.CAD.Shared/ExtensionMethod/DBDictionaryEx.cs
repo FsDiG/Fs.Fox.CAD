@@ -48,14 +48,16 @@ public static class DBDictionaryEx
     /// <param name="dict">字典</param>
     /// <param name="key">键</param>
     /// <param name="newValue">值</param>
-    public static void SetAt<T>(this DBDictionary dict, string key, T newValue) where T : DBObject
+    /// <returns>字典项目的id</returns>
+    public static ObjectId SetAt<T>(this DBDictionary dict, string key, T newValue) where T : DBObject
     {
         var tr = DBTrans.GetTopTransaction(dict.Database);
 
         using (dict.ForWrite())
         {
-            dict.SetAt(key, newValue);
+            var id = dict.SetAt(key, newValue);
             tr.AddNewlyCreatedDBObject(newValue, true);
+            return id;
         }
     }
 
