@@ -101,7 +101,11 @@ public static class DatabaseEx
         {
             var (error, file) = db.GetOrCreateSaveAsFile();
             if (echoes && error)
-                System.Windows.Forms.MessageBox.Show($"错误参数:\n{fileMsg}\n\n它将保存:\n{file}", "错误的文件路径");
+                System.Windows.Forms.MessageBox.Show($@"错误参数:
+{fileMsg}
+
+它将保存:
+{file}", "错误的文件路径");
             saveAsFile = file;
         }
 
