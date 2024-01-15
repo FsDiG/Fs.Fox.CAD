@@ -167,7 +167,7 @@ public class Cmd_IFoxInitializeInterface : IFoxAutoGo
     }
 }
 #endif
-#endif
+
 
 public class Init : AutoLoad
 {
@@ -186,3 +186,4 @@ public class Init : AutoLoad
 
     }
 }
+#endif

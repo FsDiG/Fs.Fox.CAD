@@ -96,8 +96,9 @@ public static class DBDictionaryEx
     /// 获取扩展字典
     /// </summary>
     /// <param name="obj">对象</param>
+    /// <param name="openMode">打开模式</param>
     /// <returns>扩展字典对象</returns>
-    public static DBDictionary GetXDictionary(this DBObject obj,OpenMode openMode =OpenMode.ForRead)
+    public static DBDictionary GetXDictionary(this DBObject obj, OpenMode openMode = OpenMode.ForRead)
     {
         var tr = DBTrans.GetTopTransaction(obj.Database);
         ObjectId id = obj.ExtensionDictionary;

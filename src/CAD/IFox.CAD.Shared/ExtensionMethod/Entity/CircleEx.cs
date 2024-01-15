@@ -51,7 +51,7 @@ public static class CircleEx
     /// <param name="vey">法向量的Y</param>
     /// <param name="vez">法向量的Z</param>
     /// <returns>圆</returns>
-    public static Circle? CreateCircle(Point3d center, double radius, double vex = 0, double vey = 0, double vez = 1)
+    public static Circle CreateCircle(Point3d center, double radius, double vex = 0, double vey = 0, double vez = 1)
     {
         return new Circle(center, new Vector3d(vex, vey, vez), radius);// 平面法向量XY方向
     }

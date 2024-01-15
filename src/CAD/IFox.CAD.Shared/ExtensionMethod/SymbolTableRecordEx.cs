@@ -15,7 +15,7 @@ public static class SymbolTableRecordEx
     /// 0x02 若为未添加数据库图元,则利用entity.Clone();同时不需要考虑动态块属性,可以使用entity.GetTransformedCopy
     /// </para>
     /// </summary>
-    /// <param name="btr">
+    /// <param name="btr">块表记录
     /// <para>
     /// 克隆到当前块表记录,相当于原地克隆<br/>
     /// 克隆到目标块表记录内,相当于制作新块
@@ -46,6 +46,12 @@ public static class SymbolTableRecordEx
             }
         }
     }
+    /// <summary>
+    /// 深度克隆id到块表记录
+    /// </summary>
+    /// <param name="btr">块表记录</param>
+    /// <param name="objIds">图元id集合</param>
+    /// <returns>id词典</returns>
     public static IdMapping DeepCloneEx(this BlockTableRecord btr, ObjectIdCollection objIds)
     {
         if (objIds is null || objIds.Count == 0)
@@ -98,11 +104,10 @@ public static class SymbolTableRecordEx
     /// <summary>
     /// 添加实体集合
     /// </summary>
-    /// <typeparam name="T">实体类型</typeparam>
     /// <param name="btr">块表记录</param>
     /// <param name="ents">实体集合</param>
     /// <returns>对象 id 列表</returns>
-    public static IEnumerable<ObjectId> AddEntity<T>(this BlockTableRecord btr, IEnumerable<T> ents) where T : Entity
+    public static IEnumerable<ObjectId> AddEntity(this BlockTableRecord btr, IEnumerable<Entity> ents)
     {
 
         var tr = DBTrans.GetTopTransaction(btr.Database);
