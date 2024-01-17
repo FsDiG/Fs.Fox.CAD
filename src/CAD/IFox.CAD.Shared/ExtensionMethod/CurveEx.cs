@@ -127,7 +127,7 @@ public static class CurveEx
         // 查询全部的 闭合环
         dfs.FindAll(graph);
         // 遍历闭合环的列表，将每个闭合环转换为实体曲线
-        var res = new List<Curve>();
+        List<Curve> res = [];
         foreach (var item in dfs.Curve3ds)
         {
             var curve = graph.GetCurves(item.ToList()).ToArray();
@@ -148,8 +148,8 @@ public static class CurveEx
 
         var tol = new Tolerance(0.01, 0.01);
 
-        var geCurves = new List<CompositeCurve3d>(); // 存储曲线转换后的复合曲线
-        var paramss = new List<List<double>>();      // 存储每个曲线的交点参数值
+        List<CompositeCurve3d> geCurves = []; // 存储曲线转换后的复合曲线
+        List<List<double>> paramss = [];      // 存储每个曲线的交点参数值
 
         for (int i = 0; i < curves.Count; i++)
         {
@@ -157,12 +157,12 @@ public static class CurveEx
             if (cc3d is not null)
             {
                 geCurves.Add(cc3d);
-                paramss.Add(new List<double>());
+                paramss.Add([]);
             }
         }
 
-        // var oldCurves = new List<Curve>();
-        var newCurves = new List<Curve>();
+        // List<Curve> oldCurves = [];
+        List<Curve> newCurves = [];
         var cci3d = new CurveCurveIntersector3d();
 
         for (int i = 0; i < curves.Count; i++)
@@ -218,19 +218,19 @@ public static class CurveEx
             throw new ArgumentNullException(nameof(curves));
         var zPlane = new Plane(Point3d.Origin, Vector3d.ZAxis);
         var curvesTemp = curves.Select(c => c.GetProjectedCurve(zPlane, Vector3d.ZAxis)).ToList();
-        var geCurves = new List<CompositeCurve3d>(); // 存储曲线转换后的复合曲线
-        var paramss = new List<HashSet<double>>();      // 存储每个曲线的交点参数值
+        List<CompositeCurve3d> geCurves = []; // 存储曲线转换后的复合曲线
+        List<HashSet<double>> paramss = [];      // 存储每个曲线的交点参数值
 
         for (int i = 0; i < curvesTemp.Count; i++)
         {
-            paramss.Add(new HashSet<double>());
+            paramss.Add([]);
             var cc3d = curvesTemp[i].ToCompositeCurve3d();
             if (cc3d is not null)
             {
                 geCurves.Add(cc3d);
             }
         }
-        var newCurves = new List<Curve>();
+        List<Curve> newCurves = [];
         var cci3d = new CurveCurveIntersector3d();
 
         for (int i = 0; i < curvesTemp.Count; i++)
@@ -293,8 +293,8 @@ public static class CurveEx
         //var tolerance = new Tolerance(tol, tol);
         var zPlane = new Plane(Point3d.Origin, Vector3d.ZAxis);
         List<Curve> curves = sourceCurveList.Select(c => c.GetOrthoProjectedCurve(zPlane)).ToList();
-        var geCurves = new List<BreakCurveInfo>();
-        var xlines = new List<Curve>();
+        List<BreakCurveInfo> geCurves = [];
+        List<Curve> xlines = [];
         double minX = double.MaxValue;
         double minY = double.MaxValue;
         double maxX = double.MinValue;
@@ -331,7 +331,7 @@ public static class CurveEx
             var bci = new BreakCurveInfo(maxBox, xl, cc3d);
             geCurves.Add(bci);
         });
-        var newCurves = new List<Curve>();
+        List<Curve> newCurves = [];
         var quadTree = new QuadTree<BreakCurveInfo>(maxBox);
         foreach (var bci in geCurves)
         {
@@ -694,9 +694,7 @@ public static class CurveEx
     {
         NurbCurve3d nc3d;
         NurbsData ndata = spl.NurbsData;
-        KnotCollection knots = new();
-        foreach (Double knot in ndata.GetKnots())
-            knots.Add(knot);
+        KnotCollection knots = [.. ndata.GetKnots()];
 
         if (ndata.Rational)
         {
@@ -845,7 +843,7 @@ public static class CurveEx
     /// <returns>复合曲线对象</returns>
     public static CompositeCurve3d ToCurve3d(this Polyline pl)
     {
-        List<Curve3d> c3ds = new();
+        List<Curve3d> c3ds = [];
 
         for (int i = 0; i < pl.NumberOfVertices; i++)
         {
@@ -863,7 +861,7 @@ public static class CurveEx
                     break;
             }
         }
-        return new CompositeCurve3d(c3ds.ToArray());
+        return new CompositeCurve3d([.. c3ds]);
     }
 
     /// <summary>
@@ -916,11 +914,10 @@ public static class CurveEx
 
         // 获取当前索引号的前后两段直线,并组合为Ge复合曲线
         Curve3d[] c3ds =
-            new Curve3d[]
-                {
-                        polyline.GetLineSegmentAt(index - 1),
-                        polyline.GetLineSegmentAt(index)
-                };
+            [
+                polyline.GetLineSegmentAt(index - 1),
+                polyline.GetLineSegmentAt(index)
+            ];
         CompositeCurve3d cc3d = new(c3ds);
 
         // 试倒直角

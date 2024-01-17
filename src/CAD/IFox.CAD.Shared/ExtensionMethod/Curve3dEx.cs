@@ -26,11 +26,12 @@ public static class Curve3dEx
     /// 获取三维解析类曲线(自交曲线)的交点参数
     /// </summary>
     /// <param name="c3d">三维解析类曲线</param>
+    /// <param name="sort">是否排序</param>
     /// <returns>曲线参数的列表</returns>
     public static List<double> GetParamsAtIntersectionPoints(this Curve3d c3d, bool sort = true)
     {
         CurveCurveIntersector3d cci = new(c3d, c3d, Vector3d.ZAxis);
-        List<double> pars = new();
+        List<double> pars = [];
         for (int i = 0; i < cci.NumberOfIntersectionPoints; i++)
             pars.AddRange(cci.GetIntersectionParameters(i));
         if (sort)

@@ -1,7 +1,9 @@
 ﻿using static IFoxCAD.Basal.Timer;
 
 namespace IFoxCAD.Cad;
-
+/// <summary>
+/// 工具类
+/// </summary>
 public static class Tools
 {
     /// <summary>

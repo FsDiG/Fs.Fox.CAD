@@ -1,4 +1,5 @@
-﻿namespace IFoxCAD.Cad;
+﻿#pragma warning disable CS1591 // 缺少对公共可见类型或成员的 XML 注释
+namespace IFoxCAD.Cad;
 
 using System;
 using System.Collections;
@@ -45,7 +46,9 @@ public class PeInfo
     /// 获取是否正常打开文件
     /// </summary>
     public bool OpenFile { get; private set; } = false;
+
     public DosHeader? DosHeader { get; private set; }
+
     public DosStub? DosStub { get; private set; }
     public PEHeader? PEHeader { get; private set; }
     public OptionalHeader? OptionalHeader { get; private set; }
@@ -75,6 +78,11 @@ public class PeInfo
     #endregion
 
     #region 构造
+    /// <summary>
+    /// 构造函数
+    /// </summary>
+    /// <param name="fullName"></param>
+    /// <exception cref="ArgumentException"></exception>
     public PeInfo(string fullName)
     {
         if (fullName is null)
@@ -1565,3 +1573,4 @@ public class ResourceDirectory
     public long FileEndIndex = 0;
 }
 #endregion
+#pragma warning restore CS1591 // 缺少对公共可见类型或成员的 XML 注释

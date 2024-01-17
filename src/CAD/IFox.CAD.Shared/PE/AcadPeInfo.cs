@@ -2,30 +2,60 @@
 
 namespace IFoxCAD.Cad;
 
-// 选择模式
+/// <summary>
+/// 选择模式
+/// </summary>
 [Flags]
 public enum AcadPeEnum : byte
 {
+    /// <summary>
+    /// AcadExe
+    /// </summary>
     AcadExe = 1,
+    /// <summary>
+    /// AccoreDll
+    /// </summary>
     AccoreDll = 2,
+    /// <summary>
+    /// Acdb
+    /// </summary>
     Acdb = 4,
+    /// <summary>
+    /// ExeAndCore
+    /// </summary>
     ExeAndCore = AcadExe | AccoreDll,
 }
 
-// 这里的枚举对应 GetMethodException 错误值
+/// <summary>
+/// 这里的枚举对应 GetMethodException 错误值
+/// </summary>
 [Flags]
 public enum GetMethodErrorNum : byte
 {
+    /// <summary>
+    /// 
+    /// </summary>
     Ok = 0,
+    /// <summary>
+    /// 
+    /// </summary>
     NoModule = 1,
+    /// <summary>
+    /// 
+    /// </summary>
     NoFuncName = 2,
 }
 
-// 自动获取本工程上面的发送命令的接口
+/// <summary>
+/// 自动获取本工程上面的发送命令的接口
+/// </summary>
 public class AcadPeInfo
 {
     #region 静态单例获取exe/dll信息
     static PeInfo? _PeForAcadExe;
+    /// <summary>
+    /// 
+    /// </summary>
     public static PeInfo? PeForAcadExe
     {
         get
@@ -41,6 +71,9 @@ public class AcadPeInfo
     }
 
     static PeInfo? _PeForAccoreDll;
+    /// <summary>
+    /// 
+    /// </summary>
     public static PeInfo? PeForAccoreDll
     {
         get
@@ -58,6 +91,9 @@ public class AcadPeInfo
     }
 
     static PeInfo? _PeForAcdbDll;
+    /// <summary>
+    /// 
+    /// </summary>
     public static PeInfo? PeForAcdbDll
     {
         get
@@ -136,7 +172,7 @@ public class AcadPeInfo
 
     #region 方法
     /// <summary>
-    /// 储存旧值<去除修饰函数名(查找的),带修饰函数名们>
+    /// 储存旧值，去除修饰函数名（查找的）,带修饰函数名们
     /// </summary>
     static Dictionary<string, List<PeFunction>> _Dict = new();
 
@@ -311,20 +347,40 @@ public class PeFunction
 /// </summary>
 public class GetPeMethodException : ApplicationException
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public int ErrorNum;
+    /// <summary>
+    /// 
+    /// </summary>
     public string? ErrorMsg;
+    /// <summary>
+    /// 
+    /// </summary>
     public Exception? InnerException1;
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="msg"></param>
     public GetPeMethodException(string msg) : base(msg)
     {
         ErrorMsg = msg;
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="errorNum"></param>
+    /// <param name="msg"></param>
     public GetPeMethodException(int errorNum, string msg) : base(msg)
     {
         ErrorNum = errorNum;
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="msg"></param>
+    /// <param name="innerException"></param>
     public GetPeMethodException(string msg, Exception innerException) : base(msg, innerException)
     {
         InnerException1 = innerException;

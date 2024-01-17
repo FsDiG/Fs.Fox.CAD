@@ -82,13 +82,21 @@ public abstract class AutoRegAssem : IExtensionApplication
 
 
     // 这里的是不会自动执行的
+    /// <summary>
+    /// 
+    /// </summary>
     public void Initialize()
     {
     }
+    /// <summary>
+    /// 
+    /// </summary>
     public void Terminate()
     {
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
     ~AutoRegAssem()
     {
         _autoRef?.Terminate();

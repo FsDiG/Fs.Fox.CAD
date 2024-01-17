@@ -1,5 +1,7 @@
 ﻿namespace IFoxCAD.Cad;
-
+/// <summary>
+/// 亮显模式
+/// </summary>
 [Flags]
 public enum BrightEntity : int
 {
@@ -36,7 +38,9 @@ public enum BrightEntity : int
     /// </summary>
     MoveZero = 128,
 }
-
+/// <summary>
+/// 刷新模式
+/// </summary>
 [Flags]
 public enum BrightEditor : int
 {
@@ -61,7 +65,9 @@ public enum BrightEditor : int
     /// </summary>
     ViewportsIn = 16,
 }
-
+/// <summary>
+/// 重绘扩展
+/// </summary>
 public static class RedrawEx
 {
     /// <summary>

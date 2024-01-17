@@ -135,6 +135,10 @@ public class SingleKeyWordHook : IDisposable
     /// 已经销毁
     /// </summary>
     public bool IsDisposed => _isDisposed;
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="disposing"></param>
     protected virtual void Dispose(bool disposing)
     {
         if (!_isDisposed)
@@ -147,6 +151,9 @@ public class SingleKeyWordHook : IDisposable
             _isDisposed = true;
         }
     }
+    /// <summary>
+    /// 
+    /// </summary>
     public void Dispose()
     {
         Dispose(disposing: true);

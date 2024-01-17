@@ -7,7 +7,7 @@ public class TestConvexHull
     public void Test_ConvexHull()
     {
         // using DBTrans tr = new();
-        // var pts = new List<Point3d>();
+        // List<Point3d> pts = [];
         // var flag = true;
         // while (flag)
         // {

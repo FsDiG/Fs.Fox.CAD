@@ -1,7 +1,4 @@
-﻿using System;
-using System.Data.SqlTypes;
-
-namespace IFoxCAD.Cad;
+﻿namespace IFoxCAD.Cad;
 
 /// <summary>
 /// 多段线扩展类
@@ -106,13 +103,14 @@ public static class PolylineEx
     /// <returns>多段线对象</returns>
     public static Polyline CreatePolyline(this Extents3d points, Action<Polyline>? action = null)
     {
-        var pts = new List<Point2d>()
-        {
+        List<Point2d> pts = 
+        [
             points.MinPoint.Point2d(),
             new(points.MinPoint.X, points.MaxPoint.Y),
             points.MaxPoint.Point2d(),
             new(points.MaxPoint.X, points.MinPoint.Y)
-        };
+        ];
+        
         Polyline pl = new() { Closed = true };
         pl.SetDatabaseDefaults();
         pts.ForEach((index, pt) => { pl.AddVertexAt(index, pt, 0, 0, 0); });

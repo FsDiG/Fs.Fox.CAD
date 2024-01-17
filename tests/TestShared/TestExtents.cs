@@ -16,26 +16,26 @@ public class TestExtents
         if (block != null && block.Bounds.HasValue)
         {
             var extent = block.GeometricExtents;
-            var pts = new List<Point3d>() {
+            List<Point3d> pts = [
                 extent.MinPoint,
                 new Point3d(extent.MinPoint.X,extent.MaxPoint.Y,0),
                 extent.MaxPoint,
                 new Point3d(extent.MaxPoint.X,extent.MinPoint.Y,0),
 
-            };
+            ];
 
             tr.CurrentSpace.AddEntity(pts.CreatePolyline(action: e => e.ColorIndex = 1));
                 
             if (block is BlockReference block1)
             {
                 var extents = block1.GeometryExtentsBestFit();
-                var pts1 = new List<Point3d>()
-                {
+                List<Point3d> pts1 = 
+                [
                     extents.MinPoint,
                     new Point3d(extents.MinPoint.X, extents.MaxPoint.Y, 0),
                     extents.MaxPoint,
                     new Point3d(extents.MaxPoint.X, extents.MinPoint.Y, 0),
-                };
+                ];
                 tr.CurrentSpace.AddEntity(pts.CreatePolyline(action: e => e.ColorIndex = 2));
 
                 var extents2 = block1.GetBoundingBoxEx();
@@ -70,22 +70,27 @@ public class TestExtents
                     e.Closed = true;
                 }));
                 var ext = e.GetBoundingBoxEx();
-                tr.CurrentSpace.AddEntity(ext?.Extents3d.CreatePolyline(action: e =>
+                if (ext.HasValue)
                 {
-                    e.ColorIndex = 5;
-                    e.Closed = true;
-                }));
+                    tr.CurrentSpace.AddEntity(
+                        ext.Value.Extents3d.CreatePolyline(action: e =>
+                        {
+                            e.ColorIndex = 5;
+                            e.Closed = true;
+                        }));
+                }
+               
                 if (e is Curve spline)
                 {
                     var ge = spline.GetGeCurve();
                     var box = ge.BoundBlock;
-                    var lst = new List<Point3d>()
-                    {
+                    List<Point3d> lst = 
+                    [
                         box.BasePoint,
                         box.BasePoint + box.Direction1,
                         box.BasePoint + box.Direction2,
                         box.BasePoint + box.Direction3,
-                    };
+                    ];
                     tr.CurrentSpace.AddEntity(lst.CreatePolyline(action: e =>
                     {
                         e.ColorIndex = 6;

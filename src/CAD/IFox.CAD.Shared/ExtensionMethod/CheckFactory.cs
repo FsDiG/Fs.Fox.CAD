@@ -1,5 +1,8 @@
 ﻿#if Debug
 namespace IFoxCAD.Cad;
+/// <summary>
+/// 命令检查类
+/// </summary>
 public static class CheckFactory
 {
     /* 

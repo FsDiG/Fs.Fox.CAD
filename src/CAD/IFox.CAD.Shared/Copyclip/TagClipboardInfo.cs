@@ -1,4 +1,5 @@
-﻿namespace IFoxCAD.Cad;
+﻿#pragma warning disable CS1591 // 缺少对公共可见类型或成员的 XML 注释
+namespace IFoxCAD.Cad;
 
 using System;
 using System.Diagnostics;
@@ -556,6 +557,8 @@ public enum ClipboardFormat : uint
     /// </summary>
     CF_DIBV5 = 17,
 
+
+#pragma warning disable CS1574 // XML 注释中有无法解析的 cref 特性
     /// <summary>
     /// Owner-display format. The clipboard owner must display and update the clipboard viewer window, and receive
     /// the <see cref="ClipboardMessages.WM_ASKCBFORMATNAME"/>, <see cref="ClipboardMessages.WM_HSCROLLCLIPBOARD"/>,
@@ -563,6 +566,7 @@ public enum ClipboardFormat : uint
     /// <see cref="ClipboardMessages.WM_VSCROLLCLIPBOARD"/> messages. The <c>hMem</c> parameter must be <c>null</c>.
     /// </summary>
     CF_OWNERDISPLAY = 0x0080,
+#pragma warning restore CS1574 // XML 注释中有无法解析的 cref 特性
 
     /// <summary>
     /// Text display format associated with a private format. The <c>hMem</c> parameter must be a handle to data
@@ -601,15 +605,16 @@ public enum ClipboardFormat : uint
     /// See <see cref="CF_GDIOBJFIRST"/>.
     /// </summary>
     CF_GDIOBJLAST = 0x03FF,
-
+#pragma warning disable CS1574 // XML 注释中有无法解析的 cref 特性
     /// <summary>
     /// Start of a range of integer values for private clipboard formats. The range ends with
     /// <see cref="CF_PRIVATELAST"/>. Handles associated with private clipboard formats are not freed
     /// automatically, the clipboard owner must free such handles, typically in response to the
     /// <see cref="ClipboardMessages.WM_DESTROYCLIPBOARD"/> message.
     /// </summary>
+    /// 
     CF_PRIVATEFIRST = 0x0200,
-
+#pragma warning restore CS1574 // XML 注释中有无法解析的 cref 特性
     /// <summary>
     /// See <see cref="CF_PRIVATEFIRST"/>.
     /// </summary>
@@ -654,3 +659,4 @@ enum eExpandedClipDataTypes
     kDcDetailViewStyles = 19,
 };
 #endif
+#pragma warning restore CS1591 // 缺少对公共可见类型或成员的 XML 注释

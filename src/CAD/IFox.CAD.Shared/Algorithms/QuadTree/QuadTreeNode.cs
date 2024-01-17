@@ -482,7 +482,7 @@ public class QuadTreeNode<TEntity>
             //  再判断图元的与目标的距离,找到最小距离,即为最近
             var minPt = new Point2d(queryAreaCenter.X - hw, queryAreaCenter.Y - hh);
             var maxPt = new Point2d(queryAreaCenter.X + hw, queryAreaCenter.Y + hh);
-            var ents = new List<TEntity>();
+            List<TEntity> ents = [];
             Query(new Rect(minPt, maxPt), ents);
             for (int i = 0; i < ents.Count; i++)
             {
@@ -608,7 +608,7 @@ public class QuadTreeNode<TEntity>
     {
         TEntity? results = default;
 
-        var lst = new List<TEntity>();
+        List<TEntity> lst = [];
         var qcent = queryArea.CenterPoint;
 
         switch (findMode)
@@ -763,30 +763,32 @@ public class QuadTreeNode<TEntity>
     #endregion
 
     #region 改
+    /*
     /// <summary>
     /// 所有的点归类到最小包围它的空间
     /// </summary>
-    // public void PointsToMinNode()
-    // {
-    //    ForEach(node =>
-    //    {
-    //        for (int i = 0; i < node.Contents.Count; i++)
-    //        {
-    //            var ent = node.Contents[i];
-    //            if (ent.IsPoint)
-    //            {
-    //                // 如果最小包含!=当前,就是没有放在最适合的位置
-    //                var queryNode = GetMinNode(ent);
-    //                if (queryNode != node)
-    //                {
-    //                    node.Remove(ent);
-    //                    queryNode.Contents.Add(ent);
-    //                }
-    //            }
-    //        }
-    //        return false;
-    //    });
-    // }
+    public void PointsToMinNode()
+    {
+       ForEach(node =>
+       {
+           for (int i = 0; i < node.Contents.Count; i++)
+           {
+               var ent = node.Contents[i];
+               if (ent.IsPoint)
+               {
+                   // 如果最小包含!=当前,就是没有放在最适合的位置
+                   var queryNode = GetMinNode(ent);
+                   if (queryNode != node)
+                   {
+                       node.Remove(ent);
+                       queryNode.Contents.Add(ent);
+                   }
+               }
+           }
+           return false;
+       });
+    }
+    */
     #endregion
 
     #region 方法

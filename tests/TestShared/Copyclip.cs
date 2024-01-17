@@ -406,7 +406,7 @@ public class Copyclip
             }
 
             // 获取临时文件的图元id
-            var fileEntityIds = new List<ObjectId>();
+            List<ObjectId> fileEntityIds = [];
             using (DBTrans fileTr = new(cadClipType.File, commit: false,
                                         fileOpenMode: FileOpenMode.OpenForReadAndAllShare))
             {

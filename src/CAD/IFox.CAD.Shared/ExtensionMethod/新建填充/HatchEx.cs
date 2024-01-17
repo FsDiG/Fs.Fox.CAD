@@ -1,5 +1,7 @@
 ﻿namespace IFoxCAD.Cad; 
-
+/// <summary>
+/// 充填扩展类
+/// </summary>
 public static class HatchEx
 {
     /// <summary>

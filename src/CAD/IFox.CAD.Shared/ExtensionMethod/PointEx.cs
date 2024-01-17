@@ -1,5 +1,7 @@
 namespace IFoxCAD.Cad;
-
+/// <summary>
+/// 点
+/// </summary>
 public static class PointEx
 {
     /// <summary>

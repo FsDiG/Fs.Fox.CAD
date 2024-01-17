@@ -251,16 +251,5 @@ public static class EntityBoundingInfo
         else
             return false;
     }
-    /// <summary>
-    /// 点偏移
-    /// </summary>
-    /// <param name="pt"></param>
-    /// <param name="x"></param>
-    /// <param name="y"></param>
-    /// <param name="z"></param>
-    /// <returns></returns>
-    //static Point3d Offset(this Point3d pt, double x, double y, double z = 0)
-    //{
-    //  return new Point3d(pt.X + x, pt.Y + y, pt.Z + z);
-    //}
+
 }

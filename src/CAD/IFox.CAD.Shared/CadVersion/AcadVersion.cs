@@ -20,7 +20,7 @@ public static class AcadVersion
                             .OpenSubKey(@"SOFTWARE\Autodesk\Hardcopy")
                             .GetValueNames();
 
-            var _versions = new List<CadVersion>();
+            List<CadVersion> _versions = [];
             for (int i = 0; i < copys.Length; i++)
             {
                 if (!Regex.IsMatch(copys[i], _pattern))

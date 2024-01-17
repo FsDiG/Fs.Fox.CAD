@@ -1,5 +1,7 @@
 ﻿namespace IFoxCAD.Cad;
-
+/// <summary>
+/// ifox工具类
+/// </summary>
 #if acad
 public sealed class IFoxUtils
 {
@@ -81,7 +83,7 @@ public sealed class IFoxUtils
     /// </summary>
     /// <param name="value">cad特性栏透明度值，范围0-100</param>
     /// <returns>cad透明度值</returns>
-    public Transparency CreateTransparency(int value)
+    public static Transparency CreateTransparency(int value)
     {
         return new Transparency(Convert.ToByte(Math.Floor((100 - value) * 2.55)));
     }

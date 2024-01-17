@@ -54,7 +54,7 @@ public class JigExTransient : IDisposable
     /// <summary>
     /// 向瞬态容器中添加对象
     /// </summary>
-    /// <param name="ent">图元</param>
+    /// <param name="drawable">图元</param>
     /// <param name="tdm">绘图模式</param>
     public void Add(Drawable drawable, TransientDrawingMode tdm = TransientDrawingMode.Main)
     {

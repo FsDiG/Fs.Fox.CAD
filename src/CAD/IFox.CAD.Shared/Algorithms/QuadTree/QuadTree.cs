@@ -172,7 +172,7 @@ public class QuadTree<TEntity> where TEntity : QuadEntity
     {
         QuadTreeEvn.SelectMode = selectMode;
 
-        var results = new List<TEntity>();
+        List<TEntity> results = [];
         // 选择图元
         _rootNode.Query(rect, results);
         // 选择点

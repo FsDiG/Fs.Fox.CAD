@@ -12,8 +12,14 @@ namespace IFoxCAD.Cad;
  *  作者: 惊惊⎛⎝◕⏝⏝◕｡⎠⎞ ⎛⎝≥⏝⏝0⎠⎞ ⎛⎝⓿⏝⏝⓿｡⎠⎞ ⎛⎝≥⏝⏝≤⎠⎞
  *  博客: https://www.cnblogs.com/JJBox/p/15650770.html
  */
-
+/// <summary>
+/// 重绘事件
+/// </summary>
+/// <param name="draw"></param>
 public delegate void WorldDrawEvent(WorldDraw draw);
+/// <summary>
+/// jig扩展类
+/// </summary>
 public class JigEx : DrawJig, IDisposable
 {
     #region 成员
@@ -348,6 +354,9 @@ public class JigEx : DrawJig, IDisposable
     #endregion
 
     #region IDisposable接口相关函数
+    /// <summary>
+    /// 
+    /// </summary>
     public bool IsDisposed { get; private set; } = false;
 
     /// <summary>
@@ -366,7 +375,10 @@ public class JigEx : DrawJig, IDisposable
     {
         Dispose(false);
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="disposing"></param>
     protected virtual void Dispose(bool disposing)
     {
         // 不重复释放,并设置已经释放

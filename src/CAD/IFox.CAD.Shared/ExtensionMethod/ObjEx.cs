@@ -13,12 +13,5 @@ public static class ObjEx
     {
         Acap.DocumentManager.MdiActiveDocument?.Editor.WriteMessage($"\n{obj}\n");
     }
-    /// <summary>
-    /// 系统的打印
-    /// </summary>
-    /// <param name="obj"></param>
-    //public static void PrintLine(this object obj)
-    //{
-    //    Console.WriteLine(obj.ToString());
-    //}
+
 }

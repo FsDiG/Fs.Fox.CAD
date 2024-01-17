@@ -12,7 +12,7 @@ public class TestJson
     [CommandMethod(nameof(JavaScriptSerializer))]
     public void JavaScriptSerializer()
     {
-        var RegisteredUsers = new List<int>();
+        List<int> RegisteredUsers = [];
         RegisteredUsers.Add(0);
         RegisteredUsers.Add(1);
         RegisteredUsers.Add(2);

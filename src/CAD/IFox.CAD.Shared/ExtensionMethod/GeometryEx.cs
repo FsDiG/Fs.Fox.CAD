@@ -22,7 +22,7 @@ public static class GeometryEx
         if (ptlst.Count < 3)
             return PointOnRegionType.Error;
 
-        var ls2ds = new List<LineSegment2d>();
+        List<LineSegment2d> ls2ds = [];
         foreach (var node in ptlst.GetNodes())
         {
             ls2ds.Add(new LineSegment2d(node.Value, node.Next!.Value));
@@ -74,7 +74,7 @@ public static class GeometryEx
         if (ptlst.Count < 3)
             return PointOnRegionType.Error;
 
-        var ls3ds = new List<LineSegment3d>();
+        List<LineSegment3d> ls3ds = [];
         foreach (var node in ptlst.GetNodes())
             ls3ds.Add(new LineSegment3d(node.Value, node.Next!.Value));
         var cc3d = new CompositeCurve3d(ls3ds.ToArray());
@@ -594,6 +594,9 @@ public static class GeometryEx
         drawables.ForEach(d => geometry.Draw(d));
     }
 }
+/// <summary>
+/// 向量扩展类
+/// </summary>
 public static class VectorEx
 {
     /// <summary>
@@ -661,7 +664,16 @@ public static class VectorEx
 /// </summary>
 public static class PlaneEx
 {
+    /// <summary>
+    /// X
+    /// </summary>
     public static readonly Plane X = new (Point3d.Origin, Vector3d.XAxis);
+    /// <summary>
+    /// Y
+    /// </summary>
     public static readonly Plane Y = new (Point3d.Origin, Vector3d.YAxis);
+    /// <summary>
+    /// Z
+    /// </summary>
     public static readonly Plane Z = new (Point3d.Origin, Vector3d.ZAxis);
 }

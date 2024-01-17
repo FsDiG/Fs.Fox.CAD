@@ -171,7 +171,7 @@ public partial class TestQuadTree
         var ed = doc.Editor;
         ed.WriteMessage("\n自动加入全图到四叉树");
 
-        var ss = new List<ObjectId>();
+        List<ObjectId> ss = [];
         int entnum = 0;
         var time1 = Timer.RunTime(() => {
             db.Action(tr => {
@@ -300,12 +300,12 @@ public partial class TestQuadTree
         // 需要把事务放在循环体内部
         // 报错: 0x6B00500A (msvcr80.dll)处(位于 acad.exe 中)引发的异常: 0xC0000005: 写入位置 0xFFE00000 时发生访问冲突。
         // 画出所有的四叉树节点边界,因为事务放在外面引起
-        var nodeRects = new List<Rect>();
+        List<Rect> nodeRects = [];
         _quadTreeRoot.ForEach(node => {
             nodeRects.Add(node);
             return false;
         });
-        var rectIds = new List<ObjectId>();
+        List<ObjectId> rectIds = [];
         foreach (var item in nodeRects)// Count = 97341 当数量接近这个量级
         {
             db.Action(tr => {

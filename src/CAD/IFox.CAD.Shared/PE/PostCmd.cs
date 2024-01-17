@@ -1,5 +1,7 @@
 ﻿namespace IFoxCAD.Cad;
-
+/// <summary>
+/// 发送命令
+/// </summary>
 public class PostCmd
 {
     /*
@@ -122,14 +124,34 @@ public class PostCmd
         doc?.GetType()
             .InvokeMember("SendCommand", BindingFlags.InvokeMethod, null, doc, commandArray);// 返回值是null
     }
-
+    /// <summary>
+    /// 命令模式
+    /// </summary>
     public enum RunCmdFlag : byte
     {
+        /// <summary>
+        /// 发送命令(同步)如果2015.+这里报错,那么表示vs需要提权测试
+        /// </summary>
         AcedCmd = 1,
+        /// <summary>
+        /// 发送命令(同步)
+        /// </summary>
         AcedCommand = 2,
+        /// <summary>
+        /// 发送命令(同步)，可以多线程
+        /// </summary>
         AcedPostCommand = 4,
+        /// <summary>
+        /// 发送命令(同步)
+        /// </summary>
         AcedInvoke = 8,
+        /// <summary>
+        /// 默认的发送命令
+        /// </summary>
         SendStringToExecute = 16,
+        /// <summary>
+        /// 异步命令
+        /// </summary>
         AsyncCommand = 32,
     }
 
@@ -137,14 +159,30 @@ public class PostCmd
      * 发送命令会记录在命令历史
      * 发送lisp的(command "xx")就不会
      */
+     /// <summary>
+     /// 发送命令
+     /// </summary>
+     /// <param name="args"></param>
+     /// <returns></returns>
     public static PromptStatus SendCommand(ResultBuffer args)
     {
         return AcedCmd(args);
     }
+    /// <summary>
+    /// 发送命令
+    /// </summary>
+    /// <param name="args"></param>
+    /// <returns></returns>
     public static PromptStatus SendCommand(IntPtr args)
     {
         return AcedCommand(args);
     }
+    /// <summary>
+    /// 发送命令
+    /// </summary>
+    /// <param name="args"></param>
+    /// <param name="flag"></param>
+    /// <returns></returns>
     public static PromptStatus SendCommand(string args, RunCmdFlag flag)
     {
         PromptStatus ret = PromptStatus.OK;

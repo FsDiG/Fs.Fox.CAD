@@ -26,9 +26,13 @@ public class BulgeVertexWidth
     /// 尾宽
     /// </summary>
     public double EndWidth;
-
+    /// <summary>
+    /// 顶点
+    /// </summary>
     public Point2d Vertex => new(X, Y);
-
+    /// <summary>
+    /// 默认构造
+    /// </summary>
     public BulgeVertexWidth() { }
 
     /// <summary>
@@ -77,7 +81,10 @@ public class BulgeVertexWidth
         StartWidth = pl.GetStartWidthAt(index);
         EndWidth = pl.GetEndWidthAt(index);
     }
-
+    /// <summary>
+    /// 转换为 BulgeVertex
+    /// </summary>
+    /// <returns></returns>
     public BulgeVertex ToBulgeVertex()
     {
         return new BulgeVertex(Vertex, Bulge);

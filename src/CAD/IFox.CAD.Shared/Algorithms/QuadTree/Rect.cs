@@ -17,7 +17,12 @@ public class TolerancePoint2d : IEqualityComparer<Point2d>
     {
         _tolerance = tolerance;
     }
-
+    /// <summary>
+    /// 比较
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
     public bool Equals(Point2d a, Point2d b)// Point3d是struct不会为null
     {
         /*默认规则是==是0容差,Eq是有容差*/
@@ -32,7 +37,11 @@ public class TolerancePoint2d : IEqualityComparer<Point2d>
         // (X86.CPU.FSQRT指令用的牛顿迭代法/软件层面可以使用快速平方根....我还以为CPU会采取快速平方根这样的取表操作)
         return a.IsEqualTo(b, new Tolerance(_tolerance, _tolerance));
     }
-
+    /// <summary>
+    /// 哈希
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <returns></returns>
     public int GetHashCode(Point2d obj)
     {
         // 结构体直接返回 obj.GetHashCode(); Point3d ToleranceDistinct3d
@@ -42,7 +51,9 @@ public class TolerancePoint2d : IEqualityComparer<Point2d>
     }
 }
 
-
+/// <summary>
+/// 矩形范围类
+/// </summary>
 [Serializable]
 [StructLayout(LayoutKind.Sequential)]
 [DebuggerDisplay("{DebuggerDisplay,nq}")]
@@ -53,7 +64,13 @@ public class Rect : IEquatable<Rect>, IComparable<Rect>
     private string DebuggerDisplay => ToString("f4");
 
 #pragma warning disable CA2211 // 非常量字段应当不可见
+    /// <summary>
+    /// 矩形容差
+    /// </summary>
     public static TolerancePoint2d RectTolerance = new(1e-6);
+    /// <summary>
+    /// cad容差
+    /// </summary>
     public static Tolerance CadTolerance = new(1e-6, 1e-6);
 #pragma warning restore CA2211 // 非常量字段应当不可见
 
@@ -68,15 +85,41 @@ public class Rect : IEquatable<Rect>, IComparable<Rect>
     #endregion
 
     #region 成员
+    /// <summary>
+    /// X
+    /// </summary>
     public double X => _X;
+    /// <summary>
+    /// Y
+    /// </summary>
     public double Y => _Y;
+    /// <summary>
+    /// 左
+    /// </summary>
     public double Left => _X;
+    /// <summary>
+    /// 下
+    /// </summary>
     public double Bottom => _Y;
+    /// <summary>
+    /// 右
+    /// </summary>
     public double Right => _Right;
+    /// <summary>
+    /// 上
+    /// </summary>
     public double Top => _Top;
-
+    /// <summary>
+    /// 宽
+    /// </summary>
     public double Width => _Right - _X;
+    /// <summary>
+    /// 高
+    /// </summary>
     public double Height => _Top - _Y;
+    /// <summary>
+    /// 面积
+    /// </summary>
     public double Area
     {
         get
@@ -85,9 +128,17 @@ public class Rect : IEquatable<Rect>, IComparable<Rect>
             return ar < 1e-10 ? 0 : ar;
         }
     }
-
+    /// <summary>
+    /// 左下Min
+    /// </summary>
     public Point2d MinPoint => LeftLower;
+    /// <summary>
+    /// 右上Max
+    /// </summary>
     public Point2d MaxPoint => RightUpper;
+    /// <summary>
+    /// 中间
+    /// </summary>
     public Point2d CenterPoint => Midst;
 
     /// <summary>
@@ -143,6 +194,9 @@ public class Rect : IEquatable<Rect>, IComparable<Rect>
     #endregion
 
     #region 构造
+    /// <summary>
+    /// 
+    /// </summary>
     public Rect()
     {
     }
@@ -188,18 +242,40 @@ public class Rect : IEquatable<Rect>, IComparable<Rect>
     #endregion
 
     #region 重载运算符_比较
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <returns></returns>
     public override bool Equals(object? obj)
     {
         return this.Equals(obj as Rect);
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="b"></param>
+    /// <returns></returns>
     public bool Equals(Rect? b)
     {
         return this.Equals(b, 1e-6);/*默认规则是==是0容差,Eq是有容差*/
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
     public static bool operator !=(Rect? a, Rect? b)
     {
         return !(a == b);
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="a"></param>
+    /// <param name="b"></param>
+    /// <returns></returns>
     public static bool operator ==(Rect? a, Rect? b)
     {
         // 此处地方不允许使用==null,因为此处是定义
@@ -228,7 +304,10 @@ public class Rect : IEquatable<Rect>, IComparable<Rect>
                 Math.Abs(_Top - b._Top) < tolerance &&
                 Math.Abs(_Y - b._Y) < tolerance;
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     public override int GetHashCode()
     {
         return (((int)_X ^ (int)_Y).GetHashCode() ^ (int)_Right).GetHashCode() ^ (int)_Top;
@@ -236,10 +315,21 @@ public class Rect : IEquatable<Rect>, IComparable<Rect>
     #endregion
 
     #region 包含
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="Point2d"></param>
+    /// <returns></returns>
     public bool Contains(Point2d Point2d)
     {
         return Contains(Point2d.X, Point2d.Y);
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="y"></param>
+    /// <returns></returns>
     public bool Contains(double x, double y)
     {
         return _X <= x && x <= _Right &&
@@ -279,16 +369,22 @@ public class Rect : IEquatable<Rect>, IComparable<Rect>
     {
         return ToPoints().Intersect(other.ToPoints(), RectTolerance).ToArray();
     }
-
+    /// <summary>
+    /// 转换为point2d数组
+    /// </summary>
+    /// <returns></returns>
     public Point2d[] ToPoints()
     {
         Point2d a = MinPoint;// min
         Point2d b = new(_Right, _Y);
         Point2d c = MaxPoint;// max
         Point2d d = new(_X, _Top);
-        return new Point2d[] { a, b, c, d };
+        return [a, b, c, d];
     }
-
+    /// <summary>
+    /// 转换为point2d元组
+    /// </summary>
+    /// <returns></returns>
     public (Point2d boxMin, Point2d boxRigthDown, Point2d boxMax, Point2d boxLeftUp) ToPoints4()
     {
         Point2d a = MinPoint;// min
@@ -311,6 +407,7 @@ public class Rect : IEquatable<Rect>, IComparable<Rect>
     /// 是否矩形(带角度)
     /// </summary>
     /// <param name="ptList"></param>
+    /// <param name="tolerance"></param>
     /// <returns></returns>
     public static bool IsRectAngle(List<Point2d>? ptList, double tolerance = 1e-8)
     {
@@ -490,7 +587,7 @@ public class Rect : IEquatable<Rect>, IComparable<Rect>
     /// <returns>多段线对象</returns>
     public Entity ToPolyLine()
     {
-        var bv = new List<BulgeVertex>();
+        List<BulgeVertex> bv = [];
         var pts = ToPoints();
         Polyline pl = new();
         pl.SetDatabaseDefaults();
@@ -566,10 +663,18 @@ public class Rect : IEquatable<Rect>, IComparable<Rect>
     // {
     //    return new Rect(rect.Left, rect.Bottom, rect.Right, rect.Top);
     // }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="rect"></param>
     public static implicit operator Rect(System.Drawing.RectangleF rect)
     {
         return new Rect(rect.Left, rect.Bottom, rect.Right, rect.Top);
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="rect"></param>
     public static implicit operator Rect(System.Drawing.Rectangle rect)
     {
         return new Rect(rect.Left, rect.Bottom, rect.Right, rect.Top);
@@ -577,14 +682,29 @@ public class Rect : IEquatable<Rect>, IComparable<Rect>
 #endif
 
     #region ToString
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     public sealed override string ToString()
     {
         return ToString(null, null);
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="provider"></param>
+    /// <returns></returns>
     public string ToString(IFormatProvider? provider)
     {
         return ToString(null, provider);
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="format"></param>
+    /// <param name="formatProvider"></param>
+    /// <returns></returns>
     public string ToString(string? format = null, IFormatProvider? formatProvider = null)
     {
         return $"({_X.ToString(format, formatProvider)},{_Y.ToString(format, formatProvider)})," +
@@ -597,6 +717,11 @@ public class Rect : IEquatable<Rect>, IComparable<Rect>
     }
 
     /*为了红黑树,加入这个*/
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="rect"></param>
+    /// <returns></returns>
     public int CompareTo(Rect rect)
     {
         if (rect == null)

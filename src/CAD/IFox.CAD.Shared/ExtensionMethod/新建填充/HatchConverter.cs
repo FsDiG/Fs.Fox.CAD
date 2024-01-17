@@ -315,6 +315,10 @@ public class HatchConverter
             });
         }
     }
+    /// <summary>
+    /// 创建边界
+    /// </summary>
+    /// <returns></returns>
     public List<Entity> CreateBoundary()
     {
         List<Entity> outEnts = new List<Entity>();

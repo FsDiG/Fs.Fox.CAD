@@ -241,7 +241,7 @@ public sealed class Graph : IGraph, IEnumerable<IGraphVertex>
     /// <returns>曲线表</returns>
     public List<Curve3d> GetCurves(List<IGraphVertex> graphVertices)
     {
-        var curves = new List<Curve3d>();
+        List<Curve3d> curves = [];
         for (int i = 0; i < graphVertices.Count - 1; i++)
         {
             var cur = graphVertices[i];
@@ -696,6 +696,7 @@ public sealed class DepthFirst
     /// 将列表反向,并旋转到起点为最小值
     /// </summary>
     /// <param name="lst"></param>
+    /// <param name="vertex"></param>
     /// <returns></returns>
     static List<IGraphVertex> Invert(List<IGraphVertex> lst, IGraphVertex vertex)
     {

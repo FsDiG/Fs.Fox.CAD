@@ -9,8 +9,14 @@ using System.Diagnostics;
 [Flags]
 public enum Sequence : byte
 {
-    First,// 最先
-    Last, // 最后
+    /// <summary>
+    /// 最先
+    /// </summary>
+    First,
+    /// <summary>
+    /// 最后
+    /// </summary>
+    Last, 
 }
 
 /// <summary>
@@ -18,11 +24,20 @@ public enum Sequence : byte
 /// </summary>
 public interface IFoxAutoGo
 {
-    // 控制加载顺序
+    /// <summary>
+    /// 控制加载顺序
+    /// </summary>
+    /// <returns></returns>
     Sequence SequenceId();
-    // 关闭cad的时候会自动执行
+
+    /// <summary>
+    /// 关闭cad的时候会自动执行
+    /// </summary>
     void Terminate();
-    // 打开cad的时候会自动执行
+
+    /// <summary>
+    /// 打开cad的时候会自动执行
+    /// </summary>
     void Initialize();
 }
 
@@ -89,29 +104,26 @@ class RunClass
 /// 2:<see cref="IFoxAutoGo"/>接口..(多个)
 /// </para>
 /// </summary>
-public class AutoReflection
+/// <remarks>
+/// 反射执行
+/// <para>
+/// 1.特性:<see cref="IFoxInitialize"/><br/>
+/// 2.接口:<see cref="IFoxAutoGo"/>
+/// </para>
+/// </remarks>
+/// <param name="dllName">约束在此dll进行加速</param>
+/// <param name="configInfo"></param>
+public class AutoReflection(string dllName, AutoRegConfig configInfo)
 {
-    static List<RunClass> _InitializeList = new(); // 储存方法用于初始化
-    static List<RunClass> _TerminateList = new();  // 储存方法用于结束释放
+    static List<RunClass> _InitializeList = []; // 储存方法用于初始化
+    static List<RunClass> _TerminateList = [];  // 储存方法用于结束释放
 
-    readonly string _dllName;
-    readonly AutoRegConfig _autoRegConfig;
+    readonly string _dllName = dllName;
+    readonly AutoRegConfig _autoRegConfig = configInfo;
 
     /// <summary>
-    /// 反射执行
-    /// <para>
-    /// 1.特性:<see cref="IFoxInitialize"/><br/>
-    /// 2.接口:<see cref="IFoxAutoGo"/>
-    /// </para>
+    /// 启动cad的时候会自动执行
     /// </summary>
-    /// <param name="dllName">约束在此dll进行加速</param>
-    public AutoReflection(string dllName, AutoRegConfig configInfo)
-    {
-        _dllName = dllName;
-        _autoRegConfig = configInfo;
-    }
-
-    // 启动cad的时候会自动执行
     public void Initialize()
     {
         try
@@ -232,9 +244,10 @@ public class AutoReflection
     /// <summary>
     /// 收集接口下的函数
     /// </summary>
-    /// <param name="runClassList">储存要运行的方法</param>
-    /// <param name="methodName">查找方法名</param>
-    /// <returns></returns>
+    /// <param name="initializes"></param>
+    /// <param name="initializeName"></param>
+    /// <param name="terminates"></param>
+    /// <param name="terminateName"></param>
     void GetInterfaceFunctions(List<RunClass> initializes, string initializeName,
                                List<RunClass> terminates, string terminateName)
     {

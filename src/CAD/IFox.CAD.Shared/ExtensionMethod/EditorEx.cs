@@ -1010,11 +1010,22 @@ public static class EditorEx
 
     [DllImport("accore.dll", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl, EntryPoint = "ads_queueexpr")]
     static extern int Ads_queueexpr(string strExpr);
-
+    /// <summary>
+    /// 执行lisp的方式枚举
+    /// </summary>
     public enum RunLispFlag : byte
     {
+        /// <summary>
+        /// AdsQueueexpr
+        /// </summary>
         AdsQueueexpr = 1,
+        /// <summary>
+        /// AcedEvaluateLisp
+        /// </summary>
         AcedEvaluateLisp = 2,
+        /// <summary>
+        /// SendStringToExecute
+        /// </summary>
         SendStringToExecute = 4,
     }
 

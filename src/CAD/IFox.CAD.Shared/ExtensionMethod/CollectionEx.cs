@@ -163,10 +163,22 @@ public static class CollectionEx
 
 
     #region 关键字集合
+    /// <summary>
+    /// 关键字名字
+    /// </summary>
     public enum KeywordName
     {
+        /// <summary>
+        /// 全局名字
+        /// </summary>
         GlobalName,
+        /// <summary>
+        /// 本地名字
+        /// </summary>
         LocalName,
+        /// <summary>
+        /// 显示名字
+        /// </summary>
         DisplayName,
     }
 

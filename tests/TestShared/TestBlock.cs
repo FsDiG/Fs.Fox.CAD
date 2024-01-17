@@ -167,7 +167,7 @@ public class TestBlock
         tr.BlockTable.Add("test1", line1, line2, att1, att2);
 
 
-        var ents = new List<Entity>();
+        List<Entity> ents = [];
         var line5 = new Line(new Point3d(0, 0, 0), new Point3d(1, 1, 0));
         var line6 = new Line(new Point3d(0, 0, 0), new Point3d(-1, 1, 0));
         ents.Add(line5);
@@ -245,7 +245,7 @@ public class TestBlock
     {
         using DBTrans tr = new();
 
-        var ents = new List<Entity>();
+        List<Entity> ents = [];
         var line5 = new Line(new Point3d(0, 0, 0), new Point3d(1, 1, 0));
         var line6 = new Line(new Point3d(0, 0, 0), new Point3d(-1, 1, 0));
         ents.Add(line5);
@@ -434,7 +434,7 @@ public class TestBlock
         {
             // SelectionSet ss = rss.Value;
             // ObjectId[] ids = ss.GetObjectIds();
-            // var ents = new List<KeyValuePair<Entity, long>>();
+            // List<KeyValuePair<Entity, long>> ents = [];
             // var extents = new Extents3d();
             // foreach (var id in ids)
             // {
@@ -462,7 +462,7 @@ public class TestBlock
             var extents = ents!.GetExtents();
             Point3d pt = extents.MinPoint;
             Matrix3d matrix = Matrix3d.Displacement(Point3d.Origin - pt);
-            // var newEnts = new List<Entity>();
+            // List<Entity> newEnts = [];
             // foreach (var ent in ents)
             // {
             //    var newEnt = ent.Key;
@@ -705,7 +705,7 @@ public static class Blocks
         return ids;
     }
 
-    private static ObjectIdCollection idsAdded;
+    private static ObjectIdCollection idsAdded = [];
     public static ObjectIdCollection ExplodeToOwnerSpace3(this BlockReference br)
     {
         idsAdded = new ObjectIdCollection();
@@ -720,12 +720,12 @@ public static class Blocks
     public static void LoopThroughInsertAndAddEntity2n3(Matrix3d mat, BlockReference br, BlockTableRecord space)
     {
         Transaction tr = space.Database.TransactionManager.TopTransaction;
-        BlockTableRecord btr = tr.GetObject(br.BlockTableRecord, OpenMode.ForRead) as BlockTableRecord;
+        BlockTableRecord btr = (BlockTableRecord)tr.GetObject(br.BlockTableRecord, OpenMode.ForRead);
 
         foreach (ObjectId id in btr)
         {
             DBObject obj = tr.GetObject(id, OpenMode.ForRead);
-            Entity ent = obj.Clone() as Entity;
+            Entity? ent = obj.Clone() as Entity;
             if (ent is BlockReference)
             {
                 BlockReference br1 = (BlockReference)ent;
@@ -733,11 +733,11 @@ public static class Blocks
             }
             else
             {
-                ent.TransformBy(mat);
+                ent?.TransformBy(mat);
                 space.AppendEntity(ent);
                 tr.AddNewlyCreatedDBObject(ent, true);
 
-                idsAdded.Add(ent.ObjectId);
+                idsAdded.Add(ent!.ObjectId);
             }
         }
     }

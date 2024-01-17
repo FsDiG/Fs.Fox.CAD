@@ -1,4 +1,5 @@
-﻿namespace IFoxCAD.Cad;
+﻿#pragma warning disable CS1591 // 缺少对公共可见类型或成员的 XML 注释
+namespace IFoxCAD.Cad;
 
 using System;
 using System.Diagnostics;
@@ -24,7 +25,10 @@ using Size = System.Drawing.Size;
 // http://www.cppblog.com/zwp/archive/2012/02/25/60225.html
 [Serializable]
 [StructLayout(LayoutKind.Sequential, Pack = 2)]
+
 public struct MetaFilePict
+
+
 {
     public MappingModes mm;
     public int xExt;
@@ -791,7 +795,7 @@ public static class EmfTool
     /// <summary>
     /// 矢量图 转换 byte[]
     /// </summary>
-    /// <param name="image"></param>
+    /// <param name="mf"></param>
     /// <returns></returns>
     public static byte[]? ToByteArray(this Metafile mf)
     {
@@ -920,3 +924,4 @@ public static class EmfTool
     }
 #endif
 }
+#pragma warning restore CS1591 // 缺少对公共可见类型或成员的 XML 注释
