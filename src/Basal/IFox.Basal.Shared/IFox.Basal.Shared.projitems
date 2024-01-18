@@ -18,13 +18,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)ExpressionTrees\SqlExpressionVisitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)General\ArrayEx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)General\DebugHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)General\DictEx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)General\EnumEx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)General\IsExternalInit.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)General\LinkedHashMap.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)General\LinkedHashSet.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)General\LinqEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)General\ListEx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)General\LoopList.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)General\LoopState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)General\MathEx.cs" />
