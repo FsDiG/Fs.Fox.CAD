@@ -601,8 +601,8 @@ public sealed class DBTrans : IDisposable
     public override string ToString()
 
     {
-        List<string> lines = new()
-        {
+        List<string> lines =
+        [
             $"StackCount = {_dBTrans.Count}",
             $"_fileName = \"{_fileName}\"",
             $"_commit = {_commit}",
@@ -612,7 +612,7 @@ public sealed class DBTrans : IDisposable
             $"Editor = {Editor != null}",
             $"Transaction = {Transaction.UnmanagedObject}",
             $"Database = {Database.Filename}"
-        };
+        ];
 
         return string.Join("\n", lines.ToArray());
     }

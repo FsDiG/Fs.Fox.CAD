@@ -1,8 +1,9 @@
 ﻿namespace IFoxCAD.Cad;
+
+#if acad
 /// <summary>
 /// ifox工具类
 /// </summary>
-#if acad
 public sealed class IFoxUtils
 {
     /// <summary>

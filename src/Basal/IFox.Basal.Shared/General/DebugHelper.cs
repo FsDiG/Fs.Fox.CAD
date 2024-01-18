@@ -1,8 +1,7 @@
-﻿using System.Diagnostics;
-using System.Threading;
-
-namespace IFoxCAD.Basal;
-
+﻿namespace IFoxCAD.Basal;
+/// <summary>
+/// 调试工具
+/// </summary>
 public static class Debugx
 {
     /// <summary>

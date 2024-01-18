@@ -1,8 +1,8 @@
 ﻿namespace IFoxCAD.Basal;
 
-using System.ComponentModel;
-using System.Linq;
-
+/// <summary>
+/// 枚举扩展
+/// </summary>
 public static class EnumEx
 {
     /// <summary>
@@ -14,12 +14,13 @@ public static class EnumEx
     }
 
     // (类型完整名,描述组合)
-    static readonly Dictionary<string, HashSet<string>> _cache = new();
+    static readonly Dictionary<string, HashSet<string>> _cache = [];
 
     /// <summary>
     /// 打印枚举的特性<see cref="DescriptionAttribute"/>注释内容
     /// </summary>
     /// <param name="e">枚举</param>
+    /// <param name="noDescrToString"></param>
     /// <returns>注释内容</returns>
     public static HashSet<string>? GetAttribute<T>(this Enum e, bool noDescrToString = true)
         where T : DescriptionAttribute
