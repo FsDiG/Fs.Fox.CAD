@@ -41,7 +41,7 @@ public class Timer
     }
 
     [DllImport("Kernel32.dll")]
-    static extern bool QueryPerformanceCounter(out long lpPerformanceCount);
+    private static extern bool QueryPerformanceCounter(out long lpPerformanceCount);
 
     /// <summary>
     /// 这个函数会检索性能计数器的频率.
@@ -52,10 +52,10 @@ public class Timer
     /// <param name="lpFrequency"></param>
     /// <returns></returns>
     [DllImport("Kernel32.dll")]
-    static extern bool QueryPerformanceFrequency(out long lpFrequency);
+    private static extern bool QueryPerformanceFrequency(out long lpFrequency);
 
-    long _startTime, _stopTime;
-    readonly long _freq;
+    private long _startTime, _stopTime;
+    private readonly long _freq;
     /// <summary>
     /// 构造函数
     /// </summary>
@@ -74,7 +74,7 @@ public class Timer
     /// </summary>
     public void Start()
     {
-        System.Threading.Thread.Sleep(0);
+        Thread.Sleep(0);
         QueryPerformanceCounter(out _startTime);
     }
 
@@ -84,27 +84,27 @@ public class Timer
     public void Stop()
     {
         QueryPerformanceCounter(out _stopTime);
-        _Second = (double)(_stopTime - _startTime) / _freq;
+        Second = (double)(_stopTime - _startTime) / _freq;
     }
-    double _Second = 0;
 
     // 返回计时器经过时间
     /// <summary>
     /// 秒
     /// </summary>
-    public double Second => _Second;
+    public double Second { get; private set; }
+
     /// <summary>
     /// 毫秒
     /// </summary>
-    public double Millisecond => _Second * 1000.0;
+    public double Millisecond => Second * 1000.0;
     /// <summary>
     /// 微秒
     /// </summary>
-    public double Microsecond => _Second * 1000000.0;
+    public double Microsecond => Second * 1000000.0;
     /// <summary>
     /// 纳秒
     /// </summary>
-    public double Nanosecond => _Second * 1000000000.0;
+    public double Nanosecond => Second * 1000000000.0;
     /// <summary>
     /// 计算执行委托的时间
     /// </summary>
@@ -119,22 +119,14 @@ public class Timer
         action();
         nanoSecond.Stop();
 
-        var time = 0.0;
-        switch (timeEnum)
+        var time = timeEnum switch
         {
-            case TimeEnum.Second:
-            time = nanoSecond.Second;
-            break;
-            case TimeEnum.Millisecond:
-            time = nanoSecond.Millisecond;
-            break;
-            case TimeEnum.Microsecond:
-            time = nanoSecond.Microsecond;
-            break;
-            case TimeEnum.Nanosecond:
-            time = nanoSecond.Nanosecond;
-            break;
-        }
+            TimeEnum.Second => nanoSecond.Second,
+            TimeEnum.Millisecond => nanoSecond.Millisecond,
+            TimeEnum.Microsecond => nanoSecond.Microsecond,
+            TimeEnum.Nanosecond => nanoSecond.Nanosecond,
+            _ => 0.0
+        };
         //string timeNameZn = "";
         //switch (timeEnum)
         //{

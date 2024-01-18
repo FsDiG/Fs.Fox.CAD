@@ -40,14 +40,14 @@ public static class ArrayEx
     /// 传出参数2:数组结尾<br/>
     /// 返回值比较结尾为<see langword="true"/>就移除<br/>
     /// </param>
-    [System.Diagnostics.DebuggerStepThrough]
+    [DebuggerStepThrough]
     public static void Deduplication<T>(List<T> lst, Func<T, T, bool> func)
     {
         // 头和尾比较,满足条件移除尾巴
-        for (int i = 0; i < lst.Count; i++)
+        for (var i = 0; i < lst.Count; i++)
         {
             var first = lst[i];
-            for (int j = lst.Count - 1; j > i/*符号是 >= 而且是i*/; j--)
+            for (var j = lst.Count - 1; j > i/*符号是 >= 而且是i*/; j--)
             {
                 var last = lst[j];
                 if (func(first, last))

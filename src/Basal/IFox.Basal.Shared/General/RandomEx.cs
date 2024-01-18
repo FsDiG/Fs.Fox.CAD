@@ -72,8 +72,7 @@ public static class RandomEx
     /// <returns></returns>
     public static string NextString(Random ran, string[] arr)
     {
-        ran ??= GetRandom();
-        int n = ran.Next(arr.Length - 1);
+        var n = ran.Next(arr.Length - 1);
         return arr[n];
     }
     /// <summary>
@@ -93,7 +92,6 @@ public static class RandomEx
     /// <returns></returns>
     public static double NextDouble(Random ran, double[] arr)
     {
-        ran ??= GetRandom();
         int n = ran.Next(arr.Length - 1);
         return arr[n];
     }
@@ -114,7 +112,6 @@ public static class RandomEx
     /// <returns></returns>
     public static int NextInt(Random ran, int max)
     {
-        ran ??= GetRandom();
         return ran.Next(max);
     }
     /// <summary>
@@ -136,7 +133,6 @@ public static class RandomEx
     /// <returns>返回一个介于<paramref name="min"/>与<paramref name="max"/>之间的整数</returns>
     public static int NextInt(Random ran, int min, int max)
     {
-        ran ??= GetRandom();
         return ran.Next(min, max);
     }
 
@@ -154,10 +150,9 @@ public static class RandomEx
     /// <returns></returns>
     public static System.Drawing.Color NextColor(Random ran)
     {
-        ran ??= GetRandom();
-        int R = ran.Next(255);
-        int G = ran.Next(255);
-        int B = ran.Next(255);
+        var R = ran.Next(255);
+        var G = ran.Next(255);
+        var B = ran.Next(255);
         B = (R + G > 400) ? R + G - 400 : B;// 0 : 380 - R - G;
         B = (B > 255) ? 255 : B;
         return System.Drawing.Color.FromArgb(R, G, B);

@@ -232,7 +232,7 @@ public class AutoReflection(string dllName, AutoRegConfig configInfo)
 #if DEBUG
         catch (System.Exception e)
         {
-            Debugx.Printl($"出错:{nameof(AppDomainGetTypes)};计数{error};错误信息:{e.Message}");
+            DebugEx.Printl($"出错:{nameof(AppDomainGetTypes)};计数{error};错误信息:{e.Message}");
             Debugger.Break();
 #else
         catch

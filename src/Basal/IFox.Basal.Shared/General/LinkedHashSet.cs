@@ -1,28 +1,22 @@
 ﻿namespace IFoxCAD.Basal;
-
-public class LinkedHashSet<T> : ICollection<T> where T : IComparable
+#pragma warning disable CS1591 // 缺少对公共可见类型或成员的 XML 注释
+public sealed class LinkedHashSet<T> : ICollection<T> where T : IComparable
 {
-    private readonly IDictionary<T, LoopListNode<T>> m_Dictionary;
-    private readonly LoopList<T> m_LinkedList;
+    private readonly IDictionary<T, LoopListNode<T>> _mDictionary = new Dictionary<T, LoopListNode<T>>();
+    private readonly LoopList<T> _mLinkedList = [];
 
-    public LinkedHashSet()
-    {
-        m_Dictionary = new Dictionary<T, LoopListNode<T>>();
-        m_LinkedList = new LoopList<T>();
-    }
+    public LoopListNode<T>? First => _mLinkedList.First;
 
-    public LoopListNode<T>? First => m_LinkedList.First;
+    public LoopListNode<T>? Last => _mLinkedList.Last;
 
-    public LoopListNode<T>? Last => m_LinkedList.Last;
-
-    public LoopListNode<T>? MinNode { get; set; }
+    public LoopListNode<T>? MinNode { get; private set; }
 
     public bool Add(T item)
     {
-        if (m_Dictionary.ContainsKey(item))
+        if (_mDictionary.ContainsKey(item))
             return false;
-        var node = m_LinkedList.AddLast(item);
-        m_Dictionary.Add(item, node);
+        var node = _mLinkedList.AddLast(item);
+        _mDictionary.Add(item, node);
 
         if (MinNode is null)
         {
@@ -48,12 +42,12 @@ public class LinkedHashSet<T> : ICollection<T> where T : IComparable
 
     public LoopListNode<T> AddFirst(T value)
     {
-        if (m_Dictionary.ContainsKey(value))
+        if (_mDictionary.TryGetValue(value, out var first))
         {
-            return m_Dictionary[value];
+            return first;
         }
-        var node = m_LinkedList.AddFirst(value);
-        m_Dictionary.Add(value, node);
+        var node = _mLinkedList.AddFirst(value);
+        _mDictionary.Add(value, node);
         if (MinNode is null)
         {
             MinNode = node;
@@ -79,31 +73,27 @@ public class LinkedHashSet<T> : ICollection<T> where T : IComparable
 
     public void Clear()
     {
-        m_LinkedList.Clear();
-        m_Dictionary.Clear();
+        _mLinkedList.Clear();
+        _mDictionary.Clear();
     }
 
     public bool Remove(T item)
     {
-        bool found = m_Dictionary.TryGetValue(item, out LoopListNode<T> node);
+        var found = _mDictionary.TryGetValue(item, out var node);
         if (!found) return false;
-        m_Dictionary.Remove(item);
-        m_LinkedList.Remove(node);
+        _mDictionary.Remove(item);
+        _mLinkedList.Remove(node!);
         return true;
     }
 
-    public int Count
-    {
-        get { return m_Dictionary.Count; }
-    }
+    public int Count => _mDictionary.Count;
 
     public void For(LoopListNode<T> from, Action<int, T, T> action)
     {
         var first = from;
         var last = from;
-        if (first is null) return;
 
-        for (int i = 0; i < Count; i++)
+        for (var i = 0; i < Count; i++)
         {
             action.Invoke(i, first!.Value, last!.Value);
             first = first.Next;
@@ -113,16 +103,16 @@ public class LinkedHashSet<T> : ICollection<T> where T : IComparable
 
     public List<T> ToList()
     {
-        return m_LinkedList.ToList();
+        return [.. _mLinkedList];
     }
 
-    [System.Diagnostics.DebuggerStepThrough]
+    [DebuggerStepThrough]
     public IEnumerator<T> GetEnumerator()
     {
-        return m_LinkedList.GetEnumerator();
+        return _mLinkedList.GetEnumerator();
     }
 
-    [System.Diagnostics.DebuggerStepThrough]
+    [DebuggerStepThrough]
     IEnumerator IEnumerable.GetEnumerator()
     {
         return GetEnumerator();
@@ -131,38 +121,35 @@ public class LinkedHashSet<T> : ICollection<T> where T : IComparable
 
     public bool Contains(T item)
     {
-        return m_Dictionary.ContainsKey(item);
+        return _mDictionary.ContainsKey(item);
     }
 
     public void CopyTo(T[] array, int arrayIndex)
     {
         // m_LinkedList.CopyTo(array, arrayIndex);
-        return;
+        
     }
 
     public bool SetFirst(LoopListNode<T> node)
     {
-        return m_LinkedList.SetFirst(node);
+        return _mLinkedList.SetFirst(node);
     }
 
     public LinkedHashSet<T> Clone()
     {
-        var newset = new LinkedHashSet<T>();
+        var newSet = new LinkedHashSet<T>();
         foreach (var item in this)
         {
-            newset.Add(item);
+            newSet.Add(item);
         }
-        return newset;
+        return newSet;
     }
 
-    public virtual bool IsReadOnly
-    {
-        get { return m_Dictionary.IsReadOnly; }
-    }
+    public bool IsReadOnly => _mDictionary.IsReadOnly;
 
     public override string ToString()
     {
-        return m_LinkedList.ToString();
+        return _mLinkedList.ToString();
     }
 
     public void UnionWith(IEnumerable<T> other)
@@ -220,3 +207,4 @@ public class LinkedHashSet<T> : ICollection<T> where T : IComparable
         return new NotSupportedException("This method is not supported due to simplification of example code.");
     }
 }
+#pragma warning restore CS1591 // 缺少对公共可见类型或成员的 XML 注释

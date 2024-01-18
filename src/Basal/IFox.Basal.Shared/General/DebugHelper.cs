@@ -2,7 +2,7 @@
 /// <summary>
 /// 调试工具
 /// </summary>
-public static class Debugx
+public static class DebugEx
 {
     /// <summary>
     /// cad命令切换: Debugx
@@ -13,17 +13,17 @@ public static class Debugx
     public static void Printl(object message, bool time = true)
     {
         var flag = Environment.GetEnvironmentVariable("debugx", EnvironmentVariableTarget.User);
-        if (flag == null || flag == "0")
+        if (flag is null or "0")
             return;
 
         if (time)
             //message = $"{DateTime.Now.ToLongDateString() + DateTime.Now.TimeOfDay}\n" +
-            message = $"{DateTime.Now.TimeOfDay} ThreadId:{Thread.CurrentThread.ManagedThreadId}\n" +
+            message = $"{DateTime.Now.TimeOfDay} ThreadId:{Environment.CurrentManagedThreadId}\n" +
             $"\t\t{message}";
 
         //System.Diagnostics.Debug.Indent();
 #if DEBUG
-        System.Diagnostics.Debug.WriteLine(message);
+        Debug.WriteLine(message);
 #else
         System.Diagnostics.Trace.WriteLine(message);
 #endif

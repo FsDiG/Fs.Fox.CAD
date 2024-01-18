@@ -82,7 +82,7 @@ public class TestPoint
         foreach (var item in ss1)
         {
             if (item.X > 3 && item.X < 7)
-                Debugx.Printl(item);
+                DebugEx.Printl(item);
             else if (item.X >= 7)
                 break;
         }
@@ -151,9 +151,9 @@ public class TestPoint
     {
         var lst1 = new List<int> { 1, 2, 3, 4 };
         var lst2 = new List<int> { 1, 2, 3, 4 };
-        lst1.EqualsAll(null!);
+        lst1.SequenceEqual(null!);
         Tools.TestTimes2(1000000, "eqaulspeed:", () => {
-            lst1.EqualsAll(lst2);
+            lst1.SequenceEqual(lst2);
         });
     }
 

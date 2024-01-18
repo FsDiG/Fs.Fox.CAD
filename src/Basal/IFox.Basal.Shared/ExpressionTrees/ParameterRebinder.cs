@@ -1,35 +1,29 @@
-#if NET45_OR_GREATER
-namespace IFoxCAD.Basal;
+ï»¿namespace IFoxCAD.Basal;
 
 /// <summary>
-/// ²ÎÊıÖØ°ó¶¨
+/// å‚æ•°é‡ç»‘å®š
 /// </summary>
-public class ParameterRebinder : SqlExpressionVisitor
+/// <remarks>
+/// å‚æ•°é‡ç»‘å®š
+/// </remarks>
+/// <param name="map">å­—å…¸</param>
+public class ParameterRebinder(Dictionary<ParameterExpression, ParameterExpression> map) : SqlExpressionVisitor
 {
-    private readonly Dictionary<ParameterExpression, ParameterExpression> map;
     /// <summary>
-    /// ²ÎÊıÖØ°ó¶¨
+    /// æ›¿æ¢å‚æ•°
     /// </summary>
-    /// <param name="map">×Öµä</param>
-    public ParameterRebinder(Dictionary<ParameterExpression, ParameterExpression> map)
-    {
-        this.map = map ?? new Dictionary<ParameterExpression, ParameterExpression>();
-    }
-    /// <summary>
-    /// Ìæ»»²ÎÊı
-    /// </summary>
-    /// <param name="map">×Öµä</param>
-    /// <param name="expression">±í´ïÊ½</param>
-    /// <returns>±í´ïÊ½</returns>
-    public static Expression? ReplaceParameters(Dictionary<ParameterExpression, ParameterExpression> map, Expression expression)
+    /// <param name="map">å­—å…¸</param>
+    /// <param name="expression">è¡¨è¾¾å¼</param>
+    /// <returns>è¡¨è¾¾å¼</returns>
+    public static Expression ReplaceParameters(Dictionary<ParameterExpression, ParameterExpression> map, Expression expression)
     {
         return new ParameterRebinder(map).Visit(expression);
     }
     /// <summary>
-    /// ·ÃÎÊ²ÎÊı
+    /// è®¿é—®å‚æ•°
     /// </summary>
-    /// <param name="expression">²ÎÊı±í´ïÊ½</param>
-    /// <returns>±í´ïÊ½</returns>
+    /// <param name="expression">å‚æ•°è¡¨è¾¾å¼</param>
+    /// <returns>è¡¨è¾¾å¼</returns>
     protected override Expression VisitParameter(ParameterExpression expression)
     {
         if (map.TryGetValue(expression, out var parameterExpression))
@@ -38,4 +32,3 @@ public class ParameterRebinder : SqlExpressionVisitor
         return base.VisitParameter(expression);
     }
 }
-#endif

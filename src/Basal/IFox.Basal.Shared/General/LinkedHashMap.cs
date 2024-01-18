@@ -14,34 +14,26 @@
 /// Derived from https://stackoverflow.com/a/3719378/240845
 /// https://stackoverflow.com/users/240845/mheyman
 /// </remarks>
-public class LinkedHashMap<TKey, TValue>
+/// <remarks>
+/// Initializes a new instance of the <see cref="LinkedHashMap{TKey, TValue}"/>
+/// class.
+/// </remarks>
+/// <param name="capacity">
+/// Maximum number of elements to cache.
+/// </param>
+/// <param name="dispose">
+/// When elements cycle out of the cache, disposes them. May be null.
+/// </param>
+public class LinkedHashMap<TKey, TValue>(int capacity, Action<TValue>? dispose = null)
 {
-    private readonly Dictionary<TKey, LinkedListNode<MapItem>> cacheMap = new();
+    private readonly Dictionary<TKey, LinkedListNode<MapItem>> _cacheMap = [];
 
-    private readonly LinkedList<MapItem> lruList = new();
-
-    private readonly Action<TValue>? dispose;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="LinkedHashMap{TKey, TValue}"/>
-    /// class.
-    /// </summary>
-    /// <param name="capacity">
-    /// Maximum number of elements to cache.
-    /// </param>
-    /// <param name="dispose">
-    /// When elements cycle out of the cache, disposes them. May be null.
-    /// </param>
-    public LinkedHashMap(int capacity, Action<TValue>? dispose = null)
-    {
-        this.Capacity = capacity;
-        this.dispose = dispose;
-    }
+    private readonly LinkedList<MapItem> _lruList = [];
 
     /// <summary>
     /// Gets the capacity of the cache.
     /// </summary>
-    public int Capacity { get; }
+    public int Capacity { get; } = capacity;
 
     /// <summary>Gets the value associated with the specified key.</summary>
     /// <param name="key">
@@ -59,13 +51,13 @@ public class LinkedHashMap<TKey, TValue>
     /// </returns>
     public bool TryGetValue(TKey key, out TValue? value)
     {
-        lock (this.cacheMap)
+        lock (_cacheMap)
         {
-            if (this.cacheMap.TryGetValue(key, out LinkedListNode<LinkedHashMap<TKey, TValue>.MapItem> node))
+            if (_cacheMap.TryGetValue(key, out var node))
             {
                 value = node.Value.Value;
-                this.lruList.Remove(node);
-                this.lruList.AddLast(node);
+                _lruList.Remove(node);
+                _lruList.AddLast(node);
                 return true;
             }
 
@@ -90,27 +82,27 @@ public class LinkedHashMap<TKey, TValue>
     /// </returns>
     public TValue Get(TKey key, Func<TValue> valueGenerator)
     {
-        lock (this.cacheMap)
+        lock (_cacheMap)
         {
             TValue value;
-            if (this.cacheMap.TryGetValue(key, out LinkedListNode<LinkedHashMap<TKey, TValue>.MapItem> node))
+            if (_cacheMap.TryGetValue(key, out var node))
             {
                 value = node.Value.Value;
-                this.lruList.Remove(node);
-                this.lruList.AddLast(node);
+                _lruList.Remove(node);
+                _lruList.AddLast(node);
             }
             else
             {
                 value = valueGenerator();
-                if (this.cacheMap.Count >= this.Capacity)
+                if (_cacheMap.Count >= Capacity)
                 {
-                    this.RemoveFirst();
+                    RemoveFirst();
                 }
 
                 MapItem cacheItem = new(key, value);
                 node = new LinkedListNode<MapItem>(cacheItem);
-                this.lruList.AddLast(node);
-                this.cacheMap.Add(key, node);
+                _lruList.AddLast(node);
+                _cacheMap.Add(key, node);
             }
 
             return value;
@@ -128,44 +120,38 @@ public class LinkedHashMap<TKey, TValue>
     /// </param>
     public void Add(TKey key, TValue value)
     {
-        lock (this.cacheMap)
+        lock (_cacheMap)
         {
-            if (this.cacheMap.Count >= this.Capacity)
+            if (_cacheMap.Count >= Capacity)
             {
-                this.RemoveFirst();
+                RemoveFirst();
             }
 
             MapItem cacheItem = new(key, value);
             LinkedListNode<MapItem> node = new(cacheItem);
-            this.lruList.AddLast(node);
-            this.cacheMap.Add(key, node);
+            _lruList.AddLast(node);
+            _cacheMap.Add(key, node);
         }
     }
 
     private void RemoveFirst()
     {
         // Remove from LRUPriority
-        LinkedListNode<MapItem> node = this.lruList.First;
-        this.lruList.RemoveFirst();
+        var node = _lruList.First;
+        _lruList.RemoveFirst();
 
         // Remove from cache
-        this.cacheMap.Remove(node.Value.Key);
+        _cacheMap.Remove(node.Value.Key);
 
         // dispose
-        this.dispose?.Invoke(node.Value.Value);
+        dispose?.Invoke(node.Value.Value);
     }
 
-    private class MapItem
+    private class MapItem(TKey k, TValue v)
     {
-        public MapItem(TKey k, TValue v)
-        {
-            this.Key = k;
-            this.Value = v;
-        }
+        public TKey Key { get; } = k;
 
-        public TKey Key { get; }
-
-        public TValue Value { get; }
+        public TValue Value { get; } = v;
     }
 }
 

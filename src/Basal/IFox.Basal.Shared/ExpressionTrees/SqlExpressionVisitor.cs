@@ -1,23 +1,18 @@
-#if NET45_OR_GREATER
-
-namespace IFoxCAD.Basal;
+ï»¿namespace IFoxCAD.Basal;
 
 /// <summary>
-/// sql±í´ïÊ½·ÃÎÊÕßÀà
+/// sqlè¡¨è¾¾å¼è®¿é—®è€…ç±»
 /// </summary>
 public abstract class SqlExpressionVisitor
 {
     /// <summary>
-    /// ·ÃÎÊ
+    /// è®¿é—®
     /// </summary>
-    /// <param name="expression">±í´ïÊ½</param>
-    /// <returns>±í´ïÊ½</returns>
+    /// <param name="expression">è¡¨è¾¾å¼</param>
+    /// <returns>è¡¨è¾¾å¼</returns>
     /// <exception cref="RuntimeBinderException"></exception>
-    protected virtual Expression? Visit(Expression expression)
+    protected virtual Expression Visit(Expression expression)
     {
-        if (expression is null)
-            return null;
-
         return expression.NodeType switch
         {
             ExpressionType.Add => VisitBinary((BinaryExpression)expression),
@@ -68,10 +63,10 @@ public abstract class SqlExpressionVisitor
         };
     }
     /// <summary>
-    /// ·ÃÎÊÕß°ó¶¨
+    /// è®¿é—®è€…ç»‘å®š
     /// </summary>
-    /// <param name="binding">°ó¶¨µÄÀà</param>
-    /// <returns>°ó¶¨µÄÀà</returns>
+    /// <param name="binding">ç»‘å®šçš„ç±»</param>
+    /// <returns>ç»‘å®šçš„ç±»</returns>
     /// <exception cref="RuntimeBinderException"></exception>
     protected virtual MemberBinding VisitBinding(MemberBinding binding)
     {
@@ -84,10 +79,10 @@ public abstract class SqlExpressionVisitor
         };
     }
     /// <summary>
-    /// ·ÃÎÊ¼¯ºÏ³õÊ¼Éè¶¨Ïî
+    /// è®¿é—®é›†åˆåˆå§‹è®¾å®šé¡¹
     /// </summary>
-    /// <param name="initializer">¼¯ºÏ³õÊ¼Éè¶¨Ïî</param>
-    /// <returns>¼¯ºÏ³õÊ¼Éè¶¨Ïî</returns>
+    /// <param name="initializer">é›†åˆåˆå§‹è®¾å®šé¡¹</param>
+    /// <returns>é›†åˆåˆå§‹è®¾å®šé¡¹</returns>
     protected virtual ElementInit VisitElementInitializer(ElementInit initializer)
     {
         var arguments = VisitExpressionList(initializer.Arguments);
@@ -98,43 +93,39 @@ public abstract class SqlExpressionVisitor
         return initializer;
     }
     /// <summary>
-    /// ·ÃÎÊÒ»ÔªÔËËã·û
+    /// è®¿é—®ä¸€å…ƒè¿ç®—ç¬¦
     /// </summary>
-    /// <param name="unary">Ò»ÔªÔËËã·û</param>
-    /// <returns>±í´ïÊ½</returns>
+    /// <param name="unary">ä¸€å…ƒè¿ç®—ç¬¦</param>
+    /// <returns>è¡¨è¾¾å¼</returns>
     protected virtual Expression VisitUnary(UnaryExpression unary)
     {
         var operand = Visit(unary.Operand);
 
-        if (operand != unary.Operand)
-            return Expression.MakeUnary(unary.NodeType, operand, unary.Type, unary.Method);
-
-        return unary;
+        return operand != unary.Operand ? Expression.MakeUnary(unary.NodeType, operand, unary.Type, unary.Method) : unary;
     }
     /// <summary>
-    /// ·ÃÎÊ¶ş½øÖÆÔËËã·û
+    /// è®¿é—®äºŒè¿›åˆ¶è¿ç®—ç¬¦
     /// </summary>
-    /// <param name="binary">¶ş½øÖÆÔËËã·û</param>
-    /// <returns>±í´ïÊ½</returns>
+    /// <param name="binary">äºŒè¿›åˆ¶è¿ç®—ç¬¦</param>
+    /// <returns>è¡¨è¾¾å¼</returns>
     protected virtual Expression VisitBinary(BinaryExpression binary)
     {
         var left = Visit(binary.Left);
         var right = Visit(binary.Right);
-        var conversion = Visit(binary.Conversion);
+        var conversion = Visit(binary.Conversion!);
 
         if (left == binary.Left && right == binary.Right && conversion == binary.Conversion)
             return binary;
 
-        if (binary.NodeType == ExpressionType.Coalesce && binary.Conversion != null)
-            return Expression.Coalesce(left, right, conversion as LambdaExpression);
-
-        return Expression.MakeBinary(binary.NodeType, left, right, binary.IsLiftedToNull, binary.Method);
+        return binary is { NodeType: ExpressionType.Coalesce, Conversion: not null }
+            ? Expression.Coalesce(left, right, conversion as LambdaExpression)
+            : Expression.MakeBinary(binary.NodeType, left, right, binary.IsLiftedToNull, binary.Method);
     }
     /// <summary>
-    /// ·ÃÎÊÀàĞÍ
+    /// è®¿é—®ç±»å‹
     /// </summary>
-    /// <param name="typeBinary">ÀàĞÍ</param>
-    /// <returns>±í´ïÊ½</returns>
+    /// <param name="typeBinary">ç±»å‹</param>
+    /// <returns>è¡¨è¾¾å¼</returns>
     protected virtual Expression VisitTypeIs(TypeBinaryExpression typeBinary)
     {
         var expression = Visit(typeBinary.Expression);
@@ -145,19 +136,19 @@ public abstract class SqlExpressionVisitor
         return typeBinary;
     }
     /// <summary>
-    /// ·ÃÎÊ³£ÊıÖµ
+    /// è®¿é—®å¸¸æ•°å€¼
     /// </summary>
-    /// <param name="constant">³£ÊıÖµ</param>
-    /// <returns>±í´ïÊ½</returns>
+    /// <param name="constant">å¸¸æ•°å€¼</param>
+    /// <returns>è¡¨è¾¾å¼</returns>
     protected virtual Expression VisitConstant(ConstantExpression constant)
     {
         return constant;
     }
     /// <summary>
-    /// ·ÃÎÊÌõ¼şÔËËã·û
+    /// è®¿é—®æ¡ä»¶è¿ç®—ç¬¦
     /// </summary>
-    /// <param name="conditional">Ìõ¼şÔËËã·û</param>
-    /// <returns>±í´ïÊ½</returns>
+    /// <param name="conditional">æ¡ä»¶è¿ç®—ç¬¦</param>
+    /// <returns>è¡¨è¾¾å¼</returns>
     protected virtual Expression VisitConditional(ConditionalExpression conditional)
     {
         var test = Visit(conditional.Test);
@@ -176,19 +167,19 @@ public abstract class SqlExpressionVisitor
         return conditional;
     }
     /// <summary>
-    /// ·ÃÎÊ²ÎÊı
+    /// è®¿é—®å‚æ•°
     /// </summary>
-    /// <param name="parameter">²ÎÊı</param>
-    /// <returns>±í´ïÊ½</returns>
+    /// <param name="parameter">å‚æ•°</param>
+    /// <returns>è¡¨è¾¾å¼</returns>
     protected virtual Expression VisitParameter(ParameterExpression parameter)
     {
         return parameter;
     }
     /// <summary>
-    /// ·ÃÎÊ³ÉÔ±
+    /// è®¿é—®æˆå‘˜
     /// </summary>
-    /// <param name="member">³ÉÔ±</param>
-    /// <returns>±í´ïÊ½</returns>
+    /// <param name="member">æˆå‘˜</param>
+    /// <returns>è¡¨è¾¾å¼</returns>
     protected virtual Expression VisitMemberAccess(MemberExpression member)
     {
         var expression = Visit(member.Expression);
@@ -199,13 +190,13 @@ public abstract class SqlExpressionVisitor
         return member;
     }
     /// <summary>
-    /// ·ÃÎÊ·½·¨µ÷ÓÃ
+    /// è®¿é—®æ–¹æ³•è°ƒç”¨
     /// </summary>
-    /// <param name="methodCall">·½·¨µ÷ÓÃ</param>
-    /// <returns>±í´ïÊ½</returns>
+    /// <param name="methodCall">æ–¹æ³•è°ƒç”¨</param>
+    /// <returns>è¡¨è¾¾å¼</returns>
     protected virtual Expression VisitMethodCall(MethodCallExpression methodCall)
     {
-        var instance = Visit(methodCall.Object);
+        var instance = Visit(methodCall.Object!);
         var arguments = (IEnumerable<Expression>)VisitExpressionList(methodCall.Arguments);
 
         if (instance != methodCall.Object || !Equals(arguments, methodCall.Arguments))
@@ -214,10 +205,10 @@ public abstract class SqlExpressionVisitor
         return methodCall;
     }
     /// <summary>
-    /// ·ÃÎÊ±í´ïÊ½¼¯ºÏ
+    /// è®¿é—®è¡¨è¾¾å¼é›†åˆ
     /// </summary>
-    /// <param name="original">±í´ïÊ½¼¯ºÏ</param>
-    /// <returns>±í´ïÊ½Ö»¶Á¼¯ºÏ</returns>
+    /// <param name="original">è¡¨è¾¾å¼é›†åˆ</param>
+    /// <returns>è¡¨è¾¾å¼åªè¯»é›†åˆ</returns>
     protected virtual ReadOnlyCollection<Expression> VisitExpressionList(ReadOnlyCollection<Expression> original)
     {
         var index1 = 0;
@@ -226,32 +217,29 @@ public abstract class SqlExpressionVisitor
         for (var count = original.Count; index1 < count; ++index1)
         {
             var expression = Visit(original[index1]);
-            if (expression != null)
+            if (expressions != null)
             {
-                if (expressions != null)
-                {
-                    expressions.Add(expression);
-                }
-
-                else if (expression != original[index1])
-                {
-                    expressions = new List<Expression>(count);
-
-                    for (var index2 = 0; index2 < index1; ++index2)
-                        expressions.Add(original[index2]);
-
-                    expressions.Add(expression);
-                }
+                expressions.Add(expression);
             }
-            
+
+            else if (expression != original[index1])
+            {
+                expressions = new List<Expression>(count);
+
+                for (var index2 = 0; index2 < index1; ++index2)
+                    expressions.Add(original[index2]);
+
+                expressions.Add(expression);
+            }
+
         }
 
         return expressions != null ? expressions.AsReadOnly() : original;
     }
     /// <summary>
-    /// ·ÃÎÊ³ÉÔ±¸³Öµ
+    /// è®¿é—®æˆå‘˜èµ‹å€¼
     /// </summary>
-    /// <param name="assignment">³ÉÔ±¸³Öµ</param>
+    /// <param name="assignment">æˆå‘˜èµ‹å€¼</param>
     /// <returns></returns>
     protected virtual MemberAssignment VisitMemberAssignment(MemberAssignment assignment)
     {
@@ -263,10 +251,10 @@ public abstract class SqlExpressionVisitor
         return assignment;
     }
     /// <summary>
-    /// ·ÃÎÊĞÂ¶ÔÏó³ÉÔ±µÄ³ÉÔ±
+    /// è®¿é—®æ–°å¯¹è±¡æˆå‘˜çš„æˆå‘˜
     /// </summary>
-    /// <param name="binding">ĞÂ¶ÔÏó³ÉÔ±µÄ³ÉÔ±</param>
-    /// <returns>ĞÂ¶ÔÏó³ÉÔ±µÄ³ÉÔ±</returns>
+    /// <param name="binding">æ–°å¯¹è±¡æˆå‘˜çš„æˆå‘˜</param>
+    /// <returns>æ–°å¯¹è±¡æˆå‘˜çš„æˆå‘˜</returns>
     protected virtual MemberMemberBinding VisitMemberMemberBinding(MemberMemberBinding binding)
     {
         var bindings = VisitBindingList(binding.Bindings);
@@ -277,10 +265,10 @@ public abstract class SqlExpressionVisitor
         return binding;
     }
     /// <summary>
-    /// ·ÃÎÊ³ÉÔ±³õÊ¼»¯
+    /// è®¿é—®æˆå‘˜åˆå§‹åŒ–
     /// </summary>
-    /// <param name="binding">³ÉÔ±³õÊ¼»¯</param>
-    /// <returns>³ÉÔ±³õÊ¼»¯</returns>
+    /// <param name="binding">æˆå‘˜åˆå§‹åŒ–</param>
+    /// <returns>æˆå‘˜åˆå§‹åŒ–</returns>
     protected virtual MemberListBinding VisitMemberListBinding(MemberListBinding binding)
     {
         var initializers = VisitElementInitializerList(binding.Initializers);
@@ -291,10 +279,10 @@ public abstract class SqlExpressionVisitor
         return binding;
     }
     /// <summary>
-    /// ·ÃÎÊ³ÉÔ±³õÊ¼»¯ÁĞ±í
+    /// è®¿é—®æˆå‘˜åˆå§‹åŒ–åˆ—è¡¨
     /// </summary>
-    /// <param name="original">³ÉÔ±³õÊ¼»¯ÁĞ±í</param>
-    /// <returns>³ÉÔ±³õÊ¼»¯ÁĞ±í</returns>
+    /// <param name="original">æˆå‘˜åˆå§‹åŒ–åˆ—è¡¨</param>
+    /// <returns>æˆå‘˜åˆå§‹åŒ–åˆ—è¡¨</returns>
     protected virtual IEnumerable<MemberBinding> VisitBindingList(ReadOnlyCollection<MemberBinding> original)
     {
         var index1 = 0;
@@ -320,13 +308,13 @@ public abstract class SqlExpressionVisitor
             }
         }
 
-        return (IEnumerable<MemberBinding>)bindings! ?? original;
+        return bindings!;
     }
     /// <summary>
-    /// ·ÃÎÊ¼¯ºÏÉè¶¨Ïî¼¯ºÏ
+    /// è®¿é—®é›†åˆè®¾å®šé¡¹é›†åˆ
     /// </summary>
-    /// <param name="original">¼¯ºÏÉè¶¨Ïî¼¯ºÏ</param>
-    /// <returns>¼¯ºÏÉè¶¨Ïî¼¯ºÏ</returns>
+    /// <param name="original">é›†åˆè®¾å®šé¡¹é›†åˆ</param>
+    /// <returns>é›†åˆè®¾å®šé¡¹é›†åˆ</returns>
     protected virtual IEnumerable<ElementInit> VisitElementInitializerList(ReadOnlyCollection<ElementInit> original)
     {
         var index1 = 0;
@@ -352,13 +340,13 @@ public abstract class SqlExpressionVisitor
             }
         }
 
-        return (IEnumerable<ElementInit>)initializers! ?? original;
+        return initializers!;
     }
     /// <summary>
-    /// ·ÃÎÊlambda±í´ïÊ½
+    /// è®¿é—®lambdaè¡¨è¾¾å¼
     /// </summary>
-    /// <param name="lambda">lambda±í´ïÊ½</param>
-    /// <returns>±í´ïÊ½</returns>
+    /// <param name="lambda">lambdaè¡¨è¾¾å¼</param>
+    /// <returns>è¡¨è¾¾å¼</returns>
     protected virtual Expression VisitLambda(LambdaExpression lambda)
     {
         var body = Visit(lambda.Body);
@@ -369,10 +357,10 @@ public abstract class SqlExpressionVisitor
         return lambda;
     }
     /// <summary>
-    /// ·ÃÎÊ¹¹Ôìº¯Êı
+    /// è®¿é—®æ„é€ å‡½æ•°
     /// </summary>
-    /// <param name="expression">¹¹Ôìº¯Êı</param>
-    /// <returns>¹¹Ôìº¯Êı</returns>
+    /// <param name="expression">æ„é€ å‡½æ•°</param>
+    /// <returns>æ„é€ å‡½æ•°</returns>
     protected virtual NewExpression VisitNew(NewExpression expression)
     {
         var arguments = VisitExpressionList(expression.Arguments);
@@ -386,10 +374,10 @@ public abstract class SqlExpressionVisitor
         return Expression.New(expression.Constructor, arguments);
     }
     /// <summary>
-    /// ·ÃÎÊ³ÉÔ±³õÊ¼»¯
+    /// è®¿é—®æˆå‘˜åˆå§‹åŒ–
     /// </summary>
-    /// <param name="memberInit">³ÉÔ±³õÊ¼»¯</param>
-    /// <returns>±í´ïÊ½</returns>
+    /// <param name="memberInit">æˆå‘˜åˆå§‹åŒ–</param>
+    /// <returns>è¡¨è¾¾å¼</returns>
     protected virtual Expression VisitMemberInit(MemberInitExpression memberInit)
     {
         var expression = VisitNew(memberInit.NewExpression);
@@ -401,10 +389,10 @@ public abstract class SqlExpressionVisitor
         return memberInit;
     }
     /// <summary>
-    /// ·ÃÎÊ¼¯ºÏ³õÊ¼»¯
+    /// è®¿é—®é›†åˆåˆå§‹åŒ–
     /// </summary>
-    /// <param name="listInit">¼¯ºÏ³õÊ¼»¯</param>
-    /// <returns>±í´ïÊ½</returns>
+    /// <param name="listInit">é›†åˆåˆå§‹åŒ–</param>
+    /// <returns>è¡¨è¾¾å¼</returns>
     protected virtual Expression VisitListInit(ListInitExpression listInit)
     {
         var expression = VisitNew(listInit.NewExpression);
@@ -416,10 +404,10 @@ public abstract class SqlExpressionVisitor
         return listInit;
     }
     /// <summary>
-    /// ·ÃÎÊĞÂÊı×é
+    /// è®¿é—®æ–°æ•°ç»„
     /// </summary>
-    /// <param name="newArray">ĞÂÊı×é</param>
-    /// <returns>±í´ïÊ½</returns>
+    /// <param name="newArray">æ–°æ•°ç»„</param>
+    /// <returns>è¡¨è¾¾å¼</returns>
     protected virtual Expression VisitNewArray(NewArrayExpression newArray)
     {
         var expressions = VisitExpressionList(newArray.Expressions);
@@ -427,16 +415,15 @@ public abstract class SqlExpressionVisitor
         if (Equals(expressions, newArray.Expressions))
             return newArray;
 
-        if (newArray.NodeType == ExpressionType.NewArrayInit)
-            return Expression.NewArrayInit(newArray.Type.GetElementType(), expressions);
-
-        return Expression.NewArrayBounds(newArray.Type.GetElementType(), expressions);
+        return newArray.NodeType == ExpressionType.NewArrayInit
+            ? Expression.NewArrayInit(newArray.Type.GetElementType()!, expressions)
+            : Expression.NewArrayBounds(newArray.Type.GetElementType()!, expressions);
     }
     /// <summary>
-    /// ·ÃÎÊÎ¯ÍĞµ÷ÓÃ±í´ïÊ½
+    /// è®¿é—®å§”æ‰˜è°ƒç”¨è¡¨è¾¾å¼
     /// </summary>
-    /// <param name="invocation">Î¯ÍĞµ÷ÓÃ±í´ïÊ½</param>
-    /// <returns>±í´ïÊ½</returns>
+    /// <param name="invocation">å§”æ‰˜è°ƒç”¨è¡¨è¾¾å¼</param>
+    /// <returns>è¡¨è¾¾å¼</returns>
     protected virtual Expression VisitInvocation(InvocationExpression invocation)
     {
         var arguments = VisitExpressionList(invocation.Arguments);
@@ -448,4 +435,3 @@ public abstract class SqlExpressionVisitor
         return invocation;
     }
 }
-#endif

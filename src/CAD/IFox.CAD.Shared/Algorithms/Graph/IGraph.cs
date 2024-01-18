@@ -22,7 +22,7 @@ public interface IGraph
     /// 顶点的迭代器
     /// </summary>
     /// <value></value>
-    IEnumerable<IGraphVertex> VerticesAsEnumberable { get; }
+    IEnumerable<IGraphVertex> VerticesEnumberable { get; }
 
     /// <summary>
     /// 是否有边
@@ -81,7 +81,7 @@ public interface IGraphVertex : IComparable
     /// 顶点的键
     /// </summary>
     /// <value></value>
-    int Index { get; set; }
+    int Index { get; }
 
     /// <summary>
     /// 顶点的数据

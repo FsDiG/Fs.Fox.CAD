@@ -2,6 +2,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using MouseEventArgs = System.Windows.Forms.MouseEventArgs;
 using MouseEventHandler = System.Windows.Forms.MouseEventHandler;
+#pragma warning disable CS1591 // 缺少对公共可见类型或成员的 XML 注释
 
 namespace IFoxCAD.Basal;
 
@@ -312,3 +313,4 @@ public class MouseHook
     }
     #endregion
 }
+#pragma warning restore CS1591 // 缺少对公共可见类型或成员的 XML 注释

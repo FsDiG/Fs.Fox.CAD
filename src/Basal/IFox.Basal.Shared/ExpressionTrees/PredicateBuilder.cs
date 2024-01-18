@@ -1,67 +1,67 @@
-
+ï»¿
 #if NET45_OR_GREATER
 namespace IFoxCAD.Basal;
 /// <summary>
-/// PredicateÎ¯ÍĞ¹¹ÔìÆ÷
+/// Predicateå§”æ‰˜æ„é€ å™¨
 /// </summary>
 public static class PredicateBuilder
 {
     /// <summary>
-    /// ·µ»ØÕæµÄÎ¯ÍĞ±í´ïÊ½
+    /// è¿”å›çœŸçš„å§”æ‰˜è¡¨è¾¾å¼
     /// </summary>
-    /// <typeparam name="T">´«Èë²ÎÊıµÄ·ºĞÍ</typeparam>
-    /// <returns>Õæ</returns>
+    /// <typeparam name="T">ä¼ å…¥å‚æ•°çš„æ³›å‹</typeparam>
+    /// <returns>çœŸ</returns>
     public static Expression<Func<T, bool>> True<T>()
     {
         return param => true;
     }
     /// <summary>
-    /// ·µ»Ø¼ÙµÄÎ¯ÍĞ±í´ïÊ½
+    /// è¿”å›å‡çš„å§”æ‰˜è¡¨è¾¾å¼
     /// </summary>
-    /// <typeparam name="T">´«Èë²ÎÊıµÄ·ºĞÍ</typeparam>
-    /// <returns>¼Ù</returns>
+    /// <typeparam name="T">ä¼ å…¥å‚æ•°çš„æ³›å‹</typeparam>
+    /// <returns>å‡</returns>
     public static Expression<Func<T, bool>> False<T>()
     {
         return param => false;
     }
     /// <summary>
-    /// ´´½¨predicateÎ¯ÍĞ
+    /// åˆ›å»ºpredicateå§”æ‰˜
     /// </summary>
-    /// <typeparam name="T">´«Èë²ÎÊıÀàĞÍ</typeparam>
-    /// <param name="predicate">Î¯ÍĞ±í´ïÊ½</param>
-    /// <returns>Î¯ÍĞ±í´ïÊ½</returns>
+    /// <typeparam name="T">ä¼ å…¥å‚æ•°ç±»å‹</typeparam>
+    /// <param name="predicate">å§”æ‰˜è¡¨è¾¾å¼</param>
+    /// <returns>å§”æ‰˜è¡¨è¾¾å¼</returns>
     public static Expression<Func<T, bool>> Create<T>(Expression<Func<T, bool>> predicate)
     {
         return predicate;
     }
     /// <summary>
-    /// ±íÊ¾²¢µÄ±í´ïÊ½
+    /// è¡¨ç¤ºå¹¶çš„è¡¨è¾¾å¼
     /// </summary>
-    /// <typeparam name="T">´«Èë²ÎÊıÀàĞÍ</typeparam>
-    /// <param name="first">µÚÒ»¸ö²ÎÊı</param>
-    /// <param name="second">µÚ¶ş¸ö</param>
-    /// <returns>±í´ïÊ½</returns>
+    /// <typeparam name="T">ä¼ å…¥å‚æ•°ç±»å‹</typeparam>
+    /// <param name="first">ç¬¬ä¸€ä¸ªå‚æ•°</param>
+    /// <param name="second">ç¬¬äºŒä¸ª</param>
+    /// <returns>è¡¨è¾¾å¼</returns>
     public static Expression<Func<T, bool>> And<T>(this Expression<Func<T, bool>> first, Expression<Func<T, bool>> second)
     {
         return first.Compose(second, Expression.AndAlso);
     }
     /// <summary>
-    /// ±íÊ¾»òµÄ±í´ïÊ½
+    /// è¡¨ç¤ºæˆ–çš„è¡¨è¾¾å¼
     /// </summary>
-    /// <typeparam name="T">´«Èë²ÎÊıÀàĞÍ</typeparam>
-    /// <param name="first">µÚÒ»¸ö²ÎÊı</param>
-    /// <param name="second">µÚ¶ş¸ö</param>
-    /// <returns>±í´ïÊ½</returns>
+    /// <typeparam name="T">ä¼ å…¥å‚æ•°ç±»å‹</typeparam>
+    /// <param name="first">ç¬¬ä¸€ä¸ªå‚æ•°</param>
+    /// <param name="second">ç¬¬äºŒä¸ª</param>
+    /// <returns>è¡¨è¾¾å¼</returns>
     public static Expression<Func<T, bool>> Or<T>(this Expression<Func<T, bool>> first, Expression<Func<T, bool>> second)
     {
         return first.Compose(second, Expression.OrElse);
     }
     /// <summary>
-    /// ±íÊÇ·ñµÄ±í´ïÊ½
+    /// è¡¨æ˜¯å¦çš„è¡¨è¾¾å¼
     /// </summary>
-    /// <typeparam name="T">´«Èë²ÎÊıÀàĞÍ</typeparam>
-    /// <param name="expression">±í´ïÊ½</param>
-    /// <returns>±í´ïÊ½</returns>
+    /// <typeparam name="T">ä¼ å…¥å‚æ•°ç±»å‹</typeparam>
+    /// <param name="expression">è¡¨è¾¾å¼</param>
+    /// <returns>è¡¨è¾¾å¼</returns>
     public static Expression<Func<T, bool>> Not<T>(this Expression<Func<T, bool>> expression)
     {
         return Expression.Lambda<Func<T, bool>>(Expression.Not(expression.Body), expression.Parameters);
@@ -71,12 +71,7 @@ public static class PredicateBuilder
     {
         var map = first.Parameters.Select((f, i) => new{f,s = second.Parameters[i]}).ToDictionary(p => p.s, p => p.f);
         var expression = ParameterRebinder.ReplaceParameters(map, second.Body);
-        if (expression != null)
-        {
-            return Expression.Lambda<T>(merge(first.Body, expression), first.Parameters);
-        }
-        return first;
-        
+        return Expression.Lambda<T>(merge(first.Body, expression), first.Parameters);
     }
 }
 
