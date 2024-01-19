@@ -30,3 +30,29 @@ public class Testselectfilter
         Env.Editor.WriteMessage("");
     }
 }
+
+public class TestSelectObjectType
+{
+    [CommandMethod(nameof(Test_Select_type))]
+    public void Test_Select_type()
+    {
+        var sel = Env.Editor.SSGet();
+        if (sel.Status != PromptStatus.OK) return;
+        var ids = sel.Value.GetObjectIds<Dimension>();
+        foreach (var item in ids)
+        {
+            item.Print();
+        }
+
+        var dxfName = RXObject.GetClass(typeof(Dimension)).DxfName;
+        dxfName.Print();
+        var idss = sel.Value.GetObjectIds();
+        foreach (var item in idss)
+        {
+            item.Print();
+            item.ObjectClass.DxfName.Print();
+        }
+       
+    }
+
+}

@@ -9,29 +9,6 @@ public static class SelectionSetEx
 {
     #region 获取对象id
     /// <summary>
-    /// 获取已选择的对象
-    /// </summary>
-    /// <param name="ss">选择集</param>
-    /// <returns>已选择的对象集合</returns>
-    [System.Diagnostics.DebuggerStepThrough]
-    public static IEnumerable<SelectedObject> GetSelectedObjects(this SelectionSet ss)
-    {
-        return ss.Cast<SelectedObject>();
-    }
-
-    /// <summary>
-    /// 获取已选择的对象
-    /// </summary>
-    /// <typeparam name="T">已选择的对象泛型</typeparam>
-    /// <param name="ss">选择集</param>
-    /// <returns>已选择的对象集合</returns>
-    [System.Diagnostics.DebuggerStepThrough]
-    public static IEnumerable<T> GetSelectObjects<T>(this SelectionSet ss) where T : SelectedObject
-    {
-        return ss.Cast<SelectedObject>().OfType<T>();
-    }
-
-    /// <summary>
     /// 从选择集中获取对象id
     /// </summary>
     /// <typeparam name="T">图元类型</typeparam>
@@ -40,11 +17,10 @@ public static class SelectionSetEx
     [System.Diagnostics.DebuggerStepThrough]
     public static IEnumerable<ObjectId> GetObjectIds<T>(this SelectionSet ss) where T : Entity
     {
-        string dxfName = RXClass.GetClass(typeof(T)).DxfName;
-        return
-            ss
-            .GetObjectIds()
-            .Where(id => id.ObjectClass.DxfName == dxfName);
+        var rxc = RXObject.GetClass(typeof(T));
+
+        return ss.GetObjectIds()
+                 .Where(id => id.ObjectClass.IsDerivedFrom(rxc));
     }
 
     /// <summary>
@@ -55,10 +31,8 @@ public static class SelectionSetEx
     [System.Diagnostics.DebuggerStepThrough]
     public static IEnumerable<IGrouping<string, ObjectId>> GetObjectIdGroup(this SelectionSet ss)
     {
-        return
-            ss
-            .GetObjectIds()
-            .GroupBy(id => id.ObjectClass.DxfName);
+        return ss.GetObjectIds()
+                 .GroupBy(id => id.ObjectClass.DxfName);
     }
     #endregion
 
@@ -74,16 +48,14 @@ public static class SelectionSetEx
     /// <param name="openLockedLayer">是否打开锁定图层对象,默认为不打开</param>
     /// <returns>图元集合</returns>
     [System.Diagnostics.DebuggerStepThrough]
-    public static IEnumerable<T> GetEntities<T>(this SelectionSet ss,
+    public static IEnumerable<T> GetEntities<T>(this SelectionSet? ss,
                                                  OpenMode openMode = OpenMode.ForRead,
                                                  bool openErased = false,
                                                  bool openLockedLayer = false) where T : Entity
     {
-        if (ss is null)
-            return new List<T>();
-        return ss.GetObjectIds()
-                 .Select(id => id.GetObject<T>(openMode, openErased, openLockedLayer))
-                 .OfType<T>();
+        return ss?.GetObjectIds()
+            .Select(id => id.GetObject<T>(openMode, openErased, openLockedLayer))
+            .OfType<T>() ?? [];
     }
     #endregion
 
@@ -104,7 +76,8 @@ public static class SelectionSetEx
                                   bool openErased = false,
                                   bool openLockedLayer = false) where T : Entity
     {
-        ForEach<T>(ss, (ent, state) => {
+        ForEach<T>(ss, (ent, _) =>
+        {
             action.Invoke(ent);
         }, openMode, openErased, openLockedLayer);
     }
@@ -121,7 +94,7 @@ public static class SelectionSetEx
     /// <exception cref="ArgumentNullException"></exception>
     [System.Diagnostics.DebuggerStepThrough]
     public static void ForEach<T>(this SelectionSet ss,
-                                 Action<T?, LoopState> action,
+                                 Action<T, LoopState> action,
                                  OpenMode openMode = OpenMode.ForRead,
                                  bool openErased = false,
                                  bool openLockedLayer = false) where T : Entity
