@@ -14,8 +14,8 @@
 public abstract class AutoRegAssem : IExtensionApplication
 {
     #region 字段
-    readonly AssemInfo _info;
-    readonly AutoReflection? _autoRef;
+
+    private readonly AutoReflection? _autoRef;
     #endregion
 
     #region 静态方法
@@ -26,16 +26,15 @@ public abstract class AutoRegAssem : IExtensionApplication
     /// <summary>
     /// 程序集的目录
     /// </summary>
-    public static DirectoryInfo CurrDirectory => Location.Directory;
+    public static DirectoryInfo? CurrDirectory => Location.Directory;
     /// <summary>
     /// 获取程序集的目录
     /// </summary>
     /// <param name="assem">程序集</param>
     /// <returns>路径对象</returns>
-    public static DirectoryInfo GetDirectory(Assembly? assem)
+    public static DirectoryInfo? GetDirectory(Assembly? assem)
     {
-        if (assem is null)
-            throw new(nameof(assem));
+        ArgumentNullEx.ThrowIfNull(assem);
         return new FileInfo(assem.Location).Directory;
     }
     #endregion
@@ -48,7 +47,7 @@ public abstract class AutoRegAssem : IExtensionApplication
     public AutoRegAssem(AutoRegConfig autoRegConfig)
     {
         var assem = Assembly.GetCallingAssembly();
-        _info = new()
+        var info = new AssemInfo
         {
             Loader = assem.Location,
             Fullname = assem.FullName,
@@ -58,8 +57,8 @@ public abstract class AutoRegAssem : IExtensionApplication
 
         if ((autoRegConfig & AutoRegConfig.Regedit) == AutoRegConfig.Regedit)
         {
-            if (!AutoReg.SearchForReg(_info))
-                AutoReg.RegApp(_info);
+            if (!AutoReg.SearchForReg(info))
+                AutoReg.RegApp(info);
         }
 
         if ((autoRegConfig & AutoRegConfig.RemoveEMR) == AutoRegConfig.RemoveEMR)
@@ -68,12 +67,10 @@ public abstract class AutoRegAssem : IExtensionApplication
         // 实例化了 AutoClass 之后会自动执行 IFoxAutoGo 接口下面的类,
         // 以及自动执行特性 [IFoxInitialize]
         // 类库用户不在此处进行其他代码,而是实现特性
-        if ((autoRegConfig & AutoRegConfig.ReflectionInterface) == AutoRegConfig.ReflectionInterface ||
-            (autoRegConfig & AutoRegConfig.ReflectionAttribute) == AutoRegConfig.ReflectionAttribute)
-        {
-            _autoRef = new AutoReflection(_info.Name, autoRegConfig);
-            _autoRef.Initialize();
-        }
+        if ((autoRegConfig & AutoRegConfig.ReflectionInterface) != AutoRegConfig.ReflectionInterface &&
+            (autoRegConfig & AutoRegConfig.ReflectionAttribute) != AutoRegConfig.ReflectionAttribute) return;
+        _autoRef = new AutoReflection(info.Name, autoRegConfig);
+        _autoRef.Initialize();
     }
     #endregion
 

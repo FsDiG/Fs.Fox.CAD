@@ -342,7 +342,7 @@ public partial class WindowsAPI
     /// </summary>
     /// <param name="hWnd">窗口标识符</param>
     /// <param name="text">窗口文字</param>
-    /// <param name="count">文字长度</param>
+    /// <param name="nMaxCount">文字长度</param>
     /// <returns></returns>
     [DllImport("User32.dll", CharSet = CharSet.Auto)]
     public static extern int GetWindowText(IntPtr hWnd, StringBuilder text, int nMaxCount);

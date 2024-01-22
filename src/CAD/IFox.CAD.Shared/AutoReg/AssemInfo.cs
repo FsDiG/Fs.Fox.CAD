@@ -58,6 +58,7 @@ public enum AssemLoadType
 /// <summary>
 /// 注册中心配置信息
 /// </summary>
+[Flags]
 public enum AutoRegConfig
 {
     /// <summary>

@@ -1,6 +1,4 @@
-﻿
-
-namespace IFoxCAD.Cad;
+﻿namespace IFoxCAD.Cad;
 
 /// <summary>
 /// cad版本号类
@@ -17,30 +15,22 @@ public static class AcadVersion
         get
         {
             string[] copys = Registry.LocalMachine
-                            .OpenSubKey(@"SOFTWARE\Autodesk\Hardcopy")
+                .OpenSubKey(@"SOFTWARE\Autodesk\Hardcopy")!
                             .GetValueNames();
 
             List<CadVersion> _versions = [];
-            for (int i = 0; i < copys.Length; i++)
-            {
-                if (!Regex.IsMatch(copys[i], _pattern))
-                    continue;
-
-                var gs = Regex.Match(copys[i], _pattern).Groups;
-                var ver = new CadVersion
+            _versions.AddRange(from t in copys
+                where Regex.IsMatch(t, _pattern)
+                let gs = Regex.Match(t, _pattern).Groups
+                select new CadVersion
                 {
-                    ProductRootKey = copys[i],
-                    ProductName = Registry.LocalMachine
-                                .OpenSubKey("SOFTWARE")
-                                .OpenSubKey(copys[i])
-                                .GetValue("ProductName")
-                                .ToString(),
-
+                    ProductRootKey = t,
+                    ProductName = Registry.LocalMachine.OpenSubKey("SOFTWARE")!.OpenSubKey(t)
+                        ?.GetValue("ProductName")
+                        .ToString(),
                     Major = int.Parse(gs[1].Value),
                     Minor = int.Parse(gs[2].Value),
-                };
-                _versions.Add(ver);
-            }
+                });
             return _versions;
         }
     }
@@ -52,20 +42,16 @@ public static class AcadVersion
     {
         ArgumentNullEx.ThrowIfNull(app);
 
-        string acver = app.GetType()
+        var acver = app.GetType()
                         .InvokeMember(
                             "Version",
                             BindingFlags.GetProperty,
                             null,
-                            app,
-                            new object[0]).ToString();
+                            app, []).ToString();
 
         var gs = Regex.Match(acver, @"(\d+)\.(\d+).*?").Groups;
-        int major = int.Parse(gs[1].Value);
-        int minor = int.Parse(gs[2].Value);
-        for (int i = 0; i < Versions.Count; i++)
-            if (Versions[i].Major == major && Versions[i].Minor == minor)
-                return Versions[i];
-        return null;
+        var major = int.Parse(gs[1].Value);
+        var minor = int.Parse(gs[2].Value);
+        return Versions.FirstOrDefault(t => t.Major == major && t.Minor == minor);
     }
 }

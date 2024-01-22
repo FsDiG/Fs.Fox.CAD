@@ -176,7 +176,7 @@ public class QuadTree<TEntity> where TEntity : QuadEntity
         // 选择图元
         _rootNode.Query(rect, results);
         // 选择点
-        var ptge = _points.GetEnumerator();
+        using var ptge = _points.GetEnumerator();
         switch (selectMode)
         {
             case QuadTreeSelectMode.IntersectsWith:
@@ -190,12 +190,12 @@ public class QuadTree<TEntity> where TEntity : QuadEntity
             while (ptge.MoveNext())
             {
                 var ptEnt = ptge.Current;
-                if (rect._X <= ptEnt._X && ptEnt._X <= rect._Right)
+                if (ptEnt != null && rect._X <= ptEnt._X && ptEnt._X <= rect._Right)
                 {
                     if (rect._Y <= ptEnt._Y && ptEnt._Y <= rect.Top)
                         results.Add(ptEnt);
                 }
-                else if (ptEnt._X > rect._Right)
+                else if (ptEnt != null && ptEnt._X > rect._Right)
                     break;// 超过后面范围就break,因为红黑树已经排序
             }
             break;
