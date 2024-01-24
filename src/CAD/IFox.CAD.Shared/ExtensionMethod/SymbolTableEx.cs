@@ -34,17 +34,17 @@ public static class SymbolTableEx
     /// 更改图层名
     /// </summary>
     /// <param name="table">图层符号表</param>
-    /// <param name="Oldname">旧图层名</param>
-    /// <param name="NewName">新图层名</param>
-    public static ObjectId Rename(this SymbolTable<LayerTable, LayerTableRecord> table, string Oldname, string NewName)
+    /// <param name="oldName">旧图层名</param>
+    /// <param name="newName">新图层名</param>
+    public static ObjectId Rename(this SymbolTable<LayerTable, LayerTableRecord> table, string oldName, string newName)
     {
-        if (!table.Has(Oldname))
+        if (!table.Has(oldName))
             return ObjectId.Null;
 
-        table.Change(Oldname, layer => {
-            layer.Name = NewName;
+        table.Change(oldName, layer => {
+            layer.Name = newName;
         });
-        return table[NewName];
+        return table[newName];
     }
     /// <summary>
     /// 删除图层
@@ -129,7 +129,7 @@ public static class SymbolTableEx
     /// <returns></returns>
     public static ObjectId Add(this SymbolTable<BlockTable, BlockTableRecord> table, string name, params Entity[] ents)
     {
-        return table.Add(name, null, () => { return ents; });
+        return table.Add(name, null, () => ents);
     }
 
     /// <summary>
@@ -142,15 +142,14 @@ public static class SymbolTableEx
                                        ObjectId id,
                                        List<AttributeDefinition> atts)
     {
-        List<string> attTags = new();
-        table.Change(id, btr => {
-
+        List<string> attTags = [];
+        table.Change(id, btr =>
+        {
             btr.GetEntities<AttributeDefinition>()
                 .ForEach(def => attTags.Add(def.Tag.ToUpper()));
 
-            for (int i = 0; i < atts.Count; i++)
-                if (!attTags.Contains(atts[i].Tag.ToUpper()))
-                    btr.AddEntity(atts[i]);
+            foreach (var t in atts.Where(t => !attTags.Contains(t.Tag.ToUpper())))
+                btr.AddEntity(t);
         });
     }
     /// <summary>
@@ -163,15 +162,14 @@ public static class SymbolTableEx
                                        string name,
                                        List<AttributeDefinition> atts)
     {
-        List<string> attTags = new();
-        table.Change(name, btr => {
-
+        List<string> attTags = [];
+        table.Change(name, btr =>
+        {
             btr.GetEntities<AttributeDefinition>()
                 .ForEach(def => attTags.Add(def.Tag.ToUpper()));
 
-            for (int i = 0; i < atts.Count; i++)
-                if (!attTags.Contains(atts[i].Tag.ToUpper()))
-                    btr.AddEntity(atts[i]);
+            foreach (var t in atts.Where(t => !attTags.Contains(t.Tag.ToUpper())))
+                btr.AddEntity(t);
         });
     }
 
@@ -185,20 +183,35 @@ public static class SymbolTableEx
     public static ObjectId GetBlockFrom(this SymbolTable<BlockTable, BlockTableRecord> table, string fileName, bool over)
     {
 
-        string blkdefname = SymbolUtilityServices.GetSymbolNameFromPathName(fileName, "dwg");
+        var blkdefname = SymbolUtilityServices.GetSymbolNameFromPathName(fileName, "dwg");
 #if acad
         blkdefname = SymbolUtilityServices.RepairSymbolName(blkdefname, false);
 #endif
-        ObjectId id = table[blkdefname];
-        bool has = id != ObjectId.Null;
-        if ((has && over) || !has)
+        var id = table[blkdefname];
+        var has = id != ObjectId.Null;
+
+        /* 每次看这里都要反应一阵
+           如果已经有这个id，并且要覆盖，或者没有这个id就执行下面的语句，不然就直接返回id
+           其实就是如果有这个id，并且不覆盖，就直接返回，其他的情况都需要重新插入
+           所以原代码可以修改
+        if (has && over || !has)
         {
             using Database db = new(false, true);
             db.ReadDwgFile(fileName, FileShare.Read, true, null);
             db.CloseInput(true);
             id = table.Database.Insert(BlockTableRecord.ModelSpace, blkdefname, db, false);
-        }
 
+            return id;
+        } */
+
+        if (has is true && over is false)
+        {
+            return id;
+        }
+        using Database db = new(false, true);
+        db.ReadDwgFile(fileName, FileShare.Read, true, null);
+        db.CloseInput(true);
+        id = table.Database.Insert(BlockTableRecord.ModelSpace, blkdefname, db, false);
         return id;
     }
 
