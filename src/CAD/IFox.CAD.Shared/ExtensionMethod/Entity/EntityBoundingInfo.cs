@@ -45,12 +45,18 @@ public static class EntityBoundingInfo
 
         else if (ent is Table table)
         {
+          if(table.IsNewObject) 
+            table.GenerateLayout();
+
             table.RecomputeTableBlock(true);
             return table.GeometricExtents;
         }
 
         else if (ent is Dimension dim)
         {
+           if(dim.IsNewObject)
+            dim.GenerateLayout(); // 新new的实体生成布局,即可获取包围盒
+
             dim.RecomputeDimensionBlock(true);
             return dim.GeometricExtents;
         }
