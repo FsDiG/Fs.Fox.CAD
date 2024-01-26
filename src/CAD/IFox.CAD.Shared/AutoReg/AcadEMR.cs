@@ -1,8 +1,6 @@
 ﻿#if true
 namespace IFoxCAD.Cad;
 
-using System.Diagnostics;
-
 // 作者: [VB.net]福萝卜  莱昂纳多·胖子
 // Email:oneeshine@163.com
 // QQ: 461884072

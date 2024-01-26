@@ -658,7 +658,7 @@ public sealed class DepthFirst
         return tmp.Skip(index).Concat(lst.Take(index)).ToList();
     }
 
-    private static (string, string) GetHashString(List<IGraphVertex> pathone, List<IGraphVertex> pathtwo)
+    private static (string, string) GetHashString(IReadOnlyList<IGraphVertex> pathone, IReadOnlyList<IGraphVertex> pathtwo)
     {
         var one = new string[pathone.Count];
         var two = new string[pathtwo.Count];

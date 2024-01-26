@@ -1,6 +1,6 @@
 namespace IFoxCAD.Cad;
 
-using System.Collections.ObjectModel;
+
 using System.Diagnostics;
 
 /// <summary>
@@ -44,55 +44,42 @@ public interface IFoxAutoGo
 /// <summary>
 /// 加载时自动执行特性
 /// </summary>
+/// <remarks>
+/// 用于初始化和结束回收
+/// </remarks>
+/// <param name="sequence">优先级</param>
+/// <param name="isInitialize"><see langword="true"/>用于初始化;<see langword="false"/>用于结束回收</param>
 [AttributeUsage(AttributeTargets.Method)]
-public class IFoxInitialize : Attribute
+public class IFoxInitialize(Sequence sequence = Sequence.Last, bool isInitialize = true) : Attribute
 {
     /// <summary>
     /// 优先级
     /// </summary>
-    internal Sequence SequenceId;
+    internal Sequence SequenceId = sequence;
     /// <summary>
     /// <see langword="true"/>用于初始化;<see langword="false"/>用于结束回收
     /// </summary>
-    internal bool IsInitialize;
-    /// <summary>
-    /// 用于初始化和结束回收
-    /// </summary>
-    /// <param name="sequence">优先级</param>
-    /// <param name="isInitialize"><see langword="true"/>用于初始化;<see langword="false"/>用于结束回收</param>
-    public IFoxInitialize(Sequence sequence = Sequence.Last, bool isInitialize = true)
-    {
-        SequenceId = sequence;
-        IsInitialize = isInitialize;
-    }
+    internal bool IsInitialize = isInitialize;
 }
 
 // 为了解决IExtensionApplication在一个dll内无法多次实现接口的关系
 // 所以在这里反射加载所有的 IAutoGo ,以达到能分开写"启动运行"函数的目的
-class RunClass
+/// <summary>
+/// 执行此方法
+/// </summary>
+/// <param name="method"></param>
+/// <param name="sequence"></param>
+/// <param name="instance">已经创建的对象</param>
+internal class RunClass(MethodInfo method, Sequence sequence, object? instance = null)
 {
-    public Sequence Sequence { get; }
-    readonly MethodInfo _methodInfo;
-    object? _instance;
-    /// <summary>
-    /// 执行此方法
-    /// </summary>
-    /// <param name="method"></param>
-    /// <param name="sequence"></param>
-    /// <param name="instance">已经创建的对象</param>
-    public RunClass(MethodInfo method, Sequence sequence, object? instance = null)
-    {
-        _methodInfo = method;
-        Sequence = sequence;
-        _instance = instance;
-    }
+    public Sequence Sequence { get; } = sequence;
 
     /// <summary>
     /// 运行方法
     /// </summary>
     public void Run()
     {
-        _methodInfo.Invoke(ref _instance);
+        method.Invoke(ref instance);
     }
 }
 
@@ -115,8 +102,8 @@ class RunClass
 /// <param name="configInfo"></param>
 public class AutoReflection(string dllName, AutoRegConfig configInfo)
 {
-    static List<RunClass> _InitializeList = []; // 储存方法用于初始化
-    static List<RunClass> _TerminateList = [];  // 储存方法用于结束释放
+    private static List<RunClass> _InitializeList = []; // 储存方法用于初始化
+    private static List<RunClass> _TerminateList = [];  // 储存方法用于结束释放
 
     readonly string _dllName = dllName;
     readonly AutoRegConfig _autoRegConfig = configInfo;
@@ -137,12 +124,10 @@ public class AutoReflection(string dllName, AutoRegConfig configInfo)
                 GetInterfaceFunctions(_InitializeList, nameof(Initialize), _TerminateList, nameof(Terminate));
             }
 
-            if (_InitializeList.Count > 0)
-            {
-                // 按照 SequenceId 排序_升序
-                _InitializeList = _InitializeList.OrderBy(runClass => runClass.Sequence).ToList();
-                RunFunctions(_InitializeList);
-            }
+            if (_InitializeList.Count <= 0) return;
+            // 按照 SequenceId 排序_升序
+            _InitializeList = _InitializeList.OrderBy(runClass => runClass.Sequence).ToList();
+            RunFunctions(_InitializeList);
         }
         catch 
         {
@@ -160,14 +145,12 @@ public class AutoReflection(string dllName, AutoRegConfig configInfo)
             //if ((_autoRegConfig & AutoRegConfig.ReflectionInterface) == AutoRegConfig.ReflectionInterface)
             //    GetInterfaceFunctions(_TerminateList, nameof(Terminate));
 
-            if (_TerminateList.Count > 0)
-            {
-                // 按照 SequenceId 排序_降序
-                _TerminateList = _TerminateList.OrderByDescending(runClass => runClass.Sequence).ToList();
-                RunFunctions(_TerminateList);
-            }
+            if (_TerminateList.Count <= 0) return;
+            // 按照 SequenceId 排序_降序
+            _TerminateList = [.. _TerminateList.OrderByDescending(runClass => runClass.Sequence)];
+            RunFunctions(_TerminateList);
         }
-        catch (System.Exception e)
+        catch (Exception e)
         {
             Env.Printl(e.Message);
             Debugger.Break();
@@ -182,7 +165,7 @@ public class AutoReflection(string dllName, AutoRegConfig configInfo)
     public static void AppDomainGetTypes(Action<Type> action, string? dllNameWithoutExtension = null)
     {
 #if DEBUG
-        int error = 0;
+        var error = 0;
 #endif
         try
         {
@@ -194,7 +177,7 @@ public class AutoReflection(string dllName, AutoRegConfig configInfo)
             assemblies = Array.FindAll(assemblies, p => !p.IsDynamic);
 
             // 主程序域
-            for (int ii = 0; ii < assemblies.Length; ii++)
+            for (var ii = 0; ii < assemblies.Length; ii++)
             {
                 var assembly = assemblies[ii];
 
@@ -216,7 +199,7 @@ public class AutoReflection(string dllName, AutoRegConfig configInfo)
                 if (types is null)
                     continue;
 
-                for (int jj = 0; jj < types.Length; jj++)
+                for (var jj = 0; jj < types.Length; jj++)
                 {
                     var type = types[jj];
                     if (type is not null)
@@ -230,7 +213,7 @@ public class AutoReflection(string dllName, AutoRegConfig configInfo)
             }
         }
 #if DEBUG
-        catch (System.Exception e)
+        catch (Exception e)
         {
             DebugEx.Printl($"出错:{nameof(AppDomainGetTypes)};计数{error};错误信息:{e.Message}");
             Debugger.Break();

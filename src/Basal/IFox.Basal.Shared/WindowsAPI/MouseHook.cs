@@ -34,7 +34,7 @@ public class MouseHook
     public event EventHandler? DoubleClick;
 
 
-    bool _isHookBreak = false;
+    private bool _isHookBreak;
     /// <summary>
     /// 否决本次输入:设置不向下回调
     /// </summary>
@@ -52,7 +52,8 @@ public class MouseHook
 
     [DllImport("user32.dll", EntryPoint = "GetDoubleClickTime")]
     public extern static int GetDoubleClickTime();
-    static readonly Stopwatch _watch = new();
+
+    private static readonly Stopwatch _watch = new();
 
     /// <summary>
     /// 安装鼠标钩子
@@ -66,7 +67,7 @@ public class MouseHook
         _watch.Start();
     }
 
-    void UnHook()
+    private void UnHook()
     {
         if (_NextHookProc != IntPtr.Zero)
         {
@@ -109,14 +110,13 @@ public class MouseHook
     }
 
 
-
-    MouseButtons _button;
-    int _clickCount = 0;
-    bool _down = false;
-    bool _up = false;
-    bool _ck = false;
-    bool _wheel = false;
-    bool _move = false;
+    private MouseButtons _button;
+    private int _clickCount = 0;
+    private bool _down = false;
+    private bool _up = false;
+    private bool _ck = false;
+    private bool _wheel = false;
+    private bool _move = false;
 
     /// <summary>
     /// 钩子的消息处理
@@ -125,7 +125,7 @@ public class MouseHook
     /// <param name="wParam"></param>
     /// <param name="lParam"></param>
     /// <returns>false不终止回调,true终止回调</returns>
-    bool HookTask(int nCode, int wParam, IntPtr lParam)
+    private bool HookTask(int nCode, int wParam, IntPtr lParam)
     {
         if (MouseDown is null
          && MouseUp is null
