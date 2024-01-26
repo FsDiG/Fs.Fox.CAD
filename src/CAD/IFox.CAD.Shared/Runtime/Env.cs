@@ -1,36 +1,36 @@
-
+using System.Security;
 
 namespace IFoxCAD.Cad;
 
 /// <summary>
-/// 系统管理类
-/// <para>
-/// 封装了一些系统 osmode;cmdecho;dimblk 系统变量<br/>
-/// 封装了常用的 文档 编辑器 数据库等对象为静态变量<br/>
-/// 封装了配置页面的注册表信息获取函数
-/// </para>
+///     系统管理类
+///     <para>
+///         封装了一些系统 osmode;cmdecho;dimblk 系统变量<br />
+///         封装了常用的 文档 编辑器 数据库等对象为静态变量<br />
+///         封装了配置页面的注册表信息获取函数
+///     </para>
 /// </summary>
 public static class Env
 {
     #region Goal
 
     /// <summary>
-    /// 当前的数据库
+    ///     当前的数据库
     /// </summary>
     public static Database Database => HostApplicationServices.WorkingDatabase;
 
     /// <summary>
-    /// 当前文档
+    ///     当前文档
     /// </summary>
     public static Document Document => Acaop.DocumentManager.MdiActiveDocument;
 
     /// <summary>
-    /// 编辑器对象
+    ///     编辑器对象
     /// </summary>
     public static Editor Editor => Document.Editor;
 
     /// <summary>
-    /// 图形管理器
+    ///     图形管理器
     /// </summary>
     public static Manager GsManager => Document.GraphicsManager;
 
@@ -40,70 +40,75 @@ public static class Env
 
 #if !zcad // 中望官方的问题
     /// <summary>
-    /// 获取当前配置的数据
+    ///     获取当前配置的数据
     /// </summary>
     /// <param name="subSectionName">小节名</param>
     /// <param name="propertyName">数据名</param>
     /// <returns>对象</returns>
     public static object GetCurrentProfileProperty(string subSectionName, string propertyName)
     {
-        UserConfigurationManager ucm = Acaop.UserConfigurationManager;
-        IConfigurationSection cpf = ucm.OpenCurrentProfile();
-        IConfigurationSection ss = cpf.OpenSubsection(subSectionName);
+        var ucm = Acaop.UserConfigurationManager;
+        var cpf = ucm.OpenCurrentProfile();
+        var ss = cpf.OpenSubsection(subSectionName);
         return ss.ReadProperty(propertyName, "");
     }
 
 
     /// <summary>
-    /// 获取对话框配置的数据
+    ///     获取对话框配置的数据
     /// </summary>
     /// <param name="dialog">对话框对象</param>
     /// <returns>配置项</returns>
     public static IConfigurationSection GetDialogSection(object dialog)
     {
-        UserConfigurationManager ucm = Acaop.UserConfigurationManager;
-        IConfigurationSection ds = ucm.OpenDialogSection(dialog);
+        var ucm = Acaop.UserConfigurationManager;
+        var ds = ucm.OpenDialogSection(dialog);
         return ds;
     }
 
     /// <summary>
-    /// 获取公共配置的数据
+    ///     获取公共配置的数据
     /// </summary>
     /// <param name="propertyName">数据名</param>
     /// <returns>配置项</returns>
     public static IConfigurationSection GetGlobalSection(string propertyName)
     {
-        UserConfigurationManager ucm = Acaop.UserConfigurationManager;
-        IConfigurationSection gs = ucm.OpenGlobalSection();
-        IConfigurationSection ss = gs.OpenSubsection(propertyName);
+        var ucm = Acaop.UserConfigurationManager;
+        var gs = ucm.OpenGlobalSection();
+        var ss = gs.OpenSubsection(propertyName);
         return ss;
     }
 #endif
+
     #endregion Preferences
 
     #region Enum
+
     /// <summary>
-    /// 控制在AutoLISP的command函数运行时AutoCAD是否回显提示和输入， <see langword="true"/> 为显示， <see langword="false"/> 为不显示
+    ///     控制在AutoLISP的command函数运行时AutoCAD是否回显提示和输入， <see langword="true" /> 为显示， <see langword="false" /> 为不显示
     /// </summary>
     public static bool CmdEcho
     {
         get => Convert.ToInt16(Acaop.GetSystemVariable("cmdecho")) == 1;
         set => Acaop.SetSystemVariable("cmdecho", Convert.ToInt16(value));
     }
+
     /// <summary>
-    /// 获取Cad当前是否有活动命令
+    ///     获取Cad当前是否有活动命令
     /// </summary>
     public static bool CmdActive => Convert.ToBoolean(Acaop.GetSystemVariable("CMDACTIVE"));
+
     /// <summary>
-    /// 控制在光标是否为正交模式， <see langword="true"/> 为打开正交， <see langword="false"/> 为关闭正交
+    ///     控制在光标是否为正交模式， <see langword="true" /> 为打开正交， <see langword="false" /> 为关闭正交
     /// </summary>
     public static bool OrthoMode
     {
         get => Convert.ToInt16(Acaop.GetSystemVariable("ORTHOMODE")) == 1;
         set => Acaop.SetSystemVariable("ORTHOMODE", Convert.ToInt16(value));
     }
+
     /// <summary>
-    /// 读写系统变量LastPoint的坐标(UCS)
+    ///     读写系统变量LastPoint的坐标(UCS)
     /// </summary>
     public static Point3d LastPoint
     {
@@ -114,107 +119,107 @@ public static class Env
     #region Dimblk
 
     /// <summary>
-    /// 标注箭头类型
+    ///     标注箭头类型
     /// </summary>
     public enum DimblkType
     {
         /// <summary>
-        /// 实心闭合
+        ///     实心闭合
         /// </summary>
         Defult,
 
         /// <summary>
-        /// 点
+        ///     点
         /// </summary>
         Dot,
 
         /// <summary>
-        /// 小点
+        ///     小点
         /// </summary>
         DotSmall,
 
         /// <summary>
-        /// 空心点
+        ///     空心点
         /// </summary>
         DotBlank,
 
         /// <summary>
-        /// 原点标记
+        ///     原点标记
         /// </summary>
         Origin,
 
         /// <summary>
-        /// 原点标记2
+        ///     原点标记2
         /// </summary>
         Origin2,
 
         /// <summary>
-        /// 打开
+        ///     打开
         /// </summary>
         Open,
 
         /// <summary>
-        /// 直角
+        ///     直角
         /// </summary>
         Open90,
 
         /// <summary>
-        /// 30度角
+        ///     30度角
         /// </summary>
         Open30,
 
         /// <summary>
-        /// 闭合
+        ///     闭合
         /// </summary>
         Closed,
 
         /// <summary>
-        /// 空心小点
+        ///     空心小点
         /// </summary>
         Small,
 
         /// <summary>
-        /// 无
+        ///     无
         /// </summary>
         None,
 
         /// <summary>
-        /// 倾斜
+        ///     倾斜
         /// </summary>
         Oblique,
 
         /// <summary>
-        /// 实心框
+        ///     实心框
         /// </summary>
         BoxFilled,
 
         /// <summary>
-        /// 方框
+        ///     方框
         /// </summary>
         BoxBlank,
 
         /// <summary>
-        /// 空心闭合
+        ///     空心闭合
         /// </summary>
         ClosedBlank,
 
         /// <summary>
-        /// 实心基准三角形
+        ///     实心基准三角形
         /// </summary>
         DatumFilled,
 
         /// <summary>
-        /// 基准三角形
+        ///     基准三角形
         /// </summary>
         DatumBlank,
 
         /// <summary>
-        /// 完整标记
+        ///     完整标记
         /// </summary>
         Integral,
 
         /// <summary>
-        /// 建筑标记
+        ///     建筑标记
         /// </summary>
         ArchTick
     }
@@ -261,19 +266,18 @@ public static class Env
         { "_DATUMFILLED", DimblkType.DatumFilled },
         { "_DATUMBLANK", DimblkType.DatumBlank },
         { "_INTEGRAL", DimblkType.Integral },
-        { "_ARCHTICK", DimblkType.ArchTick },
+        { "_ARCHTICK", DimblkType.ArchTick }
     };
 
 
-
     /// <summary>
-    /// 标注箭头属性
+    ///     标注箭头属性
     /// </summary>
     public static DimblkType Dimblk
     {
         get
         {
-            string s = ((string)Acaop.GetSystemVariable("dimblk")).ToUpper();
+            var s = ((string)Acaop.GetSystemVariable("dimblk")).ToUpper();
             // if (string.IsNullOrEmpty(s))
             // {
             //    return DimblkType.Defult;
@@ -291,13 +295,13 @@ public static class Env
         }
         set
         {
-            string s = GetDimblkName(value);
+            var s = GetDimblkName(value);
             Acaop.SetSystemVariable("dimblk", s);
         }
     }
 
     /// <summary>
-    /// 获取标注箭头名
+    ///     获取标注箭头名
     /// </summary>
     /// <param name="dimblk">标注箭头类型</param>
     /// <returns>箭头名</returns>
@@ -305,22 +309,20 @@ public static class Env
     {
         return
             dimblk == DimblkType.Defult
-            ?
-            "."
-            :
-            "_" + dimblk.GetName();
+                ? "."
+                : "_" + dimblk.GetName();
     }
 
     /// <summary>
-    /// 获取标注箭头ID
+    ///     获取标注箭头ID
     /// </summary>
     /// <param name="dimblk">标注箭头类型</param>
     /// <returns>箭头ID</returns>
     public static ObjectId GetDimblkId(DimblkType dimblk)
     {
-        DimblkType oldDimblk = Dimblk;
+        var oldDimblk = Dimblk;
         Dimblk = dimblk;
-        ObjectId id = HostApplicationServices.WorkingDatabase.Dimblk;
+        var id = HostApplicationServices.WorkingDatabase.Dimblk;
         Dimblk = oldDimblk;
         return id;
     }
@@ -330,105 +332,107 @@ public static class Env
     #region OsMode
 
     /// <summary>
-    /// 捕捉模式系统变量类型
+    ///     捕捉模式系统变量类型
     /// </summary>
     [Flags]
     public enum OSModeType
     {
         /// <summary>
-        /// 无
+        ///     无
         /// </summary>
         None = 0,
 
         /// <summary>
-        /// 端点
+        ///     端点
         /// </summary>
         End = 1,
 
         /// <summary>
-        /// 中点
+        ///     中点
         /// </summary>
         Middle = 2,
 
         /// <summary>
-        /// 圆心
+        ///     圆心
         /// </summary>
         Center = 4,
 
         /// <summary>
-        /// 节点
+        ///     节点
         /// </summary>
         Node = 8,
 
         /// <summary>
-        /// 象限点
+        ///     象限点
         /// </summary>
         Quadrant = 16,
 
         /// <summary>
-        /// 交点
+        ///     交点
         /// </summary>
         Intersection = 32,
 
         /// <summary>
-        /// 插入点
+        ///     插入点
         /// </summary>
         Insert = 64,
 
         /// <summary>
-        /// 垂足
+        ///     垂足
         /// </summary>
         Pedal = 128,
 
         /// <summary>
-        /// 切点
+        ///     切点
         /// </summary>
         Tangent = 256,
 
         /// <summary>
-        /// 最近点
+        ///     最近点
         /// </summary>
         Nearest = 512,
 
         /// <summary>
-        /// 几何中心
+        ///     几何中心
         /// </summary>
         Quick = 1024,
 
         /// <summary>
-        /// 外观交点
+        ///     外观交点
         /// </summary>
         Appearance = 2048,
 
         /// <summary>
-        /// 延伸
+        ///     延伸
         /// </summary>
         Extension = 4096,
 
         /// <summary>
-        /// 平行
+        ///     平行
         /// </summary>
         Parallel = 8192
     }
 
     /// <summary>
-    /// 捕捉模式系统变量
+    ///     捕捉模式系统变量
     /// </summary>
     public static OSModeType OSMode
     {
         get => (OSModeType)Convert.ToInt16(Acaop.GetSystemVariable("osmode"));
         set => Acaop.SetSystemVariable("osmode", (int)value);
     }
+
     /// <summary>
-    /// 捕捉模式osm1是否包含osm2
+    ///     捕捉模式osm1是否包含osm2
     /// </summary>
     /// <param name="osm1">原模式</param>
     /// <param name="osm2">要比较的模式</param>
-    /// <returns>包含时返回 <see langword="true"/>，不包含时返回 <see langword="false"/></returns>
+    /// <returns>包含时返回 <see langword="true" />，不包含时返回 <see langword="false" /></returns>
     public static bool Include(this OSModeType osm1, OSModeType osm2)
     {
         return (osm1 & osm2) == osm2;
     }
+
     #endregion OsMode
 
 
@@ -440,8 +444,9 @@ public static class Env
     #endregion Enum
 
     #region 系统变量
+
     /// <summary>
-    /// 获取cad系统变量
+    ///     获取cad系统变量
     /// </summary>
     /// <param name="varName">变量名</param>
     /// <returns>变量值</returns>
@@ -449,11 +454,12 @@ public static class Env
     {
         return Acaop.GetSystemVariable(varName);
     }
+
     /// <summary>
-    /// 设置cad系统变量<br/>
-    /// 0x01 建议先获取现有变量值和设置的是否相同,否则直接设置会发生异常<br/>
-    /// 0x02 建议锁文档,否则 Psltscale 设置发生异常<br/>
-    /// 发生异常的时候vs输出窗口会打印一下,但是如果不介意也没啥问题
+    ///     设置cad系统变量<br />
+    ///     0x01 建议先获取现有变量值和设置的是否相同,否则直接设置会发生异常<br />
+    ///     0x02 建议锁文档,否则 Psltscale 设置发生异常<br />
+    ///     发生异常的时候vs输出窗口会打印一下,但是如果不介意也没啥问题
     /// </summary>
     /// <param name="varName">变量名</param>
     /// <param name="value">变量值</param>
@@ -470,46 +476,54 @@ public static class Env
                 Print($"{varName} 是不存在的变量！");
         }
     }
+
     #endregion
 
     #region 环境变量
-#if acad
-    [System.Security.SuppressUnmanagedCodeSecurity]
-    [DllImport("accore.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.Cdecl, EntryPoint = "acedGetEnv")]
-    static extern int AcedGetEnv(string? envName, StringBuilder ReturnValue);
 
-    [System.Security.SuppressUnmanagedCodeSecurity]
-    [DllImport("accore.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.Cdecl, EntryPoint = "acedSetEnv")]
-    static extern int AcedSetEnv(string? envName, StringBuilder NewValue);
+#if acad
+    [SuppressUnmanagedCodeSecurity]
+    [DllImport("accore.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.Cdecl,
+        EntryPoint = "acedGetEnv")]
+    private static extern int AcedGetEnv(string? envName, StringBuilder ReturnValue);
+
+    [SuppressUnmanagedCodeSecurity]
+    [DllImport("accore.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.Cdecl,
+        EntryPoint = "acedSetEnv")]
+    private static extern int AcedSetEnv(string? envName, StringBuilder NewValue);
 #endif
 
 #if gcad
     [System.Security.SuppressUnmanagedCodeSecurity]
-    [DllImport("gced.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.Cdecl, EntryPoint = "gcedGetEnv")]
+    [DllImport("gced.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.Cdecl, EntryPoint =
+ "gcedGetEnv")]
     static extern int AcedGetEnv(string? envName, StringBuilder ReturnValue);
 
     [System.Security.SuppressUnmanagedCodeSecurity]
-    [DllImport("gced.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.Cdecl, EntryPoint = "gcedSetEnv")]
+    [DllImport("gced.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.Cdecl, EntryPoint =
+ "gcedSetEnv")]
     static extern int AcedSetEnv(string? envName, StringBuilder NewValue);
 #endif
 
     // TODO: 中望没有测试,此处仅为不报错;本工程所有含有"中望"均存在问题
 #if zcad
     [System.Security.SuppressUnmanagedCodeSecurity]
-    [DllImport("zced.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.Cdecl, EntryPoint = "zcedGetEnv")]
+    [DllImport("zced.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.Cdecl, EntryPoint =
+ "zcedGetEnv")]
     static extern int AcedGetEnv(string? envName, StringBuilder ReturnValue);
 
     [System.Security.SuppressUnmanagedCodeSecurity]
-    [DllImport("zced.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.Cdecl, EntryPoint = "zcedSetEnv")]
+    [DllImport("zced.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.Cdecl, EntryPoint =
+ "zcedSetEnv")]
     static extern int AcedSetEnv(string? envName, StringBuilder NewValue);
 #endif
 
     /// <summary>
-    /// 读取acad环境变量<br/>
-    /// 也能获取win环境变量
+    ///     读取acad环境变量<br />
+    ///     也能获取win环境变量
     /// </summary>
     /// <param name="name">变量名</param>
-    /// <returns>返回值从不为null,需判断<see cref="string.Empty"/></returns>
+    /// <returns>返回值从不为null,需判断<see cref="string.Empty" /></returns>
     public static string GetEnv(string name)
     {
         // 它将混合查询以下路径:
@@ -527,9 +541,9 @@ public static class Env
     }
 
     /// <summary>
-    /// 设置acad环境变量<br/>
-    /// 它是不会报错的,但是直接设置会写入注册表的,<br/>
-    /// 如果是设置高低版本cad不同的变量,建议先读取判断再设置<br/>
+    ///     设置acad环境变量<br />
+    ///     它是不会报错的,但是直接设置会写入注册表的,<br />
+    ///     如果是设置高低版本cad不同的变量,建议先读取判断再设置<br />
     /// </summary>
     /// <param name="name">变量名</param>
     /// <param name="var">变量值</param>
@@ -538,9 +552,11 @@ public static class Env
     {
         return AcedSetEnv(name, new StringBuilder(var));
     }
+
     #endregion
 
     #region win环境变量/由于 Aced的 能够同时获取此变量与cad内的,所以废弃
+
     // /// <summary>
     // /// 获取系统环境变量
     // /// </summary>
@@ -563,18 +579,19 @@ public static class Env
     //     // 创建、修改或删除当前进程中或者为当前用户或本地计算机保留的 Windows 操作系统注册表项中存储的环境变量
     //     Environment.SetEnvironmentVariable(var, value);
     // }
+
     #endregion
 
     #region 支持文件目录
 
     /// <summary>
-    /// 添加目录至CAD支持搜索的路径
+    ///     添加目录至CAD支持搜索的路径
     /// </summary>
     /// <param name="folders">目录</param>
     public static void AppendSupportPath(params string[] folders)
     {
         if (!folders.Any()) return;
-        var acadPath = Env.GetEnv("ACAD");
+        var acadPath = GetEnv("ACAD");
         var acadPathLowerArr =
             acadPath
                 .ToLower()
@@ -583,103 +600,123 @@ public static class Env
                 .Select(item =>
                     item[^1] == '\\' ? item.Remove(item.Length - 1) : item)
                 .ToHashSet();
-        foreach (var folder in folders) {
+        foreach (var folder in folders)
+        {
             if (!Directory.Exists(folder)) continue;
-            var folderLower = 
+            var folderLower =
                 folder[^1] == '\\' ? folder.Remove(folder.Length - 1).ToLower() : folder.ToLower();
             if (!acadPathLowerArr.Contains(folderLower))
-                acadPath = folder + ";" + acadPath;   //加到前面方便检查
+                acadPath = folder + ";" + acadPath; //加到前面方便检查
         }
+
         SetEnv("ACAD", acadPath);
     }
-    
+
     /// <summary>
-    /// 删除支持搜索文件目录
+    ///     删除支持搜索文件目录
     /// </summary>
     /// <param name="folders">目录</param>
     public static void RemoveSupportPath(params string[] folders)
     {
         if (!folders.Any()) return;
         var acadPathArr = GetEnv("ACAD").Split(';').ToList();
-        foreach (var folder in folders) {
-            var folderLower = 
+        foreach (var folder in folders)
+        {
+            var folderLower =
                 folder[^1] == '\\' ? folder.Remove(folder.Length - 1).ToLower() : folder.ToLower();
-            acadPathArr.RemoveAll(item => 
+            acadPathArr.RemoveAll(item =>
                 (item[^1] == '\\' ? item.Remove(item.Length - 1).ToLower() : item.ToLower()) == folderLower);
         }
+
         SetEnv("ACAD", string.Join(";", acadPathArr));
     }
 
     /// <summary>
-    /// 添加目录至CAD受信任的位置
+    ///     添加目录至CAD受信任的位置
     /// </summary>
     /// <param name="folders">目录</param>
     public static void AppendTrustedPath(params string[] folders)
     {
         if (!folders.Any()) return;
-        var trustedPath = Env.GetVar("TRUSTEDPATHS").ToString();
+        var trustedPath = GetVar("TRUSTEDPATHS").ToString();
         var trustedPathLowerArr =
             trustedPath
                 .ToLower()
                 .Split(';')
                 .Where(item => item != "")
-                .Select(item => 
+                .Select(item =>
                     item[^1] == '\\' ? item.Remove(item.Length - 1) : item)
                 .ToHashSet();
-        foreach (var folder in folders) {
+        foreach (var folder in folders)
+        {
             if (!Directory.Exists(folder)) continue;
-            var folderLower = 
+            var folderLower =
                 folder[^1] == '\\' ? folder.Remove(folder.Length - 1).ToLower() : folder.ToLower();
             if (!trustedPathLowerArr.Contains(folderLower))
                 trustedPath = folder + ";" + trustedPath; //加到前面方便检查
         }
+
         SetVar("TRUSTEDPATHS", trustedPath);
     }
+
     /// <summary>
-    /// 移除信任目录
+    ///     移除信任目录
     /// </summary>
     /// <param name="folders">目录</param>
     public static void RemoveTrustedPath(params string[] folders)
     {
         if (!folders.Any()) return;
         var trustedPathArr = GetVar("TRUSTEDPATHS").ToString().Split(';').ToList();
-        foreach (var folder in folders) {
-            var folderLower = 
+        foreach (var folder in folders)
+        {
+            var folderLower =
                 folder[^1] == '\\' ? folder.Remove(folder.Length - 1).ToLower() : folder.ToLower();
-            trustedPathArr.RemoveAll(item => 
+            trustedPathArr.RemoveAll(item =>
                 (item[^1] == '\\' ? item.Remove(item.Length - 1).ToLower() : item.ToLower()) == folderLower);
         }
+
         SetVar("TRUSTEDPATHS", string.Join(";", trustedPathArr));
     }
 
     #endregion
 
     /// <summary>
-    /// 命令行打印，会自动调用对象的toString函数
+    ///     命令行打印，会自动调用对象的toString函数
     /// </summary>
     /// <param name="message">要打印的对象</param>
-    public static void Print(object message) => Editor.WriteMessage($"{message}\n");
-    /// <summary>
-    /// 命令行打印，会自动调用对象的toString函数,在打印内容前添加换行
-    /// </summary>
-    /// <param name="message">要打印的对象</param>
-    public static void Printl(object message) => Editor.WriteMessage($"{Environment.NewLine}{message}\n");
+    public static void Print(object message)
+    {
+        Editor.WriteMessage($"{message}\n");
+    }
 
     /// <summary>
-    /// 判断当前是否在UCS坐标下
+    ///     命令行打印，会自动调用对象的toString函数,在打印内容前添加换行
+    /// </summary>
+    /// <param name="message">要打印的对象</param>
+    public static void Printl(object message)
+    {
+        Editor.WriteMessage($"{Environment.NewLine}{message}\n");
+    }
+
+    /// <summary>
+    ///     判断当前是否在UCS坐标下
     /// </summary>
     /// <returns>Bool</returns>
-    public static bool IsUcs() => (short)GetVar("WORLDUCS") == 0;
+    public static bool IsUcs()
+    {
+        return (short)GetVar("WORLDUCS") == 0;
+    }
 
 
     #region dwg版本号/cad版本号/年份
+
     /// <summary>
-    /// 获取当前配置文件的保存版本
+    ///     获取当前配置文件的保存版本
     /// </summary>
     /// <returns></returns>
     public static DwgVersion GetDefaultDwgVersion()
     {
-        var ffs = Env.GetEnv("DefaultFormatForSave");
+        var ffs = GetEnv("DefaultFormatForSave");
         var version = ffs switch
         {
             "1" => DwgVersion.AC1009, // R12/LT12 dxf
@@ -698,13 +735,13 @@ public static class Env
             "61" => (DwgVersion)32, // 2013 dxf
             "64" => (DwgVersion)33, // 2018 dwg  DwgVersion.AC1032
             "65" => (DwgVersion)34, // 2018 dxf
-            _ => throw new NotImplementedException(), // 提醒维护
+            _ => throw new NotImplementedException() // 提醒维护
         };
         return version;
     }
 
     /// <summary>
-    /// 是否为dxf版本号
+    ///     是否为dxf版本号
     /// </summary>
     /// <param name="dwgVersion"></param>
     /// <returns></returns>
@@ -712,26 +749,26 @@ public static class Env
     {
         var result = (int)dwgVersion switch
         {
-            16 => true,// R12/LT12 dxf
-            24 => true,// 2000 dxf
-            26 => true,// 2004 dxf
-            28 => true,// 2007 dxf
-            30 => true,// 2010 dxf
-            32 => true,// 2013 dxf
-            34 => true,// 2018 dxf
-            _ => false,
+            16 => true, // R12/LT12 dxf
+            24 => true, // 2000 dxf
+            26 => true, // 2004 dxf
+            28 => true, // 2007 dxf
+            30 => true, // 2010 dxf
+            32 => true, // 2013 dxf
+            34 => true, // 2018 dxf
+            _ => false
         };
         return result;
     }
 
     /// <summary>
-    /// 获取cad年份
+    ///     获取cad年份
     /// </summary>
     /// <exception cref="NotImplementedException">超出年份就报错</exception>
     public static int GetAcadVersion()
     {
         var ver = Acaop.Version.Major + "." + Acaop.Version.Minor;
-        int acarVarNum = ver switch
+        var acarVarNum = ver switch
         {
             "16.2" => 2006,
             "17.0" => 2007,
@@ -751,12 +788,13 @@ public static class Env
             "24.0" => 2021,
             "24.1" => 2022,
             "24.2" => 2023,
-            _ => throw new NotImplementedException(),
+            _ => throw new NotImplementedException()
         };
         return acarVarNum;
     }
+
     /// <summary>
-    /// 获取带cad版本号的dll
+    ///     获取带cad版本号的dll
     /// </summary>
     /// <param name="str">dll名字</param>
     /// <returns>dll的前面</returns>
@@ -764,15 +802,17 @@ public static class Env
     {
         return str + Acaop.Version.Major + ".dll";
     }
+
     #endregion
 
 
     #region cad变量功能延伸
+
     /// <summary>
-    /// 设置cad系统变量<br/>
-    /// 提供一个反序列化后,无cad异常输出的功能<br/>
-    /// 注意,您需要再此执行时候设置文档锁<br/>
-    /// 否则也将导致修改数据库异常<br/>
+    ///     设置cad系统变量<br />
+    ///     提供一个反序列化后,无cad异常输出的功能<br />
+    ///     注意,您需要再此执行时候设置文档锁<br />
+    ///     否则也将导致修改数据库异常<br />
     /// </summary>
     /// <param name="key"></param>
     /// <param name="value"></param>
@@ -780,7 +820,6 @@ public static class Env
     /// <exception cref="ArgumentNullException"></exception>
     public static object SetVarEx(string key, string value)
     {
-        
         var currentVar = GetVar(key);
 
         object valueType = currentVar.GetType().Name switch
@@ -789,18 +828,18 @@ public static class Env
             "Double" => double.Parse(value),
             "Int16" => short.Parse(value),
             "Int32" => int.Parse(value),
-            _ => throw new NotImplementedException(),
+            _ => throw new NotImplementedException()
         };
 
         // 相同的参数进行设置会发生一次异常
         if (!string.Equals(currentVar.ToString(), valueType.ToString(), StringComparison.CurrentCultureIgnoreCase))
-            Env.SetVar(key, valueType);
+            SetVar(key, valueType);
 
         return currentVar;
     }
 
     /// <summary>
-    /// 设置新系统变量,返回现有系统变量
+    ///     设置新系统变量,返回现有系统变量
     /// </summary>
     /// <param name="args">设置的变量词典</param>
     /// <returns>返回现有变量词典,然后下次就可以利用它进行设置回来了</returns>
@@ -821,25 +860,28 @@ public static class Env
             }
 
             // 判断是否为系统变量
-            var envstr = Env.GetEnv(item.Key);
+            var envstr = GetEnv(item.Key);
             if (!string.IsNullOrEmpty(envstr))
             {
-                Env.SetEnv(item.Key, item.Value);
+                SetEnv(item.Key, item.Value);
                 dict.Add(item.Key, envstr);
             }
         }
+
         return dict;
     }
+
     /// <summary>
-    /// 延迟更新图层锁定淡显状态
-    /// 在有锁定或解锁图层的命令的末尾使用
+    ///     延迟更新图层锁定淡显状态
+    ///     在有锁定或解锁图层的命令的末尾使用
     /// </summary>
     public static void DelayUpdateLayLockFade()
     {
         const string lfName = "LAYLOCKFADECTL";
-        int lf = Convert.ToInt32(Acaop.GetSystemVariable(lfName).ToString());
+        var lf = Convert.ToInt32(Acaop.GetSystemVariable(lfName).ToString());
         Acaop.SetSystemVariable(lfName, -lf);
         IdleAction.Add(() => Acaop.SetSystemVariable(lfName, lf));
     }
+
     #endregion
 }

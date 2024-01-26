@@ -102,8 +102,8 @@ internal static class SystemVariableChangedEvent
 public class SystemVariableChangedAttribute : Attribute
 {
     /// <summary>s
-    /// 系统变量修改时触发被标记的函数\n
-    /// \n返回值应为void
+    /// 系统变量修改时触发被标记的函数
+    /// 返回值应为void
     /// 参数不大于2个且只能为object和SystemVariableChangedEventArgs
     /// </summary>
     /// <param name="name">系统变量名</param>
