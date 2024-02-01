@@ -1,4 +1,4 @@
-﻿namespace IFoxCAD.Cad;
+namespace IFoxCAD.Cad;
 
 /// <summary>
 /// 二维解析类曲线转换为二维实体曲线扩展类
@@ -289,7 +289,7 @@ public static class Curve2dEx
                 knots,
                 weights,
                 0,
-                nc2d.Knots.Tolerance);
+                nc2d.Knots.Tolerance) { Type = SplineType.FitPoints };
     }
 
     #endregion NurbCurve2d
