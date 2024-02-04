@@ -15,56 +15,6 @@ public static class EntityBoundingInfo
     {
         return new(ext);
     }
-
-    // 包围盒外扩
-    //public static BoundingInfo? GetBoundingInfo(this Extents3d ext, double dist = 0)
-    //{
-    //  var p1 = ext.MinPoint.Offset(-dist, -dist);
-    //  var p2 = ext.MaxPoint.Offset(dist, dist);
-    //  var e = new Extents3d(p1, p2);
-    //  return new(e);
-    //}
-
-    /// <summary>
-    /// 获取实体包围盒
-    /// </summary>
-    /// <param name="ent">实体</param>
-    /// <returns>包围盒</returns>
-    static Extents3d? GetEntityBox(this Entity ent)
-    {
-        if (!ent.Bounds.HasValue)
-            return null;
-        //if (ent is BlockReference brf)
-        //  ext = brf.GeometryExtentsBestFit();
-
-        if (ent is Spline spl)
-            return spl.ToPolyline().GeometricExtents;
-
-        else if (ent is MText mtext)
-            return GetMTextBox(mtext);
-
-        else if (ent is Table table)
-        {
-          if(table.IsNewObject) 
-            table.GenerateLayout();
-
-            table.RecomputeTableBlock(true);
-            return table.GeometricExtents;
-        }
-
-        else if (ent is Dimension dim)
-        {
-           if(dim.IsNewObject)
-            dim.GenerateLayout(); // 新new的实体生成布局,即可获取包围盒
-
-            dim.RecomputeDimensionBlock(true);
-            return dim.GeometricExtents;
-        }
-        else
-            return ent.GeometricExtents;
-
-    }
-
     /// <summary>
     /// 获取多行文本的正交包围盒
     /// </summary>
@@ -72,24 +22,10 @@ public static class EntityBoundingInfo
     /// <returns>包围盒</returns>
     static Extents3d GetMTextBox(MText mText)
     {
-        return mText.GetMTextBoxCorners().ToExtents3D();
-    }
-
-    /// <summary>
-    /// 获取点集包围盒
-    /// </summary>
-    /// <param name="pts">Point3d点集</param>
-    /// <returns>包围盒</returns>
-    static Extents3d ToExtents3D(this IEnumerable<Point3d> pts)
-    {
         var ext = new Extents3d();
-        foreach (Point3d pt in pts)
-        {
-            ext.AddPoint(pt);
-        }
+        GetMTextBoxCorners(mText).ForEach(p=>ext.AddPoint(p));
         return ext;
     }
-
     /// <summary>
     /// 获取块的包围盒
     /// </summary>
@@ -133,13 +69,15 @@ public static class EntityBoundingInfo
                 {
                     if (ext.IsEmptyExt())
                     {
-                        var e = ent1.GetEntityBox();
+                        //var e = ent1.GetEntityBox();
+                        var e = GetEntityBoxEx(ent1);
                         if (e.HasValue)
                             ext = e.Value;
                     }
                     else
                     {
-                        var e = ent1.GetEntityBox();
+                        //var e = ent1.GetEntityBox();
+                        var e = GetEntityBoxEx(ent1);
                         if (e.HasValue)
                             ext.AddExtents(e.Value);
                     }
@@ -147,7 +85,8 @@ public static class EntityBoundingInfo
             }
             else
             {
-                var e = en.GetEntityBox();
+                //var e = en.GetEntityBox();
+                var e = GetEntityBoxEx(en);
                 if (e.HasValue)
                 {
                     Extents3d entext = e.Value;
@@ -167,7 +106,7 @@ public static class EntityBoundingInfo
     /// </summary>
     /// <param name="mtext">多行文本</param>
     /// <returns>最小包围盒4点坐标</returns>
-    public static Point3d[] GetMTextBoxCorners(this MText mtext)
+    public static Point3d[] GetMTextBoxCorners(MText mtext)
     {
         double width = mtext.ActualWidth;
         double height = mtext.ActualHeight;
@@ -233,16 +172,44 @@ public static class EntityBoundingInfo
     /// <returns>包围盒</returns>
     public static Extents3d? GetEntityBoxEx(Entity ent)
     {
-        if (ent is BlockReference block)
+        Extents3d? ext = null;
+        switch (ent)
         {
-            Extents3d blockExt = default;
-            var mat = Matrix3d.Identity;
-            block!.GetBlockBox(ref blockExt, ref mat);
-            if (blockExt.IsEmptyExt())
-                return null;
-            return blockExt;
+            case Spline spl:
+                ext = spl.ToPolyline().GeometricExtents;
+                break;
+            case MText mtext:
+                ext = GetMTextBox(mtext);
+                break;
+            case Table table:
+                if (table.IsNewObject)
+                    table.GenerateLayout();
+                table.RecomputeTableBlock(true);
+                ext = table.GeometricExtents;
+                break;
+            case Dimension dim:
+                if (dim.IsNewObject)
+                    dim.GenerateLayout(); // 新new的实体生成布局,即可获取包围盒
+                dim.RecomputeDimensionBlock(true);
+                ext = dim.GeometricExtents;
+                break;
+            case BlockReference block:
+                Extents3d blockExt = default;
+                var mat = Matrix3d.Identity;
+                block!.GetBlockBox(ref blockExt, ref mat);
+                if (!blockExt.IsEmptyExt())
+                  ext = blockExt;
+                break;
+            default:
+                if (ent.Bounds.HasValue)
+                    ext = ent.GeometricExtents;
+                break;
         }
-        return GetEntityBox(ent);
+        if (ext != null)
+            //实体不是点时，pass
+            if (ent is not DBPoint && ext.Value.MinPoint.IsEqualTo(ext.Value.MaxPoint))
+                return null;
+        return ext;
     }
 
     /// <summary>
