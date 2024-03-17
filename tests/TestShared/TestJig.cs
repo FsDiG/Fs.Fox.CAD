@@ -1,4 +1,4 @@
-﻿namespace Test;
+namespace Test;
 
 using System.Windows.Forms;
 
@@ -69,7 +69,7 @@ public class Commands_Jig
             // 不要这样做: jig.SetOptions(closestPt) 而是使用底层暴露
             options!.BasePoint = closestPt;
 
-            // 需要避免重复加入同一个关键字
+            // 允许在循环中替换关键字,需要避免重复加入同一个关键字
             if (!options.Keywords.Contains("A"))
                 options.Keywords.Add("A");
 
@@ -82,10 +82,13 @@ public class Commands_Jig
         });
 
         options = jig.SetOptions(per.PickedPoint);
-
+        
+        // 在这里加入关键字
         // 如果没有这个,那么空格只会是 PromptStatus.None 而不是 PromptStatus.Keyword
         // options.Keywords.Add(" ", " ", "空格结束啊");
         // jig.SetSpaceIsKeyword();
+        options.Keywords.Add("A","A","A");
+
 
         bool flag = true;
         while (flag)
