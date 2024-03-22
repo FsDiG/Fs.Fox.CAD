@@ -1,4 +1,5 @@
 using System.Security;
+
 // ReSharper disable StringLiteralTypo
 
 namespace IFoxCAD.Cad;
@@ -826,7 +827,7 @@ public static class Env
 
         if (valueType is null)
             return null;
-        
+
         // 相同的参数进行设置会发生一次异常
         if (!string.Equals(currentVar.ToString(), valueType.ToString(), StringComparison.CurrentCultureIgnoreCase))
             SetVar(key, valueType);

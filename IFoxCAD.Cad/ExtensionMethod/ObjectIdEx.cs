@@ -6,6 +6,7 @@
 public static class ObjectIdEx
 {
     #region GetObject
+
     /// <summary>
     /// 获取指定类型对象
     /// </summary>
@@ -16,9 +17,9 @@ public static class ObjectIdEx
     /// <param name="openLockedLayer">是否打开锁定图层对象,默认为不打开</param>
     /// <returns>指定类型对象</returns>
     public static T? GetObject<T>(this ObjectId id,
-                                 OpenMode openMode = OpenMode.ForRead,
-                                 bool openErased = false,
-                                 bool openLockedLayer = false) where T : DBObject
+        OpenMode openMode = OpenMode.ForRead,
+        bool openErased = false,
+        bool openLockedLayer = false) where T : DBObject
     {
         var tr = DBTrans.GetTopTransaction(id.Database);
         return tr.GetObject(id, openMode, openErased, openLockedLayer) as T;
@@ -35,15 +36,16 @@ public static class ObjectIdEx
     /// <returns>指定类型对象集合</returns>
     [DebuggerStepThrough]
     public static IEnumerable<T> GetObject<T>(this IEnumerable<ObjectId> ids,
-                                               OpenMode openMode = OpenMode.ForRead,
-                                               bool openErased = false,
-                                               bool openLockedLayer = false) where T : DBObject
+        OpenMode openMode = OpenMode.ForRead,
+        bool openErased = false,
+        bool openLockedLayer = false) where T : DBObject
     {
         var rxc = RXObject.GetClass(typeof(T));
         return ids.Where(id => id.ObjectClass.IsDerivedFrom(rxc))
-                  .Select(id => id.GetObject<T>(openMode, openErased, openLockedLayer))
-                  .OfType<T>();
+            .Select(id => id.GetObject<T>(openMode, openErased, openLockedLayer))
+            .OfType<T>();
     }
+
     /// <summary>
     /// 获取指定类型对象集合
     /// </summary>
@@ -61,6 +63,7 @@ public static class ObjectIdEx
     {
         return ids.Cast<ObjectId>().GetObject<T>(openMode, openErased, openLockedLayer);
     }
+
     /// <summary>
     /// 返回符合类型的对象id
     /// </summary>
@@ -79,6 +82,7 @@ public static class ObjectIdEx
 
         return ids.Where(id => id.ObjectClass.IsDerivedFrom(rxc));
     }
+
     #endregion GetObject
 
     /// <summary>
@@ -91,6 +95,7 @@ public static class ObjectIdEx
     {
         return db.GetObjectId(handleString.ConvertToHandle());
     }
+
     /// <summary>
     /// 根据对象句柄获取对象ObjectId
     /// </summary>
@@ -99,8 +104,9 @@ public static class ObjectIdEx
     /// <returns>对象的ObjectId</returns>
     public static ObjectId GetObjectId(this Database db, Handle? handle)
     {
-        return handle is not null && db.TryGetObjectId(handle.Value, out ObjectId id) ? id : ObjectId.Null;
+        return handle is not null && db.TryGetObjectId(handle.Value, out var id) ? id : ObjectId.Null;
     }
+
     /// <summary>
     /// 句柄字符串转句柄
     /// </summary>
@@ -108,8 +114,9 @@ public static class ObjectIdEx
     /// <returns>句柄</returns>
     public static Handle? ConvertToHandle(this string handleString)
     {
-        return long.TryParse(handleString, NumberStyles.HexNumber, null, out long l) ? new Handle(l) : null;
+        return long.TryParse(handleString, NumberStyles.HexNumber, null, out var l) ? new Handle(l) : null;
     }
+
     /// <summary>
     /// id是否有效,未被删除
     /// </summary>
@@ -132,7 +139,7 @@ public static class ObjectIdEx
             using (ent.ForWrite())
             {
                 ent.Erase();
-            }// 第一种读写权限自动转换写法
+            } // 第一种读写权限自动转换写法
             // Env.Editor.Regen();
         }
     }

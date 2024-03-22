@@ -15,16 +15,18 @@ public static class DBObjectEx
         ArgumentNullEx.ThrowIfNull(blk);
         if (blk.IsDynamicBlock)
         {
-            var btrid = blk.DynamicBlockTableRecord;
-            var tr = btrid.Database.TransactionManager.TopTransaction;
+            var btrId = blk.DynamicBlockTableRecord;
+            var tr = btrId.Database.TransactionManager.TopTransaction;
             ArgumentNullEx.ThrowIfNull(tr);
-            var btr = (BlockTableRecord)tr.GetObject(btrid);
+            var btr = (BlockTableRecord)tr.GetObject(btrId);
             return btr.Name;
         }
+
         return blk.Name;
     }
 
     #region Linq
+
     /// <summary>
     /// 删除数据库对象
     /// </summary>
@@ -41,9 +43,11 @@ public static class DBObjectEx
             }
         }
     }
+
     #endregion
 
     #region Xdata扩展
+
     /// <summary>
     /// 删除扩展数据
     /// </summary>
@@ -52,21 +56,22 @@ public static class DBObjectEx
     /// <param name="dxfCode">要删除数据的组码</param>
     public static void RemoveXData(this DBObject obj, string appName, DxfCode dxfCode)
     {
-        if (obj.XData == null)
+        if (obj.XData is null)
             return;
         XDataList data = obj.XData;
 
         // 移除指定App的扩展
-        var indexs = data.GetXdataAppIndex(appName, new DxfCode[] { dxfCode });
-        if (indexs.Count == 0)
+        var indexes = data.GetXdataAppIndex(appName, new DxfCode[] { dxfCode });
+        if (indexes.Count == 0)
             return;
 
-        for (int i = indexs.Count - 1; i >= 0; i--)
-            data.RemoveAt(indexs[i]);
+        for (var i = indexes.Count - 1; i >= 0; i--)
+            data.RemoveAt(indexes[i]);
 
         using (obj.ForWrite())
             obj.XData = data;
     }
+
     /// <summary>
     /// 删除扩展数据
     /// </summary>
@@ -74,13 +79,14 @@ public static class DBObjectEx
     /// <param name="appName">应用程序名称</param>
     public static void RemoveXData(this DBObject obj, string appName)
     {
-        if (obj.XData == null)
+        if (obj.XData is null)
             return;
 
         // 直接赋值进去等于清空名称
         using (obj.ForWrite())
             obj.XData = new XDataList() { { 1001, appName } };
     }
+
     /// <summary>
     /// 克隆对象
     /// </summary>
@@ -92,29 +98,31 @@ public static class DBObjectEx
     {
         return ent.Clone() is T tEnt ? tEnt : throw new ArgumentException(nameof(CloneEx) + "克隆出错");
     }
+
     /// <summary>
     /// 修改扩展数据
     /// </summary>
     /// <param name="obj">对象实例</param>
     /// <param name="appName">应用程序名称</param>
     /// <param name="dxfCode">要修改数据的组码</param>
-    /// <param name="newvalue">新的数据</param>
-    public static void ChangeXData(this DBObject obj, string appName, DxfCode dxfCode, object newvalue)
+    /// <param name="newValue">新的数据</param>
+    public static void ChangeXData(this DBObject obj, string appName, DxfCode dxfCode, object newValue)
     {
-        if (obj.XData == null)
+        if (obj.XData is null)
             return;
         XDataList data = obj.XData;
 
-        var indexs = data.GetXdataAppIndex(appName, new DxfCode[] { dxfCode });
-        if (indexs.Count == 0)
+        var indexes = data.GetXdataAppIndex(appName, new DxfCode[] { dxfCode });
+        if (indexes.Count == 0)
             return;
 
-        for (int i = indexs.Count - 1; i >= 0; i--)
-            data[indexs[i]] = new TypedValue((short)dxfCode, newvalue);
+        for (var i = indexes.Count - 1; i >= 0; i--)
+            data[indexes[i]] = new TypedValue((short)dxfCode, newValue);
 
         using (obj.ForWrite())
             obj.XData = data;
     }
+
     #endregion
 
     #region 读写模式切换
@@ -128,18 +136,19 @@ public static class DBObjectEx
     /// <param name="action">操作委托</param>
     public static void ForWrite<T>(this T obj, Action<T> action) where T : DBObject
     {
-        var _isNotifyEnabled = obj.IsNotifyEnabled;
-        var _isWriteEnabled = obj.IsWriteEnabled;
-        if (_isNotifyEnabled)
+        var isNotifyEnabled = obj.IsNotifyEnabled;
+        var isWriteEnabled = obj.IsWriteEnabled;
+        if (isNotifyEnabled)
             obj.UpgradeFromNotify();
-        else if (!_isWriteEnabled)
+        else if (!isWriteEnabled)
             obj.UpgradeOpen();
 
+        // ReSharper disable once ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
         action?.Invoke(obj);
 
-        if (_isNotifyEnabled)
-            obj.DowngradeToNotify(_isWriteEnabled);
-        else if (!_isWriteEnabled)
+        if (isNotifyEnabled)
+            obj.DowngradeToNotify(isWriteEnabled);
+        else if (!isWriteEnabled)
             obj.DowngradeOpen();
     }
 
@@ -190,5 +199,6 @@ public static class DBObjectEx
         #endregion IDisposable 成员
     }
 #line default
+
     #endregion
 }

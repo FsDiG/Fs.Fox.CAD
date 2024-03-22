@@ -21,6 +21,7 @@ public static class TransactionEx
     {
         return tr.GetObject(id, openMode, openErased, openLockedLayer);
     }
+
     /// <summary>
     /// 根据对象id获取图元对象
     /// </summary>

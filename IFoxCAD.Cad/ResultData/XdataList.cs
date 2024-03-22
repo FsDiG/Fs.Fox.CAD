@@ -6,18 +6,25 @@
 public class XDataList : TypedValueList
 {
     #region 构造函数
-    /// <summary>
-    /// 扩展数据封装类
-    /// </summary>
-    public XDataList() { }
 
     /// <summary>
     /// 扩展数据封装类
     /// </summary>
-    public XDataList(IEnumerable<TypedValue> values) : base(values) { }
+    public XDataList()
+    {
+    }
+
+    /// <summary>
+    /// 扩展数据封装类
+    /// </summary>
+    public XDataList(IEnumerable<TypedValue> values) : base(values)
+    {
+    }
+
     #endregion
 
     #region 添加数据
+
     /// <summary>
     /// 添加数据
     /// </summary>
@@ -47,8 +54,9 @@ public class XDataList : TypedValueList
     /// <param name="appName">注册名</param>
     public bool Contains(string appName)
     {
-        bool result = false;
-        RangeTask(appName, (_, state, _) => {
+        var result = false;
+        RangeTask(appName, (_, state, _) =>
+        {
             result = true;
             state.Break();
         });
@@ -62,8 +70,9 @@ public class XDataList : TypedValueList
     /// <param name="value">内容</param>
     public bool Contains(string appName, object value)
     {
-        bool result = false;
-        RangeTask(appName, (tv, state, _) => {
+        var result = false;
+        RangeTask(appName, (tv, state, _) =>
+        {
             if (tv.Value.Equals(value))
             {
                 result = true;
@@ -82,7 +91,8 @@ public class XDataList : TypedValueList
     public List<int> GetXdataAppIndex(string appName, DxfCode[] dxfCodes)
     {
         List<int> indexes = new();
-        RangeTask(appName, (tv, _, i) => {
+        RangeTask(appName, (tv, _, i) =>
+        {
             if (dxfCodes.Contains((DxfCode)tv.TypeCode))
                 indexes.Add(i);
         });
@@ -98,8 +108,8 @@ public class XDataList : TypedValueList
     {
         LoopState state = new();
         // 在名称和名称之间找
-        int appNameIndex = -1;
-        for (int i = 0; i < this.Count; i++)
+        var appNameIndex = -1;
+        for (var i = 0; i < this.Count; i++)
         {
             if (this[i].TypeCode == (short)DxfCode.ExtendedDataRegAppName)
             {
@@ -108,7 +118,8 @@ public class XDataList : TypedValueList
                     appNameIndex = i;
                     continue;
                 }
-                if (appNameIndex != -1)//找到了下一个名称
+
+                if (appNameIndex != -1) //找到了下一个名称
                     break;
             }
 
@@ -122,25 +133,30 @@ public class XDataList : TypedValueList
     #endregion
 
     #region 转换器
+
     /// <summary>
     /// ResultBuffer 隐式转换到 XDataList
     /// </summary>
     /// <param name="buffer">ResultBuffer 实例</param>
     public static implicit operator XDataList(ResultBuffer buffer) => new(buffer.AsArray());
+
     /// <summary>
     /// XDataList 隐式转换到 TypedValue 数组
     /// </summary>
     /// <param name="values">TypedValueList 实例</param>
     public static implicit operator TypedValue[](XDataList values) => values.ToArray();
+
     /// <summary>
     /// XDataList 隐式转换到 ResultBuffer
     /// </summary>
     /// <param name="values">TypedValueList 实例</param>
     public static implicit operator ResultBuffer(XDataList values) => new(values);
+
     /// <summary>
     /// TypedValue 数组隐式转换到 XDataList
     /// </summary>
     /// <param name="values">TypedValue 数组</param>
     public static implicit operator XDataList(TypedValue[] values) => new(values);
+
     #endregion
 }

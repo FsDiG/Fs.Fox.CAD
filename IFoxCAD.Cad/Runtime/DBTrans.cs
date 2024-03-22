@@ -504,18 +504,6 @@ public sealed class DBTrans : IDisposable
         return Transaction.GetObject(id, openMode, openErased, openLockedLayer) as T;
     }
 
-    /// <summary>
-    /// 根据对象句柄字符串获取对象Id
-    /// </summary>
-    /// <param name="handleString">句柄字符串</param>
-    /// <returns>对象id</returns>
-    public ObjectId GetObjectId(string handleString)
-    {
-        // ToDo 这个函数考虑移走
-        var handle = new Handle(Convert.ToInt64(handleString, 16));
-        return Database.TryGetObjectId(handle, out var id) ? id : ObjectId.Null;
-    }
-
     #endregion
 
     #region 前台后台任务

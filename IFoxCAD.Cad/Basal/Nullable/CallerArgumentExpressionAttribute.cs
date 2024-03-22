@@ -18,5 +18,6 @@ internal sealed class CallerArgumentExpressionAttribute : Attribute
     /// <summary>
     /// 获取其表达式应捕获为字符串的参数的名称。
     /// </summary>
+    // ReSharper disable once UnusedAutoPropertyAccessor.Global
     public string ParameterName { get; }
 }
