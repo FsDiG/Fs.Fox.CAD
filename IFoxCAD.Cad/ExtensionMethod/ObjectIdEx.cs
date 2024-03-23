@@ -10,6 +10,22 @@ public static class ObjectIdEx
     /// <summary>
     /// 获取指定类型对象
     /// </summary>
+    /// <param name="id">对象id</param>
+    /// <param name="openMode">打开模式</param>
+    /// <param name="openErased">是否打开已删除对象,默认为不打开</param>
+    /// <param name="openLockedLayer">是否打开锁定图层对象,默认为不打开</param>
+    /// <returns>指定类型对象</returns>
+    public static DBObject GetObject(this ObjectId id,
+        OpenMode openMode = OpenMode.ForRead,
+        bool openErased = false,
+        bool openLockedLayer = false)
+    {
+        var tr = DBTrans.GetTopTransaction(id.Database);
+        return tr.GetObject(id, openMode, openErased, openLockedLayer);
+    }
+    /// <summary>
+    /// 获取指定类型对象
+    /// </summary>
     /// <typeparam name="T">指定的泛型</typeparam>
     /// <param name="id">对象id</param>
     /// <param name="openMode">打开模式</param>

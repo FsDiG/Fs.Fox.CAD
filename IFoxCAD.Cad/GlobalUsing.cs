@@ -42,9 +42,10 @@ global using System.Collections.ObjectModel;
 // 系统引用
 global using System.Text.RegularExpressions;
 global using System.Runtime.CompilerServices;
-global using System.Diagnostics;
 global using System.Windows.Input;
 global using System.Globalization;
+global using System.Diagnostics;
+
 // global using System.Windows.Data;
 global using System.Net;
 global using System.Diagnostics.CodeAnalysis;

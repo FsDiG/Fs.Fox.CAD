@@ -5,25 +5,6 @@
 /// </summary>
 public static class DBObjectEx
 {
-    /// <summary>
-    /// 获取块的有效名字
-    /// </summary>
-    /// <param name="blk">块参照</param>
-    /// <returns>名字</returns>
-    public static string GetBlockName(this BlockReference blk)
-    {
-        ArgumentNullEx.ThrowIfNull(blk);
-        if (blk.IsDynamicBlock)
-        {
-            var btrId = blk.DynamicBlockTableRecord;
-            var tr = btrId.Database.TransactionManager.TopTransaction;
-            ArgumentNullEx.ThrowIfNull(tr);
-            var btr = (BlockTableRecord)tr.GetObject(btrId);
-            return btr.Name;
-        }
-
-        return blk.Name;
-    }
 
     #region Linq
 

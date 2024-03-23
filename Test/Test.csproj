@@ -2,8 +2,18 @@
 
     <PropertyGroup>
         <TargetFramework>net48</TargetFramework>
+        <ImplicitUsings>true</ImplicitUsings>
         <LangVersion>preview</LangVersion>
         <Nullable>enable</Nullable>
     </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\IFoxCAD.Cad\IFoxCAD.Cad.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoCAD.NET" Version="20.0.0" ExcludeAssets="runtime">
+      </PackageReference>
+    </ItemGroup>
 
 </Project>
