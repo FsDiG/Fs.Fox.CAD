@@ -65,13 +65,14 @@ public static class BlockReferenceEx
     /// <summary>
     /// 更新动态块属性值
     /// </summary>
-    public static void ChangeDynamicBlockProperty<T>(this BlockReference blockReference,
+    public static void ChangeBlockProperty<T>(this BlockReference blockReference,
         Dictionary<string, T> propertyNameValues)
     {
         using (blockReference.ForWrite())
         {
             foreach (DynamicBlockReferenceProperty item in blockReference.DynamicBlockReferencePropertyCollection)
             {
+                // TODO 这里太烂了，应该判断类型
                 if (propertyNameValues.TryGetValue(item.PropertyName, out var value))
                 {
                     item.Value = value;
