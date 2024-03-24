@@ -120,6 +120,16 @@ public static class PointEx
         return new(pt.X, pt.Y, z);
     }
 
+    /// <summary>
+    /// 投影到指定Z值
+    /// </summary>
+    /// <param name="pt">点</param>
+    /// <param name="z">新z值</param>
+    /// <returns>投影后的坐标</returns>
+    public static Point3d OrthoProject(this Point3d pt, double z)
+    {
+        return new Point3d(pt.X, pt.Y, z);
+    }
 
     /// <summary>
     /// 根据世界坐标计算用户坐标
