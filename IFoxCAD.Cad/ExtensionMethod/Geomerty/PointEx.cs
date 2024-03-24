@@ -24,7 +24,7 @@ public static class PointEx
     }
 
     // 为了频繁触发所以弄个缓存
-    static Plane? _planeCache;
+    private static Plane? _planeCache;
 
     /// <summary>
     /// 两点计算弧度范围0到2Pi
