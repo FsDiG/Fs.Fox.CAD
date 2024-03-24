@@ -15,7 +15,7 @@ public static class BlockReferenceEx
     /// </summary>
     /// <param name="brf">块参照</param>
     /// <param name="pt3ds">裁剪多边形点表</param>
-    public static void ClipBlockRef(this BlockReference brf, IEnumerable<Point3d> pt3ds)
+    public static void XClip(this BlockReference brf, IEnumerable<Point3d> pt3ds)
     {
         var mat = brf.BlockTransform.Inverse();
         var pts =
@@ -36,7 +36,7 @@ public static class BlockReferenceEx
     /// <param name="brf">块参照</param>
     /// <param name="pt1">第一角点</param>
     /// <param name="pt2">第二角点</param>
-    public static void ClipBlockRef(this BlockReference brf, Point3d pt1, Point3d pt2)
+    public static void XClip(this BlockReference brf, Point3d pt1, Point3d pt2)
     {
         var mat = brf.BlockTransform.Inverse();
         pt1 = pt1.TransformBy(mat);
