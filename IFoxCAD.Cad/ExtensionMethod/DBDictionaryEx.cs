@@ -5,20 +5,22 @@
 /// </summary>
 public static class DBDictionaryEx
 {
+    #region Get Set
+
     /// <summary>
     /// 获取字典里的全部对象
     /// </summary>
     /// <typeparam name="T">对象类型的泛型</typeparam>
     /// <param name="dict">字典</param>
     /// <returns>对象迭代器</returns>
-    [System.Diagnostics.DebuggerStepThrough]
+    [DebuggerStepThrough]
     public static IEnumerable<T> GetAllObjects<T>(this DBDictionary dict) where T : DBObject
     {
         var tr = DBTrans.GetTopTransaction(dict.Database);
         foreach (var e in dict)
         {
-            if (tr.GetObject(e.Value) is T tobj)
-                yield return tobj;
+            if (tr.GetObject(e.Value) is T tObj)
+                yield return tObj;
         }
     }
 
@@ -123,6 +125,8 @@ public static class DBDictionaryEx
         }
     }
 
+    #endregion
+
     #region XRecord
 
     /// <summary>
@@ -133,7 +137,12 @@ public static class DBDictionaryEx
     /// <returns>扩展数据</returns>
     public static XRecordDataList? GetXRecord(this DBDictionary dict, string key)
     {
-        return dict.GetData(key) is Xrecord xr ? xr.Data : null;
+        if (dict.GetData(key) is Xrecord { Data: not null } xr)
+        {
+            return xr.Data;
+        }
+
+        return null;
     }
 
     /// <summary>
@@ -188,15 +197,15 @@ public static class DBDictionaryEx
         foreach (var t in colTypes)
             table.AppendColumn(t.Value, t.Key);
 
-        var ncol = colTypes.Count;
-        var types = new CellType[ncol];
+        var nCol = colTypes.Count;
+        var types = new CellType[nCol];
         colTypes.Values.CopyTo(types, 0);
 
-        var nrow = content.GetLength(0);
-        for (int i = 0; i < nrow; i++)
+        var nRow = content.GetLength(0);
+        for (int i = 0; i < nRow; i++)
         {
             DataCellCollection row = new();
-            for (int j = 0; j < ncol; j++)
+            for (int j = 0; j < nCol; j++)
             {
                 var cell = new DataCell();
                 cell.SetValue(types[j], content[i, j]);
@@ -280,7 +289,7 @@ public static class DBDictionaryEx
         bool createSubDictionary,
         IEnumerable<string> dictNames)
     {
-        DBDictionary? newdict = null;
+        DBDictionary? newDict = null;
 
         if (createSubDictionary)
         {
@@ -291,14 +300,14 @@ public static class DBDictionaryEx
             {
                 if (dict.Contains(name))
                 {
-                    newdict = dict.GetData(name) as DBDictionary;
+                    newDict = dict.GetData(name) as DBDictionary;
                 }
                 else
                 {
                     DBDictionary subDict = new();
                     dict.SetData(name, subDict);
-                    newdict = subDict;
-                    newdict.TreatElementsAsHard = true;
+                    newDict = subDict;
+                    newDict.TreatElementsAsHard = true;
                 }
             }
         }
@@ -307,28 +316,14 @@ public static class DBDictionaryEx
             foreach (string name in dictNames)
             {
                 if (dict.Contains(name))
-                    newdict = dict.GetData<DBDictionary>(name);
+                    newDict = dict.GetData<DBDictionary>(name);
                 else
                     return null;
             }
         }
 
-        return newdict;
+        return newDict;
     }
-
-
-    ///// <summary>
-    ///// 获取对象扩展字典的子字典
-    ///// </summary>
-    ///// <param name="obj">对象</param>
-    ///// <param name="tr">事务</param>
-    ///// <param name="createSubDictionary">是否创建子字典</param>
-    ///// <param name="dictNames">键值列表</param>
-    ///// <returns>字典</returns>
-    // public static DBDictionary GetSubDictionary(this DBObject obj, bool createSubDictionary, params string[] dictNames)
-    // {
-    //    return obj.GetXDictionary().GetSubDictionary(createSubDictionary, dictNames);
-    // }
 
     #endregion
 
