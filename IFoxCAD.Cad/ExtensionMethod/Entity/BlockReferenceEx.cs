@@ -63,26 +63,69 @@ public static class BlockReferenceEx
     #region 属性
 
     /// <summary>
-    /// 更新动态块属性值
+    /// 更新动态块参数值
     /// </summary>
-    public static void ChangeBlockProperty<T>(this BlockReference blockReference,
-        Dictionary<string, T> propertyNameValues)
+    public static bool ChangeBlockProperty<T>(this BlockReference blockReference,
+        Dictionary<string, object> propertyNameValues)
     {
+        if (!blockReference.IsDynamicBlock)
+            return false;
         using (blockReference.ForWrite())
         {
             foreach (DynamicBlockReferenceProperty item in blockReference.DynamicBlockReferencePropertyCollection)
             {
-                // TODO 这里太烂了，应该判断类型
                 if (propertyNameValues.TryGetValue(item.PropertyName, out var value))
                 {
-                    item.Value = value;
+                    item.Value = item.PropertyTypeCode switch
+                    {
+                        1 => Convert.ToDouble(value),
+                        2 => Convert.ToInt32(value),
+                        3 => Convert.ToInt16(value),
+                        4 => Convert.ToInt16(value),
+                        5 => Convert.ToString(value),
+                        13 => Convert.ToInt64(value),
+                        _ => value,
+                    };
                 }
             }
         }
+
+        return true;
     }
 
     /// <summary>
-    /// 更新普通块的属性值
+    /// 更新动态块参数值
+    /// </summary>
+    public static bool ChangeBlockProperty<T>(this BlockReference blockReference,
+        string propName, object value)
+    {
+        if (!blockReference.IsDynamicBlock)
+            return false;
+        using (blockReference.ForWrite())
+        {
+            foreach (DynamicBlockReferenceProperty item in blockReference.DynamicBlockReferencePropertyCollection)
+            {
+                if (item.PropertyName != propName)
+                    continue;
+                item.Value = item.PropertyTypeCode switch
+                {
+                    1 => Convert.ToDouble(value),
+                    2 => Convert.ToInt32(value),
+                    3 => Convert.ToInt16(value),
+                    4 => Convert.ToInt16(value),
+                    5 => Convert.ToString(value),
+                    13 => Convert.ToInt64(value),
+                    _ => value,
+                };
+                break;
+            }
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// 更新属性块的属性值
     /// </summary>
     public static void ChangeBlockAttribute(this BlockReference blockReference, Dictionary<string, string> propertyNameValues)
     {
@@ -109,34 +152,6 @@ public static class BlockReferenceEx
                 }
             }
         }
-    }
-
-    /// <summary>
-    /// 获取嵌套块的位置(wcs)
-    /// </summary>
-    /// <param name="parentBlockRef">父块</param>
-    /// <param name="nestedBlockName">子块名</param>
-    /// <returns>子块的位置</returns>
-    /// <exception cref="ArgumentException"></exception>
-    public static Point3d? GetNestedBlockPosition(this BlockReference parentBlockRef, string nestedBlockName)
-    {
-        var tr = DBTrans.GetTopTransaction(parentBlockRef.Database);
-
-        var btr = tr.GetObject<BlockTableRecord>(parentBlockRef.BlockTableRecord);
-        if (btr == null) return null;
-        foreach (var id in btr)
-        {
-            if (id.ObjectClass.Name == "AcDbBlockReference")
-            {
-                var nestedBlockRef = tr.GetObject<BlockReference>(id);
-                if (nestedBlockRef?.Name == nestedBlockName)
-                {
-                    return nestedBlockRef.Position.TransformBy(parentBlockRef.BlockTransform);
-                }
-            }
-        }
-
-        return null;
     }
 
     /// <summary>
@@ -179,6 +194,35 @@ public static class BlockReferenceEx
         }
 
         return blk.Name;
+    }
+
+
+    /// <summary>
+    /// 获取嵌套块的位置(wcs)
+    /// </summary>
+    /// <param name="parentBlockRef">父块</param>
+    /// <param name="nestedBlockName">子块名</param>
+    /// <returns>子块的位置</returns>
+    /// <exception cref="ArgumentException"></exception>
+    public static Point3d? GetNestedBlockPosition(this BlockReference parentBlockRef, string nestedBlockName)
+    {
+        var tr = DBTrans.GetTopTransaction(parentBlockRef.Database);
+
+        var btr = tr.GetObject<BlockTableRecord>(parentBlockRef.BlockTableRecord);
+        if (btr == null) return null;
+        foreach (var id in btr)
+        {
+            if (id.ObjectClass.Name == "AcDbBlockReference")
+            {
+                var nestedBlockRef = tr.GetObject<BlockReference>(id);
+                if (nestedBlockRef?.Name == nestedBlockName)
+                {
+                    return nestedBlockRef.Position.TransformBy(parentBlockRef.BlockTransform);
+                }
+            }
+        }
+
+        return null;
     }
 
     /// <summary>
