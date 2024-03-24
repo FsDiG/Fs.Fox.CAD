@@ -29,7 +29,7 @@ public static class AutoReg
         var regApps = appKey.GetSubKeyNames();
         if (!regApps.Contains(info.Name))
             return false;
-        // 20220409 bug:文件名相同,路径不同,需要判断路径
+        // 20220409 文件名相同,路径不同,需要判断路径
         var subKey = appKey.OpenSubKey(info.Name);
         return string.Equals(subKey?.GetValue("LOADER")?.ToString(), info.Loader, StringComparison.CurrentCultureIgnoreCase);
     }
