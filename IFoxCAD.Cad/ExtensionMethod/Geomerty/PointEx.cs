@@ -267,4 +267,85 @@ public static class PointEx
     }
 
     #endregion
+
+    #region 包围盒
+
+    /// <summary>
+    /// 获取矩形4个3d角点(左下起，正方向)
+    /// </summary>
+    /// <param name="extents3d">包围盒</param>
+    /// <param name="z">z轴坐标</param>
+    /// <returns>点表</returns>
+    public static List<Point3d> GetRecPoint3ds(this Extents3d extents3d, double z = 0)
+    {
+        var xMin = extents3d.MinPoint.X;
+        var xMax = extents3d.MaxPoint.X;
+        var yMin = extents3d.MinPoint.Y;
+        var yMax = extents3d.MaxPoint.Y;
+        var pt1 = new Point3d(xMin, yMin, z);
+        var pt2 = new Point3d(xMax, yMin, z);
+        var pt3 = new Point3d(xMax, yMax, z);
+        var pt4 = new Point3d(xMin, yMax, z);
+        return [pt1, pt2, pt3, pt4];
+    }
+
+    /// <summary>
+    /// 获取矩形4个2d角点(左下起，正方向)
+    /// </summary>
+    /// <param name="extents3d">包围盒</param>
+    /// <returns>点表</returns>
+    public static List<Point2d> GetRecPoint2ds(this Extents3d extents3d)
+    {
+        var xMin = extents3d.MinPoint.X;
+        var xMax = extents3d.MaxPoint.X;
+        var yMin = extents3d.MinPoint.Y;
+        var yMax = extents3d.MaxPoint.Y;
+        var pt1 = new Point2d(xMin, yMin);
+        var pt2 = new Point2d(xMax, yMin);
+        var pt3 = new Point2d(xMax, yMax);
+        var pt4 = new Point2d(xMin, yMax);
+        return [pt1, pt2, pt3, pt4];
+    }
+
+    /// <summary>
+    /// 获取矩形4个角3d点(左下起，正方向)
+    /// </summary>
+    /// <param name="corner1">角1</param>
+    /// <param name="corner2">角2</param>
+    /// <param name="z">z轴坐标</param>
+    /// <returns>点表</returns>
+    public static List<Point3d> GetRecPoint3ds(this Point3d corner1, Point3d corner2, double z = 0)
+    {
+        var xMin = Math.Min(corner1.X, corner2.X);
+        var xMax = Math.Max(corner1.X, corner2.X);
+        var yMin = Math.Min(corner1.Y, corner2.Y);
+        var yMax = Math.Max(corner1.Y, corner2.Y);
+        var pt1 = new Point3d(xMin, yMin, z);
+        var pt2 = new Point3d(xMax, yMin, z);
+        var pt3 = new Point3d(xMax, yMax, z);
+        var pt4 = new Point3d(xMin, yMax, z);
+        return [pt1, pt2, pt3, pt4];
+    }
+
+    /// <summary>
+    /// 获取矩形4个角3d点(左下起，正方向)
+    /// </summary>
+    /// <param name="corner1">角1</param>
+    /// <param name="corner2">角2</param>
+    /// <param name="z">z轴坐标</param>
+    /// <returns>点表</returns>
+    public static List<Point2d> GetRecPoint2ds(this Point2d corner1, Point2d corner2, double z = 0)
+    {
+        var xMin = Math.Min(corner1.X, corner2.X);
+        var xMax = Math.Max(corner1.X, corner2.X);
+        var yMin = Math.Min(corner1.Y, corner2.Y);
+        var yMax = Math.Max(corner1.Y, corner2.Y);
+        var pt1 = new Point2d(xMin, yMin);
+        var pt2 = new Point2d(xMax, yMin);
+        var pt3 = new Point2d(xMax, yMax);
+        var pt4 = new Point2d(xMin, yMax);
+        return [pt1, pt2, pt3, pt4];
+    }
+
+    #endregion
 }
