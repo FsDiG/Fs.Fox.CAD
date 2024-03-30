@@ -1,4 +1,4 @@
-﻿namespace IFoxCAD.Cad.Basal.Win;
+﻿namespace IFoxCAD.Basal;
 
 public class SystemEx
 {
