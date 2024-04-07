@@ -10,10 +10,12 @@ public class EventBindingExtension : MarkupExtension
     /// 命令属性
     /// </summary>
     public string? Command { get; set; }
+
     /// <summary>
     /// 命令参数属性
     /// </summary>
     public string? CommandParameter { get; set; }
+
     /// <summary>
     /// 当在派生类中实现时，返回用作此标记扩展的目标属性值的对象。
     /// </summary>
@@ -78,7 +80,7 @@ public class EventBindingExtension : MarkupExtension
         var method = new DynamicMethod("", handlerInfo!.ReturnType,
         [
             handlerInfo.GetParameters()[0].ParameterType,
-                    handlerInfo.GetParameters()[1].ParameterType
+            handlerInfo.GetParameters()[1].ParameterType
         ]);
 
         var gen = method.GetILGenerator();
@@ -98,14 +100,14 @@ public class EventBindingExtension : MarkupExtension
     }
 
     static readonly MethodInfo getMethod = typeof(EventBindingExtension)
-        .GetMethod("HandlerIntern", new Type[] { typeof(object), typeof(object), typeof(string), typeof(string) })!;
+        .GetMethod(nameof(HandlerIntern),
+            new Type[] { typeof(object), typeof(object), typeof(string), typeof(string) })!;
 
-#pragma warning disable IDE0051 // 删除未使用的私有成员
     static void Handler(object sender, object args)
-#pragma warning restore IDE0051 // 删除未使用的私有成员
     {
         HandlerIntern(sender, args, "cmd", null);
     }
+
     /// <summary>
     /// Handlers the intern.
     /// </summary>
@@ -137,7 +139,8 @@ public class EventBindingExtension : MarkupExtension
         if (cmdProp is not null)
             return cmdProp.GetValue(vm) as ICommand;
 #if DEBUG
-        throw new Exception("EventBinding path error: '" + cmdName + "' property not found on '" + vmType + "' 'DelegateCommand'");
+        throw new Exception("EventBinding path error: '" + cmdName + "' property not found on '" + vmType +
+                            "' 'DelegateCommand'");
 #else
         return null;
 #endif
@@ -149,7 +152,9 @@ public class EventBindingExtension : MarkupExtension
         object ret = classify[0] switch
         {
             "$e" => args,
-            "$this" => classify.Length > 1 ? FollowPropertyPath(target, commandParameter.Replace("$this.", ""), target.GetType()) : target,
+            "$this" => classify.Length > 1
+                ? FollowPropertyPath(target, commandParameter.Replace("$this.", ""), target.GetType())
+                : target,
             _ => commandParameter,
         };
         return ret;
@@ -182,6 +187,7 @@ public class EventBindingExtension : MarkupExtension
             target = property.GetValue(target);
             valueType = property.PropertyType;
         }
+
         return target;
     }
 }
