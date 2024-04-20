@@ -34,4 +34,5 @@
 	<ItemGroup>
 		<Reference Include="Microsoft.CSharp" />
 	</ItemGroup>
+	<Import Project="..\CADShared\CADShared.projitems" Label="Shared" />
 </Project>

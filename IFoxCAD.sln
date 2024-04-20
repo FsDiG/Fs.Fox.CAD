@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34309.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IFoxCAD.Cad", "IFoxCAD.Cad\IFoxCAD.Cad.csproj", "{6B29955A-5796-4035-9297-210FA15D3846}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IFoxCAD.AutoCad", "IFoxCAD.AutoCad\IFoxCAD.AutoCad.csproj", "{6B29955A-5796-4035-9297-210FA15D3846}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "Test\Test.csproj", "{0C01F295-0985-436B-A15D-228877C60F1D}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CADShared", "CADShared\CADShared.shproj", "{5178502E-9A78-4588-B849-33ED439976B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
