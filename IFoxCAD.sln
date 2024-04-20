@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IFoxCAD.Cad", "IFoxCAD.Cad\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "Test\Test.csproj", "{0C01F295-0985-436B-A15D-228877C60F1D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IFoxCAD.WPF", "IFoxCAD.WPF\IFoxCAD.WPF.csproj", "{9E6049F1-EA67-4F92-93B8-00D20C49E308}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{0C01F295-0985-436B-A15D-228877C60F1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C01F295-0985-436B-A15D-228877C60F1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C01F295-0985-436B-A15D-228877C60F1D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9E6049F1-EA67-4F92-93B8-00D20C49E308}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9E6049F1-EA67-4F92-93B8-00D20C49E308}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9E6049F1-EA67-4F92-93B8-00D20C49E308}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9E6049F1-EA67-4F92-93B8-00D20C49E308}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
