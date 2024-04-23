@@ -71,42 +71,26 @@ IFoxCAD是基于NFOX类库的重制版，主要是提供一个最小化的内核
 ## 一、组织结构图
 
 - IFoxCAD
-  
-  - IFoxCAD.Basal - cad以外常用的类库
-  
-  - LinqEx - linq扩展类
-  
-  - LoopList - 环链表
-  
-  - IFoxCAD.Cad - cad相关的类库
-  
-  - Runtime - 包含系统级别的功能
-    
-    - AcadVersion - cad版本号类
-    - AssemInfo - 程序集信息
-    - AutoRegAssem - 程序集加载类型
-    - DBTrans - 事务处理类
-    - Env - 系统管理类
-    - SymbolTable - 符号表类
-  
-  - ExtensionMethod - 扩展函数，以Ex结尾
-    
-    - SymbolTableEx - 符号表扩展类
-    - SymbolTableRecordEx - 符号表记录扩展类 
-    - EntityEx - 实体扩展类   
-    - 。。。。。。  
-  
-  - ResultData
-    
-    - 待补充。。。
-  
-  - SelectionFilter
-    
-    - 待补充。。。
-  
-  - IFoxCAD.WPF - wpf的mvvm模式相关的类库
-  
-  ## 二、关于DBTrans类的说明
+```
+    ├───CADShared  -- 共享项目，所有的代码都在这里
+    │   ├───Basal  -- 一些基础类的函数
+    │   │   ├───General
+    │   │   ├───Nullable
+    │   │   └───Win
+    │   ├───ExtensionMethod  -- 扩展函数
+    │   │   ├───Entity
+    │   │   ├───Geomerty
+    │   │   └───Jig
+    │   ├───Initialize  -- 初始化
+    │   ├───ResultData  -- 扩展数据
+    │   ├───Runtime     -- 核心类
+    │   └───SelectionFilter   -- 选择集过滤器类
+    ├───docs   -- 架构及api定义说明文档
+    ├───IFoxCAD.AutoCad  -- AutoCAD的类库，内部除了globalusing外无其他代码
+    └───Test  -- 测试类
+  ```
+
+## 二、关于DBTrans类的说明
 
 ### 2.1 为什么要构建DBTrans类？
 
@@ -128,17 +112,18 @@ DBTrans的每个实例都具有这些属性，而这些属性就对应于cad的�
 
 属性:
 
-- Top  ---返回当前事务
+- Top  ---返回当前DBTrans对象
 - Database  ---数据库
 - Document  ---文档
 - Editor  ---命令行
-- Trans  ---事务管理器
+- Transaction  ---事务
 
 构造函数:
 
-- DBTrans(Document doc = null, bool commit = true)
+- DBTrans(Document? doc = null, bool commit = true, bool docLock = false)
 - DBTrans(Database database, bool commit = true)
-- DBTrans(string fileName, bool commit = true)
+- DBTrans(string fileName, bool commit = true, FileOpenMode fileOpenMode = FileOpenMode.OpenForReadAndWriteNoShare,
+  string? password = null, bool activeOpen = false)
 
 符号表:
 
@@ -152,10 +137,27 @@ DBTrans的每个实例都具有这些属性，而这些属性就对应于cad的�
 - ViewTable 视图表
 - ViewportTable 视口表
 
+字典：
+
+- NamedObjectsDict 命名对象字典
+- GroupDict  组字典
+- MLeaderStyleDict 多重引线样式字典
+- MLStyleDict 多线样式字典
+- MaterialDict 材质字典
+- TableStyleDict 表格样式字典
+- VisualStyleDict  视觉样式字典
+- ColorDict 颜色字典
+- PlotSettingsDict 打印设置字典
+- PlotStyleNameDict  打印样式表名字典
+- LayoutDict 布局字典
+- DataLinkDict  数据链接字典
+- DetailViewStyleDict 详细视图样式字典
+- SectionViewStyleDict 剖面视图样式字典
+
 方法:
 
 - GetObject  ---根据对象id获取图元对象
-- 。。。
+- Task   前台后台任务分别处理
 
 接口:
 
