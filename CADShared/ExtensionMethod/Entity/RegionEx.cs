@@ -2,13 +2,16 @@
 
 namespace IFoxCAD.Cad;
 
+/// <summary>
+/// 面域扩展
+/// </summary>
 public static class RegionEx
 {
     /// <summary>
     /// 面域转曲线
     /// </summary>
-    /// <param name="region"></param>
-    /// <returns></returns>
+    /// <param name="region">面域</param>
+    /// <returns>曲线集合</returns>
     public static IEnumerable<Curve> ToCurves(this Region region)
     {
         using var brep = new Brep(region);
@@ -29,7 +32,10 @@ public static class RegionEx
                 }
                 else
                 {
-                    foreach (var curve3d in curves3d) yield return Curve.CreateFromGeCurve(curve3d);
+                    foreach (var curve3d in curves3d)
+                    {
+                        yield return Curve.CreateFromGeCurve(curve3d);
+                    }
                 }
             }
             else
@@ -38,6 +44,7 @@ public static class RegionEx
             }
         }
     }
+
     /// <summary>
     /// 按首尾相连对曲线集合进行排序
     /// </summary>
