@@ -52,18 +52,23 @@ public static class IdleNoCmdAction
             Acap.Idle -= Acap_Idle;
             return;
         }
+
         // 判断是否有活动的命令
         if (Convert.ToBoolean(Acap.GetSystemVariable(CmdActiveName)))
             return;
+#if RELEASE
         try
         {
-            // 执行委托
-            _actions.Dequeue()?.Invoke();
+#endif
+        // 执行委托
+        _actions.Dequeue()?.Invoke();
+#if RELEASE
         }
         catch
         {
             // 不进行操作
         }
+#endif
         System.Windows.Forms.Cursor.Position = System.Windows.Forms.Cursor.Position;
     }
 }
