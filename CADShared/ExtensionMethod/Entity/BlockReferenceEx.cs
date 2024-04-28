@@ -65,7 +65,7 @@ public static class BlockReferenceEx
     /// <summary>
     /// 更新动态块参数值
     /// </summary>
-    public static bool ChangeBlockProperty<T>(this BlockReference blockReference,
+    public static bool ChangeBlockProperty(this BlockReference blockReference,
         Dictionary<string, object> propertyNameValues)
     {
         if (!blockReference.IsDynamicBlock)
@@ -96,7 +96,7 @@ public static class BlockReferenceEx
     /// <summary>
     /// 更新动态块参数值
     /// </summary>
-    public static bool ChangeBlockProperty<T>(this BlockReference blockReference,
+    public static bool ChangeBlockProperty(this BlockReference blockReference,
         string propName, object value)
     {
         if (!blockReference.IsDynamicBlock)
