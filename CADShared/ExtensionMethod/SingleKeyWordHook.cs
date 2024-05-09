@@ -8,6 +8,13 @@ namespace IFoxCAD.Cad;
 /// </summary>
 public sealed class SingleKeyWordHook : IDisposable
 {
+    #region 静态字段
+
+    private static readonly string _enterStr = Convert.ToChar(Keys.Enter).ToString();
+    private static readonly string _backStr = Convert.ToChar(Keys.Back).ToString();
+
+    #endregion
+
     #region 私有字段
 
     /// <summary>
@@ -18,7 +25,7 @@ public sealed class SingleKeyWordHook : IDisposable
     private bool _isResponsed;
     private bool _working;
     private Keys _key;
-    private readonly bool _escapeMode;
+    private readonly SingleKeyWordWorkType _workType;
 
     #endregion
 
@@ -46,15 +53,15 @@ public sealed class SingleKeyWordHook : IDisposable
     /// <summary>
     /// 单字母关键字免输回车钩子
     /// </summary>
-    /// <param name="escapeMode">使用esc(填false则使用回车)</param>
-    public SingleKeyWordHook(bool escapeMode = true)
+    /// <param name="workType">使用esc(填false则使用回车)</param>
+    public SingleKeyWordHook(SingleKeyWordWorkType workType = SingleKeyWordWorkType.ESCAPE)
     {
         IsDisposed = false;
         _isResponsed = false;
         _keyWords = new HashSet<Keys>();
         _key = Keys.None;
         _working = true;
-        _escapeMode = escapeMode;
+        _workType = workType;
         Acap.PreTranslateMessage -= Acap_PreTranslateMessage;
         Acap.PreTranslateMessage += Acap_PreTranslateMessage;
     }
@@ -79,7 +86,7 @@ public sealed class SingleKeyWordHook : IDisposable
         {
             if (item.LocalName.Length == 1)
             {
-                Keys k = (Keys)item.LocalName[0];
+                var k = (Keys)item.LocalName[0];
                 _keyWords.Add(k);
             }
         }
@@ -132,7 +139,7 @@ public sealed class SingleKeyWordHook : IDisposable
         if (contains || tempKey == Keys.ProcessKey)
         {
             // 标记为true，表示此按键已经被处理，Windows不会再进行处理
-            if (_escapeMode)
+            if (_workType != SingleKeyWordWorkType.ENTER)
             {
                 e.Handled = true;
             }
@@ -143,8 +150,19 @@ public sealed class SingleKeyWordHook : IDisposable
             {
                 // 此bool是防止按键被长按时出错
                 _isResponsed = true;
-                // 这里选择发送回车或者ESC//ESC稳妥一些，但是要promptResult的判断顺序
-                KeyBoardSendKey(_escapeMode ? Keys.Escape : Keys.Enter);
+                switch (_workType)
+                {
+                    case SingleKeyWordWorkType.ESCAPE:
+                        // ESC稳妥一些，但是要判断promptResult的顺序
+                        KeyBoardSendKey(Keys.Escape);
+                        break;
+                    case SingleKeyWordWorkType.ENTER:
+                        KeyBoardSendKey(Keys.Enter);
+                        break;
+                    case SingleKeyWordWorkType.WRITE_LINE:
+                        Utils.WriteToCommandLine(Convert.ToChar(_key) + _enterStr);
+                        break;
+                }
             }
         }
     }
@@ -183,6 +201,7 @@ public sealed class SingleKeyWordHook : IDisposable
     {
         Dispose(disposing: false);
     }
+
     /// <summary>
     /// 
     /// </summary>
@@ -213,4 +232,11 @@ public sealed class SingleKeyWordHook : IDisposable
     private static extern void keybd_event(Keys bVk, byte bScan, uint dwFlags, uint dwExtraInfo);
 
     #endregion
+}
+
+public enum SingleKeyWordWorkType : byte
+{
+    ESCAPE,
+    ENTER,
+    WRITE_LINE,
 }
