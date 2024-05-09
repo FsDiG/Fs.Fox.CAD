@@ -126,7 +126,7 @@ public static class PolylineEx
     /// <param name="plineWidth">线宽</param>
     /// <param name="closed">是否闭合</param>
     /// <returns>Polyline</returns>
-    public static Polyline CreatePolyline(this IEnumerable<Point2d> pointList, double plineWidth = 0, bool closed = false)
+    public static Polyline ToPolyline(this IEnumerable<Point2d> pointList, double plineWidth = 0, bool closed = false)
     {
         var pl = new Polyline();
         var enumerable = pointList.ToList();
