@@ -309,10 +309,10 @@ public static class Env
     /// <returns>箭头ID</returns>
     public static ObjectId GetDimblkId(DimblkType dimblk)
     {
-        var oldDimblk = Dimblk;
+        var oldDimblk = Acaop.GetSystemVariable("dimblk");
         Dimblk = dimblk;
         var id = HostApplicationServices.WorkingDatabase.Dimblk;
-        Dimblk = oldDimblk;
+        Acaop.SetSystemVariable("dimblk",oldDimblk);
         return id;
     }
 
