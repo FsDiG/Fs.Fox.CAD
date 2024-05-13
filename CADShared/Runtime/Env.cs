@@ -757,7 +757,7 @@ public static class Env
     /// 获取cad年份
     /// </summary>
     /// <exception cref="NotImplementedException">超出年份就报错</exception>
-    public static int GetAcadVersion()
+    public static int GetAcadYear()
     {
         var ver = Acaop.Version.Major + "." + Acaop.Version.Minor;
         var acadVersion = ver switch
@@ -781,6 +781,7 @@ public static class Env
             "24.1" => 2022,
             "24.2" => 2023,
             "24.3" => 2024,
+            "25.0" => 2025,
             _ => throw new NotImplementedException()
         };
         return acadVersion;
