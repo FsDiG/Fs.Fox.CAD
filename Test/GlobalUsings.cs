@@ -5,3 +5,4 @@ global using Autodesk.AutoCAD.Geometry;
 global using Autodesk.AutoCAD.Runtime;
 global using System.ComponentModel;
 global using System.Runtime.InteropServices;
+global using Autodesk.AutoCAD.Colors;
