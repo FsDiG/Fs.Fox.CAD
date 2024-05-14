@@ -1135,19 +1135,26 @@ public static class EditorEx
     /// <param name="ents">实体（已存在数据库中）</param>
     public static void PrepareForJig(this Editor ed, IEnumerable<Entity> ents)
     {
-        var dic = new Dictionary<Entity, int>();
+        var dic = new Dictionary<Entity, Color>();
         foreach (var ent in ents)
         {
             if (ent.IsNewObject)
                 continue;
-            dic.Add(ent, ent.ColorIndex);
-            ent.ColorIndex = 250;
-            ent.Draw();
+            dic.Add(ent, ent.Color);
+            using (ent.ForWrite())
+            {
+                ent.ColorIndex = 250;
+                ent.Draw();
+            }
         }
         ed.Redraw();
         foreach (var kvp in dic)
         {
-            kvp.Key.ColorIndex = kvp.Value;
+            var ent = kvp.Key;
+            using (ent.ForWrite())
+            {
+                kvp.Key.Color = kvp.Value;
+            }
         }
     }
     #endregion
