@@ -12,7 +12,7 @@
 
 可以加群交流：
 
-![IFoxCad用户交流群群二维码](./docs/png/ifoxcad用户交流群群二维码.png)
+[点击链接加入群聊【IFoxCad交流群】](https://qm.qq.com/q/tJZELgdzHi)
 
  **QQ群为丐群，所以也可以加入qq频道交流：** 
 
