@@ -1,5 +1,7 @@
 // ReSharper disable RedundantNameQualifier
+
 namespace IFoxCAD.Cad;
+
 /// <summary>
 /// 符号表管理类
 /// </summary>
@@ -10,10 +12,12 @@ public class SymbolTable<TTable, TRecord> : IEnumerable<ObjectId>
     where TRecord : SymbolTableRecord, new()
 {
     #region 程序集内部属性
+
     /// <summary>
     /// 事务管理器
     /// </summary>
     private DBTrans DTrans { get; set; }
+
     /// <summary>
     /// 数据库
     /// </summary>
@@ -22,13 +26,16 @@ public class SymbolTable<TTable, TRecord> : IEnumerable<ObjectId>
     #endregion
 
     #region 公开属性
+
     /// <summary>
     /// 当前符号表
     /// </summary>
     public TTable CurrentSymbolTable { get; private set; }
+
     #endregion
 
     #region 构造函数
+
     /// <summary>
     /// 构造函数，初始化Trans和CurrentSymbolTable属性
     /// </summary>
@@ -56,6 +63,7 @@ public class SymbolTable<TTable, TRecord> : IEnumerable<ObjectId>
     #endregion
 
     #region 索引器
+
     /// <summary>
     /// 索引器
     /// </summary>
@@ -66,6 +74,7 @@ public class SymbolTable<TTable, TRecord> : IEnumerable<ObjectId>
     #endregion
 
     #region Has
+
     /// <summary>
     /// 判断是否存在符号表记录
     /// </summary>
@@ -75,6 +84,7 @@ public class SymbolTable<TTable, TRecord> : IEnumerable<ObjectId>
     {
         return CurrentSymbolTable.Has(key);
     }
+
     /// <summary>
     /// 判断是否存在符号表记录
     /// </summary>
@@ -84,9 +94,11 @@ public class SymbolTable<TTable, TRecord> : IEnumerable<ObjectId>
     {
         return CurrentSymbolTable.Has(objectId);
     }
+
     #endregion
 
     #region 添加符号表记录
+
     /// <summary>
     /// 添加符号表记录
     /// </summary>
@@ -100,8 +112,10 @@ public class SymbolTable<TTable, TRecord> : IEnumerable<ObjectId>
             id = CurrentSymbolTable.Add(record);
             DTrans.Transaction.AddNewlyCreatedDBObject(record, true);
         }
+
         return id;
     }
+
     /// <summary>
     /// 添加符号表记录
     /// </summary>
@@ -121,9 +135,11 @@ public class SymbolTable<TTable, TRecord> : IEnumerable<ObjectId>
             action?.Invoke(record);
         return id;
     }
+
     #endregion
 
     #region 删除符号表记录
+
     /// <summary>
     /// 删除符号表记录
     /// </summary>
@@ -140,6 +156,22 @@ public class SymbolTable<TTable, TRecord> : IEnumerable<ObjectId>
     /// <param name="name">符号表记录名</param>
     public void Remove(string name)
     {
+        if (CurrentSymbolTable is LayerTable lt)
+        {
+            if (SymbolUtilityServices.IsLayerZeroName(name)
+                || SymbolUtilityServices.IsLayerDefpointsName(name))
+                return;
+            lt.GenerateUsageData();
+            if (GetRecord(name) is not LayerTableRecord { IsUsed: false } ltr)
+                return;
+            using (ltr.ForWrite())
+            {
+                ltr.Erase();
+            }
+
+            return;
+        }
+
         var record = GetRecord(name);
         if (record is not null)
             Remove(record);
@@ -155,9 +187,11 @@ public class SymbolTable<TTable, TRecord> : IEnumerable<ObjectId>
         if (record is not null)
             Remove(record);
     }
+
     #endregion
 
     #region 修改符号表记录
+
     /// <summary>
     /// 修改符号表
     /// </summary>
@@ -189,9 +223,11 @@ public class SymbolTable<TTable, TRecord> : IEnumerable<ObjectId>
                 action.Invoke(record);
         }
     }
+
     #endregion
 
     #region 获取符号表记录
+
     /// <summary>
     /// 获取符号表记录
     /// </summary>
@@ -202,9 +238,9 @@ public class SymbolTable<TTable, TRecord> : IEnumerable<ObjectId>
     /// <returns>符号表记录</returns>
     [System.Diagnostics.DebuggerStepThrough]
     public TRecord? GetRecord(ObjectId id,
-                              OpenMode openMode = OpenMode.ForRead,
-                              bool openErased = false,
-                              bool openLockedLayer = false)
+        OpenMode openMode = OpenMode.ForRead,
+        bool openErased = false,
+        bool openLockedLayer = false)
     {
         return DTrans.GetObject<TRecord>(id, openMode, openErased, openLockedLayer);
     }
@@ -219,9 +255,9 @@ public class SymbolTable<TTable, TRecord> : IEnumerable<ObjectId>
     /// <returns>符号表记录</returns>
     [System.Diagnostics.DebuggerStepThrough]
     public TRecord? GetRecord(string name,
-                              OpenMode openMode = OpenMode.ForRead,
-                              bool openErased = false,
-                              bool openLockedLayer = false)
+        OpenMode openMode = OpenMode.ForRead,
+        bool openErased = false,
+        bool openLockedLayer = false)
     {
         return GetRecord(this[name], openMode, openErased, openLockedLayer);
     }
@@ -298,16 +334,18 @@ public class SymbolTable<TTable, TRecord> : IEnumerable<ObjectId>
     /// <param name="over">是否覆盖，<see langword="true"/> 为覆盖，<see langword="false"/> 为不覆盖</param>
     /// <returns>对象id</returns>
     internal ObjectId GetRecordFrom(Func<DBTrans, SymbolTable<TTable, TRecord>> tableSelector,
-                                    string fileName,
-                                    string name,
-                                    bool over)
+        string fileName,
+        string name,
+        bool over)
     {
         using DBTrans tr = new(fileName);
         return GetRecordFrom(tableSelector(tr), name, over);
     }
+
     #endregion
 
     #region 遍历
+
 #line hidden // 调试的时候跳过它
     /// <summary>
     /// 遍历符号表,执行委托
@@ -318,13 +356,14 @@ public class SymbolTable<TTable, TRecord> : IEnumerable<ObjectId>
     /// <param name="openErased">是否打开已删除对象,默认为不打开</param>
     /// <param name="openLockedLayer">是否打开锁定图层对象,默认为不打开</param>
     public void ForEach(Action<TRecord> task,
-                        OpenMode openMode = OpenMode.ForRead,
-                        bool checkIdOk = true,
-                        bool openErased = false,
-                        bool openLockedLayer = false)
+        OpenMode openMode = OpenMode.ForRead,
+        bool checkIdOk = true,
+        bool openErased = false,
+        bool openLockedLayer = false)
     {
-        ForEach((a, _, _) => {
-            task.Invoke(a);//由于此处是委托,所以 DebuggerStepThrough 特性会进入,改用预处理方式避免
+        ForEach((a, _, _) =>
+        {
+            task.Invoke(a); //由于此处是委托,所以 DebuggerStepThrough 特性会进入,改用预处理方式避免
         }, openMode, checkIdOk, openErased, openLockedLayer);
     }
 
@@ -337,14 +376,12 @@ public class SymbolTable<TTable, TRecord> : IEnumerable<ObjectId>
     /// <param name="openErased">是否打开已删除对象,默认为不打开</param>
     /// <param name="openLockedLayer">是否打开锁定图层对象,默认为不打开</param>
     public void ForEach(Action<TRecord, LoopState> task,
-                        OpenMode openMode = OpenMode.ForRead,
-                        bool checkIdOk = true,
-                        bool openErased = false,
-                        bool openLockedLayer = false)
+        OpenMode openMode = OpenMode.ForRead,
+        bool checkIdOk = true,
+        bool openErased = false,
+        bool openLockedLayer = false)
     {
-        ForEach((a, b, _) => {
-            task.Invoke(a, b);
-        }, openMode, checkIdOk, openErased, openLockedLayer);
+        ForEach((a, b, _) => { task.Invoke(a, b); }, openMode, checkIdOk, openErased, openLockedLayer);
     }
 
     /// <summary>
@@ -357,15 +394,15 @@ public class SymbolTable<TTable, TRecord> : IEnumerable<ObjectId>
     /// <param name="openLockedLayer">是否打开锁定图层对象,默认为不打开</param>
     [System.Diagnostics.DebuggerStepThrough]
     public void ForEach(Action<TRecord, LoopState, int> task,
-                        OpenMode openMode = OpenMode.ForRead,
-                        bool checkIdOk = true,
-                        bool openErased = false,
-                        bool openLockedLayer = false)
+        OpenMode openMode = OpenMode.ForRead,
+        bool checkIdOk = true,
+        bool openErased = false,
+        bool openLockedLayer = false)
     {
         //if (task == null)
         //    throw new ArgumentNullException(nameof(task));
         ArgumentNullEx.ThrowIfNull(task);
-        LoopState state = new();/*这种方式比Action改Func更友好*/
+        LoopState state = new(); /*这种方式比Action改Func更友好*/
         int i = 0;
         foreach (var id in this)
         {
@@ -379,12 +416,14 @@ public class SymbolTable<TTable, TRecord> : IEnumerable<ObjectId>
             i++;
         }
     }
-/// <inheritdoc/>
+
+    /// <inheritdoc/>
 #line default
 
     #endregion
 
     #region IEnumerable<ObjectId> 成员
+
     [System.Diagnostics.DebuggerStepThrough]
     public IEnumerator<ObjectId> GetEnumerator()
     {
@@ -397,5 +436,6 @@ public class SymbolTable<TTable, TRecord> : IEnumerable<ObjectId>
     {
         return GetEnumerator();
     }
+
     #endregion
 }
