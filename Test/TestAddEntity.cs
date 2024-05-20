@@ -1,4 +1,4 @@
-﻿namespace Test;
+namespace Test;
 
 public partial class Test
 {
@@ -80,7 +80,7 @@ public partial class Test
             var tt = line1.GetRXClass().DxfName == nameof(Line);
         });
     }
-
+    // 测试延迟刷新
     [CommandMethod(nameof(Test_sleeptrans))]
     public static void Test_sleeptrans()
     {
