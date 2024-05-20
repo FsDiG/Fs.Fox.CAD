@@ -673,11 +673,12 @@ public static class Env
     /// <summary>
     /// 命令行打印，会自动调用对象的toString函数
     /// </summary>
-    /// <param name="message">要打印的对象</param>
-    public static void Print(object message)
+    /// <param name="obj">要打印的对象</param>
+    public static T Print<T>(T obj)
     {
         // ReSharper disable once ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
-        Document?.Editor.WriteMessage($"{message}\n");
+        Document?.Editor.WriteMessage($"{obj}\n");
+        return obj;
     }
 
     /// <summary>
