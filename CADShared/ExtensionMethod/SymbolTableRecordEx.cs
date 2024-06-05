@@ -284,7 +284,6 @@ public static class SymbolTableRecordEx
             attref.SetDatabaseDefaults();
             attref.SetAttributeFromBlock(attdef, blockRef.BlockTransform);
             attref.Position = attdef.Position.TransformBy(blockRef.BlockTransform);
-            attref.AdjustAlignment(tr.Database);
             if (atts is not null && atts.TryGetValue(attdef.Tag, out string str))
             {
                 attref.TextString = str;
@@ -295,6 +294,7 @@ public static class SymbolTableRecordEx
 
             blockRef.AttributeCollection.AppendAttribute(attref);
             tr.Transaction.AddNewlyCreatedDBObject(attref, true);
+            attref.AdjustAlignment(tr.Database);
         }
 
         return objectId;

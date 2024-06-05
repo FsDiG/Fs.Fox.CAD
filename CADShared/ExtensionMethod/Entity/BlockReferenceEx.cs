@@ -149,6 +149,7 @@ public static class BlockReferenceEx
                 if (propertyNameValues.TryGetValue(att.Tag, out var value))
                 {
                     att.TextString = value;
+                    att.AdjustAlignment(blockReference.Database);
                 }
             }
         }
