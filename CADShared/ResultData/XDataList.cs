@@ -138,7 +138,7 @@ public class XDataList : TypedValueList
     /// ResultBuffer 隐式转换到 XDataList
     /// </summary>
     /// <param name="buffer">ResultBuffer 实例</param>
-    public static implicit operator XDataList(ResultBuffer buffer) => new(buffer.AsArray());
+    public static implicit operator XDataList(ResultBuffer? buffer) => new(buffer?.AsArray() ?? []);
 
     /// <summary>
     /// XDataList 隐式转换到 TypedValue 数组
