@@ -68,6 +68,7 @@ public class JigEx : DrawJig, IDisposable
     {
         _drawEntitys = new();
         DimensionEntitys = new();
+        _options = JigPointOptions();
     }
 
     /// <summary>
