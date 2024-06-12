@@ -19,6 +19,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Basal\Nullable\CallerArgumentExpressionAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Basal\Win\SystemEx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Basal\Win\Win32Api.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\BaseEx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\CollectionEx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\DBDictionaryEx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\DBObjectEx.cs" />
