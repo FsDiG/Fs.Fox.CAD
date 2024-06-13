@@ -6,6 +6,7 @@ namespace IFoxCAD.Cad;
 public static class EditorEx
 {
     #region 选择集
+
     /// <summary>
     /// 选择穿过一个点的对象
     /// </summary>
@@ -14,7 +15,7 @@ public static class EditorEx
     /// <param name="filter">过滤器</param>
     /// <returns>选择集结果类</returns>
     public static PromptSelectionResult SelectAtPoint(this Editor editor, Point3d point,
-                                                      SelectionFilter? filter = default)
+        SelectionFilter? filter = default)
     {
         return editor.SelectCrossingWindow(point, point, filter);
     }
@@ -31,22 +32,22 @@ public static class EditorEx
 
         var lays =
             DBTrans.Top.LayerTable
-            .GetRecords()
-            .Where(ltr => ltr.LineWeight == lineWeight)
-            .Select(ltr => ltr.Name)
-            .ToArray();
+                .GetRecords()
+                .Where(ltr => ltr.LineWeight == lineWeight)
+                .Select(ltr => ltr.Name)
+                .ToArray();
 
         if (lays.Length > 0)
         {
             filter =
                 new OpOr
                 {
-                        filter,
-                        new OpAnd
-                        {
-                            { 8, string.Join(",", lays) },
-                            { 370, LineWeight.ByLayer }
-                        }
+                    filter,
+                    new OpAnd
+                    {
+                        { 8, string.Join(",", lays) },
+                        { 370, LineWeight.ByLayer }
+                    }
                 };
         }
 
@@ -67,10 +68,10 @@ public static class EditorEx
     /// </param>
     /// <returns></returns>
     public static PromptSelectionResult SSGet(this Editor editor,
-                                              string? mode = null,
-                                              SelectionFilter? filter = null,
-                                              (string add, string remove)? messages = null,
-                                              Dictionary<string, (string, Action)>? keywords = null)
+        string? mode = null,
+        SelectionFilter? filter = null,
+        (string add, string remove)? messages = null,
+        Dictionary<string, (string, Action)>? keywords = null)
     {
         PromptSelectionOptions pso = new();
         if (mode is not null)
@@ -87,6 +88,7 @@ public static class EditorEx
             pso.AllowSubSelections = mode.Contains("-A");
             pso.ForceSubSelections = mode.Contains("-F");
         }
+
         if (messages is not null)
         {
             pso.MessageForAdding = messages.Value.add;
@@ -100,14 +102,16 @@ public static class EditorEx
             if (pso.MessageForRemoval is null)
                 pso.MessageForAdding = "选择对象";
 
-            var str = keywords.Keys.Select(key => {
+            var str = keywords.Keys.Select(key =>
+            {
                 keywords.TryGetValue(key, out (string, Action) value);
                 return $"{value.Item1}({key})";
             });
 
 
             pso.MessageForAdding += $" [{string.Join("/", str)}]";
-            pso.KeywordInput += (_, e) => {
+            pso.KeywordInput += (_, e) =>
+            {
                 if (keywords.TryGetValue(e.Input, out var value))
                     value.Item2.Invoke();
             };
@@ -182,6 +186,7 @@ public static class EditorEx
                 else
                     tmp.Add(item, value);
             }
+
             dicActions.Remove(key);
         }
 
@@ -213,7 +218,7 @@ public static class EditorEx
             var keySplitS = item.Key.Split(new string[] { ",", "|" }, StringSplitOptions.RemoveEmptyEntries);
             for (int i = 0; i < keySplitS.Length; i += 2)
                 pso.Keywords.Add(keySplitS[i], keySplitS[i],
-                                 keySplitS[i + 1] + "(" + keySplitS[i] + ")");
+                    keySplitS[i + 1] + "(" + keySplitS[i] + ")");
         }
 
         // 回调的时候我想用Dict的O(1)索引,
@@ -228,14 +233,8 @@ public static class EditorEx
         // 从选择集命令中显示关键字
         pso.MessageForAdding = keyWords.GetDisplayString(true);
         // 关键字回调事件 ssget关键字
-        pso.KeywordInput += (_, e) => {
-            dicActions[e.Input].Invoke();
-        };
+        pso.KeywordInput += (_, e) => { dicActions[e.Input].Invoke(); };
     }
-
-
-
-
 
 
     // #region 即时选择样板
@@ -332,6 +331,7 @@ public static class EditorEx
     //     throw new ArgumentException("XuError");
     // }
     // #endregion
+
     #endregion
 
     #region Info
@@ -470,8 +470,8 @@ public static class EditorEx
     public static bool HasEditor()
     {
         return Acap.DocumentManager.MdiActiveDocument is not null
-            && Acap.DocumentManager.Count != 0
-            && Acap.DocumentManager.MdiActiveDocument.Editor is not null;
+               && Acap.DocumentManager.Count != 0
+               && Acap.DocumentManager.MdiActiveDocument.Editor is not null;
     }
 
     /// <summary>
@@ -481,7 +481,7 @@ public static class EditorEx
     public static bool Acceptable()
     {
         return HasEditor()
-            && !Acap.DocumentManager.MdiActiveDocument.Editor.IsDragging;
+               && !Acap.DocumentManager.MdiActiveDocument.Editor.IsDragging;
     }
 
     #endregion Info
@@ -575,6 +575,7 @@ public static class EditorEx
 
             rlst.AddRange(GetLines(tpnts, true));
         }
+
         editor.DrawVectors(new(rlst.ToArray()), editor.CurrentUserCoordinateSystem);
     }
 
@@ -597,6 +598,7 @@ public static class EditorEx
 
         editor.DrawVectors(pnts, colorIndex, true);
     }
+
     /// <summary>
     /// 根据点表绘制矢量线段(每两点为一条线段的起始点和终止点)
     /// </summary>
@@ -605,7 +607,7 @@ public static class EditorEx
     /// <param name="colorIndex">CAD颜色索引;默认：1为红色</param>
     /// <param name="drawHighlighted">是否高亮显示;<see langword="true"/>为高亮显示,默认：<see langword="false"/>为不高亮显示</param>
     public static void DrawLineVectors(this Editor editor, IEnumerable<Point3d> points, int colorIndex = 1,
-                                        bool drawHighlighted = false)
+        bool drawHighlighted = false)
     {
         Point3d endPoint1, endPoint2;
         using var itor = points.GetEnumerator();
@@ -617,6 +619,7 @@ public static class EditorEx
             editor.DrawVector(endPoint1, endPoint2, colorIndex, drawHighlighted);
         }
     }
+
     /// <summary>
     /// 根据点表绘制首尾相连的矢量
     /// </summary>
@@ -626,7 +629,7 @@ public static class EditorEx
     /// <param name="isclose">是否闭合;<see langword="true"/> 为闭合,默认：<see langword="false"/> 为不闭合</param>
     /// <param name="drawHighlighted">是否高亮显示;<see langword="true"/>为高亮显示,默认：<see langword="false"/>为不高亮显示</param>
     public static void DrawEndToEndVectors(this Editor editor, IEnumerable<Point3d> points, int colorIndex = 1,
-                                            bool isclose = false, bool drawHighlighted = false)
+        bool isclose = false, bool drawHighlighted = false)
     {
         using var itor = points.GetEnumerator();
         if (!points.Any() || !itor.MoveNext()) return;
@@ -637,9 +640,11 @@ public static class EditorEx
             editor.DrawVector(endPoint1, endPoint2, colorIndex, drawHighlighted);
             endPoint1 = endPoint2;
         }
+
         if (isclose)
             editor.DrawVector(endPoint2, firstEndPoint, colorIndex, drawHighlighted);
     }
+
     #endregion
 
     #region 矩阵
@@ -717,6 +722,7 @@ public static class EditorEx
                 throw new Exception("Aucun fenêtre active...ErrorStatus.InvalidInput");
             }
         }
+
         if (vp == null)
             return mat;
 
@@ -757,7 +763,7 @@ public static class EditorEx
             (CoordinateSystemCode.MDcs, CoordinateSystemCode.PDcs) => editor.GetMatrixFromMDcsToPDcs(),
             (CoordinateSystemCode.PDcs, CoordinateSystemCode.MDcs) => editor.GetMatrixFromPDcsToMDcs(),
             (CoordinateSystemCode.PDcs, CoordinateSystemCode.Wcs or CoordinateSystemCode.Ucs)
-            or (CoordinateSystemCode.Wcs or CoordinateSystemCode.Ucs, CoordinateSystemCode.PDcs) => throw new Exception("To be used only with DCS...ErrorStatus.InvalidInput"),
+                or (CoordinateSystemCode.Wcs or CoordinateSystemCode.Ucs, CoordinateSystemCode.PDcs) => throw new Exception("To be used only with DCS...ErrorStatus.InvalidInput"),
             (_, _) => Matrix3d.Identity
         };
     }
@@ -767,7 +773,7 @@ public static class EditorEx
     #region 缩放
 
     // todo 暂时先屏蔽这个又臭又长的代码，待搞明白为什么都这么写之后再说
-#if false 
+#if false
     /// <summary>
     /// 缩放窗口范围
     /// </summary>
@@ -828,16 +834,16 @@ public static class EditorEx
     /// 按范围缩放
     /// </summary>
     /// <param name="ed">命令行对象</param>
-    /// <param name="CenPt">中心点</param>
+    /// <param name="cenPt">中心点</param>
     /// <param name="width">窗口宽</param>
     /// <param name="height">窗口高</param>
-    public static void Zoom(this Editor ed, Point3d CenPt, double width, double height)
+    public static void Zoom(this Editor ed, Point3d cenPt, double width, double height)
     {
-        using ViewTableRecord view = ed.GetCurrentView();
-        view.Width = width;
-        view.Height = height;
-        view.CenterPoint = new Point2d(CenPt.X, CenPt.Y);
-        ed.SetCurrentView(view);// 更新当前视图
+        using var vtr = ed.GetCurrentView();
+        vtr.Width = width;
+        vtr.Height = height;
+        vtr.CenterPoint = (cenPt.Point2d() - vtr.Target.GetAsVector().Convert2d()).RotateBy(vtr.ViewTwist, Point2d.Origin);
+        ed.SetCurrentView(vtr); // 更新当前视图
     }
 
     /// <summary>
@@ -867,7 +873,7 @@ public static class EditorEx
     /// <returns></returns>
     public static Extents3d? GetValidExtents3d(this Database db, double extention = 1e-6)
     {
-        db.UpdateExt(true);// 更新当前模型空间的范围
+        db.UpdateExt(true); // 更新当前模型空间的范围
         var ve = new Vector3d(extention, extention, extention);
         // 数据库没有图元的时候,min是大,max是小,导致新建出错
         // 数据如下:
@@ -909,7 +915,7 @@ public static class EditorEx
         ed.ZoomWindow(ext.MinPoint, ext.MaxPoint, offsetDist);
     }
 
-#endregion
+    #endregion
 
     #region Get交互类
 
@@ -981,6 +987,7 @@ public static class EditorEx
     #endregion
 
     #region 执行lisp
+
     [DllImport("accore.dll", CallingConvention = CallingConvention.Cdecl, EntryPoint = "acedInvoke")]
     static extern int AcedInvoke(IntPtr args, out IntPtr result);
 
@@ -988,12 +995,13 @@ public static class EditorEx
     // 高版本此接口不能使用lisp(command "xx"),但是可以直接在自动运行接口上
     [DllImport("accore.dll", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl,
         EntryPoint = "?acedEvaluateLisp@@YAHPEB_WAEAPEAUresbuf@@@Z")]
-    [System.Security.SuppressUnmanagedCodeSecurity]// 初始化默认值
+    [System.Security.SuppressUnmanagedCodeSecurity] // 初始化默认值
     static extern int AcedEvaluateLisp(string lispLine, out IntPtr result);
 
 
     [DllImport("accore.dll", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl, EntryPoint = "ads_queueexpr")]
     static extern int Ads_queueexpr(string strExpr);
+
     /// <summary>
     /// 执行lisp的方式枚举
     /// </summary>
@@ -1004,10 +1012,12 @@ public static class EditorEx
         /// AdsQueueexpr
         /// </summary>
         AdsQueueexpr = 1,
+
         /// <summary>
         /// AcedEvaluateLisp
         /// </summary>
         AcedEvaluateLisp = 2,
+
         /// <summary>
         /// SendStringToExecute
         /// </summary>
@@ -1048,23 +1058,28 @@ public static class EditorEx
             // 0x02 自执行发送lisp都是异步,用来发送 含有(command)的lisp的
             _ = Ads_queueexpr(lispCode + "\n");
         }
+
         if ((flag & RunLispFlag.AcedEvaluateLisp) == RunLispFlag.AcedEvaluateLisp)
         {
             _ = AcedEvaluateLisp(lispCode, out IntPtr rb);
             if (rb != IntPtr.Zero)
                 return (ResultBuffer)DisposableWrapper.Create(typeof(ResultBuffer), rb, true);
         }
+
         if ((flag & RunLispFlag.SendStringToExecute) == RunLispFlag.SendStringToExecute)
         {
             var dm = Acap.DocumentManager;
             var doc = dm.MdiActiveDocument;
             doc?.SendStringToExecute(lispCode + "\n", false, false, false);
         }
+
         return null;
     }
+
     #endregion
 
     #region Export
+
     /// <summary>
     /// 输出WMF<br/>
     /// 此函数不适用于后台
@@ -1075,7 +1090,7 @@ public static class EditorEx
     /// <param name="wmfSetDel">是否清空选择集</param>
     /// <exception cref="ArgumentNullException"></exception>
     public static void ComExportWMF(this Editor editor, string saveFile,
-                                    ObjectId[]? ids = null, bool wmfSetDel = false)
+        ObjectId[]? ids = null, bool wmfSetDel = false)
     {
         if (string.IsNullOrWhiteSpace(saveFile))
             throw new ArgumentNullException(nameof(saveFile));
@@ -1093,13 +1108,14 @@ public static class EditorEx
         // 因此此处netAPI进行选择,它就能读取当前选择集缓冲区的对象
         if (ids == null || ids.Length == 0)
         {
-            var psr = editor.SelectImplied();// 预选
+            var psr = editor.SelectImplied(); // 预选
             if (psr.Status != PromptStatus.OK)
-                psr = editor.GetSelection();// 手选
+                psr = editor.GetSelection(); // 手选
             if (psr.Status != PromptStatus.OK)
                 return;
             ids = psr.Value.GetObjectIds();
         }
+
         editor.SetImpliedSelection(ids);
 
 #if zcad
@@ -1116,9 +1132,11 @@ public static class EditorEx
         if (wmfSetDel)
             wmfSet.Delete();
     }
+
     #endregion
 
     #region JigEx
+
     /// <summary>
     /// jig前的准备工作，使图元暗显
     /// </summary>
@@ -1128,6 +1146,7 @@ public static class EditorEx
     {
         ed.PrepareForJig(ents.ToList());
     }
+
     /// <summary>
     /// jig前的准备工作，使图元暗显
     /// </summary>
@@ -1147,6 +1166,7 @@ public static class EditorEx
                 ent.Draw();
             }
         }
+
         ed.Redraw();
         foreach (var kvp in dic)
         {
@@ -1157,6 +1177,7 @@ public static class EditorEx
             }
         }
     }
+
     #endregion
 
     #region Extension
