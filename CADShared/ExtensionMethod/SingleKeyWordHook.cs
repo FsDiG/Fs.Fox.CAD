@@ -136,7 +136,7 @@ public sealed class SingleKeyWordHook : IDisposable
         if (!_working || e.Message.message != 256) return;
         var tempKey = IntPtr.Size == 4 ? (Keys)e.Message.wParam.ToInt32() : (Keys)e.Message.wParam.ToInt64();
         bool contains = _keyWords.Contains(tempKey);
-        if (contains || tempKey == Keys.ProcessKey)
+        if (contains)
         {
             // 标记为true，表示此按键已经被处理，Windows不会再进行处理
             if (_workType != SingleKeyWordWorkType.ENTER)
