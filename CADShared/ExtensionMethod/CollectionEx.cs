@@ -13,7 +13,9 @@ public static class CollectionEx
     [DebuggerStepThrough]
     public static ObjectIdCollection ToCollection(this IEnumerable<ObjectId> ids)
     {
-        return new ObjectIdCollection(ids.ToArray());
+        var objectIds = ids as ObjectId[] ?? ids.ToArray();
+        // new ObjectIdCollection时填长度为0的数组会报错
+        return objectIds.Length == 0 ? new ObjectIdCollection() : new ObjectIdCollection(objectIds);
     }
 
 
