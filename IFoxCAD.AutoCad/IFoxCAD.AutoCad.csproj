@@ -8,6 +8,7 @@
 		<RootNamespace>IFoxCAD.Cad</RootNamespace>
 		<UseWindowsForms>true</UseWindowsForms>
 		<UseWpf>true</UseWpf>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

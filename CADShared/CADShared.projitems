@@ -17,8 +17,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Basal\General\LoopState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Basal\Nullable\ArgumentNullEx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Basal\Nullable\CallerArgumentExpressionAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Basal\Win\Enums.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Basal\Win\SystemEx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Basal\Win\Win32Api.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Basal\Win\WindowsAPI.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\BaseEx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\CollectionEx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\DBDictionaryEx.cs" />
@@ -55,6 +57,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Initialize\CheckFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Initialize\IAutoGo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Initialize\MethodInfoHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PE\AcadPeInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PE\DBmod.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PE\PostCmd.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PE\ProgramPE.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ResultData\LispList.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ResultData\TypedValueList.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ResultData\XDataList.cs" />
