@@ -42,6 +42,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Jig\JigEx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Jig\JigExTransient.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\ObjectIdEx.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\PaneEx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\RedrawEx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\SelectionSetEx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\SingleKeyWordHook.cs" />
