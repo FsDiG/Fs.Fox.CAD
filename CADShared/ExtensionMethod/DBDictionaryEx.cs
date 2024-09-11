@@ -119,6 +119,15 @@ public static class DBDictionaryEx
 
         using (dict.ForWrite())
         {
+            if (dict.Contains(key))
+            {
+                var oldValue = dict.GetData(key)!;
+                using (oldValue.ForWrite())
+                {
+                    oldValue.Erase();
+                    dict.Remove(key);
+                }
+            }
             var id = dict.SetAt(key, newValue);
             tr.AddNewlyCreatedDBObject(newValue, true);
             return id;
