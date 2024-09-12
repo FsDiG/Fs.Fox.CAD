@@ -150,11 +150,10 @@ public sealed class DBTrans : IDisposable
         Document = doc ?? Acaop.DocumentManager.MdiActiveDocument;
         Database = Document.Database;
         Editor = Document.Editor;
+        if (docLock && Document.LockMode(false) == DocumentLockMode.NotLocked)
+            _documentLock = Document.LockDocument();
         Transaction = Database.TransactionManager.StartTransaction();
         _commit = commit;
-        if (docLock)
-            _documentLock = Document.LockDocument();
-
         _dBTrans.Push(this);
     }
 
