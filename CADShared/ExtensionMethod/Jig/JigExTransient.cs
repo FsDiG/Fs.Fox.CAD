@@ -103,7 +103,7 @@ public class JigExTransient : IDisposable
     /// <summary>
     /// 清空瞬态容器并移除图元显示
     /// </summary>
-    public void ClearAndDispose()
+    public void ClearAndDisposeDrawables()
     {
         foreach (var drawable in _drawableSet)
         {
@@ -173,7 +173,7 @@ public class JigExTransient : IDisposable
 
         if (disposing)
         {
-            ClearAndDispose(); // 清空瞬态容器并移除对象在图纸上的显示
+            ClearAndDisposeDrawables(); // 清空瞬态容器并移除对象在图纸上的显示
         }
 
         _drawableSet.Clear();
