@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Assoc\AssocPersSubentityIdPEEx.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Assoc\AssocUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Basal\General\ArrayEx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Basal\General\DebugHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Basal\General\EnumEx.cs" />
