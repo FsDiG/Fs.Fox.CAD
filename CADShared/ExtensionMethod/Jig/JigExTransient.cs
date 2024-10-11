@@ -66,7 +66,7 @@ public class JigExTransient : IDisposable
     /// </summary>
     /// <param name="drawable">图元</param>
     /// <param name="tdm">绘图模式</param>
-    public void Add(Drawable drawable, TransientDrawingMode tdm = TransientDrawingMode.Main)
+    public void Add(Drawable drawable, TransientDrawingMode tdm = TransientDrawingMode.DirectShortTerm)
     {
         if (_drawableSet.Add(drawable))
         {
