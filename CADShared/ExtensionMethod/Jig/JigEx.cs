@@ -19,6 +19,7 @@ public delegate void WorldDrawEvent(WorldDraw draw);
 /// <summary>
 /// jig扩展类
 /// </summary>
+// ReSharper disable once ClassWithVirtualMembersNeverInherited.Global
 public class JigEx : DrawJig, IDisposable
 {
     #region 成员
@@ -36,27 +37,17 @@ public class JigEx : DrawJig, IDisposable
     /// <summary>
     /// 最后的图元,用来生成
     /// </summary>
-    public Entity[] Entitys => _drawEntitys.ToArray();
+    public Entity[] Entities => _drawEntities.ToArray();
 
-
+    /// <summary>
+    /// 鼠标移动时的委托
+    /// </summary>
     readonly Action<Point3d, Queue<Entity>>? _mouseAction;
     readonly Tolerance _tolerance; // 容差
 
-    readonly Queue<Entity> _drawEntitys; // 重复生成的图元,放在这里刷新
+    readonly Queue<Entity> _drawEntities; // 委托内重复生成的图元,放在这里刷新
     JigPromptPointOptions? _options; // jig鼠标配置
     private bool _worldDrawFlag; // 20220503
-
-    private bool _systemVariablesOrthomode;
-
-    bool SystemVariablesOrthomode // 正交修改还原
-    {
-        get => _systemVariablesOrthomode;
-        set
-        {
-            if (Env.OrthoMode != value)
-                Env.OrthoMode = _systemVariablesOrthomode = value;
-        }
-    }
 
     #endregion
 
@@ -67,8 +58,8 @@ public class JigEx : DrawJig, IDisposable
     /// </summary>
     JigEx()
     {
-        _drawEntitys = new();
-        DimensionEntitys = new();
+        _drawEntities = new();
+        DimensionEntities = new();
         _options = JigPointOptions();
     }
 
@@ -112,7 +103,7 @@ public class JigEx : DrawJig, IDisposable
         if (pro.Status != PromptStatus.OK && pro.Status != PromptStatus.Keyword)
             return SamplerStatus.Cancel;
         // 记上次的状态，因为马上要还原
-        bool isOk = !lastIsKw;
+        var isOk = !lastIsKw;
         lastIsKw = pro.Status == PromptStatus.Keyword;
 
         // 上次鼠标点不同(一定要这句,不然图元刷新太快会看到奇怪的边线)
@@ -128,11 +119,11 @@ public class JigEx : DrawJig, IDisposable
         }
 
         // 上次循环的缓冲区图元清理,否则将会在vs输出遗忘 Dispose
-        while (_drawEntitys.Count > 0)
-            _drawEntitys.Dequeue().Dispose();
+        while (_drawEntities.Count > 0)
+            _drawEntities.Dequeue().Dispose();
 
         // 委托把容器扔出去接收新创建的图元,然后给重绘更新
-        _mouseAction?.Invoke(mousePointWcs, _drawEntitys);
+        _mouseAction?.Invoke(mousePointWcs, _drawEntities);
         MousePointWcsLast = mousePointWcs;
 
         return SamplerStatus.OK;
@@ -165,10 +156,10 @@ public class JigEx : DrawJig, IDisposable
      * 四个箭头最近鼠标的亮显,其余淡显,
      * 在jig使用淡显ent.Unhighlight和亮显ent.Highlight()
      * 需要绕过重绘,否则重绘将导致图元频闪,令这两个操作失效,
-     * 此时需要自定义一个集合 EntityList (不使用本函数的_drawEntitys)
+     * 此时需要自定义一个集合 EntityList (不使用本函数的_drawEntities)
      * 再将 EntityList 传给 WorldDrawEvent 事件,事件内实现亮显和淡显(事件已经利用 DatabaseEntityDraw函数进行提供).
      * 0x03
-     * draw.Geometry.Draw(_drawEntitys[i]);
+     * draw.Geometry.Draw(_drawEntities[i]);
      * 此函数有问题,acad08克隆一份数组也可以用来刷新,
      * 而arx上面的jig只能一次改一个,所以可以用此函数.
      * 起因是此函数属于异步刷新,
@@ -187,7 +178,7 @@ public class JigEx : DrawJig, IDisposable
     {
         _worldDrawFlag = true;
         WorldDrawEvent?.Invoke(draw);
-        _drawEntitys.ForEach(ent =>
+        _drawEntities.ForEach(ent =>
         {
 #if zcad
             draw.Geometry.Draw(ent);
@@ -209,17 +200,12 @@ public class JigEx : DrawJig, IDisposable
     /// <param name="basePoint">基点</param>
     /// <param name="cursorType">光标绑定</param>
     /// <param name="msg">提示信息</param>
-    /// <param name="orthomode">正交开关</param>
     public JigPromptPointOptions SetOptions(Point3d basePoint,
         CursorType cursorType = CursorType.RubberBand,
-        string msg = "点选第二点",
-        bool orthomode = false)
+        string msg = "\n点选第二点")
     {
-        if (orthomode)
-            SystemVariablesOrthomode = true;
-
         _options = JigPointOptions();
-        _options.Message = Environment.NewLine + msg;
+        _options.Message = msg;
         _options.Cursor = cursorType; // 光标绑定
         _options.UseBasePoint = true; // 基点打开
         _options.BasePoint = basePoint; // 基点设定
@@ -231,18 +217,12 @@ public class JigEx : DrawJig, IDisposable
     /// </summary>
     /// <param name="msg">信息</param>
     /// <param name="keywords">关键字</param>
-    /// <param name="orthomode">正交开关</param>
-    /// <returns></returns>
+    /// <returns>jig配置</returns>
     public JigPromptPointOptions SetOptions(string msg,
-        Dictionary<string, string>? keywords = null,
-        bool orthomode = false)
+        Dictionary<string, string>? keywords = null)
     {
-        if (orthomode)
-            SystemVariablesOrthomode = true;
-
         _options = JigPointOptions();
         _options.Message = Environment.NewLine + msg;
-
 
         if (keywords != null)
             foreach (var item in keywords)
@@ -265,12 +245,8 @@ public class JigEx : DrawJig, IDisposable
     /// 鼠标配置:自定义
     /// </summary>
     /// <param name="action"></param>
-    /// <param name="orthomode">正交开关</param>
-    public void SetOptions(Action<JigPromptPointOptions> action, bool orthomode = false)
+    public void SetOptions(Action<JigPromptPointOptions> action)
     {
-        if (orthomode)
-            SystemVariablesOrthomode = true;
-
         _options = new JigPromptPointOptions();
         action.Invoke(_options);
     }
@@ -278,7 +254,8 @@ public class JigEx : DrawJig, IDisposable
     /// <summary>
     /// 执行
     /// </summary>
-    /// <returns></returns>
+    /// <returns>交互结果</returns>
+    [Obsolete("将在下个版本中删除，请使用Editor.Drag(JigEx)")]
     public PromptResult Drag()
     {
         // jig功能必然是当前前台文档,所以封装内部更好调用
@@ -286,9 +263,6 @@ public class JigEx : DrawJig, IDisposable
         var doc = dm.MdiActiveDocument;
         var ed = doc.Editor;
         var dr = ed.Drag(this);
-
-        if (SystemVariablesOrthomode)
-            SystemVariablesOrthomode = !SystemVariablesOrthomode;
         return dr;
     }
 
@@ -299,7 +273,7 @@ public class JigEx : DrawJig, IDisposable
     /// 用户输入控制默认配置
     /// <para>令jig.Drag().Status == <see cref="PromptStatus.None"/></para>
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Jig配置</returns>
     static JigPromptPointOptions JigPointOptions()
     {
         return new JigPromptPointOptions()
@@ -333,7 +307,7 @@ public class JigEx : DrawJig, IDisposable
     /// <summary>
     /// 注释数据,可以在缩放的时候不受影响
     /// </summary>
-    public DynamicDimensionDataCollection DimensionEntitys { get; set; }
+    public DynamicDimensionDataCollection DimensionEntities { get; set; }
 
     /// <summary>
     /// 重写注释数据
@@ -343,7 +317,7 @@ public class JigEx : DrawJig, IDisposable
     protected override DynamicDimensionDataCollection GetDynamicDimensionData(double dimScale)
     {
         base.GetDynamicDimensionData(dimScale);
-        return DimensionEntitys;
+        return DimensionEntities;
     }
 
     #endregion
@@ -387,14 +361,14 @@ public class JigEx : DrawJig, IDisposable
         if (disposing)
         {
             // 最后一次的图元如果没有加入数据库,就在此销毁,所以JigEx调用的时候加using
-            _drawEntitys.ForEach(ent =>
+            _drawEntities.ForEach(ent =>
             {
                 if (ent.Database == null && !ent.IsDisposed)
                     ent.Dispose();
             });
         }
 
-        _drawEntitys.Clear();
+        _drawEntities.Clear();
     }
 
     #endregion
