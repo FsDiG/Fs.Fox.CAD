@@ -312,7 +312,7 @@ public static class Env
         var oldDimblk = Acaop.GetSystemVariable("dimblk");
         Dimblk = dimblk;
         var id = HostApplicationServices.WorkingDatabase.Dimblk;
-        Acaop.SetSystemVariable("dimblk",oldDimblk);
+        Acaop.SetSystemVariable("dimblk", oldDimblk);
         return id;
     }
 
@@ -677,7 +677,7 @@ public static class Env
     public static T Print<T>(this T obj)
     {
         // ReSharper disable once ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
-        Document?.Editor.WriteMessage($"{obj}\n");
+        Document?.Editor.WriteMessage(obj is null ? "null\n" : $"{obj}\n");
         return obj;
     }
 
