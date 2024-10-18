@@ -30,4 +30,8 @@ Global
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {57CA0128-08DE-436F-B9F1-82C64F49BF67}
 	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		CADShared\CADShared.projitems*{5178502e-9a78-4588-b849-33ed439976b2}*SharedItemsImports = 13
+		CADShared\CADShared.projitems*{6b29955a-5796-4035-9297-210fa15d3846}*SharedItemsImports = 5
+	EndGlobalSection
 EndGlobal

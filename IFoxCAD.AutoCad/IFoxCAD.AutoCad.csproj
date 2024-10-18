@@ -1,39 +1,69 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
-		<TargetFramework>net48</TargetFramework>
-		<LangVersion>Preview</LangVersion>
-		<Nullable>enable</Nullable>
-		<PlatformTarget>x64</PlatformTarget>
-		<RootNamespace>IFoxCAD.Cad</RootNamespace>
-		<UseWindowsForms>true</UseWindowsForms>
-		<UseWpf>true</UseWpf>
-		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-	</PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net48</TargetFramework>
+        <LangVersion>Preview</LangVersion>
+        <Nullable>enable</Nullable>
+        <PlatformTarget>x64</PlatformTarget>
+        <RootNamespace>IFoxCAD.CAD</RootNamespace>
+        <UseWindowsForms>true</UseWindowsForms>
+        <UseWpf>true</UseWpf>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    </PropertyGroup>
+    
+    <!--nuget package-->
+    <PropertyGroup>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageId>IFox.CAD.ACAD</PackageId>
+		<Title>IFox.CAD.ACAD</Title>
+		<Product>IFox.CAD.ACAD</Product>
+		<Version>0.9.0</Version>
+		<Authors>xsfhlzh, vicwjb, liuqihong, DYH</Authors>
+		<Description>基于.NET的二次开发基本类库.</Description>
+		<PackageProjectUrl>https://www.nuget.org/packages/IFox.CAD.ACAD/</PackageProjectUrl>
+		<RepositoryUrl>https://gitee.com/inspirefunction/ifoxcad</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageTags>IFox,Cad,AutoCad,C#,NET,</PackageTags>
+        <Company>InspireFunction</Company>
+        <PackageReadmeFile>readme.md</PackageReadmeFile>
+        <PackageReleaseNotes>普通包更新至0.9，修改部分api优化代码</PackageReleaseNotes>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    </PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-	  <DebugType>full</DebugType>
-	  <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-	  <DefineConstants>$(DefineConstants);acad</DefineConstants>
-	</PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <DebugType>none</DebugType>
+        <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+        <DefineConstants>$(DefineConstants);acad</DefineConstants>
+    </PropertyGroup>
 
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-	  <DebugType>full</DebugType>
-	  <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-	  <DefineConstants>$(DefineConstants);acad</DefineConstants>
-	</PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+        <DebugType>none</DebugType>
+        <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+        <DefineConstants>$(DefineConstants);acad</DefineConstants>
+    </PropertyGroup>
 
-	<ItemGroup>
-		<PackageReference Include="AutoCAD.NET" Version="20.0.0" ExcludeAssets="runtime">
-		</PackageReference>
-		<PackageReference Include="IndexRange" Version="1.0.3" />
-		<PackageReference Include="Nullable" Version="1.3.1">
-		  <PrivateAssets>all</PrivateAssets>
-		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
-	</ItemGroup>
-	<ItemGroup>
-		<Reference Include="Microsoft.CSharp" />
-	</ItemGroup>
-	<Import Project="..\CADShared\CADShared.projitems" Label="Shared" />
+    <ItemGroup>
+      <None Include="..\LICENSE">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
+      <None Include="..\readme.md">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AutoCAD.NET" Version="20.0.0" ExcludeAssets="runtime">
+        </PackageReference>
+        <PackageReference Include="IndexRange" Version="1.0.3" />
+        <PackageReference Include="Nullable" Version="1.3.1">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="Microsoft.CSharp" />
+    </ItemGroup>
+    <Import Project="..\CADShared\CADShared.projitems" Label="Shared" />
 </Project>

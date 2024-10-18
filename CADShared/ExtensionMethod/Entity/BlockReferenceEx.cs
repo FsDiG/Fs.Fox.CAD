@@ -18,12 +18,10 @@ public static class BlockReferenceEx
     public static void XClip(this BlockReference brf, IEnumerable<Point3d> pt3ds)
     {
         var mat = brf.BlockTransform.Inverse();
-        var pts =
-            pt3ds
-                .Select(p => p.TransformBy(mat).Point2d())
-                .ToCollection();
+        var pts = pt3ds.Select(p => p.TransformBy(mat).Point2d()).ToCollection();
 
-        SpatialFilterDefinition sfd = new(pts, Vector3d.ZAxis, 0.0, 0.0, 0.0, true);
+        SpatialFilterDefinition sfd = new(pts, Vector3d.ZAxis, 0.0, double.PositiveInfinity,
+            double.NegativeInfinity, true);
         using SpatialFilter sf = new();
         sf.Definition = sfd;
         var dict = brf.GetXDictionary().GetSubDictionary(true, [filterDictName])!;
@@ -49,9 +47,8 @@ public static class BlockReferenceEx
         ];
 
         using SpatialFilter sf = new();
-        sf.Definition = new(pts, Vector3d.ZAxis, 0.0, 0.0, 0.0, true);
-        var dict = brf.GetXDictionary()
-            .GetSubDictionary(true, [filterDictName])!;
+        sf.Definition = new(pts, Vector3d.ZAxis, 0.0, double.PositiveInfinity, double.NegativeInfinity, true);
+        var dict = brf.GetXDictionary().GetSubDictionary(true, [filterDictName])!;
         dict.SetData(spatialName, sf);
 #if !acad
         pts.Dispose();
@@ -96,8 +93,7 @@ public static class BlockReferenceEx
     /// <summary>
     /// 更新动态块参数值
     /// </summary>
-    public static bool ChangeBlockProperty(this BlockReference blockReference,
-        string propName, object value)
+    public static bool ChangeBlockProperty(this BlockReference blockReference, string propName, object value)
     {
         if (!blockReference.IsDynamicBlock)
             return false;
@@ -127,7 +123,8 @@ public static class BlockReferenceEx
     /// <summary>
     /// 更新属性块的属性值
     /// </summary>
-    public static void ChangeBlockAttribute(this BlockReference blockReference, Dictionary<string, string> propertyNameValues)
+    public static void ChangeBlockAttribute(this BlockReference blockReference,
+        Dictionary<string, string> propertyNameValues)
     {
         var tr = DBTrans.GetTopTransaction(blockReference.Database);
         foreach (var item in blockReference.AttributeCollection)
@@ -196,7 +193,6 @@ public static class BlockReferenceEx
 
         return blk.Name;
     }
-
 
     /// <summary>
     /// 获取嵌套块的位置(wcs)
@@ -282,7 +278,8 @@ public static class BlockReferenceEx
     /// <param name="blockReference">块参照</param>
     /// <param name="action">委托</param>
     /// <param name="tr">事务</param>
-    public static void NestedForEach(this Entity blockReference, Action<Entity, Matrix3d> action, DBTrans? tr = null)
+    public static void NestedForEach(this Entity blockReference, Action<Entity, Matrix3d> action,
+        DBTrans? tr = null)
     {
         tr ??= DBTrans.GetTop(blockReference.IsNewObject ? Env.Database : blockReference.Database);
         var queue = new Queue<(Entity, Matrix3d)>();
