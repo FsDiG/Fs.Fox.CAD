@@ -27,48 +27,6 @@ public static class DBDictionaryEx
     /// <summary>
     /// 获取字典内指定key的对象
     /// </summary>
-    /// <typeparam name="T">对象类型的泛型</typeparam>
-    /// <param name="dict">字典</param>
-    /// <param name="key">指定的键值</param>
-    /// <returns>T 类型的对象</returns>
-    [Obsolete]
-    public static T? GetAt<T>(this DBDictionary dict, string key) where T : DBObject
-    {
-        var tr = DBTrans.GetTopTransaction(dict.Database);
-        if (dict.Contains(key))
-        {
-            var id = dict.GetAt(key);
-            if (!id.IsNull)
-                return tr.GetObject<T>(id);
-        }
-
-        return null;
-    }
-
-    /// <summary>
-    /// 添加条目（键值对）到字典
-    /// </summary>
-    /// <typeparam name="T">对象类型</typeparam>
-    /// <param name="dict">字典</param>
-    /// <param name="key">键</param>
-    /// <param name="newValue">值</param>
-    /// <returns>字典项目的id</returns>
-    [Obsolete]
-    public static ObjectId SetAt<T>(this DBDictionary dict, string key, T newValue) where T : DBObject
-    {
-        var tr = DBTrans.GetTopTransaction(dict.Database);
-
-        using (dict.ForWrite())
-        {
-            var id = dict.SetAt(key, newValue);
-            tr.AddNewlyCreatedDBObject(newValue, true);
-            return id;
-        }
-    }
-
-    /// <summary>
-    /// 获取字典内指定key的对象
-    /// </summary>
     /// <param name="dict">字典</param>
     /// <param name="key">指定的键值</param>
     /// <returns>T 类型的对象</returns>
@@ -90,8 +48,8 @@ public static class DBDictionaryEx
     /// </summary>
     /// <typeparam name="T">对象类型的泛型</typeparam>
     /// <param name="dict">字典</param>
-    /// <param name="key">指定的键值</param>
-    /// <returns>T 类型的对象</returns>
+    /// <param name="key">key</param>
+    /// <returns>T类型的对象</returns>
     public static T? GetData<T>(this DBDictionary dict, string key) where T : DBObject
     {
         var tr = DBTrans.GetTopTransaction(dict.Database);
@@ -99,7 +57,9 @@ public static class DBDictionaryEx
         {
             var id = dict.GetAt(key);
             if (!id.IsNull)
+            {
                 return tr.GetObject<T>(id);
+            }
         }
 
         return null;
@@ -128,6 +88,7 @@ public static class DBDictionaryEx
                     dict.Remove(key);
                 }
             }
+
             var id = dict.SetAt(key, newValue);
             tr.AddNewlyCreatedDBObject(newValue, true);
             return id;
@@ -144,14 +105,10 @@ public static class DBDictionaryEx
     /// <param name="dict">字典</param>
     /// <param name="key">键值</param>
     /// <returns>扩展数据</returns>
+    // ReSharper disable once ReturnTypeCanBeNotNullable
     public static XRecordDataList? GetXRecord(this DBDictionary dict, string key)
     {
-        if (dict.GetData(key) is Xrecord { Data: not null } xr)
-        {
-            return xr.Data;
-        }
-
-        return null;
+        return dict.GetData(key) is Xrecord { Data: not null } xr ? xr.Data : null;
     }
 
     /// <summary>
@@ -160,13 +117,14 @@ public static class DBDictionaryEx
     /// <param name="rb">扩展数据</param>
     /// <param name="dict">字典</param>
     /// <param name="key">键值</param>
-    public static void SetXRecord(this DBDictionary dict, string key, XRecordDataList rb)
+    /// <returns>字典项的Id</returns>
+    public static ObjectId SetXRecord(this DBDictionary dict, string key, XRecordDataList rb)
     {
         // DxfCode.300  字符串可以写 Data
         // DxfCode.1004 内存流不给写 Data,只能去写 XData
         Xrecord newValue = new();
         newValue.Data = rb;
-        dict.SetData(key, newValue);
+        return dict.SetData(key, newValue);
     }
 
     #endregion
@@ -184,7 +142,9 @@ public static class DBDictionaryEx
         if (id.IsNull)
         {
             using (obj.ForWrite())
+            {
                 obj.CreateExtensionDictionary();
+            }
 
             id = obj.ExtensionDictionary;
         }
@@ -294,8 +254,7 @@ public static class DBDictionaryEx
     /// <param name="createSubDictionary">是否创建子字典</param>
     /// <param name="dictNames">键值列表</param>
     /// <returns>字典</returns>
-    public static DBDictionary? GetSubDictionary(this DBDictionary dict,
-        bool createSubDictionary,
+    public static DBDictionary? GetSubDictionary(this DBDictionary dict, bool createSubDictionary,
         IEnumerable<string> dictNames)
     {
         DBDictionary? newDict = null;
@@ -387,8 +346,7 @@ public static class DBDictionaryEx
     /// <returns>编组集合</returns>
     public static IEnumerable<Group> GetGroups(this DBDictionary dict, Func<Group, bool> func)
     {
-        return dict.GetAllObjects<Group>()
-            .Where(func);
+        return dict.GetAllObjects<Group>().Where(func);
     }
 
     /// <summary>
@@ -398,9 +356,7 @@ public static class DBDictionaryEx
     /// <returns>编组集合</returns>
     public static IEnumerable<Group> GetGroups(this Entity ent)
     {
-        return ent.GetPersistentReactorIds()
-            .Cast<ObjectId>()
-            .Select(id => id.GetObject<Group>())
+        return ent.GetPersistentReactorIds().Cast<ObjectId>().Select(id => id.GetObject<Group>())
             .OfType<Group>();
     }
 
