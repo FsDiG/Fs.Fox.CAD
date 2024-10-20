@@ -36,7 +36,7 @@ public static class EnumEx
             return null!;
 
         // 注释存放的容器
-        HashSet<string> nodes = new();
+        HashSet<string> nodes = [];
         if (Attribute.GetCustomAttribute(fieldInfo, typeof(T)) is T attribute)
         {
             nodes.Add(attribute.Description);

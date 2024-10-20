@@ -215,7 +215,7 @@ public static class EditorEx
 
         foreach (var item in dicActions)
         {
-            var keySplitS = item.Key.Split(new string[] { ",", "|" }, StringSplitOptions.RemoveEmptyEntries);
+            var keySplitS = item.Key.Split([",", "|"], StringSplitOptions.RemoveEmptyEntries);
             for (var i = 0; i < keySplitS.Length; i += 2)
                 pso.Keywords.Add(keySplitS[i], keySplitS[i],
                     keySplitS[i + 1] + "(" + keySplitS[i] + ")");
@@ -445,7 +445,7 @@ public static class EditorEx
         try
         {
             if (Acceptable())
-                Acap.DocumentManager.MdiActiveDocument.Editor.WriteMessage("\n" + message);
+                Acaop.DocumentManager.MdiActiveDocument.Editor.WriteMessage("\n" + message);
         }
         catch (Exception ex)
         {
@@ -469,9 +469,9 @@ public static class EditorEx
     /// <returns><see langword="true"/>有,<see langword="false"/>没有</returns>
     public static bool HasEditor()
     {
-        return Acap.DocumentManager.MdiActiveDocument is not null
-               && Acap.DocumentManager.Count != 0
-               && Acap.DocumentManager.MdiActiveDocument.Editor is not null;
+        return Acaop.DocumentManager.MdiActiveDocument is not null
+               && Acaop.DocumentManager.Count != 0
+               && Acaop.DocumentManager.MdiActiveDocument.Editor is not null;
     }
 
     /// <summary>
@@ -481,7 +481,7 @@ public static class EditorEx
     public static bool Acceptable()
     {
         return HasEditor()
-               && !Acap.DocumentManager.MdiActiveDocument.Editor.IsDragging;
+               && !Acaop.DocumentManager.MdiActiveDocument.Editor.IsDragging;
     }
 
     #endregion Info
@@ -498,9 +498,9 @@ public static class EditorEx
     {
         using var itor = pnts.GetEnumerator();
         if (!itor.MoveNext())
-            return new List<TypedValue>();
+            return [];
 
-        List<TypedValue> values = new();
+        List<TypedValue> values = [];
 
         TypedValue tvFirst = new((int)LispDataType.Point2d, itor.Current);
         TypedValue tv1;
@@ -1068,7 +1068,7 @@ public static class EditorEx
 
         if ((flag & RunLispFlag.SendStringToExecute) == RunLispFlag.SendStringToExecute)
         {
-            var dm = Acap.DocumentManager;
+            var dm = Acaop.DocumentManager;
             var doc = dm.MdiActiveDocument;
             doc?.SendStringToExecute(lispCode + "\n", false, false, false);
         }
@@ -1097,7 +1097,7 @@ public static class EditorEx
         if (File.Exists(saveFile))
             throw new FileFormatException("文件重复:" + saveFile);
 
-        var dm = Acap.DocumentManager;
+        var dm = Acaop.DocumentManager;
         if (dm.Count == 0)
             return;
 

@@ -160,13 +160,13 @@ internal static class EntityBoundingInfo
             Matrix3d.Rotation(mtext.Rotation, mtext.Normal, Point3d.Origin) *
             Matrix3d.PlaneToWorld(new Plane(Point3d.Origin, mtext.Normal));
 
-        return new[]
-        {
-              point1.TransformBy(xform),
+        return
+        [
+            point1.TransformBy(xform),
               new Point3d(point2.X, point1.Y, 0.0).TransformBy(xform),
               point2.TransformBy(xform),
               new Point3d(point1.X, point2.Y, 0.0).TransformBy(xform)
-          };
+        ];
     }
     /// <summary>
     /// 获取实体包围盒

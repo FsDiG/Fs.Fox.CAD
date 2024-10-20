@@ -40,11 +40,13 @@ public static class DBTransEx
             if (!excludeXref)
                 GetAllIds(tr, tr.BlockTable, ids, excludeXref);
             else
-                tr.BlockTable.ForEach(tabRec => {
+                tr.BlockTable.ForEach(tabRec =>
+                {
                     if (!tabRec.IsFromExternalReference)
                         ids.Add(tabRec.Id);
                 }, checkIdOk: true);
         }
+
         if ((sym & SymModes.DimStyleTable) == SymModes.DimStyleTable)
             GetAllIds(tr, tr.DimStyleTable, ids, excludeXref);
         if ((sym & SymModes.LayerTable) == SymModes.LayerTable)
@@ -70,18 +72,16 @@ public static class DBTransEx
             id.Erase();
     }
 
-    static void GetAllIds<TTable, TRecord>(DBTrans tr,
-                       SymbolTable<TTable, TRecord> symbolTable,
-                       ObjectIdCollection ids,
-                       bool excludeXref = true)
-                       where TTable : SymbolTable
-                       where TRecord : SymbolTableRecord, new()
+    static void GetAllIds<TTable, TRecord>(DBTrans tr, SymbolTable<TTable, TRecord> symbolTable,
+        ObjectIdCollection ids, bool excludeXref = true) where TTable : SymbolTable
+        where TRecord : SymbolTableRecord, new()
     {
         if (!excludeXref)
             symbolTable.ForEach(id => ids.Add(id));
         else
         {
-            symbolTable.ForEach(id => {
+            symbolTable.ForEach(id =>
+            {
                 var tabRec = tr.GetObject<TRecord>(id);
                 if (tabRec == null)
                     return;

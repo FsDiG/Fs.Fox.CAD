@@ -289,7 +289,7 @@ public static class CollectionEx
     [DebuggerStepThrough]
     public static List<ObjectId> GetKeys(this IdMapping idMapping)
     {
-        List<ObjectId> ids = new();
+        List<ObjectId> ids = [];
         foreach (IdPair item in idMapping)
             ids.Add(item.Key);
         return ids;
@@ -303,7 +303,7 @@ public static class CollectionEx
     [DebuggerStepThrough]
     public static List<ObjectId> GetValues(this IdMapping idMapping)
     {
-        List<ObjectId> ids = new();
+        List<ObjectId> ids = [];
         foreach (IdPair item in idMapping)
         {
             ids.Add(item.Value);

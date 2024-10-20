@@ -259,7 +259,7 @@ public static class HatchEx
         var newPl = true; // 是否开始新的多段线(一个边界中可能有多条多段线)
         var firstIsPl = false; //遍历边界的第一个子段为多段线(遍历时不一定从多段线的首段开始)
         List<BulgeVertexWidth>? polyLineVertexes = null;
-        List<List<BulgeVertexWidth>> polyLineData = new();
+        List<List<BulgeVertexWidth>> polyLineData = [];
 
         // 遍历边界的多个子段
         foreach (Curve2d curve in loop.Curves)
@@ -294,7 +294,7 @@ public static class HatchEx
 
                 if (newPl)
                 {
-                    polyLineVertexes = new();
+                    polyLineVertexes = [];
                     polyLineData.Add(polyLineVertexes);
                     newPl = false;
                     pLineCount++;

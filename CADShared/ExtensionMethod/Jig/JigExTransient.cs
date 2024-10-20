@@ -43,7 +43,7 @@ public class JigExTransient : IDisposable
     public JigExTransient()
     {
         _integerCollection = new();
-        _drawableSet = new();
+        _drawableSet = [];
         _manager = TransientManager.CurrentTransientManager;
     }
 

@@ -367,7 +367,7 @@ public static class DBDictionaryEx
     public static List<string> RemoveNullGroup(this DBDictionary dict)
     {
         var groups = dict.GetGroups(g => g.NumEntities < 2);
-        List<string> names = new();
+        List<string> names = [];
         foreach (var g in groups)
         {
             names.Add(g.Name);
@@ -392,7 +392,7 @@ public static class DBDictionaryEx
     public static List<string> RemoveNullGroup(this DBDictionary dict, Func<string, bool> func)
     {
         var groups = dict.GetGroups(g => g.NumEntities < 2);
-        List<string> names = new();
+        List<string> names = [];
         foreach (var g in groups)
         {
             if (func(g.Name))

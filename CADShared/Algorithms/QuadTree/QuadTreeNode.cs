@@ -32,13 +32,13 @@ public class QuadTreeNode<TEntity>
     {
         get
         {
-            return new QuadTreeNode<TEntity>[]
-            {
-                 RightTopTree!,
+            return
+            [
+                RightTopTree!,
                  LeftTopTree!,
                  LeftBottomTree!,
-                 RightBottomTree!,
-            };
+                 RightBottomTree!
+            ];
         }
     }
     /// <summary>
@@ -115,7 +115,7 @@ public class QuadTreeNode<TEntity>
 
         Parent = parent;
         Depth = depth;
-        Contents = new();
+        Contents = [];
     }
     #endregion
 
@@ -232,7 +232,7 @@ public class QuadTreeNode<TEntity>
 
         // 为什么要用容器?
         // 相同包围盒或者四叉树分割线压着多个.
-        this.Contents.Add(ent);
+        Contents.Add(ent);
         return this;
     }
 
@@ -268,7 +268,7 @@ public class QuadTreeNode<TEntity>
         var lowerRight = new Rect(box._X + halfWidth, box._Y, box._Right, box._Top - halfHeight);
 
         // 依照象限顺序输出
-        return new Rect[] { upperRight, upperLeft, lowerleft, lowerRight };
+        return [upperRight, upperLeft, lowerleft, lowerRight];
     }
     #endregion
 
@@ -289,7 +289,7 @@ public class QuadTreeNode<TEntity>
         if (Contents.Remove(easeEnt))
         {
             if (CountSubTree == 0)
-                this.Clear(this);
+                Clear(this);
             return true;
         }
 

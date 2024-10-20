@@ -57,7 +57,7 @@ public class XRecordDataList : TypedValueList
     /// </summary>
     /// <param name="buffer">ResultBuffer 实例</param>
     public static implicit operator XRecordDataList(ResultBuffer? buffer) =>
-        buffer is null ? new() : new(buffer.AsArray());
+        buffer is null ? [] : new(buffer.AsArray());
 
     /// <summary>
     /// XRecordDataList 隐式转换到 TypedValue 数组

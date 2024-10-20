@@ -41,7 +41,7 @@ public static class DBObjectEx
         XDataList data = obj.XData;
 
         // 移除指定App的扩展
-        var indexes = data.GetXdataAppIndex(appName, new DxfCode[] { dxfCode });
+        var indexes = data.GetXdataAppIndex(appName, [dxfCode]);
         if (indexes.Count == 0)
             return;
 
@@ -92,7 +92,7 @@ public static class DBObjectEx
             return;
         XDataList data = obj.XData;
 
-        var indexes = data.GetXdataAppIndex(appName, new DxfCode[] { dxfCode });
+        var indexes = data.GetXdataAppIndex(appName, [dxfCode]);
         if (indexes.Count == 0)
             return;
 

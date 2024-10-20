@@ -51,7 +51,7 @@ public class QuadTree<TEntity> where TEntity : QuadEntity
     public QuadTree(Rect rect)
     {
         _rootNode = new QuadTreeNode<TEntity>(rect, null, 0);// 初始化根节点
-        _points = new();
+        _points = [];
     }
     #endregion
 

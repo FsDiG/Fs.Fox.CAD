@@ -19,7 +19,7 @@ public static class IFoxUtils
         var mi = type?.GetMethods().FirstOrDefault(e => e.Name == "RegenLayers");
         var pi = type?.GetProperties().FirstOrDefault(e => e.Name == "RegenPending");
         var regenPending = (int)(pi?.GetValue(null) ?? 0);
-        mi?.Invoke(null, new object[] { objectIds.ToArray(), regenPending });
+        mi?.Invoke(null, [objectIds.ToArray(), regenPending]);
     }
 
     /// <summary>

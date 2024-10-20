@@ -118,7 +118,7 @@ public static class GeometryEx
     /// <returns>解析类圆对象</returns>
     public static CircularArc2d GetMinCircle(Point2d pt1, Point2d pt2, out LoopList<Point2d> ptlst)
     {
-        ptlst = new LoopList<Point2d> { pt1, pt2 };
+        ptlst = [pt1, pt2];
         return
             new CircularArc2d
             (
@@ -137,7 +137,7 @@ public static class GeometryEx
     /// <returns>解析类圆对象</returns>
     public static CircularArc2d GetMinCircle(Point2d pt1, Point2d pt2, Point2d pt3, out LoopList<Point2d> ptlst)
     {
-        ptlst = new LoopList<Point2d> { pt1, pt2, pt3 };
+        ptlst = [pt1, pt2, pt3];
 
         // 遍历各点与下一点的向量长度,找到距离最大的两个点
         var maxNode =
@@ -160,7 +160,7 @@ public static class GeometryEx
         }
         // 否则按三点做圆
         // ptlst.SetFirst(maxNode);
-        ptlst = new LoopList<Point2d> { maxNode.Value, maxNode.Next.Value, maxNode.Previous.Value };
+        ptlst = [maxNode.Value, maxNode.Next.Value, maxNode.Previous.Value];
         ca2d = new CircularArc2d(pt1, pt2, pt3);
         ca2d.SetAngles(0, Math.PI * 2);
         return ca2d;
@@ -348,7 +348,7 @@ public static class GeometryEx
             return null;
 
             case 1:
-            ptlst = new LoopList<Point2d> { pnts[0] };
+            ptlst = [pnts[0]];
             return new CircularArc2d(pnts[0], 0);
 
             case 2:
@@ -412,7 +412,7 @@ public static class GeometryEx
             return points;
 
         int n = points.Count, k = 0;
-        List<Point2d> H = new(new Point2d[2 * n]);
+        List<Point2d> H = [..new Point2d[2 * n]];
 
         points.Sort((a, b) =>
              a.X == b.X ? a.Y.CompareTo(b.Y) : a.X.CompareTo(b.X));

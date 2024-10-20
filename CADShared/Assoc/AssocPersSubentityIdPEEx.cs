@@ -15,7 +15,7 @@ public static class AssocPersSubentityIdPEEx
     public static AssocPersSubentityIdPE? GetPersSubentityIdPE(this Entity entity)
     {
         var intPtr = entity.QueryX(_acdbAssocPersSubentityIdPEClass);
-        return AssocPersSubentityIdPE.Create(intPtr, false) as AssocPersSubentityIdPE;
+        return RXObject.Create(intPtr, false) as AssocPersSubentityIdPE;
     }
 
     /// <summary>

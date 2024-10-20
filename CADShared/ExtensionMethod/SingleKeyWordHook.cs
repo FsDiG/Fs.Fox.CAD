@@ -58,12 +58,12 @@ public sealed class SingleKeyWordHook : IDisposable
     {
         IsDisposed = false;
         _isResponsed = false;
-        _keyWords = new HashSet<Keys>();
+        _keyWords = [];
         _key = Keys.None;
         _working = true;
         _workType = workType;
-        Acap.PreTranslateMessage -= Acap_PreTranslateMessage;
-        Acap.PreTranslateMessage += Acap_PreTranslateMessage;
+        Acaop.PreTranslateMessage -= Acap_PreTranslateMessage;
+        Acaop.PreTranslateMessage += Acap_PreTranslateMessage;
     }
 
     #endregion
@@ -185,7 +185,7 @@ public sealed class SingleKeyWordHook : IDisposable
         if (IsDisposed)
             return;
 
-        Acap.PreTranslateMessage -= Acap_PreTranslateMessage;
+        Acaop.PreTranslateMessage -= Acap_PreTranslateMessage;
         if (disposing)
         {
             _keyWords.Clear();

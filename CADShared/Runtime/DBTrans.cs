@@ -166,7 +166,7 @@ public sealed class DBTrans : IDisposable
     public DBTrans(Database database, bool commit = true)
     {
         Database = database;
-        Document = Acap.DocumentManager.GetDocument(database);
+        Document = Acaop.DocumentManager.GetDocument(database);
         Editor = Document?.Editor;
         Transaction = Database.TransactionManager.StartTransaction();
         _commit = commit;

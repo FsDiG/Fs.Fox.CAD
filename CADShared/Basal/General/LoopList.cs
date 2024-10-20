@@ -286,7 +286,7 @@ public class LoopList<T> : IEnumerable<T>, IFormattable
         if (node is null)
             return null;
 
-        List<LoopListNode<T>> result = new();
+        List<LoopListNode<T>> result = [];
         var c = EqualityComparer<T>.Default;
         if (value is not null)
         {

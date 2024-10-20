@@ -90,7 +90,7 @@ public class XDataList : TypedValueList
     /// <returns>返回任务组码的索引</returns>
     public List<int> GetXdataAppIndex(string appName, DxfCode[] dxfCodes)
     {
-        List<int> indexes = new();
+        List<int> indexes = [];
         RangeTask(appName, (tv, _, i) =>
         {
             if (dxfCodes.Contains((DxfCode)tv.TypeCode))
@@ -109,7 +109,7 @@ public class XDataList : TypedValueList
         LoopState state = new();
         // 在名称和名称之间找
         var appNameIndex = -1;
-        for (var i = 0; i < this.Count; i++)
+        for (var i = 0; i < Count; i++)
         {
             if (this[i].TypeCode == (short)DxfCode.ExtendedDataRegAppName)
             {

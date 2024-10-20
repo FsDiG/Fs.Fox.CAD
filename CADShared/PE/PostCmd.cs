@@ -28,12 +28,12 @@ public class PostCmd
     /// </summary>
     static PromptStatus AcedCmd(ResultBuffer args)
     {
-        if (Acap.DocumentManager.IsApplicationContext)
+        if (Acaop.DocumentManager.IsApplicationContext)
             return 0;
         if (acedCmd is null)
         {
             var str = nameof(acedCmd);
-            if (Acap.Version.Major >= 20)// 2015.+
+            if (Acaop.Version.Major >= 20)// 2015.+
                 str += "S";
 
             acedCmd = AcadPeInfo.GetDelegate<DelegateAcedCmd>(
@@ -112,7 +112,7 @@ public class PostCmd
     /// </summary>
     static void AsyncCommand(string args)
     {
-        object[] commandArray = { args + "\n" };
+        object[] commandArray = [args + "\n"];
 #if zcad
         var com = Acap.ZcadApplication;
 #else
@@ -186,7 +186,7 @@ public class PostCmd
     public static PromptStatus SendCommand(string args, RunCmdFlag flag)
     {
         var ret = PromptStatus.OK;
-        if (!Acap.DocumentManager.IsApplicationContext)
+        if (!Acaop.DocumentManager.IsApplicationContext)
         {
             if ((flag & RunCmdFlag.AcedCmd) == RunCmdFlag.AcedCmd)
             {
@@ -216,7 +216,7 @@ public class PostCmd
         }
         else
         {
-            var dm = Acap.DocumentManager;
+            var dm = Acaop.DocumentManager;
             var doc = dm.MdiActiveDocument;
             if (doc == null)
                 return PromptStatus.Error;

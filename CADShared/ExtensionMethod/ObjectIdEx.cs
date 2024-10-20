@@ -89,7 +89,7 @@ public static class ObjectIdEx
     /// <returns>对象id集合</returns>
     public static IEnumerable<ObjectId> IsDerivedFrom<T>(this IEnumerable<ObjectId> ids, bool exactMatch = false) where T : DBObject
     {
-        var rxc = RXClass.GetClass(typeof(T));
+        var rxc = RXObject.GetClass(typeof(T));
         if (exactMatch)
         {
             var dxfName = rxc.DxfName;

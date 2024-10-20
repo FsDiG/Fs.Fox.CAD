@@ -65,7 +65,7 @@ internal class AcadEMR
             return;
         }
 
-        var funcName = Encoding.Unicode.GetString(new byte[] { 63 });
+        var funcName = Encoding.Unicode.GetString([63]);
         if (IntPtr.Size == 4)
             funcName += "isEMR@AcDbDatabase@@QBE_NXZ";
         else

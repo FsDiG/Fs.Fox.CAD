@@ -31,7 +31,7 @@ public static class IdleAction
     public static void Add(Action action)
     {
         _actions.Enqueue(action);
-        if (alreadyLoad) 
+        if (alreadyLoad)
             return;
         Acaop.Idle -= Acap_Idle;
         Acaop.Idle += Acap_Idle;

@@ -249,7 +249,7 @@ public class Rect : IEquatable<Rect>, IComparable<Rect>
     /// <returns></returns>
     public override bool Equals(object? obj)
     {
-        return this.Equals(obj as Rect);
+        return Equals(obj as Rect);
     }
     /// <summary>
     /// 
@@ -258,7 +258,7 @@ public class Rect : IEquatable<Rect>, IComparable<Rect>
     /// <returns></returns>
     public bool Equals(Rect? b)
     {
-        return this.Equals(b, 1e-6);/*默认规则是==是0容差,Eq是有容差*/
+        return Equals(b, 1e-6);/*默认规则是==是0容差,Eq是有容差*/
     }
     /// <summary>
     /// 
@@ -520,7 +520,7 @@ public class Rect : IEquatable<Rect>, IComparable<Rect>
         //if (pts == null)
         //    throw new ArgumentNullException(nameof(pts));
         ArgumentNullEx.ThrowIfNull(pts);
-        if (!Rect.IsRectAngle(pts))
+        if (!IsRectAngle(pts))
             return false;
 
         // 获取min和max点(非包围盒)

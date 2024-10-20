@@ -275,7 +275,7 @@ public class XrefFactory(DBTrans tr, HashSet<string>? xrefNames = null) : IXrefB
     private List<ObjectId> GetDetachIds(Dictionary<ObjectId, string> nested)
     {
         // 直接拆离的id
-        List<ObjectId> detachIds = new();
+        List<ObjectId> detachIds = [];
 
         // 收集要处理的id
         XrefNodeForEach((xNodeName, xNodeId, xNodeStatus, xNodeIsNested) =>

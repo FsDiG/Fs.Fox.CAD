@@ -33,8 +33,8 @@ public static class IdleNoCmdAction
         _actions.Enqueue(action);
         if (!alreadyLoad)
         {
-            Acap.Idle -= Acap_Idle;
-            Acap.Idle += Acap_Idle;
+            Acaop.Idle -= Acap_Idle;
+            Acaop.Idle += Acap_Idle;
             alreadyLoad = true;
         }
     }
@@ -49,12 +49,12 @@ public static class IdleNoCmdAction
         if (Count == 0)
         {
             alreadyLoad = false;
-            Acap.Idle -= Acap_Idle;
+            Acaop.Idle -= Acap_Idle;
             return;
         }
 
         // 判断是否有活动的命令
-        if (Convert.ToBoolean(Acap.GetSystemVariable(CmdActiveName)))
+        if (Convert.ToBoolean(Acaop.GetSystemVariable(CmdActiveName)))
             return;
 #if RELEASE
         try

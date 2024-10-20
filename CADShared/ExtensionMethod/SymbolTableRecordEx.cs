@@ -171,7 +171,7 @@ public static class SymbolTableRecordEx
     /// <returns>实体Id集合</returns>
     public static IEnumerable<ObjectId> GetObjectIds<T>(this BlockTableRecord btr) where T : Entity
     {
-        var dxfName = RXClass.GetClass(typeof(T)).DxfName;
+        var dxfName = RXObject.GetClass(typeof(T)).DxfName;
         return btr.Cast<ObjectId>()
             .Where(id => id.ObjectClass.DxfName == dxfName);
     }
@@ -341,7 +341,7 @@ public static class SymbolTableRecordEx
     /// </summary>
     /// <param name="record">符号表记录</param>
     /// <param name="task">要执行的委托</param>
-    [System.Diagnostics.DebuggerStepThrough]
+    [DebuggerStepThrough]
     public static void ForEach<TRecord>(this TRecord record, Action<ObjectId, LoopState, int> task)
         where TRecord : SymbolTableRecord, IEnumerable
     {

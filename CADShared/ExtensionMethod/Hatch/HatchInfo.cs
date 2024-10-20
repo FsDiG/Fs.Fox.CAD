@@ -60,7 +60,7 @@ public class HatchInfo
     {
         _hatch = new Hatch();
         _hatch.SetDatabaseDefaults();
-        _boundaryIds = new();
+        _boundaryIds = [];
     }
 
     /// <summary>
@@ -168,7 +168,7 @@ public class HatchInfo
         // 设置渐变色填充的起始和结束颜色
         var gColor1 = new GradientColor(colorStart, 0);
         var gColor2 = new GradientColor(colorEnd, 1);
-        _hatch.SetGradientColors(new GradientColor[] { gColor1, gColor2 });
+        _hatch.SetGradientColors([gColor1, gColor2]);
 
         _hatch.GradientShift = gradientShift;              // 梯度位移
         _hatch.ShadeTintValue = shadeTintValue;            // 阴影色值

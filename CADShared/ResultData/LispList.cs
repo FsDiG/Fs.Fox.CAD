@@ -164,7 +164,7 @@ public class LispList : TypedValueList
     /// <param name="value">lisp 列表</param>
     public void Add(LispList value)
     {
-        this.AddRange(value.Value);
+        AddRange(value.Value);
     }
 
     #endregion

@@ -102,7 +102,7 @@ public class AcadPeInfo
             {
                 // 获取此dll所有的函数名
                 var file = Process.GetCurrentProcess().MainModule.FileName;
-                var dll = Path.GetDirectoryName(file) + $"\\acdb{Acap.Version.Major}.dll";
+                var dll = Path.GetDirectoryName(file) + $"\\acdb{Acaop.Version.Major}.dll";
                 if (File.Exists(dll))
                     _PeForAcdbDll = new PeInfo(dll);
             }
@@ -120,7 +120,7 @@ public class AcadPeInfo
         {
             if (_Methods is null)
             {
-                _Methods = new();
+                _Methods = [];
 
                 if ((_acadPeEnum & AcadPeEnum.AcadExe) == AcadPeEnum.AcadExe)
                     GetPeMethod(PeForAcadExe);
@@ -193,7 +193,7 @@ public class AcadPeInfo
         }
         else
         {
-            _Methods ??= new();
+            _Methods ??= [];
             try
             {
                 PeFunction.Finds(peInfo, _findFuncName, _Methods);

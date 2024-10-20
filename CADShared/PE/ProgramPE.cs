@@ -766,11 +766,11 @@ public class PeInfo
     private string GetString(byte[] data, string type)
     {
         if (type.Trim().ToUpper() == "ASCII")
-            return System.Text.Encoding.ASCII.GetString(data);
+            return Encoding.ASCII.GetString(data);
         if (type.Trim().ToUpper() == "DEFAULT")
-            return System.Text.Encoding.Default.GetString(data);
+            return Encoding.Default.GetString(data);
         if (type.Trim().ToUpper() == "UNICODE")
-            return System.Text.Encoding.Unicode.GetString(data);
+            return Encoding.Unicode.GetString(data);
         if (type.Trim().ToUpper() == "BYTE")
         {
             var Temp = "";
@@ -1417,7 +1417,7 @@ public class OptionalHeader
         if (!is32)
         {
             // X64没有了,但是为了代码保留修改幅度不大,所以置0
-            BaseOfData = new byte[0];// x64必须置于0
+            BaseOfData = [];// x64必须置于0
             // x64长度增加的
             var ulonglong = 8;
             ImageBase = new byte[ulonglong];          // 数据基址(RVA)
@@ -1491,7 +1491,7 @@ public class ExportDirectory
     /// <summary>
     /// 函数指针名称集合
     /// </summary>
-    public List<byte[]> FunctionNamesByte = new();
+    public List<byte[]> FunctionNamesByte = [];
     public long FileStarIndex = 0;
     public long FileEndIndex = 0;
 
@@ -1500,7 +1500,7 @@ public class ExportDirectory
     /// </summary>
     public HashSet<string> FunctionNames()
     {
-        HashSet<string> names = new();
+        HashSet<string> names = [];
         for (var i = 0; i < FunctionNamesByte.Count; i++)
             names.Add(Encoding.Default.GetString(FunctionNamesByte[i]));
         return names;

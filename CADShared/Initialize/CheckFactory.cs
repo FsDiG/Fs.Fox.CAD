@@ -36,7 +36,7 @@ public static class CheckFactory
                     continue;
                 if (!dic.ContainsKey(att.GlobalName))
                 {
-                    dic.Add(att.GlobalName, new());
+                    dic.Add(att.GlobalName, []);
                 }
 
                 dic[att.GlobalName].Add(type.Name + "." + method.Name);

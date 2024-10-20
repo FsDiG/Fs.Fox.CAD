@@ -207,8 +207,8 @@ public static class Curve3dEx
                 pars.Add(inter.UpperBound);
         }
 
-        List<CompositeCurve3d> curves = new();
-        List<Curve3d> cc3ds = new();
+        List<CompositeCurve3d> curves = [];
+        List<Curve3d> cc3ds = [];
         for (var i = 0; i < pars.Count - 1; i++)
         {
             cc3ds.Clear();
