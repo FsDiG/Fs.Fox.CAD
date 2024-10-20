@@ -1,4 +1,5 @@
 ﻿namespace IFoxCAD.Cad;
+
 /// <summary>
 /// 亮显模式
 /// </summary>
@@ -9,35 +10,43 @@ public enum BrightEntity
     /// 块更新
     /// </summary>
     RecordGraphicsModified = 1,
+
     /// <summary>
     /// 标注更新
     /// </summary>
     RecomputeDimensionBlock = 2,
+
     /// <summary>
     /// 重画
     /// </summary>
     Draw = 4,
+
     /// <summary>
     /// 亮显
     /// </summary>
     Highlight = 8,
+
     /// <summary>
     /// 亮显取消
     /// </summary>
     Unhighlight = 16,
+
     /// <summary>
     /// 显示图元
     /// </summary>
     VisibleTrue = 32,
+
     /// <summary>
     /// 隐藏图元
     /// </summary>
     VisibleFalse = 64,
+
     /// <summary>
     /// 平移更新,可以令ctrl+z撤回时候保证刷新
     /// </summary>
     MoveZero = 128,
 }
+
 /// <summary>
 /// 刷新模式
 /// </summary>
@@ -48,23 +57,28 @@ public enum BrightEditor
     /// 刷新屏幕,图元不生成(例如块还是旧的显示)
     /// </summary>
     UpdateScreen = 1,
+
     /// <summary>
     /// 刷新全图
     /// </summary>
     Regen = 2,
+
     /// <summary>
     /// 清空选择集
     /// </summary>
     SelectionClean = 4,
+
     /// <summary>
     /// 视口外
     /// </summary>
     ViewportsFrom = 8,
+
     /// <summary>
     /// 视口内
     /// </summary>
     ViewportsIn = 16,
 }
+
 /// <summary>
 /// 重绘扩展
 /// </summary>
@@ -87,7 +101,7 @@ public static class RedrawEx
             // 刷新
             ed.Redraw(BrightEditor.UpdateScreen);
         }
-        
+
 
         /*
          * 我发现命令加 CommandFlags.Redraw 就不需要以下处理了:
@@ -127,7 +141,8 @@ public static class RedrawEx
             ed.Regen();
 
         if ((bright & BrightEditor.SelectionClean) == BrightEditor.SelectionClean)
-            ed.SetImpliedSelection([]);
+            // ReSharper disable once UseCollectionExpression
+            ed.SetImpliedSelection(new ObjectId[0]);
 
         if ((bright & BrightEditor.ViewportsFrom) == BrightEditor.ViewportsFrom)
             ed.UpdateTiledViewportsFromDatabase(); // 更新视口外
@@ -177,6 +192,7 @@ public static class RedrawEx
 
 
     #region 实体刷新
+
     /// <summary>
     /// 刷新实体显示
     /// </summary>
@@ -196,5 +212,6 @@ public static class RedrawEx
     /// <param name="id">实体id</param>
     [Obsolete("此处已经被RedrawEx代替")]
     public static void Flush(this ObjectId id) => Flush(id.GetObject<Entity>()!);
+
     #endregion
 }
