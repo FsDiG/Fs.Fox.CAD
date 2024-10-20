@@ -17,7 +17,7 @@
         <PackageId>IFox.CAD.ACAD</PackageId>
 		<Title>IFox.CAD.ACAD</Title>
 		<Product>IFox.CAD.ACAD</Product>
-		<Version>0.9.0</Version>
+		<Version>0.9.1</Version>
 		<Authors>xsfhlzh, vicwjb, liuqihong, DYH</Authors>
 		<Description>基于.NET的二次开发基本类库.</Description>
 		<PackageProjectUrl>https://www.nuget.org/packages/IFox.CAD.ACAD/</PackageProjectUrl>
@@ -26,7 +26,7 @@
 		<PackageTags>IFox,Cad,AutoCad,C#,NET,</PackageTags>
         <Company>InspireFunction</Company>
         <PackageReadmeFile>readme.md</PackageReadmeFile>
-        <PackageReleaseNotes>普通包更新至0.9，修改部分api优化代码</PackageReleaseNotes>
+        <PackageReleaseNotes>补充四叉树、填充、文字、等扩展</PackageReleaseNotes>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
     </PropertyGroup>
 
