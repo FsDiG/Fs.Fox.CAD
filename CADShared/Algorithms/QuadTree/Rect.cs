@@ -375,9 +375,9 @@ public class Rect : IEquatable<Rect>, IComparable<Rect>
     /// <returns></returns>
     public Point2d[] ToPoints()
     {
-        Point2d a = MinPoint;// min
+        var a = MinPoint;// min
         Point2d b = new(_Right, _Y);
-        Point2d c = MaxPoint;// max
+        var c = MaxPoint;// max
         Point2d d = new(_X, _Top);
         return [a, b, c, d];
     }
@@ -387,9 +387,9 @@ public class Rect : IEquatable<Rect>, IComparable<Rect>
     /// <returns></returns>
     public (Point2d boxMin, Point2d boxRigthDown, Point2d boxMax, Point2d boxLeftUp) ToPoints4()
     {
-        Point2d a = MinPoint;// min
+        var a = MinPoint;// min
         Point2d b = new(_Right, _Y);
-        Point2d c = MaxPoint;// max
+        var c = MaxPoint;// max
         Point2d d = new(_X, _Top);
         return (a, b, c, d);
     }
@@ -533,7 +533,7 @@ public class Rect : IEquatable<Rect>, IComparable<Rect>
         pts.Clear();
         // 排序这四个点,左下/右下/右上/左上
         var node = link.Find(minPt);
-        for (int i = 0; i < 4; i++)
+        for (var i = 0; i < 4; i++)
         {
             pts.Add(node!.Value);
             node = node.Next;
@@ -617,16 +617,16 @@ public class Rect : IEquatable<Rect>, IComparable<Rect>
         box = box.OrderBy(a => a._X).ToList();
 
         // 遍历所有图元
-        for (int i = 0; i < box.Count; i++)
+        for (var i = 0; i < box.Count; i++)
         {
             var oneRect = box[i];
             if (firstProcessing(oneRect))
                 continue;
 
-            bool actionlast = true;
+            var actionlast = true;
 
             // 搜索范围要在 one 的头尾中间的部分
-            for (int j = i + 1; j < box.Count; j++)
+            for (var j = i + 1; j < box.Count; j++)
             {
                 var twoRect = box[j];
                 // x碰撞:矩形2的Left 在 矩形1[Left-Right]闭区间;穿过的话,也必然有自己的Left因此不需要处理

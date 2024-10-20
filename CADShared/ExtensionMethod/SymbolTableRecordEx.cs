@@ -171,7 +171,7 @@ public static class SymbolTableRecordEx
     /// <returns>实体Id集合</returns>
     public static IEnumerable<ObjectId> GetObjectIds<T>(this BlockTableRecord btr) where T : Entity
     {
-        string dxfName = RXClass.GetClass(typeof(T)).DxfName;
+        var dxfName = RXClass.GetClass(typeof(T)).DxfName;
         return btr.Cast<ObjectId>()
             .Where(id => id.ObjectClass.DxfName == dxfName);
     }
@@ -284,7 +284,7 @@ public static class SymbolTableRecordEx
             attref.SetDatabaseDefaults();
             attref.SetAttributeFromBlock(attdef, blockRef.BlockTransform);
             attref.Position = attdef.Position.TransformBy(blockRef.BlockTransform);
-            if (atts is not null && atts.TryGetValue(attdef.Tag, out string str))
+            if (atts is not null && atts.TryGetValue(attdef.Tag, out var str))
             {
                 attref.TextString = str;
             }
@@ -348,7 +348,7 @@ public static class SymbolTableRecordEx
         //if (task == null)
         //    throw new ArgumentNullException(nameof(task));
         ArgumentNullEx.ThrowIfNull(task);
-        int i = 0;
+        var i = 0;
         LoopState state = new(); /*这种方式比Action改Func更友好*/
         foreach (ObjectId id in record)
         {

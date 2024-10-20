@@ -237,7 +237,7 @@ public static class PointEx
 
         // 首尾不同,去加一个到最后
         var lst = new Point2d[ptCollection.Count + 1];
-        for (int i = 0; i < ptCollection.Count; i++)
+        for (var i = 0; i < ptCollection.Count; i++)
             lst[i] = ptCollection[i];
         lst[^1] = lst[0];
 
@@ -257,7 +257,7 @@ public static class PointEx
 
         // 首尾不同,去加一个到最后
         var lst = new Point3d[ptCollection.Count + 1];
-        for (int i = 0; i < ptCollection.Count; i++)
+        for (var i = 0; i < ptCollection.Count; i++)
             lst[i] = ptCollection[i];
         lst[^1] = lst[0];
 

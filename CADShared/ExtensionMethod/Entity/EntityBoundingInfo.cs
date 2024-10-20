@@ -92,7 +92,7 @@ internal static class EntityBoundingInfo
                 var e = GetEntityBoxEx(en);
                 if (e.HasValue)
                 {
-                    Extents3d entext = e.Value;
+                    var entext = e.Value;
                     entext.TransformBy(mat);
                     if (ext.IsEmptyExt())
                         ext = entext;
@@ -111,8 +111,8 @@ internal static class EntityBoundingInfo
     /// <returns>最小包围盒4点坐标</returns>
     public static Point3d[] GetMTextBoxCorners(MText mtext)
     {
-        double width = mtext.ActualWidth;
-        double height = mtext.ActualHeight;
+        var width = mtext.ActualWidth;
+        var height = mtext.ActualHeight;
         Point3d point1, point2;
         switch (mtext.Attachment)
         {

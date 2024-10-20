@@ -117,7 +117,7 @@ public partial class WindowsAPI
 
         // 安全写法效率太低了
         // 分配结构体大小的内存空间
-        IntPtr structPtr = Marshal.AllocHGlobal(typeSize);
+        var structPtr = Marshal.AllocHGlobal(typeSize);
 
         // 将byte数组拷到分配好的内存空间
         Marshal.Copy(bytes, 0, structPtr, typeSize);

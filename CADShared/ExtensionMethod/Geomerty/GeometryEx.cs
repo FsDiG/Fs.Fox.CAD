@@ -39,7 +39,7 @@ public static class GeometryEx
             return PointOnRegionType.Outside;
 
         //
-        bool flag = false;
+        var flag = false;
         foreach (var node in ptlst.GetNodes())
         {
             var pt1 = node.Value;
@@ -48,9 +48,9 @@ public static class GeometryEx
                 continue;
             if (pt1.X < pt.X && pt2.X < pt.X)
                 continue;
-            Vector2d vec = pt2 - pt1;
-            double t = (pt.X - pt1.X) / vec.X;
-            double y = t * vec.Y + pt1.Y;
+            var vec = pt2 - pt1;
+            var t = (pt.X - pt1.X) / vec.X;
+            var y = t * vec.Y + pt1.Y;
             if (y < pt.Y && t >= 0 && t <= 1)
                 flag = !flag;
         }
@@ -89,7 +89,7 @@ public static class GeometryEx
             return PointOnRegionType.Outside;
 
         //
-        bool flag = false;
+        var flag = false;
         foreach (var node in ptlst.GetNodes())
         {
             var pt1 = node.Value;
@@ -98,9 +98,9 @@ public static class GeometryEx
                 continue;
             if (pt1.X < pt.X && pt2.X < pt.X)
                 continue;
-            Vector3d vec = pt2 - pt1;
-            double t = (pt.X - pt1.X) / vec.X;
-            double y = t * vec.Y + pt1.Y;
+            var vec = pt2 - pt1;
+            var t = (pt.X - pt1.X) / vec.X;
+            var y = t * vec.Y + pt1.Y;
             if (y < pt.Y && t >= 0 && t <= 1)
                 flag = !flag;
         }
@@ -140,7 +140,7 @@ public static class GeometryEx
         ptlst = new LoopList<Point2d> { pt1, pt2, pt3 };
 
         // 遍历各点与下一点的向量长度,找到距离最大的两个点
-        LoopListNode<Point2d> maxNode =
+        var maxNode =
             ptlst.GetNodes().FindByMax
             (
                 out _,
@@ -148,8 +148,8 @@ public static class GeometryEx
             );
 
         // 以两点做最小包围圆
-        CircularArc2d ca2d =
-            GetMinCircle(maxNode.Value, maxNode.Next!.Value, out LoopList<Point2d> tptlst);
+        var ca2d =
+            GetMinCircle(maxNode.Value, maxNode.Next!.Value, out var tptlst);
 
         // 如果另一点属于该圆
         if (ca2d.IsIn(maxNode.Previous!.Value))
@@ -187,7 +187,7 @@ public static class GeometryEx
             // 获取各组合下三点的最小包围圆
             var secondNode = firstNode.Next;
             var thirdNode = secondNode!.Next;
-            var tca2d = GetMinCircle(firstNode.Value, secondNode.Value, thirdNode!.Value, out LoopList<Point2d> tptlst);
+            var tca2d = GetMinCircle(firstNode.Value, secondNode.Value, thirdNode!.Value, out var tptlst);
 
             // 如果另一点属于该圆,并且半径小于当前值就把它做为候选解
             if (!tca2d.IsIn(firstNode.Previous!.Value))
@@ -418,7 +418,7 @@ public static class GeometryEx
              a.X == b.X ? a.Y.CompareTo(b.Y) : a.X.CompareTo(b.X));
 
         // Build lower hull
-        for (int i = 0; i < n; ++i)
+        for (var i = 0; i < n; ++i)
         {
             while (k >= 2 && IsClockWise(H[k - 2], H[k - 1], points[i]) == OrientationType.CounterClockWise)
                 k--;
@@ -549,7 +549,7 @@ public static class GeometryEx
     /// <returns>三维矩阵</returns>
     public static Matrix3d GetScaleMatrix(this Point3d point, double x, double y, double z)
     {
-        double[] matdata = new double[16];
+        var matdata = new double[16];
         matdata[0] = x;
         matdata[3] = point.X * (1 - x);
         matdata[5] = y;
@@ -567,8 +567,8 @@ public static class GeometryEx
     /// <returns>尺寸对象</returns>
     public static Size GetSize(this Extents3d ext)
     {
-        int width = (int)Math.Floor(ext.MaxPoint.X - ext.MinPoint.X);
-        int height = (int)Math.Ceiling(ext.MaxPoint.Y - ext.MinPoint.Y);
+        var width = (int)Math.Floor(ext.MaxPoint.X - ext.MinPoint.X);
+        var height = (int)Math.Ceiling(ext.MaxPoint.Y - ext.MinPoint.Y);
         return new(width, height);
     }
 

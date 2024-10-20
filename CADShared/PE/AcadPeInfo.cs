@@ -262,7 +262,7 @@ public class PeFunction
             if (_CName is null && MethodName is not null)
             {
                 _CName = MethodName.Replace("?", string.Empty); // 剔除cpp前缀
-                int num = _CName.IndexOf("@");
+                var num = _CName.IndexOf("@");
                 if (num > -1)
                     _CName = _CName.Substring(0, num); // 剔除参数部分
             }

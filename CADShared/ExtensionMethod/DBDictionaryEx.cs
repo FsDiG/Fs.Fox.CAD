@@ -171,10 +171,10 @@ public static class DBDictionaryEx
         colTypes.Values.CopyTo(types, 0);
 
         var nRow = content.GetLength(0);
-        for (int i = 0; i < nRow; i++)
+        for (var i = 0; i < nRow; i++)
         {
             DataCellCollection row = new();
-            for (int j = 0; j < nCol; j++)
+            for (var j = 0; j < nCol; j++)
             {
                 var cell = new DataCell();
                 cell.SetValue(types[j], content[i, j]);
@@ -264,7 +264,7 @@ public static class DBDictionaryEx
             using (dict.ForWrite())
                 dict.TreatElementsAsHard = true;
 
-            foreach (string name in dictNames)
+            foreach (var name in dictNames)
             {
                 if (dict.Contains(name))
                 {
@@ -281,7 +281,7 @@ public static class DBDictionaryEx
         }
         else
         {
-            foreach (string name in dictNames)
+            foreach (var name in dictNames)
             {
                 if (dict.Contains(name))
                     newDict = dict.GetData<DBDictionary>(name);

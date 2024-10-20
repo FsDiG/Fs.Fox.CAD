@@ -165,7 +165,7 @@ public static class EditorEx
     {
         Dictionary<string, Action> tmp = new();
         // 后缀名的|号切割,移除掉,组合成新的加入tmp
-        for (int i = dicActions.Count - 1; i >= 0; i--)
+        for (var i = dicActions.Count - 1; i >= 0; i--)
         {
             var pair = dicActions.ElementAt(i);
             var key = pair.Key;
@@ -173,12 +173,12 @@ public static class EditorEx
             if (keySp.Length < 2)
                 continue;
 
-            for (int j = 0; j < keySp.Length; j++)
+            for (var j = 0; j < keySp.Length; j++)
             {
                 var item = keySp[j];
                 // 防止多个后缀通过|符越过词典约束同名
                 // 后缀(key)含有,而且Action(value)不同,就把Action(value)累加到后面.
-                if (dicActions.TryGetValue(item, out Action value))
+                if (dicActions.TryGetValue(item, out var value))
                 {
                     if (dicActions[item] != dicActions[key])
                         dicActions[item] += dicActions[key];
@@ -194,12 +194,12 @@ public static class EditorEx
             dicActions.Add(item.Key, item.Value);
 
         // 去除关键字重复的,把重复的执行动作移动到前面
-        for (int i = 0; i < dicActions.Count; i++)
+        for (var i = 0; i < dicActions.Count; i++)
         {
             var pair1 = dicActions.ElementAt(i);
             var key1 = pair1.Key;
 
-            for (int j = dicActions.Count - 1; j > i; j--)
+            for (var j = dicActions.Count - 1; j > i; j--)
             {
                 var pair2 = dicActions.ElementAt(j);
                 var key2 = pair2.Key;
@@ -216,7 +216,7 @@ public static class EditorEx
         foreach (var item in dicActions)
         {
             var keySplitS = item.Key.Split(new string[] { ",", "|" }, StringSplitOptions.RemoveEmptyEntries);
-            for (int i = 0; i < keySplitS.Length; i += 2)
+            for (var i = 0; i < keySplitS.Length; i += 2)
                 pso.Keywords.Add(keySplitS[i], keySplitS[i],
                     keySplitS[i + 1] + "(" + keySplitS[i] + ")");
         }
@@ -504,7 +504,7 @@ public static class EditorEx
 
         TypedValue tvFirst = new((int)LispDataType.Point2d, itor.Current);
         TypedValue tv1;
-        TypedValue tv2 = tvFirst;
+        var tv2 = tvFirst;
 
         while (itor.MoveNext())
         {
@@ -562,13 +562,13 @@ public static class EditorEx
         var rlst =
             new LispList { { LispDataType.Int16, colorIndex } };
 
-        foreach (Point2d pnt in pnts)
+        foreach (var pnt in pnts)
         {
-            Vector2d vec = Vector2d.XAxis * radius;
-            double angle = Math.PI * 2 / numEdges;
+            var vec = Vector2d.XAxis * radius;
+            var angle = Math.PI * 2 / numEdges;
 
             List<Point2d> tpnts = [pnt + vec];
-            for (int i = 1; i < numEdges; i++)
+            for (var i = 1; i < numEdges; i++)
             {
                 tpnts.Add(pnt + vec.RotateBy(angle * i));
             }
@@ -589,11 +589,11 @@ public static class EditorEx
     /// <param name="numEdges">多边形边的个数</param>
     public static void DrawCircle(this Editor editor, Point2d pnt, short colorIndex, double radius, int numEdges)
     {
-        Vector2d vec = Vector2d.XAxis * radius;
-        double angle = Math.PI * 2 / numEdges;
+        var vec = Vector2d.XAxis * radius;
+        var angle = Math.PI * 2 / numEdges;
 
         List<Point2d> pnts = [pnt + vec];
-        for (int i = 1; i < numEdges; i++)
+        for (var i = 1; i < numEdges; i++)
             pnts.Add(pnt + vec.RotateBy(angle * i));
 
         editor.DrawVectors(pnts, colorIndex, true);
@@ -702,7 +702,7 @@ public static class EditorEx
         if ((short)Env.GetVar("TILEMODE") == 1)
             throw new ArgumentException("TILEMODE == 1..Espace papier uniquement");
 
-        Matrix3d mat = Matrix3d.Identity;
+        var mat = Matrix3d.Identity;
         //using DBTrans tr = new();
         var tr = DBTrans.GetTopTransaction(editor.Document.Database);
         var vp = tr.GetObject<Viewport>(editor.CurrentViewportObjectId);
@@ -860,7 +860,7 @@ public static class EditorEx
         extents.AddPoint(rpt);
         rpt = extents.MaxPoint + new Vector3d(offsetDist, offsetDist, 0);
         lpt = extents.MinPoint - new Vector3d(offsetDist, offsetDist, 0);
-        Vector3d ver = rpt - lpt;
+        var ver = rpt - lpt;
         ed.Zoom(lpt + ver / 2, ver.X, ver.Y);
     }
 
@@ -894,7 +894,7 @@ public static class EditorEx
     /// <param name="offsetDist">偏移距离</param>
     public static void ZoomExtents(this Editor ed, double offsetDist = 0.00)
     {
-        Database db = ed.Document.Database;
+        var db = ed.Document.Database;
         // db.UpdateExt(true); // GetValidExtents3d内提供了
         var dbExtent = db.GetValidExtents3d();
         if (dbExtent == null)
@@ -911,7 +911,7 @@ public static class EditorEx
     /// <param name="offsetDist">偏移距离</param>
     public static void ZoomObject(this Editor ed, Entity ent, double offsetDist = 0.00)
     {
-        Extents3d ext = ent.GeometricExtents;
+        var ext = ent.GeometricExtents;
         ed.ZoomWindow(ext.MinPoint, ext.MaxPoint, offsetDist);
     }
 
@@ -1061,7 +1061,7 @@ public static class EditorEx
 
         if ((flag & RunLispFlag.AcedEvaluateLisp) == RunLispFlag.AcedEvaluateLisp)
         {
-            _ = AcedEvaluateLisp(lispCode, out IntPtr rb);
+            _ = AcedEvaluateLisp(lispCode, out var rb);
             if (rb != IntPtr.Zero)
                 return (ResultBuffer)DisposableWrapper.Create(typeof(ResultBuffer), rb, true);
         }
@@ -1123,8 +1123,8 @@ public static class EditorEx
 #else
         dynamic com = Acap.AcadApplication;
 #endif
-        dynamic doc = com.ActiveDocument;
-        dynamic wmfSet = doc.ActiveSelectionSet;
+        var doc = com.ActiveDocument;
+        var wmfSet = doc.ActiveSelectionSet;
         // TODO 20221007 导出wmf的bug
         // cad21 先net选择,再进行,此处再选择一次?
         // cad21 调试期间无法选择性粘贴?

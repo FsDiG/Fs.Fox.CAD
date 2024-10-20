@@ -184,7 +184,7 @@ public class XrefFactory(DBTrans tr, HashSet<string>? xrefNames = null) : IXrefB
         _tr.Database.ResolveXrefs(UseThreadEngine, DoNewOnly);
 
         var xg = _tr.Database.GetHostDwgXrefGraph(IncludeGhosts);
-        for (int i = 0; i < xg.NumNodes; i++)
+        for (var i = 0; i < xg.NumNodes; i++)
         {
             var xNode = xg.GetXrefNode(i);
             if (!xNode.BlockTableRecordId.IsOk())
@@ -330,7 +330,7 @@ public class XrefFactory(DBTrans tr, HashSet<string>? xrefNames = null) : IXrefB
         // 拆离:未参照的文件
         if (AutoDetach)
         {
-            for (int i = 0; i < detachIds.Count; i++)
+            for (var i = 0; i < detachIds.Count; i++)
                 _tr.Database.DetachXref(detachIds[i]);
         }
 
@@ -576,10 +576,10 @@ public class XrefPath
         string[] directories = directory.Split('\\');
         string[] files = file.Split('\\');
         // 获取两条路径中的最短路径
-        int getMinLength = directories.Length < files.Length ? directories.Length : files.Length;
+        var getMinLength = directories.Length < files.Length ? directories.Length : files.Length;
 
         // 用于确定我们退出的循环中的位置。
-        int lastCommonRoot = -1;
+        var lastCommonRoot = -1;
         int index;
         // 找到共根
         for (index = 0; index < getMinLength; index++)
@@ -639,9 +639,9 @@ public class XrefPath
 
         // 判断向上删除几个
         var slashes = relativeName.Split(slash);
-        int index = 0;
+        var index = 0;
         // ReSharper disable once ForCanBeConvertedToForeach
-        for (int i = 0; i < slashes.Length; i++)
+        for (var i = 0; i < slashes.Length; i++)
         {
             if (slashes[i] != "..")
                 break;
@@ -652,14 +652,14 @@ public class XrefPath
         // 前段
         var pathDwgs = directory.Split(slash);
         pathDwgs = pathDwgs.Where(s => !string.IsNullOrEmpty(s)).ToArray(); // 清理空数组
-        for (int i = 0; i < pathDwgs.Length - index; i++)
+        for (var i = 0; i < pathDwgs.Length - index; i++)
         {
             result.Append(pathDwgs[i]);
             result.Append(slash);
         }
 
         // 后段
-        for (int i = 0; i < slashes.Length; i++)
+        for (var i = 0; i < slashes.Length; i++)
         {
             var item = slashes[i];
             if (item != "." && item != "..")

@@ -163,7 +163,7 @@ public static class CollectionEx
     [DebuggerStepThrough]
     public static void ForEach<T>(this IEnumerable<T> source, Action<T, LoopState, int> action)
     {
-        int i = 0;
+        var i = 0;
         LoopState state = new(); /*这种方式比Action改Func更友好*/
         foreach (var element in source)
         {
@@ -209,11 +209,11 @@ public static class CollectionEx
     public static bool Contains(this KeywordCollection collection, string name,
         KeywordName keywordName = KeywordName.GlobalName)
     {
-        bool contains = false;
+        var contains = false;
         switch (keywordName)
         {
             case KeywordName.GlobalName:
-                for (int i = 0; i < collection.Count; i++)
+                for (var i = 0; i < collection.Count; i++)
                 {
                     var item = collection[i];
 
@@ -226,7 +226,7 @@ public static class CollectionEx
 
                 break;
             case KeywordName.LocalName:
-                for (int i = 0; i < collection.Count; i++)
+                for (var i = 0; i < collection.Count; i++)
                 {
                     var item = collection[i];
 
@@ -239,7 +239,7 @@ public static class CollectionEx
 
                 break;
             case KeywordName.DisplayName:
-                for (int i = 0; i < collection.Count; i++)
+                for (var i = 0; i < collection.Count; i++)
                 {
                     var item = collection[i];
 
@@ -266,7 +266,7 @@ public static class CollectionEx
     public static Dictionary<string, string> ToDictionary(this KeywordCollection collection)
     {
         Dictionary<string, string> map = new();
-        for (int i = 0; i < collection.Count; i++)
+        for (var i = 0; i < collection.Count; i++)
         {
             var item = collection[i];
 

@@ -32,7 +32,7 @@ public static class Curve3dEx
     {
         CurveCurveIntersector3d cci = new(c3d, c3d, Vector3d.ZAxis);
         List<double> pars = [];
-        for (int i = 0; i < cci.NumberOfIntersectionPoints; i++)
+        for (var i = 0; i < cci.NumberOfIntersectionPoints; i++)
             pars.AddRange(cci.GetIntersectionParameters(i));
         if (sort)
             pars.Sort();
@@ -49,8 +49,8 @@ public static class Curve3dEx
     public static Curve3d GetSubCurve(this Curve3d curve, double from, double to)
     {
         Interval inter = curve.GetInterval();
-        bool atStart = Tolerance.Global.IsEqualPoint(inter.LowerBound, from);
-        bool atEnd = Tolerance.Global.IsEqualPoint(inter.UpperBound, to);
+        var atStart = Tolerance.Global.IsEqualPoint(inter.LowerBound, from);
+        var atEnd = Tolerance.Global.IsEqualPoint(inter.UpperBound, to);
         if (atStart && atEnd)
             return (Curve3d)curve.Clone();
         if (curve is NurbCurve3d)
@@ -156,7 +156,7 @@ public static class Curve3dEx
         if (pars.Count > 0)
         {
             pars.Sort();
-            for (int i = pars.Count - 1; i > 0; i--)
+            for (var i = pars.Count - 1; i > 0; i--)
                 if (Tolerance.Global.IsEqualPoint(pars[i], pars[i - 1]))
                     pars.RemoveAt(i);
         }
@@ -209,7 +209,7 @@ public static class Curve3dEx
 
         List<CompositeCurve3d> curves = new();
         List<Curve3d> cc3ds = new();
-        for (int i = 0; i < pars.Count - 1; i++)
+        for (var i = 0; i < pars.Count - 1; i++)
         {
             cc3ds.Clear();
             // 复合曲线参数转换到包含曲线参数
@@ -230,7 +230,7 @@ public static class Curve3dEx
                         cp1.LocalParameter,
                         inter.UpperBound));
 
-                for (int j = cp1.SegmentIndex + 1; j < cp2.SegmentIndex; j++)
+                for (var j = cp1.SegmentIndex + 1; j < cp2.SegmentIndex; j++)
                     cc3ds.Add((Curve3d)c3ds[j].Clone());
 
                 inter = c3ds[cp2.SegmentIndex].GetInterval();
@@ -268,7 +268,7 @@ public static class Curve3dEx
         if (cs.Length == 1)
             return ToCurve(cs[0]);
 
-        bool hasNurb = false;
+        var hasNurb = false;
 
         foreach (var c in cs)
         {
@@ -302,12 +302,12 @@ public static class Curve3dEx
 
         Plane plane = pl.GetPlane();
         Point2d endVer = Point2d.Origin;
-        int i = 0;
+        var i = 0;
         foreach (Curve3d c3d in cc3d.GetCurves())
         {
             if (c3d is CircularArc3d ca3d)
             {
-                double b = Math.Tan(0.25 * (ca3d.EndAngle - ca3d.StartAngle)) * ca3d.Normal[2];
+                var b = Math.Tan(0.25 * (ca3d.EndAngle - ca3d.StartAngle)) * ca3d.Normal[2];
                 pl.AddVertexAt(i, c3d.StartPoint.Convert2d(plane), b, 0, 0);
                 endVer = c3d.EndPoint.Convert2d(plane);
             }
@@ -411,7 +411,7 @@ public static class Curve3dEx
     public static Arc ToArc(this CircularArc3d ca3d)
     {
         // 必须新建，而不能直接使用GetPlane()获取
-        double angle = ca3d.ReferenceVector.AngleOnPlane(new Plane(ca3d.Center, ca3d.Normal));
+        var angle = ca3d.ReferenceVector.AngleOnPlane(new Plane(ca3d.Center, ca3d.Normal));
         return new Arc(ca3d.Center, ca3d.Normal, ca3d.Radius, ca3d.StartAngle + angle, ca3d.EndAngle + angle);
     }
 
@@ -549,7 +549,7 @@ public static class Curve3dEx
         for (var i = 0; i < pl3d.NumberOfControlPoints; i++)
             pt3dCollection.Add(pl3d.ControlPointAt(i));
 
-        bool closed = false;
+        var closed = false;
         var n = pt3dCollection.Count - 1;
         if (pt3dCollection[0] == pt3dCollection[n])
         {

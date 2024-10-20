@@ -95,7 +95,7 @@ public static class Curve2dEx
     public static Arc ToArc(this CircularArc2d a2d)
     {
         double startAngle, endAngle;
-        double refAngle = a2d.ReferenceVector.Angle;
+        var refAngle = a2d.ReferenceVector.Angle;
 
         if (a2d.IsClockWise)
         {
@@ -269,15 +269,15 @@ public static class Curve2dEx
     public static Spline ToCurve(this NurbCurve2d nc2d)
     {
         using Point3dCollection ctlPts = new();
-        for (int i = 0; i < nc2d.NumControlPoints; i++)
+        for (var i = 0; i < nc2d.NumControlPoints; i++)
             ctlPts.Add(new Point3d(_planeCache, nc2d.GetControlPointAt(i)));
 
         DoubleCollection knots = new();
-        for (int i = 0; i < nc2d.Knots.Count; i++)
+        for (var i = 0; i < nc2d.Knots.Count; i++)
             knots.Add(nc2d.Knots[i]);
 
         DoubleCollection weights = new();
-        for (int i = 0; i < nc2d.NumWeights; i++)
+        for (var i = 0; i < nc2d.NumWeights; i++)
             weights.Add(nc2d.GetWeightAt(i));
 
         NurbCurve2dData nurbCurve2dData = nc2d.DefinitionData;

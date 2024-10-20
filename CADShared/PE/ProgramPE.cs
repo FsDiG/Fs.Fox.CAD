@@ -86,7 +86,7 @@ public class PeInfo
     public PeInfo(string fullName)
     {
         if (fullName is null)
-            throw new ArgumentException(nameof(fullName)); ;
+            throw new ArgumentException(nameof(fullName));
 
         FullName = fullName;
         FileStream? file = null;
@@ -165,7 +165,7 @@ public class PeInfo
         if (DosHeader is null)
             return;
 
-        long Size = GetLong(DosHeader.e_PESTAR) - _PEFileIndex;   // 获得SUB的大小
+        var Size = GetLong(DosHeader.e_PESTAR) - _PEFileIndex;   // 获得SUB的大小
         DosStub = new DosStub(Size)
         {
             FileStarIndex = _PEFileIndex
@@ -257,8 +257,8 @@ public class PeInfo
             FileStarIndex = _PEFileIndex
         };
 
-        long DirCount = GetLong(OptionalHeader.NumberOfRvaAndSizes);// 这里导致无法使用64位
-        for (int i = 0; i != DirCount; i++)
+        var DirCount = GetLong(OptionalHeader.NumberOfRvaAndSizes);// 这里导致无法使用64位
+        for (var i = 0; i != DirCount; i++)
         {
             OptionalDirAttrib.DirAttrib? directAttrib = new();
             Loadbyte(ref directAttrib.DirRva);
@@ -277,7 +277,7 @@ public class PeInfo
             return;
 
         SectionTable = new SectionTable();
-        long Count = GetLong(PEHeader.NumberOfSections);
+        var Count = GetLong(PEHeader.NumberOfSections);
         SectionTable.FileStarIndex = _PEFileIndex;
         for (long i = 0; i != Count; i++)
         {
@@ -312,19 +312,19 @@ public class PeInfo
             GetLong(exporRVA.DirRva) == 0)
             return;
 
-        long exporAddress = GetLong(exporRVA.DirRva);  // 获取的位置
+        var exporAddress = GetLong(exporRVA.DirRva);  // 获取的位置
         ExportDirectory = new ExportDirectory();
 
         if (SectionTable is null)
             return;
 
-        for (int i = 0; i != SectionTable.Section.Count; i++) // 循环节表
+        for (var i = 0; i != SectionTable.Section.Count; i++) // 循环节表
         {
             if (SectionTable.Section[i] is not SectionTable.SectionData sect)
                 continue;
 
-            long starRva = GetLong(sect.SizeOfRawDataRVA);
-            long endRva = GetLong(sect.SizeOfRawDataSize);
+            var starRva = GetLong(sect.SizeOfRawDataRVA);
+            var endRva = GetLong(sect.SizeOfRawDataSize);
 
             if (exporAddress >= starRva && exporAddress < starRva + endRva)
             {
@@ -346,11 +346,11 @@ public class PeInfo
                 Loadbyte(ref ExportDirectory.AddressOfNameOrdinals);
 
                 _PEFileIndex = GetLong(ExportDirectory.AddressOfFunctions) - GetLong(sect.SizeOfRawDataRVA) + GetLong(sect.PointerToRawData);
-                long endIndex = GetLong(ExportDirectory.AddressOfNames) - GetLong(sect.SizeOfRawDataRVA) + GetLong(sect.PointerToRawData);
-                long numb = (endIndex - _PEFileIndex) / 4;
+                var endIndex = GetLong(ExportDirectory.AddressOfNames) - GetLong(sect.SizeOfRawDataRVA) + GetLong(sect.PointerToRawData);
+                var numb = (endIndex - _PEFileIndex) / 4;
                 for (long z = 0; z != numb; z++)
                 {
-                    byte[] Data = new byte[4];
+                    var Data = new byte[4];
                     Loadbyte(ref Data);
                     ExportDirectory.AddressOfFunctionsList.Add(Data);
                 }
@@ -360,7 +360,7 @@ public class PeInfo
                 numb = (endIndex - _PEFileIndex) / 4;
                 for (long z = 0; z != numb; z++)
                 {
-                    byte[] Data = new byte[4];
+                    var Data = new byte[4];
                     Loadbyte(ref Data);
                     ExportDirectory.AddressOfNamesList.Add(Data);
                 }
@@ -370,7 +370,7 @@ public class PeInfo
                 numb = (endIndex - _PEFileIndex) / 2;
                 for (long z = 0; z != numb; z++)
                 {
-                    byte[] Data = new byte[2];
+                    var Data = new byte[2];
                     Loadbyte(ref Data);
                     ExportDirectory.AddressOfNameOrdinalsList.Add(Data);
                 }
@@ -414,10 +414,10 @@ public class PeInfo
         if (OptionalDirAttrib.DirByte[1] is not OptionalDirAttrib.DirAttrib ImporRVA)
             return;
 
-        long ImporAddress = GetLong(ImporRVA.DirRva);  // 获取的位置
+        var ImporAddress = GetLong(ImporRVA.DirRva);  // 获取的位置
         if (ImporAddress == 0)
             return;
-        long ImporSize = GetLong(ImporRVA.DirSize);  // 获取大小
+        var ImporSize = GetLong(ImporRVA.DirSize);  // 获取大小
 
         ImportDirectory = new ImportDirectory();
 
@@ -430,7 +430,7 @@ public class PeInfo
         #region 获取位置
         if (SectionTable is null)
             return;
-        for (int i = 0; i != SectionTable.Section.Count; i++) // 循环节表
+        for (var i = 0; i != SectionTable.Section.Count; i++) // 循环节表
         {
             if (SectionTable.Section[i] is not SectionTable.SectionData Sect)
                 continue;
@@ -472,12 +472,12 @@ public class PeInfo
 
 
         #region 获取输入DLL名称
-        for (int z = 0; z != ImportDirectory.ImportList.Count; z++)     // 获取引入DLL名字
+        for (var z = 0; z != ImportDirectory.ImportList.Count; z++)     // 获取引入DLL名字
         {
             if (ImportDirectory.ImportList[z] is not ImportDirectory.ImportDate Import)
                 continue;
 
-            long ImportDLLName = GetLong(Import.Name) - SizeRva + PointerRva;
+            var ImportDLLName = GetLong(Import.Name) - SizeRva + PointerRva;
             _PEFileIndex = ImportDLLName;
             long ReadCount = 0;
             while (_PEFileByte is not null) // 获取引入名
@@ -494,28 +494,28 @@ public class PeInfo
         #endregion
 
         #region 获取引入方法 先获取地址 然后获取名字和头
-        for (int z = 0; z != ImportDirectory.ImportList.Count; z++)     // 获取引入方法
+        for (var z = 0; z != ImportDirectory.ImportList.Count; z++)     // 获取引入方法
         {
             if (ImportDirectory.ImportList[z] is not ImportDirectory.ImportDate import)
                 continue;
 
-            long importDLLName = GetLong(import.OriginalFirstThunk) - SizeRva + PointerRva;
+            var importDLLName = GetLong(import.OriginalFirstThunk) - SizeRva + PointerRva;
             _PEFileIndex = importDLLName;
             while (true)
             {
                 var function = new ImportDirectory.ImportDate.FunctionList();
                 Loadbyte(ref function.OriginalFirst);
 
-                long loadIndex = GetLong(function.OriginalFirst);
+                var loadIndex = GetLong(function.OriginalFirst);
                 if (loadIndex == 0)
                     break;
-                long oldIndex = _PEFileIndex;
+                var oldIndex = _PEFileIndex;
 
                 _PEFileIndex = loadIndex - SizeRva + PointerRva;
 
                 if (loadIndex >= StarRva && loadIndex < StarRva + EndRva)  // 发现有些数字超级大
                 {
-                    int ReadCount = 0;
+                    var ReadCount = 0;
 
                     while (_PEFileByte is not null)
                     {
@@ -523,7 +523,7 @@ public class PeInfo
                             Loadbyte(ref function.FunctionHead);
                         if (_PEFileByte[_PEFileIndex + ReadCount] == 0)
                         {
-                            byte[] FunctionName = new byte[ReadCount];
+                            var FunctionName = new byte[ReadCount];
                             Loadbyte(ref FunctionName);
                             function.FunctionName = FunctionName;
 
@@ -555,10 +555,10 @@ public class PeInfo
         if (OptionalDirAttrib.DirByte[2] is not OptionalDirAttrib.DirAttrib ImporRVA)
             return;
 
-        long ImporAddress = GetLong(ImporRVA.DirRva);  // 获取的位置
+        var ImporAddress = GetLong(ImporRVA.DirRva);  // 获取的位置
         if (ImporAddress == 0)
             return;
-        long ImporSize = GetLong(ImporRVA.DirSize);  // 获取大小
+        var ImporSize = GetLong(ImporRVA.DirSize);  // 获取大小
 
         ResourceDirectory = new ResourceDirectory();
 
@@ -572,7 +572,7 @@ public class PeInfo
         if (SectionTable is null)
             return;
 
-        for (int i = 0; i != SectionTable.Section.Count; i++) // 循环节表
+        for (var i = 0; i != SectionTable.Section.Count; i++) // 循环节表
         {
             if (SectionTable.Section[i] is not SectionTable.SectionData sect)
                 continue;
@@ -615,34 +615,34 @@ public class PeInfo
         Loadbyte(ref node.NumberOfNamedEntries);
         Loadbyte(ref node.NumberOfIdEntries);
 
-        long NameRVA = GetLong(node.NumberOfNamedEntries);
-        for (int i = 0; i != NameRVA; i++)
+        var NameRVA = GetLong(node.NumberOfNamedEntries);
+        for (var i = 0; i != NameRVA; i++)
         {
             var Entry = new ResourceDirectory.DirectoryEntry();
             Loadbyte(ref Entry.Name);
             Loadbyte(ref Entry.Id);
-            byte[] temp = new byte[2];
+            var temp = new byte[2];
             temp[0] = Entry.Name[0];
             temp[1] = Entry.Name[1];
 
             if (_PEFileByte is null)
                 return;
 
-            long NameIndex = GetLong(temp) + PEIndex;
+            var NameIndex = GetLong(temp) + PEIndex;
             temp[0] = _PEFileByte[NameIndex + 0];
             temp[1] = _PEFileByte[NameIndex + 1];
 
-            long NameCount = GetLong(temp);
+            var NameCount = GetLong(temp);
             node.Name = new byte[NameCount * 2];
 
-            for (int z = 0; z != node.Name.Length; z++)
+            for (var z = 0; z != node.Name.Length; z++)
                 node.Name[z] = _PEFileByte[NameIndex + 2 + z];
             // System.Windows.Forms.MessageBox.Show(GetString(Entry.ID));
 
             temp[0] = Entry.Id[2];
             temp[1] = Entry.Id[3];
 
-            long oldIndex = _PEFileIndex;
+            var oldIndex = _PEFileIndex;
 
             if (GetLong(temp) == 0)
             {
@@ -675,19 +675,19 @@ public class PeInfo
             node.EntryList.Add(Entry);
         }
 
-        long Count = GetLong(node.NumberOfIdEntries);
-        for (int i = 0; i != Count; i++)
+        var Count = GetLong(node.NumberOfIdEntries);
+        for (var i = 0; i != Count; i++)
         {
             var entry = new ResourceDirectory.DirectoryEntry();
             Loadbyte(ref entry.Name);
             Loadbyte(ref entry.Id);
             // System.Windows.Forms.MessageBox.Show(GetString(Entry.Name)+"_"+GetString(Entry.Id));
 
-            byte[] temp = new byte[2];
+            var temp = new byte[2];
             temp[0] = entry.Id[2];
             temp[1] = entry.Id[3];
 
-            long OldIndex = _PEFileIndex;
+            var OldIndex = _PEFileIndex;
 
             if (GetLong(temp) == 0)
             {
@@ -702,7 +702,7 @@ public class PeInfo
                 Loadbyte(ref dataRVA.ResourTest);
                 Loadbyte(ref dataRVA.ResourWen);
 
-                long FileRva = GetLong(dataRVA.ResourRVA) - resourSectRva + PEIndex;
+                var FileRva = GetLong(dataRVA.ResourRVA) - resourSectRva + PEIndex;
 
                 dataRVA.FileStarIndex = FileRva;
                 dataRVA.FileEndIndex = FileRva + GetLong(dataRVA.ResourSize);
@@ -736,7 +736,7 @@ public class PeInfo
         if (_PEFileByte is null)
             return;
 
-        for (int i = 0; i != data.Length; i++)
+        for (var i = 0; i != data.Length; i++)
         {
             data[i] = _PEFileByte[_PEFileIndex];
             _PEFileIndex++;
@@ -749,8 +749,8 @@ public class PeInfo
     /// <returns>AA BB CC DD</returns>
     private string GetString(byte[] data)
     {
-        string Temp = "";
-        for (int i = 0; i != data.Length - 1; i++)
+        var Temp = "";
+        for (var i = 0; i != data.Length - 1; i++)
             Temp += data[i].ToString("X02") + " ";
 
         Temp += data[data.Length - 1].ToString("X02");
@@ -773,8 +773,8 @@ public class PeInfo
             return System.Text.Encoding.Unicode.GetString(data);
         if (type.Trim().ToUpper() == "BYTE")
         {
-            string Temp = "";
-            for (int i = data.Length - 1; i != 0; i--)
+            var Temp = "";
+            for (var i = data.Length - 1; i != 0; i--)
                 Temp += data[i].ToString("X02") + " ";
             Temp += data[0].ToString("X02");
             return Temp;
@@ -788,13 +788,13 @@ public class PeInfo
     /// <returns></returns>
     static string GetInt(byte[] data)
     {
-        string Temp = "";
-        for (int i = 0; i != data.Length - 1; i++)
+        var Temp = "";
+        for (var i = 0; i != data.Length - 1; i++)
         {
-            int ByteInt = (int)data[i];
+            var ByteInt = (int)data[i];
             Temp += ByteInt.ToString() + " ";
         }
-        int EndByteInt = (int)data[data.Length - 1];
+        var EndByteInt = (int)data[data.Length - 1];
         // int EndByteInt = (int)data[^1];
         Temp += EndByteInt.ToString();
         return Temp;
@@ -809,9 +809,9 @@ public class PeInfo
         if (data.Length > 4)
             return 0;
 
-        string MC = "";
+        var MC = "";
         // if (data.Length <= 4)
-        for (int i = data.Length - 1; i != -1; i--)
+        for (var i = data.Length - 1; i != -1; i--)
             MC += data[i].ToString("X02");
         return Convert.ToInt64(MC, 16);
     }
@@ -1038,7 +1038,7 @@ public class PeInfo
             { 15, "其他表5" }
         };
 
-        for (int i = 0; i != OptionalDirAttrib.DirByte.Count; i++)
+        for (var i = 0; i != OptionalDirAttrib.DirByte.Count; i++)
         {
             if (OptionalDirAttrib.DirByte[i] is not OptionalDirAttrib.DirAttrib MyDirByte)
                 continue;
@@ -1073,7 +1073,7 @@ public class PeInfo
         returnTable.Columns.Add("ASCII");
         returnTable.Columns.Add("Describe");
 
-        for (int i = 0; i != SectionTable.Section.Count; i++)
+        for (var i = 0; i != SectionTable.Section.Count; i++)
         {
             if (SectionTable.Section[i] is not SectionTable.SectionData SectionDate)
                 continue;
@@ -1137,7 +1137,7 @@ public class PeInfo
         returnTable.Columns.Add("ASCII");
         returnTable.Columns.Add("Describe");
 
-        for (int i = 0; i != ExportDirectory.FunctionNamesByte.Count; i++)
+        for (var i = 0; i != ExportDirectory.FunctionNamesByte.Count; i++)
         {
             AddTableRow(returnTable,
                 ExportDirectory.FunctionNamesByte[i],
@@ -1145,21 +1145,21 @@ public class PeInfo
                 "_ExportDirectory.Name-Sect.SizeOfRawDataRVA+Sect.PointerToRawData");
         }
 
-        for (int i = 0; i != ExportDirectory.AddressOfNamesList.Count; i++)
+        for (var i = 0; i != ExportDirectory.AddressOfNamesList.Count; i++)
         {
             if (ExportDirectory.AddressOfNamesList[i] is not byte[] a)
                 continue;
             AddTableRow(returnTable, a, "NamesList", "");
         }
 
-        for (int i = 0; i != ExportDirectory.AddressOfFunctionsList.Count; i++)
+        for (var i = 0; i != ExportDirectory.AddressOfFunctionsList.Count; i++)
         {
             if (ExportDirectory.AddressOfFunctionsList[i] is not byte[] a)
                 continue;
             AddTableRow(returnTable, a, "Functions", "");
         }
 
-        for (int i = 0; i != ExportDirectory.AddressOfNameOrdinalsList.Count; i++)
+        for (var i = 0; i != ExportDirectory.AddressOfNameOrdinalsList.Count; i++)
         {
             if (ExportDirectory.AddressOfNameOrdinalsList[i] is not byte[] a)
                 continue;
@@ -1180,7 +1180,7 @@ public class PeInfo
         returnTable.Columns.Add("ASCII");
         returnTable.Columns.Add("Describe");
 
-        for (int i = 0; i != ImportDirectory.ImportList.Count; i++)
+        for (var i = 0; i != ImportDirectory.ImportList.Count; i++)
         {
             if (ImportDirectory.ImportList[i] is not ImportDirectory.ImportDate ImportByte)
                 continue;
@@ -1208,14 +1208,14 @@ public class PeInfo
         returnTable.Columns.Add("ASCII");
         returnTable.Columns.Add("Describe");
 
-        for (int i = 0; i != ImportDirectory.ImportList.Count; i++)
+        for (var i = 0; i != ImportDirectory.ImportList.Count; i++)
         {
             if (ImportDirectory.ImportList[i] is not ImportDirectory.ImportDate ImportByte)
                 continue;
 
             AddTableRow(returnTable, ImportByte.DLLName, "DLL-Name", "**********");
 
-            for (int z = 0; z != ImportByte.DLLFunctionList.Count; z++)
+            for (var z = 0; z != ImportByte.DLLFunctionList.Count; z++)
             {
                 if (ImportByte.DLLFunctionList[z] is not ImportDirectory.ImportDate.FunctionList Function)
                     continue;
@@ -1240,20 +1240,20 @@ public class PeInfo
     }
     private void AddResourceDirectoryRow(DataTable myTable, ResourceDirectory Node, string parentID)
     {
-        string Name = "";
+        var Name = "";
         if (Node.Name is not null)
             Name = GetString(Node.Name, "UNICODE");
 
-        for (int i = 0; i != Node.EntryList.Count; i++)
+        for (var i = 0; i != Node.EntryList.Count; i++)
         {
             if (Node.EntryList[i] is not ResourceDirectory.DirectoryEntry Entry)
                 continue;
 
-            long ID = GetLong(Entry.Name);
+            var ID = GetLong(Entry.Name);
 
-            string GUID = Guid.NewGuid().ToString();
+            var GUID = Guid.NewGuid().ToString();
 
-            string IDNAME = "ID{" + ID + "}";
+            var IDNAME = "ID{" + ID + "}";
             if (Name.Length != 0)
                 IDNAME += "Name{" + Name + "}";
 
@@ -1283,17 +1283,17 @@ public class PeInfo
 
             myTable.Rows.Add(new string[] { GUID, IDNAME, parentID });
 
-            for (int z = 0; z != Entry.DataEntryList.Count; z++)
+            for (var z = 0; z != Entry.DataEntryList.Count; z++)
             {
                 if (Entry.DataEntryList[z] is not ResourceDirectory.DirectoryEntry.DataEntry Data)
                     continue;
 
-                string Text = "Address{" + GetString(Data.ResourRVA) + "} Size{" + GetString(Data.ResourSize) + "} FileBegin{" + Data.FileStarIndex.ToString() + "-" + Data.FileEndIndex.ToString() + "}";
+                var Text = "Address{" + GetString(Data.ResourRVA) + "} Size{" + GetString(Data.ResourSize) + "} FileBegin{" + Data.FileStarIndex.ToString() + "-" + Data.FileEndIndex.ToString() + "}";
 
                 myTable.Rows.Add(new string[] { Guid.NewGuid().ToString(), Text, GUID });
             }
 
-            for (int z = 0; z != Entry.NodeDirectoryList.Count; z++)
+            for (var z = 0; z != Entry.NodeDirectoryList.Count; z++)
             {
                 if (Entry.NodeDirectoryList[z] is not ResourceDirectory a)
                     continue;
@@ -1419,7 +1419,7 @@ public class OptionalHeader
             // X64没有了,但是为了代码保留修改幅度不大,所以置0
             BaseOfData = new byte[0];// x64必须置于0
             // x64长度增加的
-            int ulonglong = 8;
+            var ulonglong = 8;
             ImageBase = new byte[ulonglong];          // 数据基址(RVA)
             SizeOfStackReserve = new byte[ulonglong]; // 保留栈的大小
             SizeOfStackCommit = new byte[ulonglong];  // 初始时指定栈大小
@@ -1501,7 +1501,7 @@ public class ExportDirectory
     public HashSet<string> FunctionNames()
     {
         HashSet<string> names = new();
-        for (int i = 0; i < FunctionNamesByte.Count; i++)
+        for (var i = 0; i < FunctionNamesByte.Count; i++)
             names.Add(Encoding.Default.GetString(FunctionNamesByte[i]));
         return names;
     }

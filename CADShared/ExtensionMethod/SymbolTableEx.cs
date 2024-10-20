@@ -257,7 +257,7 @@ public static class SymbolTableEx
             ltt.AsciiDescription = description;
             ltt.PatternLength = length; // 线型的总长度
             ltt.NumDashes = dash.Length; // 组成线型的笔画数目
-            for (int i = 0; i < dash.Length; i++)
+            for (var i = 0; i < dash.Length; i++)
             {
                 ltt.SetDashLengthAt(i, dash[i]);
             }

@@ -32,7 +32,7 @@ public class PostCmd
             return 0;
         if (acedCmd is null)
         {
-            string str = nameof(acedCmd);
+            var str = nameof(acedCmd);
             if (Acap.Version.Major >= 20)// 2015.+
                 str += "S";
 
@@ -83,7 +83,7 @@ public class PostCmd
                                 nameof(acedPostCommand), AcadPeEnum.ExeAndCore);
 
         // 不然到CAD之后会乱码
-        byte[] bytes = Encoding.Unicode.GetBytes(args);
+        var bytes = Encoding.Unicode.GetBytes(args);
         if (acedPostCommand is null)
             return PromptStatus.Error;
         return (PromptStatus)acedPostCommand.Invoke(bytes);// 调用方法
@@ -100,7 +100,7 @@ public class PostCmd
                             nameof(acedInvoke), AcadPeEnum.ExeAndCore);
 
         // 不然到CAD之后会乱码
-        byte[] bytes = Encoding.Unicode.GetBytes(args);
+        var bytes = Encoding.Unicode.GetBytes(args);
 
         if (acedInvoke is null)
             return PromptStatus.Error;
@@ -185,7 +185,7 @@ public class PostCmd
     /// <returns></returns>
     public static PromptStatus SendCommand(string args, RunCmdFlag flag)
     {
-        PromptStatus ret = PromptStatus.OK;
+        var ret = PromptStatus.OK;
         if (!Acap.DocumentManager.IsApplicationContext)
         {
             if ((flag & RunCmdFlag.AcedCmd) == RunCmdFlag.AcedCmd)

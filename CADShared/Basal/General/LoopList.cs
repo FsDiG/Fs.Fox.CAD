@@ -150,7 +150,7 @@ public class LoopList<T> : IEnumerable<T>, IFormattable
         if (first is null)
             return;
         var last = Last;
-        for (int i = 0; i < Count / 2; i++)
+        for (var i = 0; i < Count / 2; i++)
         {
             Swap(first!, last!);
             first = first!.Next;
@@ -177,7 +177,7 @@ public class LoopList<T> : IEnumerable<T>, IFormattable
         var node = First;
         if (node is null)
             return;
-        for (int i = 0; i < Count; i++)
+        for (var i = 0; i < Count; i++)
         {
             if (action(node!))
                 break;
@@ -194,7 +194,7 @@ public class LoopList<T> : IEnumerable<T>, IFormattable
         var node = First;
         if (node is null)
             return;
-        for (int i = 0; i < Count; i++)
+        for (var i = 0; i < Count; i++)
         {
             if (action(i, node!))
                 break;
@@ -563,8 +563,8 @@ public class LoopList<T> : IEnumerable<T>, IFormattable
         if (from != to && Contains(from) && Contains(to))
         {
             LoopListNode<T> node = from.Next!;
-            bool isFirstChanged = false;
-            int number = 0;
+            var isFirstChanged = false;
+            var number = 0;
 
             while (node != to)
             {
@@ -636,7 +636,7 @@ public class LoopList<T> : IEnumerable<T>, IFormattable
     public IEnumerable<LoopListNode<T>> GetNodes(LoopListNode<T> from)
     {
         var node = from;
-        for (int i = 0; i < Count; i++)
+        for (var i = 0; i < Count; i++)
         {
             yield return node!;
             node = node!.Next;
@@ -651,7 +651,7 @@ public class LoopList<T> : IEnumerable<T>, IFormattable
     public IEnumerable<LoopListNode<T>> GetNodes()
     {
         LoopListNode<T> node = First!;
-        for (int i = 0; i < Count; i++)
+        for (var i = 0; i < Count; i++)
         {
             yield return node!;
             node = node.Next!;
@@ -666,7 +666,7 @@ public class LoopList<T> : IEnumerable<T>, IFormattable
     public IEnumerator<T> GetEnumerator()
     {
         LoopListNode<T> node = First!;
-        for (int i = 0; i < Count; i++)
+        for (var i = 0; i < Count; i++)
         {
             yield return node!.Value;
             node = node.Next!;

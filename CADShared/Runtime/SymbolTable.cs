@@ -309,7 +309,7 @@ public class SymbolTable<TTable, TRecord> : IEnumerable<ObjectId>
         ArgumentNullEx.ThrowIfNull(table);
 
         var rid = this[name];
-        bool has = rid != ObjectId.Null;
+        var has = rid != ObjectId.Null;
         if ((!has || !over) && has) return rid;
         var id = table[name];
         using IdMapping map = new();
@@ -403,7 +403,7 @@ public class SymbolTable<TTable, TRecord> : IEnumerable<ObjectId>
         //    throw new ArgumentNullException(nameof(task));
         ArgumentNullEx.ThrowIfNull(task);
         LoopState state = new(); /*这种方式比Action改Func更友好*/
-        int i = 0;
+        var i = 0;
         foreach (var id in this)
         {
             if (checkIdOk && !id.IsOk())
