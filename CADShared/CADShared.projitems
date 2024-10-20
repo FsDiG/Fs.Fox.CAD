@@ -9,6 +9,12 @@
     <Import_RootNamespace>CADShared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Algorithms\QuadTree\QuadEntity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Algorithms\QuadTree\QuadTree.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Algorithms\QuadTree\QuadTreeEvn.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Algorithms\QuadTree\QuadTreeNode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Algorithms\QuadTree\QuadTreeSelectMode.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Algorithms\QuadTree\Rect.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Assoc\AssocPersSubentityIdPEEx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Assoc\AssocUtils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Basal\General\ArrayEx.cs" />
