@@ -7,8 +7,7 @@ namespace IFoxCAD.Cad;
 /// </summary>
 /// <typeparam name="TTable">符号表</typeparam>
 /// <typeparam name="TRecord">符号表记录</typeparam>
-public class SymbolTable<TTable, TRecord> : IEnumerable<ObjectId>
-    where TTable : SymbolTable
+public class SymbolTable<TTable, TRecord> : IEnumerable<ObjectId> where TTable : SymbolTable
     where TRecord : SymbolTableRecord, new()
 {
     #region 程序集内部属性
@@ -126,13 +125,31 @@ public class SymbolTable<TTable, TRecord> : IEnumerable<ObjectId>
     {
         var id = this[name];
         if (!id.IsNull) return id;
-        var record = new TRecord()
-        {
-            Name = name
-        };
+        var record = new TRecord() { Name = name };
         id = Add(record);
         using (record.ForWrite())
             action?.Invoke(record);
+        return id;
+    }
+
+    /// <summary>
+    /// 有则修改无则添加符号表记录
+    /// </summary>
+    /// <param name="name">符号表记录名</param>
+    /// <param name="action">符号表记录处理函数的无返回值委托</param>
+    /// <returns>对象id</returns>
+    public ObjectId AddOrChange(string name, Action<TRecord> action)
+    {
+        var id = this[name];
+        if (id.IsNull)
+        {
+            id = Add(name, action);
+        }
+        else
+        {
+            Change(name, action);
+        }
+
         return id;
     }
 
@@ -158,8 +175,8 @@ public class SymbolTable<TTable, TRecord> : IEnumerable<ObjectId>
     {
         if (CurrentSymbolTable is LayerTable lt)
         {
-            if (SymbolUtilityServices.IsLayerZeroName(name)
-                || SymbolUtilityServices.IsLayerDefpointsName(name))
+            if (SymbolUtilityServices.IsLayerZeroName(name) ||
+                SymbolUtilityServices.IsLayerDefpointsName(name))
                 return;
             lt.GenerateUsageData();
             if (GetRecord(name) is not LayerTableRecord { IsUsed: false } ltr)
@@ -237,9 +254,7 @@ public class SymbolTable<TTable, TRecord> : IEnumerable<ObjectId>
     /// <param name="openLockedLayer">是否打开锁定图层对象,默认为不打开</param>
     /// <returns>符号表记录</returns>
     [System.Diagnostics.DebuggerStepThrough]
-    public TRecord? GetRecord(ObjectId id,
-        OpenMode openMode = OpenMode.ForRead,
-        bool openErased = false,
+    public TRecord? GetRecord(ObjectId id, OpenMode openMode = OpenMode.ForRead, bool openErased = false,
         bool openLockedLayer = false)
     {
         return DTrans.GetObject<TRecord>(id, openMode, openErased, openLockedLayer);
@@ -254,9 +269,7 @@ public class SymbolTable<TTable, TRecord> : IEnumerable<ObjectId>
     /// <param name="openLockedLayer">是否打开锁定图层对象,默认为不打开</param>
     /// <returns>符号表记录</returns>
     [System.Diagnostics.DebuggerStepThrough]
-    public TRecord? GetRecord(string name,
-        OpenMode openMode = OpenMode.ForRead,
-        bool openErased = false,
+    public TRecord? GetRecord(string name, OpenMode openMode = OpenMode.ForRead, bool openErased = false,
         bool openLockedLayer = false)
     {
         return GetRecord(this[name], openMode, openErased, openLockedLayer);
@@ -315,11 +328,7 @@ public class SymbolTable<TTable, TRecord> : IEnumerable<ObjectId>
         using IdMapping map = new();
         using ObjectIdCollection ids = new();
         ids.Add(id);
-        table.Database.WblockCloneObjects(
-            ids,
-            CurrentSymbolTable.Id,
-            map,
-            DuplicateRecordCloning.Replace,
+        table.Database.WblockCloneObjects(ids, CurrentSymbolTable.Id, map, DuplicateRecordCloning.Replace,
             false);
         rid = map[id].Value;
         return rid;
@@ -334,9 +343,7 @@ public class SymbolTable<TTable, TRecord> : IEnumerable<ObjectId>
     /// <param name="over">是否覆盖，<see langword="true"/> 为覆盖，<see langword="false"/> 为不覆盖</param>
     /// <returns>对象id</returns>
     internal ObjectId GetRecordFrom(Func<DBTrans, SymbolTable<TTable, TRecord>> tableSelector,
-        string fileName,
-        string name,
-        bool over)
+        string fileName, string name, bool over)
     {
         using DBTrans tr = new(fileName);
         return GetRecordFrom(tableSelector(tr), name, over);
@@ -355,11 +362,8 @@ public class SymbolTable<TTable, TRecord> : IEnumerable<ObjectId>
     /// <param name="checkIdOk">检查id是否删除,默认true</param>
     /// <param name="openErased">是否打开已删除对象,默认为不打开</param>
     /// <param name="openLockedLayer">是否打开锁定图层对象,默认为不打开</param>
-    public void ForEach(Action<TRecord> task,
-        OpenMode openMode = OpenMode.ForRead,
-        bool checkIdOk = true,
-        bool openErased = false,
-        bool openLockedLayer = false)
+    public void ForEach(Action<TRecord> task, OpenMode openMode = OpenMode.ForRead, bool checkIdOk = true,
+        bool openErased = false, bool openLockedLayer = false)
     {
         ForEach((a, _, _) =>
         {
@@ -375,11 +379,8 @@ public class SymbolTable<TTable, TRecord> : IEnumerable<ObjectId>
     /// <param name="checkIdOk">检查id是否删除,默认true</param>
     /// <param name="openErased">是否打开已删除对象,默认为不打开</param>
     /// <param name="openLockedLayer">是否打开锁定图层对象,默认为不打开</param>
-    public void ForEach(Action<TRecord, LoopState> task,
-        OpenMode openMode = OpenMode.ForRead,
-        bool checkIdOk = true,
-        bool openErased = false,
-        bool openLockedLayer = false)
+    public void ForEach(Action<TRecord, LoopState> task, OpenMode openMode = OpenMode.ForRead,
+        bool checkIdOk = true, bool openErased = false, bool openLockedLayer = false)
     {
         ForEach((a, b, _) => { task.Invoke(a, b); }, openMode, checkIdOk, openErased, openLockedLayer);
     }
@@ -393,11 +394,8 @@ public class SymbolTable<TTable, TRecord> : IEnumerable<ObjectId>
     /// <param name="openErased">是否打开已删除对象,默认为不打开</param>
     /// <param name="openLockedLayer">是否打开锁定图层对象,默认为不打开</param>
     [System.Diagnostics.DebuggerStepThrough]
-    public void ForEach(Action<TRecord, LoopState, int> task,
-        OpenMode openMode = OpenMode.ForRead,
-        bool checkIdOk = true,
-        bool openErased = false,
-        bool openLockedLayer = false)
+    public void ForEach(Action<TRecord, LoopState, int> task, OpenMode openMode = OpenMode.ForRead,
+        bool checkIdOk = true, bool openErased = false, bool openLockedLayer = false)
     {
         //if (task == null)
         //    throw new ArgumentNullException(nameof(task));
