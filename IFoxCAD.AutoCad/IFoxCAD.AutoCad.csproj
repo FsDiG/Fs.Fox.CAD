@@ -10,23 +10,23 @@
         <UseWpf>true</UseWpf>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
-    
+
     <!--nuget package-->
     <PropertyGroup>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageId>IFox.CAD.ACAD</PackageId>
-		<Title>IFox.CAD.ACAD</Title>
-		<Product>IFox.CAD.ACAD</Product>
-		<Version>0.9.1</Version>
-		<Authors>xsfhlzh, vicwjb, liuqihong, DYH</Authors>
-		<Description>基于.NET的二次开发基本类库.</Description>
-		<PackageProjectUrl>https://www.nuget.org/packages/IFox.CAD.ACAD/</PackageProjectUrl>
-		<RepositoryUrl>https://gitee.com/inspirefunction/ifoxcad</RepositoryUrl>
-		<RepositoryType>git</RepositoryType>
-		<PackageTags>IFox,Cad,AutoCad,C#,NET,</PackageTags>
+        <Title>IFox.CAD.ACAD</Title>
+        <Product>IFox.CAD.ACAD</Product>
+        <Version>0.9.1.2</Version>
+        <Authors>xsfhlzh, vicwjb, liuqihong, DYH</Authors>
+        <Description>基于.NET的二次开发基本类库.</Description>
+        <PackageProjectUrl>https://www.nuget.org/packages/IFox.CAD.ACAD/</PackageProjectUrl>
+        <RepositoryUrl>https://gitee.com/inspirefunction/ifoxcad</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>IFox,Cad,AutoCad,C#,NET,</PackageTags>
         <Company>InspireFunction</Company>
         <PackageReadmeFile>readme.md</PackageReadmeFile>
-        <PackageReleaseNotes>补充四叉树、填充、文字、等扩展</PackageReleaseNotes>
+        <PackageReleaseNotes>补充随机数扩展</PackageReleaseNotes>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
     </PropertyGroup>
 
@@ -43,27 +43,27 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <None Include="..\LICENSE">
-        <Pack>True</Pack>
-        <PackagePath>\</PackagePath>
-      </None>
-      <None Include="..\readme.md">
-        <Pack>True</Pack>
-        <PackagePath>\</PackagePath>
-      </None>
+        <None Include="..\LICENSE">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+        <None Include="..\readme.md">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
     </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="AutoCAD.NET" Version="20.0.0" ExcludeAssets="runtime">
         </PackageReference>
-        <PackageReference Include="IndexRange" Version="1.0.3" />
+        <PackageReference Include="IndexRange" Version="1.0.3"/>
         <PackageReference Include="Nullable" Version="1.3.1">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
     </ItemGroup>
     <ItemGroup>
-        <Reference Include="Microsoft.CSharp" />
+        <Reference Include="Microsoft.CSharp"/>
     </ItemGroup>
-    <Import Project="..\CADShared\CADShared.projitems" Label="Shared" />
+    <Import Project="..\CADShared\CADShared.projitems" Label="Shared"/>
 </Project>
