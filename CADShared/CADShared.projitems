@@ -87,6 +87,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ResultData\TypedValueList.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ResultData\XDataList.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ResultData\XRecordDataList.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Runtime\AcPreferences.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Runtime\DBTrans.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Runtime\Env.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Runtime\IdleAction.cs" />
