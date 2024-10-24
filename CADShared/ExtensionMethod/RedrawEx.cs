@@ -94,14 +94,11 @@ public static class RedrawEx
         using (ent?.ForWrite())
         {
             // 刷新图元
-            ent?.Redraw(BrightEntity.Draw |
-                        BrightEntity.RecordGraphicsModified |
-                        BrightEntity.RecomputeDimensionBlock |
-                        BrightEntity.MoveZero);
+            ent?.Redraw(BrightEntity.Draw | BrightEntity.RecordGraphicsModified |
+                        BrightEntity.RecomputeDimensionBlock | BrightEntity.MoveZero);
             // 刷新
             ed.Redraw(BrightEditor.UpdateScreen);
         }
-
 
         /*
          * 我发现命令加 CommandFlags.Redraw 就不需要以下处理了:
@@ -189,29 +186,4 @@ public static class RedrawEx
         if ((bright & BrightEntity.MoveZero) == BrightEntity.MoveZero)
             ent.Move(Point3d.Origin, Point3d.Origin);
     }
-
-
-    #region 实体刷新
-
-    /// <summary>
-    /// 刷新实体显示
-    /// </summary>
-    /// <param name="entity">实体对象</param>
-    [Obsolete("此处已经被RedrawEx代替")]
-    public static void Flush(this Entity entity)
-    {
-        var tr = DBTrans.GetTop(entity.Database);
-        entity.RecordGraphicsModified(true);
-        tr.Transaction.TransactionManager.QueueForGraphicsFlush();
-        tr.Document?.TransactionManager.FlushGraphics();
-    }
-
-    /// <summary>
-    /// 刷新实体显示
-    /// </summary>
-    /// <param name="id">实体id</param>
-    [Obsolete("此处已经被RedrawEx代替")]
-    public static void Flush(this ObjectId id) => Flush(id.GetObject<Entity>()!);
-
-    #endregion
 }
