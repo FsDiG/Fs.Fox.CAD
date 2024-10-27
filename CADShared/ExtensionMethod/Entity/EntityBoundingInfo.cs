@@ -5,7 +5,6 @@
 /// </summary>
 internal static class EntityBoundingInfo
 {
-
     /// <summary>
     /// 获取包围盒信息
     /// </summary>
@@ -15,6 +14,7 @@ internal static class EntityBoundingInfo
     {
         return new(ext);
     }
+
     /// <summary>
     /// 获取多行文本的正交包围盒
     /// </summary>
@@ -27,8 +27,10 @@ internal static class EntityBoundingInfo
         {
             ext.AddPoint(p);
         }
+
         return ext;
     }
+
     /// <summary>
     /// 获取块的包围盒
     /// </summary>
@@ -52,9 +54,11 @@ internal static class EntityBoundingInfo
                             if (!att.Constant || att.Invisible)
                                 continue;
                         }
+
                         GetBlockBox(ent1, ref ext, ref matins);
                     }
                 }
+
             if (block.AttributeCollection.Count > 0)
             {
                 foreach (var att in block.GetAttributes())
@@ -99,11 +103,14 @@ internal static class EntityBoundingInfo
                     else
                         ext.AddExtents(entext);
                 }
+
                 return;
             }
         }
+
         return;
     }
+
     /// <summary>
     /// 获取多行文字最小包围盒4点坐标
     /// </summary>
@@ -155,19 +162,19 @@ internal static class EntityBoundingInfo
                 break;
         }
 
-        var xform =
-            Matrix3d.Displacement(mtext.Location.GetAsVector()) *
-            Matrix3d.Rotation(mtext.Rotation, mtext.Normal, Point3d.Origin) *
-            Matrix3d.PlaneToWorld(new Plane(Point3d.Origin, mtext.Normal));
+        var xform = Matrix3d.Displacement(mtext.Location.GetAsVector()) *
+                    Matrix3d.Rotation(mtext.Rotation, mtext.Normal, Point3d.Origin) *
+                    Matrix3d.PlaneToWorld(new Plane(Point3d.Origin, mtext.Normal));
 
         return
         [
             point1.TransformBy(xform),
-              new Point3d(point2.X, point1.Y, 0.0).TransformBy(xform),
-              point2.TransformBy(xform),
-              new Point3d(point1.X, point2.Y, 0.0).TransformBy(xform)
+            new Point3d(point2.X, point1.Y, 0.0).TransformBy(xform),
+            point2.TransformBy(xform),
+            new Point3d(point1.X, point2.Y, 0.0).TransformBy(xform)
         ];
     }
+
     /// <summary>
     /// 获取实体包围盒
     /// </summary>
@@ -201,13 +208,27 @@ internal static class EntityBoundingInfo
                 var mat = Matrix3d.Identity;
                 block!.GetBlockBox(ref blockExt, ref mat);
                 if (!blockExt.IsEmptyExt())
-                  ext = blockExt;
+                    ext = blockExt;
+                break;
+            // 和尚_2024-10-26
+            case Hatch hatch:
+                var hc = new HatchConverter(hatch);
+                hc.GetBoundarysData();
+                var extTmp = new Extents3d();
+                foreach (var curve in hc.CreateBoundary())
+                {
+                    extTmp.AddExtents(GetEntityBoxEx(curve)!.Value);
+                    curve.Dispose();
+                }
+
+                ext = extTmp;
                 break;
             default:
                 if (ent.Bounds.HasValue)
                     ext = ent.GeometricExtents;
                 break;
         }
+
         if (ext != null)
             //实体不是点时，pass
             if (ent is not DBPoint && ext.Value.MinPoint.IsEqualTo(ext.Value.MaxPoint))
@@ -227,5 +248,4 @@ internal static class EntityBoundingInfo
         else
             return false;
     }
-
 }
