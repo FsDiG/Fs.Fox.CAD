@@ -7,8 +7,8 @@ public static class BlockReferenceEx
 {
     #region 裁剪块参照
 
-    private const string filterDictName = "ACAD_FILTER";
-    private const string spatialName = "SPATIAL";
+    private const string kFilterDictName = "ACAD_FILTER";
+    private const string kSpatialName = "SPATIAL";
 
     /// <summary>
     /// 裁剪块参照
@@ -24,8 +24,8 @@ public static class BlockReferenceEx
             double.NegativeInfinity, true);
         using SpatialFilter sf = new();
         sf.Definition = sfd;
-        var dict = brf.GetXDictionary().GetSubDictionary(true, [filterDictName])!;
-        dict.SetData(spatialName, sf);
+        var dict = brf.GetXDictionary().GetSubDictionary(true, [kFilterDictName])!;
+        dict.SetData(kSpatialName, sf);
     }
 
     /// <summary>
@@ -47,9 +47,10 @@ public static class BlockReferenceEx
         ];
 
         using SpatialFilter sf = new();
-        sf.Definition = new(pts, Vector3d.ZAxis, 0.0, double.PositiveInfinity, double.NegativeInfinity, true);
-        var dict = brf.GetXDictionary().GetSubDictionary(true, [filterDictName])!;
-        dict.SetData(spatialName, sf);
+        sf.Definition = new(pts, Vector3d.ZAxis, 0.0, double.PositiveInfinity,
+            double.NegativeInfinity, true);
+        var dict = brf.GetXDictionary().GetSubDictionary(true, [kFilterDictName])!;
+        dict.SetData(kSpatialName, sf);
 #if !acad
         pts.Dispose();
 #endif
@@ -69,7 +70,8 @@ public static class BlockReferenceEx
             return false;
         using (blockReference.ForWrite())
         {
-            foreach (DynamicBlockReferenceProperty item in blockReference.DynamicBlockReferencePropertyCollection)
+            foreach (DynamicBlockReferenceProperty item in blockReference
+                         .DynamicBlockReferencePropertyCollection)
             {
                 if (propertyNameValues.TryGetValue(item.PropertyName, out var value))
                 {
@@ -93,13 +95,15 @@ public static class BlockReferenceEx
     /// <summary>
     /// 更新动态块参数值
     /// </summary>
-    public static bool ChangeBlockProperty(this BlockReference blockReference, string propName, object value)
+    public static bool ChangeBlockProperty(this BlockReference blockReference, string propName,
+        object value)
     {
         if (!blockReference.IsDynamicBlock)
             return false;
         using (blockReference.ForWrite())
         {
-            foreach (DynamicBlockReferenceProperty item in blockReference.DynamicBlockReferencePropertyCollection)
+            foreach (DynamicBlockReferenceProperty item in blockReference
+                         .DynamicBlockReferencePropertyCollection)
             {
                 if (item.PropertyName != propName)
                     continue;
@@ -175,6 +179,16 @@ public static class BlockReferenceEx
     #endregion
 
     /// <summary>
+    /// 获取块表记录
+    /// </summary>
+    /// <param name="brf">块参照</param>
+    /// <returns>块表记录</returns>
+    public static BlockTableRecord GetBlockTableRecord(this BlockReference brf)
+    {
+        return (BlockTableRecord)brf.BlockTableRecord.GetObject(OpenMode.ForRead);
+    }
+
+    /// <summary>
     /// 获取块的有效名字
     /// </summary>
     /// <param name="blk">块参照</param>
@@ -201,7 +215,8 @@ public static class BlockReferenceEx
     /// <param name="nestedBlockName">子块名</param>
     /// <returns>子块的位置</returns>
     /// <exception cref="ArgumentException"></exception>
-    public static Point3d? GetNestedBlockPosition(this BlockReference parentBlockRef, string nestedBlockName)
+    public static Point3d? GetNestedBlockPosition(this BlockReference parentBlockRef,
+        string nestedBlockName)
     {
         var tr = DBTrans.GetTopTransaction(parentBlockRef.Database);
 
