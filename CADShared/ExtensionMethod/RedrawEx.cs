@@ -1,4 +1,6 @@
-﻿namespace IFoxCAD.Cad;
+﻿// ReSharper disable InconsistentNaming
+
+namespace IFoxCAD.Cad;
 
 /// <summary>
 /// 亮显模式
