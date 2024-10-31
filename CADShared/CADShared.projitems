@@ -43,6 +43,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Entity\BlockReferenceEx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Entity\BoundingInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Entity\CircleEx.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Entity\CurveEx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Entity\DBTextEx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Entity\EntityBoundingInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Entity\EntityEx.cs" />
