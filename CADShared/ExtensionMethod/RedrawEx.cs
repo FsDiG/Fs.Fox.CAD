@@ -1,4 +1,6 @@
-﻿namespace IFoxCAD.Cad;
+﻿// ReSharper disable InconsistentNaming
+
+namespace IFoxCAD.Cad;
 
 /// <summary>
 /// 亮显模式
@@ -110,9 +112,7 @@ public static class RedrawEx
          * tm.FlushGraphics();        // 将当前 刷新队列 的图形提交到显示器
          * ed.UpdateScreen();         // 仅刷新屏幕,图元不生成(例如块还是旧的显示)
          */
-        var dm = Acaop.DocumentManager;
-        var doc = dm.MdiActiveDocument;
-        var tm = doc.TransactionManager;
+        var tm = ed.Document.TransactionManager;
         tm.QueueForGraphicsFlush();
         tm.FlushGraphics();
 
