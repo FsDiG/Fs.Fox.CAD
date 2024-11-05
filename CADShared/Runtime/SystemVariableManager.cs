@@ -343,6 +343,9 @@ public class SystemVariableManager
 
     #region T
 
+    /// <summary>
+    /// 视图点
+    /// </summary>
     public static Point3d Target => (Point3d)Acaop.GetSystemVariable(nameof(Target));
 
     #endregion

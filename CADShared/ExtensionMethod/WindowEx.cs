@@ -4,8 +4,15 @@ using Window = System.Windows.Window;
 
 namespace IFoxCAD.Cad;
 
+/// <summary>
+/// 窗体扩展
+/// </summary>
 public static class WindowEx
 {
+    /// <summary>
+    /// 添加Esc退出
+    /// </summary>
+    /// <param name="window">wpf窗体</param>
     public static void AddEscQuit(this Window window)
     {
         window.KeyDown -= Window_KeyDown_Esc;
@@ -17,8 +24,6 @@ public static class WindowEx
     /// <summary>
     /// 关闭时减掉事件
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
     private static void WindowOnClosed(object sender, EventArgs e)
     {
         if (sender is not Window window)
@@ -42,6 +47,11 @@ public static class WindowEx
         window.Close();
     }
 
+    /// <summary>
+    /// 判断wpf是否为模态
+    /// </summary>
+    /// <param name="window">窗体</param>
+    /// <returns>是则返回true</returns>
     public static bool IsModel(this Window window)
     {
         return (bool)(typeof(Window)
@@ -78,6 +88,10 @@ public static class WindowEx
         paletteSet.SetSize(new Size(newWidth, newHeight));
     }
     
+    /// <summary>
+    /// 获取屏幕比例
+    /// </summary>
+    /// <returns>比例</returns>
     public static double GetScreenScale()
     {
         var scale = Graphics.FromHwnd(IntPtr.Zero).DpiX / 96.0f;

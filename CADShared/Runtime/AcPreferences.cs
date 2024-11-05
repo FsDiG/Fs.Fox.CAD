@@ -1,7 +1,13 @@
 ﻿namespace IFoxCAD.Cad;
 
+/// <summary>
+/// AcapPreference扩展
+/// </summary>
 public static class AcPreferences
 {
+    /// <summary>
+    /// 显示属性
+    /// </summary>
     public static class Display
     {
         static Display()

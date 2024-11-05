@@ -1,5 +1,8 @@
 ﻿namespace IFoxCAD.Cad;
 
+/// <summary>
+/// 托盘类扩展
+/// </summary>
 public static class PaneEx
 {
     /// <summary>
@@ -152,9 +155,21 @@ public static class PaneEx
     }
 }
 
+/// <summary>
+/// 托盘边距类型
+/// </summary>
 public enum PaneMarginType : byte
 {
+    /// <summary>
+    /// 无
+    /// </summary>
     NONE,
+    /// <summary>
+    /// 小边距
+    /// </summary>
     SMALL,
+    /// <summary>
+    /// 大边距
+    /// </summary>
     LARGE
 }

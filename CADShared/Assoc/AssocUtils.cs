@@ -2,6 +2,9 @@
 
 namespace IFoxCAD.Cad.Assoc;
 
+/// <summary>
+/// 关联动作辅助类
+/// </summary>
 public static class AssocUtils
 {
     /// <summary>
@@ -12,14 +15,16 @@ public static class AssocUtils
     /// <param name="ownerId">拥有者Id</param>
     /// <param name="actionId">动作id</param>
     /// <param name="actionBodyId">动作bodyId</param>
-    /// <returns></returns>
-    public static ErrorStatus CreateActionAndActionBodyAndPostToDatabase(RXClass actionBodyClass, ObjectId ownerId, out ObjectId actionId, out ObjectId actionBodyId)
+    /// <returns>错误信息</returns>
+    public static ErrorStatus CreateActionAndActionBodyAndPostToDatabase(RXClass actionBodyClass,
+        ObjectId ownerId, out ObjectId actionId, out ObjectId actionBodyId)
     {
         actionId = actionBodyId = ObjectId.Null;
         try
         {
             if (!actionBodyClass.IsDerivedFrom(RXObject.GetClass(typeof(AssocActionBody))) ||
-                Activator.CreateInstance(actionBodyClass.GetRuntimeType()) is not AssocActionBody actionBody)
+                Activator.CreateInstance(actionBodyClass.GetRuntimeType()) is not AssocActionBody
+                    actionBody)
                 return ErrorStatus.NotThatKindOfClass;
             var db = ownerId.Database;
             using var tr = new DBTrans(db);

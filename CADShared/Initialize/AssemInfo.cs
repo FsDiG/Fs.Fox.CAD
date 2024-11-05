@@ -6,6 +6,10 @@
 [Serializable]
 public struct AssemInfo
 {
+    /// <summary>
+    /// 程序集信息
+    /// </summary>
+    /// <param name="assembly">程序集</param>
     public AssemInfo(Assembly assembly)
     {
         Loader = assembly.Location;

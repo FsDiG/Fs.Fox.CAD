@@ -233,7 +233,9 @@ public sealed class SingleKeyWordHook : IDisposable
 
     #endregion
 }
-
+/// <summary>
+/// 单文本关键字钩子扩展
+/// </summary>
 public static class SingleKeywordHookEx
 {
     /// <summary>
@@ -250,9 +252,23 @@ public static class SingleKeywordHookEx
     }
 }
 
+/// <summary>
+/// 单关键字工作模式
+/// </summary>
 public enum SingleKeyWordWorkType : byte
 {
+    /// <summary>
+    /// Esc模式
+    /// </summary>
     ESCAPE,
+    
+    /// <summary>
+    /// Enter模式
+    /// </summary>
     ENTER,
+    
+    /// <summary>
+    /// Write Line 模式
+    /// </summary>
     WRITE_LINE,
 }

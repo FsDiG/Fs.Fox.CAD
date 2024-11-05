@@ -1,14 +1,15 @@
 ﻿namespace IFoxCAD.Basal;
 
+/// <summary>
+/// 系统扩展
+/// </summary>
 public class SystemEx
 {
-    
-
     /// <summary>
     /// 关闭进程
     /// </summary>
     /// <param name="procName">进程名</param>
-    /// <returns></returns>
+    /// <returns>成功返回<c>true</c></returns>
     public static bool CloseProc(string procName)
     {
         var result = false;

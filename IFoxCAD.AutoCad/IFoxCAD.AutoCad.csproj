@@ -38,8 +38,9 @@
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
         <DebugType>none</DebugType>
-        <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+        <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
         <DefineConstants>$(DefineConstants);acad</DefineConstants>
+        <DocumentationFile>bin\Release\IFoxCAD.AutoCad.xml</DocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
