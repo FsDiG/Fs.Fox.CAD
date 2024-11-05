@@ -15,7 +15,7 @@ public partial class WindowsAPI
     public static extern long GetHandleInformation(long hObject, ref long lpdwFlags);
 
     [DllImport("kernel32.dll")]
-    public static extern IntPtr GetModuleHandle(string ModuleName);
+    public static extern IntPtr GetModuleHandle(string moduleName);
 
     [DllImport("kernel32.dll")]
     public static extern int GetCurrentThreadId();
@@ -145,7 +145,7 @@ public partial class WindowsAPI
     [MethodImpl]
     public static T? BytesToStruct<T>(byte[] bytes)
     {
-        T? result = default;
+        T? result;
         unsafe
         {
             // 安全指针方法
@@ -342,8 +342,10 @@ public partial class WindowsAPI
     {
         const string llh = "LowLevelHooksTimeout";
         using var registryKey = Registry.CurrentUser.OpenSubKey("Control Panel\\Desktop", true);
-        if ((int)registryKey.GetValue(llh, 0) < setLowLevel)
+        if (registryKey is not null && (int)registryKey.GetValue(llh, 0) < setLowLevel)
+        {
             registryKey.SetValue(llh, setLowLevel, RegistryValueKind.DWord);
+        }
     }
 
     #endregion
@@ -416,7 +418,7 @@ public partial class WindowsAPI
             return a.Equals(b);
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return obj is IntRect d && Equals(d);
         }
@@ -515,7 +517,7 @@ public partial class WindowsAPI
             return a.Equals(b);
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             return obj is Point3D d && Equals(d);
         }
