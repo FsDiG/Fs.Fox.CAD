@@ -1,4 +1,5 @@
-﻿namespace IFoxCAD.CAD.ExtensionMethod;
+﻿// ReSharper disable UnusedAutoPropertyAccessor.Global
+namespace IFoxCAD.CAD.ExtensionMethod;
 
 /// <summary>
 /// 交互设置扩展
@@ -9,7 +10,7 @@ public static class PromptOptionsEx
     /// <summary>
     /// 保留关键字列表
     /// </summary>
-    internal static readonly HashSet<string> SsgetSaveKeywords =
+    internal static readonly HashSet<string> SsGetSaveKeywords =
     [
         "WINDOW", "LAST", "CROSSWINDOW", "BOX", "ALL", "FENCE", "WPOLYGON", "CPOLYGON", "GROUP",
         "ADD", "REMOVE", "MULTIPLE", "PREVIOUS", "UNDO", "AUTO", "SINGLE", "SUBOBJECT", "OBJECT"
@@ -26,7 +27,7 @@ public static class PromptOptionsEx
         for (var i = 0; i < keywords.Length / 2; i++)
         {
             var key = keywords[i].ToUpper();
-            if (SsgetSaveKeywords.FirstOrDefault(e => e.StartsWith(key)) is { } saveKey)
+            if (SsGetSaveKeywords.FirstOrDefault(e => e.StartsWith(key)) is { } saveKey)
             {
                 throw new ArgumentException($"关键字{key}与选择集保留关键字{saveKey}冲突");
             }
