@@ -18,7 +18,7 @@
         <PackageId>IFox.CAD.ACAD</PackageId>
         <Title>IFox.CAD.ACAD</Title>
         <Product>IFox.CAD.ACAD</Product>
-        <Version>0.9.1.7</Version>
+        <Version>0.9.1.8</Version>
         <Authors>xsfhlzh, vicwjb, liuqihong, DYH</Authors>
         <Description>基于.NET的二次开发基本类库.</Description>
         <PackageProjectUrl>https://www.nuget.org/packages/IFox.CAD.ACAD/</PackageProjectUrl>
