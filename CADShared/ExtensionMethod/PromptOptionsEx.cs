@@ -1,5 +1,5 @@
 ﻿// ReSharper disable UnusedAutoPropertyAccessor.Global
-namespace IFoxCAD.CAD.ExtensionMethod;
+namespace IFoxCAD.CAD;
 
 /// <summary>
 /// 交互设置扩展
