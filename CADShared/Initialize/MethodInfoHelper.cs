@@ -1,4 +1,8 @@
-﻿namespace IFoxCAD.Cad;
+﻿#if a2024
+using ArgumentNullException = IFoxCAD.Basal.ArgumentNullException;
+#endif
+
+namespace IFoxCAD.Cad;
 
 internal static class MethodInfoHelper
 {
@@ -13,7 +17,7 @@ internal static class MethodInfoHelper
     /// <param name="instance">已经外部创建的对象,为空则此处创建</param>
     public static object? Invoke(this MethodInfo methodInfo, ref object? instance)
     {
-        ArgumentNullEx.ThrowIfNull(methodInfo);
+        ArgumentNullException.ThrowIfNull(methodInfo);
         object? result = null;
         if (methodInfo.IsStatic)
         {

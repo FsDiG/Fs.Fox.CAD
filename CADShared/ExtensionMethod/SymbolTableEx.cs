@@ -1,4 +1,6 @@
-﻿namespace IFoxCAD.Cad;
+﻿using ArgumentNullException = System.ArgumentNullException;
+
+namespace IFoxCAD.Cad;
 
 /// <summary>
 /// 符号表类扩展函数

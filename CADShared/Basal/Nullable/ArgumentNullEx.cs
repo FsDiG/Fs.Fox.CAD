@@ -1,10 +1,12 @@
 ﻿
 namespace IFoxCAD.Basal;
+#if a2024
+
 
 /// <summary>
 /// 参数null检查类
 /// </summary>
-public static class ArgumentNullEx
+public static class ArgumentNullException
 {
     /// <summary>
     /// 检查参数是否为 null
@@ -22,5 +24,6 @@ public static class ArgumentNullEx
     }
 
     [DoesNotReturn]
-    private static void Throw(string? paramName) => throw new ArgumentNullException(paramName);
+    private static void Throw(string? paramName) => throw new System.ArgumentNullException(paramName);
 }
+#endif

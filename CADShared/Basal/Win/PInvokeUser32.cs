@@ -221,7 +221,7 @@ public static class PInvokeUser32
         public static GuiThreadInfo Create(uint windowThreadProcessId)
         {
             if (windowThreadProcessId == 0)
-                throw new ArgumentNullException(nameof(windowThreadProcessId));
+                throw new System.ArgumentNullException(nameof(windowThreadProcessId));
 
             GuiThreadInfo gti = new();
             gti.cbSize = Marshal.SizeOf(gti);

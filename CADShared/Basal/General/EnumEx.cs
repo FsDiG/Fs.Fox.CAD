@@ -31,7 +31,7 @@ public static class EnumEx
         if (Cache.TryGetValue(eFullName, out var attribute1))
             return attribute1;
 
-        var fieldInfo = eType.GetField(Enum.GetName(eType, e));
+        var fieldInfo = eType.GetField(Enum.GetName(eType, e) ?? string.Empty);
         if (fieldInfo == null)
             return null!;
 

@@ -81,12 +81,12 @@ public partial class WindowsAPI
     /// <param name="data">锁定数据对象指针</param>
     /// <param name="task">返回锁定的内存片段指针,锁定期间执行任务</param>
     /// <returns>是否锁定成功</returns>
-    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="System.ArgumentNullException"></exception>
     public static bool GlobalLockTask(IntPtr data, Action<IntPtr> task)
     {
         //if (task == null)
         //    throw new ArgumentNullException(nameof(task));
-        ArgumentNullEx.ThrowIfNull(task);
+        ArgumentNullException.ThrowIfNull(task);
         if (data == IntPtr.Zero)
             return false;
 
@@ -130,7 +130,7 @@ public partial class WindowsAPI
         Marshal.Copy(bytes, 0, structPtr, typeSize);
         // 将内存空间转换为目标结构体;
         // 转类型的时候会拷贝一次,看它们地址验证 &result != &structPtr
-        var result = (T)Marshal.PtrToStructure(structPtr, structType);
+        var result = (T)Marshal.PtrToStructure(structPtr, structType)!;
 
         // 释放内存空间
         Marshal.FreeHGlobal(structPtr);
@@ -324,7 +324,7 @@ public partial class WindowsAPI
 
         public static KeyboardHookStruct Create(IntPtr lParam)
         {
-            return (KeyboardHookStruct)Marshal.PtrToStructure(lParam, typeof(KeyboardHookStruct));
+            return (KeyboardHookStruct)(Marshal.PtrToStructure(lParam, typeof(KeyboardHookStruct)) ?? throw new InvalidOperationException());
         }
 
         public void ToPtr(IntPtr lParam)
@@ -492,7 +492,7 @@ public partial class WindowsAPI
 
         public static Point3D Create(IntPtr lParam)
         {
-            return (Point3D)Marshal.PtrToStructure(lParam, typeof(Point3D));
+            return (Point3D)(Marshal.PtrToStructure(lParam, typeof(Point3D)) ?? throw new InvalidOperationException());
         }
 
         public void ToPtr(IntPtr lParam)

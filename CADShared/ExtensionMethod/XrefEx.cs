@@ -1,4 +1,9 @@
 ﻿// ReSharper disable ForCanBeConvertedToForeach
+
+#if a2024
+using ArgumentNullException = IFoxCAD.Basal.ArgumentNullException;
+#endif
+
 namespace IFoxCAD.Cad;
 
 #region 参照工厂
@@ -471,7 +476,7 @@ public class XrefPath
     {
         //if (brf == null)
         //    throw new ArgumentNullException(nameof(brf));
-        ArgumentNullEx.ThrowIfNull(brf);
+        ArgumentNullException.ThrowIfNull(brf);
         CurrentDatabasePath = Path.GetDirectoryName(tr.Database.Filename);
 
         var btRec = tr.GetObject<BlockTableRecord>(brf.BlockTableRecord); // 块表记录
@@ -519,8 +524,8 @@ public class XrefPath
         //if (fileRelations == null)
         //    throw new ArgumentNullException(nameof(fileRelations));
 
-        ArgumentNullEx.ThrowIfNull(directory);
-        ArgumentNullEx.ThrowIfNull(fileRelations);
+        ArgumentNullException.ThrowIfNull(directory);
+        ArgumentNullException.ThrowIfNull(fileRelations);
 
         string? result = null;
         switch (converterModes)

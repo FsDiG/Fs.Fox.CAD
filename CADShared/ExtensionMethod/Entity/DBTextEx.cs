@@ -1,4 +1,6 @@
-﻿namespace IFoxCAD.Cad;
+﻿using ArgumentNullException = System.ArgumentNullException;
+
+namespace IFoxCAD.Cad;
 
 /// <summary>
 /// 单行文字扩展类
@@ -15,7 +17,7 @@ public static class DBTextEx
     /// <param name="database">文字所在的数据库</param>
     /// <param name="action">文字属性设置委托</param>
     /// <returns>文字对象</returns>
-    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="System.ArgumentNullException"></exception>
     public static DBText CreateDBText(Point3d position, string text, double height,
         AttachmentPoint justify = AttachmentPoint.BaseLeft, Database? database = null,
         Action<DBText>? action = null)

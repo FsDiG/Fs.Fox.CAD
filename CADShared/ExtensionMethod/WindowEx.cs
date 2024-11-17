@@ -24,7 +24,7 @@ public static class WindowEx
     /// <summary>
     /// 关闭时减掉事件
     /// </summary>
-    private static void WindowOnClosed(object sender, EventArgs e)
+    private static void WindowOnClosed(object? sender, EventArgs e)
     {
         if (sender is not Window window)
             return;

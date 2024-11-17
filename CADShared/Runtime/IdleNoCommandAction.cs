@@ -44,7 +44,7 @@ public static class IdleNoCmdAction
     /// </summary>
     /// <param name="sender">Acap</param>
     /// <param name="e">事件参数</param>
-    private static void Acap_Idle(object sender, EventArgs e)
+    private static void Acap_Idle(object? sender, EventArgs e)
     {
         if (Count == 0)
         {

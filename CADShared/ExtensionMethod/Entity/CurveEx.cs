@@ -1,5 +1,9 @@
 // ReSharper disable ForCanBeConvertedToForeach
 
+#if a2024
+using ArgumentNullException = IFoxCAD.Basal.ArgumentNullException;
+#endif
+
 namespace IFoxCAD.Cad;
 
 /// <summary>
@@ -48,7 +52,7 @@ public static class CurveEx
     {
         //if (pars is null)
         //    throw new ArgumentNullException(nameof(pars));
-        ArgumentNullEx.ThrowIfNull(pars);
+        ArgumentNullException.ThrowIfNull(pars);
         if (isOrder)
             pars = pars.OrderBy(x => x);
 
@@ -88,7 +92,7 @@ public static class CurveEx
     {
         //if (points is null)
         //    throw new ArgumentNullException(nameof(points));
-        ArgumentNullEx.ThrowIfNull(points);
+        ArgumentNullException.ThrowIfNull(points);
         if (isOrder)
             points = points.OrderBy(point =>
             {
@@ -107,7 +111,7 @@ public static class CurveEx
     /// <returns>打断后的曲线列表</returns>
     public static List<Curve> BreakCurve(this List<Curve> curves)
     {
-        ArgumentNullEx.ThrowIfNull(curves);
+        ArgumentNullException.ThrowIfNull(curves);
 
         var tol = new Tolerance(0.01, 0.01);
 
@@ -174,11 +178,11 @@ public static class CurveEx
     /// </summary>
     /// <param name="curves">曲线列表</param>
     /// <returns>打断后的曲线列表</returns>
-    /// <exception cref="ArgumentNullException">传入的曲线列表错误</exception>
+    /// <exception cref="System.ArgumentNullException">传入的曲线列表错误</exception>
     public static List<Curve> BreakCurveOnZPlane(this List<Curve> curves)
     {
         if (curves is null)
-            throw new ArgumentNullException(nameof(curves));
+            throw new System.ArgumentNullException(nameof(curves));
         var zPlane = new Plane(Point3d.Origin, Vector3d.ZAxis);
         var curvesTemp = curves.Select(c => c.GetProjectedCurve(zPlane, Vector3d.ZAxis)).ToList();
         List<CompositeCurve3d> geCurves = []; // 存储曲线转换后的复合曲线

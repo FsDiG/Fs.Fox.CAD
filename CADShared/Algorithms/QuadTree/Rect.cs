@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics;
 using System.Runtime.CompilerServices;
-
+#if a2024
+using ArgumentNullException = IFoxCAD.Basal.ArgumentNullException;
+#endif
 namespace IFoxCAD.Cad;
 
 /// <summary>
@@ -413,8 +415,7 @@ public class Rect : IEquatable<Rect>, IComparable<Rect>
     {
         //if (ptList == null)
         //    throw new ArgumentNullException(nameof(ptList));
-
-        ArgumentNullEx.ThrowIfNull(ptList);
+        ArgumentNullException.ThrowIfNull(ptList);
         var pts = ptList.ToList();
         /*
          *  消重,不这里设置,否则这不是一个正确的单元测试
@@ -469,7 +470,7 @@ public class Rect : IEquatable<Rect>, IComparable<Rect>
     {
         //if (ptList == null)
         //    throw new ArgumentNullException(nameof(ptList));
-        ArgumentNullEx.ThrowIfNull(ptList);
+        ArgumentNullException.ThrowIfNull(ptList);
         var pts = ptList.ToList();
         if (ptList.Count == 5)
         {
@@ -519,7 +520,7 @@ public class Rect : IEquatable<Rect>, IComparable<Rect>
     {
         //if (pts == null)
         //    throw new ArgumentNullException(nameof(pts));
-        ArgumentNullEx.ThrowIfNull(pts);
+        ArgumentNullException.ThrowIfNull(pts);
         if (!IsRectAngle(pts))
             return false;
 
@@ -722,7 +723,7 @@ public class Rect : IEquatable<Rect>, IComparable<Rect>
     /// </summary>
     /// <param name="rect"></param>
     /// <returns></returns>
-    public int CompareTo(Rect rect)
+    public int CompareTo(Rect? rect)
     {
         if (rect == null)
             return -1;

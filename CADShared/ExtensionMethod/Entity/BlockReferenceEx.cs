@@ -1,4 +1,8 @@
-﻿namespace IFoxCAD.Cad;
+﻿#if a2024
+using ArgumentNullException = IFoxCAD.Basal.ArgumentNullException;
+#endif
+
+namespace IFoxCAD.Cad;
 
 /// <summary>
 /// 块参照扩展类
@@ -195,12 +199,12 @@ public static class BlockReferenceEx
     /// <returns>名字</returns>
     public static string GetBlockName(this BlockReference blk)
     {
-        ArgumentNullEx.ThrowIfNull(blk);
+        ArgumentNullException.ThrowIfNull(blk);
         if (blk.IsDynamicBlock)
         {
             var btrId = blk.DynamicBlockTableRecord;
             var tr = btrId.Database.TransactionManager.TopTransaction;
-            ArgumentNullEx.ThrowIfNull(tr);
+            ArgumentNullException.ThrowIfNull(tr);
             var btr = (BlockTableRecord)tr.GetObject(btrId);
             return btr.Name;
         }
@@ -245,7 +249,7 @@ public static class BlockReferenceEx
     [DebuggerStepThrough]
     public static void ForEach(this BlockReference brf, Action<ObjectId> action)
     {
-        ArgumentNullEx.ThrowIfNull(action);
+        ArgumentNullException.ThrowIfNull(action);
         var tr = DBTrans.GetTopTransaction(brf.Database);
         if (tr.GetObject(brf.BlockTableRecord) is BlockTableRecord btr)
         {
@@ -258,11 +262,11 @@ public static class BlockReferenceEx
     /// </summary>
     /// <param name="brf"></param>
     /// <param name="action"></param>
-    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="System.ArgumentNullException"></exception>
     [DebuggerStepThrough]
     public static void ForEach(this BlockReference brf, Action<ObjectId, LoopState> action)
     {
-        ArgumentNullEx.ThrowIfNull(action);
+        ArgumentNullException.ThrowIfNull(action);
         var tr = DBTrans.GetTopTransaction(brf.Database);
         if (tr.GetObject(brf.BlockTableRecord) is BlockTableRecord btr)
         {
@@ -275,11 +279,11 @@ public static class BlockReferenceEx
     /// </summary>
     /// <param name="brf"></param>
     /// <param name="action"></param>
-    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="System.ArgumentNullException"></exception>
     [DebuggerStepThrough]
     public static void ForEach(this BlockReference brf, Action<ObjectId, LoopState, int> action)
     {
-        ArgumentNullEx.ThrowIfNull(action);
+        ArgumentNullException.ThrowIfNull(action);
         var tr = DBTrans.GetTopTransaction(brf.Database);
         if (tr.GetObject(brf.BlockTableRecord) is BlockTableRecord btr)
         {

@@ -1,4 +1,9 @@
-﻿namespace IFoxCAD.Cad;
+﻿
+#if a2024
+using ArgumentNullException = IFoxCAD.Basal.ArgumentNullException;
+#endif
+
+namespace IFoxCAD.Cad;
 
 /// <summary>
 /// 符号表记录扩展类
@@ -27,7 +32,7 @@ public static class SymbolTableRecordEx
     public static void DeepCloneEx(this BlockTableRecord btr, ObjectIdCollection objIds, IdMapping maoOut)
     {
         if (objIds is null || objIds.Count == 0)
-            throw new ArgumentNullException(nameof(objIds));
+            throw new System.ArgumentNullException(nameof(objIds));
 
         var db = objIds[0].Database;
         using (btr.ForWrite())
@@ -57,7 +62,7 @@ public static class SymbolTableRecordEx
     public static IdMapping DeepCloneEx(this BlockTableRecord btr, ObjectIdCollection objIds)
     {
         if (objIds is null || objIds.Count == 0)
-            throw new ArgumentNullException(nameof(objIds));
+            throw new System.ArgumentNullException(nameof(objIds));
 
         var db = objIds[0].Database;
         IdMapping mapOut = new();
@@ -347,7 +352,7 @@ public static class SymbolTableRecordEx
     {
         //if (task == null)
         //    throw new ArgumentNullException(nameof(task));
-        ArgumentNullEx.ThrowIfNull(task);
+        ArgumentNullException.ThrowIfNull(task);
         var i = 0;
         LoopState state = new(); /*这种方式比Action改Func更友好*/
         foreach (ObjectId id in record)

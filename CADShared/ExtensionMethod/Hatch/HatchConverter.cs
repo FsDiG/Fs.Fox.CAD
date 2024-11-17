@@ -1,6 +1,10 @@
 ﻿// ReSharper disable CompareOfFloatsByEqualityOperator
 // ReSharper disable ForCanBeConvertedToForeach
 
+#if a2024
+using ArgumentNullException = IFoxCAD.Basal.ArgumentNullException;
+#endif
+
 namespace IFoxCAD.Cad;
 
 using PointV = Point2d;
@@ -174,8 +178,8 @@ public class HatchConverter
         //if (hcData is null)
         //    throw new ArgumentNullException(nameof(hcData));
 
-        ArgumentNullEx.ThrowIfNull(loop);
-        ArgumentNullEx.ThrowIfNull(hcData);
+        ArgumentNullException.ThrowIfNull(loop);
+        ArgumentNullException.ThrowIfNull(hcData);
 
 
         // 判断为圆形:
@@ -205,7 +209,7 @@ public class HatchConverter
         //if (loop is null)
         //    throw new ArgumentNullException(nameof(loop));
 
-        ArgumentNullEx.ThrowIfNull(loop);
+        ArgumentNullException.ThrowIfNull(loop);
 
         if (loop.Curves.Count != 2)
             throw new ArgumentException("边界非多段线,而且点数!=2,点数为:" + nameof(loop.Curves.Count) +

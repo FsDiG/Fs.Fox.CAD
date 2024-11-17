@@ -61,7 +61,7 @@ public class SystemVariableManager
     /// <summary>
     /// 用于设置当前空间的当前注释比例的值
     /// </summary>
-    public static string CanNoScale => Acaop.GetSystemVariable(nameof(CanNoScale)).ToString();
+    public static string CanNoScale => Acaop.GetSystemVariable(nameof(CanNoScale)).ToString()!;
 
     /// <summary>
     /// 用于显示当前的注释性比例
@@ -79,7 +79,7 @@ public class SystemVariableManager
     /// </summary>
     public static string CEColor
     {
-        get => Acaop.GetSystemVariable(nameof(CEColor)).ToString();
+        get => Acaop.GetSystemVariable(nameof(CEColor)).ToString()!;
         set => Acaop.SetSystemVariable(nameof(CEColor), value);
     }
 
@@ -97,7 +97,7 @@ public class SystemVariableManager
     /// </summary>
     public static string CELType
     {
-        get => Acaop.GetSystemVariable(nameof(CELType)).ToString();
+        get => Acaop.GetSystemVariable(nameof(CELType)).ToString()!;
         set => Acaop.SetSystemVariable(nameof(CELType), value);
     }
 
@@ -124,7 +124,7 @@ public class SystemVariableManager
     /// </summary>
     public static string CLayer
     {
-        get => Acaop.GetSystemVariable(nameof(CLayer)).ToString();
+        get => Acaop.GetSystemVariable(nameof(CLayer)).ToString()!;
         set => Acaop.SetSystemVariable(nameof(CLayer), value);
     }
 
@@ -165,14 +165,14 @@ public class SystemVariableManager
     /// <summary>
     /// 当前的命令
     /// </summary>
-    public static string CmdNames => Acaop.GetSystemVariable(nameof(CmdNames)).ToString();
+    public static string CmdNames => Acaop.GetSystemVariable(nameof(CmdNames)).ToString()!;
 
     /// <summary>
     /// 返回图形中的当前选项卡（模型或布局）的名称
     /// </summary>
     public static string CTab
     {
-        get => Acaop.GetSystemVariable(nameof(CTab)).ToString();
+        get => Acaop.GetSystemVariable(nameof(CTab)).ToString()!;
         set => Acaop.SetSystemVariable(nameof(CTab), value);
     }
 

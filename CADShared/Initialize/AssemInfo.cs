@@ -13,8 +13,8 @@ public struct AssemInfo
     public AssemInfo(Assembly assembly)
     {
         Loader = assembly.Location;
-        Fullname = assembly.FullName;
-        Name = assembly.GetName().Name;
+        Fullname = assembly.FullName!;
+        Name = assembly.GetName().Name!;
         LoadType = AssemLoadType.Starting;
     }
 

@@ -1,4 +1,8 @@
-﻿namespace IFoxCAD.Cad;
+﻿#if a2024
+using ArgumentNullException = IFoxCAD.Basal.ArgumentNullException;
+#endif
+
+namespace IFoxCAD.Cad;
 
 /// <summary>
 /// 选择集扩展类
@@ -90,7 +94,7 @@ public static class SelectionSetEx
     /// <param name="openMode">打开模式</param>
     /// <param name="openErased">是否打开已删除对象,默认为不打开</param>
     /// <param name="openLockedLayer">是否打开锁定图层对象,默认为不打开</param>
-    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="System.ArgumentNullException"></exception>
     [DebuggerStepThrough]
     public static void ForEach<T>(this SelectionSet ss,
         Action<T, LoopState> action,
@@ -98,7 +102,7 @@ public static class SelectionSetEx
         bool openErased = false,
         bool openLockedLayer = false) where T : Entity
     {
-        ArgumentNullEx.ThrowIfNull(action);
+        ArgumentNullException.ThrowIfNull(action);
 
         LoopState state = new();
         var ents = ss.GetEntities<T>(openMode, openErased, openLockedLayer);

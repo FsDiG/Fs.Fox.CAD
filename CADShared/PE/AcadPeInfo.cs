@@ -63,7 +63,9 @@ public class AcadPeInfo
             if (_PeForAcadExe is null)
             {
                 // 获取此acad.exe获取所有的函数名
-                var file = Process.GetCurrentProcess().MainModule.FileName;
+                var processModule = Process.GetCurrentProcess().MainModule;
+                if (processModule == null) return _PeForAcadExe;
+                var file = processModule.FileName;
                 _PeForAcadExe = new PeInfo(file);
             }
             return _PeForAcadExe;
@@ -81,7 +83,7 @@ public class AcadPeInfo
             if (_PeForAccoreDll is null)
             {
                 // 获取此dll所有的函数名
-                var file = Process.GetCurrentProcess().MainModule.FileName;
+                var file = Process.GetCurrentProcess().MainModule!.FileName;
                 var dll = Path.GetDirectoryName(file) + "\\accore.dll";
                 if (File.Exists(dll))// 08没有,高版本分离的
                     _PeForAccoreDll = new PeInfo(dll);
@@ -101,7 +103,7 @@ public class AcadPeInfo
             if (_PeForAcdbDll is null)
             {
                 // 获取此dll所有的函数名
-                var file = Process.GetCurrentProcess().MainModule.FileName;
+                var file = Process.GetCurrentProcess().MainModule!.FileName;
                 var dll = Path.GetDirectoryName(file) + $"\\acdb{Acaop.Version.Major}.dll";
                 if (File.Exists(dll))
                     _PeForAcdbDll = new PeInfo(dll);
@@ -235,9 +237,9 @@ public class AcadPeInfo
 
         // 排序,最少长度原则本身就是让完全相同字符串在最前面
         // 这里替换为有序哈希,因为我总是需要不带修饰的返回函数,所以是排序长度的第一个
-        _Methods = _Methods.OrderBy(str => str.CName?.Length)
-                           .ThenBy(str => str.MethodName.Length)
-                           .ToList();
+        _Methods = _Methods?.OrderBy(str => str.CName?.Length)
+            .ThenBy(str => str.MethodName.Length)
+            .ToList();
 
         func = Marshal.GetDelegateForFunctionPointer(Methods.First().GetProcAddress(), typeof(TDelegate)) as TDelegate;
         return func;

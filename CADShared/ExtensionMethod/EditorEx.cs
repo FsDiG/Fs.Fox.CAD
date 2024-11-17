@@ -1,3 +1,5 @@
+using ArgumentNullException = System.ArgumentNullException;
+
 namespace IFoxCAD.Cad;
 
 /// <summary>
@@ -171,8 +173,7 @@ public static class EditorEx
                     if (dicActions[item] != dicActions[key])
                         dicActions[item] += dicActions[key];
                 }
-                else
-                    tmp.Add(item, value);
+                else if (value != null) tmp.Add(item, value);
             }
 
             dicActions.Remove(key);
@@ -1088,7 +1089,7 @@ public static class EditorEx
     /// <param name="saveFile">保存文件</param>
     /// <param name="ids">选择集的对象,为null时候手选</param>
     /// <param name="wmfSetDel">是否清空选择集</param>
-    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="System.ArgumentNullException"></exception>
     public static void ComExportWMF(this Editor editor, string saveFile, ObjectId[]? ids = null,
         bool wmfSetDel = false)
     {
@@ -1102,7 +1103,7 @@ public static class EditorEx
             return;
 
         // 剔除后缀
-        saveFile = Path.Combine(Path.GetDirectoryName(saveFile),
+        saveFile = Path.Combine(Path.GetDirectoryName(saveFile) ?? string.Empty,
             Path.GetFileNameWithoutExtension(saveFile));
         // ActiveSelectionSet:
         // 第一次执行会触发选择,再次重复命令执行的时候,它会无法再选择(即使清空选择集).

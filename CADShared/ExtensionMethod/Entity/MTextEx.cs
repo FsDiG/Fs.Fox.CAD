@@ -1,4 +1,6 @@
-﻿namespace IFoxCAD.Cad;
+﻿using ArgumentNullException = System.ArgumentNullException;
+
+namespace IFoxCAD.Cad;
 
 /// <summary>
 /// 多行文字扩展类
@@ -14,7 +16,7 @@ public static class MTextEx
     /// <param name="database">文字所在的数据库</param>
     /// <param name="action">文字属性设置委托</param>
     /// <returns>文字对象id</returns>
-    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="System.ArgumentNullException"></exception>
     public static MText CreateMText(Point3d position, string text, double height, Database? database = null,
         Action<MText>? action = null)
     {

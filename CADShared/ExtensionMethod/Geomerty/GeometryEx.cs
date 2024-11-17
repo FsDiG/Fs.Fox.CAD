@@ -1,3 +1,5 @@
+using ArgumentNullException = System.ArgumentNullException;
+
 namespace IFoxCAD.Cad;
 
 using System.Drawing;

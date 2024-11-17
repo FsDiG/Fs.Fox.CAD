@@ -1,4 +1,8 @@
-﻿namespace IFoxCAD.Cad;
+﻿#if a2024
+using ArgumentNullException = IFoxCAD.Basal.ArgumentNullException;
+#endif
+
+namespace IFoxCAD.Cad;
 
 /// <summary>
 /// 注册中心
@@ -37,7 +41,7 @@ public abstract class AutoRegAssem : IExtensionApplication
     /// <returns>路径对象</returns>
     public static DirectoryInfo? GetDirectory(Assembly? assem)
     {
-        ArgumentNullEx.ThrowIfNull(assem);
+        ArgumentNullException.ThrowIfNull(assem);
         return new FileInfo(assem.Location).Directory;
     }
 
@@ -55,8 +59,8 @@ public abstract class AutoRegAssem : IExtensionApplication
         var info = new AssemInfo
         {
             Loader = assem.Location,
-            Fullname = assem.FullName,
-            Name = assem.GetName().Name,
+            Fullname = assem.FullName!,
+            Name = assem.GetName().Name!,
             LoadType = AssemLoadType.Starting
         };
 

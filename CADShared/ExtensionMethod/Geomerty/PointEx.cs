@@ -1,3 +1,7 @@
+#if a2024
+using ArgumentNullException = IFoxCAD.Basal.ArgumentNullException;
+#endif
+
 namespace IFoxCAD.Cad;
 
 /// <summary>
@@ -230,7 +234,7 @@ public static class PointEx
     [DebuggerStepThrough]
     public static void End2End(this Point2dCollection ptCollection)
     {
-        ArgumentNullEx.ThrowIfNull(ptCollection);
+        ArgumentNullException.ThrowIfNull(ptCollection);
 
         if (ptCollection.Count == 0 || ptCollection[0].Equals(ptCollection[^1])) // 首尾相同直接返回
             return;
@@ -251,7 +255,7 @@ public static class PointEx
     [DebuggerStepThrough]
     public static void End2End(this Point3dCollection ptCollection)
     {
-        ArgumentNullEx.ThrowIfNull(ptCollection);
+        ArgumentNullException.ThrowIfNull(ptCollection);
         if (ptCollection.Count == 0 || ptCollection[0].Equals(ptCollection[^1])) // 首尾相同直接返回
             return;
 

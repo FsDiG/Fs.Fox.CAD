@@ -1,4 +1,7 @@
 using System.Security;
+#if a2024
+using ArgumentNullException = IFoxCAD.Basal.ArgumentNullException;
+#endif
 
 // ReSharper disable StringLiteralTypo
 
@@ -630,7 +633,7 @@ public static class Env
         if (!folders.Any()) return;
         var trustedPath = GetVar("TRUSTEDPATHS").ToString();
         var trustedPathLowerArr =
-            trustedPath
+            trustedPath!
                 .ToLower()
                 .Split(';')
                 .Where(item => item != "")
@@ -656,7 +659,7 @@ public static class Env
     public static void RemoveTrustedPath(params string[] folders)
     {
         if (!folders.Any()) return;
-        var trustedPathArr = GetVar("TRUSTEDPATHS").ToString().Split(';').ToList();
+        var trustedPathArr = GetVar("TRUSTEDPATHS").ToString()!.Split(';').ToList();
         foreach (var folder in folders)
         {
             var folderLower =
@@ -812,7 +815,7 @@ public static class Env
     /// <param name="key"></param>
     /// <param name="value"></param>
     /// <returns>成功返回当前值,失败null</returns>
-    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="System.ArgumentNullException"></exception>
     public static object? SetVarEx(string key, string value)
     {
         var currentVar = GetVar(key);
@@ -844,7 +847,7 @@ public static class Env
     /// <returns>返回现有变量词典,然后下次就可以利用它进行设置回来了</returns>
     public static Dictionary<string, string> SaveCadVar(Dictionary<string, string> args)
     {
-        ArgumentNullEx.ThrowIfNull(args);
+        ArgumentNullException.ThrowIfNull(args);
         var dict = new Dictionary<string, string>();
         foreach (var item in args)
         {
@@ -852,7 +855,7 @@ public static class Env
             var ok = SetVarEx(item.Key, item.Value);
             if (ok is not null)
             {
-                dict.Add(item.Key, ok.ToString());
+                dict.Add(item.Key, $"{ok}");
                 continue;
             }
 

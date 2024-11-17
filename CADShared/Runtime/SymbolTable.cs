@@ -1,5 +1,9 @@
 // ReSharper disable RedundantNameQualifier
 
+#if a2024
+using ArgumentNullException = IFoxCAD.Basal.ArgumentNullException;
+#endif
+
 namespace IFoxCAD.Cad;
 
 /// <summary>
@@ -218,11 +222,9 @@ public class SymbolTable<TTable, TRecord> : IEnumerable<ObjectId> where TTable :
     public void Change(string name, Action<TRecord> action)
     {
         var record = GetRecord(name);
-        if (record is not null)
-        {
-            using (record.ForWrite())
-                action.Invoke(record);
-        }
+        if (record is null) return;
+        using (record.ForWrite())
+            action.Invoke(record);
     }
 
     /// <summary>
@@ -319,7 +321,7 @@ public class SymbolTable<TTable, TRecord> : IEnumerable<ObjectId> where TTable :
     /// <returns>对象id</returns>
     private ObjectId GetRecordFrom(SymbolTable<TTable, TRecord> table, string name, bool over)
     {
-        ArgumentNullEx.ThrowIfNull(table);
+        ArgumentNullException.ThrowIfNull(table);
 
         var rid = this[name];
         var has = rid != ObjectId.Null;
@@ -399,7 +401,7 @@ public class SymbolTable<TTable, TRecord> : IEnumerable<ObjectId> where TTable :
     {
         //if (task == null)
         //    throw new ArgumentNullException(nameof(task));
-        ArgumentNullEx.ThrowIfNull(task);
+        ArgumentNullException.ThrowIfNull(task);
         LoopState state = new(); /*这种方式比Action改Func更友好*/
         var i = 0;
         foreach (var id in this)
