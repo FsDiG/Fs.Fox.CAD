@@ -66,7 +66,8 @@ public class SystemVariableManager
     /// <summary>
     /// 用于显示当前的注释性比例
     /// </summary>
-    public static double CanNoScaleValue => Convert.ToDouble(Acaop.GetSystemVariable(nameof(CanNoScale)));
+    public static double CanNoScaleValue =>
+        Convert.ToDouble(Acaop.GetSystemVariable(nameof(CanNoScale)));
 
     /// <summary>
     /// 储存以公元纪年为基准的日历数据和时间
@@ -130,7 +131,8 @@ public class SystemVariableManager
     /// <summary>
     /// 用于确定全屏显示是打开或关闭状态
     /// </summary>
-    public static bool CleanScreenState => Convert.ToBoolean(Acaop.GetSystemVariable(nameof(CleanScreenState)));
+    public static bool CleanScreenState =>
+        Convert.ToBoolean(Acaop.GetSystemVariable(nameof(CleanScreenState)));
 
     /// <summary>
     /// 指示命令窗口是隐藏还是显示状态
@@ -154,7 +156,11 @@ public class SystemVariableManager
     /// <summary>
     /// 在使用 LISP 的函数时，切换回应为打开或关闭
     /// </summary>
-    public static bool CmdEcho => Convert.ToBoolean(Acaop.GetSystemVariable(nameof(CmdEcho)));
+    public static bool CmdEcho
+    {
+        get => Convert.ToBoolean(Acaop.GetSystemVariable(nameof(CmdEcho)));
+        set => Acaop.SetSystemVariable(nameof(CmdEcho), value ? 1 : 0);
+    }
 
     /// <summary>
     /// 当前的命令
