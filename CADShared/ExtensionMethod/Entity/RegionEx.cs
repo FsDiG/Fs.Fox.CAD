@@ -15,33 +15,24 @@ public static class RegionEx
     public static IEnumerable<Curve> ToCurves(this Region region)
     {
         using var brep = new Brep(region);
-        var loops = brep.Complexes
-            .SelectMany(complex => complex.Shells)
+        var loops = brep.Complexes.SelectMany(complex => complex.Shells)
             .SelectMany(shell => shell.Faces)
             .SelectMany(face => face.Loops);
         foreach (var loop in loops)
         {
-            var curves3d = loop.Edges.Select(edge => ((ExternalCurve3d)edge.Curve).NativeCurve).ToList();
-            if (1 < curves3d.Count)
+            var curves3d = loop.Edges.Select(edge => ((ExternalCurve3d)edge.Curve).NativeCurve)
+                .ToList();
+            var cur = Curve.CreateFromGeCurve(1 < curves3d.Count
+                ? new CompositeCurve3d(curves3d.ToOrderedArray())
+                : curves3d.First());
+
+            foreach (var curve3d in curves3d)
             {
-                if (curves3d.All(curve3d => curve3d is CircularArc3d or LineSegment3d))
-                {
-                    var pl = (Polyline)Curve.CreateFromGeCurve(new CompositeCurve3d(curves3d.ToOrderedArray()));
-                    pl.Closed = true;
-                    yield return pl;
-                }
-                else
-                {
-                    foreach (var curve3d in curves3d)
-                    {
-                        yield return Curve.CreateFromGeCurve(curve3d);
-                    }
-                }
+                curve3d.Dispose();
             }
-            else
-            {
-                yield return Curve.CreateFromGeCurve(curves3d.First());
-            }
+
+            cur.SetPropertiesFrom(region);
+            yield return cur;
         }
     }
 
@@ -49,8 +40,8 @@ public static class RegionEx
     /// 按首尾相连对曲线集合进行排序
     /// </summary>
     /// <param name="source"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentException"></exception>
+    /// <returns>曲线列表</returns>
+    /// <exception cref="ArgumentException">当不能首尾相连时会抛出此异常</exception>
     private static Curve3d[] ToOrderedArray(this IEnumerable<Curve3d> source)
     {
         var tol = new Tolerance(0.001, 0.001);
