@@ -18,7 +18,7 @@
         <PackageId>IFox.CAD.ACAD</PackageId>
         <Title>IFox.CAD.ACAD</Title>
         <Product>IFox.CAD.ACAD</Product>
-        <Version>0.9.1.9</Version>
+        <Version>0.9.1.10</Version>
         <Authors>xsfhlzh, vicwjb, liuqihong, DYH</Authors>
         <Description>基于.NET的二次开发基本类库.</Description>
         <PackageProjectUrl>https://www.nuget.org/packages/IFox.CAD.ACAD/</PackageProjectUrl>
@@ -27,7 +27,7 @@
         <PackageTags>IFox,Cad,AutoCad,C#,NET,</PackageTags>
         <Company>InspireFunction</Company>
         <PackageReadmeFile>readme.md</PackageReadmeFile>
-        <PackageReleaseNotes>修复部分系统变量不能Set的问题</PackageReleaseNotes>
+        <PackageReleaseNotes>修复region同环曲线不闭合的问题</PackageReleaseNotes>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
     </PropertyGroup>
 
