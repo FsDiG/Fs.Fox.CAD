@@ -288,20 +288,13 @@ public static class LinqEx
         }
 
         #region IComparer<T> 成员
-
-#if a2024
-        public int Compare(T x, T y)
-        {
-            return _comp(x, y);
-        }
-#else
+        
         public int Compare(T? x, T? y)
         {
             if (x is not null && y is not null)
                 return _comp(x, y);
             return 0;
         }
-#endif
         #endregion IComparer<T> 成员
     }
 

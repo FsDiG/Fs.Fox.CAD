@@ -1,5 +1,6 @@
-﻿namespace System.Runtime.CompilerServices;
-
+﻿
+#if a2024
+namespace System.Runtime.CompilerServices;
 /// <summary>
 /// 指示参数将为另一个参数传递的表达式捕获为字符串。
 /// </summary>
@@ -21,3 +22,4 @@ internal sealed class CallerArgumentExpressionAttribute : Attribute
     // ReSharper disable once UnusedAutoPropertyAccessor.Global
     public string ParameterName { get; }
 }
+#endif

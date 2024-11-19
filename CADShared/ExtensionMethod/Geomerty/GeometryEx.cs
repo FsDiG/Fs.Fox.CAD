@@ -1,4 +1,6 @@
-using ArgumentNullException = System.ArgumentNullException;
+#if a2024
+using ArgumentNullException = IFoxCAD.Basal.ArgumentNullEx;
+#endif
 
 namespace IFoxCAD.Cad;
 
@@ -294,7 +296,7 @@ public static class GeometryEx
     {
         using var itor = pnts.GetEnumerator();
         if (!itor.MoveNext())
-            throw new ArgumentNullException(nameof(pnts));
+            throw new System.ArgumentNullException(nameof(pnts));
         var start = itor.Current;
         var p2 = start;
         double area = 0;
