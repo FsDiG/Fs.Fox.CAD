@@ -1,5 +1,7 @@
 namespace IFoxCAD.Cad;
-
+#if a2024
+using ArgumentNullException = IFoxCAD.Basal.ArgumentNullEx;
+#endif
 using System.Diagnostics;
 using System.IO;
 
@@ -23,7 +25,7 @@ public sealed class DBTrans : IDisposable
     /// <returns>事务对象</returns>
     public static Transaction GetTopTransaction(Database database)
     {
-        ArgumentNullEx.ThrowIfNull(database);
+        ArgumentNullException.ThrowIfNull(database);
         return database.TransactionManager.TopTransaction ?? throw new Exception("没有顶层事务！");
     }
 
@@ -36,9 +38,9 @@ public sealed class DBTrans : IDisposable
     public static DBTrans GetTop(Database? database = null)
     {
         database ??= HostApplicationServices.WorkingDatabase;
-        ArgumentNullEx.ThrowIfNull(database);
+        ArgumentNullException.ThrowIfNull(database);
         var trans = database.TransactionManager.TopTransaction;
-        ArgumentNullEx.ThrowIfNull(trans);
+        ArgumentNullException.ThrowIfNull(trans);
 
         foreach (var item in _dBTrans)
         {
@@ -108,7 +110,7 @@ public sealed class DBTrans : IDisposable
 
             // 由于大量的函数依赖本属性,强迫用户先开启事务
             if (_dBTrans.Count == 0)
-                throw new ArgumentNullException("事务栈没有任何事务,请在调用前创建:" + nameof(DBTrans));
+                throw new System.ArgumentNullException("事务栈没有任何事务,请在调用前创建:" + nameof(DBTrans));
             var trans = _dBTrans.Peek();
             return trans;
         }
@@ -191,7 +193,7 @@ public sealed class DBTrans : IDisposable
         string? password = null, bool activeOpen = false)
     {
         if (string.IsNullOrWhiteSpace(fileName))
-            throw new ArgumentNullException(nameof(fileName));
+            throw new System.ArgumentNullException(nameof(fileName));
 
         _fileName = fileName.Replace("/", "\\"); // doc.Name总是"D:\\JX.dwg"
 
@@ -538,7 +540,7 @@ public sealed class DBTrans : IDisposable
     // ReSharper disable once InconsistentNaming
     public void Task(Action action, bool handlingDBTextDeviation = true)
     {
-        ArgumentNullEx.ThrowIfNull(action);
+        ArgumentNullException.ThrowIfNull(action);
         // 前台开图 || 后台直接处理
         if (Document != null || !handlingDBTextDeviation)
         {
