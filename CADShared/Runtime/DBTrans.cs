@@ -1,7 +1,3 @@
-#if a2024
-using ArgumentNullException = IFoxCAD.Basal.ArgumentNullEx;
-#endif
-
 namespace IFoxCAD.Cad;
 
 using System.Diagnostics;
@@ -27,7 +23,7 @@ public sealed class DBTrans : IDisposable
     /// <returns>事务对象</returns>
     public static Transaction GetTopTransaction(Database database)
     {
-        ArgumentNullException.ThrowIfNull(database);
+        ArgumentNullEx.ThrowIfNull(database);
         return database.TransactionManager.TopTransaction ?? throw new Exception("没有顶层事务！");
     }
 
@@ -36,21 +32,22 @@ public sealed class DBTrans : IDisposable
     /// </summary>
     /// <param name="database">数据库</param>
     /// <returns>DBTrans 事务</returns>
-    /// <exception cref="System.ArgumentNullException"></exception>
-    public static DBTrans GetTop(Database database)
+    /// <exception cref="ArgumentNullException"></exception>
+    public static DBTrans GetTop(Database? database = null)
     {
-        ArgumentNullException.ThrowIfNull(database);
+        database ??= HostApplicationServices.WorkingDatabase;
+        ArgumentNullEx.ThrowIfNull(database);
         var trans = database.TransactionManager.TopTransaction;
-        ArgumentNullException.ThrowIfNull(trans);
+        ArgumentNullEx.ThrowIfNull(trans);
 
         foreach (var item in _dBTrans)
         {
+            // 匹配事务栈内DBTrans的transaction的指针与数据库的顶层事务的指针
             if (item.Transaction.UnmanagedObject == trans.UnmanagedObject)
             {
                 return item;
             }
-        } // 匹配事务栈内DBTrans的transaction的指针与数据库的顶层事务的指针
-
+        }
 
         return Top;
     }
@@ -81,12 +78,12 @@ public sealed class DBTrans : IDisposable
 
     #endregion
 
-    #region 公开属性
+    #region 内部属性
 
     /// <summary>
     /// 返回当前事务
     /// </summary>
-    public static DBTrans Top
+    internal static DBTrans Top
     {
         get
         {
@@ -111,12 +108,15 @@ public sealed class DBTrans : IDisposable
 
             // 由于大量的函数依赖本属性,强迫用户先开启事务
             if (_dBTrans.Count == 0)
-                throw new System.ArgumentNullException("事务栈没有任何事务,请在调用前创建:" + nameof(DBTrans));
+                throw new ArgumentNullException("事务栈没有任何事务,请在调用前创建:" + nameof(DBTrans));
             var trans = _dBTrans.Peek();
             return trans;
         }
     }
 
+    #endregion
+
+    #region 公开属性
 
     /// <summary>
     /// 文档
@@ -186,14 +186,12 @@ public sealed class DBTrans : IDisposable
     /// <param name="fileOpenMode">开图模式</param>
     /// <param name="password">密码</param>
     /// <param name="activeOpen">后台打开false;前台打开true(必须设置CommandFlags.Session)</param>
-    public DBTrans(string fileName,
-        bool commit = true,
+    public DBTrans(string fileName, bool commit = true,
         FileOpenMode fileOpenMode = FileOpenMode.OpenForReadAndWriteNoShare,
-        string? password = null,
-        bool activeOpen = false)
+        string? password = null, bool activeOpen = false)
     {
         if (string.IsNullOrWhiteSpace(fileName))
-            throw new System.ArgumentNullException(nameof(fileName));
+            throw new ArgumentNullException(nameof(fileName));
 
         _fileName = fileName.Replace("/", "\\"); // doc.Name总是"D:\\JX.dwg"
 
@@ -215,8 +213,7 @@ public sealed class DBTrans : IDisposable
         }
         else
         {
-            var doc = Acaop.DocumentManager
-                .Cast<Document>()
+            var doc = Acaop.DocumentManager.Cast<Document>()
                 .FirstOrDefault(doc => !doc.IsDisposed && doc.Name == _fileName);
 
             if (activeOpen)
@@ -227,7 +224,8 @@ public sealed class DBTrans : IDisposable
                     {
                         // 设置命令标记: CommandFlags.Session
                         // 若没有设置: Open()之后的会进入中断状态(不会执行,直到切换文档ctrl+tab或者关闭文档)
-                        doc = Acaop.DocumentManager.Open(fileName, fileOpenMode == FileOpenMode.OpenForReadAndReadShare, password);
+                        doc = Acaop.DocumentManager.Open(fileName,
+                            fileOpenMode == FileOpenMode.OpenForReadAndReadShare, password);
                     }
                     catch (Exception e)
                     {
@@ -299,7 +297,8 @@ public sealed class DBTrans : IDisposable
     /// <summary>
     /// 块表
     /// </summary>
-    public SymbolTable<BlockTable, BlockTableRecord> BlockTable => _blockTable ??= new(this, Database.BlockTableId);
+    public SymbolTable<BlockTable, BlockTableRecord> BlockTable =>
+        _blockTable ??= new(this, Database.BlockTableId);
 
     private SymbolTable<BlockTable, BlockTableRecord>? _blockTable;
 
@@ -323,72 +322,82 @@ public sealed class DBTrans : IDisposable
     private ObjectId _lastCurrentSpaceId = ObjectId.Null;
     private BlockTableRecord? _currentSpace;
 
-
     /// <summary>
     /// 模型空间
     /// </summary>
-    public BlockTableRecord ModelSpace => _modelSpace ??= BlockTable.GetRecord(BlockTable.CurrentSymbolTable[BlockTableRecord.ModelSpace])!;
+    public BlockTableRecord ModelSpace =>
+        _modelSpace ??=
+            BlockTable.GetRecord(BlockTable.CurrentSymbolTable[BlockTableRecord.ModelSpace])!;
 
     private BlockTableRecord? _modelSpace;
 
     /// <summary>
     /// 图纸空间
     /// </summary>
-    public BlockTableRecord PaperSpace => BlockTable.GetRecord(BlockTable.CurrentSymbolTable[BlockTableRecord.PaperSpace])!;
+    public BlockTableRecord PaperSpace =>
+        BlockTable.GetRecord(BlockTable.CurrentSymbolTable[BlockTableRecord.PaperSpace])!;
 
     /// <summary>
     /// 层表
     /// </summary>
-    public SymbolTable<LayerTable, LayerTableRecord> LayerTable => _layerTable ??= new(this, Database.LayerTableId);
+    public SymbolTable<LayerTable, LayerTableRecord> LayerTable =>
+        _layerTable ??= new(this, Database.LayerTableId);
 
     private SymbolTable<LayerTable, LayerTableRecord>? _layerTable;
 
     /// <summary>
     /// 文字样式表
     /// </summary>
-    public SymbolTable<TextStyleTable, TextStyleTableRecord> TextStyleTable => _textStyleTable ??= new(this, Database.TextStyleTableId);
+    public SymbolTable<TextStyleTable, TextStyleTableRecord> TextStyleTable =>
+        _textStyleTable ??= new(this, Database.TextStyleTableId);
 
     private SymbolTable<TextStyleTable, TextStyleTableRecord>? _textStyleTable;
 
     /// <summary>
     /// 注册应用程序表
     /// </summary>
-    public SymbolTable<RegAppTable, RegAppTableRecord> RegAppTable => _regAppTable ??= new(this, Database.RegAppTableId);
+    public SymbolTable<RegAppTable, RegAppTableRecord> RegAppTable =>
+        _regAppTable ??= new(this, Database.RegAppTableId);
 
     private SymbolTable<RegAppTable, RegAppTableRecord>? _regAppTable;
 
     /// <summary>
     /// 标注样式表
     /// </summary>
-    public SymbolTable<DimStyleTable, DimStyleTableRecord> DimStyleTable => _dimStyleTable ??= new(this, Database.DimStyleTableId);
+    public SymbolTable<DimStyleTable, DimStyleTableRecord> DimStyleTable =>
+        _dimStyleTable ??= new(this, Database.DimStyleTableId);
 
     private SymbolTable<DimStyleTable, DimStyleTableRecord>? _dimStyleTable;
 
     /// <summary>
     /// 线型表
     /// </summary>
-    public SymbolTable<LinetypeTable, LinetypeTableRecord> LinetypeTable => _linetypeTable ??= new(this, Database.LinetypeTableId);
+    public SymbolTable<LinetypeTable, LinetypeTableRecord> LinetypeTable =>
+        _linetypeTable ??= new(this, Database.LinetypeTableId);
 
     private SymbolTable<LinetypeTable, LinetypeTableRecord>? _linetypeTable;
 
     /// <summary>
     /// 用户坐标系表
     /// </summary>
-    public SymbolTable<UcsTable, UcsTableRecord> UcsTable => _ucsTable ??= new(this, Database.UcsTableId);
+    public SymbolTable<UcsTable, UcsTableRecord> UcsTable =>
+        _ucsTable ??= new(this, Database.UcsTableId);
 
     private SymbolTable<UcsTable, UcsTableRecord>? _ucsTable;
 
     /// <summary>
     /// 视图表
     /// </summary>
-    public SymbolTable<ViewTable, ViewTableRecord> ViewTable => _viewTable ??= new(this, Database.ViewTableId);
+    public SymbolTable<ViewTable, ViewTableRecord> ViewTable =>
+        _viewTable ??= new(this, Database.ViewTableId);
 
     private SymbolTable<ViewTable, ViewTableRecord>? _viewTable;
 
     /// <summary>
     /// 视口表
     /// </summary>
-    public SymbolTable<ViewportTable, ViewportTableRecord> ViewportTable => _viewportTable ??= new(this, Database.ViewportTableId);
+    public SymbolTable<ViewportTable, ViewportTableRecord> ViewportTable =>
+        _viewportTable ??= new(this, Database.ViewportTableId);
 
     private SymbolTable<ViewportTable, ViewportTableRecord>? _viewportTable;
 
@@ -399,7 +408,8 @@ public sealed class DBTrans : IDisposable
     /// <summary>
     /// 命名对象字典
     /// </summary>
-    public DBDictionary NamedObjectsDict => GetObject<DBDictionary>(Database.NamedObjectsDictionaryId)!;
+    public DBDictionary NamedObjectsDict =>
+        GetObject<DBDictionary>(Database.NamedObjectsDictionaryId)!;
 
     /// <summary>
     /// 组字典
@@ -409,7 +419,8 @@ public sealed class DBTrans : IDisposable
     /// <summary>
     /// 多重引线样式字典
     /// </summary>
-    public DBDictionary MLeaderStyleDict => GetObject<DBDictionary>(Database.MLeaderStyleDictionaryId)!;
+    public DBDictionary MLeaderStyleDict =>
+        GetObject<DBDictionary>(Database.MLeaderStyleDictionaryId)!;
 
     /// <summary>
     /// 多线样式字典
@@ -430,7 +441,8 @@ public sealed class DBTrans : IDisposable
     /// <summary>
     /// 视觉样式字典
     /// </summary>
-    public DBDictionary VisualStyleDict => GetObject<DBDictionary>(Database.VisualStyleDictionaryId)!;
+    public DBDictionary VisualStyleDict =>
+        GetObject<DBDictionary>(Database.VisualStyleDictionaryId)!;
 
     /// <summary>
     /// 颜色字典
@@ -440,12 +452,14 @@ public sealed class DBTrans : IDisposable
     /// <summary>
     /// 打印设置字典
     /// </summary>
-    public DBDictionary PlotSettingsDict => GetObject<DBDictionary>(Database.PlotSettingsDictionaryId)!;
+    public DBDictionary PlotSettingsDict =>
+        GetObject<DBDictionary>(Database.PlotSettingsDictionaryId)!;
 
     /// <summary>
     /// 打印样式表名字典
     /// </summary>
-    public DBDictionary PlotStyleNameDict => GetObject<DBDictionary>(Database.PlotStyleNameDictionaryId)!;
+    public DBDictionary PlotStyleNameDict =>
+        GetObject<DBDictionary>(Database.PlotStyleNameDictionaryId)!;
 
     /// <summary>
     /// 布局字典
@@ -461,12 +475,14 @@ public sealed class DBTrans : IDisposable
     /// <summary>
     /// 详细视图样式字典
     /// </summary>
-    public DBDictionary DetailViewStyleDict => GetObject<DBDictionary>(Database.DetailViewStyleDictionaryId)!;
+    public DBDictionary DetailViewStyleDict =>
+        GetObject<DBDictionary>(Database.DetailViewStyleDictionaryId)!;
 
     /// <summary>
     /// 剖面视图样式字典
     /// </summary>
-    public DBDictionary SectionViewStyleDict => GetObject<DBDictionary>(Database.SectionViewStyleDictionaryId)!;
+    public DBDictionary SectionViewStyleDict =>
+        GetObject<DBDictionary>(Database.SectionViewStyleDictionaryId)!;
 
 #endif
 
@@ -482,10 +498,8 @@ public sealed class DBTrans : IDisposable
     /// <param name="openErased">是否打开已删除对象,默认为不打开</param>
     /// <param name="openLockedLayer">是否打开锁定图层对象,默认为不打开</param>
     /// <returns>数据库DBObject对象</returns>
-    public DBObject GetObject(ObjectId id,
-        OpenMode openMode = OpenMode.ForRead,
-        bool openErased = false,
-        bool openLockedLayer = false)
+    public DBObject GetObject(ObjectId id, OpenMode openMode = OpenMode.ForRead,
+        bool openErased = false, bool openLockedLayer = false)
     {
         return Transaction.GetObject(id, openMode, openErased, openLockedLayer);
     }
@@ -499,10 +513,8 @@ public sealed class DBTrans : IDisposable
     /// <param name="openErased">是否打开已删除对象,默认为不打开</param>
     /// <param name="openLockedLayer">是否打开锁定图层对象,默认为不打开</param>
     /// <returns>图元对象</returns>
-    public T? GetObject<T>(ObjectId id,
-        OpenMode openMode = OpenMode.ForRead,
-        bool openErased = false,
-        bool openLockedLayer = false) where T : DBObject
+    public T? GetObject<T>(ObjectId id, OpenMode openMode = OpenMode.ForRead,
+        bool openErased = false, bool openLockedLayer = false) where T : DBObject
     {
         return Transaction.GetObject(id, openMode, openErased, openLockedLayer) as T;
     }
@@ -526,7 +538,7 @@ public sealed class DBTrans : IDisposable
     // ReSharper disable once InconsistentNaming
     public void Task(Action action, bool handlingDBTextDeviation = true)
     {
-        ArgumentNullException.ThrowIfNull(action);
+        ArgumentNullEx.ThrowIfNull(action);
         // 前台开图 || 后台直接处理
         if (Document != null || !handlingDBTextDeviation)
         {
@@ -613,7 +625,8 @@ public sealed class DBTrans : IDisposable
          */
 
         // 不重复释放,并设置已经释放
-        if (IsDisposed) return;
+        if (IsDisposed)
+            return;
 
         if (disposing)
         {
@@ -664,15 +677,10 @@ public sealed class DBTrans : IDisposable
     {
         List<string> lines =
         [
-            $"StackCount = {_dBTrans.Count}",
-            $"_fileName = \"{_fileName}\"",
-            $"_commit = {_commit}",
-            $"_documentLock = {_documentLock != null}",
-
-            $"Document = {Document != null}",
-            $"Editor = {Editor != null}",
-            $"Transaction = {Transaction.UnmanagedObject}",
-            $"Database = {Database.Filename}"
+            $"StackCount = {_dBTrans.Count}", $"_fileName = \"{_fileName}\"",
+            $"_commit = {_commit}", $"_documentLock = {_documentLock != null}",
+            $"Document = {Document != null}", $"Editor = {Editor != null}",
+            $"Transaction = {Transaction.UnmanagedObject}", $"Database = {Database.Filename}"
         ];
 
         return string.Join("\n", lines.ToArray());
