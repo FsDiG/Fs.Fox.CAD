@@ -630,7 +630,7 @@ public static class Env
     /// <param name="folders">目录</param>
     public static void AppendTrustedPath(params string[] folders)
     {
-        if (!folders.Any()) return;
+        if (folders.Length == 0) return;
         var trustedPath = GetVar("TRUSTEDPATHS").ToString();
         var trustedPathLowerArr =
             trustedPath!
