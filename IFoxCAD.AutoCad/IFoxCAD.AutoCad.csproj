@@ -13,12 +13,15 @@
 
     <!--nuget package-->
     <PropertyGroup>
+        <!--每次发布需要修改的部分-->
+        <Version>0.9.1.10</Version>
+        <PackageReleaseNotes>修复region同环曲线不闭合的问题</PackageReleaseNotes>
+        <!--每次发布无需修改的部分-->
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageId>IFox.CAD.ACAD</PackageId>
         <Title>IFox.CAD.ACAD</Title>
         <Product>IFox.CAD.ACAD</Product>
-        <Version>0.9.1.10</Version>
         <Authors>xsfhlzh, vicwjb, liuqihong, DYH</Authors>
         <Description>基于.NET的二次开发基本类库.</Description>
         <PackageProjectUrl>https://www.nuget.org/packages/IFox.CAD.ACAD/</PackageProjectUrl>
@@ -27,7 +30,6 @@
         <PackageTags>IFox,Cad,AutoCad,C#,NET,</PackageTags>
         <Company>InspireFunction</Company>
         <PackageReadmeFile>readme.md</PackageReadmeFile>
-        <PackageReleaseNotes>修复region同环曲线不闭合的问题</PackageReleaseNotes>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
     </PropertyGroup>
 
