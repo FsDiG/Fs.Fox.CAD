@@ -120,7 +120,7 @@ public static class DatabaseEx
 #endif
 
 #if zcad // 中望这里没有测试
-            db.DxfOut(saveAsFile, 7, version, true);
+            db.DxfOut(saveAsFile, 7, version);
 #endif
             return;
         }

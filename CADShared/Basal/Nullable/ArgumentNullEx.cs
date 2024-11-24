@@ -1,5 +1,5 @@
 ﻿
-#if a2024
+#if a2024 || zcad
 namespace IFoxCAD.Basal;
 
 /// <summary>

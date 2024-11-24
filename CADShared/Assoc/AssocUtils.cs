@@ -1,4 +1,9 @@
-﻿using ErrorStatus = Autodesk.AutoCAD.Runtime.ErrorStatus;
+﻿#if acad
+using ErrorStatus = Autodesk.AutoCAD.Runtime.ErrorStatus;
+#elif zcad
+using ErrorStatus = ZwSoft.ZwCAD.Runtime.ErrorStatus;
+#endif
+
 
 namespace IFoxCAD.Cad.Assoc;
 

@@ -1,5 +1,5 @@
 using System.Security;
-#if a2024
+#if a2024 || zcad
 using ArgumentNullException = IFoxCAD.Basal.ArgumentNullEx;
 #endif
 

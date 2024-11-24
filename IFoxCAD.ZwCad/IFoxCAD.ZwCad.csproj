@@ -1,0 +1,83 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net48</TargetFramework>
+        <LangVersion>Preview</LangVersion>
+        <Nullable>enable</Nullable>
+        <PlatformTarget>x64</PlatformTarget>
+        <RootNamespace>IFoxCAD.CAD</RootNamespace>
+        <UseWindowsForms>true</UseWindowsForms>
+        <UseWpf>true</UseWpf>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    </PropertyGroup>
+
+    <!--nuget package-->
+    <PropertyGroup>
+        <!--每次发布需要修改的部分-->
+        <Version>0.9.1.10</Version>
+        <PackageReleaseNotes>修复region同环曲线不闭合的问题</PackageReleaseNotes>
+        <!--每次发布无需修改的部分-->
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageId>IFox.CAD.ZCAD</PackageId>
+        <Title>IFox.CAD.ZCAD</Title>
+        <Product>IFox.CAD.ZCAD</Product>
+        <Authors>xsfhlzh, vicwjb, liuqihong, DYH</Authors>
+        <Description>基于.NET的二次开发基本类库.</Description>
+        <PackageProjectUrl>https://www.nuget.org/packages/IFox.CAD.ZCAD/</PackageProjectUrl>
+        <RepositoryUrl>https://gitee.com/inspirefunction/ifoxcad</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>IFox,Cad,ZwCad,C#,NET,</PackageTags>
+        <Company>InspireFunction</Company>
+        <PackageReadmeFile>readme.md</PackageReadmeFile>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <DebugType>none</DebugType>
+        <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+        <DebugType>none</DebugType>
+        <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+
+        <DocumentationFile>bin\Release\IFoxCAD.ZwCad.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(TargetFramework)' == 'NET48'">
+        <DefineConstants>$(Configuration);zcad;z2025</DefineConstants>
+    </PropertyGroup>
+
+
+
+
+
+
+
+    <ItemGroup>
+        <None Include="..\LICENSE">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+        <None Include="..\readme.md">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(TargetFramework)' == 'NET48'">
+        <PackageReference Include="ZWCad.Net.2025" Version="1.0.0" ExcludeAssets="runtime"/>
+        <PackageReference Include="IndexRange" Version="1.0.3"/>
+        <PackageReference Include="Nullable" Version="1.3.1">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <Reference Include="Microsoft.CSharp"/>
+    </ItemGroup>
+
+
+
+
+    <Import Project="..\CADShared\CADShared.projitems" Label="Shared"/>
+</Project>

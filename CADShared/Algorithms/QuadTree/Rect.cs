@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Runtime.CompilerServices;
-#if a2024
+#if a2024 || zcad
 using ArgumentNullException = IFoxCAD.Basal.ArgumentNullEx;
 #endif
 namespace IFoxCAD.Cad;
