@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.8.34309.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{AE09C3B7-58AC-4A68-9884-1F93FDA5D785}"
+	ProjectSection(SolutionItems) = preProject
+		src\Directory.Build.props = src\Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CADShared", "src\CADShared\CADShared.shproj", "{5178502E-9A78-4588-B849-33ED439976B2}"
 EndProject

@@ -2,35 +2,19 @@
 
     <PropertyGroup>
         <TargetFrameworks>net48;net8.0-windows</TargetFrameworks>
-        <LangVersion>Preview</LangVersion>
-        <Nullable>enable</Nullable>
-        <PlatformTarget>x64</PlatformTarget>
-        <RootNamespace>IFoxCAD.CAD</RootNamespace>
-        <UseWindowsForms>true</UseWindowsForms>
-        <UseWpf>true</UseWpf>
-        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+
+
+
     </PropertyGroup>
 
     <!--nuget package-->
     <PropertyGroup>
-        <!--每次发布需要修改的部分-->
-        <Version>0.9.1.10</Version>
-        <PackageReleaseNotes>修复region同环曲线不闭合的问题</PackageReleaseNotes>
-        <!--每次发布无需修改的部分-->
-        <GenerateDocumentationFile>true</GenerateDocumentationFile>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        
         <PackageId>IFox.CAD.ACAD</PackageId>
         <Title>IFox.CAD.ACAD</Title>
         <Product>IFox.CAD.ACAD</Product>
-        <Authors>xsfhlzh, vicwjb, liuqihong, DYH</Authors>
-        <Description>基于.NET的二次开发基本类库.</Description>
-        <PackageProjectUrl>https://www.nuget.org/packages/IFox.CAD.ACAD/</PackageProjectUrl>
-        <RepositoryUrl>https://gitee.com/inspirefunction/ifoxcad</RepositoryUrl>
-        <RepositoryType>git</RepositoryType>
-        <PackageTags>IFox,Cad,AutoCad,C#,NET,</PackageTags>
-        <Company>InspireFunction</Company>
-        <PackageReadmeFile>readme.md</PackageReadmeFile>
-        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+<!--        <PackageReadmeFile>readme.md</PackageReadmeFile>-->
+<!--        <PackageLicenseFile>LICENSE</PackageLicenseFile>-->
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
