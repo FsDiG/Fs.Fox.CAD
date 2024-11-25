@@ -169,21 +169,24 @@ public class Cmd_IFoxInitializeInterface : IFoxAutoGo
 #endif
 
 
-public class Init : AutoLoad
+
+#endif
+
+public class Init
 {
-    public override void Initialize()
+    [CommandMethod(nameof(Initialize))]
+    public void Initialize()
     {
         
-        Env.Print("loading...");
-        // 将程序的目录加入信任路径
-        // Env.AppendSupportPath(CurrentDirectory.FullName);
+        var assembly= Assembly.GetExecutingAssembly();
+        Env.Printl(assembly.GetName().Name);
+        var info = new AssemInfo(assembly);
+        Env.Printl(info.ToString());
+        AutoReg.RegApp(info);
     }
 
-    public override void Terminate()
+    public void Terminate()
     {
-        // 这里不能调用输出函数，因为这个函数执行的时候，已经没有editor对象了。
-        // 所以如果不是想要在cad关闭的时候清理某些东西，这里不用写任何的代码。
-
+        
     }
 }
-#endif

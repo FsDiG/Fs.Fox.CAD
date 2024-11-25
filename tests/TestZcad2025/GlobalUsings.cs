@@ -12,8 +12,9 @@ global using System.ComponentModel;
 global using System.Runtime.InteropServices;
 global using System.Collections.Specialized;
 global using System.Threading;
+global using System.Diagnostics;
 global using Exception = System.Exception;
-
+global using System.Runtime.CompilerServices;
 global using Registry = Microsoft.Win32.Registry;
 global using RegistryKey = Microsoft.Win32.RegistryKey;
 

@@ -1,9 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<LangVersion>preview</LangVersion>
 		<Nullable>enable</Nullable>
 
-		<TargetFramework>NET48</TargetFramework>
+		<TargetFrameworks>net48;net8.0-windows</TargetFrameworks>
 		<UseWPF>true</UseWPF>
 		<UseWindowsForms>true</UseWindowsForms>
 		<PlatformTarget>x64</PlatformTarget>
@@ -13,11 +13,39 @@
 		<Deterministic>false</Deterministic>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(TargetFramework)' == 'NET48'">
-		<DefineConstants>$(Configuration);acad</DefineConstants>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<DebugType>none</DebugType>
+		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<DebugType>none</DebugType>
+		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(TargetFramework)' == 'NET48'">
+		<DefineConstants>$(Configuration);acad;a2024</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-windows'">
+		<DefineConstants>$(Configuration);acad;a2025</DefineConstants>
+		<EnableDynamicLoading>true</EnableDynamicLoading>
+	</PropertyGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'NET48'">
+		<PackageReference Include="AutoCAD.NET" Version="20.0.0" ExcludeAssets="runtime">
+		</PackageReference>
+		<PackageReference Include="IndexRange" Version="1.0.3"/>
+		<PackageReference Include="Nullable" Version="1.3.1">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<Reference Include="Microsoft.CSharp"/>
+	</ItemGroup>
+	
+	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0-windows'">
+		<PackageReference Include="AutoCAD.NET" Version="25.0.1" ExcludeAssets="runtime"/>
+	</ItemGroup>
 	<ItemGroup>
 		<Reference Include="System.Web" />
 		<Reference Include="System.Web.Extensions" />
@@ -26,7 +54,6 @@
 
 	<ItemGroup>
 	  	<ProjectReference Include="..\..\src\IFoxCAD.AutoCad\IFoxCAD.AutoCad.csproj" />
-		<PackageReference Include="AutoCAD.NET" Version="20.0.0" ExcludeAssets="runtime" />
 	</ItemGroup>
 	<Import Project="..\TestShared\TestShared.projitems" Label="Shared" />
 </Project>

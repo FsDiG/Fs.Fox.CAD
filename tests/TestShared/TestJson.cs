@@ -18,8 +18,15 @@ public class TestJson
         RegisteredUsers.Add(2);
         RegisteredUsers.Add(3);
 
+#if a2024 || zcad
         var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
         var serializedResult = serializer.Serialize(RegisteredUsers);
         var deserializedResult = serializer.Deserialize<List<int>>(serializedResult);
+#elif a2025
+        var serializedResult = System.Text.Json.JsonSerializer.Serialize(RegisteredUsers);
+        var deserializedResult = System.Text.Json.JsonSerializer.Deserialize<List<int>>(serializedResult);
+#endif
+        
+        
     }
 }
