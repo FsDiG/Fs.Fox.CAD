@@ -19,14 +19,12 @@
 		<UseWpf>true</UseWpf>
 		<OutputPath>..\..\bin\$(Configuration)\</OutputPath>
 	</PropertyGroup>
-		
-	
+
     <PropertyGroup><!--nuget包信息-->
         <Company>InspireFunction</Company>
         <Authors>xsfhlzh;vicwjb;liuqihong;DYH</Authors>
         <Copyright>InspireFunction</Copyright>
         <Description>基于.NET的二次开发基本类库.</Description>
-	    
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 	    <PackageProjectUrl>https://gitee.com/inspirefunction/ifoxcad</PackageProjectUrl>
 	    <RepositoryUrl>https://gitee.com/inspirefunction/ifoxcad.git</RepositoryUrl>

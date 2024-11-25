@@ -2,31 +2,23 @@
 
     <PropertyGroup>
         <TargetFrameworks>net48;net8.0-windows</TargetFrameworks>
-
-
-
     </PropertyGroup>
 
     <!--nuget package-->
     <PropertyGroup>
-        
         <PackageId>IFox.CAD.ACAD</PackageId>
         <Title>IFox.CAD.ACAD</Title>
         <Product>IFox.CAD.ACAD</Product>
-<!--        <PackageReadmeFile>readme.md</PackageReadmeFile>-->
-<!--        <PackageLicenseFile>LICENSE</PackageLicenseFile>-->
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
         <DebugType>none</DebugType>
         <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
         <DebugType>none</DebugType>
         <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-
         <DocumentationFile>bin\Release\IFoxCAD.AutoCad.xml</DocumentationFile>
     </PropertyGroup>
 
@@ -38,11 +30,6 @@
         <DefineConstants>$(Configuration);acad;a2025</DefineConstants>
         <EnableDynamicLoading>true</EnableDynamicLoading>
     </PropertyGroup>
-
-
-
-
-    
     
     <ItemGroup>
         <None Include="..\..\LICENSE">
@@ -68,8 +55,6 @@
     <ItemGroup Condition="'$(TargetFramework)' == 'net8.0-windows'">
         <PackageReference Include="AutoCAD.NET" Version="25.0.1" ExcludeAssets="runtime"/>
     </ItemGroup>
-    <ItemGroup>
-        
-    </ItemGroup>
+
     <Import Project="..\CADShared\CADShared.projitems" Label="Shared"/>
 </Project>
