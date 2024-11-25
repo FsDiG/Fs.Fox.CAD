@@ -1,5 +1,4 @@
-namespace Test;
-
+﻿namespace Test;
 
 public class TestLayer
 {
@@ -13,7 +12,7 @@ public class TestLayer
             lt.LineWeight = LineWeight.LineWeight030;
         });
         tr.LayerTable.Remove("3");
-        tr.LayerTable.Remove("0");
+        tr.LayerTable.Delete("0");
         tr.LayerTable.Change("4", lt => {
             lt.Color = Color.FromColorIndex(ColorMethod.ByColor, 2);
         });
@@ -45,7 +44,7 @@ public class TestLayer
         tr.LayerTable.Remove("Defpoints");// 删除图层 Defpoints
         tr.LayerTable.Remove("1");        // 删除不存在的图层 1
         tr.LayerTable.Remove("2");        // 删除有图元的图层 2
-        tr.LayerTable.Remove("3");        // 删除图层 3
+        tr.LayerTable.Remove("3");        // 删除图层 3  // 删除图层 3
 
         tr.LayerTable.Remove("2"); // 测试是否能强制删除
     }

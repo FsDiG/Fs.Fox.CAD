@@ -1,4 +1,5 @@
-﻿#if true
+﻿#if true 
+#if acad
 namespace IFoxCAD.Cad;
 
 // 作者: [VB.net]福萝卜  莱昂纳多·胖子
@@ -148,4 +149,5 @@ internal class AcadEMR
         return false;
     }
 }
+#endif
 #endif

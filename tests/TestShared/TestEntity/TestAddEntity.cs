@@ -1,5 +1,4 @@
-namespace Test;
-
+﻿namespace Test;
 
 public class TestAddEntity
 {
@@ -40,14 +39,14 @@ public class TestAddEntity
         Line line1 = new(new Point3d(0, 0, 0), new Point3d(1, 1, 0));
         Line line2 = new(new Point3d(0, 0, 0), new Point3d(1, 1, 0));
         Line line3 = new(new Point3d(1, 1, 0), new Point3d(3, 3, 0));
-        var circle = CircleEx.CreateCircle(new(0,0,0),10);
+        Circle circle = new();
         // 一次性添加到当前空间
         tr.CurrentSpace.AddEntity(line2, line2, line3, circle);
         // 或者可以传入个列表
         List<Line> lines = [line1, line2, line3];
         tr.CurrentSpace.AddEntity(lines);
         // 或者可以传入个数组
-        Entity[] lines1 = [line1, line2, line3];
+        Line[] lines1 = [line1, line2, line3];
         tr.CurrentSpace.AddEntity(lines1);
         // 图元数组
         Entity[] lines2 = [line1, line2, line3, circle];
@@ -81,9 +80,9 @@ public class TestAddEntity
     public void Test_AddArc()
     {
         using DBTrans tr = new();
-        var arc1 = ArcEx.CreateArcSCE(new Point3d(2, 0, 0), new Point3d(0, 0, 0), new Point3d(0, 2, 0));// 起点，圆心，终点
-        var arc2 = ArcEx.CreateArc(new Point3d(4, 0, 0), new Point3d(0, 0, 0), Math.PI / 2);            // 起点，圆心，弧度
-        var arc3 = ArcEx.CreateArc(new Point3d(1, 0, 0), new Point3d(0, 0, 0), new Point3d(0, 1, 0));   // 起点，圆上一点，终点
+        Arc arc1 = ArcEx.CreateArcSCE(new Point3d(2, 0, 0), new Point3d(0, 0, 0), new Point3d(0, 2, 0));// 起点，圆心，终点
+        Arc arc2 = ArcEx.CreateArc(new Point3d(4, 0, 0), new Point3d(0, 0, 0), Math.PI / 2);            // 起点，圆心，弧度
+        Arc arc3 = ArcEx.CreateArc(new Point3d(1, 0, 0), new Point3d(0, 0, 0), new Point3d(0, 1, 0));   // 起点，圆上一点，终点
         tr.CurrentSpace.AddEntity(arc1, arc2, arc3);
     }
 
