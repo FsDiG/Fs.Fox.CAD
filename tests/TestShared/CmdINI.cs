@@ -178,11 +178,12 @@ public class Init
     public void Initialize()
     {
         
-        var assembly= Assembly.GetExecutingAssembly();
-        Env.Printl(assembly.GetName().Name);
-        var info = new AssemInfo(assembly);
-        Env.Printl(info.ToString());
-        AutoReg.RegApp(info);
+        // var assembly= Assembly.GetExecutingAssembly();
+        // Env.Printl(assembly.GetName().Name);
+        // var info = new AssemInfo(assembly);
+        // Env.Printl(info.ToString());
+        // AutoReg.RegApp(info);
+        AutoReg.RegApp();
     }
 
     public void Terminate()
