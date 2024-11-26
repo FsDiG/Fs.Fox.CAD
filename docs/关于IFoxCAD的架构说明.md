@@ -72,22 +72,26 @@ IFoxCAD是基于NFOX类库的重制版，主要是提供一个最小化的内核
 
 - IFoxCAD
 ```
-    ├───CADShared  -- 共享项目，所有的代码都在这里
-    │   ├───Basal  -- 一些基础类的函数
-    │   │   ├───General
-    │   │   ├───Nullable
-    │   │   └───Win
-    │   ├───ExtensionMethod  -- 扩展函数
-    │   │   ├───Entity
-    │   │   ├───Geomerty
-    │   │   └───Jig
-    │   ├───Initialize  -- 初始化
-    │   ├───ResultData  -- 扩展数据
-    │   ├───Runtime     -- 核心类
-    │   └───SelectionFilter   -- 选择集过滤器类
-    ├───docs   -- 架构及api定义说明文档
-    ├───IFoxCAD.AutoCad  -- AutoCAD的类库，内部除了globalusing外无其他代码
-    └───Test  -- 测试类
+├───bin                      -- 用于放置生成的nuget包和dll
+├───docs                     -- 架构及api定义说明文档
+├───src                      -- 源码目录
+│   ├───CADShared            -- 共享项目，所有的代码都在这里
+│   │   ├───Algorithms       -- 基础算法和数据结构
+│   │   ├───Assoc            -- 关联函数
+│   │   ├───Basal            -- 一些基础类的函数
+│   │   ├───ExtensionMethod  -- 扩展函数
+│   │   ├───Initialize       -- 初始化
+│   │   ├───PE               -- PE
+│   │   ├───ResultData       -- 扩展数据
+│   │   ├───Runtime          -- 核心类
+│   │   └───SelectionFilter  -- 选择集过滤器类
+│   ├───IFoxCAD.AutoCad      -- AutoCAD的类库，内部除了globalusing外无其他代码
+│   └───IFoxCAD.ZwCad        -- AutoCAD的类库，内部除了globalusing外无其他代码
+└───tests                    -- 测试类
+    ├───TestAcad2025         -- autocad测试
+    ├───TestShared           -- 共享项目，所有的测试代码都在这里
+    └───TestZcad2025         -- zwcad测试
+    
   ```
 
 ## 二、关于DBTrans类的说明

@@ -36,7 +36,7 @@ public class Commands_Jig
 
         while (true)
         {
-            var prDrag = moveJig.Drag();
+            var prDrag = Env.Editor.Drag(moveJig);
             if (prDrag.Status == PromptStatus.OK)
                 break;
         }
@@ -93,7 +93,7 @@ public class Commands_Jig
         bool flag = true;
         while (flag)
         {
-            var pr = jig.Drag();
+            var pr = Env.Editor.Drag(jig);
             if (pr.Status == PromptStatus.Keyword)
             {
                 switch (pr.StringResult)
