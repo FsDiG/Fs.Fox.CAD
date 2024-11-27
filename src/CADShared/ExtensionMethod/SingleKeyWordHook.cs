@@ -1,4 +1,4 @@
-﻿using Keys = System.Windows.Forms.Keys;
+using Keys = System.Windows.Forms.Keys;
 
 namespace IFoxCAD.Cad;
 
@@ -84,11 +84,9 @@ public sealed class SingleKeyWordHook : IDisposable
     {
         foreach (Keyword item in keywordCollection)
         {
-            if (item.LocalName.Length == 1)
-            {
-                var k = (Keys)item.LocalName[0];
-                _keyWords.Add(k);
-            }
+            if (item.LocalName.Length != 1) continue;
+            var k = (Keys)item.LocalName[0];
+            _keyWords.Add(k);
         }
     }
 
@@ -108,6 +106,7 @@ public sealed class SingleKeyWordHook : IDisposable
     /// </summary>
     public void Reset()
     {
+        _key = Keys.None;
         _isResponsed = false;
     }
 
@@ -136,34 +135,32 @@ public sealed class SingleKeyWordHook : IDisposable
         if (!_working || e.Message.message != 256) return;
         var tempKey = IntPtr.Size == 4 ? (Keys)e.Message.wParam.ToInt32() : (Keys)e.Message.wParam.ToInt64();
         var contains = _keyWords.Contains(tempKey);
-        if (contains)
+        if (!contains) return;
+        
+        // 标记为true，表示此按键已经被处理，Windows不会再进行处理
+        if (_workType != SingleKeyWordWorkType.ENTER)
         {
-            // 标记为true，表示此按键已经被处理，Windows不会再进行处理
-            if (_workType != SingleKeyWordWorkType.ENTER)
-            {
-                e.Handled = true;
-            }
+            e.Handled = true;
+        }
 
-            if (contains)
-                _key = tempKey;
-            if (!_isResponsed)
-            {
-                // 此bool是防止按键被长按时出错
-                _isResponsed = true;
-                switch (_workType)
-                {
-                    case SingleKeyWordWorkType.ESCAPE:
-                        // ESC稳妥一些，但是要判断promptResult的顺序
-                        KeyBoardSendKey(Keys.Escape);
-                        break;
-                    case SingleKeyWordWorkType.ENTER:
-                        KeyBoardSendKey(Keys.Enter);
-                        break;
-                    case SingleKeyWordWorkType.WRITE_LINE:
-                        Utils.WriteToCommandLine(Convert.ToChar(_key) + _enterStr);
-                        break;
-                }
-            }
+        if (IsResponsed) return; //放 e.Handled 后是避免在非 ENTER 模式时长按造成动态输入框偶发性闪现关键字以至轻微卡顿问题
+
+        _key = tempKey;
+        _isResponsed = true; // 此bool是防止按键被长按时出错
+        
+        switch (_workType)
+        {
+            case SingleKeyWordWorkType.ESCAPE:
+                // ESC稳妥一些，但是要判断promptResult的顺序
+                KeyBoardSendKey(Keys.Escape);
+                break;
+            case SingleKeyWordWorkType.ENTER:
+                KeyBoardSendKey(Keys.Enter);
+                break;
+            case SingleKeyWordWorkType.WRITE_LINE:
+                Utils.SetFocusToDwgView(); // 恢复焦点（如果前面关键字输入错误便会将焦点移至动态输入框）
+                Utils.WriteToCommandLine(Convert.ToChar(_key) + _enterStr);
+                break;
         }
     }
 
@@ -177,7 +174,7 @@ public sealed class SingleKeyWordHook : IDisposable
     public bool IsDisposed { get; private set; }
 
     /// <summary>
-    /// 
+    /// 拆除事件
     /// </summary>
     /// <param name="disposing"></param>
     private void Dispose(bool disposing)
@@ -195,19 +192,19 @@ public sealed class SingleKeyWordHook : IDisposable
     }
 
     /// <summary>
-    /// 析够里把事件拆了
+    /// 析构里把事件拆了
     /// </summary>
     ~SingleKeyWordHook()
     {
-        Dispose(disposing: false);
+        Dispose(false);
     }
 
     /// <summary>
-    /// 
+    /// 拆除事件并清空关键字
     /// </summary>
     public void Dispose()
     {
-        Dispose(disposing: true);
+        Dispose(true);
         GC.SuppressFinalize(this);
     }
 
