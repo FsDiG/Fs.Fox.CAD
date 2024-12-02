@@ -1,4 +1,4 @@
-#if a2024 || zcad
+﻿#if a2024 || zcad
 using ArgumentNullException = IFoxCAD.Basal.ArgumentNullEx;
 #endif
 
@@ -111,7 +111,7 @@ public class JigEx : DrawJig, IDisposable
         lastIsKw = pro.Status == PromptStatus.Keyword;
 
         // 上次鼠标点不同(一定要这句,不然图元刷新太快会看到奇怪的边线)
-        var mousePointWcs = LastIsKw ? MousePointWcsLast : pro.Value;
+        var mousePointWcs = lastIsKw ? MousePointWcsLast : pro.Value;
 
         // == 是比较类字段,但是最好转为哈希比较.
         // IsEqualTo 是方形判断(仅加法),但是cad是距离.
