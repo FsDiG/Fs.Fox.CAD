@@ -1,4 +1,4 @@
-﻿namespace IFoxCAD.Basal;
+﻿namespace Fs.Fox.Basal;
 
 /// <summary>
 /// linq 扩展类

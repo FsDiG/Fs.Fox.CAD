@@ -1,4 +1,4 @@
-﻿namespace IFoxCAD.Cad;
+﻿namespace Fs.Fox.Cad;
 
 /// <summary>
 /// 和尚777 重构

@@ -1,4 +1,4 @@
-﻿namespace IFoxCAD.Cad;
+﻿namespace Fs.Fox.Cad;
 
 /// <summary>
 /// 托盘类扩展

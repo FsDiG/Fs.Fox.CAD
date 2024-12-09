@@ -1,6 +1,6 @@
 ﻿#if true 
 #if acad
-namespace IFoxCAD.Cad;
+namespace Fs.Fox.Cad;
 
 // 作者: [VB.net]福萝卜  莱昂纳多·胖子
 // Email:oneeshine@163.com

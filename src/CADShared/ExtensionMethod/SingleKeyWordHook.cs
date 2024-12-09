@@ -1,6 +1,6 @@
 using Keys = System.Windows.Forms.Keys;
 
-namespace IFoxCAD.Cad;
+namespace Fs.Fox.Cad;
 
 /// <summary>
 /// 关键字不需要空格钩子

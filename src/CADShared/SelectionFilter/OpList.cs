@@ -1,4 +1,4 @@
-﻿namespace IFoxCAD.Cad;
+﻿namespace Fs.Fox.Cad;
 
 /// <summary>
 /// 逻辑操作符的列表抽象类

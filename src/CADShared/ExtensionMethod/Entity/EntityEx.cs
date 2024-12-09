@@ -1,4 +1,4 @@
-﻿namespace IFoxCAD.Cad;
+﻿namespace Fs.Fox.Cad;
 
 /// <summary>
 /// 实体图元扩展类

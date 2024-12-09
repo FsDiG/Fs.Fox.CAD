@@ -1,6 +1,6 @@
 // ReSharper disable SuggestVarOrType_SimpleTypes
 
-namespace IFoxCAD.Cad;
+namespace Fs.Fox.Cad;
 
 /// <summary>
 /// 二维解析类曲线转换为二维实体曲线扩展类

@@ -1,6 +1,6 @@
 ﻿using ArgumentNullException = System.ArgumentNullException;
 
-namespace IFoxCAD.Cad;
+namespace Fs.Fox.Cad;
 
 /// <summary>
 /// 多行文字扩展类

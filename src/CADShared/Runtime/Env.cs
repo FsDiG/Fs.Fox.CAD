@@ -1,11 +1,11 @@
 using System.Security;
 #if a2024 || zcad
-using ArgumentNullException = IFoxCAD.Basal.ArgumentNullEx;
+using ArgumentNullException = Fs.Fox.Basal.ArgumentNullEx;
 #endif
 
 // ReSharper disable StringLiteralTypo
 
-namespace IFoxCAD.Cad;
+namespace Fs.Fox.Cad;
 
 /// <summary>
 /// 系统管理类

@@ -5,7 +5,7 @@ using ErrorStatus = ZwSoft.ZwCAD.Runtime.ErrorStatus;
 #endif
 
 
-namespace IFoxCAD.Cad.Assoc;
+namespace Fs.Fox.Cad.Assoc;
 
 /// <summary>
 /// 关联动作辅助类

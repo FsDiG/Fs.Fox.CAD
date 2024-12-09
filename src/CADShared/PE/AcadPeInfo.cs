@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace IFoxCAD.Cad;
+namespace Fs.Fox.Cad;
 
 /// <summary>
 /// 选择模式

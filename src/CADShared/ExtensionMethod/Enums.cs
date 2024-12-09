@@ -1,4 +1,4 @@
-﻿namespace IFoxCAD.Cad;
+﻿namespace Fs.Fox.Cad;
 
 /// <summary>
 /// 参照路径转换

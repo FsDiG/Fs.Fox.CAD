@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics;
 using System.Runtime.CompilerServices;
 #if a2024 || zcad
-using ArgumentNullException = IFoxCAD.Basal.ArgumentNullEx;
+using ArgumentNullException = Fs.Fox.Basal.ArgumentNullEx;
 #endif
-namespace IFoxCAD.Cad;
+namespace Fs.Fox.Cad;
 
 /// <summary>
 /// Linq Distinct 消重比较两点在容差范围内就去除

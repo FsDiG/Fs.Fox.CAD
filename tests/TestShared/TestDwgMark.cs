@@ -1,5 +1,5 @@
 namespace Test;
-using IFoxCAD.Cad;
+using Fs.Fox.Cad;
 public class TestDwgMark {
     [CommandMethod(nameof(DwgMarktest))]
     public void DwgMarktest() {

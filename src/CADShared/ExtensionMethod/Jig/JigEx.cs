@@ -1,8 +1,8 @@
 ﻿#if a2024 || zcad
-using ArgumentNullException = IFoxCAD.Basal.ArgumentNullEx;
+using ArgumentNullException = Fs.Fox.Basal.ArgumentNullEx;
 #endif
 
-namespace IFoxCAD.Cad;
+namespace Fs.Fox.Cad;
 
 /*  封装jig
  *  20220726 隐藏事件,利用函数进行数据库图元重绘

@@ -1,8 +1,8 @@
 #if a2024 || zcad
-using ArgumentNullException = IFoxCAD.Basal.ArgumentNullEx;
+using ArgumentNullException = Fs.Fox.Basal.ArgumentNullEx;
 #endif
 
-namespace IFoxCAD.Cad;
+namespace Fs.Fox.Cad;
 
 /// <summary>
 /// 点

@@ -6,9 +6,10 @@
 
     <!--nuget package-->
     <PropertyGroup>
-        <PackageId>IFox.CAD.ACAD</PackageId>
-        <Title>IFox.CAD.ACAD</Title>
-        <Product>IFox.CAD.ACAD</Product>
+        <PackageId></PackageId>
+        <Title></Title>
+        <Product></Product>
+        <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -19,7 +20,7 @@
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
         <DebugType>none</DebugType>
         <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-        <DocumentationFile>bin\Release\IFoxCAD.AutoCad.xml</DocumentationFile>
+        <DocumentationFile>bin\Release\Fs.Fox.AutoCad.xml</DocumentationFile>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(TargetFramework)' == 'NET48'">
@@ -29,6 +30,22 @@
     <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-windows'">
         <DefineConstants>$(Configuration);acad;a2025</DefineConstants>
         <EnableDynamicLoading>true</EnableDynamicLoading>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net48|AnyCPU'">
+      <IsPublishable>False</IsPublishable>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows|AnyCPU'">
+      <IsPublishable>False</IsPublishable>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net48|AnyCPU'">
+      <IsPublishable>False</IsPublishable>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows|AnyCPU'">
+      <IsPublishable>False</IsPublishable>
     </PropertyGroup>
     
     <ItemGroup>
@@ -45,16 +62,16 @@
     <ItemGroup Condition="'$(TargetFramework)' == 'NET48'">
         <PackageReference Include="AutoCAD.NET" Version="20.0.0" ExcludeAssets="runtime">
         </PackageReference>
-        <PackageReference Include="IndexRange" Version="1.0.3"/>
+        <PackageReference Include="IndexRange" Version="1.0.3" />
         <PackageReference Include="Nullable" Version="1.3.1">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <Reference Include="Microsoft.CSharp"/>
+        <Reference Include="Microsoft.CSharp" />
     </ItemGroup>
     <ItemGroup Condition="'$(TargetFramework)' == 'net8.0-windows'">
-        <PackageReference Include="AutoCAD.NET" Version="25.0.1" ExcludeAssets="runtime"/>
+        <PackageReference Include="AutoCAD.NET" Version="25.0.1" ExcludeAssets="runtime" />
     </ItemGroup>
 
-    <Import Project="..\CADShared\CADShared.projitems" Label="Shared"/>
+    <Import Project="..\CADShared\CADShared.projitems" Label="Shared" />
 </Project>

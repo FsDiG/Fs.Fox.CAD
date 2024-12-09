@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using Window = System.Windows.Window;
 
-namespace IFoxCAD.Cad;
+namespace Fs.Fox.Cad;
 
 /// <summary>
 /// 窗体扩展

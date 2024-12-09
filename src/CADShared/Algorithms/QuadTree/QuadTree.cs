@@ -18,7 +18,7 @@
  * 3.接口:约束都要有正交矩形,否则无法调用"包含"方法
  * 4.选择模式:模仿cad的窗选和框选
  */
-namespace IFoxCAD.Cad;
+namespace Fs.Fox.Cad;
 
 /// <summary>
 /// 根节点控制器

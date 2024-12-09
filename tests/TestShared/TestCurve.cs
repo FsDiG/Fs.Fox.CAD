@@ -47,7 +47,7 @@ public class TestGraph
         if (ents == null)
             return;
 
-        var graph = new IFoxCAD.Cad.Graph(); // 为了调试先把图的访问改为internal
+        var graph = new Fs.Fox.Cad.Graph(); // 为了调试先把图的访问改为internal
         foreach (var curve in ents)
         {
             graph.AddEdge(curve!.GetGeCurve());

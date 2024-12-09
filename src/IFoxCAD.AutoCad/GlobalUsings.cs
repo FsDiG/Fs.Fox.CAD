@@ -49,4 +49,4 @@ global using System.Diagnostics;
 // global using System.Windows.Data;
 global using System.Net;
 global using System.Diagnostics.CodeAnalysis;
-global using IFoxCAD.Basal;
+global using Fs.Fox.Basal;

@@ -1,6 +1,6 @@
 ﻿#pragma warning disable CS1591 // 缺少对公共可见类型或成员的 XML 注释
 #if true
-namespace IFoxCAD.Basal;
+namespace Fs.Fox.Basal;
 
 // https://blog.csdn.net/qq_43812868/article/details/108587936
 [Flags]

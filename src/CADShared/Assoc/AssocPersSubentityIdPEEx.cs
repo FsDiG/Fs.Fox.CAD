@@ -1,4 +1,4 @@
-﻿namespace IFoxCAD.Cad.Assoc;
+﻿namespace Fs.Fox.Cad.Assoc;
 
 /// <summary>
 /// 子对象关系Id扩展

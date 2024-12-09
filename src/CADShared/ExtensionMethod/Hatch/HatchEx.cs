@@ -1,6 +1,6 @@
 // ReSharper disable CompareOfFloatsByEqualityOperator
 
-namespace IFoxCAD.Cad;
+namespace Fs.Fox.Cad;
 
 /// <summary>
 /// 充填扩展类

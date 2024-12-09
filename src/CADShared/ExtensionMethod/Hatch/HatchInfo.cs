@@ -1,10 +1,10 @@
 ﻿
 
 #if a2024 || zcad
-using ArgumentNullException = IFoxCAD.Basal.ArgumentNullEx;
+using ArgumentNullException = Fs.Fox.Basal.ArgumentNullEx;
 #endif
 
-namespace IFoxCAD.Cad;
+namespace Fs.Fox.Cad;
 
 /*
  *  添加的第一个边界必须是外边界,即用于定义图案填充最外面的边界。

@@ -1,5 +1,5 @@
 ﻿#pragma warning disable CS1591 // 缺少对公共可见类型或成员的 XML 注释
-namespace IFoxCAD.Cad;
+namespace Fs.Fox.Cad;
 
 using System;
 using System.Collections;
@@ -96,7 +96,7 @@ public class PeInfo
             // 文件流
             file = new FileStream(fullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);// FileShare才能进c盘
             _PEFileByte = new byte[file.Length];
-            file.Read(_PEFileByte, 0, _PEFileByte.Length);
+            int read = file.Read(_PEFileByte, 0, _PEFileByte.Length);
             LoadFile();
             OpenFile = true;
         }

@@ -1,7 +1,7 @@
 ﻿#if false
 namespace Test;
 
-using DxfFiler = IFoxCAD.Cad.DxfFiler;
+using DxfFiler = Fs.Fox.Cad.DxfFiler;
 
 public class CmdTestDwgFilerEx
 {

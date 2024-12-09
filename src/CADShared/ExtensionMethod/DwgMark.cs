@@ -1,4 +1,4 @@
-namespace IFoxCAD.Cad;
+namespace Fs.Fox.Cad;
 
 /// <summary>
 /// 为dwg文件添加标记

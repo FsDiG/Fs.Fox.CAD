@@ -1,6 +1,6 @@
 ﻿using Cursor = System.Windows.Forms.Cursor;
 
-namespace IFoxCAD.Cad;
+namespace Fs.Fox.Cad;
 
 /// <summary>
 /// 空闲执行

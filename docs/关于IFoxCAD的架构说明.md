@@ -1,4 +1,4 @@
-# IFoxCAD的架构说明
+# Fs.Fox的架构说明
 
 AutoCAD 的 .net api 的架构是如下这样的：
 
@@ -64,13 +64,13 @@ h--write-->d[Database]
 g[Document or Database]--start-->f
 ```
 
-IFoxCAD是基于NFOX类库的重制版，主要是提供一个最小化的内核，即DBTrans、SymbolTable、ResultData、SelectFilter等基础类，其他的功能都通过扩展方法的方式来实现。
+Fs.Fox是基于NFOX类库的重制版，主要是提供一个最小化的内核，即DBTrans、SymbolTable、ResultData、SelectFilter等基础类，其他的功能都通过扩展方法的方式来实现。
 
 其重制的原因在于原NFOX类库的封装过于厚重，初学者理解起来困难，重制版希望做到最小化的内核，方便理解，然后丰富的扩展函数来实现大量的功能，便于学着现有的教程中那套基于Database扩展函数封装思路的初学者快速的入门。
 
 ## 一、组织结构图
 
-- IFoxCAD
+- Fs.Fox
 ```
 ├───bin                      -- 用于放置生成的nuget包和dll
 ├───docs                     -- 架构及api定义说明文档
@@ -85,8 +85,8 @@ IFoxCAD是基于NFOX类库的重制版，主要是提供一个最小化的内核
 │   │   ├───ResultData       -- 扩展数据
 │   │   ├───Runtime          -- 核心类
 │   │   └───SelectionFilter  -- 选择集过滤器类
-│   ├───IFoxCAD.AutoCad      -- AutoCAD的类库，内部除了globalusing外无其他代码
-│   └───IFoxCAD.ZwCad        -- AutoCAD的类库，内部除了globalusing外无其他代码
+│   ├───Fs.Fox.AutoCad      -- AutoCAD的类库，内部除了globalusing外无其他代码
+│   └───Fs.Fox.ZwCad        -- AutoCAD的类库，内部除了globalusing外无其他代码
 └───tests                    -- 测试类
     ├───TestAcad2025         -- autocad测试
     ├───TestShared           -- 共享项目，所有的测试代码都在这里

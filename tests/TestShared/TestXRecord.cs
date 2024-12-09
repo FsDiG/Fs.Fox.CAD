@@ -4,7 +4,7 @@
 #if NewtonsoftJson
 using System.Diagnostics;
 using Newtonsoft.Json;
-using static IFoxCAD.Cad.WindowsAPI;
+using static Fs.Fox.Cad.WindowsAPI;
 
 namespace Test_XRecord;
 

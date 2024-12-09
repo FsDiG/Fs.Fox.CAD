@@ -1,6 +1,6 @@
 ﻿
 #if a2024 || zcad
-namespace IFoxCAD.Basal;
+namespace Fs.Fox.Basal;
 
 /// <summary>
 /// 参数null检查类

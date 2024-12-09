@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics;
-using static IFoxCAD.Basal.WindowsAPI;
+using static Fs.Fox.Basal.WindowsAPI;
 
 namespace TestShared;
 

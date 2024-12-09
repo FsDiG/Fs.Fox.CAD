@@ -1,6 +1,6 @@
 ﻿using ArgumentNullException = System.ArgumentNullException;
 
-namespace IFoxCAD.Cad;
+namespace Fs.Fox.Cad;
 
 /// <summary>
 /// 符号表类扩展函数

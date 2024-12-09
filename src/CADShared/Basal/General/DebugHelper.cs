@@ -1,4 +1,4 @@
-﻿namespace IFoxCAD.Basal;
+﻿namespace Fs.Fox.Basal;
 /// <summary>
 /// 调试工具
 /// </summary>

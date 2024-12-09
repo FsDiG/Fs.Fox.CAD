@@ -3,7 +3,7 @@ using Autodesk.AutoCAD.BoundaryRepresentation;
 #elif zcad
 using ZwSoft.ZwCAD.BoundaryRepresentation;
 #endif
-namespace IFoxCAD.Cad;
+namespace Fs.Fox.Cad;
 
 /// <summary>
 /// 面域扩展

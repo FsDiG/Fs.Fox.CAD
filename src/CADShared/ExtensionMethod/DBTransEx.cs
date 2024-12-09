@@ -1,6 +1,6 @@
 ﻿#define lack_test
 
-namespace IFoxCAD.Cad;
+namespace Fs.Fox.Cad;
 
 #if lack_test
 /// <summary>

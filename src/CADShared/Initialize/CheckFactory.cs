@@ -1,5 +1,5 @@
 ﻿#if DEBUG
-namespace IFoxCAD.Cad;
+namespace Fs.Fox.Cad;
 
 /// <summary>
 /// 命令检查类

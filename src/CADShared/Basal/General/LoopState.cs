@@ -1,6 +1,6 @@
 ﻿// ReSharper disable InconsistentNaming
 #pragma warning disable CS1591 // 缺少对公共可见类型或成员的 XML 注释
-namespace IFoxCAD.Basal;
+namespace Fs.Fox.Basal;
 
 #line hidden // 调试的时候跳过它
 /// <summary>
