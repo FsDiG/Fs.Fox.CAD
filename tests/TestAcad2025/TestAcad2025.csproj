@@ -33,7 +33,7 @@
 	</PropertyGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'NET48'">
-		<PackageReference Include="AutoCAD.NET" Version="20.0.0" ExcludeAssets="runtime">
+		<PackageReference Include="AutoCAD.NET" Version="23.0.0" ExcludeAssets="runtime">
 		</PackageReference>
 		<PackageReference Include="IndexRange" Version="1.0.3"/>
 		<PackageReference Include="System.Text.Json" Version="9.0.0"/>
@@ -54,7 +54,7 @@
 
 
 	<ItemGroup>
-	  	<ProjectReference Include="..\..\src\Fs.Fox.AutoCad\Fs.Fox.AutoCad.csproj" />
+	  	<ProjectReference Include="..\..\src\IFoxCAD.AutoCad\Fs.Fox.AutoCad.csproj" />
 	</ItemGroup>
 	<Import Project="..\TestShared\TestShared.projitems" Label="Shared" />
 </Project>

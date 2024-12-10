@@ -89,8 +89,12 @@ public partial class WindowsAPI
         //if (task == null)
         //    throw new ArgumentNullException(nameof(task));
         ArgumentNullException.ThrowIfNull(task);
+        
+
         if (data == IntPtr.Zero)
+        {
             return false;
+        }
 
         try
         {
