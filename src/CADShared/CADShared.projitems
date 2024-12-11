@@ -56,6 +56,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Geomerty\Curve3dEx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Geomerty\GeometryEx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Geomerty\PointEx.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Hatch\HatchDialog.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Jig\JigEx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Jig\JigExTransient.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\ObjectIdEx.cs" />

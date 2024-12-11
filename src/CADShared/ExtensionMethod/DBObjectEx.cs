@@ -71,12 +71,12 @@ public static class DBObjectEx
     /// 克隆对象
     /// </summary>
     /// <typeparam name="T">对象类型</typeparam>
-    /// <param name="ent">对象</param>
+    /// <param name="obj">对象</param>
     /// <returns>克隆后的对象</returns>
     /// <exception cref="ArgumentException"></exception>
-    public static T CloneEx<T>(this T ent) where T : RXObject
+    public static T CloneEx<T>(this T obj) where T : ICloneable
     {
-        return ent.Clone() is T tEnt ? tEnt : throw new ArgumentException(nameof(CloneEx) + "克隆出错");
+        return obj.Clone() is T tObj ? tObj : throw new ArgumentException(nameof(CloneEx) + "克隆出错");
     }
 
     /// <summary>
@@ -86,7 +86,8 @@ public static class DBObjectEx
     /// <param name="appName">应用程序名称</param>
     /// <param name="dxfCode">要修改数据的组码</param>
     /// <param name="newValue">新的数据</param>
-    public static void ChangeXData(this DBObject obj, string appName, DxfCode dxfCode, object newValue)
+    public static void ChangeXData(this DBObject obj, string appName, DxfCode dxfCode,
+        object newValue)
     {
         if (obj.XData is null)
             return;

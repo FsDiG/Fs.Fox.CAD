@@ -1,5 +1,6 @@
 ﻿#if acad
 using Autodesk.AutoCAD.BoundaryRepresentation;
+
 #elif zcad
 using ZwSoft.ZwCAD.BoundaryRepresentation;
 #endif
@@ -17,6 +18,8 @@ public static class RegionEx
     /// <returns>曲线集合</returns>
     public static IEnumerable<Curve> ToCurves(this Region region)
     {
+        if (region.IsNull)
+            yield break;
         using var brep = new Brep(region);
         var loops = brep.Complexes.SelectMany(complex => complex.Shells)
             .SelectMany(shell => shell.Faces)

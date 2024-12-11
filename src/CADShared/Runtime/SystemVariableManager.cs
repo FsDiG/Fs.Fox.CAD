@@ -249,6 +249,15 @@ public class SystemVariableManager
     #region H
 
     /// <summary>
+    /// 当前填充的名称
+    /// </summary>
+    public static string HPName
+    {
+        get => Acaop.GetSystemVariable(nameof(HPName)).ToString()!;
+        set => Acaop.SetSystemVariable(nameof(HPName), value);
+    }
+
+    /// <summary>
     /// 填充比例
     /// </summary>
     public static double HPScale
