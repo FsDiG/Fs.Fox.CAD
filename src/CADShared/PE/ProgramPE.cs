@@ -96,7 +96,8 @@ public class PeInfo
             // 文件流
             file = new FileStream(fullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);// FileShare才能进c盘
             _PEFileByte = new byte[file.Length];
-            file.Read(_PEFileByte, 0, _PEFileByte.Length);
+            int bytesRead = file.Read(_PEFileByte, 0, _PEFileByte.Length);//增加返回值,避免Error CA2022警告
+            Debug.Assert(bytesRead > 0);
             LoadFile();
             OpenFile = true;
         }

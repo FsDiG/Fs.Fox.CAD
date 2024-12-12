@@ -11,10 +11,10 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)CmdINI.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Copyclip.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)TestAddEntity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TestTypeSpeed.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestBlock.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestCadFilePath.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)TestConvexHull.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TestGeom\TestConvexHull.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestCurve.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestDBobject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestDBTrans.cs" />
@@ -25,6 +25,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)TestEnv.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestExtents.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestFileDatabase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TestGeom\TestGeom.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestHatchinfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestId.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestJig.cs" />
