@@ -1,4 +1,5 @@
 ﻿// ReSharper disable UnusedAutoPropertyAccessor.Global
+
 namespace IFoxCAD.Cad;
 
 /// <summary>
@@ -26,13 +27,13 @@ public static class PromptOptionsEx
     {
         for (var i = 0; i < keywords.Length / 2; i++)
         {
-            var key = keywords[i].ToUpper();
+            var key = keywords[i * 2].ToUpper();
             if (SsGetSaveKeywords.FirstOrDefault(e => e.StartsWith(key)) is { } saveKey)
             {
                 throw new ArgumentException($"关键字{key}与选择集保留关键字{saveKey}冲突");
             }
 
-            var message = keywords[i + 1];
+            var message = keywords[i * 2 + 1];
             var end = $"({key})";
             if (!message.EndsWith(end))
             {
