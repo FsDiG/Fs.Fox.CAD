@@ -1,4 +1,4 @@
-# Fs.Fox 说明
+# IFoxCAD 说明
 
 基于.NET的Cad二次开发类库。
 
@@ -8,7 +8,7 @@
 
 后来，经过一段时间的更新后，由于莫名其妙的原因NFox类库挂掉了。而这时山人同学已经基本吃透NFox类库，考虑到NFox的封装过于复杂，遂进行了重构。
 
-重构的类库命名为Fs.Fox， 寓意为：**I(爱)Fox(狐哥)**，本项目发布于**Inspire Function（中文名：跃动方程）** 组织下，感谢 **小轩轩** 给起的名字。
+重构的类库命名为IFoxCAD， 寓意为：**I(爱)Fox(狐哥)**，本项目发布于**Inspire Function（中文名：跃动方程）** 组织下，感谢 **小轩轩** 给起的名字。
 
 可以加群交流：
 
@@ -20,9 +20,9 @@
 
 #### 二、 使用帮助
 
-Fs.Fox的项目文档请看 **[Fs.Fox类库从入门到精通](https://www.kdocs.cn/l/cc6ZXSa0vMgD)**。
+IFoxCAD的项目文档请看 **[IFoxCAD类库从入门到精通](https://www.kdocs.cn/l/cc6ZXSa0vMgD)**。
 
-Fs.Fox的API文档请看 **[Fs.Fox API 文档](https://inspirefunction.github.io/ifoxdoc/)**。**请注意这个网站需要科学浏览**
+IFoxCAD的API文档请看 **[IFoxCAD API 文档](https://inspirefunction.github.io/ifoxdoc/)**。**请注意这个网站需要科学浏览**
 
 
 #### 三、IFoxCad 项目模版
@@ -44,6 +44,6 @@ Fs.Fox的API文档请看 **[Fs.Fox API 文档](https://inspirefunction.github.io
 期待你的参与，你可以做如下的工作来帮助IFoxCad发展:
 
 - 如果你在使用的过程中发现IFoxCad的某些不足或者bug，你可以在 [项目issues](https://gitee.com/inspirefunction/ifoxcad/issues) 里提交issue来供开发人员进行完善。
-- 帮助开发人员编写使用文档，文档地址见 **[Fs.Fox类库从入门到精通](https://www.kdocs.cn/l/cc6ZXSa0vMgD)**
+- 帮助开发人员编写使用文档，文档地址见 **[IFoxCAD类库从入门到精通](https://www.kdocs.cn/l/cc6ZXSa0vMgD)**
 - fork本项目，修复bug，增加功能，并提交pr。
 
