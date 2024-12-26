@@ -1,8 +1,8 @@
 <Project>
     <!--版本号和提示-->
     <PropertyGroup>
-        <Version>0.9.2-preview4</Version>
-        <PackageReleaseNotes>添加填充选择窗口HatchDialog</PackageReleaseNotes>
+        <Version>0.9.2-preview6</Version>
+        <PackageReleaseNotes>优化点在多边形内的判断逻辑</PackageReleaseNotes>
     </PropertyGroup>
 
     <PropertyGroup>
