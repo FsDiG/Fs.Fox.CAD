@@ -14,3 +14,10 @@
 希望能够灵活和自由维护和开发此类库
 IFox0.9版本正在重构，存在不稳定因素,原计划去掉.net48的支持,不排除后续有大的变动;
 IFox PullRequest目前看反馈速度也比较慢
+
+# 两个远程地址
+建议配置两个远程地址,gitee的可以跟fox仓库进行pr等关联操作
+推荐从gitee-->github
+[remote "origin"]
+	url = git@gitee.com:bim360/Fs.Fox.CAD.git
+	url = git@github.com:FsDiG/Fs.Fox.CAD.git

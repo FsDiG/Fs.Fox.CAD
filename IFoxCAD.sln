@@ -18,7 +18,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestAcad2025", "tests\TestA
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{7145708C-A65B-470E-A8DA-ED79AC9A42D7}"
 	ProjectSection(SolutionItems) = preProject
-		Fs分支说明.txt = Fs分支说明.txt
 		docs\关于IFoxCAD的架构说明.md = docs\关于IFoxCAD的架构说明.md
 	EndProjectSection
 EndProject
