@@ -1,6 +1,5 @@
 ﻿#if acad
-
-namespace IFoxCAD.Cad;
+namespace Fs.Fox.Cad;
 
 /// <summary>
 /// 填充图案选择对话框<br/>
