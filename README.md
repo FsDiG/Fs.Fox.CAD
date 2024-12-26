@@ -7,7 +7,11 @@
 ## Fs.Fox 分支说明
 
 在IFoxCAD的基础上,将命名空间改为Fs.Fox,并作为Fs团队AutoCAD的基础库之一使用;
-重要更改会尽量回馈给IFox,不过IFox对Pr处理速度太慢了~
+重要更改会尽量回馈给IFox,不过IFox对PR处理速度太慢了, 我基本已经放弃~
+### 在线导图
+我基于公开文档草稿整理了思维导图, boardmix链接中的文件「.NET ARX_Fox」
+https://boardmix.cn/app/share/CAE.CMvmgA4gASoQHBGpsUGmGR9LipooomyTSDAGQAE/U41nx2，
+需要编辑权限的欢迎私聊我
 
 ## Why
 
