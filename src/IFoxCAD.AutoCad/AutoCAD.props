@@ -1,0 +1,31 @@
+﻿<Project>
+	<PropertyGroup>
+		<NoWarn>MSB3052</NoWarn>
+		<Configurations>$(Configurations);2019_Debug;2020_Debug;2019_Release;2020_Release</Configurations>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(Configuration.Contains('Release'))">
+		<Optimize>true</Optimize>
+		<DebugType>none</DebugType>
+	</PropertyGroup>
+
+	<!-- Supports 19-25 -->
+	<PropertyGroup Condition="$(Configuration.Contains('2019'))">
+		<AutoCADVersion>2019</AutoCADVersion>
+		<DefineConstants>$(DefineConstants);ACAD_2019</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(Configuration.Contains('2020'))">
+		<AutoCADVersion>2020</AutoCADVersion>
+		<DefineConstants>$(DefineConstants);ACAD_2020</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="$(Configuration.Contains('Debug'))">
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>full</DebugType>
+		<DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(Configuration.Contains('Release'))">
+		<Optimize>true</Optimize>
+		<DebugType>none</DebugType>
+		<DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
+	</PropertyGroup>
+</Project>

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net8.0-windows;net48</TargetFrameworks>
+        <TargetFrameworks>net48</TargetFrameworks>
     </PropertyGroup>
 
     <!--nuget package-->
@@ -69,5 +69,21 @@
         <PackageReference Include="AutoCAD.NET" Version="25.0.1" ExcludeAssets="runtime" />
     </ItemGroup>
 
+  <Target Name="CustomCopyOutputForNet48" AfterTargets="Build" Condition="'$(TargetFramework)' == 'net48'">
+    <PropertyGroup>
+      <!-- 定义一个基础路径变量，方便维护 -->
+      <Net48OutputPathBase>..\..\..\Build\DiGLib\DiGArchBase\x64_2019</Net48OutputPathBase>
+    </PropertyGroup>
+    <Copy
+      SourceFiles="$(TargetDir)$(TargetFileName)"
+      DestinationFolder="$(Net48OutputPathBase)_Debug\"
+      Condition=" '$(Configuration)' == 'Debug' " />
+    <Copy
+      SourceFiles="$(TargetDir)$(TargetFileName)"
+      DestinationFolder="$(Net48OutputPathBase)_Release\"
+      Condition=" '$(Configuration)' == 'Release' " />
+  </Target>
+
     <Import Project="..\CADShared\CADShared.projitems" Label="Shared" />
+
 </Project>
