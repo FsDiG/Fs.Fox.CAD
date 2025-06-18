@@ -40,7 +40,7 @@ jobs:
         id: set-deploy
         run: |
           $should_deploy = $false
-          if ('${{ github.event_name }}' -eq 'push' -and '${{ contains(github.event.head_commit.message, "[deploy]") }}' -eq 'true') {
+          if ('${{ github.event_name }}' -eq 'push' -and '${{ contains(github.event.head_commit.message, '[deploy]') }}' -eq 'true') {
             $should_deploy = $true
           }
           elseif ('${{ github.event_name }}' -eq 'workflow_dispatch' -and '${{ github.event.inputs.deploy }}' -eq 'true') {
@@ -116,62 +116,39 @@ jobs:
       # --- 开始部署到 Build Repo (根据新的条件执行) --- 
 
       - name: Commit and push to Build repository
-        # 条件：与 Checkout target repository 步骤的条件一致
         if: steps.set-deploy.outputs.deploy == 'true'
-        env: # 将原始提交消息作为环境变量传递，以帮助解决多字节字符编码问题
+        env:
           ORIGINAL_COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
         run: |
-          cd Build # 进入 Build Repo 的本地克隆目录
+          cd Build
           
-          # 针对 Build Repo 的本地克隆明确设置 Git 提交编码为 UTF-8
-          # 这有助于确保提交对象中的消息元数据是 UTF-8
+          # 设置Git配置
           git config i18n.commitEncoding UTF-8
-          Write-Host "Set git i18n.commitEncoding to UTF-8 for this repository clone."
-
-          # 配置提交者信息
           git config --global user.name "GitHub Action Bot"
           git config --global user.email "actions-bot@github.com"
           
-          git add . # 暂存所有更改
-
-          # --- Git 诊断信息 (用于调试文件差异问题) ---
-          Write-Host "--- Git Status Short ---"
-          git status --short
-          Write-Host "--- Git Config core.autocrlf ---"
-          git config core.autocrlf # 检查行尾符配置
-          Write-Host "--- Git Config core.filemode ---"
-          git config core.filemode # 检查文件模式跟踪配置
-          Write-Host "--- Git Diff Staged (Raw) ---"
-          git diff --staged # 显示暂存文件的具体差异
-          Write-Host "--- End of Git Diagnostics ---"
-          # --- 结束 Git 诊断信息 ---
-
+          # 暂存所有更改
+          git add .
+          
           # 检查是否有实际的文件更改需要提交
           git diff --staged --quiet
-          if ($LASTEXITCODE -ne 0) { # 如果 $LASTEXITCODE 非0，表示有暂存的更改
-            # 从环境变量读取原始提交消息，并构建新的提交消息
+          if ($LASTEXITCODE -ne 0) {
+            # 构建提交消息
             $source_commit_msg_from_env = $env:ORIGINAL_COMMIT_MESSAGE
             $commit_message_content = "Update IFoxCAD build artifacts (SHA: ${{ github.sha }}, Branch: ${{ github.ref_name }})`n`n$source_commit_msg_from_env"
-            Write-Host "Commit message content (using env var) will be: $commit_message_content"
             
-            # 将构造好的提交消息以 UTF-8 编码写入临时文件
-            # 这是解决向 git commit -m 传递多字节字符（如中文）时可能发生的编码问题的关键步骤
-            # 注意：Set-Content -Encoding UTF8 在 PowerShell 5.1 中会添加 BOM。
-            # 如果之前确认无 BOM 的 UTF-8 (使用 New-Object System.Text.UTF8Encoding($false)) 才解决了 GitHub 界面乱码，请确保恢复该实现。
+            # 写入提交消息到文件
             $commit_message_file = "commit_message.txt"
             Set-Content -Path $commit_message_file -Value $commit_message_content -Encoding UTF8 -NoNewline -Force
-            Write-Host "Commit message written to $commit_message_file with UTF-8 encoding (using Set-Content)."
-
-            git commit -F $commit_message_file # 从文件读取提交消息，以确保编码正确性
             
-            Write-Host "--- Verifying committed message in Action log (using git log -1 --pretty=%B) ---"
-            git log -1 --pretty=%B # 在 Action 日志中验证已提交的消息编码
-            Write-Host "--- End of committed message verification ---"
+            # 提交并推送
+            git commit -F $commit_message_file
+            git push
             
-            git push # 推送更改到目标 Build Repo
+            Write-Host "Changes committed and pushed to Build repository."
           } else {
             Write-Host "No changes to commit in target repository."
           }
-        shell: powershell # 指定使用 powershell 执行此步骤的 run 命令
+        shell: powershell
       # --- 结束部署到 Build Repo ---
 
