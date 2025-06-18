@@ -81,25 +81,10 @@ jobs:
         with:
           repository: FsDiG/Build # 目标 Build 仓库的名称
           token: ${{ secrets.BUILD_REPO_TOKEN }} # 用于推送到此目标仓库的 PAT
-          path: target_build_repo # 将目标仓库克隆到此子目录
+          path: Build # 将目标仓库克隆到此子目录
 
-      - name: Execute copyToDigBuild.ps1 script
-        # 条件：与 Checkout target repository 步骤的条件一致
-        if: |
-          (github.event_name == 'push' && contains(github.event.head_commit.message, '[deploy]')) ||
-          (github.event_name == 'workflow_dispatch' && github.event.inputs.deploy == 'true')
-        env:
-          DiGBuildDir: ${{ github.workspace }}\target_build_repo # 将 Build Repo 的本地路径传给 ps1 脚本
-         
-        run: |
-          Write-Host "DiGBuildDir is: $($env:DiGBuildDir)"    
-          Write-Host "Running copyToDigBuild.ps1..."
-          # 使用 powershell.exe 调用 .ps1 脚本, -ExecutionPolicy Bypass 确保脚本能执行
-          powershell.exe -ExecutionPolicy Bypass -File ./copyToDigBuild.ps1 
-          Write-Host "copyToDigBuild.ps1 finished."
-        shell: powershell # 指定使用 powershell 执行此步骤的 run 命令
 
-      - name: Commit and push to target repository
+      - name: Commit and push to Build repository
         # 条件：与 Checkout target repository 步骤的条件一致
         if: |
           (github.event_name == 'push' && contains(github.event.head_commit.message, '[deploy]')) ||
@@ -107,7 +92,7 @@ jobs:
         env: # 将原始提交消息作为环境变量传递，以帮助解决多字节字符编码问题
           ORIGINAL_COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
         run: |
-          cd target_build_repo # 进入 Build Repo 的本地克隆目录
+          cd Build # 进入 Build Repo 的本地克隆目录
           
           # 针对 Build Repo 的本地克隆明确设置 Git 提交编码为 UTF-8
           # 这有助于确保提交对象中的消息元数据是 UTF-8
