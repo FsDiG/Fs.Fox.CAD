@@ -35,19 +35,61 @@ jobs:
       (github.event_name == 'workflow_dispatch')
 
     steps:
+      # 检查是否需要部署
+      - name: Set deployment flag
+        id: set-deploy
+        run: |
+          $should_deploy = $false
+          if ('${{ github.event_name }}' -eq 'push' -and '${{ contains(github.event.head_commit.message, "[deploy]") }}' -eq 'true') {
+            $should_deploy = $true
+          }
+          elseif ('${{ github.event_name }}' -eq 'workflow_dispatch' -and '${{ github.event.inputs.deploy }}' -eq 'true') {
+            $should_deploy = $true
+          }
+          echo "deploy=$should_deploy" >> $env:GITHUB_OUTPUT
+        shell: powershell
+
+      # 如果需要部署，先检出目标仓库
+      - name: Checkout target repository
+        if: steps.set-deploy.outputs.deploy == 'true'
+        uses: actions/checkout@v4
+        with:
+          repository: FsDiG/Build # 目标 Build 仓库的名称
+          token: ${{ secrets.BUILD_REPO_TOKEN }} # 用于推送到此目标仓库的 PAT
+          path: Build # 将目标仓库克隆到此子目录
+
       - name: Checkout repository
         uses: actions/checkout@v4 # 检出当前 IFoxCAD 仓库的代码
         with:
           # 如果是手动触发 (workflow_dispatch)，则检出 inputs.branch 指定的分支。
           # 对于其他事件 (如 push, pull_request)，则使用事件关联的 github.ref。
           ref: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.branch || github.ref }}
+          path: source_code # 将源代码克隆到这个目录
 
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v1.1 # 设置 MSBuild 环境，用于编译 C#/.NET 项目
 
+      - name: Clear Build folders
+        run: |
+          echo "Preparing Build folders..."
+          # Create directory structure if it doesn't exist
+          New-Item -ItemType Directory -Force -Path "Build\DiGLib\DiGArchBase\x64_2019_Debug" | Out-Null
+          New-Item -ItemType Directory -Force -Path "Build\DiGLib\DiGArchBase\x64_2019_Release" | Out-Null
+          
+          # If we're deploying, we don't want to delete existing files in the target repo
+          if ('${{ steps.set-deploy.outputs.deploy }}' -ne 'true') {
+            # Remove all content from these directories (only if not deploying)
+            Remove-Item -Path "Build\DiGLib\DiGArchBase\x64_2019_Debug\*" -Force -Recurse -ErrorAction SilentlyContinue
+            Remove-Item -Path "Build\DiGLib\DiGArchBase\x64_2019_Release\*" -Force -Recurse -ErrorAction SilentlyContinue
+          }
+          
+          echo "Build folders prepared."
+        shell: powershell
+
       - name: Restore NuGet packages
         run: |
           echo "Restoring NuGet packages..."         
+          cd source_code
           msbuild src/IFoxCAD.AutoCad/Fs.Fox.AutoCad.csproj /t:Restore
           echo "NuGet packages restored."
 
@@ -58,37 +100,24 @@ jobs:
       - name: Build project Fs.Fox.AutoCad (Debug)
         run: |
           echo "Building Fs.Fox.AutoCad project (Debug)..."
-          msbuild src/IFoxCAD.AutoCad/Fs.Fox.AutoCad.csproj /p:Configuration=Debug /p:Platform="Any CPU" /p:ContinuousIntegrationBuild=true /verbosity:detailed
+          cd source_code
+          msbuild src/IFoxCAD.AutoCad/Fs.Fox.AutoCad.csproj /p:Configuration=Debug /p:Platform="Any CPU" /p:ContinuousIntegrationBuild=true /p:OutputPath="..\Build\DiGLib\DiGArchBase\x64_2019_Debug" /verbosity:minimal
           echo "Fs.Fox.AutoCad project (Debug) built."
 
       - name: Build project Fs.Fox.AutoCad (Release)
         run: |
           echo "Building Fs.Fox.AutoCad project (Release)..."
-          msbuild src/IFoxCAD.AutoCad/Fs.Fox.AutoCad.csproj /p:Configuration=Release /p:Platform="Any CPU" /p:ContinuousIntegrationBuild=true /verbosity:detailed
+          cd source_code
+          msbuild src/IFoxCAD.AutoCad/Fs.Fox.AutoCad.csproj /p:Configuration=Release /p:Platform="Any CPU" /p:ContinuousIntegrationBuild=true /p:OutputPath="..\Build\DiGLib\DiGArchBase\x64_2019_Release" /verbosity:minimal
           echo "Fs.Fox.AutoCad project (Release) built."
 
       # --- 结束项目编译 --- 
 
       # --- 开始部署到 Build Repo (根据新的条件执行) --- 
- 
-
-      - name: Checkout target repository
-        # 条件：推送到任何分支且提交信息包含 [deploy] 关键词时执行，或者手动触发并选择了部署
-        if: |
-          (github.event_name == 'push' && contains(github.event.head_commit.message, '[deploy]')) ||
-          (github.event_name == 'workflow_dispatch' && github.event.inputs.deploy == 'true')
-        uses: actions/checkout@v4
-        with:
-          repository: FsDiG/Build # 目标 Build 仓库的名称
-          token: ${{ secrets.BUILD_REPO_TOKEN }} # 用于推送到此目标仓库的 PAT
-          path: Build # 将目标仓库克隆到此子目录
-
 
       - name: Commit and push to Build repository
         # 条件：与 Checkout target repository 步骤的条件一致
-        if: |
-          (github.event_name == 'push' && contains(github.event.head_commit.message, '[deploy]')) ||
-          (github.event_name == 'workflow_dispatch' && github.event.inputs.deploy == 'true')
+        if: steps.set-deploy.outputs.deploy == 'true'
         env: # 将原始提交消息作为环境变量传递，以帮助解决多字节字符编码问题
           ORIGINAL_COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
         run: |
