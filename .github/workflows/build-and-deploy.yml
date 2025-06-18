@@ -49,14 +49,6 @@ jobs:
           echo "deploy=$should_deploy" >> $env:GITHUB_OUTPUT
         shell: powershell
 
-      # 如果需要部署，先检出目标仓库
-      - name: Checkout target repository
-        if: steps.set-deploy.outputs.deploy == 'true'
-        uses: actions/checkout@v4
-        with:
-          repository: FsDiG/Build # 目标 Build 仓库的名称
-          token: ${{ secrets.BUILD_REPO_TOKEN }} # 用于推送到此目标仓库的 PAT
-          path: Build # 将目标仓库克隆到此子目录
 
       - name: Checkout repository
         uses: actions/checkout@v4 # 检出当前 IFoxCAD 仓库的代码
@@ -85,6 +77,17 @@ jobs:
           
           echo "Build folders prepared."
         shell: powershell
+
+        # 如果需要部署，先检出目标仓库
+      - name: Checkout target repository
+        if: steps.set-deploy.outputs.deploy == 'true'
+        uses: actions/checkout@v4
+        with:
+          repository: FsDiG/Build # 目标 Build 仓库的名称
+          token: ${{ secrets.BUILD_REPO_TOKEN }} # 用于推送到此目标仓库的 PAT
+          path: Build # 将目标仓库克隆到此子目录
+
+
 
       - name: Restore NuGet packages
         run: |
