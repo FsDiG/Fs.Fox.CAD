@@ -10,6 +10,9 @@
         <Title></Title>
         <Product></Product>
         <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+        <Description>基于.NET的二次开发基础类库.源于FOX</Description>
+        <Copyright>FS</Copyright>
+        <PackageReleaseNotes>增加CI流程支持</PackageReleaseNotes>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
