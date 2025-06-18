@@ -58,13 +58,13 @@ jobs:
       - name: Build project Fs.Fox.AutoCad (Debug)
         run: |
           echo "Building Fs.Fox.AutoCad project (Debug)..."
-          msbuild src/IFoxCAD.AutoCad/Fs.Fox.AutoCad.csproj /p:Configuration=Debug /p:Platform="Any CPU" /verbosity:detailed
+          msbuild src/IFoxCAD.AutoCad/Fs.Fox.AutoCad.csproj /p:Configuration=Debug /p:Platform="Any CPU" /p:ContinuousIntegrationBuild=true /verbosity:detailed
           echo "Fs.Fox.AutoCad project (Debug) built."
 
       - name: Build project Fs.Fox.AutoCad (Release)
         run: |
           echo "Building Fs.Fox.AutoCad project (Release)..."
-          msbuild src/IFoxCAD.AutoCad/Fs.Fox.AutoCad.csproj /p:Configuration=Release /p:Platform="Any CPU" /verbosity:detailed
+          msbuild src/IFoxCAD.AutoCad/Fs.Fox.AutoCad.csproj /p:Configuration=Release /p:Platform="Any CPU" /p:ContinuousIntegrationBuild=true /verbosity:detailed
           echo "Fs.Fox.AutoCad project (Release) built."
 
       # --- 结束项目编译 --- 
