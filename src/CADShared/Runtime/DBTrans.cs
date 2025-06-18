@@ -1,4 +1,4 @@
-namespace Fs.Fox.Cad;
+﻿namespace Fs.Fox.Cad;
 #if a2024 || zcad
 using ArgumentNullException = Fs.Fox.Basal.ArgumentNullEx;
 #endif
@@ -26,7 +26,7 @@ public sealed class DBTrans : IDisposable
     public static Transaction GetTopTransaction(Database database)
     {
         ArgumentNullException.ThrowIfNull(database);
-        return database.TransactionManager.TopTransaction ?? throw new Exception("没有顶层事务！");
+        return database.TransactionManager.TopTransaction ?? throw new Exception("NoTopTransaction!");
     }
 
     /// <summary>

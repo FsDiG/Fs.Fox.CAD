@@ -1,4 +1,4 @@
-using System.Security;
+﻿using System.Security;
 #if a2024 || zcad
 using ArgumentNullException = Fs.Fox.Basal.ArgumentNullEx;
 #endif
@@ -466,7 +466,9 @@ public static class Env
         catch (Exception)
         {
             if (echo)
+            {
                 Print($"{varName} 是不存在的变量！");
+            }
         }
     }
 
@@ -583,7 +585,11 @@ public static class Env
     /// <param name="folders">目录</param>
     public static void AppendSupportPath(params string[] folders)
     {
-        if (!folders.Any()) return;
+        if (!folders.Any())
+        {
+            return;
+        }
+
         var acadPath = GetEnv("ACAD");
         var acadPathLowerArr =
             acadPath
@@ -595,11 +601,17 @@ public static class Env
                 .ToHashSet();
         foreach (var folder in folders)
         {
-            if (!Directory.Exists(folder)) continue;
+            if (!Directory.Exists(folder))
+            {
+                continue;
+            }
+
             var folderLower =
                 folder[^1] == '\\' ? folder.Remove(folder.Length - 1).ToLower() : folder.ToLower();
             if (!acadPathLowerArr.Contains(folderLower))
+            {
                 acadPath = folder + ";" + acadPath; //加到前面方便检查
+            }
         }
 
         SetEnv("ACAD", acadPath);
@@ -611,7 +623,11 @@ public static class Env
     /// <param name="folders">目录</param>
     public static void RemoveSupportPath(params string[] folders)
     {
-        if (!folders.Any()) return;
+        if (!folders.Any())
+        {
+            return;
+        }
+
         var acadPathArr = GetEnv("ACAD").Split(';').ToList();
         foreach (var folder in folders)
         {
@@ -630,7 +646,11 @@ public static class Env
     /// <param name="folders">目录</param>
     public static void AppendTrustedPath(params string[] folders)
     {
-        if (folders.Length == 0) return;
+        if (folders.Length == 0)
+        {
+            return;
+        }
+
         var trustedPath = GetVar("TRUSTEDPATHS").ToString();
         var trustedPathLowerArr =
             trustedPath!
@@ -642,11 +662,17 @@ public static class Env
                 .ToHashSet();
         foreach (var folder in folders)
         {
-            if (!Directory.Exists(folder)) continue;
+            if (!Directory.Exists(folder))
+            {
+                continue;
+            }
+
             var folderLower =
                 folder[^1] == '\\' ? folder.Remove(folder.Length - 1).ToLower() : folder.ToLower();
             if (!trustedPathLowerArr.Contains(folderLower))
+            {
                 trustedPath = folder + ";" + trustedPath; //加到前面方便检查
+            }
         }
 
         SetVar("TRUSTEDPATHS", trustedPath);
@@ -658,7 +684,11 @@ public static class Env
     /// <param name="folders">目录</param>
     public static void RemoveTrustedPath(params string[] folders)
     {
-        if (!folders.Any()) return;
+        if (!folders.Any())
+        {
+            return;
+        }
+
         var trustedPathArr = GetVar("TRUSTEDPATHS").ToString()!.Split(';').ToList();
         foreach (var folder in folders)
         {
@@ -831,11 +861,15 @@ public static class Env
         };
 
         if (valueType is null)
+        {
             return null;
+        }
 
         // 相同的参数进行设置会发生一次异常
         if (!string.Equals(currentVar.ToString(), valueType.ToString(), StringComparison.CurrentCultureIgnoreCase))
+        {
             SetVar(key, valueType);
+        }
 
         return currentVar;
     }
