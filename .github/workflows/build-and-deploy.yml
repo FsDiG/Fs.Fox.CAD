@@ -49,14 +49,14 @@ jobs:
           echo "deploy=$should_deploy" >> $env:GITHUB_OUTPUT
         shell: powershell
 
-
+      
       - name: Checkout repository
         uses: actions/checkout@v4 # 检出当前 IFoxCAD 仓库的代码
         with:
           # 如果是手动触发 (workflow_dispatch)，则检出 inputs.branch 指定的分支。
           # 对于其他事件 (如 push, pull_request)，则使用事件关联的 github.ref。
           ref: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.branch || github.ref }}
-          path: source_code # 将源代码克隆到这个目录
+          # 不再指定 path，直接检出到根目录
 
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v1.1 # 设置 MSBuild 环境，用于编译 C#/.NET 项目
@@ -88,11 +88,9 @@ jobs:
           path: Build # 将目标仓库克隆到此子目录
 
 
-
       - name: Restore NuGet packages
         run: |
           echo "Restoring NuGet packages..."         
-          cd source_code
           msbuild src/IFoxCAD.AutoCad/Fs.Fox.AutoCad.csproj /t:Restore
           echo "NuGet packages restored."
 
@@ -103,14 +101,12 @@ jobs:
       - name: Build project Fs.Fox.AutoCad (Debug)
         run: |
           echo "Building Fs.Fox.AutoCad project (Debug)..."
-          cd source_code
           msbuild src/IFoxCAD.AutoCad/Fs.Fox.AutoCad.csproj /p:Configuration=Debug /p:Platform="Any CPU" /p:ContinuousIntegrationBuild=true /p:OutputPath="..\Build\DiGLib\DiGArchBase\x64_2019_Debug" /verbosity:minimal
           echo "Fs.Fox.AutoCad project (Debug) built."
 
       - name: Build project Fs.Fox.AutoCad (Release)
         run: |
           echo "Building Fs.Fox.AutoCad project (Release)..."
-          cd source_code
           msbuild src/IFoxCAD.AutoCad/Fs.Fox.AutoCad.csproj /p:Configuration=Release /p:Platform="Any CPU" /p:ContinuousIntegrationBuild=true /p:OutputPath="..\Build\DiGLib\DiGArchBase\x64_2019_Release" /verbosity:minimal
           echo "Fs.Fox.AutoCad project (Release) built."
 
