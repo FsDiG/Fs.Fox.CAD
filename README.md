@@ -3,6 +3,8 @@
 
 官方地址:     [IFoxCAD: 基于.NET的Cad二次开发类库](https://gitee.com/inspirefunction/ifoxcad)
 或参考本分支下的:  IFoxCAD 说明.md
+p.s. 
+[  ] 评估 IndexRange nuget包的意义;  IndexRange 是在.NET Standard 2.1引入的, NET Framework 4.8 仅支持 .NET Standard 2.0; 
 
 ## Fs.Fox 分支说明
 

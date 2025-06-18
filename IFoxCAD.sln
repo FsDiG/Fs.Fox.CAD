@@ -31,8 +31,8 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{9A0A144F-6820-4D15-9D39-43B7298195E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9A0A144F-6820-4D15-9D39-43B7298195E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9A0A144F-6820-4D15-9D39-43B7298195E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9A0A144F-6820-4D15-9D39-43B7298195E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A0A144F-6820-4D15-9D39-43B7298195E3}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A0A144F-6820-4D15-9D39-43B7298195E3}.Release|Any CPU.Build.0 = Debug|Any CPU
 		{47C42AB4-C2F4-475B-899C-71FDE57D926E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{47C42AB4-C2F4-475B-899C-71FDE57D926E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47C42AB4-C2F4-475B-899C-71FDE57D926E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -51,7 +51,9 @@ Global
 		SolutionGuid = {57CA0128-08DE-436F-B9F1-82C64F49BF67}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		tests\TestShared\TestShared.projitems*{47c42ab4-c2f4-475b-899c-71fde57d926e}*SharedItemsImports = 5
 		src\CADShared\CADShared.projitems*{5178502e-9a78-4588-b849-33ed439976b2}*SharedItemsImports = 13
 		src\CADShared\CADShared.projitems*{9a0a144f-6820-4d15-9d39-43b7298195e3}*SharedItemsImports = 5
+		tests\TestShared\TestShared.projitems*{ced63d2d-0af6-4831-806d-5e8e9b0d0a07}*SharedItemsImports = 13
 	EndGlobalSection
 EndGlobal
