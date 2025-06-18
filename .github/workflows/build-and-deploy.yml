@@ -45,6 +45,12 @@ jobs:
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v1.1 # 设置 MSBuild 环境，用于编译 C#/.NET 项目
 
+      - name: Restore NuGet packages
+        run: |
+          echo "Restoring NuGet packages..."
+          msbuild src/IFoxCAD.sln /t:Restore
+          echo "NuGet packages restored."
+
       # --- 开始项目编译 --- 
       # 注意：编译顺序为先 Debug 后 Release
       # 编译 IFoxCAD.sln 中的 Fs.Fox.AutoCad.csproj 项目
