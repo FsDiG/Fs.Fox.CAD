@@ -1,7 +1,7 @@
 ﻿namespace Fs.Fox.Basal;
 
 /// <summary>
-/// linq 扩展类
+/// Linq 扩展类
 /// </summary>
 public static class LinqEx
 {

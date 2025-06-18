@@ -68,12 +68,31 @@
     <ItemGroup Condition="'$(TargetFramework)' == 'net8.0-windows'">
         <PackageReference Include="AutoCAD.NET" Version="25.0.1" ExcludeAssets="runtime" />
     </ItemGroup>
-	    
-    <Target Name="CustomCopyOutputForNet48" AfterTargets="Build" Condition="'$(TargetFramework)' == 'net48'">
-	    <!-- For CI environment, use PowerShell script with reliable paths -->
-	    <Exec Command="powershell -Command &quot;New-Item -ItemType Directory -Force -Path '$(MSBuildProjectDirectory)\..\..\Build\DiGLib\DiGArchBase\x64_2019_Debug\'; Copy-Item '$(TargetDir)$(TargetFileName)' -Destination '$(MSBuildProjectDirectory)\..\..\Build\DiGLib\DiGArchBase\x64_2019_Debug\'&quot;" Condition="'$(Configuration)' == 'Debug' AND '$(ContinuousIntegrationBuild)' == 'true'" />
-	    <Exec Command="powershell -Command &quot;New-Item -ItemType Directory -Force -Path '$(MSBuildProjectDirectory)\..\..\Build\DiGLib\DiGArchBase\x64_2019_Release\'; Copy-Item '$(TargetDir)$(TargetFileName)' -Destination '$(MSBuildProjectDirectory)\..\..\Build\DiGLib\DiGArchBase\x64_2019_Release\'&quot;" Condition="'$(Configuration)' == 'Release' AND '$(ContinuousIntegrationBuild)' == 'true'" />
-    </Target>
+
+	<Target Name="CustomCopyOutputForNet48" AfterTargets="Build" Condition="'$(TargetFramework)' == 'net48'">
+		<!-- For CI environment, use PowerShell script with reliable paths -->
+		<Exec Command="powershell -Command &quot;
+        # Create target directory
+        New-Item -ItemType Directory -Force -Path '$(MSBuildProjectDirectory)\..\..\Build\DiGLib\DiGArchBase\x64_2019_Debug\';
+        
+        # Copy all required files
+        Copy-Item '$(TargetDir)Fs.Fox.AutoCad.dll' -Destination '$(MSBuildProjectDirectory)\..\..\Build\DiGLib\DiGArchBase\x64_2019_Debug\';
+        Copy-Item '$(TargetDir)Fs.Fox.AutoCad.xml' -Destination '$(MSBuildProjectDirectory)\..\..\Build\DiGLib\DiGArchBase\x64_2019_Debug\' -ErrorAction SilentlyContinue;
+        Copy-Item '$(TargetDir)IndexRange.dll' -Destination '$(MSBuildProjectDirectory)\..\..\Build\DiGLib\DiGArchBase\x64_2019_Debug\' -ErrorAction SilentlyContinue;
+        &quot;"
+		      Condition="'$(Configuration)' == 'Debug' AND '$(ContinuousIntegrationBuild)' == 'true'" />
+
+		<Exec Command="powershell -Command &quot;
+        # Create target directory
+        New-Item -ItemType Directory -Force -Path '$(MSBuildProjectDirectory)\..\..\Build\DiGLib\DiGArchBase\x64_2019_Release\';
+        
+        # Copy all required files
+        Copy-Item '$(TargetDir)Fs.Fox.AutoCad.dll' -Destination '$(MSBuildProjectDirectory)\..\..\Build\DiGLib\DiGArchBase\x64_2019_Release\';
+        Copy-Item '$(TargetDir)Fs.Fox.AutoCad.xml' -Destination '$(MSBuildProjectDirectory)\..\..\Build\DiGLib\DiGArchBase\x64_2019_Release\' -ErrorAction SilentlyContinue;
+        Copy-Item '$(TargetDir)IndexRange.dll' -Destination '$(MSBuildProjectDirectory)\..\..\Build\DiGLib\DiGArchBase\x64_2019_Release\' -ErrorAction SilentlyContinue;
+        &quot;"
+		      Condition="'$(Configuration)' == 'Release' AND '$(ContinuousIntegrationBuild)' == 'true'" />
+	</Target>
     
     <Import Project="..\CADShared\CADShared.projitems" Label="Shared" />
 
