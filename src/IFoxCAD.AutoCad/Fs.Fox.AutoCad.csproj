@@ -69,16 +69,25 @@
         <PackageReference Include="AutoCAD.NET" Version="25.0.1" ExcludeAssets="runtime" />
     </ItemGroup>
 
-  <Target Name="CustomCopyOutputForNet48" AfterTargets="Build" Condition="'$(TargetFramework)' == 'net48'">
-    <Copy
-      SourceFiles="$(TargetDir)$(TargetFileName)"
-      DestinationFolder="$(SolutionDir)Build\DiGLib\DiGArchBase\x64_2019_Debug\"
-      Condition=" '$(Configuration)' == 'Debug' " />
-    <Copy
-      SourceFiles="$(TargetDir)$(TargetFileName)"
-      DestinationFolder="$(SolutionDir)Build\DiGLib\DiGArchBase\x64_2019_Release\"
-      Condition=" '$(Configuration)' == 'Release' " />
-  </Target>
+    <Target Name="CustomCopyOutputForNet48" AfterTargets="Build" Condition="'$(TargetFramework)' == 'net48'">
+	    <!-- For local development, use MSBuild Copy task -->
+	    <Copy
+		    SourceFiles="$(TargetDir)$(TargetFileName)"
+		    DestinationFolder="$(SolutionDir)Build\DiGLib\DiGArchBase\x64_2019_Debug\"
+		    Condition="'$(Configuration)' == 'Debug' AND '$(ContinuousIntegrationBuild)' != 'true'" />
+	    <Copy
+		    SourceFiles="$(TargetDir)$(TargetFileName)"
+		    DestinationFolder="$(SolutionDir)Build\DiGLib\DiGArchBase\x64_2019_Release\"
+		    Condition="'$(Configuration)' == 'Release' AND '$(ContinuousIntegrationBuild)' != 'true'" />
+
+	    <!-- For CI environment, use PowerShell script with reliable paths -->
+	    <Exec
+		    Command="powershell -Command &quot;New-Item -ItemType Directory -Force -Path '$(MSBuildProjectDirectory)\..\..\Build\DiGLib\DiGArchBase\x64_2019_Debug\'; Copy-Item '$(TargetDir)$(TargetFileName)' -Destination '$(MSBuildProjectDirectory)\..\..\Build\DiGLib\DiGArchBase\x64_2019_Debug\'&quot;"
+		    Condition="'$(Configuration)' == 'Debug' AND '$(ContinuousIntegrationBuild)' == 'true'" />
+	    <Exec
+		    Command="powershell -Command &quot;New-Item -ItemType Directory -Force -Path '$(MSBuildProjectDirectory)\..\..\Build\DiGLib\DiGArchBase\x64_2019_Release\'; Copy-Item '$(TargetDir)$(TargetFileName)' -Destination '$(MSBuildProjectDirectory)\..\..\Build\DiGLib\DiGArchBase\x64_2019_Release\'&quot;"
+		    Condition="'$(Configuration)' == 'Release' AND '$(ContinuousIntegrationBuild)' == 'true'" />
+    </Target>
 
     <Import Project="..\CADShared\CADShared.projitems" Label="Shared" />
 
