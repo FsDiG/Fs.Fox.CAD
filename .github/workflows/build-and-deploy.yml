@@ -47,8 +47,8 @@ jobs:
 
       - name: Restore NuGet packages
         run: |
-          echo "Restoring NuGet packages..."
-          msbuild src/IFoxCAD.sln /t:Restore
+          echo "Restoring NuGet packages..."         
+          msbuild src/IFoxCAD.AutoCad/Fs.Fox.AutoCad.csproj /t:Restore
           echo "NuGet packages restored."
 
       # --- 开始项目编译 --- 
