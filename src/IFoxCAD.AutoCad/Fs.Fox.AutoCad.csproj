@@ -2,6 +2,8 @@
 
     <PropertyGroup>
         <TargetFrameworks>net48</TargetFrameworks>
+        <Configurations>Debug;Release;2019_Debug</Configurations>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     </PropertyGroup>
 
     <!--nuget package-->
@@ -18,6 +20,15 @@
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
         <DebugType>none</DebugType>
         <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+        <OutputPath>bin\Debug\</OutputPath>
+        <DocumentationFile>bin\Debug\Fs.Fox.AutoCad.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='2019_Debug|AnyCPU'">
+        <DebugType>none</DebugType>
+        <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+        <OutputPath>..\..\..\Build\DiGLib\DiGArchBase\x64_2019_Debug\</OutputPath>
+        <DocumentationFile>..\..\..\Build\DiGLib\DiGArchBase\x64_2019_Debug\Fs.Fox.AutoCad.xml</DocumentationFile>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -37,6 +48,10 @@
 
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net48|AnyCPU'">
       <IsPublishable>False</IsPublishable>
+    </PropertyGroup>
+    
+    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='2019_Debug|net48|AnyCPU'">
+        <IsPublishable>False</IsPublishable>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows|AnyCPU'">
