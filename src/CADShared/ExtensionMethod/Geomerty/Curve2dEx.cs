@@ -1,4 +1,4 @@
-// ReSharper disable SuggestVarOrType_SimpleTypes
+﻿// ReSharper disable SuggestVarOrType_SimpleTypes
 
 namespace Fs.Fox.Cad;
 
@@ -68,9 +68,13 @@ public static class Curve2dEx
     public static Curve ToCurve(this CircularArc2d ca2d)
     {
         if (ca2d.IsClosed())
+        {
             return ToCircle(ca2d);
+        }
         else
+        {
             return ToArc(ca2d);
+        }
     }
 
     /// <summary>
@@ -270,15 +274,21 @@ public static class Curve2dEx
     {
         using Point3dCollection ctlPts = new();
         for (var i = 0; i < nc2d.NumControlPoints; i++)
+        {
             ctlPts.Add(new Point3d(_planeCache, nc2d.GetControlPointAt(i)));
+        }
 
         DoubleCollection knots = new();
         for (var i = 0; i < nc2d.Knots.Count; i++)
+        {
             knots.Add(nc2d.Knots[i]);
+        }
 
         DoubleCollection weights = new();
         for (var i = 0; i < nc2d.NumWeights; i++)
+        {
             weights.Add(nc2d.GetWeightAt(i));
+        }
 
         NurbCurve2dData nurbCurve2dData = nc2d.DefinitionData;
 

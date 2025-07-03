@@ -104,4 +104,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)SelectionFilter\OpList.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SelectionFilter\OpLogi.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)ExtensionMethod\Geomerty\ToDo\" />
+  </ItemGroup>
 </Project>

@@ -1,4 +1,4 @@
-#if a2024 || zcad
+﻿#if a2024 || zcad
 using ArgumentNullException = Fs.Fox.Basal.ArgumentNullEx;
 #endif
 
@@ -40,9 +40,15 @@ public static class PointEx
     public static double GetAngle(this Point3d startPoint, Point3d endPoint, Vector3d? direction = null)
     {
         if (direction != null)
+        {
             _planeCache = new Plane(new Point3d(), direction.Value);
+        }
+
         if (_planeCache == null)
+        {
             _planeCache = new Plane(new Point3d(), Vector3d.ZAxis);
+        }
+
         return startPoint.GetVectorTo(endPoint).AngleOnPlane(_planeCache);
     }
 
@@ -207,7 +213,10 @@ public static class PointEx
             default:
             {
                 if (Math.Abs(bulge) < tol)
+                {
                     bulge = 0;
+                }
+
                 break;
             }
         }
@@ -237,12 +246,17 @@ public static class PointEx
         ArgumentNullException.ThrowIfNull(ptCollection);
 
         if (ptCollection.Count == 0 || ptCollection[0].Equals(ptCollection[^1])) // 首尾相同直接返回
+        {
             return;
+        }
 
         // 首尾不同,去加一个到最后
         var lst = new Point2d[ptCollection.Count + 1];
         for (var i = 0; i < ptCollection.Count; i++)
+        {
             lst[i] = ptCollection[i];
+        }
+
         lst[^1] = lst[0];
 
         ptCollection.Clear();
@@ -257,17 +271,24 @@ public static class PointEx
     {
         ArgumentNullException.ThrowIfNull(ptCollection);
         if (ptCollection.Count == 0 || ptCollection[0].Equals(ptCollection[^1])) // 首尾相同直接返回
+        {
             return;
+        }
 
         // 首尾不同,去加一个到最后
         var lst = new Point3d[ptCollection.Count + 1];
         for (var i = 0; i < ptCollection.Count; i++)
+        {
             lst[i] = ptCollection[i];
+        }
+
         lst[^1] = lst[0];
 
         ptCollection.Clear();
         foreach (var t in lst)
+        {
             ptCollection.Add(t);
+        }
     }
 
     #endregion

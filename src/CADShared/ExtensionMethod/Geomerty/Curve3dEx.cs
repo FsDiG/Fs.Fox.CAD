@@ -33,9 +33,15 @@ public static class Curve3dEx
         CurveCurveIntersector3d cci = new(c3d, c3d, Vector3d.ZAxis);
         List<double> pars = [];
         for (var i = 0; i < cci.NumberOfIntersectionPoints; i++)
+        {
             pars.AddRange(cci.GetIntersectionParameters(i));
+        }
+
         if (sort)
+        {
             pars.Sort();
+        }
+
         return pars;
     }
 
@@ -52,7 +58,10 @@ public static class Curve3dEx
         var atStart = Tolerance.Global.IsEqualPoint(inter.LowerBound, from);
         var atEnd = Tolerance.Global.IsEqualPoint(inter.UpperBound, to);
         if (atStart && atEnd)
+        {
             return (Curve3d)curve.Clone();
+        }
+
         if (curve is NurbCurve3d)
         {
             if (from < to)
@@ -154,12 +163,18 @@ public static class Curve3dEx
         {
             pars.Sort();
             for (var i = pars.Count - 1; i > 0; i--)
+            {
                 if (Tolerance.Global.IsEqualPoint(pars[i], pars[i - 1]))
+                {
                     pars.RemoveAt(i);
+                }
+            }
         }
 
         if (pars.Count == 0)
+        {
             return null;
+        }
 
         // 这个是曲线参数类
         var inter = c3d.GetInterval();
@@ -169,7 +184,9 @@ public static class Curve3dEx
         {
             // 闭合曲线不允许打断于一点
             if (pars.Count < 2)
+            {
                 return null;
+            }
 
             // 如果包含起点
             if (Tolerance.Global.IsEqualPoint(pars[0], inter.LowerBound))
@@ -180,7 +197,9 @@ public static class Curve3dEx
                 {
                     pars.RemoveAt(pars.Count - 1);
                     if (pars.Count == 1)
+                    {
                         return null;
+                    }
                 }
             }
             else if (Tolerance.Global.IsEqualPoint(pars[^1], inter.UpperBound))
@@ -195,13 +214,22 @@ public static class Curve3dEx
         {
             // 非闭合曲线加入起点和终点
             if (Tolerance.Global.IsEqualPoint(pars[0], inter.LowerBound))
+            {
                 pars[0] = inter.LowerBound;
+            }
             else
+            {
                 pars.Insert(0, inter.LowerBound);
+            }
+
             if (Tolerance.Global.IsEqualPoint(pars[^1], inter.UpperBound))
+            {
                 pars[^1] = inter.UpperBound;
+            }
             else
+            {
                 pars.Add(inter.UpperBound);
+            }
         }
 
         List<CompositeCurve3d> curves = [];
@@ -223,7 +251,9 @@ public static class Curve3dEx
                 cc3ds.Add(c3ds[cp1.SegmentIndex].GetSubCurve(cp1.LocalParameter, inter.UpperBound));
 
                 for (var j = cp1.SegmentIndex + 1; j < cp2.SegmentIndex; j++)
+                {
                     cc3ds.Add((Curve3d)c3ds[j].Clone());
+                }
 
                 inter = c3ds[cp2.SegmentIndex].GetInterval();
                 cc3ds.Add(c3ds[cp2.SegmentIndex].GetSubCurve(inter.LowerBound, cp2.LocalParameter));
@@ -253,16 +283,24 @@ public static class Curve3dEx
     {
         Curve3d[] cs = curve.GetCurves();
         if (cs.Length == 0)
+        {
             return null;
+        }
+
         if (cs.Length == 1)
+        {
             return ToCurve(cs[0]);
+        }
 
         var hasNurb = false;
 
         foreach (var c in cs)
         {
             if (c is not (NurbCurve3d or EllipticalArc3d))
+            {
                 continue;
+            }
+
             hasNurb = true;
             break;
         }
@@ -271,7 +309,10 @@ public static class Curve3dEx
         {
             var nc3d = cs[0].ToNurbCurve3d();
             for (var i = 1; i < cs.Length; i++)
+            {
                 nc3d?.JoinWith(cs[i].ToNurbCurve3d());
+            }
+
             return nc3d?.ToCurve();
         }
 
@@ -478,7 +519,9 @@ public static class Curve3dEx
         {
             DoubleCollection knots = new();
             foreach (double knot in nc3d.Knots)
+            {
                 knots.Add(knot);
+            }
 
             NurbCurve3dData nurbCurve3dData = nc3d.DefinitionData;
 
@@ -505,7 +548,9 @@ public static class Curve3dEx
         using Point3dCollection pt3dCollection = new();
 
         for (var i = 0; i < pl3d.NumberOfControlPoints; i++)
+        {
             pt3dCollection.Add(pl3d.ControlPointAt(i));
+        }
 
         var closed = false;
         var n = pt3dCollection.Count - 1;

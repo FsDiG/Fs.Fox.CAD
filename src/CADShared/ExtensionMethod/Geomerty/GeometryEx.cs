@@ -1,4 +1,4 @@
-#if a2024
+﻿#if a2024
 using ArgumentNullException = Fs.Fox.Basal.ArgumentNullEx;
 #endif
 
@@ -23,14 +23,19 @@ public static class GeometryEx
     {
         var ptList = pts.ToList();
         if (ptList.Count < 3)
+        {
             return PointOnRegionType.Error;
+        }
+
         if (ptList[0] == ptList[1])
         {
             ptList.RemoveAt(ptList.Count - 1);
         }
 
         if (ptList.Count < 3)
+        {
             return PointOnRegionType.Error;
+        }
 
         List<Curve2d> ls2ds = [];
         for (var i = 0; i < ptList.Count - 1; i++)
@@ -51,12 +56,16 @@ public static class GeometryEx
 
         // 在多边形上?
         if (cc2d.IsOn(pt))
+        {
             return PointOnRegionType.On;
+        }
 
         // 在最小包围矩形外?
         var bb2d = cc2d.BoundBlock;
         if (!bb2d.Contains(pt))
+        {
             return PointOnRegionType.Outside;
+        }
 
         #region 旧版疑似有问题的代码
 
@@ -110,14 +119,19 @@ public static class GeometryEx
     {
         var ptList = pts.ToList();
         if (ptList.Count < 3)
+        {
             return PointOnRegionType.Error;
+        }
+
         if (ptList[0] == ptList[1])
         {
             ptList.RemoveAt(ptList.Count - 1);
         }
 
         if (ptList.Count < 3)
+        {
             return PointOnRegionType.Error;
+        }
 
         List<Curve3d> ls3ds = [];
         for (var i = 0; i < ptList.Count - 1; i++)
@@ -138,12 +152,16 @@ public static class GeometryEx
 
         // 在多边形上?
         if (cc3d.IsOn(pt))
+        {
             return PointOnRegionType.On;
+        }
 
         // 在最小包围矩形外?
         var bb3d = cc3d.BoundBlock;
         if (!bb3d.Contains(pt))
+        {
             return PointOnRegionType.Outside;
+        }
 
 
         var flag = false;
@@ -240,7 +258,10 @@ public static class GeometryEx
 
             // 如果另一点属于该圆,并且半径小于当前值就把它做为候选解
             if (!tca2d.IsIn(firstNode.Previous!.Value))
+            {
                 continue;
+            }
+
             if (ca2d is null || tca2d.Radius < ca2d.Radius)
             {
                 ca2d = tca2d;
@@ -342,7 +363,10 @@ public static class GeometryEx
     {
         using var itor = pnts.GetEnumerator();
         if (!itor.MoveNext())
+        {
             throw new System.ArgumentNullException(nameof(pnts));
+        }
+
         var start = itor.Current;
         var p2 = start;
         double area = 0;
@@ -459,7 +483,9 @@ public static class GeometryEx
     public static List<Point2d> ConvexHull(this List<Point2d> points)
     {
         if (points.Count <= 1)
+        {
             return points;
+        }
 
         int n = points.Count, k = 0;
         List<Point2d> H = [..new Point2d[2 * n]];
@@ -471,7 +497,10 @@ public static class GeometryEx
         {
             while (k >= 2 && IsClockWise(H[k - 2], H[k - 1], points[i]) ==
                    OrientationType.CounterClockWise)
+            {
                 k--;
+            }
+
             H[k++] = points[i];
         }
 
@@ -480,7 +509,10 @@ public static class GeometryEx
         {
             while (k >= t && IsClockWise(H[k - 2], H[k - 1], points[i]) ==
                    OrientationType.CounterClockWise)
+            {
                 k--;
+            }
+
             H[k++] = points[i];
         }
 
