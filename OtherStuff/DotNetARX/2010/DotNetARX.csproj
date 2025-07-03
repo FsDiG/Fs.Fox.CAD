@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<PropertyGroup>
+		<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+		<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+		<ProductVersion>8.0.30703</ProductVersion>
+		<SchemaVersion>2.0</SchemaVersion>
+		<ProjectGuid>{5DDFCADA-BEA4-402C-B3E4-5C7F83C2F09E}</ProjectGuid>
+		<OutputType>Library</OutputType>
+		<AppDesignerFolder>Properties</AppDesignerFolder>
+		<RootNamespace>DotNetARX</RootNamespace>
+		<AssemblyName>DotNetARX</AssemblyName>
+		<FileAlignment>512</FileAlignment>
+		<TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+		<TargetFrameworkProfile />
+	</PropertyGroup>
+	<Import Project="..\..\..\Config\TIANHUA.CSharp.General.net472.targets" />
+	<ItemGroup>
+		<Reference Include="System" />
+		<Reference Include="System.Core" />
+		<Reference Include="System.Drawing" />
+		<Reference Include="System.Windows.Forms" />
+		<Reference Include="System.Xml.Linq" />
+		<Reference Include="System.Data.DataSetExtensions" />
+		<Reference Include="System.Data" />
+		<Reference Include="System.Xml" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Include="AnnotateTools.cs" />
+		<Compile Include="ArcTools.cs" />
+		<Compile Include="BlockTools.cs" />
+		<Compile Include="CircleTools.cs" />
+		<Compile Include="CommandTools.cs" />
+		<Compile Include="COMTools.cs" />
+		<Compile Include="CUITools.cs" />
+		<Compile Include="DictTools.cs" />
+		<Compile Include="DimStyleTools.cs" />
+		<Compile Include="DimTools.cs" />
+		<Compile Include="DocumentTools.cs" />
+		<Compile Include="Draw3DTools.cs" />
+		<Compile Include="EllipseTools.cs" />
+		<Compile Include="EntTools.cs" />
+		<Compile Include="GeTools.cs" />
+		<Compile Include="GroupTools.cs" />
+		<Compile Include="HatchTools.cs" />
+		<Compile Include="LayerTools.cs" />
+		<Compile Include="LayoutTools.cs" />
+		<Compile Include="LineTypeTools.cs" />
+		<Compile Include="LinqToCAD.cs" />
+		<Compile Include="ListTools.cs" />
+		<Compile Include="MessageFilter.cs" />
+		<Compile Include="MLineTools.cs" />
+		<Compile Include="PInvoke.cs" />
+		<Compile Include="PlotSettingsEx.cs" />
+		<Compile Include="PlotTools.cs" />
+		<Compile Include="PolylineTools.cs" />
+		<Compile Include="ProgressManager.cs" />
+		<Compile Include="Properties\AssemblyInfo.cs" />
+		<Compile Include="RegionTools.cs" />
+		<Compile Include="Register.cs" />
+		<Compile Include="SelectionTools.cs" />
+		<Compile Include="SummaryInfoTools.cs" />
+		<Compile Include="TableTools.cs" />
+		<Compile Include="TextStyleTools.cs" />
+		<Compile Include="TextTools.cs" />
+		<Compile Include="Tools.cs" />
+		<Compile Include="UCSTools.cs" />
+		<Compile Include="ViewportTools.cs" />
+		<Compile Include="ViewTableTools.cs" />
+		<Compile Include="XDataTools.cs" />
+		<Compile Include="XrefTools.cs" />
+	</ItemGroup>
+	<Choose>
+		<When Condition="$(DefineConstants.Contains('ACAD2012'))">
+			<ItemGroup>
+				<PackageReference Include="AutoCAD-2012.Net.Base" Version="1.0.0" />
+			</ItemGroup>
+			<ItemGroup>
+				<Reference Include="AcMPolygonMGD">
+					<HintPath>..\..\Externals\AutoCAD\2012\AcMPolygonMGD.dll</HintPath>
+				</Reference>
+			</ItemGroup>
+		</When>
+		<When Condition="$(DefineConstants.Contains('ACAD2014'))">
+			<ItemGroup>
+				<PackageReference Include="AutoCAD-2014.Net.Base" Version="1.0.0" />
+			</ItemGroup>
+			<ItemGroup>
+				<Reference Include="AcMPolygonMGD">
+					<HintPath>..\..\Externals\AutoCAD\2014\AcMPolygonMGD.dll</HintPath>
+				</Reference>
+			</ItemGroup>
+		</When>
+		<When Condition="$(DefineConstants.Contains('ACAD2016'))">
+			<ItemGroup>
+				<PackageReference Include="AutoCAD-2016.Net.Base" Version="1.0.0" />
+			</ItemGroup>
+			<ItemGroup>
+				<Reference Include="AcMPolygonMGD">
+					<HintPath>..\..\Externals\AutoCAD\2016\AcMPolygonMGD.dll</HintPath>
+				</Reference>
+			</ItemGroup>
+		</When>
+		<When Condition="$(DefineConstants.Contains('ACAD2018'))">
+			<ItemGroup>
+				<PackageReference Include="AutoCAD.NET" Version="22.0.0" />
+				<PackageReference Include="AutoCAD.NET.Core" Version="22.0.0" />
+				<PackageReference Include="AutoCAD.NET.Model" Version="22.0.0" />
+			</ItemGroup>
+			<ItemGroup>
+				<Reference Include="AcMPolygonMGD">
+					<HintPath>..\..\Externals\AutoCAD\2018\AcMPolygonMGD.dll</HintPath>
+				</Reference>
+			</ItemGroup>
+		</When>
+	</Choose>
+	<Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

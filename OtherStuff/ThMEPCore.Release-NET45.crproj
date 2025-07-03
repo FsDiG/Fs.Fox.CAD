@@ -1,0 +1,19 @@
+<project outputDir=".\Confused" baseDir=".\build\bin\Release-NET45" xmlns="http://confuser.codeplex.com">
+  <rule pattern="true" preset="none">
+    <protection id="anti debug" />
+    <protection id="anti dump" />
+    <protection id="anti ildasm" />
+    <protection id="anti tamper" />
+    <protection id="constants" />
+    <protection id="ctrl flow" />
+    <protection id="invalid metadata" />
+    <protection id="ref proxy" />
+    <protection id="rename" />
+    <protection id="resources" />
+  </rule>
+  <module path="DotNetARX.dll" />
+  <module path="CADExtension.dll" />
+  <module path="ThCADCore.dll" />
+  <module path="ThCADExtension.dll" />
+  <module path="ThMEPEngineCore.dll" />
+</project>

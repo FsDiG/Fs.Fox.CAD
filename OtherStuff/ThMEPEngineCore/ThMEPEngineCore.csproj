@@ -1,0 +1,436 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AD98390A-569D-4774-AA3E-D9F00BC84CD6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ThMEPEngineCore</RootNamespace>
+    <AssemblyName>ThMEPEngineCore</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug-NET45|AnyCPU'">
+    <OutputPath>..\ThMEPWSS\bin\Debug-NET45\</OutputPath>
+  </PropertyGroup>
+  <Import Project="..\..\Config\TIANHUA.CSharp.General.net472.targets" />
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Algorithm\ThMEPCenterlineService.cs" />
+    <Compile Include="Algorithm\ThMEPPolyDecomposer.cs" />
+    <Compile Include="Algorithm\ThMEPTriangulationService.cs" />
+    <Compile Include="Algorithm\ThPolygonToGapPolylineService.cs" />
+    <Compile Include="Algorithm\ThLineMerger.cs" />
+    <Compile Include="Algorithm\ThMEPFrameService.cs" />
+    <Compile Include="Algorithm\ThMEPNTSExtension.cs" />
+    <Compile Include="Algorithm\ThMEPPolygonPartitioner.cs" />
+    <Compile Include="Algorithm\ThMEPXClipInfo.cs" />
+    <Compile Include="Algorithm\ThMEPXClipService.cs" />
+    <Compile Include="Algorithm\ThMEPOriginTransformer.cs" />
+    <Compile Include="BeamInfo\Business\CalBeamIntersectService.cs" />
+    <Compile Include="BeamInfo\Business\CalBeamStruService.cs" />
+    <Compile Include="BeamInfo\Business\CalSpanBeamInfo.cs" />
+    <Compile Include="BeamInfo\Business\FillBeamInfo.cs" />
+    <Compile Include="BeamInfo\Business\GetBeamMarkInfo.cs" />
+    <Compile Include="BeamInfo\Business\MarkingService.cs" />
+    <Compile Include="BeamInfo\Business\ThBeamGeometryPreprocessor.cs" />
+    <Compile Include="BeamInfo\Model\ArcBeam.cs" />
+    <Compile Include="BeamInfo\Model\Beam.cs" />
+    <Compile Include="BeamInfo\Model\BeamIntersectInfo.cs" />
+    <Compile Include="BeamInfo\Model\LineBeam.cs" />
+    <Compile Include="BeamInfo\Model\MarkingInfo.cs" />
+    <Compile Include="BeamInfo\Model\MergeLineBeam.cs" />
+    <Compile Include="BeamInfo\Model\ThBeamSpanZone.cs" />
+    <Compile Include="BeamInfo\Model\ThCentralizedMarking.cs" />
+    <Compile Include="BeamInfo\Model\ThOriginMarkingcs.cs" />
+    <Compile Include="BeamInfo\ThDistinguishBeamInfo.cs" />
+    <Compile Include="BeamInfo\Utils\CalBeamIntersect.cs" />
+    <Compile Include="BeamInfo\Utils\GetObjectUtils.cs" />
+    <Compile Include="BeamInfo\Utils\ThArcBeamOutliner.cs" />
+    <Compile Include="BeamInfo\Utils\ThOverkillDbExtension.cs" />
+    <Compile Include="BeamInfo\Utils\ThStructureDbExtension.cs" />
+    <Compile Include="BeamInfo\Utils\ThStructureUtils.cs" />
+    <Compile Include="CAD\ThDbObjectRecognitionEngine.cs" />
+    <Compile Include="CAD\ThDrawTool.cs" />
+    <Compile Include="CAD\ThGeometryTool.cs" />
+    <Compile Include="Algorithm\ThMEPLineExtension.cs" />
+    <Compile Include="Algorithm\ThPolylineHandler.cs" />
+    <Compile Include="CAD\ThPropertySet.cs" />
+    <Compile Include="CAD\ThXrefDbExtension.cs" />
+    <Compile Include="Diagnostics\ThIfcBeamDebugExtension.cs" />
+    <Compile Include="Engine\ThAnnotationElementExtractionEngine.cs" />
+    <Compile Include="Engine\ThAnnotationElementExtractionVisitor.cs" />
+    <Compile Include="Engine\ThAnnotationElementExtractor.cs" />
+    <Compile Include="Engine\ThAnnotationElementRecognitionEngine.cs" />
+    <Compile Include="Engine\ThArchitectureWallExtractionVisitor.cs" />
+    <Compile Include="Engine\ThBeamExtractionVisitor.cs" />
+    <Compile Include="Engine\ThBeamPreprocessEngine.cs" />
+    <Compile Include="Engine\ThBuildingElementExtractionEngine.cs" />
+    <Compile Include="Engine\ThBuildingElementExtractor.cs" />
+    <Compile Include="Engine\ThBuildingElementExtractionVisitor.cs" />
+    <Compile Include="Engine\ThCurtainWallExtractionVisitor.cs" />
+    <Compile Include="Engine\ThCurtainWallRecognitionEngine.cs" />
+    <Compile Include="Engine\ThRoomBuilderEngine.cs" />
+    <Compile Include="Engine\ThRoomMarkExtractionVisitor.cs" />
+    <Compile Include="Engine\ThRoomMarkRecognitionEngine.cs" />
+    <Compile Include="Engine\ThSpatialElementExtractionVisitor.cs" />
+    <Compile Include="Engine\ThSpatialElementExtractor.cs" />
+    <Compile Include="Model\ThIfcAnnotation.cs" />
+    <Compile Include="Model\ThIfcTextNote.cs" />
+    <Compile Include="Service\ThRoomSpatialPredicateService.cs" />
+    <Compile Include="Engine\ThSlabExtractionVisitor.cs" />
+    <Compile Include="Engine\ThDoorExtractionVisitor.cs" />
+    <Compile Include="Engine\ThDoorMarkExtractionVisitor.cs" />
+    <Compile Include="Engine\ThSlabRecognitionEngine.cs" />
+    <Compile Include="Engine\ThDoorStoneExtractionVisitor.cs" />
+    <Compile Include="Engine\ThColumnExtractionVisitor.cs" />
+    <Compile Include="Engine\ThDoorMarkRecognitionEngine.cs" />
+    <Compile Include="Engine\ThDoorStoneRecognitionEngine.cs" />
+    <Compile Include="Engine\ThDistributionElementExtractionEngine.cs" />
+    <Compile Include="Engine\ThDistributionElementExtractionVisitor.cs" />
+    <Compile Include="Engine\ThDistributionElementExtractor.cs" />
+    <Compile Include="Engine\ThDoorRecognitionEngine.cs" />
+    <Compile Include="Engine\ThArchitectureWallRecognitionEngine.cs" />
+    <Compile Include="Engine\ThBeamConnectRecogitionEngine.cs" />
+    <Compile Include="Engine\ThBeamRecognitionEngine.cs" />
+    <Compile Include="Engine\ThBuildingElementPreprocessEngine.cs" />
+    <Compile Include="Engine\ThDistributionElementRecognitionEngine.cs" />
+    <Compile Include="Engine\ThExtendBeamEngine.cs" />
+    <Compile Include="Engine\ThGemometryExportEngine.cs" />
+    <Compile Include="Engine\ThMergeBeamEngine.cs" />
+    <Compile Include="Engine\ThParkingStallRecognitionEngine.cs" />
+    <Compile Include="Engine\ThRoomExtractionVisitor.cs" />
+    <Compile Include="Engine\ThRoomRecognitionEngine.cs" />
+    <Compile Include="Engine\ThShearWallExtractionVisitor.cs" />
+    <Compile Include="Engine\ThSimilarityMeasureEngine.cs" />
+    <Compile Include="Engine\ThJoinBeamEngine.cs" />
+    <Compile Include="Engine\ThSnapBeamEngine.cs" />
+    <Compile Include="Engine\ThLaneLineRecognitionEngine.cs" />
+    <Compile Include="Engine\ThShearWallRecognitionEngine.cs" />
+    <Compile Include="Engine\ThColumnRecognitionEngine.cs" />
+    <Compile Include="Engine\ThBuildingElementRecognitionEngine.cs" />
+    <Compile Include="Engine\ThSpaceRecognitionEngine.cs" />
+    <Compile Include="Engine\ThSpatialElementRecognitionEngine.cs" />
+    <Compile Include="Engine\ThSpatialElementExtractionEngine.cs" />
+    <Compile Include="Engine\ThWindowExtractionVisitor.cs" />
+    <Compile Include="Engine\ThWindowRecognitionEngine.cs" />
+    <Compile Include="Features\ThBeamFeature.cs" />
+    <Compile Include="Features\ThGeometryFeatureCollection.cs" />
+    <Compile Include="Features\ThBeamFeatureCollection.cs" />
+    <Compile Include="Features\ThColumnFeature.cs" />
+    <Compile Include="Features\ThColumnFeatureCollection.cs" />
+    <Compile Include="Features\ThGeometryFeature.cs" />
+    <Compile Include="Features\ThShearWallFeatureCollection.cs" />
+    <Compile Include="Features\ThThShearWallFeature.cs" />
+    <Compile Include="Interface\ICalculateBeam.cs" />
+    <Compile Include="IO\GeoJSON\ThBeamGeoJsonReader.cs" />
+    <Compile Include="IO\GeoJSON\ThGeometryJsonWriter.cs" />
+    <Compile Include="IO\GeoJSON\ThColumnGeoJsonWriter.cs" />
+    <Compile Include="IO\GeoJSON\ThBeamGeoJsonWriter.cs" />
+    <Compile Include="IO\GeoJSON\ThShearWallGeoJsonWriter.cs" />
+    <Compile Include="IO\ThGeoOutput.cs" />
+    <Compile Include="LaneLine\ThLaneLineEngine.cs" />
+    <Compile Include="LaneLine\ThLaneLineExtendEngine.cs" />
+    <Compile Include="LaneLine\ThLaneLineJoinEngine.cs" />
+    <Compile Include="LaneLine\ThLaneLineMergeExtension.cs" />
+    <Compile Include="Model\BuiltInCategory.cs" />
+    <Compile Include="Model\Electrical\ThIfcCableCarrierFitting.cs" />
+    <Compile Include="Model\Electrical\ThIfcCableCarrierSegment.cs" />
+    <Compile Include="Model\Electrical\ThIfcCableFitting.cs" />
+    <Compile Include="Model\Electrical\ThIfcCableSegment.cs" />
+    <Compile Include="Model\Electrical\ThIfcCommunicationsAppliance.cs" />
+    <Compile Include="Model\Electrical\ThIfcLamp.cs" />
+    <Compile Include="Model\Hvac\ThIfcDuctCross.cs" />
+    <Compile Include="Model\Hvac\ThIfcDuctElbow.cs" />
+    <Compile Include="Model\Hvac\ThIfcAirTerminal.cs" />
+    <Compile Include="Model\Hvac\ThIfcDuctFitting.cs" />
+    <Compile Include="Model\Hvac\ThIfcDuctHose.cs" />
+    <Compile Include="Model\Hvac\ThIfcDuctSegment.cs" />
+    <Compile Include="Model\Hvac\ThIfcDuctTee.cs" />
+    <Compile Include="Model\Hvac\ThIfcDuctReducing.cs" />
+    <Compile Include="Model\Hvac\ThIfcFan.cs" />
+    <Compile Include="Model\Hvac\ThIfcPipeFitting.cs" />
+    <Compile Include="Model\Hvac\ThIfcPipeSegment.cs" />
+    <Compile Include="Model\Hvac\ThIfcValve.cs" />
+    <Compile Include="Model\Relationship\ThIfcRelDecomposes.cs" />
+    <Compile Include="Model\Relationship\ThIfcRelFillsElement.cs" />
+    <Compile Include="Model\Relationship\ThIfcRelVoidsElement.cs" />
+    <Compile Include="Model\ThGeometry.cs" />
+    <Compile Include="Model\ThIfcCurtainWall.cs" />
+    <Compile Include="Model\ThIfcElectricAppliance.cs" />
+    <Compile Include="Model\ThIfcExternalSpatialElement.cs" />
+    <Compile Include="Model\ThIfcExternalSpatialStructureElement.cs" />
+    <Compile Include="Model\ThIfcFeatureElement.cs" />
+    <Compile Include="Model\ThIfcFeatureElementSubtraction.cs" />
+    <Compile Include="Model\ThIfcFireSuppressionTerminal.cs" />
+    <Compile Include="Model\ThIfcFlowController.cs" />
+    <Compile Include="Model\ThIfcFlowFitting.cs" />
+    <Compile Include="Model\ThIfcFlowMovingDevice.cs" />
+    <Compile Include="Model\ThIfcFlowSegment.cs" />
+    <Compile Include="Model\ThIfcOpeningElement.cs" />
+    <Compile Include="Model\ThIfcRoom.cs" />
+    <Compile Include="Model\ThIfcSanitaryTerminal.cs" />
+    <Compile Include="Model\Relationship\ThIfcRelConnectsElements.cs" />
+    <Compile Include="Model\Relationship\ThIfcRelConnectsPathElements.cs" />
+    <Compile Include="Model\Segment\ThArcSegment.cs" />
+    <Compile Include="Model\Segment\ThLinearSegment.cs" />
+    <Compile Include="Model\Segment\ThSegment.cs" />
+    <Compile Include="Model\ThBeamLink.cs" />
+    <Compile Include="Model\ThIfcAlarm.cs" />
+    <Compile Include="Model\Electrical\ThIfcAudioVisualAppliance.cs" />
+    <Compile Include="Model\ThIfcArcBeam.cs" />
+    <Compile Include="Model\ThIfcBeam.cs" />
+    <Compile Include="Model\ThIfcBeamAnnotation.cs" />
+    <Compile Include="Model\ThIfcBeamComparer.cs" />
+    <Compile Include="Model\ThIfcBuilding.cs" />
+    <Compile Include="Model\ThIfcBuildingElement.cs" />
+    <Compile Include="Model\ThIfcBuildingStorey.cs" />
+    <Compile Include="Model\ThIfcColumn.cs" />
+    <Compile Include="Model\ThIfcColumnStandardCase.cs" />
+    <Compile Include="Model\ThIfcCommunicationsAppliance.cs" />
+    <Compile Include="Model\ThIfcController.cs" />
+    <Compile Include="Model\ThIfcDistributionControlElement.cs" />
+    <Compile Include="Model\ThIfcDistributionElement.cs" />
+    <Compile Include="Model\ThIfcDistributionFlowElement.cs" />
+    <Compile Include="Model\ThIfcDoor.cs" />
+    <Compile Include="Model\ThIfcDoorStandardCase.cs" />
+    <Compile Include="Model\ThIfcElement.cs" />
+    <Compile Include="Model\ThIfcFlowTerminal.cs" />
+    <Compile Include="Model\ThIfcGroup.cs" />
+    <Compile Include="Model\ThIfcLane.cs" />
+    <Compile Include="Model\ThIfcLineBeam.cs" />
+    <Compile Include="Model\ThIfcObject.cs" />
+    <Compile Include="Model\ThIfcParkingStall.cs" />
+    <Compile Include="Model\ThIfcProduct.cs" />
+    <Compile Include="Model\Relationship\ThIfcRelationship.cs" />
+    <Compile Include="Model\Relationship\ThIfcRelConnects.cs" />
+    <Compile Include="Model\Relationship\ThIfcRelSpaceBoundary.cs" />
+    <Compile Include="Model\ThIfcSite.cs" />
+    <Compile Include="Model\ThIfcSlab.cs" />
+    <Compile Include="Model\ThIfcSlabStandardCase.cs" />
+    <Compile Include="Model\ThIfcSpatialElement.cs" />
+    <Compile Include="Model\ThIfcSpatialStructureElement.cs" />
+    <Compile Include="Model\ThIfcSpatialZone.cs" />
+    <Compile Include="Model\ThIfcStair.cs" />
+    <Compile Include="Model\ThIfcSystem.cs" />
+    <Compile Include="Model\ThIfcWall.cs" />
+    <Compile Include="Model\ThIfcWallStandardCase.cs" />
+    <Compile Include="Model\ThIfcWindow.cs" />
+    <Compile Include="Model\ThIfcWindowStandardCase.cs" />
+    <Compile Include="Model\ThIfcZone.cs" />
+    <Compile Include="Operation\GridService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Model\ThIfcSpace.cs" />
+    <Compile Include="Service\Hvac\ThHvacEditorExtension.cs" />
+    <Compile Include="Service\Hvac\ThHvacGeExtension.cs" />
+    <Compile Include="Service\Hvac\ThHvacDbModelFoundationService.cs" />
+    <Compile Include="Service\Hvac\ThHvacDbModelFoundationExtension.cs" />
+    <Compile Include="Service\Hvac\ThHvacDbModelFoundationManager.cs" />
+    <Compile Include="Service\Hvac\ThHvacDbModelDynBlockExtension.cs" />
+    <Compile Include="Service\Hvac\ThHvacDbModelManager.cs" />
+    <Compile Include="Service\Hvac\ThHvacCommon.cs" />
+    <Compile Include="Service\Hvac\ThHvacDbModelExtension.cs" />
+    <Compile Include="LaneLine\ThLaneLineService.cs" />
+    <Compile Include="Service\ThArcBeamMarkingService.cs" />
+    <Compile Include="Service\ThArchitectureElevationLayerManager.cs" />
+    <Compile Include="Service\ThArchitectureElevationRecognition.cs" />
+    <Compile Include="Service\ThWindowSimplifier.cs" />
+    <Compile Include="Service\ThCurtainWallLayerManager.cs" />
+    <Compile Include="Service\ThAxialAxisTagDbExtension.cs" />
+    <Compile Include="Service\ThAxialAxisTagLayerManager.cs" />
+    <Compile Include="Service\ThAxialCircleTagDbExtension.cs" />
+    <Compile Include="Service\ThAxialCircleTagLayerManager.cs" />
+    <Compile Include="Service\ThBuildDoorService.cs" />
+    <Compile Include="Service\ThDoorUtils.cs" />
+    <Compile Include="Service\ThFindDoorstoneNeighborService.cs" />
+    <Compile Include="Service\ThTextInfoService.cs" />
+    <Compile Include="Service\ThDimensionTagsDbExtension.cs" />
+    <Compile Include="Service\ThDimensionTagsLayerManager.cs" />
+    <Compile Include="Service\ThDivisionLinesDbExtension.cs" />
+    <Compile Include="Service\ThDivisionLinesLayerManager.cs" />
+    <Compile Include="Service\ThExternalTagsDbExtension.cs" />
+    <Compile Include="Service\ThExternalTagsLayerManager.cs" />
+    <Compile Include="Service\ThLaneLineCleanService.cs" />
+    <Compile Include="Service\ThLayerNamesDbExtension.cs" />
+    <Compile Include="Service\ThLayerNamesLayerManager.cs" />
+    <Compile Include="Service\ThMatchDoorStoneService.cs" />
+    <Compile Include="Service\ThCollectDoorStoneService.cs" />
+    <Compile Include="Service\ThSpatialIndexCacheService.cs" />
+    <Compile Include="Service\ThPositionTagsDbExtension.cs" />
+    <Compile Include="Service\ThPositionTagsLayerManager.cs" />
+    <Compile Include="Service\ThRoomLayerManager.cs" />
+    <Compile Include="Service\ThRoomDbExtension.cs" />
+    <Compile Include="Service\ThArchitectureWallDbExtension.cs" />
+    <Compile Include="Service\ThArchitectureWallLayerManager.cs" />
+    <Compile Include="Service\ThArchitectureWallSimplifier.cs" />
+    <Compile Include="Service\ThBeamLinkExtension.cs" />
+    <Compile Include="Service\ThBeamMerger.cs" />
+    <Compile Include="Engine\ThSplitBeamEngine.cs" />
+    <Compile Include="Service\ThBeamLinkSnapService.cs" />
+    <Compile Include="Service\ThDeviceLayerManager.cs" />
+    <Compile Include="Service\ThDbExtension.cs" />
+    <Compile Include="Service\ThFilterPortLinkBeams.cs" />
+    <Compile Include="Extension\ThIfcBeamExtension.cs" />
+    <Compile Include="Service\ThGravityWaterBucketDbExtension.cs" />
+    <Compile Include="Service\ThGravityWaterBucketLayerManager.cs" />
+    <Compile Include="LaneLine\ThLaneLineSimplifier.cs" />
+    <Compile Include="Service\ThLinealBeamSplitterExtension.cs" />
+    <Compile Include="Service\ThLineBeamMarkingService.cs" />
+    <Compile Include="Service\ThLineBeamOutliner.cs" />
+    <Compile Include="Service\ThOtherDbExtension.cs" />
+    <Compile Include="Service\ThLaneLineLayerManager.cs" />
+    <Compile Include="Service\ThLaneLineDbExtension.cs" />
+    <Compile Include="Service\ThParkingStallDbExtension.cs" />
+    <Compile Include="Service\ThParkingStallLayerManager.cs" />
+    <Compile Include="Service\ThSegmentService.cs" />
+    <Compile Include="Service\ThSegmentServiceExtension.cs" />
+    <Compile Include="Service\ThCurveBeamSplitter.cs" />
+    <Compile Include="Service\ThBeamSplitter.cs" />
+    <Compile Include="Service\ThLinealBeamSplitter.cs" />
+    <Compile Include="Service\ThSideEntryWaterBucketDbExtension.cs" />
+    <Compile Include="Service\ThSideEntryWaterBucketLayerManager.cs" />
+    <Compile Include="Service\ThSpaceBoundaryLayerManager.cs" />
+    <Compile Include="Service\ThSpaceNameLayerManager.cs" />
+    <Compile Include="Service\ThSpaceBoundaryRecognition.cs" />
+    <Compile Include="Service\ThSpaceNameRecognition.cs" />
+    <Compile Include="Service\ThStructureBeamUtils.cs" />
+    <Compile Include="Service\ThSubSecondaryBeamLinkExtension.cs" />
+    <Compile Include="Service\ThSecondaryBeamLinkExtension.cs" />
+    <Compile Include="Service\ThOverhangingPrimaryBeamLinkExtension.cs" />
+    <Compile Include="Service\ThStructureShearWallLayerManager.cs" />
+    <Compile Include="Service\ThBeamLayerManager.cs" />
+    <Compile Include="Service\ThStructureColumnLayerManager.cs" />
+    <Compile Include="Service\ThBeamMarkingService.cs" />
+    <Compile Include="Service\ThSpatialIndexManager.cs" />
+    <Compile Include="Service\ThSpatialIndexService.cs" />
+    <Compile Include="Service\ThStructureBeamDbExtension.cs" />
+    <Compile Include="Service\ThStructureBeamTextDbExtension.cs" />
+    <Compile Include="Service\ThStructureDbExtension.cs" />
+    <Compile Include="Service\ThStructureUtils.cs" />
+    <Compile Include="Service\ThHalfPrimaryBeamLinkExtension.cs" />
+    <Compile Include="Service\ThVerticalComponentBeamLinkExtension.cs" />
+    <Compile Include="Algorithm\ThMEPCollisionDetector.cs" />
+    <Compile Include="Service\ThWellsDbExtension.cs" />
+    <Compile Include="Service\ThWellsLayerManager.cs" />
+    <Compile Include="Service\ThWindowDbExtension.cs" />
+    <Compile Include="Service\ThWindowLayerManager.cs" />
+    <Compile Include="Temp\IBuildGeometry.cs" />
+    <Compile Include="Temp\IExtract.cs" />
+    <Compile Include="Temp\IPrint.cs" />
+    <Compile Include="Temp\ThArrangeObstacleService.cs" />
+    <Compile Include="Temp\ThCenterLineExtractor.cs" />
+    <Compile Include="Temp\ThColumnExtractor.cs" />
+    <Compile Include="Temp\ThConnectPortExtractor.cs" />
+    <Compile Include="Temp\ThDoorExtractor.cs" />
+    <Compile Include="Temp\ThDrainageFacilityExtractor.cs" />
+    <Compile Include="Temp\ThEquipmentExtractor.cs" />
+    <Compile Include="Temp\ThExtractColumnService.cs" />
+    <Compile Include="Temp\ThExtractConnectPortsService.cs" />
+    <Compile Include="Temp\ThExtractCenterLineService.cs" />
+    <Compile Include="Temp\ThExtractorBase.cs" />
+    <Compile Include="Temp\ThExtractWallService.cs" />
+    <Compile Include="Temp\ThExtractDoorService.cs" />
+    <Compile Include="Temp\ThExtractDrainageFacilityService.cs" />
+    <Compile Include="Temp\ThExtractEquipmentService.cs" />
+    <Compile Include="Temp\ThExtractGeometryEngine.cs" />
+    <Compile Include="Temp\ThExtractService.cs" />
+    <Compile Include="Temp\ThExtractSpaceRecognitionEngine.cs" />
+    <Compile Include="Temp\ThLaneLineExtractor.cs" />
+    <Compile Include="Temp\ThParkingStallExtractor.cs" />
+    <Compile Include="Temp\ThSpaceExtractor.cs" />
+    <Compile Include="Temp\ThShearWallExtractor.cs" />
+    <Compile Include="Temp\ThWallExtractor.cs" />
+    <Compile Include="ThMEPEngineCoreApp.cs" />
+    <Compile Include="ThMEPEngineCoreCommon.cs" />
+    <Compile Include="ThMEPEngineCoreGeUtils.cs" />
+    <Compile Include="ThMEPEngineCoreInternalCmds.cs" />
+    <Compile Include="ThMEPEngineCoreService.cs" />
+    <Compile Include="Engine\ThRawBeamRecognitionEngine.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CADExtension\CADExtension.csproj">
+      <Project>{11dad9ac-da76-4b36-8315-9af9ba638d41}</Project>
+      <Name>CADExtension</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DotNetARX\2010\DotNetARX.csproj">
+      <Project>{5ddfcada-bea4-402c-b3e4-5c7f83c2f09e}</Project>
+      <Name>DotNetARX</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ThCADCore\ThCADCore.csproj">
+      <Project>{c6ac9e68-9059-4ddd-8fa7-58e2656d572e}</Project>
+      <Name>ThCADCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ThCADExtension\ThCADExtension.csproj">
+      <Project>{2abcdb6e-f0c9-44c1-960f-31d494ef9738}</Project>
+      <Name>ThCADExtension</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Choose>
+    <When Condition="$(DefineConstants.Contains('ACAD2012'))">
+      <ItemGroup>
+        <PackageReference Include="AutoCAD-2012.Net.Base" Version="1.0.0" />
+      </ItemGroup>
+      <ItemGroup>
+        <Reference Include="AcMPolygonMGD">
+          <HintPath>..\..\Externals\AutoCAD\2012\AcMPolygonMGD.dll</HintPath>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(DefineConstants.Contains('ACAD2014'))">
+      <ItemGroup>
+        <PackageReference Include="AutoCAD-2014.Net.Base" Version="1.0.0" />
+      </ItemGroup>
+      <ItemGroup>
+        <Reference Include="AcMPolygonMGD">
+          <HintPath>..\..\Externals\AutoCAD\2014\AcMPolygonMGD.dll</HintPath>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(DefineConstants.Contains('ACAD2016'))">
+      <ItemGroup>
+        <PackageReference Include="AutoCAD-2016.Net.Base" Version="1.0.0" />
+      </ItemGroup>
+      <ItemGroup>
+        <Reference Include="AcMPolygonMGD">
+          <HintPath>..\..\Externals\AutoCAD\2016\AcMPolygonMGD.dll</HintPath>
+        </Reference>
+        <Reference Include="ManagedLibrary">
+          <HintPath>..\..\Externals\GTE\2016\ManagedLibrary.v16.dll</HintPath>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(DefineConstants.Contains('ACAD2018'))">
+      <ItemGroup>
+        <PackageReference Include="AutoCAD.NET" Version="22.0.0" />
+        <PackageReference Include="AutoCAD.NET.Core" Version="22.0.0" />
+        <PackageReference Include="AutoCAD.NET.Model" Version="22.0.0" />
+      </ItemGroup>
+      <ItemGroup>
+        <Reference Include="AcMPolygonMGD">
+          <HintPath>..\..\Externals\AutoCAD\2018\AcMPolygonMGD.dll</HintPath>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <ItemGroup>
+    <PackageReference Include="Xbim.Essentials" Version="5.1.297" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="IO\DWG\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

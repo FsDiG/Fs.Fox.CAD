@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C6AC9E68-9059-4DDD-8FA7-58E2656D572E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ThCADCore</RootNamespace>
+    <AssemblyName>ThCADCore</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <Import Project="..\..\Config\TIANHUA.CSharp.General.net472.targets" />
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="NTS\IO\ThCADCoreNTSDbGeoJsonReader.cs" />
+    <Compile Include="NTS\IO\ThCADCoreNTSDbGeoJsonWriter.cs" />
+    <Compile Include="NTS\ThCADCoreNTSBuildArea.cs" />
+    <Compile Include="NTS\ThCADCoreNTSCenterlineBuilder.cs" />
+    <Compile Include="NTS\ThCADCoreNTSConcaveHull.cs" />
+    <Compile Include="NTS\ThCADCoreNTSDistance.cs" />
+    <Compile Include="NTS\ThCADCoreNTSEarCutTriangulationBuilder.cs" />
+    <Compile Include="NTS\ThCADCoreNTSEntityExtension.cs" />
+    <Compile Include="NTS\ThCADCoreNTSExtension.cs" />
+    <Compile Include="NTS\ThCADCoreNTSFastGeometryClipper.cs" />
+    <Compile Include="NTS\ThCADCoreNTSGeometryClipper.cs" />
+    <Compile Include="NTS\ThCADCoreNTSGeometryComparer.cs" />
+    <Compile Include="NTS\ThCADCoreNTSDbExtension.cs" />
+    <Compile Include="NTS\ThCADCoreNTSDbObjCollectionExtension.cs" />
+    <Compile Include="NTS\ThCADCoreNTSGeExtension.cs" />
+    <Compile Include="NTS\ThCADCoreNTSGeometrySmoother.cs" />
+    <Compile Include="NTS\ThCADCoreNTSHatchExtension.cs" />
+    <Compile Include="NTS\ThCADCoreNTSKdTree.cs" />
+    <Compile Include="NTS\ThCADCoreNTSLineExtension.cs" />
+    <Compile Include="NTS\ThCADCoreNTSMatch.cs" />
+    <Compile Include="NTS\ThCADCoreNTSMPolygonExtension.cs" />
+    <Compile Include="NTS\ThCADCoreNTSOperation.cs" />
+    <Compile Include="NTS\ThCADCoreNTSOrdinates.cs" />
+    <Compile Include="NTS\ThCADCoreNTSPolygonizer.cs" />
+    <Compile Include="NTS\ThCADCoreNTSPolylineExtension.cs" />
+    <Compile Include="NTS\ThCADCoreNTSFixedPrecision.cs" />
+    <Compile Include="NTS\ThCADCoreNTSPreparedExtension.cs" />
+    <Compile Include="NTS\ThCADCoreNTSRectangleExtension.cs" />
+    <Compile Include="NTS\ThCADCoreNTSRegionExtension.cs" />
+    <Compile Include="NTS\ThCADCoreNTSRelateExtension.cs" />
+    <Compile Include="NTS\ThCADCoreNTSService.cs" />
+    <Compile Include="NTS\ThCADCoreNTSSimplify.cs" />
+    <Compile Include="NTS\ThCADCoreNTSSpatialIndexEx.cs" />
+    <Compile Include="NTS\ThCADCoreNTSSpatialIndex.cs" />
+    <Compile Include="NTS\ThCADCoreNTSTriangleExtension.cs" />
+    <Compile Include="NTS\ThCADCoreNTSTriangulate.cs" />
+    <Compile Include="NTS\ThCADCoreNTSPolygonExtension.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CADExtension\CADExtension.csproj">
+      <Project>{11dad9ac-da76-4b36-8315-9af9ba638d41}</Project>
+      <Name>CADExtension</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DotNetARX\2010\DotNetARX.csproj">
+      <Project>{5ddfcada-bea4-402c-b3e4-5c7f83c2f09e}</Project>
+      <Name>DotNetARX</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ThCADExtension\ThCADExtension.csproj">
+      <Project>{2abcdb6e-f0c9-44c1-960f-31d494ef9738}</Project>
+      <Name>ThCADExtension</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Choose>
+    <When Condition="$(DefineConstants.Contains('ACAD2012'))">
+      <ItemGroup>
+        <PackageReference Include="AutoCAD-2012.Net.Base" Version="1.0.0" />
+      </ItemGroup>
+      <ItemGroup>
+        <Reference Include="AcMPolygonMGD">
+          <HintPath>..\..\Externals\AutoCAD\2012\AcMPolygonMGD.dll</HintPath>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(DefineConstants.Contains('ACAD2014'))">
+      <ItemGroup>
+        <PackageReference Include="AutoCAD-2014.Net.Base" Version="1.0.0" />
+      </ItemGroup>
+      <ItemGroup>
+        <Reference Include="AcMPolygonMGD">
+          <HintPath>..\..\Externals\AutoCAD\2014\AcMPolygonMGD.dll</HintPath>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(DefineConstants.Contains('ACAD2016'))">
+      <ItemGroup>
+        <PackageReference Include="AutoCAD-2016.Net.Base" Version="1.0.0" />
+      </ItemGroup>
+      <ItemGroup>
+        <Reference Include="AcMPolygonMGD">
+          <HintPath>..\..\Externals\AutoCAD\2016\AcMPolygonMGD.dll</HintPath>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(DefineConstants.Contains('ACAD2018'))">
+      <ItemGroup>
+        <PackageReference Include="AutoCAD.NET" Version="22.0.0" />
+        <PackageReference Include="AutoCAD.NET.Core" Version="22.0.0" />
+        <PackageReference Include="AutoCAD.NET.Model" Version="22.0.0" />
+      </ItemGroup>
+      <ItemGroup>
+        <Reference Include="AcMPolygonMGD">
+          <HintPath>..\..\Externals\AutoCAD\2018\AcMPolygonMGD.dll</HintPath>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <ItemGroup>
+    <PackageReference Include="NetTopologySuite" Version="2.1.0" />
+    <PackageReference Include="NetTopologySuite.Features" Version="2.1.0" />
+    <PackageReference Include="NetTopologySuite.IO.GeoJSON" Version="2.0.3" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

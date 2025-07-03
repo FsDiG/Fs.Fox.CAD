@@ -1,0 +1,311 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{11DAD9AC-DA76-4B36-8315-9AF9BA638D41}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CADExtension</RootNamespace>
+    <AssemblyName>CADExtension</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <Import Project="..\..\Config\TIANHUA.CSharp.General.net472.targets" />
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AcExtensionLibrary\AcCoreMgdExtensionsShared\ApplicationServices\TransactionManagerExtensions.cs" />
+    <Compile Include="AcExtensionLibrary\AcCoreMgdExtensionsShared\EditorInput\AllowedClassFilter.cs" />
+    <Compile Include="AcExtensionLibrary\AcCoreMgdExtensionsShared\EditorInput\EditorExtensions.cs" />
+    <Compile Include="AcExtensionLibrary\AcCoreMgdExtensionsShared\EditorInput\PromptKeywords.cs" />
+    <Compile Include="AcExtensionLibrary\AcCoreMgdExtensionsShared\Runtime\CommandClass.cs" />
+    <Compile Include="AcExtensionLibrary\AcCoreMgdExtensionsShared\Runtime\ExtensionApplication.cs" />
+    <Compile Include="AcExtensionLibrary\AcCoreMgdExtensionsShared\Runtime\ICommandClass.cs" />
+    <Compile Include="AcExtensionLibrary\AcCoreMgdExtensionsShared\Runtime\LockedTransaction.cs" />
+    <Compile Include="AcExtensionLibrary\AcDbMgdExtensionsShared\DatabaseServices\AnnotationScaleExtensions.cs" />
+    <Compile Include="AcExtensionLibrary\AcDbMgdExtensionsShared\DatabaseServices\BlockReferenceExtensions.cs" />
+    <Compile Include="AcExtensionLibrary\AcDbMgdExtensionsShared\DatabaseServices\BlockTableExtensions.cs" />
+    <Compile Include="AcExtensionLibrary\AcDbMgdExtensionsShared\DatabaseServices\BlockTableRecordExtensions.cs" />
+    <Compile Include="AcExtensionLibrary\AcDbMgdExtensionsShared\DatabaseServices\CurveExtensions.cs" />
+    <Compile Include="AcExtensionLibrary\AcDbMgdExtensionsShared\DatabaseServices\DatabaseExtensions.cs" />
+    <Compile Include="AcExtensionLibrary\AcDbMgdExtensionsShared\DatabaseServices\DBDictionaryExtensions.cs" />
+    <Compile Include="AcExtensionLibrary\AcDbMgdExtensionsShared\DatabaseServices\DBObjectExtensions.cs" />
+    <Compile Include="AcExtensionLibrary\AcDbMgdExtensionsShared\DatabaseServices\DimStyleTableExtensions.cs" />
+    <Compile Include="AcExtensionLibrary\AcDbMgdExtensionsShared\DatabaseServices\DrawableOverrule.cs" />
+    <Compile Include="AcExtensionLibrary\AcDbMgdExtensionsShared\DatabaseServices\Enums.cs" />
+    <Compile Include="AcExtensionLibrary\AcDbMgdExtensionsShared\DatabaseServices\Extents3dExtensions.cs" />
+    <Compile Include="AcExtensionLibrary\AcDbMgdExtensionsShared\DatabaseServices\GripOverrule.cs" />
+    <Compile Include="AcExtensionLibrary\AcDbMgdExtensionsShared\DatabaseServices\GroupDictionary.cs" />
+    <Compile Include="AcExtensionLibrary\AcDbMgdExtensionsShared\DatabaseServices\LayerTableExtensions.cs" />
+    <Compile Include="AcExtensionLibrary\AcDbMgdExtensionsShared\DatabaseServices\LayerTableRecordExtensions.cs" />
+    <Compile Include="AcExtensionLibrary\AcDbMgdExtensionsShared\DatabaseServices\LayoutDictionary.cs" />
+    <Compile Include="AcExtensionLibrary\AcDbMgdExtensionsShared\DatabaseServices\LinetypeTableExtensions.cs" />
+    <Compile Include="AcExtensionLibrary\AcDbMgdExtensionsShared\DatabaseServices\MLStyleDictionary.cs" />
+    <Compile Include="AcExtensionLibrary\AcDbMgdExtensionsShared\DatabaseServices\ObjectIdCollectionExtensions.cs" />
+    <Compile Include="AcExtensionLibrary\AcDbMgdExtensionsShared\DatabaseServices\ObjectIdExtensions.cs" />
+    <Compile Include="AcExtensionLibrary\AcDbMgdExtensionsShared\DatabaseServices\ObjectOverrule.cs" />
+    <Compile Include="AcExtensionLibrary\AcDbMgdExtensionsShared\DatabaseServices\OsnapOverrule.cs" />
+    <Compile Include="AcExtensionLibrary\AcDbMgdExtensionsShared\DatabaseServices\ProxyEntityExtensions.cs" />
+    <Compile Include="AcExtensionLibrary\AcDbMgdExtensionsShared\DatabaseServices\ProxyObjectExtensions.cs" />
+    <Compile Include="AcExtensionLibrary\AcDbMgdExtensionsShared\DatabaseServices\SymbolTableExtensions.cs" />
+    <Compile Include="AcExtensionLibrary\AcDbMgdExtensionsShared\DatabaseServices\SymbolTableRecordExtensions.cs" />
+    <Compile Include="AcExtensionLibrary\AcDbMgdExtensionsShared\DatabaseServices\TextStyleTableExtensions.cs" />
+    <Compile Include="AcExtensionLibrary\AcDbMgdExtensionsShared\DatabaseServices\ViewTableExtensions.cs" />
+    <Compile Include="AcExtensionLibrary\AcDbMgdExtensionsShared\DatabaseServices\WrapperDBDictionary.cs" />
+    <Compile Include="AcExtensionLibrary\AcDbMgdExtensionsShared\DatabaseServices\Wrappers\WrapperDBDictionary.cs" />
+    <Compile Include="AcExtensionLibrary\AcDbMgdExtensionsShared\DoubleExtensions.cs" />
+    <Compile Include="AcExtensionLibrary\AcDbMgdExtensionsShared\Geometry\Point3dExtension.cs" />
+    <Compile Include="AcExtensionLibrary\AcDbMgdExtensionsShared\_Extensions\Drawing\BitmapExtensions.cs" />
+    <Compile Include="AcExtensionLibrary\AcDbMgdExtensionsShared\_Extensions\ObjectExtensions.cs" />
+    <Compile Include="AcExtensionLibrary\AcDbMgdExtensionsShared\_Extensions\StringExtensions.cs" />
+    <Compile Include="AcExtensionLibrary\AcMgdExtensionsShared\ApplicationServices\ApplicationExtensions.cs" />
+    <Compile Include="AcExtensionLibrary\AcMgdExtensionsShared\ApplicationServices\DocumentExtensions.cs" />
+    <Compile Include="AcExtensionLibrary\AcMgdExtensionsShared\ApplicationServices\Preferences.cs" />
+    <Compile Include="AcExtensionLibrary\AcMgdExtensionsShared\ApplicationServices\PreferencesDisplay\DisplayScrollBars.cs" />
+    <Compile Include="AcExtensionLibrary\AcMgdExtensionsShared\ApplicationServices\PreferencesFiles\AcadDirectory.cs" />
+    <Compile Include="AcExtensionLibrary\AcMgdExtensionsShared\ApplicationServices\PreferencesFiles\EnterpriseMenuFile.cs" />
+    <Compile Include="AcExtensionLibrary\AcMgdExtensionsShared\ApplicationServices\PreferencesFiles\IAcadPathRepository.cs" />
+    <Compile Include="AcExtensionLibrary\AcMgdExtensionsShared\ApplicationServices\PreferencesFiles\MenuFile.cs" />
+    <Compile Include="AcExtensionLibrary\AcMgdExtensionsShared\ApplicationServices\PreferencesFiles\PageSetupOverridesTemplateFile.cs" />
+    <Compile Include="AcExtensionLibrary\AcMgdExtensionsShared\ApplicationServices\PreferencesFiles\PrinterConfigPath.cs" />
+    <Compile Include="AcExtensionLibrary\AcMgdExtensionsShared\ApplicationServices\PreferencesFiles\PrinterDescPath.cs" />
+    <Compile Include="AcExtensionLibrary\AcMgdExtensionsShared\ApplicationServices\PreferencesFiles\PrinterStyleSheetPath.cs" />
+    <Compile Include="AcExtensionLibrary\AcMgdExtensionsShared\ApplicationServices\PreferencesFiles\SupportPath.cs" />
+    <Compile Include="AcExtensionLibrary\AcMgdExtensionsShared\ApplicationServices\PreferencesFiles\TemplateDWGPath.cs" />
+    <Compile Include="AcExtensionLibrary\AcMgdExtensionsShared\ApplicationServices\PreferencesFiles\ToolPalettePath.cs" />
+    <Compile Include="AcExtensionLibrary\AcMgdExtensionsShared\ApplicationServices\PreferencesUser\SCMTimeValue.cs" />
+    <Compile Include="AcExtensionLibrary\AcMgdExtensionsShared\ApplicationServices\StringExtensions.cs" />
+    <Compile Include="AcHelper\AcDocument.cs" />
+    <Compile Include="AcHelper\AcGraphic.cs" />
+    <Compile Include="AcHelper\Active.cs" />
+    <Compile Include="AcHelper\Collections\Dictionaries.cs" />
+    <Compile Include="AcHelper\Collections\Tables.cs" />
+    <Compile Include="AcHelper\Commands\CommandHandlerBase.cs" />
+    <Compile Include="AcHelper\Commands\IAcadCommand.cs" />
+    <Compile Include="AcHelper\Commands\SendStringToExecuteException.cs" />
+    <Compile Include="AcHelper\Common.cs" />
+    <Compile Include="AcHelper\Constants.cs" />
+    <Compile Include="AcHelper\DatabaseExtensions.cs" />
+    <Compile Include="AcHelper\DocumentExtensions.cs" />
+    <Compile Include="AcHelper\EntityExtensions.cs" />
+    <Compile Include="AcHelper\Enumerables\DbObjectEnumerable.cs" />
+    <Compile Include="AcHelper\Enumerables\DbObjectEnumerator.cs" />
+    <Compile Include="AcHelper\ErrorCode.cs" />
+    <Compile Include="AcHelper\ExceptionHandler.cs" />
+    <Compile Include="AcHelper\Exceptions\TransactionException.cs" />
+    <Compile Include="AcHelper\ExtensionMethods.cs" />
+    <Compile Include="AcHelper\LayerUtils.cs" />
+    <Compile Include="AcHelper\LoggerNotInitializedException.cs" />
+    <Compile Include="AcHelper\Structures.cs" />
+    <Compile Include="AcHelper\Wrappers\AcTransaction.cs" />
+    <Compile Include="AcHelper\Wrappers\AcTransactionException.cs" />
+    <Compile Include="AcHelper\Wrappers\NestableAcTransaction.cs" />
+    <Compile Include="AcHelper\Wrappers\WriteEnabler.cs" />
+    <Compile Include="AcHelper\Wrappers\WriteEnablerException.cs" />
+    <Compile Include="AcHelper\Wrappers\XRecordHandler.cs" />
+    <Compile Include="AcHelper\Wrappers\XRecordHandlerException.cs" />
+    <Compile Include="AutoCADCommands\Algorithms.cs" />
+    <Compile Include="AutoCADCommands\App.cs" />
+    <Compile Include="AutoCADCommands\Commands.cs" />
+    <Compile Include="AutoCADCommands\DbHelper.cs" />
+    <Compile Include="AutoCADCommands\FlexDataStore.cs" />
+    <Compile Include="AutoCADCommands\Interaction.cs" />
+    <Compile Include="AutoCADCommands\Internal\CustomDictionary.cs" />
+    <Compile Include="AutoCADCommands\Internal\JigDrag.cs" />
+    <Compile Include="AutoCADCommands\Layouts.cs" />
+    <Compile Include="AutoCADCommands\QuickSelection.cs" />
+    <Compile Include="AutoCADCommands\SymbolPack.cs" />
+    <Compile Include="GeometryExtensions\CircularArc2dExtensions.cs" />
+    <Compile Include="GeometryExtensions\CircularArc3dExtensions.cs" />
+    <Compile Include="GeometryExtensions\EditorExtensions.cs" />
+    <Compile Include="GeometryExtensions\EllipseExtensions.cs" />
+    <Compile Include="GeometryExtensions\GeomExt.cs" />
+    <Compile Include="GeometryExtensions\Point2dCollectionExtensions.cs" />
+    <Compile Include="GeometryExtensions\Point2dExtensions.cs" />
+    <Compile Include="GeometryExtensions\Point3dCollectionExtensions.cs" />
+    <Compile Include="GeometryExtensions\Point3dExtensions.cs" />
+    <Compile Include="GeometryExtensions\Polyline2dExtensions.cs" />
+    <Compile Include="GeometryExtensions\Polyline3dExtensions.cs" />
+    <Compile Include="GeometryExtensions\PolylineExtensions.cs" />
+    <Compile Include="GeometryExtensions\PolylineSegment.cs" />
+    <Compile Include="GeometryExtensions\PolylineSegmentCollection.cs" />
+    <Compile Include="GeometryExtensions\RegionExtensions.cs" />
+    <Compile Include="GeometryExtensions\SplineExtensions.cs" />
+    <Compile Include="GeometryExtensions\Triangle.cs" />
+    <Compile Include="GeometryExtensions\Triangle2d.cs" />
+    <Compile Include="GeometryExtensions\Triangle3d.cs" />
+    <Compile Include="GeometryExtensions\Vector3dExtensions.cs" />
+    <Compile Include="GeometryExtensions\ViewportExtensions.cs" />
+    <Compile Include="Linq2Acad\AcadDatabase.cs" />
+    <Compile Include="Linq2Acad\AcadSummaryInfo.cs" />
+    <Compile Include="Linq2Acad\Enumerables\Base\ContainerEnumerableBase.cs" />
+    <Compile Include="Linq2Acad\Enumerables\Base\ElementEnumerable.cs" />
+    <Compile Include="Linq2Acad\Enumerables\Base\IdEnumerable.cs" />
+    <Compile Include="Linq2Acad\Enumerables\Base\NameBasedContainerEnumerableBase.cs" />
+    <Compile Include="Linq2Acad\Enumerables\DBDictionaryEnumerable.cs" />
+    <Compile Include="Linq2Acad\Enumerables\DBDictionaryEnumerables.cs" />
+    <Compile Include="Linq2Acad\Enumerables\EntityContainer.cs" />
+    <Compile Include="Linq2Acad\Enumerables\SymbolTableEnumerable.cs" />
+    <Compile Include="Linq2Acad\Enumerables\SymbolTableEnumerables.cs" />
+    <Compile Include="Linq2Acad\Enumerables\XRefContainer.cs" />
+    <Compile Include="Linq2Acad\Error.cs" />
+    <Compile Include="Linq2Acad\Extensions\AttributeCollectionExtensions.cs" />
+    <Compile Include="Linq2Acad\Extensions\DbObjectExtensions.cs" />
+    <Compile Include="Linq2Acad\Extensions\DbObjectsExtensions.cs" />
+    <Compile Include="Linq2Acad\Extensions\DynamicBlockReferencePropertyCollectionExtensions.cs" />
+    <Compile Include="Linq2Acad\Extensions\EditorExtensions.cs" />
+    <Compile Include="Linq2Acad\Extensions\LayerTableRecordExtensions.cs" />
+    <Compile Include="Linq2Acad\Extensions\XRefsExtensions.cs" />
+    <Compile Include="Linq2Acad\Helpers.cs" />
+    <Compile Include="Linq2Acad\ImportResult.cs" />
+    <Compile Include="Linq2Acad\XRef.cs" />
+    <Compile Include="Linq2Acad\XRefStatus.cs" />
+    <Compile Include="NFox\Basal\Collections\Interfaces.cs" />
+    <Compile Include="NFox\Basal\Collections\LinqEx.cs" />
+    <Compile Include="NFox\Basal\Collections\LoopList.cs" />
+    <Compile Include="NFox\Basal\Collections\SerialList1.cs" />
+    <Compile Include="NFox\Basal\Collections\SerialList2.cs" />
+    <Compile Include="NFox\Basal\Collections\Tree.cs" />
+    <Compile Include="NFox\Basal\Collections\XmlNode.cs" />
+    <Compile Include="NFox\Basal\ComponentModel\TransferCoverter.cs" />
+    <Compile Include="NFox\Basal\ComponentModel\TypeManager.cs" />
+    <Compile Include="NFox\Basal\ComponentModel\XDataProperty.cs" />
+    <Compile Include="NFox\Basal\ComponentModel\XEntityProperties.cs" />
+    <Compile Include="NFox\Basal\ComponentModel\XTypedValue.cs" />
+    <Compile Include="NFox\Basal\ComponentModel\XTypedValueCollection.cs" />
+    <Compile Include="NFox\Basal\ComponentModel\XTypedValueConverter.cs" />
+    <Compile Include="NFox\Basal\ComponentModel\XTypedValueDescriptor.cs" />
+    <Compile Include="NFox\Basal\Images\GifCreator.cs" />
+    <Compile Include="NFox\Basal\Images\ImageCreator.cs" />
+    <Compile Include="NFox\Basal\Images\ImageEx.cs" />
+    <Compile Include="NFox\Basal\Images\TiffCreator.cs" />
+    <Compile Include="NFox\Cad\ExtendMethods\BlockTableRecordEx.cs" />
+    <Compile Include="NFox\Cad\ExtendMethods\CollectionEx.cs" />
+    <Compile Include="NFox\Cad\ExtendMethods\Curve2dEx.cs" />
+    <Compile Include="NFox\Cad\ExtendMethods\Curve3dEx.cs" />
+    <Compile Include="NFox\Cad\ExtendMethods\CurveEx.cs" />
+    <Compile Include="NFox\Cad\ExtendMethods\DBDictionaryEx.cs" />
+    <Compile Include="NFox\Cad\ExtendMethods\DBObjectEx.cs" />
+    <Compile Include="NFox\Cad\ExtendMethods\EditorEx.cs" />
+    <Compile Include="NFox\Cad\ExtendMethods\EntityEx.cs" />
+    <Compile Include="NFox\Cad\ExtendMethods\GeometryEx.cs" />
+    <Compile Include="NFox\Cad\ExtendMethods\ObjectIdEx.cs" />
+    <Compile Include="NFox\Cad\ExtendMethods\SelectionSetEx.cs" />
+    <Compile Include="NFox\Cad\ExtendMethods\SymbolTableEx.cs" />
+    <Compile Include="NFox\Cad\MTextTranslation\RtfLimitNode.cs" />
+    <Compile Include="NFox\Cad\MTextTranslation\RtfNode.cs" />
+    <Compile Include="NFox\Cad\MTextTranslation\RtfRangeNode.cs" />
+    <Compile Include="NFox\Cad\MTextTranslation\RtfScriptNode.cs" />
+    <Compile Include="NFox\Cad\MTextTranslation\RtfSimpleNode.cs" />
+    <Compile Include="NFox\Cad\MTextTranslation\RtfSpecCodeNode.cs" />
+    <Compile Include="NFox\Cad\MTextTranslation\RtfTextNode.cs" />
+    <Compile Include="NFox\Cad\ResultData\LispList.cs" />
+    <Compile Include="NFox\Cad\ResultData\ListData.cs" />
+    <Compile Include="NFox\Cad\ResultData\XdataList.cs" />
+    <Compile Include="NFox\Cad\Runtime\AcadVersion.cs" />
+    <Compile Include="NFox\Cad\Runtime\CommandInfo.cs" />
+    <Compile Include="NFox\Cad\Runtime\DBTransaction.cs" />
+    <Compile Include="NFox\Cad\Runtime\SymbolTable.cs" />
+    <Compile Include="NFox\Cad\Runtime\SystemManager.cs" />
+    <Compile Include="NFox\Cad\SelectionFilter\OpComp.cs" />
+    <Compile Include="NFox\Cad\SelectionFilter\OpEqual.cs" />
+    <Compile Include="NFox\Cad\SelectionFilter\OpFilter.cs" />
+    <Compile Include="NFox\Cad\SelectionFilter\OpList.cs" />
+    <Compile Include="NFox\Cad\SelectionFilter\OpLogi.cs" />
+    <Compile Include="NFox\Cad\Utils\BlockRefJig.cs" />
+    <Compile Include="NFox\Cad\Utils\ConvexHull2d.cs" />
+    <Compile Include="NFox\Cad\Utils\DbUtility.cs" />
+    <Compile Include="NFox\Cad\Utils\GsUtility.cs" />
+    <Compile Include="NFox\Cad\Utils\Helper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StraightSkeletonNet\Circular\CircularList.cs" />
+    <Compile Include="StraightSkeletonNet\Circular\CircularNode.cs" />
+    <Compile Include="StraightSkeletonNet\Circular\Edge.cs" />
+    <Compile Include="StraightSkeletonNet\Circular\Vertex.cs" />
+    <Compile Include="StraightSkeletonNet\EdgeResult.cs" />
+    <Compile Include="StraightSkeletonNet\Events\Chains\ChainType.cs" />
+    <Compile Include="StraightSkeletonNet\Events\Chains\EdgeChain.cs" />
+    <Compile Include="StraightSkeletonNet\Events\Chains\IChain.cs" />
+    <Compile Include="StraightSkeletonNet\Events\Chains\SingleEdgeChain.cs" />
+    <Compile Include="StraightSkeletonNet\Events\Chains\SplitChain.cs" />
+    <Compile Include="StraightSkeletonNet\Events\EdgeEvent.cs" />
+    <Compile Include="StraightSkeletonNet\Events\MultiEdgeEvent.cs" />
+    <Compile Include="StraightSkeletonNet\Events\MultiSplitEvent.cs" />
+    <Compile Include="StraightSkeletonNet\Events\PickEvent.cs" />
+    <Compile Include="StraightSkeletonNet\Events\SkeletonEvent.cs" />
+    <Compile Include="StraightSkeletonNet\Events\SplitEvent.cs" />
+    <Compile Include="StraightSkeletonNet\Events\VertexSplitEvent.cs" />
+    <Compile Include="StraightSkeletonNet\LavUtil.cs" />
+    <Compile Include="StraightSkeletonNet\Path\FaceNode.cs" />
+    <Compile Include="StraightSkeletonNet\Path\FaceQueue.cs" />
+    <Compile Include="StraightSkeletonNet\Path\FaceQueueUtil.cs" />
+    <Compile Include="StraightSkeletonNet\Path\PathQueue.cs" />
+    <Compile Include="StraightSkeletonNet\Path\PathQueueNode.cs" />
+    <Compile Include="StraightSkeletonNet\Primitives\LineLinear2d.cs" />
+    <Compile Include="StraightSkeletonNet\Primitives\LineParametric2d.cs" />
+    <Compile Include="StraightSkeletonNet\Primitives\PrimitiveUtils.cs" />
+    <Compile Include="StraightSkeletonNet\Primitives\PriorityQueue.cs" />
+    <Compile Include="StraightSkeletonNet\Primitives\Vector2d.cs" />
+    <Compile Include="StraightSkeletonNet\Skeleton.cs" />
+    <Compile Include="StraightSkeletonNet\SkeletonBuilder.cs" />
+  </ItemGroup>
+  <Choose>
+    <When Condition="$(DefineConstants.Contains('ACAD2012'))">
+      <ItemGroup>
+        <PackageReference Include="AutoCAD-2012.Net.Base" Version="1.0.0" />
+      </ItemGroup>
+      <ItemGroup>
+        <Reference Include="AcMPolygonMGD">
+          <HintPath>..\..\Externals\AutoCAD\2012\AcMPolygonMGD.dll</HintPath>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(DefineConstants.Contains('ACAD2014'))">
+      <ItemGroup>
+        <PackageReference Include="AutoCAD-2014.Net.Base" Version="1.0.0" />
+      </ItemGroup>
+      <ItemGroup>
+        <Reference Include="AcMPolygonMGD">
+          <HintPath>..\..\Externals\AutoCAD\2014\AcMPolygonMGD.dll</HintPath>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(DefineConstants.Contains('ACAD2016'))">
+      <ItemGroup>
+        <PackageReference Include="AutoCAD-2016.Net.Base" Version="1.0.0" />
+      </ItemGroup>
+      <ItemGroup>
+        <Reference Include="AcMPolygonMGD">
+          <HintPath>..\..\Externals\AutoCAD\2016\AcMPolygonMGD.dll</HintPath>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition="$(DefineConstants.Contains('ACAD2018'))">
+      <ItemGroup>
+        <PackageReference Include="AutoCAD.NET" Version="22.0.0" />
+        <PackageReference Include="AutoCAD.NET.Core" Version="22.0.0" />
+        <PackageReference Include="AutoCAD.NET.Model" Version="22.0.0" />
+      </ItemGroup>
+      <ItemGroup>
+        <Reference Include="AcMPolygonMGD">
+          <HintPath>..\..\Externals\AutoCAD\2018\AcMPolygonMGD.dll</HintPath>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
