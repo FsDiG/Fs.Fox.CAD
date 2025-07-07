@@ -1,4 +1,4 @@
-// ReSharper disable ForCanBeConvertedToForeach
+﻿// ReSharper disable ForCanBeConvertedToForeach
 
 #if a2024 || zcad
 using ArgumentNullException = Fs.Fox.Basal.ArgumentNullEx;
@@ -12,11 +12,11 @@ namespace Fs.Fox.Cad;
 public static class CurveEx
 {
     /// <summary>
-    /// 曲线长度
+    /// 获得曲线长度,通过获取曲线的起始参数和结束参数计算
     /// </summary>
     /// <param name="curve">曲线</param>
     /// <returns>长度</returns>
-    public static double GetLength(this Curve curve)
+    public static double GetCurveLength(this Curve curve)
     {
         return curve.GetDistanceAtParameter(curve.EndParam);
     }
@@ -47,7 +47,7 @@ public static class CurveEx
     /// </para>
     /// </param>
     /// <returns>打断后曲线的集合</returns>
-    public static IEnumerable<Curve> GetSplitCurves(this Curve curve, IEnumerable<double> pars,
+    public static IEnumerable<Curve> GetSplitCurves(Curve curve, IEnumerable<double> pars,
         bool isOrder = false)
     {
         //if (pars is null)
@@ -221,7 +221,7 @@ public static class CurveEx
             }
 
             var curNow = curvesTemp[i];
-            var length = curNow.GetLength();
+            var length = curNow.GetCurveLength();
             var np = pars1.Where(p => p >= 0 && p <= length)
                 .Select(curNow.GetParameterAtDistance)
                 .Where(p =>
@@ -230,7 +230,7 @@ public static class CurveEx
                 .ToList();
             if (np.Count > 0)
             {
-                var splitCurs = curNow.GetSplitCurves(np, true).ToList();
+                var splitCurs = GetSplitCurves(curNow, np, true).ToList();
                 if (splitCurs.Count > 1)
                 {
                     newCurves.AddRange(splitCurs);
@@ -374,7 +374,7 @@ public static class CurveEx
                             var c3dCur = Curve.CreateFromGeCurve(c3d);
 
                             if (c3dCur is null || c3dCur.Closed || c3dCur is Circle ||
-                                c3dCur.GetLength() < tol)
+                                c3dCur.GetCurveLength() < tol)
                                 continue;
                             c3dCur.SetPropertiesFrom(cur);
                             newCurves.Add(c3dCur);
