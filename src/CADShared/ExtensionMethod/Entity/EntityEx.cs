@@ -145,7 +145,7 @@ public static class EntityEx
     /// </summary>
     /// <param name="ent"></param>
     /// <returns>包围盒信息</returns>
-    public static BoundingInfo? GetBoundingBoxEx(this Entity ent)
+    public static BoundingBox9? GetBoundingBoxEx(this Entity ent)
     {
         return EntityBoundingInfo.GetEntityBoxEx(ent)?.GetBoundingInfo();
     }

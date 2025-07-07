@@ -10,7 +10,7 @@ internal static class EntityBoundingInfo
     /// </summary>
     /// <param name="ext">包围盒</param>
     /// <returns>包围盒信息</returns>
-    public static BoundingInfo? GetBoundingInfo(this Extents3d ext)
+    public static BoundingBox9? GetBoundingInfo(this Extents3d ext)
     {
         return new(ext);
     }

@@ -1,11 +1,59 @@
 ﻿namespace Fs.Fox.Cad;
 
 /// <summary>
-/// 和尚777 重构
-/// 包围盒信息
+/// 包含9点参考系统的包围盒 
 /// </summary>
-public struct BoundingInfo
+/*
+ * 包围盒9位码坐标
+ * P7---------------P8----------------P9
+ * |                |                 |
+ * |                |                 |
+ * |                |                 |
+ * P4---------------P5----------------P6
+ * |                |                 |
+ * |                |                 |
+ * |                |                 |
+ * P1---------------P2----------------P3
+ */
+public struct BoundingBox9
 {
+    #region 构造
+
+    /// <summary>
+    /// 包围盒信息3D构造
+    /// </summary>
+    /// <param name="ext">包围盒</param>
+    public BoundingBox9(Extents3d ext)
+    {
+        MinX = ext.MinPoint.X;
+        MinY = ext.MinPoint.Y;
+        MinZ = ext.MinPoint.Z;
+        MaxX = ext.MaxPoint.X;
+        MaxY = ext.MaxPoint.Y;
+        MaxZ = ext.MaxPoint.Z;
+        Extents3d = ext;
+    }
+
+    /// <summary>
+    /// 包围盒信息2D构造
+    /// </summary>
+    /// <param name="ext">包围盒</param>
+    public BoundingBox9(Extents2d ext)
+    {
+        MinX = ext.MinPoint.X;
+        MinY = ext.MinPoint.Y;
+        MinZ = 0;
+        MaxX = ext.MaxPoint.X;
+        MaxY = ext.MaxPoint.Y;
+        MaxZ = 0;
+        var pt1 = new Point3d(MinX, MinY, 0);
+        var pt9 = new Point3d(MaxX, MaxY, 0);
+        Extents3d = new Extents3d(pt1, pt9);
+    }
+
+    #endregion
+
+
     #region 成员
 
     /// <summary>
@@ -40,18 +88,6 @@ public struct BoundingInfo
 
     #region 包围盒9位码坐标
 
-    /*
-     * 包围盒9位码坐标
-     * P7---------------P8----------------P9
-     * |                |                 |
-     * |                |                 |
-     * |                |                 |
-     * P4---------------P5----------------P6
-     * |                |                 |
-     * |                |                 |
-     * |                |                 |
-     * P1---------------P2----------------P3
-     */
     /// <summary>
     /// MinPoint 左下点 P1
     /// </summary>
@@ -130,41 +166,6 @@ public struct BoundingInfo
 
     #endregion
 
-    #region 构造
-
-    /// <summary>
-    /// 包围盒信息3D构造
-    /// </summary>
-    /// <param name="ext">包围盒</param>
-    public BoundingInfo(Extents3d ext)
-    {
-        MinX = ext.MinPoint.X;
-        MinY = ext.MinPoint.Y;
-        MinZ = ext.MinPoint.Z;
-        MaxX = ext.MaxPoint.X;
-        MaxY = ext.MaxPoint.Y;
-        MaxZ = ext.MaxPoint.Z;
-        Extents3d = ext;
-    }
-
-    /// <summary>
-    /// 包围盒信息2D构造
-    /// </summary>
-    /// <param name="ext">包围盒</param>
-    public BoundingInfo(Extents2d ext)
-    {
-        MinX = ext.MinPoint.X;
-        MinY = ext.MinPoint.Y;
-        MinZ = 0;
-        MaxX = ext.MaxPoint.X;
-        MaxY = ext.MaxPoint.Y;
-        MaxZ = 0;
-        var pt1 = new Point3d(MinX, MinY, 0);
-        var pt9 = new Point3d(MaxX, MaxY, 0);
-        Extents3d = new Extents3d(pt1, pt9);
-    }
-
-    #endregion
 
     /// <summary>
     /// 重写ToString
