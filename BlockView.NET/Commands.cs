@@ -1,4 +1,4 @@
-// (C) Copyright 2002-2007 by Autodesk, Inc. 
+﻿// (C) Copyright 2002-2007 by Autodesk, Inc. 
 //
 // Permission to use, copy, modify, and distribute this software in
 // object code form for any purpose and without fee is hereby granted, 
@@ -29,26 +29,25 @@ using AcadApp = Autodesk.AutoCAD.ApplicationServices.Application;
 // by Fenton Webb, DevTech, Autodesk. 23/05/2008
 namespace BlockView.NET
 {
-  /// <summary>
-  /// Summary description for asdkCommands.
-  /// </summary>
-  public class asdkCommands
-  {
-    public asdkCommands()
-    {
-    }
+	/// <summary>
+	/// Summary description for asdkCommands.
+	/// </summary>
+	public class asdkCommands
+	{
+		public asdkCommands()
+		{
+		}
 
-    // the main block view command, brings up Model dialog with GsView control
-    // by Fenton Webb, 21/05/2008, DevTech, Autodesk
-    [CommandMethod("bview")]
-    static public void bview() // This method can have any name
-    {
-      // create a new instance of the dialog
-      using (BlockViewDialog blockViewDlg = new BlockViewDialog())
-      {
-        // now show it as a model form in AutoCAD
-        AcadApp.ShowModalDialog(blockViewDlg);
-      }
-    }
-  }
+		// the main block view command, brings up Model dialog with GsView control
+		// by Fenton Webb, 21/05/2008, DevTech, Autodesk
+		[CommandMethod("bview")]
+		static public void bview() // This method can have any name
+		{
+			// create a new instance of the dialog
+			using (BlockViewDialog blockViewDlg = new BlockViewDialog())
+			{
+				AcadApp.ShowModalDialog(blockViewDlg);
+			}
+		}
+	}
 }

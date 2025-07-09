@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Diagnostics;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 
-using AcadApp = Autodesk.AutoCAD.ApplicationServices.Application;
+using AcadApp = Autodesk.AutoCAD.ApplicationServices.Core.Application;
 using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.Windows;

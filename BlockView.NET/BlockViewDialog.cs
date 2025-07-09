@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 // autocad stuff
 using Autodesk.AutoCAD.ApplicationServices;
-using AcadApp = Autodesk.AutoCAD.ApplicationServices.Application;
+using AcadApp = Autodesk.AutoCAD.ApplicationServices.Core.Application;
 using Autodesk.AutoCAD.GraphicsInterface;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.Windows;
