@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 // autocad stuff
@@ -12,15 +8,11 @@ using Autodesk.AutoCAD.ApplicationServices;
 using AcadApp = Autodesk.AutoCAD.ApplicationServices.Core.Application;
 using Autodesk.AutoCAD.GraphicsInterface;
 using Autodesk.AutoCAD.DatabaseServices;
-using Autodesk.AutoCAD.Windows;
 using Autodesk.AutoCAD.EditorInput;
-using Autodesk.AutoCAD.Runtime;
 using Autodesk.AutoCAD.Geometry;
 using Autodesk.AutoCAD.GraphicsSystem;
 
 //using GsRenderMode = Autodesk.AutoCAD.GraphicsSystem.RenderMode;
-using System.IO;
-using System.Diagnostics;
 
 //////////////////////////////////////////////////////////////////////////
 // by Fenton Webb, DevTech, Autodesk. 23/05/2008

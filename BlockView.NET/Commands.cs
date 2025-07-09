@@ -19,7 +19,6 @@
 // (Rights in Technical Data and Computer Software), as applicable.
 //
 
-using System;
 using Autodesk.AutoCAD.Runtime;
 using AcadApp = Autodesk.AutoCAD.ApplicationServices.Application;
 

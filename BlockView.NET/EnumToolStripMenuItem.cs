@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 //using GsRenderMode = Autodesk.AutoCAD.GraphicsSystem.RenderMode;
 using System.ComponentModel;
