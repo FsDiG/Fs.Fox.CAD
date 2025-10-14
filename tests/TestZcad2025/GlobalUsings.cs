@@ -43,7 +43,7 @@ global using Cad_ErrorStatus = ZwSoft.ZwCAD.Runtime.ErrorStatus;
 
 
 /// ifoxcad
-global using IFoxCAD.Cad;
-global using IFoxCAD.Basal;
+global using Fs.Fox.Cad;
+global using Fs.Fox.Basal;
 
 global using Test;

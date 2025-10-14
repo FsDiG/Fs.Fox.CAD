@@ -2,7 +2,6 @@
     <PropertyGroup>
         <LangVersion>preview</LangVersion>
         <Nullable>enable</Nullable>
-
         <TargetFramework>NET48</TargetFramework>
         <UseWPF>true</UseWPF>
         <UseWindowsForms>true</UseWindowsForms>
@@ -14,17 +13,17 @@
         <DefineConstants>$(Configuration);zcad</DefineConstants>
     </PropertyGroup>
     
-
-<!--    <ItemGroup>-->
-<!--        <Reference Include="System.Web" />-->
-<!--        <Reference Include="System.Web.Extensions" />-->
-<!--    </ItemGroup>-->
-
     <ItemGroup>
-        <PackageReference Include="System.Text.Json" Version="9.0.0" />
-        <PackageReference Include="ZWCad.Net.2025" Version="1.0.0" ExcludeAssets="runtime" />
+        <PackageReference Include="PolySharp" Version="1.15.0">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="System.Text.Json" Version="9.0.9" />
+        <PackageReference Include="ZWCAD.NetApi" Version="20.25.0" ExcludeAssets="runtime" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\IFoxCAD.ZwCad\Fs.Fox.ZwCad.csproj" />
     </ItemGroup>
     <Import Project="..\TestShared\TestShared.projitems" Label="Shared" />
-
-    
 </Project>

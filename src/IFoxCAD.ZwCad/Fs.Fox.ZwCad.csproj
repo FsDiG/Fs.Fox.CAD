@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFramework>net48</TargetFramework>
+        <TargetFrameworks>net48</TargetFrameworks>
     </PropertyGroup>
     <!--nuget package-->
     <PropertyGroup>
@@ -12,16 +12,20 @@
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
         <DebugType>none</DebugType>
         <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+	    <OutputPath>bin\Debug\</OutputPath>
+	    <DocumentationFile>bin\Debug\Fs.Fox.ZwCad.xml</DocumentationFile>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
         <DebugType>none</DebugType>
         <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-        <DocumentationFile>bin\Release\IFoxCAD.ZwCad.xml</DocumentationFile>
+	    <OutputPath>bin\Release\</OutputPath>
+        <DocumentationFile>bin\Release\Fs.Fox.ZwCad.xml</DocumentationFile>
     </PropertyGroup>
 
-    <PropertyGroup Condition="'$(TargetFramework)' == 'NET48'">
+    <PropertyGroup>
         <DefineConstants>$(Configuration);zcad;z2025</DefineConstants>
+        <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     </PropertyGroup>
 
     <ItemGroup>
@@ -29,21 +33,16 @@
             <Pack>True</Pack>
             <PackagePath>\</PackagePath>
         </None>
-        <None Include="..\..\readme.md">
-            <Pack>True</Pack>
-            <PackagePath>\</PackagePath>
-        </None>
     </ItemGroup>
-
-    <ItemGroup Condition="'$(TargetFramework)' == 'NET48'">
-        <PackageReference Include="ZWCad.Net.2025" Version="1.0.0" ExcludeAssets="runtime"/>
-        <PackageReference Include="IndexRange" Version="1.0.3"/>
-        <PackageReference Include="Nullable" Version="1.3.1">
+    <ItemGroup>
+        <PackageReference Include="ZWCAD.NetApi" Version="20.25.0" ExcludeAssets="runtime" />
+        <PackageReference Include="PolySharp" Version="1.15.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <Reference Include="Microsoft.CSharp"/>
+<!--        <PackageReference Include="ZWCAD.NetApi" Version="20.25.0" ExcludeAssets="runtime"/>-->
+        <Reference Include="Microsoft.CSharp" />
     </ItemGroup>
     
-    <Import Project="..\CADShared\CADShared.projitems" Label="Shared"/>
+    <Import Project="..\CADShared\CADShared.projitems" Label="Shared" />
 </Project>
