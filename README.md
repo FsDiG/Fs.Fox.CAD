@@ -23,6 +23,12 @@ IFox PullRequest目前看反馈速度也比较慢
 
 ## 其他
 
+### CAD平台支持
+- **AutoCAD**: 支持AutoCAD 2019及以上版本
+- **中望CAD (ZWCAD)**: 
+  - ZWCAD 2022 (IFoxCAD.ZwCad2022)
+  - ZWCAD 2025 (IFoxCAD.ZwCad)
+
 ### ToDo
 - [ ] 评估第三方IndexRange包,是否要清理
 C#原生IndexRange 是在Standard 2.1引入的,Framework 4.8 仅支持Standard 2.0;

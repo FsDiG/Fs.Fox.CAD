@@ -67,12 +67,16 @@ jobs:
           # Create directory structure if it doesn't exist
           New-Item -ItemType Directory -Force -Path "Build\DiGLib\DiGArchBase\x64_2019_Debug" | Out-Null
           New-Item -ItemType Directory -Force -Path "Build\DiGLib\DiGArchBase\x64_2019_Release" | Out-Null
+          New-Item -ItemType Directory -Force -Path "Build\DiGLib\DiGArchBase\x64_ZwCad2022_Debug" | Out-Null
+          New-Item -ItemType Directory -Force -Path "Build\DiGLib\DiGArchBase\x64_ZwCad2022_Release" | Out-Null
           
           # If we're deploying, we don't want to delete existing files in the target repo
           if ('${{ steps.set-deploy.outputs.deploy }}' -ne 'true') {
             # Remove all content from these directories (only if not deploying)
             Remove-Item -Path "Build\DiGLib\DiGArchBase\x64_2019_Debug\*" -Force -Recurse -ErrorAction SilentlyContinue
             Remove-Item -Path "Build\DiGLib\DiGArchBase\x64_2019_Release\*" -Force -Recurse -ErrorAction SilentlyContinue
+            Remove-Item -Path "Build\DiGLib\DiGArchBase\x64_ZwCad2022_Debug\*" -Force -Recurse -ErrorAction SilentlyContinue
+            Remove-Item -Path "Build\DiGLib\DiGArchBase\x64_ZwCad2022_Release\*" -Force -Recurse -ErrorAction SilentlyContinue
           }
           
           echo "Build folders prepared."
@@ -92,6 +96,7 @@ jobs:
         run: |
           echo "Restoring NuGet packages..."         
           msbuild src/IFoxCAD.AutoCad/Fs.Fox.AutoCad.csproj /t:Restore
+          msbuild src/IFoxCAD.ZwCad2022/IFoxCAD.ZwCad2022.csproj /t:Restore
           echo "NuGet packages restored."
 
       # --- 开始项目编译 --- 
@@ -109,6 +114,18 @@ jobs:
           echo "Building Fs.Fox.AutoCad project (Release)..."
           msbuild src/IFoxCAD.AutoCad/Fs.Fox.AutoCad.csproj /p:Configuration=Release /p:Platform="Any CPU" /p:ContinuousIntegrationBuild=true /p:OutputPath="..\Build\DiGLib\DiGArchBase\x64_2019_Release" /verbosity:minimal
           echo "Fs.Fox.AutoCad project (Release) built."
+
+      - name: Build project IFoxCAD.ZwCad2022 (Debug)
+        run: |
+          echo "Building IFoxCAD.ZwCad2022 project (Debug)..."
+          msbuild src/IFoxCAD.ZwCad2022/IFoxCAD.ZwCad2022.csproj /p:Configuration=Debug /p:Platform="Any CPU" /p:ContinuousIntegrationBuild=true /p:OutputPath="..\..\Build\DiGLib\DiGArchBase\x64_ZwCad2022_Debug" /verbosity:minimal
+          echo "IFoxCAD.ZwCad2022 project (Debug) built."
+
+      - name: Build project IFoxCAD.ZwCad2022 (Release)
+        run: |
+          echo "Building IFoxCAD.ZwCad2022 project (Release)..."
+          msbuild src/IFoxCAD.ZwCad2022/IFoxCAD.ZwCad2022.csproj /p:Configuration=Release /p:Platform="Any CPU" /p:ContinuousIntegrationBuild=true /p:OutputPath="..\..\Build\DiGLib\DiGArchBase\x64_ZwCad2022_Release" /verbosity:minimal
+          echo "IFoxCAD.ZwCad2022 project (Release) built."
 
       # --- 结束项目编译 --- 
 
