@@ -16,6 +16,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{46F3EDA8
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestAcad2025", "tests\TestAcad2025\TestAcad2025.csproj", "{47C42AB4-C2F4-475B-899C-71FDE57D926E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestZcad2022", "tests\TestZcad2022\TestZcad2022.csproj", "{7AAE971E-C9A3-42F3-A72F-AB1C1737D122}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IFoxCAD.ZwCad2022", "src\IFoxCAD.ZwCad2022\IFoxCAD.ZwCad2022.csproj", "{6A513285-73E4-4677-B140-492EAB406FA9}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{7145708C-A65B-470E-A8DA-ED79AC9A42D7}"
 	ProjectSection(SolutionItems) = preProject
 		docs\关于IFoxCAD的架构说明.md = docs\关于IFoxCAD的架构说明.md
@@ -43,6 +47,14 @@ Global
 		{47C42AB4-C2F4-475B-899C-71FDE57D926E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47C42AB4-C2F4-475B-899C-71FDE57D926E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47C42AB4-C2F4-475B-899C-71FDE57D926E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AAE971E-C9A3-42F3-A72F-AB1C1737D122}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AAE971E-C9A3-42F3-A72F-AB1C1737D122}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AAE971E-C9A3-42F3-A72F-AB1C1737D122}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AAE971E-C9A3-42F3-A72F-AB1C1737D122}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A513285-73E4-4677-B140-492EAB406FA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A513285-73E4-4677-B140-492EAB406FA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A513285-73E4-4677-B140-492EAB406FA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A513285-73E4-4677-B140-492EAB406FA9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,6 +64,8 @@ Global
 		{9A0A144F-6820-4D15-9D39-43B7298195E3} = {AE09C3B7-58AC-4A68-9884-1F93FDA5D785}
 		{47C42AB4-C2F4-475B-899C-71FDE57D926E} = {46F3EDA8-A6D1-4707-8D03-731CADB41A56}
 		{CED63D2D-0AF6-4831-806D-5E8E9B0D0A07} = {46F3EDA8-A6D1-4707-8D03-731CADB41A56}
+		{7AAE971E-C9A3-42F3-A72F-AB1C1737D122} = {46F3EDA8-A6D1-4707-8D03-731CADB41A56}
+		{6A513285-73E4-4677-B140-492EAB406FA9} = {AE09C3B7-58AC-4A68-9884-1F93FDA5D785}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {57CA0128-08DE-436F-B9F1-82C64F49BF67}
@@ -59,6 +73,8 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		tests\TestShared\TestShared.projitems*{47c42ab4-c2f4-475b-899c-71fde57d926e}*SharedItemsImports = 5
 		src\CADShared\CADShared.projitems*{5178502e-9a78-4588-b849-33ed439976b2}*SharedItemsImports = 13
+		src\CADShared\CADShared.projitems*{6a513285-73e4-4677-b140-492eab406fa9}*SharedItemsImports = 5
+		tests\TestShared\TestShared.projitems*{7aae971e-c9a3-42f3-a72f-ab1c1737d122}*SharedItemsImports = 5
 		src\CADShared\CADShared.projitems*{9a0a144f-6820-4d15-9d39-43b7298195e3}*SharedItemsImports = 5
 		tests\TestShared\TestShared.projitems*{ced63d2d-0af6-4831-806d-5e8e9b0d0a07}*SharedItemsImports = 13
 	EndGlobalSection
