@@ -15,15 +15,15 @@
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
         <DebugType>none</DebugType>
         <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-        <OutputPath>bin\ZW_$(ZWCADVersion)_$(Configuration)\</OutputPath>
-        <DocumentationFile>bin\ZW_$(ZWCADVersion)_$(Configuration)\Fs.Fox.ZwCad.xml</DocumentationFile>
+        <OutputPath>..\..\Build\ZW_$(ZWCADVersion)_$(Configuration)\</OutputPath>
+        <DocumentationFile>..\..\Build\ZW_$(ZWCADVersion)_$(Configuration)\Fs.Fox.ZwCad.xml</DocumentationFile>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
         <DebugType>none</DebugType>
         <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-        <OutputPath>bin\ZW_$(ZWCADVersion)_$(Configuration)\</OutputPath>
-        <DocumentationFile>bin\ZW_$(ZWCADVersion)_$(Configuration)\Fs.Fox.ZwCad.xml</DocumentationFile>
+        <OutputPath>..\..\Build\ZW_$(ZWCADVersion)_$(Configuration)\</OutputPath>
+        <DocumentationFile>..\..\Build\ZW_$(ZWCADVersion)_$(Configuration)\Fs.Fox.ZwCad.xml</DocumentationFile>
     </PropertyGroup>
 
     <!-- 条件编译符号 -->

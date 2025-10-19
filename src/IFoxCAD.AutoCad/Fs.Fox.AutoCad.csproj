@@ -20,8 +20,8 @@
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
         <DebugType>none</DebugType>
         <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-        <OutputPath>bin\Debug\</OutputPath>
-        <DocumentationFile>bin\Debug\Fs.Fox.AutoCad.xml</DocumentationFile>
+        <OutputPath>..\..\Build\AC_Debug\</OutputPath>
+        <DocumentationFile>..\..\Build\AC_Debug\Fs.Fox.AutoCad.xml</DocumentationFile>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='2019_Debug|AnyCPU'">
@@ -34,7 +34,8 @@
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
         <DebugType>none</DebugType>
         <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-        <DocumentationFile>bin\Release\Fs.Fox.AutoCad.xml</DocumentationFile>
+        <OutputPath>..\..\Build\AC_Release\</OutputPath>
+        <DocumentationFile>..\..\Build\AC_Release\Fs.Fox.AutoCad.xml</DocumentationFile>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(TargetFramework)' == 'net48'">

@@ -34,6 +34,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fs.Fox.ZwCad2022", "src\IFo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fs.Fox.ZwCad2025", "src\IFoxCAD.ZwCad\Fs.Fox.ZwCad2025.csproj", "{3B2C4D5E-6F7A-8B9C-0D1E-2F3A4B5C6D7E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestZcad2022", "tests\TestZcad2022\TestZcad2022.csproj", "{5D6E7F8A-9B0C-1D2E-3F4A-5B6C7D8E9F0A}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestZcad2025", "tests\TestZcad2025\TestZcad2025.csproj", "{0D666D1D-AF07-3129-6E6C-D801558E5667}"
 EndProject
 Global
@@ -58,6 +60,10 @@ Global
 		{3B2C4D5E-6F7A-8B9C-0D1E-2F3A4B5C6D7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B2C4D5E-6F7A-8B9C-0D1E-2F3A4B5C6D7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B2C4D5E-6F7A-8B9C-0D1E-2F3A4B5C6D7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D6E7F8A-9B0C-1D2E-3F4A-5B6C7D8E9F0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D6E7F8A-9B0C-1D2E-3F4A-5B6C7D8E9F0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D6E7F8A-9B0C-1D2E-3F4A-5B6C7D8E9F0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D6E7F8A-9B0C-1D2E-3F4A-5B6C7D8E9F0A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0D666D1D-AF07-3129-6E6C-D801558E5667}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0D666D1D-AF07-3129-6E6C-D801558E5667}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D666D1D-AF07-3129-6E6C-D801558E5667}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -73,6 +79,7 @@ Global
 		{CED63D2D-0AF6-4831-806D-5E8E9B0D0A07} = {46F3EDA8-A6D1-4707-8D03-731CADB41A56}
 		{2A1B3C4D-5E6F-7A8B-9C0D-1E2F3A4B5C6D} = {AE09C3B7-58AC-4A68-9884-1F93FDA5D785}
 		{3B2C4D5E-6F7A-8B9C-0D1E-2F3A4B5C6D7E} = {AE09C3B7-58AC-4A68-9884-1F93FDA5D785}
+		{5D6E7F8A-9B0C-1D2E-3F4A-5B6C7D8E9F0A} = {46F3EDA8-A6D1-4707-8D03-731CADB41A56}
 		{0D666D1D-AF07-3129-6E6C-D801558E5667} = {46F3EDA8-A6D1-4707-8D03-731CADB41A56}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
@@ -84,6 +91,7 @@ Global
 		src\CADShared\CADShared.projitems*{3b2c4d5e-6f7a-8b9c-0d1e-2f3a4b5c6d7e}*SharedItemsImports = 5
 		tests\TestShared\TestShared.projitems*{47c42ab4-c2f4-475b-899c-71fde57d926e}*SharedItemsImports = 5
 		src\CADShared\CADShared.projitems*{5178502e-9a78-4588-b849-33ed439976b2}*SharedItemsImports = 13
+		tests\TestShared\TestShared.projitems*{5d6e7f8a-9b0c-1d2e-3f4a-5b6c7d8e9f0a}*SharedItemsImports = 5
 		src\CADShared\CADShared.projitems*{9a0a144f-6820-4d15-9d39-43b7298195e3}*SharedItemsImports = 5
 		tests\TestShared\TestShared.projitems*{ced63d2d-0af6-4831-806d-5e8e9b0d0a07}*SharedItemsImports = 13
 	EndGlobalSection
