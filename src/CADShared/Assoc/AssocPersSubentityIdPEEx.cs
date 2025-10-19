@@ -7,7 +7,7 @@ public static class AssocPersSubentityIdPEEx
 {
 #if !ZWCAD2022
     // zcb 测试发现,只有中望2022版本没有这个类
-    private static readonly RXClass _acdbAssocPersSuvbentityIdPEClass = RXObject.GetClass(typeof(AssocPersSubentityIdPE));
+    private static readonly RXClass _acdbAssocPersSubentityIdPEClass  = RXObject.GetClass(typeof(AssocPersSubentityIdPE));
 
     /// <summary>
     /// 获取实体的个性化子对象关系Id
