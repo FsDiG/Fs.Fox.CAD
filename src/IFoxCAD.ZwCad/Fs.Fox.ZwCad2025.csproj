@@ -3,6 +3,7 @@
         <TargetFrameworks>net48</TargetFrameworks>
         <ZWCADVersion>2025</ZWCADVersion>
         <AssemblyName>Fs.Fox.ZwCad</AssemblyName>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     </PropertyGroup>
     
     <!--nuget package-->

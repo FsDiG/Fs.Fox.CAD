@@ -4,6 +4,7 @@
         <TargetFrameworks>net48</TargetFrameworks>
         <ACADVersion>2019</ACADVersion>
         <AssemblyName>Fs.Fox.AutoCad</AssemblyName>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     </PropertyGroup>
 
     <!--nuget package-->

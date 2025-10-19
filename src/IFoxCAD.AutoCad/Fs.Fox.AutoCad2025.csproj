@@ -5,6 +5,7 @@
         <ACADVersion>2025</ACADVersion>
         <AssemblyName>Fs.Fox.AutoCad</AssemblyName>
         <EnableDynamicLoading>true</EnableDynamicLoading>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     </PropertyGroup>
 
     <!--nuget package-->
