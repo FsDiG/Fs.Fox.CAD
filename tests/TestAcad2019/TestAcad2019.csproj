@@ -41,7 +41,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  	<ProjectReference Include="..\..\src\IFoxCAD.AutoCad\Fs.Fox.AutoCad.csproj" />
+	  	<ProjectReference Include="..\..\src\IFoxCAD.AutoCad\Fs.Fox.AutoCad2019.csproj" />
 	</ItemGroup>
 	<Import Project="..\TestShared\TestShared.projitems" Label="Shared" />
 </Project>
