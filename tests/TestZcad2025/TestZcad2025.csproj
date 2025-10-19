@@ -11,11 +11,11 @@
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-        <OutputPath>..\..\src\Build\ZW_2025_Debug\</OutputPath>
+        <OutputPath>..\..\Build\ZW_2025_Debug\</OutputPath>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-        <OutputPath>..\..\src\Build\ZW_2025_Release\</OutputPath>
+        <OutputPath>..\..\Build\ZW_2025_Release\</OutputPath>
     </PropertyGroup>
 
     <PropertyGroup>

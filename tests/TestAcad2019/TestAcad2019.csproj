@@ -17,13 +17,13 @@
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<DebugType>none</DebugType>
 		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-		<OutputPath>..\..\src\Build\AC_2019_Debug\</OutputPath>
+		<OutputPath>..\..\Build\AC_2019_Debug\</OutputPath>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 		<DebugType>none</DebugType>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-		<OutputPath>..\..\src\Build\AC_2019_Release\</OutputPath>
+		<OutputPath>..\..\Build\AC_2019_Release\</OutputPath>
 	</PropertyGroup>
 
 	<PropertyGroup>

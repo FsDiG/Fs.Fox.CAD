@@ -121,7 +121,7 @@ public static class DatabaseEx
 
 #if zcad // 中望这里没有测试
 
-    #if ZWCAD2022
+    #if z2022
                 Debug.Assert(false, "此处逻辑未处理, 只编译过");
     #else
                 db.DxfOut(saveAsFile, 7, version);

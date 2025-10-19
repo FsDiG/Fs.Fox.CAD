@@ -303,7 +303,7 @@ public static class Curve2dEx
             0,
             nc2d.Knots.Tolerance);
 
-#if !ZWCAD2022
+#if !z2022
     curve.Type = SplineType.FitPoints;
         //  中望CAD2022 及以前版本不支持此属性,未测试兼容问题
 #endif

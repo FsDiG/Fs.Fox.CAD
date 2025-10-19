@@ -13,7 +13,7 @@ global using Viewport = ZwSoft.ZwCAD.DatabaseServices.Viewport;
 global using Color = ZwSoft.ZwCAD.Colors.Color;
 global using Acap = ZwSoft.ZwCAD.ApplicationServices.Application;
 
-#if ZWCAD2025
+#if z2025
 global using Acaop = ZwSoft.ZwCAD.ApplicationServices.Core.Application;
 #else
 // ZWCAD 2022 及之前版本没有 Core 命名空间，直接使用 Application

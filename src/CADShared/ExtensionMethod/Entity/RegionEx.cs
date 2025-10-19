@@ -47,12 +47,7 @@ public static class RegionEx
     }
 
 #endif
-
-
-
-
-
-
+    
     /// <summary>
     /// 按首尾相连对曲线集合进行排序
     /// </summary>

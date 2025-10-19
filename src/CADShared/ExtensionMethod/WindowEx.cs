@@ -88,7 +88,7 @@ public static class WindowEx
             newHeight = size.Height;
         }
 
-#if !ZWCAD2022
+#if !z2022
 // paletteSet.SetSize(new Size(newWidth, newHeight));   // 中望2025 这样调用报错找不到setsize函数
         WindowExtension.SetSize(paletteSet, new Size(newWidth, newHeight)); // 中望2025这样调用没有问题
 #else

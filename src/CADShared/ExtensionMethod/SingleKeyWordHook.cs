@@ -160,7 +160,7 @@ public sealed class SingleKeyWordHook : IDisposable
             case SingleKeyWordWorkType.WRITE_LINE:
                 Utils.SetFocusToDwgView(); // 恢复焦点（如果前面关键字输入错误便会将焦点移至动态输入框）
 
-#if !ZWCAD2022
+#if !z2022
                 Utils.WriteToCommandLine(Convert.ToChar(_key) + _enterStr);
 #else
                 Debug.Assert(false, "中望CAD2022未测试!");
