@@ -1,30 +1,34 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFrameworks>net48</TargetFrameworks>
+        <ZWCADVersion>2025</ZWCADVersion>
+        <AssemblyName>Fs.Fox.ZwCad</AssemblyName>
     </PropertyGroup>
+    
     <!--nuget package-->
     <PropertyGroup>
-        <PackageId>IFox.CAD.ZCAD</PackageId>
-        <Title>IFox.CAD.ZCAD</Title>
-        <Product>IFox.CAD.ZCAD</Product>
+        <PackageId>IFox.CAD.ZCAD2025</PackageId>
+        <Title>IFox.CAD.ZCAD2025</Title>
+        <Product>IFox.CAD.ZCAD2025</Product>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
         <DebugType>none</DebugType>
         <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-	    <OutputPath>bin\Debug\</OutputPath>
-	    <DocumentationFile>bin\Debug\Fs.Fox.ZwCad.xml</DocumentationFile>
+        <OutputPath>bin\ZW_$(ZWCADVersion)_$(Configuration)\</OutputPath>
+        <DocumentationFile>bin\ZW_$(ZWCADVersion)_$(Configuration)\Fs.Fox.ZwCad.xml</DocumentationFile>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
         <DebugType>none</DebugType>
         <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-	    <OutputPath>bin\Release\</OutputPath>
-        <DocumentationFile>bin\Release\Fs.Fox.ZwCad.xml</DocumentationFile>
+        <OutputPath>bin\ZW_$(ZWCADVersion)_$(Configuration)\</OutputPath>
+        <DocumentationFile>bin\ZW_$(ZWCADVersion)_$(Configuration)\Fs.Fox.ZwCad.xml</DocumentationFile>
     </PropertyGroup>
 
+    <!-- 条件编译符号 -->
     <PropertyGroup>
-        <DefineConstants>$(Configuration);zcad;z2025</DefineConstants>
+        <DefineConstants>$(Configuration);zcad;z2025;ZWCAD2025;ZWCAD</DefineConstants>
         <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     </PropertyGroup>
 
@@ -34,15 +38,17 @@
             <PackagePath>\</PackagePath>
         </None>
     </ItemGroup>
+
+    <!-- ZWCAD 2025 的 NuGet 包引用 -->
     <ItemGroup>
         <PackageReference Include="ZWCAD.NetApi" Version="20.25.0" ExcludeAssets="runtime" />
         <PackageReference Include="PolySharp" Version="1.15.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-<!--        <PackageReference Include="ZWCAD.NetApi" Version="20.25.0" ExcludeAssets="runtime"/>-->
         <Reference Include="Microsoft.CSharp" />
     </ItemGroup>
     
     <Import Project="..\CADShared\CADShared.projitems" Label="Shared" />
 </Project>
+

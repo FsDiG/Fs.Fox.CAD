@@ -23,7 +23,7 @@
     </ItemGroup>
     
     <ItemGroup>
-      <ProjectReference Include="..\..\src\IFoxCAD.ZwCad\Fs.Fox.ZwCad.csproj" />
+      <ProjectReference Include="..\..\src\IFoxCAD.ZwCad\Fs.Fox.ZwCad2025.csproj" />
     </ItemGroup>
     <Import Project="..\TestShared\TestShared.projitems" Label="Shared" />
 </Project>

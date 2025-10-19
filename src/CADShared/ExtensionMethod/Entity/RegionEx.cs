@@ -11,6 +11,10 @@ namespace Fs.Fox.Cad;
 /// </summary>
 public static class RegionEx
 {
+    
+
+#if AutoCAD
+ 
     /// <summary>
     /// 面域转曲线
     /// </summary>
@@ -41,6 +45,13 @@ public static class RegionEx
             yield return cur;
         }
     }
+
+#endif
+
+
+
+
+
 
     /// <summary>
     /// 按首尾相连对曲线集合进行排序

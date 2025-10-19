@@ -7,6 +7,8 @@ using ErrorStatus = ZwSoft.ZwCAD.Runtime.ErrorStatus;
 
 namespace Fs.Fox.Cad.Assoc;
 
+#if acad
+
 /// <summary>
 /// 关联动作辅助类
 /// </summary>
@@ -52,4 +54,13 @@ public static class AssocUtils
             return ErrorStatus.InternetUnknownError;
         }
     }
+
 }
+
+
+
+
+ 
+ 
+
+#endif
