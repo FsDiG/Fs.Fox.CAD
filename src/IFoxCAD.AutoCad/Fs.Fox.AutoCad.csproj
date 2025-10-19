@@ -39,7 +39,7 @@
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(TargetFramework)' == 'net48'">
-        <DefineConstants>$(Configuration);acad;a2024</DefineConstants>
+        <DefineConstants>$(Configuration);acad;a2019</DefineConstants>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0-windows'">
