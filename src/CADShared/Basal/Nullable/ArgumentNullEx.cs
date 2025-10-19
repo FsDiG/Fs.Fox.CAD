@@ -1,5 +1,5 @@
 ﻿
-#if a2024 || zcad
+#if a2019 || zcad
 namespace Fs.Fox.Basal;
 
 /// <summary>

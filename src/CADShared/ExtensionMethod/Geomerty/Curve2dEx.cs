@@ -292,17 +292,24 @@ public static class Curve2dEx
 
         NurbCurve2dData nurbCurve2dData = nc2d.DefinitionData;
 
+        Spline curve = new Spline(
+            nurbCurve2dData.Degree,
+            nurbCurve2dData.Rational,
+            nc2d.IsClosed(),
+            nurbCurve2dData.Periodic,
+            ctlPts,
+            knots,
+            weights,
+            0,
+            nc2d.Knots.Tolerance);
+
+#if !z2022
+    curve.Type = SplineType.FitPoints;
+        //  中望CAD2022 及以前版本不支持此属性,未测试兼容问题
+#endif
+
         return
-            new Spline(
-                nurbCurve2dData.Degree,
-                nurbCurve2dData.Rational,
-                nc2d.IsClosed(),
-                nurbCurve2dData.Periodic,
-                ctlPts,
-                knots,
-                weights,
-                0,
-                nc2d.Knots.Tolerance) { Type = SplineType.FitPoints };
+            curve;
     }
 
     #endregion NurbCurve2d

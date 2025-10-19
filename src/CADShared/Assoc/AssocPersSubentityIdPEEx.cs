@@ -5,7 +5,9 @@
 /// </summary>
 public static class AssocPersSubentityIdPEEx
 {
-    private static readonly RXClass _acdbAssocPersSubentityIdPEClass = RXObject.GetClass(typeof(AssocPersSubentityIdPE));
+#if !z2022
+    // zcb 测试发现,只有中望2022版本没有这个类
+    private static readonly RXClass _acdbAssocPersSubentityIdPEClass  = RXObject.GetClass(typeof(AssocPersSubentityIdPE));
 
     /// <summary>
     /// 获取实体的个性化子对象关系Id
@@ -17,7 +19,7 @@ public static class AssocPersSubentityIdPEEx
         var intPtr = entity.QueryX(_acdbAssocPersSubentityIdPEClass);
         return RXObject.Create(intPtr, false) as AssocPersSubentityIdPE;
     }
-
+    
     /// <summary>
     /// 获取实体中所有指定类型的子对象Id
     /// </summary>
@@ -56,4 +58,6 @@ public static class AssocPersSubentityIdPEEx
 
         return result;
     }
+
+#endif
 }

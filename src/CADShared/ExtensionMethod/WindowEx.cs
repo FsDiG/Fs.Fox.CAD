@@ -84,9 +84,16 @@ public static class WindowEx
             newWidth = size.Width;
         var newHeight = Convert.ToInt32(height * scale);
         if (newHeight > size.Height)
+        {
             newHeight = size.Height;
-        // paletteSet.SetSize(new Size(newWidth, newHeight));   // 中望2025 这样调用报错找不到setsize函数
+        }
+
+#if !z2022
+// paletteSet.SetSize(new Size(newWidth, newHeight));   // 中望2025 这样调用报错找不到setsize函数
         WindowExtension.SetSize(paletteSet, new Size(newWidth, newHeight)); // 中望2025这样调用没有问题
+#else
+        Debug.Assert(false, "中望CAD2022未测试!");
+#endif
     }
     
     /// <summary>

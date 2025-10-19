@@ -1,0 +1,55 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFrameworks>net48</TargetFrameworks>
+        <ZWCADVersion>2025</ZWCADVersion>
+        <AssemblyName>Fs.Fox.ZwCad</AssemblyName>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    </PropertyGroup>
+    
+    <!--nuget package-->
+    <PropertyGroup>
+        <PackageId>IFox.CAD.ZCAD2025</PackageId>
+        <Title>IFox.CAD.ZCAD2025</Title>
+        <Product>IFox.CAD.ZCAD2025</Product>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <DebugType>none</DebugType>
+        <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+        <OutputPath>..\..\Build\ZW_$(ZWCADVersion)_$(Configuration)\</OutputPath>
+        <DocumentationFile>..\..\Build\ZW_$(ZWCADVersion)_$(Configuration)\Fs.Fox.ZwCad.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+        <DebugType>none</DebugType>
+        <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+        <OutputPath>..\..\Build\ZW_$(ZWCADVersion)_$(Configuration)\</OutputPath>
+        <DocumentationFile>..\..\Build\ZW_$(ZWCADVersion)_$(Configuration)\Fs.Fox.ZwCad.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <!-- 条件编译符号 -->
+    <PropertyGroup>
+        <DefineConstants>$(Configuration);zcad;z2025;z2025;ZWCAD</DefineConstants>
+        <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\..\LICENSE">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+    </ItemGroup>
+
+    <!-- ZWCAD 2025 的 NuGet 包引用 -->
+    <ItemGroup>
+        <PackageReference Include="ZWCAD.NetApi" Version="20.25.0" ExcludeAssets="runtime" />
+        <PackageReference Include="PolySharp" Version="1.15.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <Reference Include="Microsoft.CSharp" />
+    </ItemGroup>
+    
+    <Import Project="..\CADShared\CADShared.projitems" Label="Shared" />
+</Project>
+

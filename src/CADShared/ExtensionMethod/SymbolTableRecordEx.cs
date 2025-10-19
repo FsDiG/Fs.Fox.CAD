@@ -1,5 +1,5 @@
 ﻿
-#if a2024 || zcad
+#if a2019 || zcad
 using ArgumentNullException = Fs.Fox.Basal.ArgumentNullEx;
 #endif
 

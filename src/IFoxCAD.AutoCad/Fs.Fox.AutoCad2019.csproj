@@ -1,0 +1,65 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFrameworks>net48</TargetFrameworks>
+        <ACADVersion>2019</ACADVersion>
+        <AssemblyName>Fs.Fox.AutoCad</AssemblyName>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    </PropertyGroup>
+
+    <!--nuget package-->
+    <PropertyGroup>
+        <PackageId>IFox.CAD.ACAD2019</PackageId>
+        <Title>IFox.CAD.ACAD2019</Title>
+        <Product>IFox.CAD.ACAD2019</Product>
+        <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+        <Description>基于.NET的二次开发基础类库.源于FOX</Description>
+        <Copyright>FS</Copyright>
+        <PackageReleaseNotes>增加CI流程支持</PackageReleaseNotes>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <DebugType>none</DebugType>
+        <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+        <OutputPath>..\..\Build\AC_$(ACADVersion)_$(Configuration)\</OutputPath>
+        <DocumentationFile>..\..\Build\AC_$(ACADVersion)_$(Configuration)\Fs.Fox.AutoCad.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+        <DebugType>none</DebugType>
+        <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+        <OutputPath>..\..\Build\AC_$(ACADVersion)_$(Configuration)\</OutputPath>
+        <DocumentationFile>..\..\Build\AC_$(ACADVersion)_$(Configuration)\Fs.Fox.AutoCad.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <!-- 条件编译符号 -->
+    <PropertyGroup>
+        <DefineConstants>$(Configuration);acad;a2019;ACAD2019;ACAD</DefineConstants>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\..\LICENSE">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+    </ItemGroup>
+
+    <!-- AutoCAD 2019 的 NuGet 包引用 -->
+    <ItemGroup>
+        <PackageReference Include="AutoCAD.NET" Version="23.0.0" ExcludeAssets="runtime" />
+        <Reference Include="Microsoft.CSharp" />
+        <PackageReference Include="PolySharp" Version="1.15.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <!-- CI 构建时的自动复制 -->
+    <Target Name="CustomCopyOutputForCI" AfterTargets="Build" Condition="'$(ContinuousIntegrationBuild)' == 'true'">
+	    <Exec Command="powershell -Command &quot;New-Item -ItemType Directory -Force -Path '$(MSBuildProjectDirectory)\..\..\Build\DiGLib\DiGArchBase\x64_2019_$(Configuration)\'; Copy-Item '$(TargetDir)Fs.Fox.AutoCad.dll' -Destination '$(MSBuildProjectDirectory)\..\..\Build\DiGLib\DiGArchBase\x64_2019_$(Configuration)\'; Copy-Item '$(TargetDir)Fs.Fox.AutoCad.xml' -Destination '$(MSBuildProjectDirectory)\..\..\Build\DiGLib\DiGArchBase\x64_2019_$(Configuration)\' -ErrorAction SilentlyContinue; Copy-Item '$(TargetDir)IndexRange.dll' -Destination '$(MSBuildProjectDirectory)\..\..\Build\DiGLib\DiGArchBase\x64_2019_$(Configuration)\' -ErrorAction SilentlyContinue;&quot;" />
+    </Target>
+
+    <Import Project="..\CADShared\CADShared.projitems" Label="Shared" />
+
+</Project>
+

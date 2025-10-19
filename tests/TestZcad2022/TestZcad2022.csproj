@@ -11,15 +11,15 @@
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-        <OutputPath>..\..\Build\ZW_2025_Debug\</OutputPath>
+        <OutputPath>..\..\Build\ZW_2022_Debug\</OutputPath>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-        <OutputPath>..\..\Build\ZW_2025_Release\</OutputPath>
+        <OutputPath>..\..\Build\ZW_2022_Release\</OutputPath>
     </PropertyGroup>
 
     <PropertyGroup>
-        <DefineConstants>$(Configuration);zcad;z2025</DefineConstants>
+        <DefineConstants>$(Configuration);zcad;z2022</DefineConstants>
     </PropertyGroup>
     
     <ItemGroup>
@@ -28,11 +28,12 @@
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="System.Text.Json" Version="9.0.9" />
-        <PackageReference Include="ZWCAD.NetApi" Version="20.25.0" ExcludeAssets="runtime" />
+        <PackageReference Include="ZWCAD.NetApi" Version="20.22.0" ExcludeAssets="runtime" />
     </ItemGroup>
     
     <ItemGroup>
-      <ProjectReference Include="..\..\src\IFoxCAD.ZwCad\Fs.Fox.ZwCad2025.csproj" />
+      <ProjectReference Include="..\..\src\IFoxCAD.ZwCad\Fs.Fox.ZwCad2022.csproj" />
     </ItemGroup>
     <Import Project="..\TestShared\TestShared.projitems" Label="Shared" />
 </Project>
+

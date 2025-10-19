@@ -1,4 +1,4 @@
-﻿/// 系统引用
+/// 系统引用
 global using System;
 global using System.Collections;
 global using System.Collections.Generic;
@@ -47,3 +47,4 @@ global using Fs.Fox.Cad;
 global using Fs.Fox.Basal;
 
 global using Test;
+
