@@ -49,7 +49,7 @@
         <!-- Include Test DLL in NuGet package -->
         <None Include="..\..\Build\AC_$(ACADVersion)_$(Configuration)\TestAcad2019.dll" Condition="Exists('..\..\Build\AC_$(ACADVersion)_$(Configuration)\TestAcad2019.dll')">
             <Pack>True</Pack>
-            <PackagePath>lib\$(TargetFramework)\</PackagePath>
+            <PackagePath>lib\net48\</PackagePath>
         </None>
     </ItemGroup>
 

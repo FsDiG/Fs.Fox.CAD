@@ -45,7 +45,7 @@
         <!-- Include Test DLL in NuGet package -->
         <None Include="..\..\Build\ZW_$(ZWCADVersion)_$(Configuration)\TestZcad2025.dll" Condition="Exists('..\..\Build\ZW_$(ZWCADVersion)_$(Configuration)\TestZcad2025.dll')">
             <Pack>True</Pack>
-            <PackagePath>lib\$(TargetFramework)\</PackagePath>
+            <PackagePath>lib\net48\</PackagePath>
         </None>
     </ItemGroup>
 

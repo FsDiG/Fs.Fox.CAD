@@ -50,7 +50,7 @@
         <!-- Include Test DLL in NuGet package -->
         <None Include="..\..\Build\AC_$(ACADVersion)_$(Configuration)\TestAcad2025.dll" Condition="Exists('..\..\Build\AC_$(ACADVersion)_$(Configuration)\TestAcad2025.dll')">
             <Pack>True</Pack>
-            <PackagePath>lib\$(TargetFramework)\</PackagePath>
+            <PackagePath>lib\net8.0-windows\</PackagePath>
         </None>
     </ItemGroup>
 
