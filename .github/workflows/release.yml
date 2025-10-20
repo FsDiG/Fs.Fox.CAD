@@ -46,22 +46,16 @@ jobs:
 
           Write-Host "Updated version to $version in Directory.Build.props"
 
-      - name: Restore NuGet packages for all projects
+      - name: Restore NuGet packages for .NET 8 project
         run: |
-          echo "Restoring NuGet packages for all projects..."
-          msbuild src/IFoxCAD.AutoCad/Fs.Fox.AutoCad2019.csproj /t:Restore `
-            /p:Configuration=Release /p:Platform="Any CPU"
+          echo "Restoring NuGet packages for AutoCAD 2025..."
           dotnet restore src/IFoxCAD.AutoCad/Fs.Fox.AutoCad2025.csproj
-          msbuild src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2022.csproj /t:Restore `
-            /p:Configuration=Release /p:Platform="Any CPU"
-          msbuild src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2025.csproj /t:Restore `
-            /p:Configuration=Release /p:Platform="Any CPU"
           echo "NuGet packages restored."
 
       - name: Build AutoCAD 2019 (net48)
         run: |
           echo "Building AutoCAD 2019..."
-          msbuild src/IFoxCAD.AutoCad/Fs.Fox.AutoCad2019.csproj `
+          msbuild src/IFoxCAD.AutoCad/Fs.Fox.AutoCad2019.csproj /t:Restore;Build `
             /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
           echo "AutoCAD 2019 built."
 
@@ -75,14 +69,14 @@ jobs:
       - name: Build ZWCAD 2022 (net48)
         run: |
           echo "Building ZWCAD 2022..."
-          msbuild src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2022.csproj `
+          msbuild src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2022.csproj /t:Restore;Build `
             /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
           echo "ZWCAD 2022 built."
 
       - name: Build ZWCAD 2025 (net48)
         run: |
           echo "Building ZWCAD 2025..."
-          msbuild src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2025.csproj `
+          msbuild src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2025.csproj /t:Restore;Build `
             /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
           echo "ZWCAD 2025 built."
 
