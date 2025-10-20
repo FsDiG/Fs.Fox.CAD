@@ -83,7 +83,7 @@ jobs:
         run: |
           echo "Packing AutoCAD 2019..."
           $artifactsPath = "${{ github.workspace }}\artifacts"
-          msbuild src/IFoxCAD.AutoCad/Fs.Fox.AutoCad2019.csproj /t:Pack `
+          msbuild src/IFoxCAD.AutoCad/Fs.Fox.AutoCad2019.csproj '/t:Restore;Pack' `
             /p:Configuration=Release /p:Platform="Any CPU" `
             /p:PackageOutputPath="$artifactsPath" /verbosity:minimal
           echo "AutoCAD 2019 packed."
@@ -100,7 +100,7 @@ jobs:
         run: |
           echo "Packing ZWCAD 2022..."
           $artifactsPath = "${{ github.workspace }}\artifacts"
-          msbuild src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2022.csproj /t:Pack `
+          msbuild src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2022.csproj '/t:Restore;Pack' `
             /p:Configuration=Release /p:Platform="Any CPU" `
             /p:PackageOutputPath="$artifactsPath" /verbosity:minimal
           echo "ZWCAD 2022 packed."
@@ -109,7 +109,7 @@ jobs:
         run: |
           echo "Packing ZWCAD 2025..."
           $artifactsPath = "${{ github.workspace }}\artifacts"
-          msbuild src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2025.csproj /t:Pack `
+          msbuild src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2025.csproj '/t:Restore;Pack' `
             /p:Configuration=Release /p:Platform="Any CPU" `
             /p:PackageOutputPath="$artifactsPath" /verbosity:minimal
           echo "ZWCAD 2025 packed."
