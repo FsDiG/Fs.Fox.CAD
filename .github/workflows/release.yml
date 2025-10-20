@@ -52,7 +52,7 @@ jobs:
         run: |
           echo "Packing AutoCAD 2019..."
           $artifactsPath = "${{ github.workspace }}\artifacts"
-          msbuild src/IFoxCAD.AutoCad/TestAcad2019.csproj '/t:Restore;Pack' `
+          msbuild tests/TestAcad2019.csproj '/t:Restore;Pack' `
             /p:OutputPath="..\..\Build\AC_2019_Release\" /p:Configuration=Release /p:Platform="Any CPU" `
             /p:PackageOutputPath="$artifactsPath" /verbosity:minimal
           echo "AutoCAD 2019 packed."
@@ -61,7 +61,7 @@ jobs:
         run: |
           echo "Packing AutoCAD 2025..."
           $artifactsPath = "${{ github.workspace }}\artifacts"
-          dotnet pack src/IFoxCAD.AutoCad/TestAcad2025.csproj `
+          dotnet pack tests/TestAcad2025.csproj `
             --configuration Release --output "$artifactsPath"
           echo "AutoCAD 2025 packed."
 
@@ -69,7 +69,7 @@ jobs:
         run: |
           echo "Packing ZWCAD 2022..."
           $artifactsPath = "${{ github.workspace }}\artifacts"
-          msbuild src/IFoxCAD.ZwCad/TestZcad2022.csproj '/t:Restore;Pack' `
+          msbuild tests/TestZcad2022.csproj '/t:Restore;Pack' `
             /p:OutputPath="..\..\Build\ZW_2022_Release\" /p:Configuration=Release /p:Platform="Any CPU" `
             /p:PackageOutputPath="$artifactsPath" /verbosity:minimal
           echo "ZWCAD 2022 packed."
@@ -78,7 +78,7 @@ jobs:
         run: |
           echo "Packing ZWCAD 2025..."
           $artifactsPath = "${{ github.workspace }}\artifacts"
-          msbuild src/IFoxCAD.ZwCad/TestZcad2025.csproj '/t:Restore;Pack' `
+          msbuild tests/TestZcad2025.csproj '/t:Restore;Pack' `
             /p:OutputPath="..\..\Build\ZW_2025_Release\" /p:Configuration=Release /p:Platform="Any CPU" `
             /p:PackageOutputPath="$artifactsPath" /verbosity:minimal
           echo "ZWCAD 2025 packed."
