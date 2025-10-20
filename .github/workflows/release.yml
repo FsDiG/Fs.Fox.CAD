@@ -23,8 +23,6 @@ jobs:
 
       - name: Get version from tag
         id: get_version
-      - name: Get version from tag
-        id: get_version
         run: |
           $tag = "${{ github.ref_name }}"
           $version = $tag -replace '^v', ''
