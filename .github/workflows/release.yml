@@ -1,6 +1,7 @@
+---
 name: Release to NuGet
 
-on:
+'on':
   push:
     tags:
       - 'v*'
@@ -8,125 +9,142 @@ on:
 jobs:
   release:
     runs-on: windows-latest
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Setup .NET 8
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '8.0.x'
-    
-    - name: Setup .NET Framework (MSBuild)
-      uses: microsoft/setup-msbuild@v2
-    
-    - name: Get version from tag
-      id: get_version
-      run: |
-        $tag = "${{ github.ref_name }}"
-        $version = $tag -replace '^v', ''
-        echo "version=$version" >> $env:GITHUB_OUTPUT
-        echo "Version: $version"
-    
-    - name: Update project version
-      run: |
-        $version = "${{ steps.get_version.outputs.version }}"
-        $propsFile = "src/Directory.Build.props"
-        
-        # Read the Directory.Build.props file
-        $content = Get-Content $propsFile -Raw
-        
-        # Update the Version property
-        $content = $content -replace '<Version>.*</Version>', "<Version>$version</Version>"
-        
-        # Write back to file
-        Set-Content $propsFile -Value $content -Encoding UTF8
-        
-        Write-Host "Updated version to $version in Directory.Build.props"
-    
-    - name: Restore NuGet packages for all projects
-      run: |
-        echo "Restoring NuGet packages for all projects..."
-        dotnet restore src/IFoxCAD.AutoCad/Fs.Fox.AutoCad2019.csproj
-        dotnet restore src/IFoxCAD.AutoCad/Fs.Fox.AutoCad2025.csproj
-        dotnet restore src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2022.csproj
-        dotnet restore src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2025.csproj
-        echo "NuGet packages restored."
-    
-    - name: Build AutoCAD 2019 (net48)
-      run: |
-        echo "Building AutoCAD 2019..."
-        msbuild src/IFoxCAD.AutoCad/Fs.Fox.AutoCad2019.csproj /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
-        echo "AutoCAD 2019 built."
-    
-    - name: Build AutoCAD 2025 (net8.0-windows)
-      run: |
-        echo "Building AutoCAD 2025..."
-        dotnet build src/IFoxCAD.AutoCad/Fs.Fox.AutoCad2025.csproj --no-restore --configuration Release
-        echo "AutoCAD 2025 built."
-    
-    - name: Build ZWCAD 2022 (net48)
-      run: |
-        echo "Building ZWCAD 2022..."
-        msbuild src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2022.csproj /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
-        echo "ZWCAD 2022 built."
-    
-    - name: Build ZWCAD 2025 (net48)
-      run: |
-        echo "Building ZWCAD 2025..."
-        msbuild src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2025.csproj /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
-        echo "ZWCAD 2025 built."
 
-    - name: Pack AutoCAD 2019
-      run: |
-        echo "Packing AutoCAD 2019..."
-        msbuild src/IFoxCAD.AutoCad/Fs.Fox.AutoCad2019.csproj /t:Pack /p:Configuration=Release /p:Platform="Any CPU" /p:PackageOutputPath="..\..\artifacts" /verbosity:minimal
-        echo "AutoCAD 2019 packed."
-    
-    - name: Pack AutoCAD 2025
-      run: |
-        echo "Packing AutoCAD 2025..."
-        dotnet pack src/IFoxCAD.AutoCad/Fs.Fox.AutoCad2025.csproj --no-build --configuration Release --output ./artifacts
-        echo "AutoCAD 2025 packed."
-    
-    - name: Pack ZWCAD 2022
-      run: |
-        echo "Packing ZWCAD 2022..."
-        msbuild src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2022.csproj /t:Pack /p:Configuration=Release /p:Platform="Any CPU" /p:PackageOutputPath="..\..\artifacts" /verbosity:minimal
-        echo "ZWCAD 2022 packed."
-    
-    - name: Pack ZWCAD 2025
-      run: |
-        echo "Packing ZWCAD 2025..."
-        msbuild src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2025.csproj /t:Pack /p:Configuration=Release /p:Platform="Any CPU" /p:PackageOutputPath="..\..\artifacts" /verbosity:minimal
-        echo "ZWCAD 2025 packed."
-    
-    - name: Publish to NuGet
-      run: |
-        $packages = Get-ChildItem ./artifacts/*.nupkg
-        foreach ($package in $packages) {
-          Write-Host "Publishing $($package.Name)"
-          dotnet nuget push $package.FullName --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
-        }
-    
-    - name: Create GitHub Release
-      uses: softprops/action-gh-release@v2
-      with:
-        tag_name: ${{ github.ref_name }}
-        name: Release ${{ github.ref_name }}
-        body: |
-          Release ${{ github.ref_name }}
-          
-          ## 版本 / Version
-          ${{ steps.get_version.outputs.version }}
-          
-          ## NuGet 包 / NuGet Packages
-          - IFox.CAD.ACAD2019 (AutoCAD 2019, .NET Framework 4.8)
-          - IFox.CAD.ACAD2025 (AutoCAD 2025, .NET 8.0)
-          - IFox.CAD.ZCAD2022 (ZWCAD 2022, .NET Framework 4.8)
-          - IFox.CAD.ZCAD2025 (ZWCAD 2025, .NET Framework 4.8)
-        files: ./artifacts/*.nupkg
-        draft: false
-        prerelease: false
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Setup .NET Framework (MSBuild)
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Get version from tag
+        id: get_version
+      - name: Get version from tag
+        id: get_version
+        run: |
+          $tag = "${{ github.ref_name }}"
+          $version = $tag -replace '^v', ''
+          echo "version=$version" >> $env:GITHUB_OUTPUT
+          echo "Version: $version"
+
+      - name: Update project version
+        run: |
+          $version = "${{ steps.get_version.outputs.version }}"
+          $propsFile = "src/Directory.Build.props"
+
+          # Read the Directory.Build.props file
+          $content = Get-Content $propsFile -Raw
+
+          # Update the Version property
+          $content = $content -replace '<Version>.*</Version>', `
+            "<Version>$version</Version>"
+
+          # Write back to file
+          Set-Content $propsFile -Value $content -Encoding UTF8
+
+          Write-Host "Updated version to $version in Directory.Build.props"
+
+      - name: Restore NuGet packages for all projects
+        run: |
+          echo "Restoring NuGet packages for all projects..."
+          dotnet restore src/IFoxCAD.AutoCad/Fs.Fox.AutoCad2019.csproj
+          dotnet restore src/IFoxCAD.AutoCad/Fs.Fox.AutoCad2025.csproj
+          dotnet restore src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2022.csproj
+          dotnet restore src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2025.csproj
+          echo "NuGet packages restored."
+
+      - name: Build AutoCAD 2019 (net48)
+        run: |
+          echo "Building AutoCAD 2019..."
+          msbuild src/IFoxCAD.AutoCad/Fs.Fox.AutoCad2019.csproj `
+            /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
+          echo "AutoCAD 2019 built."
+
+      - name: Build AutoCAD 2025 (net8.0-windows)
+        run: |
+          echo "Building AutoCAD 2025..."
+          dotnet build src/IFoxCAD.AutoCad/Fs.Fox.AutoCad2025.csproj `
+            --no-restore --configuration Release
+          echo "AutoCAD 2025 built."
+
+      - name: Build ZWCAD 2022 (net48)
+        run: |
+          echo "Building ZWCAD 2022..."
+          msbuild src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2022.csproj `
+            /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
+          echo "ZWCAD 2022 built."
+
+      - name: Build ZWCAD 2025 (net48)
+        run: |
+          echo "Building ZWCAD 2025..."
+          msbuild src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2025.csproj `
+            /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
+          echo "ZWCAD 2025 built."
+
+      - name: Pack AutoCAD 2019
+        run: |
+          echo "Packing AutoCAD 2019..."
+          msbuild src/IFoxCAD.AutoCad/Fs.Fox.AutoCad2019.csproj /t:Pack `
+            /p:Configuration=Release /p:Platform="Any CPU" `
+            /p:PackageOutputPath="..\..\artifacts" /verbosity:minimal
+          echo "AutoCAD 2019 packed."
+
+      - name: Pack AutoCAD 2025
+        run: |
+          echo "Packing AutoCAD 2025..."
+          dotnet pack src/IFoxCAD.AutoCad/Fs.Fox.AutoCad2025.csproj `
+            --no-build --configuration Release --output ./artifacts
+          echo "AutoCAD 2025 packed."
+
+      - name: Pack ZWCAD 2022
+        run: |
+          echo "Packing ZWCAD 2022..."
+          msbuild src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2022.csproj /t:Pack `
+            /p:Configuration=Release /p:Platform="Any CPU" `
+            /p:PackageOutputPath="..\..\artifacts" /verbosity:minimal
+          echo "ZWCAD 2022 packed."
+
+      - name: Pack ZWCAD 2025
+        run: |
+          echo "Packing ZWCAD 2025..."
+          msbuild src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2025.csproj /t:Pack `
+            /p:Configuration=Release /p:Platform="Any CPU" `
+            /p:PackageOutputPath="..\..\artifacts" /verbosity:minimal
+          echo "ZWCAD 2025 packed."
+
+      - name: Publish to NuGet
+        run: |
+          $packages = Get-ChildItem ./artifacts/*.nupkg
+          foreach ($package in $packages) {
+            Write-Host "Publishing $($package.Name)"
+            dotnet nuget push $package.FullName `
+              --api-key ${{ secrets.NUGET_API_KEY }} `
+              --source https://api.nuget.org/v3/index.json `
+              --skip-duplicate
+          }
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
+          body: |
+            Release ${{ github.ref_name }}
+
+            ## 版本 / Version
+            ${{ steps.get_version.outputs.version }}
+
+            ## NuGet 包 / NuGet Packages
+            - IFox.CAD.ACAD2019 (AutoCAD 2019, .NET Framework 4.8)
+            - IFox.CAD.ACAD2025 (AutoCAD 2025, .NET 8.0)
+            - IFox.CAD.ZCAD2022 (ZWCAD 2022, .NET Framework 4.8)
+            - IFox.CAD.ZCAD2025 (ZWCAD 2025, .NET Framework 4.8)
+          files: ./artifacts/*.nupkg
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
