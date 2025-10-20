@@ -56,6 +56,7 @@ jobs:
       - name: Build AutoCAD 2019 (net48)
         run: |
           echo "Building AutoCAD 2019..."
+          echo "Output: Build\AC_2019_Release\"
           msbuild src/IFoxCAD.AutoCad/Fs.Fox.AutoCad2019.csproj '/t:Restore;Build' `
             /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
           echo "AutoCAD 2019 built."
@@ -63,6 +64,7 @@ jobs:
       - name: Build AutoCAD 2025 (net8.0-windows)
         run: |
           echo "Building AutoCAD 2025..."
+          echo "Output: Build\AC_2025_Release\"
           dotnet build src/IFoxCAD.AutoCad/Fs.Fox.AutoCad2025.csproj `
             --configuration Release
           echo "AutoCAD 2025 built."
@@ -70,6 +72,7 @@ jobs:
       - name: Build ZWCAD 2022 (net48)
         run: |
           echo "Building ZWCAD 2022..."
+          echo "Output: Build\ZW_2022_Release\"
           msbuild src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2022.csproj '/t:Restore;Build' `
             /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
           echo "ZWCAD 2022 built."
@@ -77,6 +80,7 @@ jobs:
       - name: Build ZWCAD 2025 (net48)
         run: |
           echo "Building ZWCAD 2025..."
+          echo "Output: Build\ZW_2025_Release\"
           msbuild src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2025.csproj '/t:Restore;Build' `
             /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
           echo "ZWCAD 2025 built."
