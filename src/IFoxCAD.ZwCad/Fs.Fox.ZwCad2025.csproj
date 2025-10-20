@@ -31,7 +31,6 @@
     <PropertyGroup>
         <DefineConstants>$(Configuration);zcad;z2025;z2025;ZWCAD</DefineConstants>
         <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
-	    <BaseOutputPath>..\..\Build\ZW_$(ZWCADVersion)_$(Configuration)\</BaseOutputPath>
     </PropertyGroup>
 
     <ItemGroup>
