@@ -1,153 +1,98 @@
 ﻿name: 构建与部署 IFoxCAD (Build and Deploy IFoxCAD)
 
 on:
-  push: # 监听所有分支的推送，以便作业条件可以检查 [build] 标签
+  push:
     branches:
-      - '**' # '**' 代表匹配所有分支
+      - main
+      - '**' # 监听所有分支以支持 [build] 标签
   pull_request:
     branches:
-      - main # 只监听目标为 main 分支的 pull request 事件
-  # 可以选择性地添加 workflow_dispatch 以支持手动触发
+      - main
   workflow_dispatch:
     inputs:
-      branch:
-        description: '要运行脚本的源代码分支'
-        required: true
-        default: 'main'
-      deploy: # 新增：用于手动触发时决定是否部署
-        description: '是否要将编译成果发布到Build仓库'
+      deploy:
+        description: '手动触发'
         required: false
         type: boolean
         default: false
 
 jobs:
-  build-and-deploy:
-    runs-on: self-hosted # 指定在自托管的 runner 上运行
-    # 条件执行：控制此 job 何时运行
-    # 1. 推送到 main 分支时
-    # 2. 创建到 main 分支的 Pull Request 时
-    # 3. 推送到任何分支且提交信息包含 [build] 关键词时
-    # 4. 手动触发时
+  build:
+    runs-on: windows-latest
+    # 简化条件：main 分支、PR 到 main、包含 [build]/[deploy] 或手动触发
     if: |
-      (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
-      (github.event_name == 'pull_request' && github.base_ref == 'main') ||
-      (github.event_name == 'push' && (contains(github.event.head_commit.message, '[build]') || contains(github.event.head_commit.message, '[deploy]'))) ||
-      (github.event_name == 'workflow_dispatch')
+      github.ref == 'refs/heads/main' ||
+      github.base_ref == 'main' ||
+      contains(github.event.head_commit.message, '[build]') ||
+      contains(github.event.head_commit.message, '[deploy]') ||
+      github.event_name == 'workflow_dispatch'
+    
+    strategy:
+      matrix:
+        include:
+          # AutoCAD 2019 - MSBuild (.NET Framework)
+          - project: TestAcad2019
+            path: tests/TestAcad2019/TestAcad2019.csproj
+            build-tool: msbuild
+            output-prefix: AC_2019
+          
+          # AutoCAD 2025 - dotnet CLI (.NET 8)
+          - project: TestAcad2025
+            path: tests/TestAcad2025/TestAcad2025.csproj
+            build-tool: dotnet
+            output-prefix: AC_2025
+          
+          # ZWCAD 2022 - MSBuild (.NET Framework)
+          - project: TestZcad2022
+            path: tests/TestZcad2022/TestZcad2022.csproj
+            build-tool: msbuild
+            output-prefix: ZW_2022
+          
+          # ZWCAD 2025 - MSBuild (.NET Framework)
+          - project: TestZcad2025
+            path: tests/TestZcad2025/TestZcad2025.csproj
+            build-tool: msbuild
+            output-prefix: ZW_2025
+
+    name: Build ${{ matrix.project }}
 
     steps:
-      # 检查是否需要部署
-      - name: Set deployment flag
-        id: set-deploy
-        run: |
-          $should_deploy = $false
-          if ('${{ github.event_name }}' -eq 'push' -and '${{ contains(github.event.head_commit.message, '[deploy]') }}' -eq 'true') {
-            $should_deploy = $true
-          }
-          elseif ('${{ github.event_name }}' -eq 'workflow_dispatch' -and '${{ github.event.inputs.deploy }}' -eq 'true') {
-            $should_deploy = $true
-          }
-          echo "deploy=$should_deploy" >> $env:GITHUB_OUTPUT
-        shell: powershell
+      - uses: actions/checkout@v4
 
-      
-      - name: Checkout repository
-        uses: actions/checkout@v4 # 检出当前 IFoxCAD 仓库的代码
+      - name: Setup .NET 8
+        if: matrix.build-tool == 'dotnet'
+        uses: actions/setup-dotnet@v4
         with:
-          # 如果是手动触发 (workflow_dispatch)，则检出 inputs.branch 指定的分支。
-          # 对于其他事件 (如 push, pull_request)，则使用事件关联的 github.ref。
-          ref: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.branch || github.ref }}
-          # 不再指定 path，直接检出到根目录
+          dotnet-version: '8.0.x'
 
       - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v1.1 # 设置 MSBuild 环境，用于编译 C#/.NET 项目
+        if: matrix.build-tool == 'msbuild'
+        uses: microsoft/setup-msbuild@v2
 
-      - name: Clear Build folders
+      # MSBuild 项目（AutoCAD 2019, ZWCAD 2022, ZWCAD 2025）
+      - name: Build with MSBuild (Debug & Release)
+        if: matrix.build-tool == 'msbuild'
         run: |
-          echo "Preparing Build folders..."
-          # Create directory structure if it doesn't exist
-          New-Item -ItemType Directory -Force -Path "Build\DiGLib\DiGArchBase\x64_2019_Debug" | Out-Null
-          New-Item -ItemType Directory -Force -Path "Build\DiGLib\DiGArchBase\x64_2019_Release" | Out-Null
+          Write-Host "Building ${{ matrix.project }} - Debug..."
+          msbuild ${{ matrix.path }} '/t:Restore;Build' `
+            /p:OutputPath="..\..\Build\${{ matrix.output-prefix }}_Debug\" `
+            /p:Configuration=Debug /p:Platform="Any CPU" /verbosity:minimal
           
-          # If we're deploying, we don't want to delete existing files in the target repo
-          if ('${{ steps.set-deploy.outputs.deploy }}' -ne 'true') {
-            # Remove all content from these directories (only if not deploying)
-            Remove-Item -Path "Build\DiGLib\DiGArchBase\x64_2019_Debug\*" -Force -Recurse -ErrorAction SilentlyContinue
-            Remove-Item -Path "Build\DiGLib\DiGArchBase\x64_2019_Release\*" -Force -Recurse -ErrorAction SilentlyContinue
-          }
+          Write-Host "Building ${{ matrix.project }} - Release..."
+          msbuild ${{ matrix.path }} '/t:Restore;Build' `
+            /p:OutputPath="..\..\Build\${{ matrix.output-prefix }}_Release\" `
+            /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
           
-          echo "Build folders prepared."
-        shell: powershell
+          Write-Host "${{ matrix.project }} builds completed."
 
-        # 如果需要部署，先检出目标仓库
-      - name: Checkout target repository
-        if: steps.set-deploy.outputs.deploy == 'true'
-        uses: actions/checkout@v4
-        with:
-          repository: FsDiG/Build # 目标 Build 仓库的名称
-          token: ${{ secrets.BUILD_REPO_TOKEN }} # 用于推送到此目标仓库的 PAT
-          path: Build # 将目标仓库克隆到此子目录
-
-
-      - name: Restore NuGet packages
+      # dotnet CLI 项目（AutoCAD 2025）
+      - name: Build with dotnet CLI (Debug & Release)
+        if: matrix.build-tool == 'dotnet'
         run: |
-          echo "Restoring NuGet packages..."         
-          msbuild src/IFoxCAD.AutoCad/Fs.Fox.AutoCad.csproj /t:Restore
-          echo "NuGet packages restored."
-
-      # --- 开始项目编译 --- 
-      # 注意：编译顺序为先 Debug 后 Release
-      # 编译 IFoxCAD.sln 中的 Fs.Fox.AutoCad.csproj 项目
-
-      - name: Build project Fs.Fox.AutoCad (Debug)
-        run: |
-          echo "Building Fs.Fox.AutoCad project (Debug)..."
-          msbuild src/IFoxCAD.AutoCad/Fs.Fox.AutoCad.csproj /p:Configuration=Debug /p:Platform="Any CPU" /p:ContinuousIntegrationBuild=true /p:OutputPath="..\Build\DiGLib\DiGArchBase\x64_2019_Debug" /verbosity:minimal
-          echo "Fs.Fox.AutoCad project (Debug) built."
-
-      - name: Build project Fs.Fox.AutoCad (Release)
-        run: |
-          echo "Building Fs.Fox.AutoCad project (Release)..."
-          msbuild src/IFoxCAD.AutoCad/Fs.Fox.AutoCad.csproj /p:Configuration=Release /p:Platform="Any CPU" /p:ContinuousIntegrationBuild=true /p:OutputPath="..\Build\DiGLib\DiGArchBase\x64_2019_Release" /verbosity:minimal
-          echo "Fs.Fox.AutoCad project (Release) built."
-
-      # --- 结束项目编译 --- 
-
-      # --- 开始部署到 Build Repo (根据新的条件执行) --- 
-
-      - name: Commit and push to Build repository
-        if: steps.set-deploy.outputs.deploy == 'true'
-        env:
-          ORIGINAL_COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
-        run: |
-          cd Build
+          Write-Host "Building ${{ matrix.project }} - Debug..."
+          dotnet build ${{ matrix.path }} --configuration Debug
           
-          # 设置Git配置
-          git config i18n.commitEncoding UTF-8
-          git config --global user.name "GitHub Action Bot"
-          git config --global user.email "actions-bot@github.com"
+          Write-Host "Building ${{ matrix.project }} - Release..."
+          dotnet build ${{ matrix.path }} --configuration Release
           
-          # 暂存所有更改
-          git add .
-          
-          # 检查是否有实际的文件更改需要提交
-          git diff --staged --quiet
-          if ($LASTEXITCODE -ne 0) {
-            # 构建提交消息
-            $source_commit_msg_from_env = $env:ORIGINAL_COMMIT_MESSAGE
-            $commit_message_content = "Update IFoxCAD build artifacts (SHA: ${{ github.sha }}, Branch: ${{ github.ref_name }})`n`n$source_commit_msg_from_env"
-            
-            # 写入提交消息到文件
-            $commit_message_file = "commit_message.txt"
-            Set-Content -Path $commit_message_file -Value $commit_message_content -Encoding UTF8 -NoNewline -Force
-            
-            # 提交并推送
-            git commit -F $commit_message_file
-            git push
-            
-            Write-Host "Changes committed and pushed to Build repository."
-          } else {
-            Write-Host "No changes to commit in target repository."
-          }
-        shell: powershell
-      # --- 结束部署到 Build Repo ---
-
+          Write-Host "${{ matrix.project }} builds completed."
