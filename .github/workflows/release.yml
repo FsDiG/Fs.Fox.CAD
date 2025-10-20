@@ -58,7 +58,7 @@ jobs:
           echo "Building AutoCAD 2019..."
           echo "Output: Build\AC_2019_Release\"
           msbuild src/IFoxCAD.AutoCad/Fs.Fox.AutoCad2019.csproj '/t:Restore;Build' `
-            /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
+            /p:OutputPath="..\..\Build\AC_2019_Release\" /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
           echo "AutoCAD 2019 built."
 
       - name: Build AutoCAD 2025 (net8.0-windows)
@@ -74,7 +74,7 @@ jobs:
           echo "Building ZWCAD 2022..."
           echo "Output: Build\ZW_2022_Release\"
           msbuild src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2022.csproj '/t:Restore;Build' `
-            /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
+            /p:OutputPath="..\..\Build\ZW_2022_Release\" /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
           echo "ZWCAD 2022 built."
 
       - name: Build ZWCAD 2025 (net48)
@@ -82,7 +82,7 @@ jobs:
           echo "Building ZWCAD 2025..."
           echo "Output: Build\ZW_2025_Release\"
           msbuild src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2025.csproj '/t:Restore;Build' `
-            /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
+            /p:OutputPath="..\..\Build\ZW_2025_Release\" /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
           echo "ZWCAD 2025 built."
 
       - name: Pack AutoCAD 2019
