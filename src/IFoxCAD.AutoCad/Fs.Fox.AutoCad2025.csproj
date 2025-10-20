@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net8.0-windows</TargetFrameworks>
+        <TargetFrameworks>net8.0-windows7.0</TargetFrameworks>
         <ACADVersion>2025</ACADVersion>
         <AssemblyName>Fs.Fox.AutoCad</AssemblyName>
         <EnableDynamicLoading>true</EnableDynamicLoading>
@@ -50,7 +50,7 @@
         <!-- Include Test DLL in NuGet package -->
         <None Include="..\..\Build\AC_$(ACADVersion)_$(Configuration)\TestAcad2025.dll" Condition="Exists('..\..\Build\AC_$(ACADVersion)_$(Configuration)\TestAcad2025.dll')">
             <Pack>True</Pack>
-            <PackagePath>lib\net8.0-windows\</PackagePath>
+            <PackagePath>lib\net8.0-windows7.0\</PackagePath>
         </None>
     </ItemGroup>
 
