@@ -86,32 +86,36 @@ jobs:
       - name: Pack AutoCAD 2019
         run: |
           echo "Packing AutoCAD 2019..."
+          $artifactsPath = "${{ github.workspace }}\artifacts"
           msbuild src/IFoxCAD.AutoCad/Fs.Fox.AutoCad2019.csproj /t:Pack `
             /p:Configuration=Release /p:Platform="Any CPU" `
-            /p:PackageOutputPath="..\..\artifacts" /verbosity:minimal
+            /p:PackageOutputPath="$artifactsPath" /verbosity:minimal
           echo "AutoCAD 2019 packed."
 
       - name: Pack AutoCAD 2025
         run: |
           echo "Packing AutoCAD 2025..."
+          $artifactsPath = "${{ github.workspace }}\artifacts"
           dotnet pack src/IFoxCAD.AutoCad/Fs.Fox.AutoCad2025.csproj `
-            --no-build --configuration Release --output ./artifacts
+            --no-build --configuration Release --output "$artifactsPath"
           echo "AutoCAD 2025 packed."
 
       - name: Pack ZWCAD 2022
         run: |
           echo "Packing ZWCAD 2022..."
+          $artifactsPath = "${{ github.workspace }}\artifacts"
           msbuild src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2022.csproj /t:Pack `
             /p:Configuration=Release /p:Platform="Any CPU" `
-            /p:PackageOutputPath="..\..\artifacts" /verbosity:minimal
+            /p:PackageOutputPath="$artifactsPath" /verbosity:minimal
           echo "ZWCAD 2022 packed."
 
       - name: Pack ZWCAD 2025
         run: |
           echo "Packing ZWCAD 2025..."
+          $artifactsPath = "${{ github.workspace }}\artifacts"
           msbuild src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2025.csproj /t:Pack `
             /p:Configuration=Release /p:Platform="Any CPU" `
-            /p:PackageOutputPath="..\..\artifacts" /verbosity:minimal
+            /p:PackageOutputPath="$artifactsPath" /verbosity:minimal
           echo "ZWCAD 2025 packed."
 
       - name: Publish to NuGet
