@@ -49,10 +49,13 @@ jobs:
       - name: Restore NuGet packages for all projects
         run: |
           echo "Restoring NuGet packages for all projects..."
-          dotnet restore src/IFoxCAD.AutoCad/Fs.Fox.AutoCad2019.csproj
+          msbuild src/IFoxCAD.AutoCad/Fs.Fox.AutoCad2019.csproj /t:Restore `
+            /p:Configuration=Release /p:Platform="Any CPU"
           dotnet restore src/IFoxCAD.AutoCad/Fs.Fox.AutoCad2025.csproj
-          dotnet restore src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2022.csproj
-          dotnet restore src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2025.csproj
+          msbuild src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2022.csproj /t:Restore `
+            /p:Configuration=Release /p:Platform="Any CPU"
+          msbuild src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2025.csproj /t:Restore `
+            /p:Configuration=Release /p:Platform="Any CPU"
           echo "NuGet packages restored."
 
       - name: Build AutoCAD 2019 (net48)
@@ -97,7 +100,7 @@ jobs:
           echo "Packing AutoCAD 2025..."
           $artifactsPath = "${{ github.workspace }}\artifacts"
           dotnet pack src/IFoxCAD.AutoCad/Fs.Fox.AutoCad2025.csproj `
-            --no-build --configuration Release --output "$artifactsPath"
+            --configuration Release --output "$artifactsPath"
           echo "AutoCAD 2025 packed."
 
       - name: Pack ZWCAD 2022
