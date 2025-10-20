@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFrameworks>net48</TargetFrameworks>
         <ZWCADVersion>2025</ZWCADVersion>
@@ -41,6 +41,11 @@
         <None Include="..\..\readme.md">
             <Pack>True</Pack>
             <PackagePath>\</PackagePath>
+        </None>
+        <!-- Include Test DLL in NuGet package -->
+        <None Include="..\..\Build\ZW_$(ZWCADVersion)_$(Configuration)\TestZcad2025.dll" Condition="Exists('..\..\Build\ZW_$(ZWCADVersion)_$(Configuration)\TestZcad2025.dll')">
+            <Pack>True</Pack>
+            <PackagePath>lib\$(TargetFramework)\</PackagePath>
         </None>
     </ItemGroup>
 

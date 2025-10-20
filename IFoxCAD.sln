@@ -30,6 +30,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\build-and-deploy.md = .github\workflows\build-and-deploy.md
 		.github\workflows\build-and-deploy.yml = .github\workflows\build-and-deploy.yml
+		.github\workflows\release.md = .github\workflows\release.md
+		.github\workflows\release.yml = .github\workflows\release.yml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fs.Fox.ZwCad2022", "src\IFoxCAD.ZwCad\Fs.Fox.ZwCad2022.csproj", "{2A1B3C4D-5E6F-7A8B-9C0D-1E2F3A4B5C6D}"

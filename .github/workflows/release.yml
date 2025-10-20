@@ -1,4 +1,4 @@
----
+﻿---
 name: Release to NuGet
 
 'on':
@@ -61,6 +61,13 @@ jobs:
             /p:OutputPath="..\..\Build\AC_2019_Release\" /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
           echo "AutoCAD 2019 built."
 
+      - name: Build TestAcad2019
+        run: |
+          echo "Building TestAcad2019..."
+          msbuild tests/TestAcad2019/TestAcad2019.csproj '/t:Restore;Build' `
+            /p:OutputPath="..\..\Build\AC_2019_Release\" /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
+          echo "TestAcad2019 built."
+
       - name: Build AutoCAD 2025 (net8.0-windows)
         run: |
           echo "Building AutoCAD 2025..."
@@ -68,6 +75,13 @@ jobs:
           dotnet build src/IFoxCAD.AutoCad/Fs.Fox.AutoCad2025.csproj `
             --configuration Release
           echo "AutoCAD 2025 built."
+
+      - name: Build TestAcad2025
+        run: |
+          echo "Building TestAcad2025..."
+          dotnet build tests/TestAcad2025/TestAcad2025.csproj `
+            --configuration Release
+          echo "TestAcad2025 built."
 
       - name: Build ZWCAD 2022 (net48)
         run: |
@@ -77,6 +91,13 @@ jobs:
             /p:OutputPath="..\..\Build\ZW_2022_Release\" /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
           echo "ZWCAD 2022 built."
 
+      - name: Build TestZcad2022
+        run: |
+          echo "Building TestZcad2022..."
+          msbuild tests/TestZcad2022/TestZcad2022.csproj '/t:Restore;Build' `
+            /p:OutputPath="..\..\Build\ZW_2022_Release\" /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
+          echo "TestZcad2022 built."
+
       - name: Build ZWCAD 2025 (net48)
         run: |
           echo "Building ZWCAD 2025..."
@@ -84,6 +105,13 @@ jobs:
           msbuild src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2025.csproj '/t:Restore;Build' `
             /p:OutputPath="..\..\Build\ZW_2025_Release\" /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
           echo "ZWCAD 2025 built."
+
+      - name: Build TestZcad2025
+        run: |
+          echo "Building TestZcad2025..."
+          msbuild tests/TestZcad2025/TestZcad2025.csproj '/t:Restore;Build' `
+            /p:OutputPath="..\..\Build\ZW_2025_Release\" /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
+          echo "TestZcad2025 built."
 
       - name: Pack AutoCAD 2019
         run: |

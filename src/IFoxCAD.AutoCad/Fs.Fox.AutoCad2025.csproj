@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFrameworks>net8.0-windows</TargetFrameworks>
@@ -46,6 +46,11 @@
         <None Include="..\..\readme.md">
             <Pack>True</Pack>
             <PackagePath>\</PackagePath>
+        </None>
+        <!-- Include Test DLL in NuGet package -->
+        <None Include="..\..\Build\AC_$(ACADVersion)_$(Configuration)\TestAcad2025.dll" Condition="Exists('..\..\Build\AC_$(ACADVersion)_$(Configuration)\TestAcad2025.dll')">
+            <Pack>True</Pack>
+            <PackagePath>lib\$(TargetFramework)\</PackagePath>
         </None>
     </ItemGroup>
 
