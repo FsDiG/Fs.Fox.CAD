@@ -50,35 +50,55 @@ jobs:
 
       - name: Pack AutoCAD 2019
         run: |
+          echo "Building TestAcad2019..."
+          msbuild tests/TestAcad2019/TestAcad2019.csproj '/t:Restore;Build' `
+            /p:OutputPath="..\..\Build\AC_2019_Release\" /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
+          echo "TestAcad2019 built."
+
           echo "Packing AutoCAD 2019..."
           $artifactsPath = "${{ github.workspace }}\artifacts"
-          msbuild tests/TestAcad2019/TestAcad2019.csproj '/t:Restore;Pack' `
+          msbuild src/IFoxCAD.AutoCad/Fs.Fox.AutoCad2019.csproj '/t:Restore;Pack' `
             /p:OutputPath="..\..\Build\AC_2019_Release\" /p:Configuration=Release /p:Platform="Any CPU" `
             /p:PackageOutputPath="$artifactsPath" /verbosity:minimal
           echo "AutoCAD 2019 packed."
 
       - name: Pack AutoCAD 2025
         run: |
+          echo "Building TestAcad2025..."
+          dotnet build tests/TestAcad2025/TestAcad2025.csproj `
+            --configuration Release
+          echo "TestAcad2025 built."
+
           echo "Packing AutoCAD 2025..."
           $artifactsPath = "${{ github.workspace }}\artifacts"
-          dotnet pack tests/TestAcad2025/TestAcad2025.csproj `
+          dotnet pack src/IFoxCAD.AutoCad/Fs.Fox.AutoCad2025.csproj `
             --configuration Release --output "$artifactsPath"
           echo "AutoCAD 2025 packed."
 
       - name: Pack ZWCAD 2022
         run: |
+          echo "Building TestZcad2022..."
+          msbuild tests/TestZcad2022/TestZcad2022.csproj '/t:Restore;Build' `
+            /p:OutputPath="..\..\Build\ZW_2022_Release\" /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
+          echo "TestZcad2022 built."
+
           echo "Packing ZWCAD 2022..."
           $artifactsPath = "${{ github.workspace }}\artifacts"
-          msbuild tests/TestZcad2022/TestZcad2022.csproj '/t:Restore;Pack' `
+          msbuild src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2022.csproj '/t:Restore;Pack' `
             /p:OutputPath="..\..\Build\ZW_2022_Release\" /p:Configuration=Release /p:Platform="Any CPU" `
             /p:PackageOutputPath="$artifactsPath" /verbosity:minimal
           echo "ZWCAD 2022 packed."
 
       - name: Pack ZWCAD 2025
         run: |
+          echo "Building TestZcad2025..."
+          msbuild tests/TestZcad2025/TestZcad2025.csproj '/t:Restore;Build' `
+            /p:OutputPath="..\..\Build\ZW_2025_Release\" /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
+          echo "TestZcad2025 built."
+
           echo "Packing ZWCAD 2025..."
           $artifactsPath = "${{ github.workspace }}\artifacts"
-          msbuild tests/TestZcad2025/TestZcad2025.csproj '/t:Restore;Pack' `
+          msbuild src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2025.csproj '/t:Restore;Pack' `
             /p:OutputPath="..\..\Build\ZW_2025_Release\" /p:Configuration=Release /p:Platform="Any CPU" `
             /p:PackageOutputPath="$artifactsPath" /verbosity:minimal
           echo "ZWCAD 2025 packed."
