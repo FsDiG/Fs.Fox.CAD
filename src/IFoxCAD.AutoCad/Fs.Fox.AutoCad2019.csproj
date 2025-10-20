@@ -42,6 +42,10 @@
             <Pack>True</Pack>
             <PackagePath>\</PackagePath>
         </None>
+        <None Include="..\..\readme.md">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
     </ItemGroup>
 
     <!-- AutoCAD 2019 的 NuGet 包引用 -->
