@@ -59,7 +59,11 @@ git push origin v1.0.0
 |------------|------|---------|
 | `NUGET_API_KEY` | NuGet.org API 密钥 | 访问 https://www.nuget.org/account/apikeys 创建 |
 
-### 添加 Secret 步骤
+### 详细配置步骤
+
+请参考：[NuGet API Key 配置指南](../../docs/NuGet_API_Key_Setup.md)
+
+快速步骤：
 1. 进入 GitHub 仓库页面
 2. 点击 `Settings` → `Secrets and variables` → `Actions`
 3. 点击 `New repository secret`
