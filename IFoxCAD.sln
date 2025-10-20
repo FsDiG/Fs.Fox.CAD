@@ -40,6 +40,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestZcad2022", "tests\TestZ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestZcad2025", "tests\TestZcad2025\TestZcad2025.csproj", "{0D666D1D-AF07-3129-6E6C-D801558E5667}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestAcad2019", "tests\TestAcad2019\TestAcad2019.csproj", "{DBEC8790-AC05-0884-60AD-84A0A93B4165}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -74,6 +76,10 @@ Global
 		{0D666D1D-AF07-3129-6E6C-D801558E5667}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D666D1D-AF07-3129-6E6C-D801558E5667}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D666D1D-AF07-3129-6E6C-D801558E5667}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBEC8790-AC05-0884-60AD-84A0A93B4165}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBEC8790-AC05-0884-60AD-84A0A93B4165}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBEC8790-AC05-0884-60AD-84A0A93B4165}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBEC8790-AC05-0884-60AD-84A0A93B4165}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -88,6 +94,7 @@ Global
 		{3B2C4D5E-6F7A-8B9C-0D1E-2F3A4B5C6D7E} = {AE09C3B7-58AC-4A68-9884-1F93FDA5D785}
 		{5D6E7F8A-9B0C-1D2E-3F4A-5B6C7D8E9F0A} = {46F3EDA8-A6D1-4707-8D03-731CADB41A56}
 		{0D666D1D-AF07-3129-6E6C-D801558E5667} = {46F3EDA8-A6D1-4707-8D03-731CADB41A56}
+		{DBEC8790-AC05-0884-60AD-84A0A93B4165} = {46F3EDA8-A6D1-4707-8D03-731CADB41A56}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {57CA0128-08DE-436F-B9F1-82C64F49BF67}
@@ -102,5 +109,6 @@ Global
 		src\CADShared\CADShared.projitems*{9a0a144f-6820-4d15-9d39-43b7298195e3}*SharedItemsImports = 5
 		src\CADShared\CADShared.projitems*{a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6e}*SharedItemsImports = 5
 		tests\TestShared\TestShared.projitems*{ced63d2d-0af6-4831-806d-5e8e9b0d0a07}*SharedItemsImports = 13
+		tests\TestShared\TestShared.projitems*{dbec8790-ac05-0884-60ad-84a0a93b4165}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal
