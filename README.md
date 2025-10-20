@@ -4,6 +4,28 @@
 官方地址: [IFoxCAD: 基于.NET的Cad二次开发类库](https://gitee.com/inspirefunction/ifoxcad)
 或参考本分支下的:  IFoxCAD 说明.md
 
+## 发布与 NuGet 包
+
+本项目支持通过 GitHub Actions 自动发布 NuGet 包。当推送版本标签时，将自动构建并发布到 NuGet.org。
+
+### 可用的 NuGet 包
+
+- **IFox.CAD.ACAD2019** - AutoCAD 2019 支持 (.NET Framework 4.8)
+- **IFox.CAD.ACAD2025** - AutoCAD 2025 支持 (.NET 8.0)
+- **IFox.CAD.ZCAD2022** - 中望CAD 2022 支持 (.NET Framework 4.8)
+- **IFox.CAD.ZCAD2025** - 中望CAD 2025 支持 (.NET Framework 4.8)
+
+### 如何发布新版本
+
+```bash
+# 创建版本标签
+git tag v1.0.0
+
+# 推送标签到远程仓库
+git push origin v1.0.0
+```
+
+详细说明请参考：[发布工作流程文档](.github/workflows/release.md)
 
 ## Fs.Fox 分支说明
 
