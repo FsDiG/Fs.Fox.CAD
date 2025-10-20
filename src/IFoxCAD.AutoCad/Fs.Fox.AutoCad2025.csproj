@@ -36,6 +36,7 @@
     <!-- 条件编译符号 -->
     <PropertyGroup>
         <DefineConstants>$(Configuration);acad;a2025;ACAD2025;ACAD</DefineConstants>
+	    <BaseOutputPath>..\..\Build\AC_$(ACADVersion)_$(Configuration)\</BaseOutputPath>
     </PropertyGroup>
 
     <ItemGroup>
