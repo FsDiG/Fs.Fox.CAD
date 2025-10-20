@@ -7,21 +7,14 @@ name: Release to NuGet
       - 'v*'
 
 jobs:
-  release:
+  # 第一个作业：准备版本信息
+  prepare:
     runs-on: windows-latest
-    permissions:
-      contents: write
-
+    outputs:
+      version: ${{ steps.get_version.outputs.version }}
+    
     steps:
       - uses: actions/checkout@v4
-
-      - name: Setup .NET 8
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '8.0.x'
-
-      - name: Setup .NET Framework (MSBuild)
-        uses: microsoft/setup-msbuild@v2
 
       - name: Get version from tag
         id: get_version
@@ -35,73 +28,142 @@ jobs:
         run: |
           $version = "${{ steps.get_version.outputs.version }}"
           $propsFile = "src/Directory.Build.props"
-
-          # Read the Directory.Build.props file
           $content = Get-Content $propsFile -Raw
-
-          # Update the Version property
-          $content = $content -replace '<Version>.*</Version>', `
-            "<Version>$version</Version>"
-
-          # Write back to file
+          $content = $content -replace '<Version>.*</Version>', "<Version>$version</Version>"
           Set-Content $propsFile -Value $content -Encoding UTF8
-
           Write-Host "Updated version to $version in Directory.Build.props"
 
-      - name: Pack AutoCAD 2019
-        run: |
-          echo "Building TestAcad2019..."
-          msbuild tests/TestAcad2019/TestAcad2019.csproj '/t:Restore;Build' `
-            /p:OutputPath="..\..\Build\AC_2019_Release\" /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
-          echo "TestAcad2019 built."
+      - name: Upload updated props file
+        uses: actions/upload-artifact@v4
+        with:
+          name: updated-props
+          path: src/Directory.Build.props
 
-          echo "Packing AutoCAD 2019..."
+  # 第二个作业：并行构建和打包
+  build-and-pack:
+    needs: prepare
+    runs-on: windows-latest
+    
+    strategy:
+      matrix:
+        include:
+          # AutoCAD 2019 - MSBuild (.NET Framework 4.8)
+          - cad: AutoCAD
+            version: 2019
+            test-project: tests/TestAcad2019/TestAcad2019.csproj
+            pack-project: src/IFoxCAD.AutoCad/Fs.Fox.AutoCad2019.csproj
+            build-tool: msbuild
+            output-path: Build\AC_2019_Release
+            framework: .NET Framework 4.8
+          
+          # AutoCAD 2025 - dotnet CLI (.NET 8.0)
+          - cad: AutoCAD
+            version: 2025
+            test-project: tests/TestAcad2025/TestAcad2025.csproj
+            pack-project: src/IFoxCAD.AutoCad/Fs.Fox.AutoCad2025.csproj
+            build-tool: dotnet
+            output-path: Build\AC_2025_Release
+            framework: .NET 8.0
+          
+          # ZWCAD 2022 - MSBuild (.NET Framework 4.8)
+          - cad: ZWCAD
+            version: 2022
+            test-project: tests/TestZcad2022/TestZcad2022.csproj
+            pack-project: src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2022.csproj
+            build-tool: msbuild
+            output-path: Build\ZW_2022_Release
+            framework: .NET Framework 4.8
+          
+          # ZWCAD 2025 - MSBuild (.NET Framework 4.8)
+          - cad: ZWCAD
+            version: 2025
+            test-project: tests/TestZcad2025/TestZcad2025.csproj
+            pack-project: src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2025.csproj
+            build-tool: msbuild
+            output-path: Build\ZW_2025_Release
+            framework: .NET Framework 4.8
+
+    name: Pack ${{ matrix.cad }} ${{ matrix.version }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download updated props file
+        uses: actions/download-artifact@v4
+        with:
+          name: updated-props
+          path: src/
+
+      - name: Setup .NET 8
+        if: matrix.build-tool == 'dotnet'
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Setup MSBuild
+        if: matrix.build-tool == 'msbuild'
+        uses: microsoft/setup-msbuild@v2
+
+      # MSBuild 项目的构建和打包
+      - name: Build and Pack with MSBuild
+        if: matrix.build-tool == 'msbuild'
+        run: |
           $artifactsPath = "${{ github.workspace }}\artifacts"
-          msbuild src/IFoxCAD.AutoCad/Fs.Fox.AutoCad2019.csproj '/t:Restore;Pack' `
-            /p:OutputPath="..\..\Build\AC_2019_Release\" /p:Configuration=Release /p:Platform="Any CPU" `
+          
+          Write-Host "Building test project for ${{ matrix.cad }} ${{ matrix.version }}..."
+          msbuild ${{ matrix.test-project }} '/t:Restore;Build' `
+            /p:OutputPath="..\..\${{ matrix.output-path }}\" `
+            /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
+          
+          Write-Host "Packing ${{ matrix.cad }} ${{ matrix.version }}..."
+          msbuild ${{ matrix.pack-project }} '/t:Restore;Pack' `
+            /p:OutputPath="..\..\${{ matrix.output-path }}\" `
+            /p:Configuration=Release /p:Platform="Any CPU" `
             /p:PackageOutputPath="$artifactsPath" /verbosity:minimal
-          echo "AutoCAD 2019 packed."
+          
+          Write-Host "${{ matrix.cad }} ${{ matrix.version }} packed successfully."
 
-      - name: Pack AutoCAD 2025
+      # dotnet CLI 项目的构建和打包
+      - name: Build and Pack with dotnet CLI
+        if: matrix.build-tool == 'dotnet'
         run: |
-          echo "Building TestAcad2025..."
-          dotnet build tests/TestAcad2025/TestAcad2025.csproj `
-            --configuration Release
-          echo "TestAcad2025 built."
-
-          echo "Packing AutoCAD 2025..."
           $artifactsPath = "${{ github.workspace }}\artifacts"
-          dotnet pack src/IFoxCAD.AutoCad/Fs.Fox.AutoCad2025.csproj `
-            --configuration Release --output "$artifactsPath"
-          echo "AutoCAD 2025 packed."
+          
+          Write-Host "Building test project for ${{ matrix.cad }} ${{ matrix.version }}..."
+          dotnet build ${{ matrix.test-project }} --configuration Release
+          
+          Write-Host "Packing ${{ matrix.cad }} ${{ matrix.version }}..."
+          dotnet pack ${{ matrix.pack-project }} --configuration Release --output "$artifactsPath"
+          
+          Write-Host "${{ matrix.cad }} ${{ matrix.version }} packed successfully."
 
-      - name: Pack ZWCAD 2022
-        run: |
-          echo "Building TestZcad2022..."
-          msbuild tests/TestZcad2022/TestZcad2022.csproj '/t:Restore;Build' `
-            /p:OutputPath="..\..\Build\ZW_2022_Release\" /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
-          echo "TestZcad2022 built."
+      - name: Upload NuGet package
+        uses: actions/upload-artifact@v4
+        with:
+          name: package-${{ matrix.cad }}-${{ matrix.version }}
+          path: artifacts/*.nupkg
 
-          echo "Packing ZWCAD 2022..."
-          $artifactsPath = "${{ github.workspace }}\artifacts"
-          msbuild src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2022.csproj '/t:Restore;Pack' `
-            /p:OutputPath="..\..\Build\ZW_2022_Release\" /p:Configuration=Release /p:Platform="Any CPU" `
-            /p:PackageOutputPath="$artifactsPath" /verbosity:minimal
-          echo "ZWCAD 2022 packed."
+  # 第三个作业：发布到 NuGet 和创建 GitHub Release
+  publish:
+    needs: [prepare, build-and-pack]
+    runs-on: windows-latest
+    permissions:
+      contents: write
 
-      - name: Pack ZWCAD 2025
-        run: |
-          echo "Building TestZcad2025..."
-          msbuild tests/TestZcad2025/TestZcad2025.csproj '/t:Restore;Build' `
-            /p:OutputPath="..\..\Build\ZW_2025_Release\" /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
-          echo "TestZcad2025 built."
+    steps:
+      - uses: actions/checkout@v4
 
-          echo "Packing ZWCAD 2025..."
-          $artifactsPath = "${{ github.workspace }}\artifacts"
-          msbuild src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2025.csproj '/t:Restore;Pack' `
-            /p:OutputPath="..\..\Build\ZW_2025_Release\" /p:Configuration=Release /p:Platform="Any CPU" `
-            /p:PackageOutputPath="$artifactsPath" /verbosity:minimal
-          echo "ZWCAD 2025 packed."
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Download all packages
+        uses: actions/download-artifact@v4
+        with:
+          pattern: package-*
+          path: artifacts/
+          merge-multiple: true
 
       - name: Publish to NuGet
         run: |
@@ -123,7 +185,7 @@ jobs:
             Release ${{ github.ref_name }}
 
             ## 版本 / Version
-            ${{ steps.get_version.outputs.version }}
+            ${{ needs.prepare.outputs.version }}
 
             ## NuGet 包 / NuGet Packages
             - IFox.CAD.ACAD2019 (AutoCAD 2019, .NET Framework 4.8)
