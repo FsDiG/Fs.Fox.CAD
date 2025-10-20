@@ -1,4 +1,4 @@
-﻿name: 构建与部署 IFoxCAD (Build and Deploy IFoxCAD)
+﻿name: 构建检查
 
 on:
   push:
@@ -31,25 +31,25 @@ jobs:
       matrix:
         include:
           # AutoCAD 2019 - MSBuild (.NET Framework)
-          - project: TestAcad2019
+          - project: AutoCAD 2019 And Test
             path: tests/TestAcad2019/TestAcad2019.csproj
             build-tool: msbuild
             output-prefix: AC_2019
           
           # AutoCAD 2025 - dotnet CLI (.NET 8)
-          - project: TestAcad2025
+          - project: AutoCAD 2025 And Test
             path: tests/TestAcad2025/TestAcad2025.csproj
             build-tool: dotnet
             output-prefix: AC_2025
           
           # ZWCAD 2022 - MSBuild (.NET Framework)
-          - project: TestZcad2022
+          - project: ZWCAD 2022 And Test
             path: tests/TestZcad2022/TestZcad2022.csproj
             build-tool: msbuild
             output-prefix: ZW_2022
           
           # ZWCAD 2025 - MSBuild (.NET Framework)
-          - project: TestZcad2025
+          - project: ZWCAD 2025 And Test
             path: tests/TestZcad2025/TestZcad2025.csproj
             build-tool: msbuild
             output-prefix: ZW_2025
