@@ -51,7 +51,7 @@ jobs:
           - cad: AutoCAD
             version: 2019
             test-project: tests/TestAcad2019/TestAcad2019.csproj
-            pack-project: src/IFoxCAD.AutoCad/Fs.Fox.AutoCad2019.csproj
+            pack-project: src/Fs.Fox.AutoCad2019/Fs.Fox.AutoCad2019.csproj
             build-tool: msbuild
             output-path: Build\AC_2019_Release
             framework: .NET Framework 4.8
@@ -60,7 +60,7 @@ jobs:
           - cad: AutoCAD
             version: 2025
             test-project: tests/TestAcad2025/TestAcad2025.csproj
-            pack-project: src/IFoxCAD.AutoCad/Fs.Fox.AutoCad2025.csproj
+            pack-project: src/Fs.Fox.AutoCad2025/Fs.Fox.AutoCad2025.csproj
             build-tool: dotnet
             output-path: Build\AC_2025_Release
             framework: .NET 8.0
@@ -69,7 +69,7 @@ jobs:
           - cad: ZWCAD
             version: 2022
             test-project: tests/TestZcad2022/TestZcad2022.csproj
-            pack-project: src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2022.csproj
+            pack-project: src/Fs.Fox.ZwCad2022/Fs.Fox.ZwCad2022.csproj
             build-tool: msbuild
             output-path: Build\ZW_2022_Release
             framework: .NET Framework 4.8
@@ -78,7 +78,7 @@ jobs:
           - cad: ZWCAD
             version: 2025
             test-project: tests/TestZcad2025/TestZcad2025.csproj
-            pack-project: src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2025.csproj
+            pack-project: src/Fs.Fox.ZwCad2025/Fs.Fox.ZwCad2025.csproj
             build-tool: msbuild
             output-path: Build\ZW_2025_Release
             framework: .NET Framework 4.8

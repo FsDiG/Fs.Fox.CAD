@@ -42,9 +42,9 @@
 	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	  </PackageReference>
 	</ItemGroup>
-
+	
 	<ItemGroup>
-	  	<ProjectReference Include="..\..\src\IFoxCAD.AutoCad\Fs.Fox.AutoCad2019.csproj" />
+	  <ProjectReference Include="..\..\src\Fs.Fox.AutoCad2019\Fs.Fox.AutoCad2019.csproj" />
 	</ItemGroup>
 	<Import Project="..\TestShared\TestShared.projitems" Label="Shared" />
 </Project>

@@ -34,7 +34,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <None Include="..\..\LICENSE">
+	    <Compile Include="..\..\src\IFoxCAD.ZwCad\GlobalUsings.cs">
+		    <Pack>True</Pack>
+		    <PackagePath>\</PackagePath>
+	    </Compile>
+		<None Include="..\..\LICENSE">
             <Pack>True</Pack>
             <PackagePath>\</PackagePath>
         </None>

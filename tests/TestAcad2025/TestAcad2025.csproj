@@ -41,14 +41,13 @@
 	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	  </PackageReference>
 	</ItemGroup>
+	
+	<ItemGroup>
+	  <ProjectReference Include="..\..\src\Fs.Fox.AutoCad2025\Fs.Fox.AutoCad2025.csproj" />
+	</ItemGroup>
 <!--	<ItemGroup>-->
 <!--		<Reference Include="System.Web" />-->
 <!--		<Reference Include="System.Web.Extensions" />-->
 <!--	</ItemGroup>-->
-
-
-	<ItemGroup>
-	  	<ProjectReference Include="..\..\src\IFoxCAD.AutoCad\Fs.Fox.AutoCad2025.csproj" />
-	</ItemGroup>
 	<Import Project="..\TestShared\TestShared.projitems" Label="Shared" />
 </Project>
