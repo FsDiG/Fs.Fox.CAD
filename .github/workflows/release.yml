@@ -14,7 +14,7 @@ jobs:
       version: ${{ steps.get_version.outputs.version }}
     
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Get version from tag
         id: get_version
@@ -86,7 +86,7 @@ jobs:
     name: Pack ${{ matrix.cad }} ${{ matrix.version }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Download updated props file
         uses: actions/download-artifact@v4
@@ -96,7 +96,7 @@ jobs:
 
       - name: Setup .NET 8
         if: matrix.build-tool == 'dotnet'
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: '8.0.x'
 
@@ -151,10 +151,10 @@ jobs:
       contents: write
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Setup .NET 8
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: '8.0.x'
 
