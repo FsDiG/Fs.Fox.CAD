@@ -18,6 +18,7 @@ on:
 
 jobs:
   build:
+    name: Build All Targets
     runs-on: self-hosted
     # 简化条件：main 分支、PR 到 main、包含 [build]/[deploy] 或手动触发
     if: |
@@ -26,73 +27,53 @@ jobs:
       contains(github.event.head_commit.message, '[build]') ||
       contains(github.event.head_commit.message, '[deploy]') ||
       github.event_name == 'workflow_dispatch'
-    
-    strategy:
-      matrix:
-        include:
-          # AutoCAD 2019 - MSBuild (.NET Framework)
-          - project: AutoCAD 2019 And Test
-            path: tests/TestAcad2019/TestAcad2019.csproj
-            build-tool: msbuild
-            output-prefix: AC_2019
-          
-          # AutoCAD 2025 - dotnet CLI (.NET 8)
-          - project: AutoCAD 2025 And Test
-            path: tests/TestAcad2025/TestAcad2025.csproj
-            build-tool: dotnet
-            output-prefix: AC_2025
-          
-          # ZWCAD 2022 - MSBuild (.NET Framework)
-          - project: ZWCAD 2022 And Test
-            path: tests/TestZcad2022/TestZcad2022.csproj
-            build-tool: msbuild
-            output-prefix: ZW_2022
-          
-          # ZWCAD 2025 - MSBuild (.NET Framework)
-          - project: ZWCAD 2025 And Test
-            path: tests/TestZcad2025/TestZcad2025.csproj
-            build-tool: msbuild
-            output-prefix: ZW_2025
-
-    name: Build ${{ matrix.project }}
 
     steps:
       - uses: actions/checkout@v5
 
-      - name: Setup .NET 8
-        if: matrix.build-tool == 'dotnet'
+      - name: Setup .NET
         uses: actions/setup-dotnet@v5
-        with:
-          dotnet-version: '8.0.x'
 
       - name: Setup MSBuild
-        if: matrix.build-tool == 'msbuild'
         uses: microsoft/setup-msbuild@v2
 
-      # MSBuild 项目（AutoCAD 2019, ZWCAD 2022, ZWCAD 2025）
-      - name: Build with MSBuild (Debug & Release)
-        if: matrix.build-tool == 'msbuild'
+      - name: Build all (Debug & Release)
         run: |
-          Write-Host "Building ${{ matrix.project }} - Debug..."
-          msbuild ${{ matrix.path }} '/t:Restore;Build' `
-            /p:OutputPath="..\..\Build\${{ matrix.output-prefix }}_Debug\" `
-            /p:Configuration=Debug /p:Platform="Any CPU" /verbosity:minimal
-          
-          Write-Host "Building ${{ matrix.project }} - Release..."
-          msbuild ${{ matrix.path }} '/t:Restore;Build' `
-            /p:OutputPath="..\..\Build\${{ matrix.output-prefix }}_Release\" `
-            /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
-          
-          Write-Host "${{ matrix.project }} builds completed."
+          $buildRoot = "${{ github.workspace }}\Build"
+          New-Item -ItemType Directory -Force -Path $buildRoot | Out-Null
 
-      # dotnet CLI 项目（AutoCAD 2025）
-      - name: Build with dotnet CLI (Debug & Release)
-        if: matrix.build-tool == 'dotnet'
-        run: |
-          Write-Host "Building ${{ matrix.project }} - Debug..."
-          dotnet build ${{ matrix.path }} --configuration Debug
-          
-          Write-Host "Building ${{ matrix.project }} - Release..."
-          dotnet build ${{ matrix.path }} --configuration Release
-          
-          Write-Host "${{ matrix.project }} builds completed."
+          function Build-MSBuild([string]$csproj, [string]$prefix) {
+            Write-Host "Building $prefix - Debug..."
+            msbuild $csproj '/t:Restore;Build' `
+              /p:OutputPath="..\..\Build\${prefix}_Debug\" `
+              /p:Configuration=Debug /p:Platform="Any CPU" /verbosity:minimal
+            
+            Write-Host "Building $prefix - Release..."
+            msbuild $csproj '/t:Restore;Build' `
+              /p:OutputPath="..\..\Build\${prefix}_Release\" `
+              /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
+            
+            Write-Host "$prefix builds completed."
+          }
+
+          function Build-DotNet([string]$csproj, [string]$prefix) {
+            Write-Host "Building $prefix - Debug..."
+            dotnet build $csproj --configuration Debug
+            
+            Write-Host "Building $prefix - Release..."
+            dotnet build $csproj --configuration Release
+            
+            Write-Host "$prefix builds completed."
+          }
+
+          # AutoCAD2019 - MSBuild (.NET Framework)
+          Build-MSBuild "tests/TestAcad2019/TestAcad2019.csproj" "AC_2019"
+
+          # AutoCAD2025 - dotnet CLI (.NET8)
+          Build-DotNet "tests/TestAcad2025/TestAcad2025.csproj" "AC_2025"
+
+          # ZWCAD2022 - MSBuild (.NET Framework)
+          Build-MSBuild "tests/TestZcad2022/TestZcad2022.csproj" "ZW_2022"
+
+          # ZWCAD2025 - MSBuild (.NET Framework)
+          Build-MSBuild "tests/TestZcad2025/TestZcad2025.csproj" "ZW_2025"
