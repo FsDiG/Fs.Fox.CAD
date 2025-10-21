@@ -5,6 +5,7 @@
         <ACADVersion>2019</ACADVersion>
         <AssemblyName>Fs.Fox.AutoCad</AssemblyName>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+	    <IntermediateOutputPath>..\..\objs\AC_$(ACADVersion)_$(Configuration)\obj\</IntermediateOutputPath>
     </PropertyGroup>
 
     <!--nuget package-->

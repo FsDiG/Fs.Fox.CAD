@@ -409,3 +409,4 @@ healthchecksdb
 #ifoxcad
 **/Properties/launchSettings.json
 /Build
+/objs
