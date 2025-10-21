@@ -97,8 +97,6 @@ jobs:
       - name: Setup .NET 8
         if: matrix.build-tool == 'dotnet'
         uses: actions/setup-dotnet@v5
-        with:
-          dotnet-version: '8.0.x'
 
       - name: Setup MSBuild
         if: matrix.build-tool == 'msbuild'
@@ -155,8 +153,6 @@ jobs:
 
       - name: Setup .NET 8
         uses: actions/setup-dotnet@v5
-        with:
-          dotnet-version: '8.0.x'
 
       - name: Download all packages
         uses: actions/download-artifact@v4
