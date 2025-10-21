@@ -3,7 +3,7 @@
 		<LangVersion>preview</LangVersion>
 		<Nullable>enable</Nullable>
 
-		<TargetFramework>net8.0-windows</TargetFramework>
+		<TargetFramework>net8.0-windows7.0</TargetFramework>
 		<UseWPF>true</UseWPF>
 		<UseWindowsForms>true</UseWindowsForms>
 		<PlatformTarget>x64</PlatformTarget>

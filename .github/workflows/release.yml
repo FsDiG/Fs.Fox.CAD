@@ -1,0 +1,199 @@
+﻿---
+name: Release to NuGet
+
+'on':
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  # 第一个作业：准备版本信息
+  prepare:
+    runs-on: windows-latest
+    outputs:
+      version: ${{ steps.get_version.outputs.version }}
+    
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get version from tag
+        id: get_version
+        run: |
+          $tag = "${{ github.ref_name }}"
+          $version = $tag -replace '^v', ''
+          echo "version=$version" >> $env:GITHUB_OUTPUT
+          echo "Version: $version"
+
+      - name: Update project version
+        run: |
+          $version = "${{ steps.get_version.outputs.version }}"
+          $propsFile = "src/Directory.Build.props"
+          $content = Get-Content $propsFile -Raw
+          $content = $content -replace '<Version>.*</Version>', "<Version>$version</Version>"
+          Set-Content $propsFile -Value $content -Encoding UTF8
+          Write-Host "Updated version to $version in Directory.Build.props"
+
+      - name: Upload updated props file
+        uses: actions/upload-artifact@v4
+        with:
+          name: updated-props
+          path: src/Directory.Build.props
+
+  # 第二个作业：并行构建和打包
+  build-and-pack:
+    needs: prepare
+    runs-on: windows-latest
+    
+    strategy:
+      matrix:
+        include:
+          # AutoCAD 2019 - MSBuild (.NET Framework 4.8)
+          - cad: AutoCAD
+            version: 2019
+            test-project: tests/TestAcad2019/TestAcad2019.csproj
+            pack-project: src/IFoxCAD.AutoCad/Fs.Fox.AutoCad2019.csproj
+            build-tool: msbuild
+            output-path: Build\AC_2019_Release
+            framework: .NET Framework 4.8
+          
+          # AutoCAD 2025 - dotnet CLI (.NET 8.0)
+          - cad: AutoCAD
+            version: 2025
+            test-project: tests/TestAcad2025/TestAcad2025.csproj
+            pack-project: src/IFoxCAD.AutoCad/Fs.Fox.AutoCad2025.csproj
+            build-tool: dotnet
+            output-path: Build\AC_2025_Release
+            framework: .NET 8.0
+          
+          # ZWCAD 2022 - MSBuild (.NET Framework 4.8)
+          - cad: ZWCAD
+            version: 2022
+            test-project: tests/TestZcad2022/TestZcad2022.csproj
+            pack-project: src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2022.csproj
+            build-tool: msbuild
+            output-path: Build\ZW_2022_Release
+            framework: .NET Framework 4.8
+          
+          # ZWCAD 2025 - MSBuild (.NET Framework 4.8)
+          - cad: ZWCAD
+            version: 2025
+            test-project: tests/TestZcad2025/TestZcad2025.csproj
+            pack-project: src/IFoxCAD.ZwCad/Fs.Fox.ZwCad2025.csproj
+            build-tool: msbuild
+            output-path: Build\ZW_2025_Release
+            framework: .NET Framework 4.8
+
+    name: Pack ${{ matrix.cad }} ${{ matrix.version }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download updated props file
+        uses: actions/download-artifact@v4
+        with:
+          name: updated-props
+          path: src/
+
+      - name: Setup .NET 8
+        if: matrix.build-tool == 'dotnet'
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Setup MSBuild
+        if: matrix.build-tool == 'msbuild'
+        uses: microsoft/setup-msbuild@v2
+
+      # MSBuild 项目的构建和打包
+      - name: Build and Pack with MSBuild
+        if: matrix.build-tool == 'msbuild'
+        run: |
+          $artifactsPath = "${{ github.workspace }}\artifacts"
+          
+          Write-Host "Building test project for ${{ matrix.cad }} ${{ matrix.version }}..."
+          msbuild ${{ matrix.test-project }} '/t:Restore;Build' `
+            /p:OutputPath="..\..\${{ matrix.output-path }}\" `
+            /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
+          
+          Write-Host "Packing ${{ matrix.cad }} ${{ matrix.version }}..."
+          msbuild ${{ matrix.pack-project }} '/t:Restore;Pack' `
+            /p:OutputPath="..\..\${{ matrix.output-path }}\" `
+            /p:Configuration=Release /p:Platform="Any CPU" `
+            /p:PackageOutputPath="$artifactsPath" /verbosity:minimal
+          
+          Write-Host "${{ matrix.cad }} ${{ matrix.version }} packed successfully."
+
+      # dotnet CLI 项目的构建和打包
+      - name: Build and Pack with dotnet CLI
+        if: matrix.build-tool == 'dotnet'
+        run: |
+          $artifactsPath = "${{ github.workspace }}\artifacts"
+          
+          Write-Host "Building test project for ${{ matrix.cad }} ${{ matrix.version }}..."
+          dotnet build ${{ matrix.test-project }} --configuration Release
+          
+          Write-Host "Packing ${{ matrix.cad }} ${{ matrix.version }}..."
+          dotnet pack ${{ matrix.pack-project }} --configuration Release --output "$artifactsPath"
+          
+          Write-Host "${{ matrix.cad }} ${{ matrix.version }} packed successfully."
+
+      - name: Upload NuGet package
+        uses: actions/upload-artifact@v4
+        with:
+          name: package-${{ matrix.cad }}-${{ matrix.version }}
+          path: artifacts/*.nupkg
+
+  # 第三个作业：发布到 NuGet 和创建 GitHub Release
+  publish:
+    needs: [prepare, build-and-pack]
+    runs-on: windows-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Download all packages
+        uses: actions/download-artifact@v4
+        with:
+          pattern: package-*
+          path: artifacts/
+          merge-multiple: true
+
+      - name: Publish to NuGet
+        run: |
+          $packages = Get-ChildItem ./artifacts/*.nupkg
+          foreach ($package in $packages) {
+            Write-Host "Publishing $($package.Name)"
+            dotnet nuget push $package.FullName `
+              --api-key ${{ secrets.NUGET_API_KEY }} `
+              --source https://api.nuget.org/v3/index.json `
+              --skip-duplicate
+          }
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
+          body: |
+            Release ${{ github.ref_name }}
+
+            ## 版本 / Version
+            ${{ needs.prepare.outputs.version }}
+
+            ## NuGet 包 / NuGet Packages
+            - IFox.CAD.ACAD2019 (AutoCAD 2019, .NET Framework 4.8)
+            - IFox.CAD.ACAD2025 (AutoCAD 2025, .NET 8.0)
+            - IFox.CAD.ZCAD2022 (ZWCAD 2022, .NET Framework 4.8)
+            - IFox.CAD.ZCAD2025 (ZWCAD 2025, .NET Framework 4.8)
+          files: ./artifacts/*.nupkg
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.BUILD_REPO_TOKEN }}
