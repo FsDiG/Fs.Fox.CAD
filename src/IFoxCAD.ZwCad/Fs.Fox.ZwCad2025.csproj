@@ -4,7 +4,6 @@
         <ZWCADVersion>2025</ZWCADVersion>
         <AssemblyName>Fs.Fox.ZwCad</AssemblyName>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-	    <IntermediateOutputPath>..\..\objs\ZW_$(ZWCADVersion)_$(Configuration)\obj\</IntermediateOutputPath>
     </PropertyGroup>
     
     <!--nuget package-->

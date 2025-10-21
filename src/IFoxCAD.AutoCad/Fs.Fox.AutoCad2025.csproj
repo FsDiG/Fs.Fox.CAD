@@ -1,12 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net8.0-windows7.0</TargetFramework>
+        <TargetFrameworks>net8.0-windows7.0</TargetFrameworks>
         <ACADVersion>2025</ACADVersion>
         <AssemblyName>Fs.Fox.AutoCad</AssemblyName>
         <EnableDynamicLoading>true</EnableDynamicLoading>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-	    <IntermediateOutputPath>..\..\objs\AC_$(ACADVersion)_$(Configuration)\obj\</IntermediateOutputPath>
     </PropertyGroup>
 
     <!--nuget package-->
