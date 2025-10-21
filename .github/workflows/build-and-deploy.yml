@@ -18,7 +18,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: self-hosted
     # 简化条件：main 分支、PR 到 main、包含 [build]/[deploy] 或手动触发
     if: |
       github.ref == 'refs/heads/main' ||
