@@ -9,7 +9,7 @@ name: Release to NuGet
 jobs:
   # 第一个作业：准备版本信息
   prepare:
-    runs-on: windows-latest
+    runs-on: self-hosted
     outputs:
       version: ${{ steps.get_version.outputs.version }}
     
@@ -42,7 +42,7 @@ jobs:
   # 第二个作业：并行构建和打包
   build-and-pack:
     needs: prepare
-    runs-on: windows-latest
+    runs-on: self-hosted
     
     strategy:
       matrix:
@@ -146,7 +146,7 @@ jobs:
   # 第三个作业：发布到 NuGet 和创建 GitHub Release
   publish:
     needs: [prepare, build-and-pack]
-    runs-on: windows-latest
+    runs-on: self-hosted
     permissions:
       contents: write
 
