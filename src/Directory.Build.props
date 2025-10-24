@@ -32,7 +32,6 @@
         <PackageTags>IFox;Fs.Fox;CAD;AutoCAD;ZWCAD;中望CAD;二次开发;Plugin;C#;.NET;ARX</PackageTags>
         <PackageReadmeFile>readme.md</PackageReadmeFile>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
-        <PackageIcon>icon.png</PackageIcon>
     </PropertyGroup>
 
 </Project>
