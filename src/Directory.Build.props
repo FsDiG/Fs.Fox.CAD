@@ -21,17 +21,18 @@
     </PropertyGroup>
 
     <PropertyGroup><!--nuget包信息-->
-        <Company>InspireFunction</Company>
-        <Authors>xsfhlzh;vicwjb;liuqihong;DYH</Authors>
-        <Copyright>InspireFunction</Copyright>
-        <Description>基于.NET的二次开发基本类库.</Description>
+        <Company>FS Team</Company>
+        <Authors>xsfhlzh;vicwjb;liuqihong;DYH;FS Team</Authors>
+        <Copyright>FS Team</Copyright>
+        <Description>基于.NET的CAD二次开发基础类库，支持AutoCAD和中望CAD多个版本。提供完整的API封装，简化CAD插件开发。源于IFoxCAD项目。</Description>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-        <PackageProjectUrl>https://gitee.com/inspirefunction/ifoxcad</PackageProjectUrl>
-        <RepositoryUrl>https://gitee.com/inspirefunction/ifoxcad.git</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/FsDiG/Fs.Fox.CAD</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/FsDiG/Fs.Fox.CAD.git</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
-        <PackageTags>IFox;cad;AutoCad;C#;NET;ZwCad</PackageTags>
+        <PackageTags>IFox;Fs.Fox;CAD;AutoCAD;ZWCAD;中望CAD;二次开发;Plugin;C#;.NET;ARX</PackageTags>
         <PackageReadmeFile>readme.md</PackageReadmeFile>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <PackageIcon>icon.png</PackageIcon>
     </PropertyGroup>
 
 </Project>
