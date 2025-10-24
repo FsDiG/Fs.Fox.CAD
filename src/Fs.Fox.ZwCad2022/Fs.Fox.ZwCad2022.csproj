@@ -9,8 +9,12 @@
     <!--nuget package-->
     <PropertyGroup>
         <PackageId>IFox.CAD.ZCAD2022</PackageId>
-        <Title>IFox.CAD.ZCAD2022</Title>
+        <Title>IFox.CAD for 中望CAD 2022</Title>
         <Product>IFox.CAD.ZCAD2022</Product>
+        <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+        <Description>基于.NET的中望CAD二次开发基础类库，支持中望CAD 2022（.NET Framework 4.8）。提供完整的CAD二次开发API封装，简化ZWCAD插件开发。源于IFoxCAD项目，由Fs团队维护。</Description>
+        <Copyright>FS Team</Copyright>
+        <PackageReleaseNotes>增加CI流程支持，完善NuGet包信息</PackageReleaseNotes>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

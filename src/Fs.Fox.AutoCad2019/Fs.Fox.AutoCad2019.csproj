@@ -10,12 +10,12 @@
     <!--nuget package-->
     <PropertyGroup>
         <PackageId>IFox.CAD.ACAD2019</PackageId>
-        <Title>IFox.CAD.ACAD2019</Title>
+        <Title>IFox.CAD for AutoCAD 2019</Title>
         <Product>IFox.CAD.ACAD2019</Product>
         <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
-        <Description>基于.NET的二次开发基础类库.源于FOX</Description>
-        <Copyright>FS</Copyright>
-        <PackageReleaseNotes>增加CI流程支持</PackageReleaseNotes>
+        <Description>基于.NET的AutoCAD二次开发基础类库，支持AutoCAD 2019（.NET Framework 4.8）。提供完整的CAD二次开发API封装，简化AutoCAD插件开发。源于IFoxCAD项目，由Fs团队维护。</Description>
+        <Copyright>FS Team</Copyright>
+        <PackageReleaseNotes>增加CI流程支持，完善NuGet包信息</PackageReleaseNotes>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
