@@ -133,29 +133,6 @@ git push origin v1.0.0
 3. **灵活维护**: 独立维护，快速响应需求变化
 4. **持续更新**: 定期更新，紧跟 CAD 平台最新版本
 
-## 文档和资源
-
-### 使用文档
-
-- 📚 **IFoxCAD 入门教程**: [IFoxCAD类库从入门到精通](https://www.kdocs.cn/l/cc6ZXSa0vMgD)
-- 📖 **API 文档**: [IFoxCAD API 文档](https://inspirefunction.github.io/ifoxdoc/)（需要科学上网）
-- 🗺️ **架构说明**: 参考 [关于IFoxCAD的架构说明](./docs/关于IFoxCAD的架构说明.md)
-- 🔧 **编译说明**: 参考 [编译说明.md](./编译说明.md)
-
-### 社区交流
-
-- 💬 **QQ 群**: [点击加入 IFoxCad 交流群](https://qm.qq.com/q/tJZELgdzHi)
-- 📱 **QQ 频道**: [点击加入 CAD二次开发频道](https://pd.qq.com/s/2wmmkv4c2)
-
-## 贡献指南
-
-我们欢迎各种形式的贡献：
-
-1. 🐛 **报告 Bug**: 在 [Issues](https://github.com/FsDiG/Fs.Fox.CAD/issues) 中提交问题
-2. 💡 **提出建议**: 分享您的想法和改进建议
-3. 📝 **改进文档**: 帮助完善文档和示例代码
-4. 🔀 **提交 PR**: Fork 项目，修复问题或添加功能
-
 ## 开发路线
 
 ### 当前版本
@@ -165,24 +142,6 @@ git push origin v1.0.0
 - ✅ GitHub Actions 自动化发布
 - ✅ NuGet 包发布
 
-### 计划中
-
-- [ ] 评估第三方 IndexRange 包优化（C# 原生 IndexRange 在 Standard 2.1 引入，Framework 4.8 仅支持 Standard 2.0）
-- [ ] 增加更多示例代码
-- [ ] 完善单元测试覆盖率
-- [ ] 优化性能和内存使用
-
 ## 许可证
 
 本项目采用 [MIT License](LICENSE) 开源协议。
-
-## 致谢
-
-- 感谢 **雪山飞狐（又狐哥）** 创建了最初的开源库
-- 感谢 **落魄山人** 整理和重构了 IFoxCAD
-- 感谢 **Inspire Function（跃动方程）** 组织的支持
-- 感谢所有贡献者的付出
-
----
-
-**注**: 本项目基于 IFoxCAD 开发，重要更改会尽量回馈给上游项目。
