@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
     inputs:
       deploy:
-        description: '手动触发'
+        description: '是否执行部署操作'
         required: false
         type: boolean
         default: false
