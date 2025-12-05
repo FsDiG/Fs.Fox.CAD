@@ -1,5 +1,5 @@
-﻿using System.Security;
-#if a2019 || zcad
+using System.Security;
+#if AC_2019 || ZWCAD
 using ArgumentNullException = Fs.Fox.Basal.ArgumentNullEx;
 #endif
 
@@ -43,7 +43,7 @@ public static class Env
 
     #region Preferences
 
-#if !zcad // 中望官方的问题
+#if !ZWCAD // 中望官方的问题
     /// <summary>
     /// 获取当前配置的数据
     /// </summary>
@@ -476,7 +476,7 @@ public static class Env
 
     #region 环境变量
 
-#if acad
+#if ACAD
     [SuppressUnmanagedCodeSecurity]
     [DllImport("accore.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.Cdecl,
         EntryPoint = "acedGetEnv")]
@@ -488,7 +488,7 @@ public static class Env
     private static extern int AcedSetEnv(string? envName, StringBuilder newValue);
 #endif
 
-#if gcad
+#if GCAD
     [System.Security.SuppressUnmanagedCodeSecurity]
     [DllImport("gced.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.Cdecl, EntryPoint =
  "gcedGetEnv")]
@@ -501,7 +501,7 @@ public static class Env
 #endif
 
     // TODO: 中望没有测试,此处仅为不报错;本工程所有含有"中望"均存在问题
-#if zcad
+#if ZWCAD
     [System.Security.SuppressUnmanagedCodeSecurity]
     [DllImport("zced.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.Cdecl, EntryPoint =
  "zcedGetEnv")]

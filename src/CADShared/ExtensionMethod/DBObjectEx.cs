@@ -1,4 +1,4 @@
-﻿namespace Fs.Fox.Cad;
+namespace Fs.Fox.Cad;
 
 /// <summary>
 /// 实体对象扩展类

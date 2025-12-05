@@ -1,4 +1,4 @@
-﻿namespace Fs.Fox.Cad;
+namespace Fs.Fox.Cad;
 
 /// <summary>
 /// 选择集过滤器抽象类

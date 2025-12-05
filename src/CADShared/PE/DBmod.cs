@@ -1,4 +1,4 @@
-﻿namespace Fs.Fox.Cad;
+namespace Fs.Fox.Cad;
 
 /// <summary>
 /// 获取数据库修改状态

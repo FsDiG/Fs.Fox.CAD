@@ -1,5 +1,5 @@
-﻿#if true 
-#if acad
+#if true 
+#if ACAD
 namespace Fs.Fox.Cad;
 
 // 作者: [VB.net]福萝卜  莱昂纳多·胖子

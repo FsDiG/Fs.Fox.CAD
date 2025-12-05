@@ -1,4 +1,4 @@
-﻿namespace Fs.Fox.Cad;
+namespace Fs.Fox.Cad;
 
 /// <summary>
 /// 托盘类扩展

@@ -1,4 +1,4 @@
-﻿namespace Fs.Fox.Cad;
+namespace Fs.Fox.Cad;
 
 /// <summary>
 /// 工具类
@@ -6,7 +6,7 @@
 // ReSharper disable once InconsistentNaming
 public static class IFoxUtils
 {
-#if acad
+#if ACAD
     /// <summary>
     /// 刷新图层状态，在修改图层的锁定或冻结状态后使用
     /// </summary>

@@ -1,4 +1,4 @@
-﻿using System.Drawing;
+using System.Drawing;
 using System.Windows.Forms;
 using Window = System.Windows.Window;
 
@@ -88,7 +88,7 @@ public static class WindowEx
             newHeight = size.Height;
         }
 
-#if !z2022
+#if !ZW_2022
 // paletteSet.SetSize(new Size(newWidth, newHeight));   // 中望2025 这样调用报错找不到setsize函数
         WindowExtension.SetSize(paletteSet, new Size(newWidth, newHeight)); // 中望2025这样调用没有问题
 #else

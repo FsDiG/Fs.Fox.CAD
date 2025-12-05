@@ -1120,7 +1120,7 @@ public static class EditorEx
 
         editor.SetImpliedSelection(ids);
 
-#if zcad
+#if ZWCAD
         dynamic com = Acap.ZcadApplication;
 #else
         dynamic com = Acap.AcadApplication;

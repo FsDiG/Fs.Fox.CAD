@@ -1,4 +1,4 @@
-﻿namespace Fs.Fox.Cad;
+namespace Fs.Fox.Cad;
 
 /// <summary>
 /// 数据库扩展函数
@@ -115,13 +115,13 @@ public static class DatabaseEx
         if (Path.GetExtension(saveAsFile)!.ToLower().Contains("dxf"))
         {
             // dxf用任何版本号都会报错
-#if acad || gcad
+#if ACAD || GCAD
             db.DxfOut(saveAsFile, 7, true);
 #endif
 
-#if zcad // 中望这里没有测试
+#if ZWCAD // 中望这里没有测试
 
-    #if z2022
+    #if ZW_2022
                 Debug.Assert(false, "此处逻辑未处理, 只编译过");
     #else
                 db.DxfOut(saveAsFile, 7, version);

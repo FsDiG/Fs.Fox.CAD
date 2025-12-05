@@ -1,4 +1,4 @@
-﻿using Autodesk.AutoCAD.Geometry;
+using Autodesk.AutoCAD.Geometry;
 
 namespace GeometryExtensions
 {

@@ -19,7 +19,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <DefineConstants>$(Configuration);zcad;z2025</DefineConstants>
+        <DefineConstants>$(Configuration);ZWCAD;ZW_2025</DefineConstants>
     </PropertyGroup>
     
     <ItemGroup>

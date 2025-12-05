@@ -1,13 +1,13 @@
-﻿#if acad
+#if ACAD
 using ErrorStatus = Autodesk.AutoCAD.Runtime.ErrorStatus;
-#elif zcad
+#elif ZWCAD
 using ErrorStatus = ZwSoft.ZwCAD.Runtime.ErrorStatus;
 #endif
 
 
 namespace Fs.Fox.Cad.Assoc;
 
-#if acad
+#if ACAD
 
 /// <summary>
 /// 关联动作辅助类

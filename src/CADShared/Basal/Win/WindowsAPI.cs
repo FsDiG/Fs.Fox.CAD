@@ -1,6 +1,6 @@
-﻿#pragma warning disable CS1591 // 缺少对公共可见类型或成员的 XML 注释
+#pragma warning disable CS1591 // 缺少对公共可见类型或成员的 XML 注释
 #define Marshal
-#if a2019 || zcad
+#if AC_2019 || ZWCAD
 using ArgumentNullException = Fs.Fox.Basal.ArgumentNullEx;
 #endif
 namespace Fs.Fox.Basal;

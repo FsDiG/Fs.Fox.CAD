@@ -1,5 +1,5 @@
-﻿
-#if a2019 || zcad
+
+#if AC_2019 || ZWCAD
 namespace Fs.Fox.Basal;
 
 /// <summary>

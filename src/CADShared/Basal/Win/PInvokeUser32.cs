@@ -1,4 +1,4 @@
-﻿namespace Fs.Fox.Basal;
+namespace Fs.Fox.Basal;
 
 /// <summary>
 /// PInvokeUser32

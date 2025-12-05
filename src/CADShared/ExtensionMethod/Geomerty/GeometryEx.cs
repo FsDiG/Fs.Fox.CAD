@@ -1,4 +1,4 @@
-﻿#if a2019
+#if AC_2019
 using ArgumentNullException = Fs.Fox.Basal.ArgumentNullEx;
 #endif
 

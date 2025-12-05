@@ -33,7 +33,7 @@
 
     <!-- 条件编译符号 -->
     <PropertyGroup>
-        <DefineConstants>$(Configuration);zcad;z2022;ZWCAD</DefineConstants>
+        <DefineConstants>$(Configuration);ZWCAD;ZW_2022</DefineConstants>
         <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     </PropertyGroup>
 

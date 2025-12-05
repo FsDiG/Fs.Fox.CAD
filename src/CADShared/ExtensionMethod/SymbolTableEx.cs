@@ -1,4 +1,4 @@
-﻿using ArgumentNullException = System.ArgumentNullException;
+using ArgumentNullException = System.ArgumentNullException;
 
 namespace Fs.Fox.Cad;
 
@@ -190,7 +190,7 @@ public static class SymbolTableEx
         bool over)
     {
         var blkDefName = SymbolUtilityServices.GetSymbolNameFromPathName(fileName, "dwg");
-#if acad
+#if ACAD
         blkDefName = SymbolUtilityServices.RepairSymbolName(blkDefName, false);
 #endif
         var id = table[blkDefName];

@@ -1,6 +1,6 @@
-﻿// ReSharper disable ForCanBeConvertedToForeach
+// ReSharper disable ForCanBeConvertedToForeach
 
-#if a2019 || zcad
+#if AC_2019 || ZWCAD
 using ArgumentNullException = Fs.Fox.Basal.ArgumentNullEx;
 #endif
 
@@ -248,7 +248,7 @@ public static class CurveEx
 
         return newCurves;
     }
-#if !gcad
+#if !GCAD
     /// <summary>
     /// 打段曲线2维By四叉树
     /// <code>

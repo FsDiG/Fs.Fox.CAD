@@ -1,7 +1,7 @@
-﻿#if acad
+#if ACAD
 using Autodesk.AutoCAD.BoundaryRepresentation;
 
-#elif zcad
+#elif ZWCAD
 using ZwSoft.ZwCAD.BoundaryRepresentation;
 #endif
 namespace Fs.Fox.Cad;

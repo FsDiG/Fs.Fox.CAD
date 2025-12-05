@@ -1,4 +1,4 @@
-﻿#if a2019 || zcad
+#if AC_2019 || ZWCAD
 using ArgumentNullException = Fs.Fox.Basal.ArgumentNullEx;
 #endif
 
@@ -55,7 +55,7 @@ public static class BlockReferenceEx
             double.NegativeInfinity, true);
         var dict = brf.GetXDictionary().GetSubDictionary(true, [kFilterDictName])!;
         dict.SetData(kSpatialName, sf);
-#if !acad
+#if !ACAD
         pts.Dispose();
 #endif
     }

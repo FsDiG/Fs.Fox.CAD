@@ -1,4 +1,4 @@
-﻿#if a2019 || zcad
+#if AC_2019 || ZWCAD
 using ArgumentNullException = Fs.Fox.Basal.ArgumentNullEx;
 #endif
 
@@ -184,7 +184,7 @@ public class JigEx : DrawJig, IDisposable
         WorldDrawEvent?.Invoke(draw);
         _drawEntities.ForEach(ent =>
         {
-#if zcad
+#if ZWCAD
             draw.Geometry.Draw(ent);
 #else
             draw.RawGeometry.Draw(ent);

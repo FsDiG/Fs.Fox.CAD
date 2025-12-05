@@ -1,4 +1,4 @@
-﻿namespace Fs.Fox.Cad;
+namespace Fs.Fox.Cad;
 /// <summary>
 /// 发送命令
 /// </summary>
@@ -113,7 +113,7 @@ public class PostCmd
     static void AsyncCommand(string args)
     {
         object[] commandArray = [args + "\n"];
-#if zcad
+#if ZWCAD
         var com = Acap.ZcadApplication;
 #else
         var com = Acap.AcadApplication;

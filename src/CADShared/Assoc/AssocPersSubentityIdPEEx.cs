@@ -1,11 +1,11 @@
-﻿namespace Fs.Fox.Cad.Assoc;
+namespace Fs.Fox.Cad.Assoc;
 
 /// <summary>
 /// 子对象关系Id扩展
 /// </summary>
 public static class AssocPersSubentityIdPEEx
 {
-#if !z2022
+#if !ZW_2022
     // zcb 测试发现,只有中望2022版本没有这个类
     private static readonly RXClass _acdbAssocPersSubentityIdPEClass  = RXObject.GetClass(typeof(AssocPersSubentityIdPE));
 

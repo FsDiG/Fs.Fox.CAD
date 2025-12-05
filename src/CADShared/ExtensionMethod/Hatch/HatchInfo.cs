@@ -1,6 +1,6 @@
-﻿
 
-#if a2019 || zcad
+
+#if AC_2019 || ZWCAD
 using ArgumentNullException = Fs.Fox.Basal.ArgumentNullEx;
 #endif
 

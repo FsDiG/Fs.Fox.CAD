@@ -1,4 +1,4 @@
-﻿namespace Fs.Fox.Cad;
+namespace Fs.Fox.Cad;
 
 /// <summary>
 /// 圆弧扩展类
@@ -40,7 +40,7 @@ public static class ArcEx
         // 创建一个几何类的圆弧对象
         CircularArc3d geArc = new(startPoint, pointOnArc, endPoint);
         // 将几何类圆弧对象的圆心和半径赋值给圆弧
-#if !gcad
+#if !GCAD
 
         return (Arc)Curve.CreateFromGeCurve(geArc);
 #else

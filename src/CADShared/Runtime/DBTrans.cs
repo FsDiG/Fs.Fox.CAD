@@ -1,5 +1,5 @@
-﻿namespace Fs.Fox.Cad;
-#if a2019 || zcad
+namespace Fs.Fox.Cad;
+#if AC_2019 || ZWCAD
 using ArgumentNullException = Fs.Fox.Basal.ArgumentNullEx;
 #endif
 using System.Diagnostics;
@@ -468,7 +468,7 @@ public sealed class DBTrans : IDisposable
     /// </summary>
     public DBDictionary LayoutDict => GetObject<DBDictionary>(Database.LayoutDictionaryId)!;
 
-#if !zcad // 中望官方的问题
+#if !ZWCAD // 中望官方的问题
     /// <summary>
     /// 数据链接字典
     /// </summary>

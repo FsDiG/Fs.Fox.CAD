@@ -1,4 +1,4 @@
-﻿#if a2019 || zcad
+#if AC_2019 || ZWCAD
 using ArgumentNullException = Fs.Fox.Basal.ArgumentNullEx;
 #endif
 
@@ -70,7 +70,7 @@ public abstract class AutoRegAssem : IExtensionApplication
                 AutoReg.RegApp(info);
         }
 
-#if acad
+#if ACAD
         if ((autoRegConfig & AutoRegConfig.RemoveEMR) == AutoRegConfig.RemoveEMR)
             AcadEMR.Remove();
 #endif

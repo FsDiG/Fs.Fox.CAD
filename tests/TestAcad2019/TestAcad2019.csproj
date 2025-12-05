@@ -27,7 +27,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<DefineConstants>$(Configuration);acad;a2019</DefineConstants>
+		<DefineConstants>$(Configuration);ACAD;AC_2019</DefineConstants>
 	</PropertyGroup>
 
 	<ItemGroup>

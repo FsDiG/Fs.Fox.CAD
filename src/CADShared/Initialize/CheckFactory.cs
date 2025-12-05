@@ -1,4 +1,4 @@
-﻿#if DEBUG
+#if DEBUG
 namespace Fs.Fox.Cad;
 
 /// <summary>

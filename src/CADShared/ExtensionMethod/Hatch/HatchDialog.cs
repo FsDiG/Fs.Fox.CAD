@@ -1,4 +1,4 @@
-﻿#if acad
+#if ACAD
 namespace Fs.Fox.Cad;
 
 /// <summary>

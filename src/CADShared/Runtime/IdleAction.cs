@@ -1,4 +1,4 @@
-﻿using Cursor = System.Windows.Forms.Cursor;
+using Cursor = System.Windows.Forms.Cursor;
 
 namespace Fs.Fox.Cad;
 

@@ -28,7 +28,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<DefineConstants>$(Configuration);acad;a2025</DefineConstants>
+		<DefineConstants>$(Configuration);ACAD;AC_2025</DefineConstants>
 	</PropertyGroup>
 
 	<ItemGroup>

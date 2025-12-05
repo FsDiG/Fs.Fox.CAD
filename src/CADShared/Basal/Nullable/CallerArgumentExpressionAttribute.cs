@@ -1,5 +1,5 @@
-﻿
-#if a2019 || zcad
+
+#if AC_2019 || ZWCAD
 namespace System.Runtime.CompilerServices;
 /// <summary>
 /// 指示参数将为另一个参数传递的表达式捕获为字符串。

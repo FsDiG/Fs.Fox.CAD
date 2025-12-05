@@ -34,7 +34,7 @@
 
     <!-- 条件编译符号 -->
     <PropertyGroup>
-        <DefineConstants>$(Configuration);acad;a2019;ACAD2019;ACAD</DefineConstants>
+        <DefineConstants>$(Configuration);ACAD;AC_2019</DefineConstants>
     </PropertyGroup>
 
     <ItemGroup>

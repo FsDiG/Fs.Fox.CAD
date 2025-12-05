@@ -1,4 +1,4 @@
-﻿namespace Fs.Fox.Basal;
+namespace Fs.Fox.Basal;
 
 /// <summary>
 /// 枚举扩展

@@ -1,4 +1,4 @@
-﻿namespace Fs.Fox.Cad;
+namespace Fs.Fox.Cad;
 
 /*
  * 这个类存在的意义是为了不暴露Rect类字段
