@@ -1,4 +1,4 @@
-﻿namespace NFox.Cad
+namespace NFox.Cad
 {
     /// <summary>
     /// 简单文本类型枚举

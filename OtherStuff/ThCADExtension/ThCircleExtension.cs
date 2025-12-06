@@ -1,4 +1,4 @@
-﻿using DotNetARX;
+using DotNetARX;
 using Autodesk.AutoCAD.Geometry;
 using Autodesk.AutoCAD.DatabaseServices;
 

@@ -1,4 +1,4 @@
-﻿namespace NFox.Cad
+namespace NFox.Cad
 {
     /// <summary>
     /// 划线类型枚举

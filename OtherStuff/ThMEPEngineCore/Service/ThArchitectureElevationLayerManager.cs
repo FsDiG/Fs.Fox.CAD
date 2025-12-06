@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Linq2Acad;
 using System.Collections.Generic;
 using Autodesk.AutoCAD.DatabaseServices;

@@ -1,4 +1,4 @@
-﻿using ThCADCore.NTS;
+using ThCADCore.NTS;
 using ThCADExtension;
 using ThMEPEngineCore.CAD;
 using Autodesk.AutoCAD.DatabaseServices;

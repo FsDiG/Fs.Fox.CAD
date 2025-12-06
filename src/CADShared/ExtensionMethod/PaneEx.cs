@@ -30,34 +30,34 @@ public static class PaneEx
             var style = (PaneStyles)(marginType == PaneMarginType.LARGE ? 64 : 128);
             while (true)
             {
-                Acap.StatusBar.Update();
-                var index = Acap.StatusBar.Panes.IndexOf(pane);
+                CadApp.StatusBar.Update();
+                var index = CadApp.StatusBar.Panes.IndexOf(pane);
                 if (index == -1 || index == 0)
                     break;
-                var left1 = Acap.StatusBar.Panes[index - 1];
+                var left1 = CadApp.StatusBar.Panes[index - 1];
                 var left1Style = Convert.ToInt32(left1.Style);
 
                 if (index == 1 && (left1Style == 64 || left1Style == 128))
                 {
-                    Acap.StatusBar.Panes.Remove(left1);
+                    CadApp.StatusBar.Panes.Remove(left1);
                     continue;
                 }
 
                 if (left1Style != 64 && left1Style != 128)
                 {
                     var leftAdd1 = new Pane() { ToolTipText = pane.ToolTipText, Style = style };
-                    Acap.StatusBar.Panes.Insert(index, leftAdd1);
+                    CadApp.StatusBar.Panes.Insert(index, leftAdd1);
                     continue;
                 }
 
                 left1.Style = style;
                 if (index > 1)
                 {
-                    var left2 = Acap.StatusBar.Panes[index - 2];
+                    var left2 = CadApp.StatusBar.Panes[index - 2];
                     var left2Style = Convert.ToInt32(left2.Style);
                     if (left2Style == 64 || left2Style == 128)
                     {
-                        Acap.StatusBar.Panes.Remove(left2);
+                        CadApp.StatusBar.Panes.Remove(left2);
                         continue;
                     }
                 }
@@ -69,15 +69,15 @@ public static class PaneEx
         {
             while (true)
             {
-                Acap.StatusBar.Update();
-                var index = Acap.StatusBar.Panes.IndexOf(pane);
+                CadApp.StatusBar.Update();
+                var index = CadApp.StatusBar.Panes.IndexOf(pane);
                 if (index > 0)
                 {
-                    var left1 = Acap.StatusBar.Panes[index - 1];
+                    var left1 = CadApp.StatusBar.Panes[index - 1];
                     var left1Style = Convert.ToInt32(left1.Style);
                     if (left1Style == 64 || left1Style == 128)
                     {
-                        Acap.StatusBar.Panes.Remove(left1);
+                        CadApp.StatusBar.Panes.Remove(left1);
                         continue;
                     }
                 }
@@ -86,7 +86,7 @@ public static class PaneEx
             }
         }
 
-        Acap.StatusBar.Update();
+        CadApp.StatusBar.Update();
     }
 
     /// <summary>
@@ -102,27 +102,27 @@ public static class PaneEx
             var style = (PaneStyles)(marginType == PaneMarginType.LARGE ? 64 : 128);
             while (true)
             {
-                Acap.StatusBar.Update();
-                var index = Acap.StatusBar.Panes.IndexOf(pane);
-                if (index == -1 || index == Acap.StatusBar.Panes.Count - 1)
+                CadApp.StatusBar.Update();
+                var index = CadApp.StatusBar.Panes.IndexOf(pane);
+                if (index == -1 || index == CadApp.StatusBar.Panes.Count - 1)
                     break;
-                var right1 = Acap.StatusBar.Panes[index + 1];
+                var right1 = CadApp.StatusBar.Panes[index + 1];
                 var right1Style = Convert.ToInt32(right1.Style);
                 if (right1Style != 64 && right1Style != 128)
                 {
                     var rightAdd1 = new Pane() { ToolTipText = pane.ToolTipText, Style = style };
-                    Acap.StatusBar.Panes.Insert(index + 1, rightAdd1);
+                    CadApp.StatusBar.Panes.Insert(index + 1, rightAdd1);
                     continue;
                 }
 
                 right1.Style = style;
-                if (index < Acap.StatusBar.Panes.Count - 2)
+                if (index < CadApp.StatusBar.Panes.Count - 2)
                 {
-                    var right2 = Acap.StatusBar.Panes[index + 2];
+                    var right2 = CadApp.StatusBar.Panes[index + 2];
                     var right2Style = Convert.ToInt32(right2.Style);
                     if (right2Style == 64 || right2Style == 128)
                     {
-                        Acap.StatusBar.Panes.Remove(right2);
+                        CadApp.StatusBar.Panes.Remove(right2);
                         continue;
                     }
                 }
@@ -134,15 +134,15 @@ public static class PaneEx
         {
             while (true)
             {
-                Acap.StatusBar.Update();
-                var index = Acap.StatusBar.Panes.IndexOf(pane);
-                if (index < Acap.StatusBar.Panes.Count - 1)
+                CadApp.StatusBar.Update();
+                var index = CadApp.StatusBar.Panes.IndexOf(pane);
+                if (index < CadApp.StatusBar.Panes.Count - 1)
                 {
-                    var right1 = Acap.StatusBar.Panes[index + 1];
+                    var right1 = CadApp.StatusBar.Panes[index + 1];
                     var right1Style = Convert.ToInt32(right1.Style);
                     if (right1Style == 64 || right1Style == 128)
                     {
-                        Acap.StatusBar.Panes.Remove(right1);
+                        CadApp.StatusBar.Panes.Remove(right1);
                         continue;
                     }
                 }
@@ -151,7 +151,7 @@ public static class PaneEx
             }
         }
 
-        Acap.StatusBar.Update();
+        CadApp.StatusBar.Update();
     }
 }
 

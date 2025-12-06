@@ -1,4 +1,4 @@
-﻿using NetTopologySuite.Geometries;
+using NetTopologySuite.Geometries;
 using NetTopologySuite.Operation.Relate;
 using NTSDimension = NetTopologySuite.Geometries.Dimension;
 using AcPolygon = Autodesk.AutoCAD.DatabaseServices.Polyline;

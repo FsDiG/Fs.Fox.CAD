@@ -1,4 +1,4 @@
-﻿namespace NFox.Cad
+namespace NFox.Cad
 {
     /// <summary>
     /// 没用的类

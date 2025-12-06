@@ -1,4 +1,4 @@
-﻿using StraightSkeletonNet.Primitives;
+using StraightSkeletonNet.Primitives;
 
 namespace StraightSkeletonNet.Circular
 {

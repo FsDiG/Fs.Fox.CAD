@@ -1,4 +1,4 @@
-﻿namespace AcHelper
+namespace AcHelper
 {
     /// <summary>
     /// 

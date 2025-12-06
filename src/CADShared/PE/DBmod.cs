@@ -72,7 +72,7 @@ public class DBmodEx
     /// <param name="action"></param>
     public static void DBmodTask(Action action)
     {
-        var dm = Acaop.DocumentManager;
+        var dm = CadCoreApp.DocumentManager;
         if (dm.Count == 0)
             return;
         var doc = dm.MdiActiveDocument;
@@ -94,7 +94,7 @@ public class DBmodEx
     {
         if (_flag)// 仅执行一次,在初始化时候
         {
-            var dm = Acaop.DocumentManager;
+            var dm = CadCoreApp.DocumentManager;
             if (dm.Count == 0)
                 return;
             var doc = dm.MdiActiveDocument;

@@ -1,4 +1,4 @@
-﻿using Linq2Acad;
+using Linq2Acad;
 using Autodesk.AutoCAD.Geometry;
 using System.Collections.Generic;
 using Autodesk.AutoCAD.DatabaseServices;

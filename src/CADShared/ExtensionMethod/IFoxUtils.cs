@@ -13,7 +13,7 @@ public static class IFoxUtils
     /// <param name="layerIds">图层id集合</param>
     public static void RegenLayers(IEnumerable<ObjectId> layerIds)
     {
-        var type = Acaop.Version.Major >= 21
+        var type = CadCoreApp.Version.Major >= 21
             ? Assembly.Load("accoremgd")?.GetType("Autodesk.AutoCAD.Internal.CoreLayerUtilities")
             : Assembly.Load("acmgd")?.GetType("Autodesk.AutoCAD.Internal.LayerUtilities");
         var mi = type?.GetMethods().FirstOrDefault(e => e.Name == "RegenLayers");
@@ -35,7 +35,7 @@ public static class IFoxUtils
                      .GroupBy(e => e.Database))
         {
             var db = group.Key;
-            var doc = Acap.DocumentManager.GetDocument(db);
+            var doc = CadApp.DocumentManager.GetDocument(db);
             if (doc is null)
                 continue; // 获取不到文档说明是后台开图，后台开图就不用刷新了
             using var dl = doc.LockDocument();
@@ -77,10 +77,10 @@ public static class IFoxUtils
     {
         TrayItem? trayItem = null;
         const string name = "IFox";
-        var num = Acap.StatusBar.TrayItems.Count;
+        var num = CadApp.StatusBar.TrayItems.Count;
         for (var i = 0; i < num; i++)
         {
-            var ti = Acap.StatusBar.TrayItems[i];
+            var ti = CadApp.StatusBar.TrayItems[i];
             if (ti.ToolTipText != name)
                 continue;
             trayItem = ti;
@@ -90,8 +90,8 @@ public static class IFoxUtils
         if (trayItem == null)
         {
             trayItem = new() { ToolTipText = name, Visible = true, };
-            Acap.StatusBar.TrayItems.Add(trayItem);
-            Acap.StatusBar.Update();
+            CadApp.StatusBar.TrayItems.Add(trayItem);
+            CadApp.StatusBar.Update();
         }
 
         if (second <= 0)
@@ -100,7 +100,7 @@ public static class IFoxUtils
             second = 10;
         else
             second %= 10;
-        Acaop.SetSystemVariable("TrayTimeOut", second);
+        CadCoreApp.SetSystemVariable("TrayTimeOut", second);
         var tibw = new TrayItemBubbleWindow
         {
             IconType = iconType,
@@ -110,8 +110,8 @@ public static class IFoxUtils
             HyperLink = hyperLink,
             Text2 = text2
         };
-        Acaop.SetSystemVariable("TRAYICONS", 1);
-        Acaop.SetSystemVariable("TRAYNOTIFY", 1);
+        CadCoreApp.SetSystemVariable("TRAYICONS", 1);
+        CadCoreApp.SetSystemVariable("TRAYNOTIFY", 1);
         trayItem.Visible = true;
         trayItem.ShowBubbleWindow(tibw);
     }
@@ -122,9 +122,9 @@ public static class IFoxUtils
     public static void VetoMouseDoubleClickEvent()
     {
         const string key = "DBLCLKEDIT";
-        var value = Acaop.GetSystemVariable(key);
-        Acaop.SetSystemVariable(key, 0);
-        IdleAction.Add(() => Acaop.SetSystemVariable(key, value));
+        var value = CadCoreApp.GetSystemVariable(key);
+        CadCoreApp.SetSystemVariable(key, 0);
+        IdleAction.Add(() => CadCoreApp.SetSystemVariable(key, value));
     }
 
     /// <summary>

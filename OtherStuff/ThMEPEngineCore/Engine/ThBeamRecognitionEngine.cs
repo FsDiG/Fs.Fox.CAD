@@ -1,4 +1,4 @@
-﻿using DotNetARX;
+using DotNetARX;
 using System.Linq;
 using ThCADCore.NTS;
 using ThMEPEngineCore.Model;

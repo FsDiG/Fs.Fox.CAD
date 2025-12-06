@@ -1,4 +1,4 @@
-﻿using AcHelper;
+using AcHelper;
 using Linq2Acad;
 using ThCADCore.NTS;
 using System.Collections.Generic;

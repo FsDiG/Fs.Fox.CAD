@@ -1,4 +1,4 @@
-﻿/// 系统引用
+/// 系统引用
 global using System;
 global using System.Collections;
 global using System.Collections.Generic;
@@ -25,11 +25,11 @@ global using ZwSoft.ZwCAD.Colors;
 global using ZwSoft.ZwCAD.DatabaseServices;
 global using ZwSoft.ZwCAD.Geometry;
 global using ZwSoft.ZwCAD.Runtime;
-global using Acap = ZwSoft.ZwCAD.ApplicationServices.Application;
-global using Acaop = ZwSoft.ZwCAD.ApplicationServices.Application;
-global using AcException = ZwSoft.ZwCAD.Runtime.Exception;
+global using CadApp = ZwSoft.ZwCAD.ApplicationServices.Application;
+global using CadCoreApp = ZwSoft.ZwCAD.ApplicationServices.Application;
+global using CadException = ZwSoft.ZwCAD.Runtime.Exception;
 global using ZwSoft.ZwCAD.DatabaseServices.Filters;
-global using Acgi = ZwSoft.ZwCAD.GraphicsInterface;
+global using CadGI = ZwSoft.ZwCAD.GraphicsInterface;
 // jig命名空间会引起Viewport/Polyline等等重义,最好逐个引入 using ZwSoft.ZwCAD.GraphicsInterface
 global using ZwSoft.ZwCAD.GraphicsInterface;
 global using WorldDraw = ZwSoft.ZwCAD.GraphicsInterface.WorldDraw;
@@ -37,9 +37,9 @@ global using Manager = ZwSoft.ZwCAD.GraphicsSystem.Manager;
 global using Group = ZwSoft.ZwCAD.DatabaseServices.Group;
 global using Viewport = ZwSoft.ZwCAD.DatabaseServices.Viewport;
 global using Polyline = ZwSoft.ZwCAD.DatabaseServices.Polyline;
-global using Cad_DwgFiler = ZwSoft.ZwCAD.DatabaseServices.DwgFiler;
-global using Cad_DxfFiler = ZwSoft.ZwCAD.DatabaseServices.DxfFiler;
-global using Cad_ErrorStatus = ZwSoft.ZwCAD.Runtime.ErrorStatus;
+global using CadDwgFiler = ZwSoft.ZwCAD.DatabaseServices.DwgFiler;
+global using CadDxfFiler = ZwSoft.ZwCAD.DatabaseServices.DxfFiler;
+global using CadErrorStatus = ZwSoft.ZwCAD.Runtime.ErrorStatus;
 
 
 /// ifoxcad

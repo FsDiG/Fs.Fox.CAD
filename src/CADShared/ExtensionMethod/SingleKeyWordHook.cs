@@ -62,8 +62,8 @@ public sealed class SingleKeyWordHook : IDisposable
         _key = Keys.None;
         _working = true;
         _workType = workType;
-        Acaop.PreTranslateMessage -= Acap_PreTranslateMessage;
-        Acaop.PreTranslateMessage += Acap_PreTranslateMessage;
+        CadCoreApp.PreTranslateMessage -= Acap_PreTranslateMessage;
+        CadCoreApp.PreTranslateMessage += Acap_PreTranslateMessage;
     }
 
     #endregion
@@ -188,7 +188,7 @@ public sealed class SingleKeyWordHook : IDisposable
         if (IsDisposed)
             return;
 
-        Acaop.PreTranslateMessage -= Acap_PreTranslateMessage;
+        CadCoreApp.PreTranslateMessage -= Acap_PreTranslateMessage;
         if (disposing)
         {
             _keyWords.Clear();

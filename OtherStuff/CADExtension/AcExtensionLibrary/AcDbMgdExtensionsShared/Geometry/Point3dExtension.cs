@@ -1,4 +1,4 @@
-﻿namespace Autodesk.AutoCAD.Geometry
+namespace Autodesk.AutoCAD.Geometry
 {
     /// <summary>
     ///

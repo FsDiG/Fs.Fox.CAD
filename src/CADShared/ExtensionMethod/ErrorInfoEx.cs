@@ -12,12 +12,12 @@ public static class ErrorInfoEx
     /// {
     ///     //你的代码
     /// }
-    /// catch (AcException acex) { acex.AcErrorInfo(); }
+    /// catch (CadException acex) { acex.AcErrorInfo(); }
     /// catch (Exception) { throw; }
     /// </code>
     /// </summary>
-    /// <param name="acex">AcException</param>
-    internal static void AcErrorInfo(this AcException acex)
+    /// <param name="acex">CadException</param>
+    internal static void AcErrorInfo(this CadException acex)
     {
         var infoStr = acex.Message switch
         {
@@ -416,6 +416,6 @@ public static class ErrorInfoEx
             "eAlreadyInactive" => "已经是不活动的了",
             _ => acex.Message,
         };
-        Acaop.ShowAlertDialog($"{acex.Message}：{infoStr}");
+        CadCoreApp.ShowAlertDialog($"{acex.Message}：{infoStr}");
     }
 }

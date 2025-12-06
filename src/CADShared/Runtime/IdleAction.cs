@@ -33,22 +33,22 @@ public static class IdleAction
         _actions.Enqueue(action);
         if (alreadyLoad)
             return;
-        Acaop.Idle -= Acap_Idle;
-        Acaop.Idle += Acap_Idle;
+        CadCoreApp.Idle -= Acap_Idle;
+        CadCoreApp.Idle += Acap_Idle;
         alreadyLoad = true;
     }
 
     /// <summary>
     /// 空闲处理事件
     /// </summary>
-    /// <param name="sender">Acap</param>
+    /// <param name="sender">CadApp</param>
     /// <param name="e">事件参数</param>
     private static void Acap_Idle(object? sender, EventArgs e)
     {
         if (Count == 0)
         {
             alreadyLoad = false;
-            Acaop.Idle -= Acap_Idle;
+            CadCoreApp.Idle -= Acap_Idle;
             return;
         }
 

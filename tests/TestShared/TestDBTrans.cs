@@ -1,4 +1,4 @@
-﻿namespace Test;
+namespace Test;
 
 public class TestTrans
 {
@@ -24,13 +24,13 @@ public class TestTrans
 
     private static Database Getdb()
     {
-        var db = Acaop.DocumentManager.MdiActiveDocument.Database;
+        var db = CadCoreApp.DocumentManager.MdiActiveDocument.Database;
         return db;
     }
 
     private static Document Getdoc()
     {
-        var doc = Acaop.DocumentManager.MdiActiveDocument;
+        var doc = CadCoreApp.DocumentManager.MdiActiveDocument;
         return doc;
     }
     
@@ -175,12 +175,12 @@ public class TestTrans
         var tr1 = HostApplicationServices.WorkingDatabase.TransactionManager.TopTransaction;
         using DBTrans tr2 = new();
         var tr3 = HostApplicationServices.WorkingDatabase.TransactionManager.TopTransaction;
-        var tr6 = Acaop.DocumentManager.MdiActiveDocument.TransactionManager.TopTransaction;
+        var tr6 = CadCoreApp.DocumentManager.MdiActiveDocument.TransactionManager.TopTransaction;
         Env.Print(tr2.Transaction == tr3);
         Env.Print(tr3 == tr6);
         using DBTrans tr4 = new();
         var tr5 = HostApplicationServices.WorkingDatabase.TransactionManager.TopTransaction;
-        var tr7 = Acaop.DocumentManager.MdiActiveDocument.TransactionManager.TopTransaction;
+        var tr7 = CadCoreApp.DocumentManager.MdiActiveDocument.TransactionManager.TopTransaction;
         Env.Print(tr4.Transaction == tr5);
         Env.Print(tr5 == tr7);
         var trm = HostApplicationServices.WorkingDatabase.TransactionManager;

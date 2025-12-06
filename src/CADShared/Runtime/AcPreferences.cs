@@ -12,7 +12,7 @@ public static class AcPreferences
     {
         static Display()
         {
-            dynamic preferences = Acap.Preferences;
+            dynamic preferences = CadApp.Preferences;
             _acadDisplay = preferences.Display;
         }
 

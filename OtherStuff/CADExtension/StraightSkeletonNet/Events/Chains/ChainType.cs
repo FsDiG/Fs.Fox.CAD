@@ -1,4 +1,4 @@
-﻿namespace StraightSkeletonNet.Events.Chains
+namespace StraightSkeletonNet.Events.Chains
 {
     internal enum ChainType
     {

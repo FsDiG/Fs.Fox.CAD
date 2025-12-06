@@ -1,4 +1,4 @@
-﻿using NFox.Collections;
+using NFox.Collections;
 using System;
 using System.Collections.Generic;
 using System.Linq;

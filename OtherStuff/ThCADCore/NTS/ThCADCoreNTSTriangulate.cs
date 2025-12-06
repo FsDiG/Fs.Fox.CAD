@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using NetTopologySuite.Densify;
 using NetTopologySuite.Geometries;
 using NetTopologySuite.Triangulate;

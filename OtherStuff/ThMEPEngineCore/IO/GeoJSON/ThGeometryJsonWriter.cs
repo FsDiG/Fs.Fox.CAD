@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using ThCADCore.NTS;
 using Newtonsoft.Json;
 using Dreambuild.AutoCAD;

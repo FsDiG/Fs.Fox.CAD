@@ -263,7 +263,7 @@ public class JigEx : DrawJig, IDisposable
     public PromptResult Drag()
     {
         // jig功能必然是当前前台文档,所以封装内部更好调用
-        var dm = Acaop.DocumentManager;
+        var dm = CadCoreApp.DocumentManager;
         var doc = dm.MdiActiveDocument;
         var ed = doc.Editor;
         var dr = ed.Drag(this);

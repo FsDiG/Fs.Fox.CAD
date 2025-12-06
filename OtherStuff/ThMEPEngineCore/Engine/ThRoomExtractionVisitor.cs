@@ -1,4 +1,4 @@
-﻿using ThCADExtension;
+using ThCADExtension;
 using ThMEPEngineCore.CAD;
 using ThMEPEngineCore.Algorithm;
 using Autodesk.AutoCAD.Geometry;

@@ -1,4 +1,4 @@
-﻿
+
 namespace Test;
 
 public class TestBlock
@@ -421,7 +421,7 @@ public class TestBlock
     public void Test_QuickBlockDef2()
     {
         // Database db = HostApplicationServices.WorkingDatabase;
-        Editor ed = Acap.DocumentManager.MdiActiveDocument.Editor;
+        Editor ed = CadApp.DocumentManager.MdiActiveDocument.Editor;
         PromptSelectionOptions promptOpt = new()
         {
             MessageForAdding = "请选择需要快速制作块的对象"
@@ -471,7 +471,7 @@ public class TestBlock
             // }
             // if (tr.BlockTable.Has(blockName))
             // {
-            //    Acap.ShowAlertDialog(Environment.NewLine + "块名重复，程序退出！");
+            //    CadApp.ShowAlertDialog(Environment.NewLine + "块名重复，程序退出！");
             //    return;
             // }
             ents.ForEach(ent =>
@@ -489,7 +489,7 @@ public class TestBlock
             ents.ForEach(ent => ent?.ForWrite(e => e?.Erase(true)));
             var bId = tr.CurrentSpace.InsertBlock(pt, blockName);
             // tr.GetObject<Entity>(bId, OpenMode.ForWrite).Move(Point3d.Origin, Point3d.Origin);
-            // var ed = Acap.DocumentManager.MdiActiveDocument.Editor;
+            // var ed = CadApp.DocumentManager.MdiActiveDocument.Editor;
             // ed.Regen();
             // tr.Editor.Regen();
             // 调用regen() 卡死
@@ -506,7 +506,7 @@ public class TestBlock
     [CommandMethod(nameof(Test_QuickBlockDef1))]
     public void Test_QuickBlockDef1()
     {
-        var dm = Acap.DocumentManager;
+        var dm = CadApp.DocumentManager;
         var doc = dm.MdiActiveDocument;
         var db = doc.Database;
         var ed = doc.Editor;
@@ -762,7 +762,7 @@ public class BlockImportClass
     [CommandMethod(nameof(Test_CombineBlocksIntoLibrary))]
     public void Test_CombineBlocksIntoLibrary()
     {
-        Document doc = Acap.DocumentManager.MdiActiveDocument;
+        Document doc = CadApp.DocumentManager.MdiActiveDocument;
         Editor ed = doc.Editor;
         Database destDb = doc.Database;
 

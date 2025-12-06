@@ -1,4 +1,4 @@
-﻿using NetTopologySuite.IO;
+using NetTopologySuite.IO;
 using Autodesk.AutoCAD.DatabaseServices;
 
 namespace ThCADCore.NTS.IO

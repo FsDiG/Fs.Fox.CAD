@@ -1,4 +1,4 @@
-﻿using Autodesk.AutoCAD.Customization;
+using Autodesk.AutoCAD.Customization;
 
 namespace ThCADExtension
 {

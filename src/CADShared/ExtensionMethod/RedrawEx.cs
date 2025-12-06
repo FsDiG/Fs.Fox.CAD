@@ -105,7 +105,7 @@ public static class RedrawEx
         /*
          * 我发现命令加 CommandFlags.Redraw 就不需要以下处理了:
          * 数据库事务和文档事务不一样,文档事务有刷新函数.
-         * var doc = Acap.DocumentManager.MdiActiveDocument;
+         * var doc = CadApp.DocumentManager.MdiActiveDocument;
          * var ed = doc.Editor;
          * var tm = doc.TransactionManager;
          * tm.QueueForGraphicsFlush();// 如果在最外层事务结束之前需要更新图形,此句把目前为止所做的更改放入 刷新队列
@@ -130,7 +130,7 @@ public static class RedrawEx
         if ((bright & BrightEditor.UpdateScreen) == BrightEditor.UpdateScreen)
         {
             // 两个函数底层差不多
-            // Acap.UpdateScreen();
+            // CadApp.UpdateScreen();
             ed.UpdateScreen();
         }
 

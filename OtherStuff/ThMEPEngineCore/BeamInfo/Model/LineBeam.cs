@@ -53,13 +53,13 @@ namespace ThMEPEngineCore.BeamInfo.Model
             }
             else if((angle>0.0 && angle < 90.0) || (angle > 180.0 && angle < 270.0))
             {
-                //µÚÒ»¡¢µÚÈýÏóÏÞ
+                //ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 double rotateAng = Vector3d.XAxis.GetAngleTo(originBeamDir, Vector3d.ZAxis) % Math.PI;
                 return Vector3d.XAxis.RotateBy(rotateAng, Vector3d.ZAxis);
             }
             else
             {
-                //µÚ¶þ¡¢µÚËÄÏóÏÞ
+                //ï¿½Ú¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 double rotateAng = Vector3d.XAxis.GetAngleTo(originBeamDir, Vector3d.ZAxis) % Math.PI;
                 rotateAng += Math.PI;
                 return Vector3d.XAxis.RotateBy(rotateAng, Vector3d.ZAxis);

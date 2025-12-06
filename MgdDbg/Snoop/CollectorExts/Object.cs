@@ -27,7 +27,7 @@ using System.Collections;
 using MgdDbg.Snoop.Collectors;
 
 using AcDb = Autodesk.AutoCAD.DatabaseServices;
-using AcAp = Autodesk.AutoCAD.ApplicationServices;
+using CadApp = Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.Windows;
 
@@ -73,49 +73,49 @@ namespace MgdDbg.Snoop.CollectorExts {
                 return;
             }
 
-            AcAp.Document doc = e.ObjToSnoop as AcAp.Document;
+            CadApp.Document doc = e.ObjToSnoop as CadApp.Document;
             if (doc != null) {
                 Stream(snoopCollector.Data(), doc);
                 return;
             }
 
-            AcAp.DocumentCollectionEventArgs docCollectEventArgs = e.ObjToSnoop as AcAp.DocumentCollectionEventArgs;
+            CadApp.DocumentCollectionEventArgs docCollectEventArgs = e.ObjToSnoop as CadApp.DocumentCollectionEventArgs;
             if (docCollectEventArgs != null) {
                 Stream(snoopCollector.Data(), docCollectEventArgs);
                 return;
             }
 
-            AcAp.DocumentLockModeWillChangeEventArgs docLockModeEventArgs = e.ObjToSnoop as AcAp.DocumentLockModeWillChangeEventArgs;
+            CadApp.DocumentLockModeWillChangeEventArgs docLockModeEventArgs = e.ObjToSnoop as CadApp.DocumentLockModeWillChangeEventArgs;
             if (docLockModeEventArgs != null) {
                 Stream(snoopCollector.Data(), docLockModeEventArgs);
                 return;
             }
 
-            AcAp.DocumentLockModeChangedEventArgs docLockModeChangedEventArgs = e.ObjToSnoop as AcAp.DocumentLockModeChangedEventArgs;
+            CadApp.DocumentLockModeChangedEventArgs docLockModeChangedEventArgs = e.ObjToSnoop as CadApp.DocumentLockModeChangedEventArgs;
             if (docLockModeChangedEventArgs != null) {
                 Stream(snoopCollector.Data(), docLockModeChangedEventArgs);
                 return;
             }
 
-            AcAp.DocumentLockModeChangeVetoedEventArgs docLockModeVetoedEventArgs = e.ObjToSnoop as AcAp.DocumentLockModeChangeVetoedEventArgs;
+            CadApp.DocumentLockModeChangeVetoedEventArgs docLockModeVetoedEventArgs = e.ObjToSnoop as CadApp.DocumentLockModeChangeVetoedEventArgs;
             if (docLockModeVetoedEventArgs != null) {
                 Stream(snoopCollector.Data(), docLockModeVetoedEventArgs);
                 return;
             }
 
-            AcAp.DocumentDestroyedEventArgs docDestroyedEventArgs = e.ObjToSnoop as AcAp.DocumentDestroyedEventArgs;
+            CadApp.DocumentDestroyedEventArgs docDestroyedEventArgs = e.ObjToSnoop as CadApp.DocumentDestroyedEventArgs;
             if (docDestroyedEventArgs != null) {
                 Stream(snoopCollector.Data(), docDestroyedEventArgs);
                 return;
             }
 
-            AcAp.DocumentCollection docCollection = e.ObjToSnoop as AcAp.DocumentCollection;
+            CadApp.DocumentCollection docCollection = e.ObjToSnoop as CadApp.DocumentCollection;
             if (docCollection != null) {
                 Stream(snoopCollector.Data(), docCollection);
                 return;
             }
 
-            AcAp.XrefFileLock xrefFileLock = e.ObjToSnoop as AcAp.XrefFileLock;
+            CadApp.XrefFileLock xrefFileLock = e.ObjToSnoop as CadApp.XrefFileLock;
             if (xrefFileLock != null) {
                 Stream(snoopCollector.Data(), xrefFileLock);
                 return;
@@ -184,9 +184,9 @@ namespace MgdDbg.Snoop.CollectorExts {
         /// </summary>
 
         private void
-        Stream(ArrayList data, AcAp.Document doc)
+        Stream(ArrayList data, CadApp.Document doc)
         {
-            data.Add(new Snoop.Data.ClassSeparator(typeof(AcAp.Document)));
+            data.Add(new Snoop.Data.ClassSeparator(typeof(CadApp.Document)));
 
 #if(AC2012)
 #else
@@ -209,17 +209,17 @@ namespace MgdDbg.Snoop.CollectorExts {
         }
 
         private void
-        Stream(ArrayList data, AcAp.DocumentCollectionEventArgs args)
+        Stream(ArrayList data, CadApp.DocumentCollectionEventArgs args)
         {
-            data.Add(new Snoop.Data.ClassSeparator(typeof(AcAp.DocumentCollectionEventArgs)));
+            data.Add(new Snoop.Data.ClassSeparator(typeof(CadApp.DocumentCollectionEventArgs)));
 
             data.Add(new Snoop.Data.Object("Document", args.Document));
         }
 
         private void
-        Stream(ArrayList data, AcAp.DocumentLockModeWillChangeEventArgs args)
+        Stream(ArrayList data, CadApp.DocumentLockModeWillChangeEventArgs args)
         {
-            data.Add(new Snoop.Data.ClassSeparator(typeof(AcAp.DocumentLockModeWillChangeEventArgs)));
+            data.Add(new Snoop.Data.ClassSeparator(typeof(CadApp.DocumentLockModeWillChangeEventArgs)));
 
             data.Add(new Snoop.Data.Object("Document", args.Document));
             data.Add(new Snoop.Data.String("Global command name", args.GlobalCommandName));
@@ -229,9 +229,9 @@ namespace MgdDbg.Snoop.CollectorExts {
         }
 
         private void
-        Stream(ArrayList data, AcAp.DocumentLockModeChangedEventArgs args)
+        Stream(ArrayList data, CadApp.DocumentLockModeChangedEventArgs args)
         {
-            data.Add(new Snoop.Data.ClassSeparator(typeof(AcAp.DocumentLockModeChangedEventArgs)));
+            data.Add(new Snoop.Data.ClassSeparator(typeof(CadApp.DocumentLockModeChangedEventArgs)));
 
             data.Add(new Snoop.Data.Object("Document", args.Document));
             data.Add(new Snoop.Data.String("Global command name", args.GlobalCommandName));
@@ -241,26 +241,26 @@ namespace MgdDbg.Snoop.CollectorExts {
         }
 
         private void
-        Stream(ArrayList data, AcAp.DocumentLockModeChangeVetoedEventArgs args)
+        Stream(ArrayList data, CadApp.DocumentLockModeChangeVetoedEventArgs args)
         {
-            data.Add(new Snoop.Data.ClassSeparator(typeof(AcAp.DocumentLockModeChangeVetoedEventArgs)));
+            data.Add(new Snoop.Data.ClassSeparator(typeof(CadApp.DocumentLockModeChangeVetoedEventArgs)));
 
             data.Add(new Snoop.Data.Object("Document", args.Document));
             data.Add(new Snoop.Data.String("Global command name", args.GlobalCommandName));
         }
 
         private void
-        Stream(ArrayList data, AcAp.DocumentDestroyedEventArgs args)
+        Stream(ArrayList data, CadApp.DocumentDestroyedEventArgs args)
         {
-            data.Add(new Snoop.Data.ClassSeparator(typeof(AcAp.DocumentDestroyedEventArgs)));
+            data.Add(new Snoop.Data.ClassSeparator(typeof(CadApp.DocumentDestroyedEventArgs)));
 
             data.Add(new Snoop.Data.String("File name", args.FileName));
         }
 
         private void
-        Stream(ArrayList data, AcAp.DocumentCollection docCol)
+        Stream(ArrayList data, CadApp.DocumentCollection docCol)
         {
-            data.Add(new Snoop.Data.ClassSeparator(typeof(AcAp.DocumentCollection)));
+            data.Add(new Snoop.Data.ClassSeparator(typeof(CadApp.DocumentCollection)));
 
             data.Add(new Snoop.Data.Bool("Document activation enabled", docCol.DocumentActivationEnabled));
             data.Add(new Snoop.Data.Bool("Is application context", docCol.IsApplicationContext));
@@ -270,9 +270,9 @@ namespace MgdDbg.Snoop.CollectorExts {
         }
 
         private void
-        Stream(ArrayList data, AcAp.XrefFileLock xrefFileLock)
+        Stream(ArrayList data, CadApp.XrefFileLock xrefFileLock)
         {
-            data.Add(new Snoop.Data.ClassSeparator(typeof(AcAp.XrefFileLock)));
+            data.Add(new Snoop.Data.ClassSeparator(typeof(CadApp.XrefFileLock)));
 
             data.Add(new Snoop.Data.ObjectIdCollection("Out of sync block Ids", xrefFileLock.OutOfSyncBlockIds));
             data.Add(new Snoop.Data.Int("Xload CtlType", xrefFileLock.XloadCtlType));          

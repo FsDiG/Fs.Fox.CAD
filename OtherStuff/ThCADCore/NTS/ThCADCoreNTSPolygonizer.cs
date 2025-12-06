@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using NFox.Cad;
 using System.Collections.Generic;
 using NetTopologySuite.Geometries;

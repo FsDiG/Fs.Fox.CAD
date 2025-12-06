@@ -104,7 +104,7 @@ public class AcadPeInfo
             {
                 // 获取此dll所有的函数名
                 var file = Process.GetCurrentProcess().MainModule!.FileName;
-                var dll = Path.GetDirectoryName(file) + $"\\acdb{Acaop.Version.Major}.dll";
+                var dll = Path.GetDirectoryName(file) + $"\\acdb{CadCoreApp.Version.Major}.dll";
                 if (File.Exists(dll))
                     _PeForAcdbDll = new PeInfo(dll);
             }

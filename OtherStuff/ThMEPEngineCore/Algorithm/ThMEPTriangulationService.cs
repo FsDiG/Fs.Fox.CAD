@@ -1,4 +1,4 @@
-﻿#if ACAD2016
+#if ACAD2016
 using NFox.Cad;
 using System.Linq;
 using ThCADCore.NTS;

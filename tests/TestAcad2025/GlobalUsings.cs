@@ -1,4 +1,4 @@
-﻿/// 系统引用
+/// 系统引用
 global using System;
 global using System.Collections;
 global using System.Collections.Generic;
@@ -24,9 +24,9 @@ global using Autodesk.AutoCAD.Colors;
 global using Autodesk.AutoCAD.DatabaseServices;
 global using Autodesk.AutoCAD.Geometry;
 global using Autodesk.AutoCAD.Runtime;
-global using Acap = Autodesk.AutoCAD.ApplicationServices.Application;
-global using Acaop = Autodesk.AutoCAD.ApplicationServices.Core.Application;
-global using Acgi = Autodesk.AutoCAD.GraphicsInterface;
+global using CadApp = Autodesk.AutoCAD.ApplicationServices.Application;
+global using CadCoreApp = Autodesk.AutoCAD.ApplicationServices.Core.Application;
+global using CadGI = Autodesk.AutoCAD.GraphicsInterface;
 
 global using Autodesk.AutoCAD.DatabaseServices.Filters;
 global using Autodesk.AutoCAD;
@@ -38,9 +38,9 @@ global using Group = Autodesk.AutoCAD.DatabaseServices.Group;
 global using Viewport = Autodesk.AutoCAD.DatabaseServices.Viewport;
 global using Autodesk.AutoCAD.GraphicsInterface;
 global using Polyline = Autodesk.AutoCAD.DatabaseServices.Polyline;
-global using Cad_DwgFiler = Autodesk.AutoCAD.DatabaseServices.DwgFiler;
-global using Cad_DxfFiler = Autodesk.AutoCAD.DatabaseServices.DxfFiler;
-global using Cad_ErrorStatus = Autodesk.AutoCAD.Runtime.ErrorStatus;
+global using CadDwgFiler = Autodesk.AutoCAD.DatabaseServices.DwgFiler;
+global using CadDxfFiler = Autodesk.AutoCAD.DatabaseServices.DxfFiler;
+global using CadErrorStatus = Autodesk.AutoCAD.Runtime.ErrorStatus;
 
 
 /// ifoxcad

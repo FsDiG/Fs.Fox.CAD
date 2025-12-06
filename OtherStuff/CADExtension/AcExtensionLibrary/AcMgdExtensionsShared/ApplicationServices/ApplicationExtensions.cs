@@ -1,4 +1,4 @@
-﻿namespace Autodesk.AutoCAD.ApplicationServices
+namespace Autodesk.AutoCAD.ApplicationServices
 {
     /// <summary>
     ///

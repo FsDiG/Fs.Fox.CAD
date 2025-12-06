@@ -1,4 +1,4 @@
-﻿#if false
+#if false
 namespace Test;
 
 using DxfFiler = Fs.Fox.Cad.DxfFiler;
@@ -8,7 +8,7 @@ public class CmdTestDwgFilerEx
     [CommandMethod(nameof(CmdTest_DwgFilerEx))]
     public static void CmdTest_DwgFilerEx()
     {
-        var dm = Acap.DocumentManager;
+        var dm = CadApp.DocumentManager;
         var doc = dm.MdiActiveDocument;
         var db = doc.Database;
         var ed = doc.Editor;
@@ -39,7 +39,7 @@ public class CmdTestDwgFilerEx
     [CommandMethod(nameof(CmdTest_EntDxfout))]
     public static void CmdTest_EntDxfout()
     {
-        var dm = Acap.DocumentManager;
+        var dm = CadApp.DocumentManager;
         var doc = dm.MdiActiveDocument;
         var db = doc.Database;
         var ed = doc.Editor;
@@ -73,7 +73,7 @@ public class CmdTestDwgFilerEx
     [CommandMethod(nameof(CmdTest_TextOut))]
     public static void CmdTest_TextOut()
     {
-        var dm = Acap.DocumentManager;
+        var dm = CadApp.DocumentManager;
         var doc = dm.MdiActiveDocument;
         var db = doc.Database;
         var ed = doc.Editor;

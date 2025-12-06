@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using ThCADCore.NTS;
 using System.Collections.Generic;
 using Autodesk.AutoCAD.DatabaseServices;

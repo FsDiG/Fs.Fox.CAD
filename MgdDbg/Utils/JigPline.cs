@@ -26,7 +26,7 @@ using System.Text;
 using AcDb = Autodesk.AutoCAD.DatabaseServices;
 using AcEd = Autodesk.AutoCAD.EditorInput;
 using AcGe = Autodesk.AutoCAD.Geometry;
-using AcAp = Autodesk.AutoCAD.ApplicationServices;
+using CadApp = Autodesk.AutoCAD.ApplicationServices;
 
 namespace MgdDbg.Utils
 {

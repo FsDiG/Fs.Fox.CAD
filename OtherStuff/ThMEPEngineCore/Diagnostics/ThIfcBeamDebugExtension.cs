@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using ThMEPEngineCore.Model;
 using Autodesk.AutoCAD.Geometry;
 

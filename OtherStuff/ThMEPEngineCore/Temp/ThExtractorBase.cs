@@ -1,4 +1,4 @@
-﻿
+
 namespace ThMEPEngineCore.Temp
 {
     public abstract class ThExtractorBase

@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using NFox.Cad;
 using DotNetARX;
 using ThCADCore.NTS;

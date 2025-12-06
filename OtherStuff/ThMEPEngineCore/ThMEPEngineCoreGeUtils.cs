@@ -1,4 +1,4 @@
-﻿using AcHelper;
+using AcHelper;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.Geometry;
 using Linq2Acad;

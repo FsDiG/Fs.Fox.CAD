@@ -122,7 +122,7 @@ public class Commands_Jig
     [CommandMethod(nameof(Test_MessageFilter))]
     public void Test_MessageFilter()
     {
-        var dm = Acap.DocumentManager;
+        var dm = CadApp.DocumentManager;
         var ed = dm.MdiActiveDocument.Editor;
 
         // Create and add our message filter
@@ -171,7 +171,7 @@ public class Commands_Jig
     [CommandMethod(nameof(Test_QuickText))]
     static public void Test_QuickText()
     {
-        var dm = Acap.DocumentManager;
+        var dm = CadApp.DocumentManager;
         var doc = dm.MdiActiveDocument;
         var db = doc.Database;
         var ed = doc.Editor;

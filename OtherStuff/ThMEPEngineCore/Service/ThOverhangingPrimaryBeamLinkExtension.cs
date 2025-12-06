@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Collections.Generic;
 using ThMEPEngineCore.Model;
 using Autodesk.AutoCAD.Geometry;

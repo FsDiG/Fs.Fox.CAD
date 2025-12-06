@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using AcHelper;
 using Linq2Acad;
 #if ACAD2012

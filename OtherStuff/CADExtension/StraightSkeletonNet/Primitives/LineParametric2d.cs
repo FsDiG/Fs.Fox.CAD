@@ -1,4 +1,4 @@
-﻿
+
 namespace StraightSkeletonNet.Primitives
 {
     /// <summary>

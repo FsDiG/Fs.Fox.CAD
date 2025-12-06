@@ -1,4 +1,4 @@
-﻿using NetTopologySuite.IO;
+using NetTopologySuite.IO;
 
 namespace ThMEPEngineCore.IO.GeoJSON
 {

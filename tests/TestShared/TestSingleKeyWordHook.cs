@@ -1,4 +1,4 @@
-﻿namespace TestShared;
+namespace TestShared;
 public static class TestSingleKeyWordHook
 {
     [CommandMethod(nameof(TestSingleKeyWordHookDemo))]

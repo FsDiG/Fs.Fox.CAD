@@ -1,4 +1,4 @@
-﻿namespace ThMEPEngineCore.Model.Hvac
+namespace ThMEPEngineCore.Model.Hvac
 {
     public class ThIfcPipeSegment : ThIfcFlowSegment
     {

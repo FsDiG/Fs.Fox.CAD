@@ -1,4 +1,4 @@
-﻿namespace ThMEPEngineCore.Service.Hvac
+namespace ThMEPEngineCore.Service.Hvac
 {
     public class ThHvacCommon
     {

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using ThMEPEngineCore.Model;
 using ThMEPEngineCore.Service;

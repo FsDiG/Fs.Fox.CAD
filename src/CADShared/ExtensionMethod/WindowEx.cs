@@ -77,7 +77,7 @@ public static class WindowEx
     /// <param name="height">高度</param>
     public static void SetSizeByScreenResolution(this PaletteSet paletteSet, int width, int height)
     {
-        var size = GetScreenResolutionFromWindowHandle(Acaop.MainWindow.Handle);
+        var size = GetScreenResolutionFromWindowHandle(CadCoreApp.MainWindow.Handle);
         var scale = size.Height * 1d / 1080;
         var newWidth = Convert.ToInt32(width * scale);
         if (newWidth > size.Width)

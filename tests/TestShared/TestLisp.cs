@@ -1,4 +1,4 @@
-﻿namespace Test;
+namespace Test;
 
 public class TestLisp
 {
@@ -67,7 +67,7 @@ public class TestLisp
     {
         // 测试方法1: (command "CmdTest_RunLisp1")
         // 测试方式2: (LispTest_RunLisp)
-        var dm = Acap.DocumentManager;
+        var dm = CadApp.DocumentManager;
         var doc = dm.MdiActiveDocument;
         var ed = doc.Editor;
 

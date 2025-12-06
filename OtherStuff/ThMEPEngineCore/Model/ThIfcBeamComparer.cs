@@ -1,4 +1,4 @@
-﻿using ThCADExtension;
+using ThCADExtension;
 using Dreambuild.AutoCAD;
 using Autodesk.AutoCAD.Geometry;
 using System.Collections.Generic;

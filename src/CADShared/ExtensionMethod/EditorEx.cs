@@ -428,7 +428,7 @@ public static class EditorEx
         try
         {
             if (Acceptable())
-                Acaop.DocumentManager.MdiActiveDocument.Editor.WriteMessage("\n" + message);
+                CadCoreApp.DocumentManager.MdiActiveDocument.Editor.WriteMessage("\n" + message);
         }
         catch (Exception ex)
         {
@@ -452,9 +452,9 @@ public static class EditorEx
     /// <returns><see langword="true"/>有,<see langword="false"/>没有</returns>
     public static bool HasEditor()
     {
-        return Acaop.DocumentManager.MdiActiveDocument is not null &&
-               Acaop.DocumentManager.Count != 0 &&
-               Acaop.DocumentManager.MdiActiveDocument.Editor is not null;
+        return CadCoreApp.DocumentManager.MdiActiveDocument is not null &&
+               CadCoreApp.DocumentManager.Count != 0 &&
+               CadCoreApp.DocumentManager.MdiActiveDocument.Editor is not null;
     }
 
     /// <summary>
@@ -463,7 +463,7 @@ public static class EditorEx
     /// <returns><see langword="true"/>可以打印,<see langword="false"/>不可以打印</returns>
     public static bool Acceptable()
     {
-        return HasEditor() && !Acaop.DocumentManager.MdiActiveDocument.Editor.IsDragging;
+        return HasEditor() && !CadCoreApp.DocumentManager.MdiActiveDocument.Editor.IsDragging;
     }
 
     #endregion Info
@@ -1069,7 +1069,7 @@ public static class EditorEx
 
         if ((flag & RunLispFlag.SendStringToExecute) == RunLispFlag.SendStringToExecute)
         {
-            var dm = Acaop.DocumentManager;
+            var dm = CadCoreApp.DocumentManager;
             var doc = dm.MdiActiveDocument;
             doc?.SendStringToExecute(lispCode + "\n", false, false, false);
         }
@@ -1098,7 +1098,7 @@ public static class EditorEx
         if (File.Exists(saveFile))
             throw new FileFormatException("文件重复:" + saveFile);
 
-        var dm = Acaop.DocumentManager;
+        var dm = CadCoreApp.DocumentManager;
         if (dm.Count == 0)
             return;
 
@@ -1121,9 +1121,9 @@ public static class EditorEx
         editor.SetImpliedSelection(ids);
 
 #if ZWCAD
-        dynamic com = Acap.ZcadApplication;
+        dynamic com = CadApp.ZcadApplication;
 #else
-        dynamic com = Acap.AcadApplication;
+        dynamic com = CadApp.AcadApplication;
 #endif
         var doc = com.ActiveDocument;
         var wmfSet = doc.ActiveSelectionSet;

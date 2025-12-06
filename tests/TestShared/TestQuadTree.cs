@@ -148,7 +148,7 @@ public partial class TestQuadTree
     [CommandMethod(nameof(CmdTest_QuadTree21))]
     public void CmdTest_QuadTree21()
     {
-        var dm = Acap.DocumentManager;
+        var dm = CadApp.DocumentManager;
         var doc = dm.MdiActiveDocument;
         var db = doc.Database;
         var ed = doc.Editor;
@@ -165,7 +165,7 @@ public partial class TestQuadTree
     [CommandMethod(nameof(CmdTest_QuadTree20))]
     public void CmdTest_QuadTree20()
     {
-        var dm = Acap.DocumentManager;
+        var dm = CadApp.DocumentManager;
         var doc = dm.MdiActiveDocument;
         var db = doc.Database;
         var ed = doc.Editor;
@@ -263,7 +263,7 @@ public partial class TestQuadTree
     [CommandMethod(nameof(CmdTest_QuadTree0))]
     public void CmdTest_QuadTree0()
     {
-        var dm = Acap.DocumentManager;
+        var dm = CadApp.DocumentManager;
         var doc = dm.MdiActiveDocument;
         // var db = doc.Database;
         var ed = doc.Editor;
@@ -284,7 +284,7 @@ public partial class TestQuadTree
     [CommandMethod(nameof(CmdTest_CreateNodesRect))]
     public void CmdTest_CreateNodesRect()
     {
-        var dm = Acap.DocumentManager;
+        var dm = CadApp.DocumentManager;
         var doc = dm.MdiActiveDocument;
         var db = doc.Database;
         var ed = doc.Editor;

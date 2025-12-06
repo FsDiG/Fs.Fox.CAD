@@ -14,8 +14,8 @@ public class SystemVariableManager
     /// </summary>
     public bool ApBox
     {
-        get => Convert.ToBoolean(Acaop.GetSystemVariable(nameof(ApBox)));
-        set => Acaop.SetSystemVariable(nameof(ApBox), Convert.ToInt32(value));
+        get => Convert.ToBoolean(CadCoreApp.GetSystemVariable(nameof(ApBox)));
+        set => CadCoreApp.SetSystemVariable(nameof(ApBox), Convert.ToInt32(value));
     }
 
     /// <summary>
@@ -23,8 +23,8 @@ public class SystemVariableManager
     /// </summary>
     public int Aperture
     {
-        get => Convert.ToInt32(Acaop.GetSystemVariable(nameof(Aperture)));
-        set => Acaop.SetSystemVariable(nameof(Aperture), value);
+        get => Convert.ToInt32(CadCoreApp.GetSystemVariable(nameof(Aperture)));
+        set => CadCoreApp.SetSystemVariable(nameof(Aperture), value);
     }
 
     /// <summary>
@@ -32,8 +32,8 @@ public class SystemVariableManager
     /// </summary>
     public int Aunits
     {
-        get => Convert.ToInt32(Acaop.GetSystemVariable(nameof(Aunits)));
-        set => Acaop.SetSystemVariable(nameof(Aunits), value);
+        get => Convert.ToInt32(CadCoreApp.GetSystemVariable(nameof(Aunits)));
+        set => CadCoreApp.SetSystemVariable(nameof(Aunits), value);
     }
 
     /// <summary>
@@ -41,8 +41,8 @@ public class SystemVariableManager
     /// </summary>
     public int Auprec
     {
-        get => Convert.ToInt32(Acaop.GetSystemVariable(nameof(Auprec)));
-        set => Acaop.SetSystemVariable(nameof(Auprec), value);
+        get => Convert.ToInt32(CadCoreApp.GetSystemVariable(nameof(Auprec)));
+        set => CadCoreApp.SetSystemVariable(nameof(Auprec), value);
     }
 
     #endregion
@@ -52,7 +52,7 @@ public class SystemVariableManager
     /// <summary>
     /// 是否在块编辑器中
     /// </summary>
-    public bool BlockEditor => Acaop.GetSystemVariable(nameof(BlockEditor)) is 1;
+    public bool BlockEditor => CadCoreApp.GetSystemVariable(nameof(BlockEditor)) is 1;
 
     #endregion
 
@@ -61,26 +61,26 @@ public class SystemVariableManager
     /// <summary>
     /// 用于设置当前空间的当前注释比例的值
     /// </summary>
-    public static string CanNoScale => Acaop.GetSystemVariable(nameof(CanNoScale)).ToString()!;
+    public static string CanNoScale => CadCoreApp.GetSystemVariable(nameof(CanNoScale)).ToString()!;
 
     /// <summary>
     /// 用于显示当前的注释性比例
     /// </summary>
     public static double CanNoScaleValue =>
-        Convert.ToDouble(Acaop.GetSystemVariable(nameof(CanNoScale)));
+        Convert.ToDouble(CadCoreApp.GetSystemVariable(nameof(CanNoScale)));
 
     /// <summary>
     /// 储存以公元纪年为基准的日历数据和时间
     /// </summary>
-    public static double CDate => Convert.ToDouble(Acaop.GetSystemVariable(nameof(CDate)));
+    public static double CDate => Convert.ToDouble(CadCoreApp.GetSystemVariable(nameof(CDate)));
 
     /// <summary>
     /// 设置新对象的颜色
     /// </summary>
     public static string CEColor
     {
-        get => Acaop.GetSystemVariable(nameof(CEColor)).ToString()!;
-        set => Acaop.SetSystemVariable(nameof(CEColor), value);
+        get => CadCoreApp.GetSystemVariable(nameof(CEColor)).ToString()!;
+        set => CadCoreApp.SetSystemVariable(nameof(CEColor), value);
     }
 
     /// <summary>
@@ -88,8 +88,8 @@ public class SystemVariableManager
     /// </summary>
     public static double CELtScale
     {
-        get => Convert.ToDouble(Acaop.GetSystemVariable(nameof(CELtScale)));
-        set => Acaop.SetSystemVariable(nameof(CELtScale), value);
+        get => Convert.ToDouble(CadCoreApp.GetSystemVariable(nameof(CELtScale)));
+        set => CadCoreApp.SetSystemVariable(nameof(CELtScale), value);
     }
 
     /// <summary>
@@ -97,8 +97,8 @@ public class SystemVariableManager
     /// </summary>
     public static string CELType
     {
-        get => Acaop.GetSystemVariable(nameof(CELType)).ToString()!;
-        set => Acaop.SetSystemVariable(nameof(CELType), value);
+        get => CadCoreApp.GetSystemVariable(nameof(CELType)).ToString()!;
+        set => CadCoreApp.SetSystemVariable(nameof(CELType), value);
     }
 
     /// <summary>
@@ -106,8 +106,8 @@ public class SystemVariableManager
     /// </summary>
     public static double CELWeight
     {
-        get => Convert.ToDouble(Acaop.GetSystemVariable(nameof(CELWeight)));
-        set => Acaop.SetSystemVariable(nameof(CELWeight), value);
+        get => Convert.ToDouble(CadCoreApp.GetSystemVariable(nameof(CELWeight)));
+        set => CadCoreApp.SetSystemVariable(nameof(CELWeight), value);
     }
 
     /// <summary>
@@ -115,8 +115,8 @@ public class SystemVariableManager
     /// </summary>
     public static double CircleRad
     {
-        get => Convert.ToDouble(Acaop.GetSystemVariable(nameof(CircleRad)));
-        set => Acaop.SetSystemVariable(nameof(CircleRad), value);
+        get => Convert.ToDouble(CadCoreApp.GetSystemVariable(nameof(CircleRad)));
+        set => CadCoreApp.SetSystemVariable(nameof(CircleRad), value);
     }
 
     /// <summary>
@@ -124,33 +124,33 @@ public class SystemVariableManager
     /// </summary>
     public static string CLayer
     {
-        get => Acaop.GetSystemVariable(nameof(CLayer)).ToString()!;
-        set => Acaop.SetSystemVariable(nameof(CLayer), value);
+        get => CadCoreApp.GetSystemVariable(nameof(CLayer)).ToString()!;
+        set => CadCoreApp.SetSystemVariable(nameof(CLayer), value);
     }
 
     /// <summary>
     /// 用于确定全屏显示是打开或关闭状态
     /// </summary>
     public static bool CleanScreenState =>
-        Convert.ToBoolean(Acaop.GetSystemVariable(nameof(CleanScreenState)));
+        Convert.ToBoolean(CadCoreApp.GetSystemVariable(nameof(CleanScreenState)));
 
     /// <summary>
     /// 指示命令窗口是隐藏还是显示状态
     /// </summary>
-    public static bool CliState => Convert.ToBoolean(Acaop.GetSystemVariable(nameof(CliState)));
+    public static bool CliState => Convert.ToBoolean(CadCoreApp.GetSystemVariable(nameof(CliState)));
 
     /// <summary>
     /// 存在活动命令
     /// </summary>
-    public static bool CmdActive => Convert.ToBoolean(Acaop.GetSystemVariable(nameof(CmdActive)));
+    public static bool CmdActive => Convert.ToBoolean(CadCoreApp.GetSystemVariable(nameof(CmdActive)));
 
     /// <summary>
     /// 控制是否要打开对话框来显示命令
     /// </summary>
     public static bool CmdDia
     {
-        get => Convert.ToBoolean(Acaop.GetSystemVariable(nameof(CmdDia)));
-        set => Acaop.SetSystemVariable(nameof(CmdDia), Convert.ToInt32(value));
+        get => Convert.ToBoolean(CadCoreApp.GetSystemVariable(nameof(CmdDia)));
+        set => CadCoreApp.SetSystemVariable(nameof(CmdDia), Convert.ToInt32(value));
     }
 
     /// <summary>
@@ -158,22 +158,22 @@ public class SystemVariableManager
     /// </summary>
     public static bool CmdEcho
     {
-        get => Convert.ToBoolean(Acaop.GetSystemVariable(nameof(CmdEcho)));
-        set => Acaop.SetSystemVariable(nameof(CmdEcho), value ? 1 : 0);
+        get => Convert.ToBoolean(CadCoreApp.GetSystemVariable(nameof(CmdEcho)));
+        set => CadCoreApp.SetSystemVariable(nameof(CmdEcho), value ? 1 : 0);
     }
 
     /// <summary>
     /// 当前的命令
     /// </summary>
-    public static string CmdNames => Acaop.GetSystemVariable(nameof(CmdNames)).ToString()!;
+    public static string CmdNames => CadCoreApp.GetSystemVariable(nameof(CmdNames)).ToString()!;
 
     /// <summary>
     /// 返回图形中的当前选项卡（模型或布局）的名称
     /// </summary>
     public static string CTab
     {
-        get => Acaop.GetSystemVariable(nameof(CTab)).ToString()!;
-        set => Acaop.SetSystemVariable(nameof(CTab), value);
+        get => CadCoreApp.GetSystemVariable(nameof(CTab)).ToString()!;
+        set => CadCoreApp.SetSystemVariable(nameof(CTab), value);
     }
 
     /// <summary>
@@ -182,8 +182,8 @@ public class SystemVariableManager
     /// </summary>
     public static int CursorSize
     {
-        get => Convert.ToInt32(Acaop.GetSystemVariable(nameof(CursorSize)));
-        set => Acaop.SetSystemVariable(nameof(CursorSize), value);
+        get => Convert.ToInt32(CadCoreApp.GetSystemVariable(nameof(CursorSize)));
+        set => CadCoreApp.SetSystemVariable(nameof(CursorSize), value);
     }
 
     /// <summary>
@@ -191,8 +191,8 @@ public class SystemVariableManager
     /// </summary>
     public static short CVPort
     {
-        get => Convert.ToInt16(Acaop.GetSystemVariable(nameof(CVPort)));
-        set => Acaop.SetSystemVariable(nameof(CVPort), value);
+        get => Convert.ToInt16(CadCoreApp.GetSystemVariable(nameof(CVPort)));
+        set => CadCoreApp.SetSystemVariable(nameof(CVPort), value);
     }
 
     #endregion
@@ -204,22 +204,22 @@ public class SystemVariableManager
     /// </summary>
     public static bool DblClick
     {
-        get => Convert.ToBoolean(Acaop.GetSystemVariable(nameof(DblClick)));
-        set => Acaop.SetSystemVariable(nameof(DblClick), Convert.ToInt32(value));
+        get => Convert.ToBoolean(CadCoreApp.GetSystemVariable(nameof(DblClick)));
+        set => CadCoreApp.SetSystemVariable(nameof(DblClick), Convert.ToInt32(value));
     }
 
     /// <summary>
     /// 指示图形的修改状态
     /// </summary>
-    public static DBmod DBMod => (DBmod)Acaop.GetSystemVariable(nameof(DBMod));
+    public static DBmod DBMod => (DBmod)CadCoreApp.GetSystemVariable(nameof(DBMod));
 
     /// <summary>
     /// 动态输入
     /// </summary>
     public static int DynMode
     {
-        get => Convert.ToInt32(Acaop.GetSystemVariable(nameof(DynMode)));
-        set => Acaop.SetSystemVariable(nameof(DynMode), value);
+        get => Convert.ToInt32(CadCoreApp.GetSystemVariable(nameof(DynMode)));
+        set => CadCoreApp.SetSystemVariable(nameof(DynMode), value);
     }
 
     /// <summary>
@@ -227,8 +227,8 @@ public class SystemVariableManager
     /// </summary>
     public static bool DynPrompt
     {
-        get => Convert.ToBoolean(Acaop.GetSystemVariable(nameof(DynPrompt)));
-        set => Acaop.SetSystemVariable(nameof(DynPrompt), Convert.ToInt32(value));
+        get => Convert.ToBoolean(CadCoreApp.GetSystemVariable(nameof(DynPrompt)));
+        set => CadCoreApp.SetSystemVariable(nameof(DynPrompt), Convert.ToInt32(value));
     }
 
     #endregion
@@ -240,8 +240,8 @@ public class SystemVariableManager
     /// </summary>
     public bool GridMode
     {
-        get => Acaop.GetSystemVariable(nameof(GridMode)) is 1;
-        set => Acaop.SetSystemVariable(nameof(GridMode), Convert.ToInt32(value));
+        get => CadCoreApp.GetSystemVariable(nameof(GridMode)) is 1;
+        set => CadCoreApp.SetSystemVariable(nameof(GridMode), Convert.ToInt32(value));
     }
 
     #endregion
@@ -253,8 +253,8 @@ public class SystemVariableManager
     /// </summary>
     public static string HPName
     {
-        get => Acaop.GetSystemVariable(nameof(HPName)).ToString()!;
-        set => Acaop.SetSystemVariable(nameof(HPName), value);
+        get => CadCoreApp.GetSystemVariable(nameof(HPName)).ToString()!;
+        set => CadCoreApp.SetSystemVariable(nameof(HPName), value);
     }
 
     /// <summary>
@@ -262,12 +262,12 @@ public class SystemVariableManager
     /// </summary>
     public static double HPScale
     {
-        get => Convert.ToDouble(Acaop.GetSystemVariable(nameof(HPScale)));
+        get => Convert.ToDouble(CadCoreApp.GetSystemVariable(nameof(HPScale)));
         set
         {
             if (value <= 0)
                 throw new ArgumentOutOfRangeException(nameof(HPScale), "HPScale必须大于0");
-            Acaop.SetSystemVariable(nameof(HPScale), value);
+            CadCoreApp.SetSystemVariable(nameof(HPScale), value);
         }
     }
 
@@ -280,8 +280,8 @@ public class SystemVariableManager
     /// </summary>
     public UnitsValue Insunits
     {
-        get => (UnitsValue)Acaop.GetSystemVariable(nameof(Insunits));
-        set => Acaop.SetSystemVariable(nameof(Insunits), (int)value);
+        get => (UnitsValue)CadCoreApp.GetSystemVariable(nameof(Insunits));
+        set => CadCoreApp.SetSystemVariable(nameof(Insunits), (int)value);
     }
 
     #endregion
@@ -293,8 +293,8 @@ public class SystemVariableManager
     /// </summary>
     public Point3d LastPoint
     {
-        get => (Point3d)Acaop.GetSystemVariable(nameof(LastPoint));
-        set => Acaop.SetSystemVariable(nameof(LastPoint), value);
+        get => (Point3d)CadCoreApp.GetSystemVariable(nameof(LastPoint));
+        set => CadCoreApp.SetSystemVariable(nameof(LastPoint), value);
     }
 
     /// <summary>
@@ -302,8 +302,8 @@ public class SystemVariableManager
     /// </summary>
     public int Lunits
     {
-        get => Convert.ToInt32(Acaop.GetSystemVariable(nameof(Lunits)));
-        set => Acaop.SetSystemVariable(nameof(Lunits), value);
+        get => Convert.ToInt32(CadCoreApp.GetSystemVariable(nameof(Lunits)));
+        set => CadCoreApp.SetSystemVariable(nameof(Lunits), value);
     }
 
     /// <summary>
@@ -311,8 +311,8 @@ public class SystemVariableManager
     /// </summary>
     public int Luprec
     {
-        get => Convert.ToInt32(Acaop.GetSystemVariable(nameof(Luprec)));
-        set => Acaop.SetSystemVariable(nameof(Luprec), value);
+        get => Convert.ToInt32(CadCoreApp.GetSystemVariable(nameof(Luprec)));
+        set => CadCoreApp.SetSystemVariable(nameof(Luprec), value);
     }
 
     #endregion
@@ -324,8 +324,8 @@ public class SystemVariableManager
     /// </summary>
     public MeasurementValue Measurement
     {
-        get => (MeasurementValue)Acaop.GetSystemVariable(nameof(Measurement));
-        set => Acaop.SetSystemVariable(nameof(Measurement), Convert.ToInt32(value));
+        get => (MeasurementValue)CadCoreApp.GetSystemVariable(nameof(Measurement));
+        set => CadCoreApp.SetSystemVariable(nameof(Measurement), Convert.ToInt32(value));
     }
 
     #endregion
@@ -337,8 +337,8 @@ public class SystemVariableManager
     /// </summary>
     public static bool OrthoMode
     {
-        get => Convert.ToBoolean(Acaop.GetSystemVariable(nameof(OrthoMode)));
-        set => Acaop.SetSystemVariable(nameof(OrthoMode), Convert.ToInt32(value));
+        get => Convert.ToBoolean(CadCoreApp.GetSystemVariable(nameof(OrthoMode)));
+        set => CadCoreApp.SetSystemVariable(nameof(OrthoMode), Convert.ToInt32(value));
     }
 
     #endregion
@@ -350,8 +350,8 @@ public class SystemVariableManager
     /// </summary>
     public static bool PickFirst
     {
-        get => Convert.ToBoolean(Acaop.GetSystemVariable(nameof(PickFirst)));
-        set => Acaop.SetSystemVariable(nameof(PickFirst), Convert.ToInt32(value));
+        get => Convert.ToBoolean(CadCoreApp.GetSystemVariable(nameof(PickFirst)));
+        set => CadCoreApp.SetSystemVariable(nameof(PickFirst), Convert.ToInt32(value));
     }
 
     #endregion
@@ -361,7 +361,7 @@ public class SystemVariableManager
     /// <summary>
     /// 视图点
     /// </summary>
-    public static Point3d Target => (Point3d)Acaop.GetSystemVariable(nameof(Target));
+    public static Point3d Target => (Point3d)CadCoreApp.GetSystemVariable(nameof(Target));
 
     #endregion
 }

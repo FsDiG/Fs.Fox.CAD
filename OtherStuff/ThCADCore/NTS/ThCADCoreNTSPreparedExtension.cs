@@ -1,4 +1,4 @@
-﻿using NetTopologySuite.Geometries.Prepared;
+using NetTopologySuite.Geometries.Prepared;
 using Autodesk.AutoCAD.DatabaseServices;
 using AcPolygon = Autodesk.AutoCAD.DatabaseServices.Polyline;
 

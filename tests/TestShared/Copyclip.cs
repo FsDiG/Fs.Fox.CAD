@@ -32,7 +32,7 @@ public class Copyclip
     [IFoxInitialize] // 惊惊: 遇到了高版本无法导出WMF,放弃此功能,等待有缘人
     public void Init()
     {
-        Acap.DocumentManager.DocumentLockModeChanged += Dm_VetoCommand;
+        CadApp.DocumentManager.DocumentLockModeChanged += Dm_VetoCommand;
         Env.Printl($"※剪贴板控制※\n{nameof(Copyclip_Switch)} - 切换开关\n");
     }
 
@@ -102,7 +102,7 @@ public class Copyclip
 #endif
         if (cmd != null)
         {
-            var dm = Acap.DocumentManager;
+            var dm = CadApp.DocumentManager;
             if (dm.Count == 0)
                 return;
             var doc = dm.MdiActiveDocument;
@@ -204,7 +204,7 @@ public class Copyclip
             if (!_rwLock.IsWriteLockHeld)
                 _rwLock.EnterWriteLock(); // 进入写入锁
 
-            var dm = Acap.DocumentManager;
+            var dm = CadApp.DocumentManager;
             if (dm.Count == 0)
                 return;
             var doc = dm.MdiActiveDocument;
@@ -381,7 +381,7 @@ public class Copyclip
             if (!_rwLock.IsWriteLockHeld)
                 _rwLock.EnterWriteLock(); // 进入写入锁
 
-            var dm = Acap.DocumentManager;
+            var dm = CadApp.DocumentManager;
             if (dm.Count == 0)
                 return;
 

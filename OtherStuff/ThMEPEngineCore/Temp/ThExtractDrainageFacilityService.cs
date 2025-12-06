@@ -1,4 +1,4 @@
-﻿using NFox.Cad;
+using NFox.Cad;
 using Linq2Acad;
 using ThCADCore.NTS;
 using System.Linq;

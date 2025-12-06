@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Linq2Acad;
 using Autodesk.AutoCAD.Geometry;
 using Autodesk.AutoCAD.Internal;

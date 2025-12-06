@@ -1,4 +1,4 @@
-﻿#if ACAD2016
+#if ACAD2016
 using DotNetARX;
 using System.Linq;
 using ThCADExtension;

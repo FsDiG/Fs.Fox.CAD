@@ -1,4 +1,4 @@
-﻿namespace Autodesk.AutoCAD.ApplicationServices.PreferencesUser
+namespace Autodesk.AutoCAD.ApplicationServices.PreferencesUser
 {
     /// <summary>
     ///

@@ -1,4 +1,4 @@
-﻿using AcHelper.Wrappers;
+using AcHelper.Wrappers;
 using Autodesk.AutoCAD.Colors;
 using Autodesk.AutoCAD.DatabaseServices;
 using System;

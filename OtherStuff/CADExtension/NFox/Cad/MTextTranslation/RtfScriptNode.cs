@@ -1,4 +1,4 @@
-﻿namespace NFox.Cad
+namespace NFox.Cad
 {
     /// <summary>
     /// 堆叠类型枚举

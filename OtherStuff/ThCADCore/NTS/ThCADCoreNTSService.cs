@@ -1,4 +1,4 @@
-﻿using NetTopologySuite;
+using NetTopologySuite;
 using NetTopologySuite.Geometries;
 using NetTopologySuite.Geometries.Prepared;
 

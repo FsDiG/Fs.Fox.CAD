@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Autodesk.AutoCAD.DatabaseServices;
 
 namespace ThMEPEngineCore.Service.Hvac

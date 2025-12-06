@@ -1,4 +1,4 @@
-﻿using Linq2Acad;
+using Linq2Acad;
 using Autodesk.AutoCAD.DatabaseServices;
 
 namespace ThMEPEngineCore.BeamInfo.Utils

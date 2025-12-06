@@ -1,4 +1,4 @@
-﻿namespace AcHelper.Wrappers
+namespace AcHelper.Wrappers
 {
     public enum ErrorCode
     {

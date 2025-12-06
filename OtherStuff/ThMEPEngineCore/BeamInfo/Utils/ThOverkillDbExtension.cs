@@ -1,4 +1,4 @@
-﻿using Linq2Acad;
+using Linq2Acad;
 using System.Linq;
 using ThCADExtension;
 using Autodesk.AutoCAD.Geometry;

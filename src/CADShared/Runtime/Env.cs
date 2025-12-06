@@ -27,7 +27,7 @@ public static class Env
     /// <summary>
     /// 当前文档
     /// </summary>
-    public static Document Document => Acaop.DocumentManager.MdiActiveDocument;
+    public static Document Document => CadCoreApp.DocumentManager.MdiActiveDocument;
 
     /// <summary>
     /// 编辑器对象
@@ -52,7 +52,7 @@ public static class Env
     /// <returns>对象</returns>
     public static object GetCurrentProfileProperty(string subSectionName, string propertyName)
     {
-        var ucm = Acaop.UserConfigurationManager;
+        var ucm = CadCoreApp.UserConfigurationManager;
         var cpf = ucm.OpenCurrentProfile();
         var ss = cpf.OpenSubsection(subSectionName);
         return ss.ReadProperty(propertyName, "");
@@ -66,7 +66,7 @@ public static class Env
     /// <returns>配置项</returns>
     public static IConfigurationSection GetDialogSection(object dialog)
     {
-        var ucm = Acaop.UserConfigurationManager;
+        var ucm = CadCoreApp.UserConfigurationManager;
         var ds = ucm.OpenDialogSection(dialog);
         return ds;
     }
@@ -78,7 +78,7 @@ public static class Env
     /// <returns>配置项</returns>
     public static IConfigurationSection GetGlobalSection(string propertyName)
     {
-        var ucm = Acaop.UserConfigurationManager;
+        var ucm = CadCoreApp.UserConfigurationManager;
         var gs = ucm.OpenGlobalSection();
         var ss = gs.OpenSubsection(propertyName);
         return ss;
@@ -94,22 +94,22 @@ public static class Env
     /// </summary>
     public static bool CmdEcho
     {
-        get => Convert.ToInt16(Acaop.GetSystemVariable("cmdecho")) == 1;
-        set => Acaop.SetSystemVariable("cmdecho", Convert.ToInt16(value));
+        get => Convert.ToInt16(CadCoreApp.GetSystemVariable("cmdecho")) == 1;
+        set => CadCoreApp.SetSystemVariable("cmdecho", Convert.ToInt16(value));
     }
 
     /// <summary>
     /// 获取Cad当前是否有活动命令
     /// </summary>
-    public static bool CmdActive => Convert.ToBoolean(Acaop.GetSystemVariable("CMDACTIVE"));
+    public static bool CmdActive => Convert.ToBoolean(CadCoreApp.GetSystemVariable("CMDACTIVE"));
 
     /// <summary>
     /// 控制在光标是否为正交模式， <see langword="true" /> 为打开正交， <see langword="false" /> 为关闭正交
     /// </summary>
     public static bool OrthoMode
     {
-        get => Convert.ToInt16(Acaop.GetSystemVariable("ORTHOMODE")) == 1;
-        set => Acaop.SetSystemVariable("ORTHOMODE", Convert.ToInt16(value));
+        get => Convert.ToInt16(CadCoreApp.GetSystemVariable("ORTHOMODE")) == 1;
+        set => CadCoreApp.SetSystemVariable("ORTHOMODE", Convert.ToInt16(value));
     }
 
     /// <summary>
@@ -117,8 +117,8 @@ public static class Env
     /// </summary>
     public static Point3d LastPoint
     {
-        get => (Point3d)Acaop.GetSystemVariable("LASTPOINT");
-        set => Acaop.SetSystemVariable("LASTPOINT", value);
+        get => (Point3d)CadCoreApp.GetSystemVariable("LASTPOINT");
+        set => CadCoreApp.SetSystemVariable("LASTPOINT", value);
     }
 
     #region Dimblk
@@ -282,13 +282,13 @@ public static class Env
     {
         get
         {
-            var s = ((string)Acaop.GetSystemVariable("dimblk")).ToUpper();
+            var s = ((string)CadCoreApp.GetSystemVariable("dimblk")).ToUpper();
             return _dimDescDict[s];
         }
         set
         {
             var s = GetDimblkName(value);
-            Acaop.SetSystemVariable("dimblk", s);
+            CadCoreApp.SetSystemVariable("dimblk", s);
         }
     }
 
@@ -312,10 +312,10 @@ public static class Env
     /// <returns>箭头ID</returns>
     public static ObjectId GetDimblkId(DimblkType dimblk)
     {
-        var oldDimblk = Acaop.GetSystemVariable("dimblk");
+        var oldDimblk = CadCoreApp.GetSystemVariable("dimblk");
         Dimblk = dimblk;
         var id = HostApplicationServices.WorkingDatabase.Dimblk;
-        Acaop.SetSystemVariable("dimblk", oldDimblk);
+        CadCoreApp.SetSystemVariable("dimblk", oldDimblk);
         return id;
     }
 
@@ -411,8 +411,8 @@ public static class Env
     // ReSharper disable once InconsistentNaming
     public static OSModeType OSMode
     {
-        get => (OSModeType)Convert.ToInt16(Acaop.GetSystemVariable("osmode"));
-        set => Acaop.SetSystemVariable("osmode", (int)value);
+        get => (OSModeType)Convert.ToInt16(CadCoreApp.GetSystemVariable("osmode"));
+        set => CadCoreApp.SetSystemVariable("osmode", (int)value);
     }
 
     /// <summary>
@@ -445,7 +445,7 @@ public static class Env
     /// <returns>变量值</returns>
     public static object GetVar(string varName)
     {
-        return Acaop.GetSystemVariable(varName);
+        return CadCoreApp.GetSystemVariable(varName);
     }
 
     /// <summary>
@@ -461,7 +461,7 @@ public static class Env
     {
         try
         {
-            Acaop.SetSystemVariable(varName, value);
+            CadCoreApp.SetSystemVariable(varName, value);
         }
         catch (Exception)
         {
@@ -793,7 +793,7 @@ public static class Env
     /// <exception cref="NotImplementedException">超出年份就报错</exception>
     public static int GetAcadYear()
     {
-        var ver = Acaop.Version.Major + "." + Acaop.Version.Minor;
+        var ver = CadCoreApp.Version.Major + "." + CadCoreApp.Version.Minor;
         var acadVersion = ver switch
         {
             "16.2" => 2006,
@@ -828,7 +828,7 @@ public static class Env
     /// <returns>dll的前面</returns>
     public static string GetAcapVersionDll(string str = "acdb")
     {
-        return str + Acaop.Version.Major + ".dll";
+        return str + CadCoreApp.Version.Major + ".dll";
     }
 
     #endregion
@@ -912,9 +912,9 @@ public static class Env
     public static void DelayUpdateLayLockFade()
     {
         const string lfName = "LAYLOCKFADECTL";
-        var lf = Convert.ToInt32(Acaop.GetSystemVariable(lfName).ToString());
-        Acaop.SetSystemVariable(lfName, -lf);
-        IdleAction.Add(() => Acaop.SetSystemVariable(lfName, lf));
+        var lf = Convert.ToInt32(CadCoreApp.GetSystemVariable(lfName).ToString());
+        CadCoreApp.SetSystemVariable(lfName, -lf);
+        IdleAction.Add(() => CadCoreApp.SetSystemVariable(lfName, lf));
     }
 
     #endregion

@@ -15,7 +15,7 @@ public class PostCmd
      * static extern int AcedCmd(IntPtr rbp);
      * public static int AcedCmd(ResultBuffer args)
      * {
-     *     if (Acap.DocumentManager.IsApplicationContext)
+     *     if (CadApp.DocumentManager.IsApplicationContext)
      *         return 0;
      *     else
      *         return AcedCmd(args.UnmanagedObject);
@@ -28,12 +28,12 @@ public class PostCmd
     /// </summary>
     static PromptStatus AcedCmd(ResultBuffer args)
     {
-        if (Acaop.DocumentManager.IsApplicationContext)
+        if (CadCoreApp.DocumentManager.IsApplicationContext)
             return 0;
         if (acedCmd is null)
         {
             var str = nameof(acedCmd);
-            if (Acaop.Version.Major >= 20)// 2015.+
+            if (CadCoreApp.Version.Major >= 20)// 2015.+
                 str += "S";
 
             acedCmd = AcadPeInfo.GetDelegate<DelegateAcedCmd>(
@@ -114,9 +114,9 @@ public class PostCmd
     {
         object[] commandArray = [args + "\n"];
 #if ZWCAD
-        var com = Acap.ZcadApplication;
+        var com = CadApp.ZcadApplication;
 #else
-        var com = Acap.AcadApplication;
+        var com = CadApp.AcadApplication;
 #endif
         // activeDocument 加载lisp第二个文档有问题,似乎要切换了才能
         var doc = com.GetType()
@@ -186,7 +186,7 @@ public class PostCmd
     public static PromptStatus SendCommand(string args, RunCmdFlag flag)
     {
         var ret = PromptStatus.OK;
-        if (!Acaop.DocumentManager.IsApplicationContext)
+        if (!CadCoreApp.DocumentManager.IsApplicationContext)
         {
             if ((flag & RunCmdFlag.AcedCmd) == RunCmdFlag.AcedCmd)
             {
@@ -216,7 +216,7 @@ public class PostCmd
         }
         else
         {
-            var dm = Acaop.DocumentManager;
+            var dm = CadCoreApp.DocumentManager;
             var doc = dm.MdiActiveDocument;
             if (doc == null)
                 return PromptStatus.Error;

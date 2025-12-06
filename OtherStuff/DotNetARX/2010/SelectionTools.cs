@@ -1,4 +1,4 @@
-﻿using Autodesk.AutoCAD.EditorInput;
+using Autodesk.AutoCAD.EditorInput;
 using Autodesk.AutoCAD.Geometry;
 
 namespace DotNetARX

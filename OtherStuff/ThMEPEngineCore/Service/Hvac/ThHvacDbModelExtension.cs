@@ -1,4 +1,4 @@
-﻿using Linq2Acad;
+using Linq2Acad;
 using DotNetARX;
 using System.Linq;
 using System.Text;

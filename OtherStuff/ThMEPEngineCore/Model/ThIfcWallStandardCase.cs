@@ -1,4 +1,4 @@
-﻿namespace ThMEPEngineCore.Model
+namespace ThMEPEngineCore.Model
 {
     public class ThIfcWallStandardCase : ThIfcWall
     {

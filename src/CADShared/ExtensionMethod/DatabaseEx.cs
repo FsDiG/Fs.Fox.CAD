@@ -36,7 +36,7 @@ public static class DatabaseEx
     {
         // 遍历当前所有文档,文档必然是前台的
         Document? doc = null;
-        foreach (Document docItem in Acaop.DocumentManager)
+        foreach (Document docItem in CadCoreApp.DocumentManager)
         {
             if (docItem.Database.Filename == db.Filename)
             {

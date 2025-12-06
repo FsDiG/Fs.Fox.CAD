@@ -1,4 +1,4 @@
-﻿namespace Autodesk.AutoCAD.DatabaseServices
+namespace Autodesk.AutoCAD.DatabaseServices
 {
     /// <summary>
     /// Extension class for DBObject object

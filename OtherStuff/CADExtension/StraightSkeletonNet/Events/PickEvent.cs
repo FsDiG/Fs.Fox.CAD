@@ -1,4 +1,4 @@
-﻿using StraightSkeletonNet.Events.Chains;
+using StraightSkeletonNet.Events.Chains;
 using StraightSkeletonNet.Primitives;
 
 namespace StraightSkeletonNet.Events

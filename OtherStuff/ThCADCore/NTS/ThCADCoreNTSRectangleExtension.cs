@@ -1,4 +1,4 @@
-﻿using NetTopologySuite.Utilities;
+using NetTopologySuite.Utilities;
 using NetTopologySuite.Geometries;
 using Autodesk.AutoCAD.DatabaseServices;
 

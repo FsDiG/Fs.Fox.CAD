@@ -1,4 +1,4 @@
-﻿
+
 //
 // (C) Copyright 2004 by Autodesk, Inc. 
 //

@@ -1,4 +1,4 @@
-﻿using AcHelper.Enumerables;
+using AcHelper.Enumerables;
 using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.Colors;
 using Autodesk.AutoCAD.DatabaseServices;

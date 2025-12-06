@@ -1,4 +1,4 @@
-﻿using ThCADCore.NTS;
+using ThCADCore.NTS;
 using ThMEPEngineCore.Model;
 using NetTopologySuite.Features;
 using Autodesk.AutoCAD.DatabaseServices;

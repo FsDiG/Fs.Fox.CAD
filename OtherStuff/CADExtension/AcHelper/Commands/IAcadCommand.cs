@@ -1,4 +1,4 @@
-﻿namespace AcHelper.Commands
+namespace AcHelper.Commands
 {
 	/// <summary>
 	/// The IAcadCommand interface is used to execute specific AutoCAD commands.

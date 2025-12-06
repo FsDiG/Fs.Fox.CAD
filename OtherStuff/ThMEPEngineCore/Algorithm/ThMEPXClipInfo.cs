@@ -1,4 +1,4 @@
-﻿using ThCADCore.NTS;
+using ThCADCore.NTS;
 using Autodesk.AutoCAD.DatabaseServices;
 using NetTopologySuite.Geometries.Prepared;
 using Autodesk.AutoCAD.Geometry;

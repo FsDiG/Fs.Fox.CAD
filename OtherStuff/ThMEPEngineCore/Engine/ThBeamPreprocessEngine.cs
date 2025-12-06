@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using NFox.Cad;
 using Linq2Acad;
 using System.Linq;

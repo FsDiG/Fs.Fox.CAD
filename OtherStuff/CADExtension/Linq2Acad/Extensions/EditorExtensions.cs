@@ -1,4 +1,4 @@
-﻿using Autodesk.AutoCAD.EditorInput;
+using Autodesk.AutoCAD.EditorInput;
 using System;
 using System.Collections.Generic;
 using System.Linq;

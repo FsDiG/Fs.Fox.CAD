@@ -1,4 +1,4 @@
-﻿//#define ExtendedDataBinaryChunk
+//#define ExtendedDataBinaryChunk
 #define XTextString
 
 #if NewtonsoftJson

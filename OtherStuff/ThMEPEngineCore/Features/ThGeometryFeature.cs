@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using ThCADCore.NTS;
 using ThMEPEngineCore.Model;
 using NetTopologySuite.Features;

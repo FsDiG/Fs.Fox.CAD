@@ -1,4 +1,4 @@
-﻿namespace Autodesk.AutoCAD.ApplicationServices.PreferencesFiles
+namespace Autodesk.AutoCAD.ApplicationServices.PreferencesFiles
 {
     /// <summary>
     ///

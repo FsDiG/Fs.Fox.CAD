@@ -930,7 +930,7 @@ namespace MgdDbg.Snoop.CollectorExts
         {
             data.Add(new Snoop.Data.ClassSeparator(typeof(VisualStyleTraits)));
 
-            data.Add(new Snoop.Data.Object("AcGi visual style", visStylTrts.AcGiVisualStyle));
+            data.Add(new Snoop.Data.Object("CadGI visual style", visStylTrts.AcGiVisualStyle));
         }
 
         #endregion

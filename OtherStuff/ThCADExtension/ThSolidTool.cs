@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using GeometryExtensions;
 using Autodesk.AutoCAD.Geometry;
 using System.Collections.Generic;

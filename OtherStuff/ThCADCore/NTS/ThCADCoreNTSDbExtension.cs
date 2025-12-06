@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using DotNetARX;
 using ThCADExtension;
 using Dreambuild.AutoCAD;

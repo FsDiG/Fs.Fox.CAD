@@ -1,4 +1,4 @@
-﻿using ThCADCore.NTS;
+using ThCADCore.NTS;
 using ThMEPEngineCore.Service;
 using Autodesk.AutoCAD.Geometry;
 using System.Collections.Generic;

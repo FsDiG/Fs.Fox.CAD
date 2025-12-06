@@ -63,7 +63,7 @@ public class Testenv
     {
         // Env.Print(AcadVersion.Versions);
         AcadVersion.Versions.ForEach(v => Env.Print(v));
-        AcadVersion.FromApp(Acap.AcadApplication)?.Print();
+        AcadVersion.FromApp(CadApp.AcadApplication)?.Print();
         1.Print();
         "1".Print();
     }
@@ -146,9 +146,9 @@ public class Testenv
     [CommandMethod(nameof(Test_RemovePath))]
     public static void Test_RemovePath()
     {
-        // var acad = Acaop.TryGetSystemVariable("ACAD").ToString();
+        // var acad = CadCoreApp.TryGetSystemVariable("ACAD").ToString();
         // acad.Print();
-        // Acaop.SetSystemVariable("ACAD", acad + @";c:\a\x");
+        // CadCoreApp.SetSystemVariable("ACAD", acad + @";c:\a\x");
         Env.GetEnv("ACAD").Print();
         Env.RemoveSupportPath();
         // Env.RemoveTrustedPath(@"c:\a\x");

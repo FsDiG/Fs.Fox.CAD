@@ -33,8 +33,8 @@ public static class IdleNoCmdAction
         _actions.Enqueue(action);
         if (!alreadyLoad)
         {
-            Acaop.Idle -= Acap_Idle;
-            Acaop.Idle += Acap_Idle;
+            CadCoreApp.Idle -= Acap_Idle;
+            CadCoreApp.Idle += Acap_Idle;
             alreadyLoad = true;
         }
     }
@@ -42,19 +42,19 @@ public static class IdleNoCmdAction
     /// <summary>
     /// 空闲处理事件
     /// </summary>
-    /// <param name="sender">Acap</param>
+    /// <param name="sender">CadApp</param>
     /// <param name="e">事件参数</param>
     private static void Acap_Idle(object? sender, EventArgs e)
     {
         if (Count == 0)
         {
             alreadyLoad = false;
-            Acaop.Idle -= Acap_Idle;
+            CadCoreApp.Idle -= Acap_Idle;
             return;
         }
 
         // 判断是否有活动的命令
-        if (Convert.ToBoolean(Acaop.GetSystemVariable(CmdActiveName)))
+        if (Convert.ToBoolean(CadCoreApp.GetSystemVariable(CmdActiveName)))
             return;
 #if RELEASE
         try

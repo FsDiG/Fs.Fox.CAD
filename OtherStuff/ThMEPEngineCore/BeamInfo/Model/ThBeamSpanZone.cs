@@ -1,4 +1,4 @@
-﻿using AcPolygon = Autodesk.AutoCAD.DatabaseServices.Polyline;
+using AcPolygon = Autodesk.AutoCAD.DatabaseServices.Polyline;
 
 namespace ThMEPEngineCore.BeamInfo.Model
 {

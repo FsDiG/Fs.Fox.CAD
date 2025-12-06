@@ -1,4 +1,4 @@
-﻿namespace StraightSkeletonNet.Path
+namespace StraightSkeletonNet.Path
 {
     internal class PathQueueNode<T> where T : PathQueueNode<T>
     {

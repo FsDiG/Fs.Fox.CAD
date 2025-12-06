@@ -1,4 +1,4 @@
-﻿using NFox.Cad;
+using NFox.Cad;
 using System.Linq;
 using ThCADCore.NTS;
 using Dreambuild.AutoCAD;

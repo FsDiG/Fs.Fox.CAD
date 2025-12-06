@@ -1,4 +1,4 @@
-﻿
+
 namespace Test;
 
 public partial class Test
@@ -20,7 +20,7 @@ public partial class Test
 
         // 将c1以默认模式,c2以亮显模式加到瞬态容器,即在图纸上显示
         jet.Add(c1);
-        jet.Add(c2, Acgi.TransientDrawingMode.Highlight);
+        jet.Add(c2, CadGI.TransientDrawingMode.Highlight);
 
         // 再取一点,再建一个圆c3
         var r2 = Env.Editor.GetPoint("\n选择下一点");

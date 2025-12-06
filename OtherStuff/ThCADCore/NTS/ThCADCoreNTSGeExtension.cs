@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using NetTopologySuite.Geometries;
 using NetTopologySuite.Algorithm;
 using Autodesk.AutoCAD.Geometry;

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Autodesk.AutoCAD.Geometry;
 using System.Text.RegularExpressions;
 using ThMEPEngineCore.Model;

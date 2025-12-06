@@ -153,7 +153,7 @@ public sealed class DBTrans : IDisposable
     /// <param name="docLock">是否锁文档</param>
     public DBTrans(Document? doc = null, bool commit = true, bool docLock = false)
     {
-        Document = doc ?? Acaop.DocumentManager.MdiActiveDocument;
+        Document = doc ?? CadCoreApp.DocumentManager.MdiActiveDocument;
         Database = Document.Database;
         Editor = Document.Editor;
         if (docLock && Document.LockMode(false) == DocumentLockMode.NotLocked)
@@ -172,7 +172,7 @@ public sealed class DBTrans : IDisposable
     public DBTrans(Database database, bool commit = true)
     {
         Database = database;
-        Document = Acaop.DocumentManager.GetDocument(database);
+        Document = CadCoreApp.DocumentManager.GetDocument(database);
         Editor = Document?.Editor;
         Transaction = Database.TransactionManager.StartTransaction();
         _commit = commit;
@@ -215,7 +215,7 @@ public sealed class DBTrans : IDisposable
         }
         else
         {
-            var doc = Acaop.DocumentManager.Cast<Document>()
+            var doc = CadCoreApp.DocumentManager.Cast<Document>()
                 .FirstOrDefault(doc => !doc.IsDisposed && doc.Name == _fileName);
 
             if (activeOpen)
@@ -226,7 +226,7 @@ public sealed class DBTrans : IDisposable
                     {
                         // 设置命令标记: CommandFlags.Session
                         // 若没有设置: Open()之后的会进入中断状态(不会执行,直到切换文档ctrl+tab或者关闭文档)
-                        doc = Acaop.DocumentManager.Open(fileName,
+                        doc = CadCoreApp.DocumentManager.Open(fileName,
                             fileOpenMode == FileOpenMode.OpenForReadAndReadShare, password);
                     }
                     catch (Exception e)
@@ -238,7 +238,7 @@ public sealed class DBTrans : IDisposable
                 // 设置命令标记: CommandFlags.Session
                 // 若没有设置: doc.IsActive 会异常
                 if (!doc.IsActive)
-                    Acaop.DocumentManager.MdiActiveDocument = doc;
+                    CadCoreApp.DocumentManager.MdiActiveDocument = doc;
 
                 // Open()是跨文档,所以必须要锁文档
                 // 否则 Editor?.Redraw() 的 tm.QueueForGraphicsFlush() 将报错提示文档锁
@@ -551,7 +551,7 @@ public sealed class DBTrans : IDisposable
         // 后台
         // 这种情况发生在关闭了所有文档之后,进行跨进程通讯
         // 此处要先获取激活的文档,不能直接获取当前数据库否则异常
-        var dm = Acaop.DocumentManager;
+        var dm = CadCoreApp.DocumentManager;
         var doc = dm.MdiActiveDocument;
         if (doc == null)
         {

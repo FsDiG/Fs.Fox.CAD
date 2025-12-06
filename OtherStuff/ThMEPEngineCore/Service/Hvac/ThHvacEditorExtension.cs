@@ -1,4 +1,4 @@
-﻿using AcHelper;
+using AcHelper;
 using Linq2Acad;
 using ThCADExtension;
 using Autodesk.AutoCAD.Geometry;

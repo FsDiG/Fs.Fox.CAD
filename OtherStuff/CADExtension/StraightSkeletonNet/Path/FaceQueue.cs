@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using StraightSkeletonNet.Circular;
 
 namespace StraightSkeletonNet.Path

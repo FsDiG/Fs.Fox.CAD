@@ -1,4 +1,4 @@
-﻿using NFox.Cad;
+using NFox.Cad;
 using Autodesk.AutoCAD.EditorInput;
 using Autodesk.AutoCAD.DatabaseServices;
 

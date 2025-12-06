@@ -1,4 +1,4 @@
-﻿using NetTopologySuite.Algorithm.Match;
+using NetTopologySuite.Algorithm.Match;
 using Autodesk.AutoCAD.DatabaseServices;
 
 namespace ThCADCore.NTS

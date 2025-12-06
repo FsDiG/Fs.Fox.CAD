@@ -45,7 +45,7 @@ public static class AssocUtils
             network.AddAction(actionId, true);
             return ErrorStatus.OK;
         }
-        catch (AcException e)
+        catch (CadException e)
         {
             return e.ErrorStatus;
         }

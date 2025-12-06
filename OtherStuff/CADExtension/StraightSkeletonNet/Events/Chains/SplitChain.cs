@@ -1,4 +1,4 @@
-﻿using StraightSkeletonNet.Circular;
+using StraightSkeletonNet.Circular;
 
 namespace StraightSkeletonNet.Events.Chains
 {

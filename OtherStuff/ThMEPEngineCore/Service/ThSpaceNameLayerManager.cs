@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Linq2Acad;
 using System.Collections.Generic;

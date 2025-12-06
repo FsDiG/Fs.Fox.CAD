@@ -1,4 +1,4 @@
-﻿using Autodesk.AutoCAD.ApplicationServices.PreferencesDisplay;
+using Autodesk.AutoCAD.ApplicationServices.PreferencesDisplay;
 using Autodesk.AutoCAD.ApplicationServices.PreferencesFiles;
 using Autodesk.AutoCAD.ApplicationServices.PreferencesUser;
 

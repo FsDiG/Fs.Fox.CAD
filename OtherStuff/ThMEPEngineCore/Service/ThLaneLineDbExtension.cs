@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Linq2Acad;
 using ThMEPEngineCore.Service;
 using Autodesk.AutoCAD.Geometry;

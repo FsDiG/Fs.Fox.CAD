@@ -1,4 +1,4 @@
-﻿namespace ThMEPEngineCore.BeamInfo.Model
+namespace ThMEPEngineCore.BeamInfo.Model
 {
     public class ThCentralizedMarking
     {

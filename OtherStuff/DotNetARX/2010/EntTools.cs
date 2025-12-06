@@ -5,102 +5,102 @@ using Autodesk.AutoCAD.Geometry;
 namespace DotNetARX
 {
     /// <summary>
-    /// ÊµÌå²Ù×÷Àà
+    /// Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     public static class EntTools
     {
         /// <summary>
-        /// ÒÆ¶¯ÊµÌå
+        /// ï¿½Æ¶ï¿½Êµï¿½ï¿½
         /// </summary>
-        /// <param name="id">ÊµÌåµÄObjectId</param>
-        /// <param name="sourcePt">ÒÆ¶¯µÄÔ´µã</param>
-        /// <param name="targetPt">ÒÆ¶¯µÄÄ¿±êµã</param>
+        /// <param name="id">Êµï¿½ï¿½ï¿½ObjectId</param>
+        /// <param name="sourcePt">ï¿½Æ¶ï¿½ï¿½ï¿½Ô´ï¿½ï¿½</param>
+        /// <param name="targetPt">ï¿½Æ¶ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½</param>
         public static void Move(this ObjectId id, Point3d sourcePt, Point3d targetPt)
         {
-            //¹¹½¨ÓÃÓÚÒÆ¶¯ÊµÌåµÄ¾ØÕó
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½Êµï¿½ï¿½Ä¾ï¿½ï¿½ï¿½
             Vector3d vector = targetPt.GetVectorTo(sourcePt);
             Matrix3d mt = Matrix3d.Displacement(vector);
-            //ÒÔÐ´µÄ·½Ê½´ò¿ªid±íÊ¾µÄÊµÌå¶ÔÏó
+            //ï¿½ï¿½Ð´ï¿½Ä·ï¿½Ê½ï¿½ï¿½idï¿½ï¿½Ê¾ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½
             Entity ent = (Entity)id.GetObject(OpenMode.ForWrite);
-            ent.TransformBy(mt);//¶ÔÊµÌåÊµÊ©ÒÆ¶¯
-            ent.DowngradeOpen();//Îª·ÀÖ¹´íÎó£¬ÇÐ»»ÊµÌåÎª¶ÁµÄ×´Ì¬
+            ent.TransformBy(mt);//ï¿½ï¿½Êµï¿½ï¿½ÊµÊ©ï¿½Æ¶ï¿½
+            ent.DowngradeOpen();//Îªï¿½ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½ï¿½Ð»ï¿½Êµï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½×´Ì¬
         }
 
         /// <summary>
-        /// ÒÆ¶¯ÊµÌå
+        /// ï¿½Æ¶ï¿½Êµï¿½ï¿½
         /// </summary>
-        /// <param name="ent">ÊµÌå</param>
-        /// <param name="sourcePt">ÒÆ¶¯µÄÔ´µã</param>
-        /// <param name="targetPt">ÒÆ¶¯µÄÄ¿±êµã</param>
+        /// <param name="ent">Êµï¿½ï¿½</param>
+        /// <param name="sourcePt">ï¿½Æ¶ï¿½ï¿½ï¿½Ô´ï¿½ï¿½</param>
+        /// <param name="targetPt">ï¿½Æ¶ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½</param>
         public static void Move(this Entity ent, Point3d sourcePt, Point3d targetPt)
         {
-            if (ent.IsNewObject) // Èç¹ûÊÇ»¹Î´±»Ìí¼Óµ½Êý¾Ý¿âÖÐµÄÐÂÊµÌå
+            if (ent.IsNewObject) // ï¿½ï¿½ï¿½ï¿½Ç»ï¿½Î´ï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½Ðµï¿½ï¿½ï¿½Êµï¿½ï¿½
             {
-                // ¹¹½¨ÓÃÓÚÒÆ¶¯ÊµÌåµÄ¾ØÕó
+                // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½Êµï¿½ï¿½Ä¾ï¿½ï¿½ï¿½
                 Vector3d vector = targetPt.GetVectorTo(sourcePt);
                 Matrix3d mt = Matrix3d.Displacement(vector);
-                ent.TransformBy(mt);//¶ÔÊµÌåÊµÊ©ÒÆ¶¯
+                ent.TransformBy(mt);//ï¿½ï¿½Êµï¿½ï¿½ÊµÊ©ï¿½Æ¶ï¿½
             }
-            else // Èç¹ûÊÇÒÑ¾­Ìí¼Óµ½Êý¾Ý¿âÖÐµÄÊµÌå
+            else // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½Ðµï¿½Êµï¿½ï¿½
             {
                 ent.ObjectId.Move(sourcePt, targetPt);
             }
         }
 
         /// <summary>
-        /// ¸´ÖÆÊµÌå
+        /// ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½
         /// </summary>
-        /// <param name="id">ÊµÌåµÄObjectId</param>
-        /// <param name="sourcePt">¸´ÖÆµÄÔ´µã</param>
-        /// <param name="targetPt">¸´ÖÆµÄÄ¿±êµã</param>
-        /// <returns>·µ»Ø¸´ÖÆÊµÌåµÄObjectId</returns>
+        /// <param name="id">Êµï¿½ï¿½ï¿½ObjectId</param>
+        /// <param name="sourcePt">ï¿½ï¿½ï¿½Æµï¿½Ô´ï¿½ï¿½</param>
+        /// <param name="targetPt">ï¿½ï¿½ï¿½Æµï¿½Ä¿ï¿½ï¿½ï¿½</param>
+        /// <returns>ï¿½ï¿½ï¿½Ø¸ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ObjectId</returns>
         public static ObjectId Copy(this ObjectId id, Point3d sourcePt, Point3d targetPt)
         {
-            //¹¹½¨ÓÃÓÚ¸´ÖÆÊµÌåµÄ¾ØÕó
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¸ï¿½ï¿½ï¿½Êµï¿½ï¿½Ä¾ï¿½ï¿½ï¿½
             Vector3d vector = targetPt.GetVectorTo(sourcePt);
             Matrix3d mt = Matrix3d.Displacement(vector);
-            //»ñÈ¡id±íÊ¾µÄÊµÌå¶ÔÏó
+            //ï¿½ï¿½È¡idï¿½ï¿½Ê¾ï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½
             Entity ent = (Entity)id.GetObject(OpenMode.ForRead);
-            //»ñÈ¡ÊµÌåµÄ¿½±´
+            //ï¿½ï¿½È¡Êµï¿½ï¿½Ä¿ï¿½ï¿½ï¿½
             Entity entCopy = ent.GetTransformedCopy(mt);
-            //½«¸´ÖÆµÄÊµÌå¶ÔÏóÌí¼Óµ½Ä£ÐÍ¿Õ¼ä
+            //ï¿½ï¿½ï¿½ï¿½ï¿½Æµï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½Ä£ï¿½Í¿Õ¼ï¿½
             ObjectId copyId = id.Database.AddToModelSpace(entCopy);
-            return copyId; //·µ»Ø¸´ÖÆÊµÌåµÄObjectId
+            return copyId; //ï¿½ï¿½ï¿½Ø¸ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ObjectId
         }
 
         /// <summary>
-        /// ¸´ÖÆÊµÌå
+        /// ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½
         /// </summary>
-        /// <param name="ent">ÊµÌå</param>
-        /// <param name="sourcePt">¸´ÖÆµÄÔ´µã</param>
-        /// <param name="targetPt">¸´ÖÆµÄÄ¿±êµã</param>
-        /// <returns>·µ»Ø¸´ÖÆÊµÌåµÄObjectId</returns>
+        /// <param name="ent">Êµï¿½ï¿½</param>
+        /// <param name="sourcePt">ï¿½ï¿½ï¿½Æµï¿½Ô´ï¿½ï¿½</param>
+        /// <param name="targetPt">ï¿½ï¿½ï¿½Æµï¿½Ä¿ï¿½ï¿½ï¿½</param>
+        /// <returns>ï¿½ï¿½ï¿½Ø¸ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ObjectId</returns>
         public static ObjectId Copy(this Entity ent, Point3d sourcePt, Point3d targetPt)
         {
             ObjectId copyId;
-            if (ent.IsNewObject) // Èç¹ûÊÇ»¹Î´±»Ìí¼Óµ½Êý¾Ý¿âÖÐµÄÐÂÊµÌå
+            if (ent.IsNewObject) // ï¿½ï¿½ï¿½ï¿½Ç»ï¿½Î´ï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½Ðµï¿½ï¿½ï¿½Êµï¿½ï¿½
             {
-                //¹¹½¨ÓÃÓÚ¸´ÖÆÊµÌåµÄ¾ØÕó
+                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¸ï¿½ï¿½ï¿½Êµï¿½ï¿½Ä¾ï¿½ï¿½ï¿½
                 Vector3d vector = targetPt.GetVectorTo(sourcePt);
                 Matrix3d mt = Matrix3d.Displacement(vector);
-                //»ñÈ¡ÊµÌåµÄ¿½±´
+                //ï¿½ï¿½È¡Êµï¿½ï¿½Ä¿ï¿½ï¿½ï¿½
                 Entity entCopy = ent.GetTransformedCopy(mt);
-                //½«¸´ÖÆµÄÊµÌå¶ÔÏóÌí¼Óµ½Ä£ÐÍ¿Õ¼ä
+                //ï¿½ï¿½ï¿½ï¿½ï¿½Æµï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½Ä£ï¿½Í¿Õ¼ï¿½
                 copyId = ent.Database.AddToModelSpace(entCopy);
             }
             else
             {
                 copyId = ent.ObjectId.Copy(sourcePt, targetPt);
             }
-            return copyId; //·µ»Ø¸´ÖÆÊµÌåµÄObjectId
+            return copyId; //ï¿½ï¿½ï¿½Ø¸ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ObjectId
         }
 
         /// <summary>
-        /// Ðý×ªÊµÌå
+        /// ï¿½ï¿½×ªÊµï¿½ï¿½
         /// </summary>
-        /// <param name="id">ÊµÌåµÄObjectId</param>
-        /// <param name="basePt">Ðý×ª»ùµã</param>
-        /// <param name="angle">Ðý×ª½Ç¶È</param>
+        /// <param name="id">Êµï¿½ï¿½ï¿½ObjectId</param>
+        /// <param name="basePt">ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½</param>
+        /// <param name="angle">ï¿½ï¿½×ªï¿½Ç¶ï¿½</param>
         public static void Rotate(this ObjectId id, Point3d basePt, double angle)
         {
             Matrix3d mt = Matrix3d.Rotation(angle, Vector3d.ZAxis, basePt);
@@ -110,11 +110,11 @@ namespace DotNetARX
         }
 
         /// <summary>
-        /// Ðý×ªÊµÌå
+        /// ï¿½ï¿½×ªÊµï¿½ï¿½
         /// </summary>
-        /// <param name="ent">ÊµÌå</param>
-        /// <param name="basePt">Ðý×ª»ùµã</param>
-        /// <param name="angle">Ðý×ª½Ç¶È</param>
+        /// <param name="ent">Êµï¿½ï¿½</param>
+        /// <param name="basePt">ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½</param>
+        /// <param name="angle">ï¿½ï¿½×ªï¿½Ç¶ï¿½</param>
         public static void Rotate(this Entity ent, Point3d basePt, double angle)
         {
             if (ent.IsNewObject)
@@ -129,11 +129,11 @@ namespace DotNetARX
         }
 
         /// <summary>
-        /// Ëõ·ÅÊµÌå
+        /// ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½
         /// </summary>
-        /// <param name="id">ÊµÌåµÄObjectId</param>
-        /// <param name="basePt">Ëõ·Å»ùµã</param>
-        /// <param name="scaleFactor">Ëõ·Å±ÈÀý</param>
+        /// <param name="id">Êµï¿½ï¿½ï¿½ObjectId</param>
+        /// <param name="basePt">ï¿½ï¿½ï¿½Å»ï¿½ï¿½ï¿½</param>
+        /// <param name="scaleFactor">ï¿½ï¿½ï¿½Å±ï¿½ï¿½ï¿½</param>
         public static void Scale(this ObjectId id, Point3d basePt, double scaleFactor)
         {
             Matrix3d mt = Matrix3d.Scaling(scaleFactor, basePt);
@@ -143,11 +143,11 @@ namespace DotNetARX
         }
 
         /// <summary>
-        /// Ëõ·ÅÊµÌå
+        /// ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½
         /// </summary>
-        /// <param name="ent">ÊµÌå</param>
-        /// <param name="basePt">Ëõ·Å»ùµã</param>
-        /// <param name="scaleFactor">Ëõ·Å±ÈÀý</param>
+        /// <param name="ent">Êµï¿½ï¿½</param>
+        /// <param name="basePt">ï¿½ï¿½ï¿½Å»ï¿½ï¿½ï¿½</param>
+        /// <param name="scaleFactor">ï¿½ï¿½ï¿½Å±ï¿½ï¿½ï¿½</param>
         public static void Scale(this Entity ent, Point3d basePt, double scaleFactor)
         {
             if (ent.IsNewObject)
@@ -162,23 +162,23 @@ namespace DotNetARX
         }
 
         /// <summary>
-        /// ¾µÏñÊµÌå
+        /// ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½
         /// </summary>
-        /// <param name="id">ÊµÌåµÄObjectId</param>
-        /// <param name="mirrorPt1">¾µÏñÖáµÄµÚÒ»µã</param>
-        /// <param name="mirrorPt2">¾µÏñÖáµÄµÚ¶þµã</param>
-        /// <param name="eraseSourceObject">ÊÇ·ñÉ¾³ýÔ´¶ÔÏó</param>
-        /// <returns>·µ»Ø¾µÏñÊµÌåµÄObjectId</returns>
+        /// <param name="id">Êµï¿½ï¿½ï¿½ObjectId</param>
+        /// <param name="mirrorPt1">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½Ò»ï¿½ï¿½</param>
+        /// <param name="mirrorPt2">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÄµÚ¶ï¿½ï¿½ï¿½</param>
+        /// <param name="eraseSourceObject">ï¿½Ç·ï¿½É¾ï¿½ï¿½Ô´ï¿½ï¿½ï¿½ï¿½</param>
+        /// <returns>ï¿½ï¿½ï¿½Ø¾ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ObjectId</returns>
         public static ObjectId Mirror(this ObjectId id, Point3d mirrorPt1, Point3d mirrorPt2, bool eraseSourceObject)
         {
-            Line3d miLine = new Line3d(mirrorPt1, mirrorPt2);//¾µÏñÏß
-            Matrix3d mt = Matrix3d.Mirroring(miLine);//¾µÏñ¾ØÕó
+            Line3d miLine = new Line3d(mirrorPt1, mirrorPt2);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            Matrix3d mt = Matrix3d.Mirroring(miLine);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             ObjectId mirrorId = id;
             Entity ent = (Entity)id.GetObject(OpenMode.ForWrite);
-            //Èç¹ûÉ¾³ýÔ´¶ÔÏó£¬ÔòÖ±½Ó¶ÔÔ´¶ÔÏóÊµÐÐ¾µÏñ±ä»»
+            //ï¿½ï¿½ï¿½É¾ï¿½ï¿½Ô´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½Ó¶ï¿½Ô´ï¿½ï¿½ï¿½ï¿½Êµï¿½Ð¾ï¿½ï¿½ï¿½ä»»
             if (eraseSourceObject == true)
                 ent.TransformBy(mt);
-            else //Èç¹û²»É¾³ýÔ´¶ÔÏó£¬Ôò¾µÏñ¸´ÖÆÔ´¶ÔÏó
+            else //ï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½Ô´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´ï¿½ï¿½ï¿½ï¿½
             {
                 Entity entCopy = ent.GetTransformedCopy(mt);
                 mirrorId = id.Database.AddToModelSpace(entCopy);
@@ -187,24 +187,24 @@ namespace DotNetARX
         }
 
         /// <summary>
-        /// ¾µÏñÊµÌå
+        /// ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½
         /// </summary>
-        /// <param name="ent">ÊµÌå</param>
-        /// <param name="mirrorPt1">¾µÏñÖáµÄµÚÒ»µã</param>
-        /// <param name="mirrorPt2">¾µÏñÖáµÄµÚ¶þµã</param>
-        /// <param name="eraseSourceObject">ÊÇ·ñÉ¾³ýÔ´¶ÔÏó</param>
-        /// <returns>·µ»Ø¾µÏñÊµÌåµÄObjectId</returns>
+        /// <param name="ent">Êµï¿½ï¿½</param>
+        /// <param name="mirrorPt1">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½Ò»ï¿½ï¿½</param>
+        /// <param name="mirrorPt2">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÄµÚ¶ï¿½ï¿½ï¿½</param>
+        /// <param name="eraseSourceObject">ï¿½Ç·ï¿½É¾ï¿½ï¿½Ô´ï¿½ï¿½ï¿½ï¿½</param>
+        /// <returns>ï¿½ï¿½ï¿½Ø¾ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ObjectId</returns>
         public static ObjectId Mirror(this Entity ent, Point3d mirrorPt1, Point3d mirrorPt2, bool eraseSourceObject)
         {
-            Line3d miLine = new Line3d(mirrorPt1, mirrorPt2);//¾µÏñÏß
-            Matrix3d mt = Matrix3d.Mirroring(miLine);//¾µÏñ¾ØÕó
+            Line3d miLine = new Line3d(mirrorPt1, mirrorPt2);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            Matrix3d mt = Matrix3d.Mirroring(miLine);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             ObjectId mirrorId = ObjectId.Null;
             if (ent.IsNewObject)
             {
-                //Èç¹ûÉ¾³ýÔ´¶ÔÏó£¬ÔòÖ±½Ó¶ÔÔ´¶ÔÏóÊµÐÐ¾µÏñ±ä»»
+                //ï¿½ï¿½ï¿½É¾ï¿½ï¿½Ô´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö±ï¿½Ó¶ï¿½Ô´ï¿½ï¿½ï¿½ï¿½Êµï¿½Ð¾ï¿½ï¿½ï¿½ä»»
                 if (eraseSourceObject == true)
                     ent.TransformBy(mt);
-                else //Èç¹û²»É¾³ýÔ´¶ÔÏó£¬Ôò¾µÏñ¸´ÖÆÔ´¶ÔÏó
+                else //ï¿½ï¿½ï¿½ï¿½ï¿½É¾ï¿½ï¿½Ô´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´ï¿½ï¿½ï¿½ï¿½
                 {
                     Entity entCopy = ent.GetTransformedCopy(mt);
                     mirrorId = ent.Database.AddToModelSpace(entCopy);
@@ -218,11 +218,11 @@ namespace DotNetARX
         }
 
         /// <summary>
-        /// Æ«ÒÆÊµÌå
+        /// Æ«ï¿½ï¿½Êµï¿½ï¿½
         /// </summary>
-        /// <param name="id">ÊµÌåµÄObjectId</param>
-        /// <param name="dis">Æ«ÒÆ¾àÀë</param>
-        /// <returns>·µ»ØÆ«ÒÆºóµÄÊµÌåId¼¯ºÏ</returns>
+        /// <param name="id">Êµï¿½ï¿½ï¿½ObjectId</param>
+        /// <param name="dis">Æ«ï¿½Æ¾ï¿½ï¿½ï¿½</param>
+        /// <returns>ï¿½ï¿½ï¿½ï¿½Æ«ï¿½Æºï¿½ï¿½Êµï¿½ï¿½Idï¿½ï¿½ï¿½ï¿½</returns>
         public static ObjectIdCollection Offset(this ObjectId id, double dis)
         {
             ObjectIdCollection ids = new ObjectIdCollection();
@@ -231,30 +231,30 @@ namespace DotNetARX
             {
                 try
                 {
-                    //»ñÈ¡Æ«ÒÆµÄ¶ÔÏó¼¯ºÏ
+                    //ï¿½ï¿½È¡Æ«ï¿½ÆµÄ¶ï¿½ï¿½ó¼¯ºï¿½
                     DBObjectCollection offsetCurves = cur.GetOffsetCurves(dis);
-                    //½«¶ÔÏó¼¯ºÏÀàÐÍ×ª»»ÎªÊµÌåÀàµÄÊý×é£¬ÒÔ·½±ã¼ÓÈëÊµÌåµÄ²Ù×÷
+                    //ï¿½ï¿½ï¿½ï¿½ï¿½ó¼¯ºï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ÎªÊµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é£¬ï¿½Ô·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½Ä²ï¿½ï¿½ï¿½
                     Entity[] offsetEnts = new Entity[offsetCurves.Count];
                     offsetCurves.CopyTo(offsetEnts, 0);
-                    //½«Æ«ÒÆµÄ¶ÔÏó¼ÓÈëµ½Êý¾Ý¿â
+                    //ï¿½ï¿½Æ«ï¿½ÆµÄ¶ï¿½ï¿½ï¿½ï¿½ï¿½ëµ½ï¿½ï¿½ï¿½Ý¿ï¿½
                     ids = id.Database.AddToModelSpace(offsetEnts);
                 }
                 catch
                 {
-                    Application.ShowAlertDialog("ÎÞ·¨Æ«ÒÆ£¡");
+                    Application.ShowAlertDialog("ï¿½Þ·ï¿½Æ«ï¿½Æ£ï¿½");
                 }
             }
             else
-                Application.ShowAlertDialog("ÎÞ·¨Æ«ÒÆ£¡");
-            return ids;//·µ»ØÆ«ÒÆºóµÄÊµÌåId¼¯ºÏ
+                Application.ShowAlertDialog("ï¿½Þ·ï¿½Æ«ï¿½Æ£ï¿½");
+            return ids;//ï¿½ï¿½ï¿½ï¿½Æ«ï¿½Æºï¿½ï¿½Êµï¿½ï¿½Idï¿½ï¿½ï¿½ï¿½
         }
 
         /// <summary>
-        /// Æ«ÒÆÊµÌå
+        /// Æ«ï¿½ï¿½Êµï¿½ï¿½
         /// </summary>
-        /// <param name="ent">ÊµÌå</param>
-        /// <param name="dis">Æ«ÒÆ¾àÀë</param>
-        /// <returns>·µ»ØÆ«ÒÆºóµÄÊµÌå¼¯ºÏ</returns>
+        /// <param name="ent">Êµï¿½ï¿½</param>
+        /// <param name="dis">Æ«ï¿½Æ¾ï¿½ï¿½ï¿½</param>
+        /// <returns>ï¿½ï¿½ï¿½ï¿½Æ«ï¿½Æºï¿½ï¿½Êµï¿½å¼¯ï¿½ï¿½</returns>
         public static DBObjectCollection Offset(this Entity ent, double dis)
         {
             DBObjectCollection offsetCurves = new DBObjectCollection();
@@ -269,54 +269,54 @@ namespace DotNetARX
                 }
                 catch
                 {
-                    Application.ShowAlertDialog("ÎÞ·¨Æ«ÒÆ£¡");
+                    Application.ShowAlertDialog("ï¿½Þ·ï¿½Æ«ï¿½Æ£ï¿½");
                 }
             }
             else
-                Application.ShowAlertDialog("ÎÞ·¨Æ«ÒÆ£¡");
+                Application.ShowAlertDialog("ï¿½Þ·ï¿½Æ«ï¿½Æ£ï¿½");
             return offsetCurves;
         }
 
         /// <summary>
-        /// ¾ØÐÎÕóÁÐÊµÌå
+        /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½
         /// </summary>
-        /// <param name="id">ÊµÌåµÄObjectId</param>
-        /// <param name="numRows">¾ØÐÎÕóÁÐµÄÐÐÊý,¸ÃÖµ±ØÐëÎªÕýÊý</param>
-        /// <param name="numCols">¾ØÐÎÕóÁÐµÄÁÐÊý,¸ÃÖµ±ØÐëÎªÕýÊý</param>
-        /// <param name="disRows">ÐÐ¼äµÄ¾àÀë</param>
-        /// <param name="disCols">ÁÐ¼äµÄ¾àÀë</param>
-        /// <returns>·µ»ØÕóÁÐºóµÄÊµÌå¼¯ºÏµÄObjectId</returns>
+        /// <param name="id">Êµï¿½ï¿½ï¿½ObjectId</param>
+        /// <param name="numRows">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½</param>
+        /// <param name="numCols">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½</param>
+        /// <param name="disRows">ï¿½Ð¼ï¿½Ä¾ï¿½ï¿½ï¿½</param>
+        /// <param name="disCols">ï¿½Ð¼ï¿½Ä¾ï¿½ï¿½ï¿½</param>
+        /// <returns>ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðºï¿½ï¿½Êµï¿½å¼¯ï¿½Ïµï¿½ObjectId</returns>
         public static ObjectIdCollection ArrayRectang(this ObjectId id, int numRows, int numCols, double disRows, double disCols)
         {
-            // ÓÃÓÚ·µ»ØÕóÁÐºóµÄÊµÌå¼¯ºÏµÄObjectId
+            // ï¿½ï¿½ï¿½Ú·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðºï¿½ï¿½Êµï¿½å¼¯ï¿½Ïµï¿½ObjectId
             ObjectIdCollection ids = new ObjectIdCollection();
-            // ÒÔ¶ÁµÄ·½Ê½´ò¿ªÊµÌå
+            // ï¿½Ô¶ï¿½ï¿½Ä·ï¿½Ê½ï¿½ï¿½Êµï¿½ï¿½
             Entity ent = (Entity)id.GetObject(OpenMode.ForRead);
             for (int m = 0; m < numRows; m++)
             {
                 for (int n = 0; n < numCols; n++)
                 {
-                    // »ñÈ¡Æ½ÒÆ¾ØÕó
+                    // ï¿½ï¿½È¡Æ½ï¿½Æ¾ï¿½ï¿½ï¿½
                     Matrix3d mt = Matrix3d.Displacement(new Vector3d(n * disCols, m * disRows, 0));
-                    Entity entCopy = ent.GetTransformedCopy(mt);// ¸´ÖÆÊµÌå
-                    // ½«¸´ÖÆµÄÊµÌåÌí¼Óµ½Ä£ÐÍ¿Õ¼ä
+                    Entity entCopy = ent.GetTransformedCopy(mt);// ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½
+                    // ï¿½ï¿½ï¿½ï¿½ï¿½Æµï¿½Êµï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½Ä£ï¿½Í¿Õ¼ï¿½
                     ObjectId entCopyId = id.Database.AddToModelSpace(entCopy);
-                    ids.Add(entCopyId);// ½«¸´ÖÆÊµÌåµÄObjectIdÌí¼Óµ½¼¯ºÏÖÐ
+                    ids.Add(entCopyId);// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½ObjectIdï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 }
             }
-            ent.UpgradeOpen();// ÇÐ»»ÊµÌåÎªÐ´µÄ×´Ì¬
-            ent.Erase();// É¾³ýÊµÌå
-            return ids;// ·µ»ØÕóÁÐºóµÄÊµÌå¼¯ºÏµÄObjectId
+            ent.UpgradeOpen();// ï¿½Ð»ï¿½Êµï¿½ï¿½ÎªÐ´ï¿½ï¿½×´Ì¬
+            ent.Erase();// É¾ï¿½ï¿½Êµï¿½ï¿½
+            return ids;// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðºï¿½ï¿½Êµï¿½å¼¯ï¿½Ïµï¿½ObjectId
         }
 
         /// <summary>
-        /// »·ÐÎÕóÁÐÊµÌå
+        /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½
         /// </summary>
-        /// <param name="id">ÊµÌåµÄObjectId</param>
-        /// <param name="cenPt">»·ÐÎÕóÁÐµÄÖÐÐÄµã</param>
-        /// <param name="numObj">ÔÚ»·ÐÎÕóÁÐÖÐËùÒª´´½¨µÄ¶ÔÏóÊýÁ¿</param>
-        /// <param name="angle">ÒÔ»¡¶È±íÊ¾µÄÌî³ä½Ç¶È£¬ÕýÖµ±íÊ¾ÄæÊ±Õë·½ÏòÐý×ª£¬¸ºÖµ±íÊ¾Ë³Ê±Õë·½ÏòÐý×ª£¬Èç¹û½Ç¶ÈÎª0Ôò³ö´í</param>
-        /// <returns>·µ»ØÕóÁÐºóµÄÊµÌå¼¯ºÏµÄObjectId</returns>
+        /// <param name="id">Êµï¿½ï¿½ï¿½ObjectId</param>
+        /// <param name="cenPt">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½Äµï¿½</param>
+        /// <param name="numObj">ï¿½Ú»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</param>
+        /// <param name="angle">ï¿½Ô»ï¿½ï¿½È±ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½Ç¶È£ï¿½ï¿½ï¿½Öµï¿½ï¿½Ê¾ï¿½ï¿½Ê±ï¿½ë·½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½Ê¾Ë³Ê±ï¿½ë·½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¶ï¿½Îª0ï¿½ï¿½ï¿½ï¿½ï¿½</param>
+        /// <returns>ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðºï¿½ï¿½Êµï¿½å¼¯ï¿½Ïµï¿½ObjectId</returns>
         public static ObjectIdCollection ArrayPolar(this ObjectId id, Point3d cenPt, int numObj, double angle)
         {
             ObjectIdCollection ids = new ObjectIdCollection();
@@ -332,9 +332,9 @@ namespace DotNetARX
         }
 
         /// <summary>
-        /// É¾³ýÊµÌå
+        /// É¾ï¿½ï¿½Êµï¿½ï¿½
         /// </summary>
-        /// <param name="id">ÊµÌåµÄObjectId</param>
+        /// <param name="id">Êµï¿½ï¿½ï¿½ObjectId</param>
         public static void Erase(this ObjectId id)
         {
             DBObject ent = id.GetObject(OpenMode.ForWrite);
@@ -342,10 +342,10 @@ namespace DotNetARX
         }
 
         /// <summary>
-        /// ¼ÆËãÍ¼ÐÎÊý¾Ý¿âÄ£ÐÍ¿Õ¼äÖÐËùÓÐÊµÌåµÄ°üÎ§¿ò
+        /// ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½Ä£ï¿½Í¿Õ¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½Ä°ï¿½Î§ï¿½ï¿½
         /// </summary>
-        /// <param name="db">Êý¾Ý¿â¶ÔÏó</param>
-        /// <returns>·µ»ØÄ£ÐÍ¿Õ¼äÖÐËùÓÐÊµÌåµÄ°üÎ§¿ò</returns>
+        /// <param name="db">ï¿½ï¿½ï¿½Ý¿ï¿½ï¿½ï¿½ï¿½</param>
+        /// <returns>ï¿½ï¿½ï¿½ï¿½Ä£ï¿½Í¿Õ¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½Ä°ï¿½Î§ï¿½ï¿½</returns>
         public static Extents3d GetAllEntsExtent(this Database db)
         {
             Extents3d totalExt = new Extents3d();

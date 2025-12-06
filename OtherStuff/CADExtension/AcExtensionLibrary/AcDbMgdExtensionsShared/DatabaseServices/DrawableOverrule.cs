@@ -1,4 +1,4 @@
-﻿using Autodesk.AutoCAD.GraphicsInterface;
+using Autodesk.AutoCAD.GraphicsInterface;
 using Autodesk.AutoCAD.Runtime;
 
 namespace Autodesk.AutoCAD.DatabaseServices

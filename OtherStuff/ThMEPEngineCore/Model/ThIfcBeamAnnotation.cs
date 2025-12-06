@@ -1,4 +1,4 @@
-﻿using ThMEPEngineCore.Service;
+using ThMEPEngineCore.Service;
 using Autodesk.AutoCAD.Geometry;
 using System.Collections.Generic;
 using Autodesk.AutoCAD.DatabaseServices;
