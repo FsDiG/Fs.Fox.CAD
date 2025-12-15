@@ -6,13 +6,13 @@ namespace Fs.Fox.Cad;
 // ReSharper disable once InconsistentNaming
 public static class IFoxUtils
 {
-#if ACAD
     /// <summary>
     /// 刷新图层状态，在修改图层的锁定或冻结状态后使用
     /// </summary>
     /// <param name="layerIds">图层id集合</param>
     public static void RegenLayers(IEnumerable<ObjectId> layerIds)
     {
+#if ACAD
         var type = CadCoreApp.Version.Major >= 21
             ? Assembly.Load("accoremgd")?.GetType("Autodesk.AutoCAD.Internal.CoreLayerUtilities")
             : Assembly.Load("acmgd")?.GetType("Autodesk.AutoCAD.Internal.LayerUtilities");
@@ -20,6 +20,7 @@ public static class IFoxUtils
         var pi = type?.GetProperties().FirstOrDefault(e => e.Name == "RegenPending");
         var regenPending = (int)(pi?.GetValue(null) ?? 0);
         mi?.Invoke(null, [layerIds.ToArray(), regenPending]);
+#endif
     }
 
     /// <summary>
@@ -136,5 +137,4 @@ public static class IFoxUtils
     {
         return new Transparency(Convert.ToByte(Math.Floor((100 - value) * 2.55)));
     }
-#endif
 }
