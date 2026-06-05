@@ -1,4 +1,4 @@
-#if AC_2019 || ZWCAD
+#if AC_NET48 || ZWCAD
 using ArgumentNullException = Fs.Fox.Basal.ArgumentNullEx;
 #endif
 

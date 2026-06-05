@@ -1,19 +1,20 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFrameworks>net48</TargetFrameworks>
-        <ACADVersion>2019</ACADVersion>
+        <ACADVersion>2021</ACADVersion>
+        <AutoCADManagedSdkVersion>2021</AutoCADManagedSdkVersion>
         <AssemblyName>Fs.Fox.AutoCad</AssemblyName>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     </PropertyGroup>
 
     <!--nuget package-->
     <PropertyGroup>
-        <PackageId>IFox.CAD.ACAD2019</PackageId>
-        <Title>IFox.CAD for AutoCAD 2019</Title>
-        <Product>IFox.CAD.ACAD2019</Product>
+        <PackageId>IFox.CAD.ACAD2021</PackageId>
+        <Title>IFox.CAD for AutoCAD 2021</Title>
+        <Product>IFox.CAD.ACAD2021</Product>
         <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
-        <Description>基于.NET的AutoCAD二次开发基础类库，支持AutoCAD 2019（.NET Framework 4.8）。提供完整的CAD二次开发API封装，简化AutoCAD插件开发。源于IFoxCAD项目，由Fs团队维护。</Description>
+        <Description>基于.NET的AutoCAD二次开发基础类库，支持AutoCAD 2021（.NET Framework 4.8）。提供完整的CAD二次开发API封装，简化AutoCAD插件开发。源于IFoxCAD项目，由Fs团队维护。</Description>
         <Copyright>FS Team</Copyright>
         <PackageReleaseNotes>增加CI流程支持，完善NuGet包信息</PackageReleaseNotes>
     </PropertyGroup>
@@ -34,7 +35,7 @@
 
     <!-- 条件编译符号 -->
     <PropertyGroup>
-        <DefineConstants>$(Configuration);ACAD;AC_2019;AC_NET48</DefineConstants>
+        <DefineConstants>$(Configuration);ACAD;AC_2021;AC_NET48</DefineConstants>
     </PropertyGroup>
 
     <ItemGroup>
@@ -59,15 +60,14 @@
             <PackagePath>\</PackagePath>
         </None>
         <!-- Include Test DLL in NuGet package -->
-        <None Include="..\..\Build\AC_$(ACADVersion)_$(Configuration)\TestAcad2019.dll" Condition="Exists('..\..\Build\AC_$(ACADVersion)_$(Configuration)\TestAcad2019.dll')">
+        <None Include="..\..\Build\AC_$(ACADVersion)_$(Configuration)\TestAcad2021.dll" Condition="Exists('..\..\Build\AC_$(ACADVersion)_$(Configuration)\TestAcad2021.dll')">
             <Pack>True</Pack>
             <PackagePath>lib\net48\</PackagePath>
         </None>
     </ItemGroup>
 
-    <!-- AutoCAD 2019 的 NuGet 包引用 -->
+    <!-- AutoCAD 2021 SDK 引用 -->
     <ItemGroup>
-        <PackageReference Include="AutoCAD.NET" Version="23.0.0" ExcludeAssets="runtime" />
         <Reference Include="Microsoft.CSharp" />
         <PackageReference Include="PolySharp" Version="1.16.0">
             <PrivateAssets>all</PrivateAssets>
@@ -77,10 +77,12 @@
 
     <!-- CI 构建时的自动复制 -->
     <Target Name="CustomCopyOutputForCI" AfterTargets="Build" Condition="'$(ContinuousIntegrationBuild)' == 'true'">
-	    <Exec Command="powershell -Command &quot;New-Item -ItemType Directory -Force -Path '$(MSBuildProjectDirectory)\..\..\Build\DiGLib\DiGArchBase\x64_2019_$(Configuration)\'; Copy-Item '$(TargetDir)Fs.Fox.AutoCad.dll' -Destination '$(MSBuildProjectDirectory)\..\..\Build\DiGLib\DiGArchBase\x64_2019_$(Configuration)\'; Copy-Item '$(TargetDir)Fs.Fox.AutoCad.xml' -Destination '$(MSBuildProjectDirectory)\..\..\Build\DiGLib\DiGArchBase\x64_2019_$(Configuration)\' -ErrorAction SilentlyContinue; Copy-Item '$(TargetDir)IndexRange.dll' -Destination '$(MSBuildProjectDirectory)\..\..\Build\DiGLib\DiGArchBase\x64_2019_$(Configuration)\' -ErrorAction SilentlyContinue;&quot;" />
+	    <Exec Command="powershell -Command &quot;New-Item -ItemType Directory -Force -Path '$(MSBuildProjectDirectory)\..\..\Build\DiGLib\DiGArchBase\x64_2021_$(Configuration)\'; Copy-Item '$(TargetDir)Fs.Fox.AutoCad.dll' -Destination '$(MSBuildProjectDirectory)\..\..\Build\DiGLib\DiGArchBase\x64_2021_$(Configuration)\'; Copy-Item '$(TargetDir)Fs.Fox.AutoCad.xml' -Destination '$(MSBuildProjectDirectory)\..\..\Build\DiGLib\DiGArchBase\x64_2021_$(Configuration)\' -ErrorAction SilentlyContinue; Copy-Item '$(TargetDir)IndexRange.dll' -Destination '$(MSBuildProjectDirectory)\..\..\Build\DiGLib\DiGArchBase\x64_2021_$(Configuration)\' -ErrorAction SilentlyContinue;&quot;" />
     </Target>
 
+    <Import Project="..\..\..\AutoCAD.ManagedReferences.props" />
     <Import Project="..\CADShared\CADShared.projitems" Label="Shared" />
 
 </Project>
+
 
