@@ -12,9 +12,11 @@ Fs.Fox.CAD 是基于 .NET 的 CAD 二次开发基础类库，源于 [IFoxCAD](ht
 
 本项目在 IFoxCAD 的基础上，将命名空间改为 Fs.Fox，作为 Fs 团队 AutoCAD 开发的基础库之一。我们致力于提供稳定、易用的 CAD 二次开发解决方案，支持 AutoCAD 和中望CAD 多个版本。
 
+> AutoCAD 2027 封装当前按 `net8.0-windows7.0` 构建，并用 ObjectARX2025 的 managed reference 避免 C# 编译期 `CS1705`；平台语义、包名和输出目录仍保持 2027。详见 [docs/AC_2027-net8-compatibility-decision.md](docs/AC_2027-net8-compatibility-decision.md)。
+
 ### 主要特性
 
-- 🚀 **多版本支持**: 支持 AutoCAD 2019/2025 和中望CAD 2022/2025
+- 🚀 **多版本支持**: 支持 AutoCAD 2019/2025/2027 和中望CAD 2022/2025
 - 📦 **NuGet 发布**: 通过 NuGet 轻松集成到您的项目
 - 🔧 **丰富的 API**: 提供完整的 CAD 二次开发 API 封装
 - 📝 **详细文档**: 包含完整的使用文档和示例代码
@@ -34,6 +36,7 @@ Fs.Fox.CAD 是基于 .NET 的 CAD 二次开发基础类库，源于 [IFoxCAD](ht
 |--------|------|----------|-----------|----------|
 | **IFox.CAD.ACAD2019** | [![NuGet](https://img.shields.io/nuget/v/IFox.CAD.ACAD2019.svg)](https://www.nuget.org/packages/IFox.CAD.ACAD2019/) | AutoCAD 2019 | .NET Framework 4.8 | [下载](https://www.nuget.org/packages/IFox.CAD.ACAD2019/) |
 | **IFox.CAD.ACAD2025** | [![NuGet](https://img.shields.io/nuget/v/IFox.CAD.ACAD2025.svg)](https://www.nuget.org/packages/IFox.CAD.ACAD2025/) | AutoCAD 2025 | .NET 8.0 | [下载](https://www.nuget.org/packages/IFox.CAD.ACAD2025/) |
+| **IFox.CAD.ACAD2027** | 当前内部构建 | AutoCAD 2027 | .NET 8.0 | 当前随产品链路构建 |
 | **IFox.CAD.ZCAD2022** | [![NuGet](https://img.shields.io/nuget/v/IFox.CAD.ZCAD2022.svg)](https://www.nuget.org/packages/IFox.CAD.ZCAD2022/) | 中望CAD 2022 | .NET Framework 4.8 | [下载](https://www.nuget.org/packages/IFox.CAD.ZCAD2022/) |
 | **IFox.CAD.ZCAD2025** | [![NuGet](https://img.shields.io/nuget/v/IFox.CAD.ZCAD2025.svg)](https://www.nuget.org/packages/IFox.CAD.ZCAD2025/) | 中望CAD 2025 | .NET Framework 4.8 | [下载](https://www.nuget.org/packages/IFox.CAD.ZCAD2025/) |
 

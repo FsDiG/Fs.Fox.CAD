@@ -1,9 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net10.0-windows</TargetFrameworks>
+        <TargetFrameworks>net8.0-windows7.0</TargetFrameworks>
         <ACADVersion>2027</ACADVersion>
         <AutoCADManagedSdkVersion>2027</AutoCADManagedSdkVersion>
+        <!-- This project targets net8.0 for the current protection toolchain; compile against ObjectARX2025 managed references because ObjectARX2027 managed assemblies target net10.0. -->
+        <AutoCADManagedReferenceSdkVersion>2025</AutoCADManagedReferenceSdkVersion>
         <AssemblyName>Fs.Fox.AutoCad</AssemblyName>
         <EnableDynamicLoading>true</EnableDynamicLoading>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
@@ -15,7 +17,7 @@
         <Title>IFox.CAD for AutoCAD 2027</Title>
         <Product>IFox.CAD.ACAD2027</Product>
         <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
-        <Description>基于.NET的AutoCAD二次开发基础类库，支持AutoCAD 2027（.NET 10.0）。提供完整的CAD二次开发API封装，简化AutoCAD插件开发。源于IFoxCAD项目，由Fs团队维护。</Description>
+        <Description>基于.NET的AutoCAD二次开发基础类库，支持AutoCAD 2027（当前按 .NET 8.0 构建）。提供完整的CAD二次开发API封装，简化AutoCAD插件开发。源于IFoxCAD项目，由Fs团队维护。</Description>
         <Copyright>FS Team</Copyright>
         <PackageReleaseNotes>增加CI流程支持，完善NuGet包信息</PackageReleaseNotes>
     </PropertyGroup>
@@ -63,7 +65,7 @@
         <!-- Include Test DLL in NuGet package -->
         <None Include="..\..\Build\AC_$(ACADVersion)_$(Configuration)\TestAcad2027.dll" Condition="Exists('..\..\Build\AC_$(ACADVersion)_$(Configuration)\TestAcad2027.dll')">
             <Pack>True</Pack>
-            <PackagePath>lib\net10.0-windows\</PackagePath>
+            <PackagePath>lib\net8.0-windows7.0\</PackagePath>
         </None>
     </ItemGroup>
 
