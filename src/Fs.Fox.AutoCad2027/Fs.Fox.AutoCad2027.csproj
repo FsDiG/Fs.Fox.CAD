@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net8.0-windows7.0</TargetFrameworks>
+        <TargetFramework>net8.0-windows7.0</TargetFramework>
         <ACADVersion>2027</ACADVersion>
         <AutoCADManagedSdkVersion>2027</AutoCADManagedSdkVersion>
         <!-- This project targets net8.0 for the current protection toolchain; compile against ObjectARX2025 managed references because ObjectARX2027 managed assemblies target net10.0. -->
-        <AutoCADManagedReferenceSdkVersion>2025</AutoCADManagedReferenceSdkVersion>
+        <AutoCADManagedReferenceSdkVersion Condition="'$(AutoCADManagedReferenceSdkVersion)' == ''">2025</AutoCADManagedReferenceSdkVersion>
         <AssemblyName>Fs.Fox.AutoCad</AssemblyName>
         <EnableDynamicLoading>true</EnableDynamicLoading>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
@@ -65,7 +65,7 @@
         <!-- Include Test DLL in NuGet package -->
         <None Include="..\..\Build\AC_$(ACADVersion)_$(Configuration)\TestAcad2027.dll" Condition="Exists('..\..\Build\AC_$(ACADVersion)_$(Configuration)\TestAcad2027.dll')">
             <Pack>True</Pack>
-            <PackagePath>lib\net8.0-windows7.0\</PackagePath>
+            <PackagePath>lib/net8.0-windows7.0/</PackagePath>
         </None>
     </ItemGroup>
 
@@ -77,7 +77,67 @@
         </PackageReference>
     </ItemGroup>
 
-    <Import Project="..\..\..\AutoCAD.ManagedReferences.props" />
+    <PropertyGroup>
+        <FsFoxExternalAutoCADManagedReferencesProps>..\..\..\AutoCAD.ManagedReferences.props</FsFoxExternalAutoCADManagedReferencesProps>
+        <AutoCADManagedSdkDir Condition="'$(AutoCADManagedSdkDir)' == '' and '$(AutoCADManagedReferenceSdkVersion)' != ''">$(FsLibsDir)SDK\ObjectARX$(AutoCADManagedReferenceSdkVersion)\inc\</AutoCADManagedSdkDir>
+    </PropertyGroup>
+
+    <ItemGroup Condition="!Exists('$(FsFoxExternalAutoCADManagedReferencesProps)') and '$(AutoCADManagedReferenceSdkVersion)' != ''">
+        <Reference Include="AcCoreMgd">
+            <HintPath>$(AutoCADManagedSdkDir)AcCoreMgd.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="AcCui">
+            <HintPath>$(AutoCADManagedSdkDir)AcCui.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="AcDbMgd">
+            <HintPath>$(AutoCADManagedSdkDir)AcDbMgd.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="acdbmgdbrep">
+            <HintPath>$(AutoCADManagedSdkDir)acdbmgdbrep.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="AcDx">
+            <HintPath>$(AutoCADManagedSdkDir)AcDx.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="AcMgd">
+            <HintPath>$(AutoCADManagedSdkDir)AcMgd.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="AcMr">
+            <HintPath>$(AutoCADManagedSdkDir)AcMr.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="AcSeamless">
+            <HintPath>$(AutoCADManagedSdkDir)AcSeamless.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="AcTcMgd">
+            <HintPath>$(AutoCADManagedSdkDir)AcTcMgd.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="AcWindows">
+            <HintPath>$(AutoCADManagedSdkDir)AcWindows.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="AdUIMgd">
+            <HintPath>$(AutoCADManagedSdkDir)AdUIMgd.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="AdUiPalettes">
+            <HintPath>$(AutoCADManagedSdkDir)AdUiPalettes.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+        <Reference Include="AdWindows">
+            <HintPath>$(AutoCADManagedSdkDir)AdWindows.dll</HintPath>
+            <Private>false</Private>
+        </Reference>
+    </ItemGroup>
+
+    <Import Project="$(FsFoxExternalAutoCADManagedReferencesProps)" Condition="Exists('$(FsFoxExternalAutoCADManagedReferencesProps)')" />
     <Import Project="..\CADShared\CADShared.projitems" Label="Shared" />
 
 </Project>
