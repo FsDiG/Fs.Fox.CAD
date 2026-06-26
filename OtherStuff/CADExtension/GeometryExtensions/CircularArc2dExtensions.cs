@@ -47,7 +47,7 @@ namespace GeometryExtensions
         /// </remarks>
         /// <param name="arc">The instance to which this method applies.</param>
         /// <param name="pt">The Point2d to which tangents are searched</param>
-        /// <returns>An array of LineSegement2d representing the tangents (2) or null if there is none.</returns>
+        /// <returns>An array of LineSegment2d representing the tangents (2) or null if there is none.</returns>
         public static LineSegment2d[] GetTangentsTo(this CircularArc2d arc, Point2d pt)
         {
             // check if the point is inside the circle

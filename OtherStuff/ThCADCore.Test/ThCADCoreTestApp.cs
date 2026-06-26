@@ -255,9 +255,9 @@ namespace ThCADCore.Test
                 }
 
 
-                var geometrys = objs.ToNTSLineStrings();
+                var geometries = objs.ToNTSLineStrings();
 
-                var overlapUnion = OverlapUnion.Union(geometrys.First(), geometrys.Last());
+                var overlapUnion = OverlapUnion.Union(geometries.First(), geometries.Last());
                 foreach (Entity obj in overlapUnion.ToDbCollection())
                 {
                     obj.ColorIndex = 1;
@@ -322,9 +322,9 @@ namespace ThCADCore.Test
                 {
                     objs.Add(acadDatabase.Element<Entity>(obj));
                 }
-                var geometrys = objs.ToNTSLineStrings();
+                var geometries = objs.ToNTSLineStrings();
 
-                var snapGeometry = SnapIfNeededOverlayOp.Overlay(geometrys.First(), geometrys.Last(), SpatialFunction.Union);
+                var snapGeometry = SnapIfNeededOverlayOp.Overlay(geometries.First(), geometries.Last(), SpatialFunction.Union);
                 foreach (Entity obj in snapGeometry.ToDbCollection())
                 {
                     obj.ColorIndex = 1;
@@ -349,9 +349,9 @@ namespace ThCADCore.Test
                 {
                     objs.Add(acadDatabase.Element<Entity>(obj));
                 }
-                var geometrys = objs.ToNTSLineStrings();
+                var geometries = objs.ToNTSLineStrings();
                 // 求交点
-                var snapGeometry = SnapIfNeededOverlayOp.Overlay(geometrys.First(), geometrys.Last(), SpatialFunction.Intersection);
+                var snapGeometry = SnapIfNeededOverlayOp.Overlay(geometries.First(), geometries.Last(), SpatialFunction.Intersection);
                 foreach (Entity obj in snapGeometry.ToDbCollection())
                 {
                     obj.ColorIndex = 1;
@@ -376,9 +376,9 @@ namespace ThCADCore.Test
                 //{
                 //    objs.Add(acadDatabase.Element<Entity>(obj));
                 //}
-                //var geometrys = objs.ToNTSLineStrings();
+                //var geometries = objs.ToNTSLineStrings();
 
-                //var snapGeometry = SnapIfNeededOverlayOp.Overlay(geometrys.First(), geometrys.Last(), SpatialFunction.Difference);
+                //var snapGeometry = SnapIfNeededOverlayOp.Overlay(geometries.First(), geometries.Last(), SpatialFunction.Difference);
                 //foreach (Entity obj in snapGeometry.ToDbCollection())
                 //{
                 //    obj.ColorIndex = 1;

@@ -62,7 +62,7 @@ namespace Linq2Acad
     }
 
     /// <summary>
-    /// Creates an excpetion of type System.FileNotFoundException.
+    /// Creates an exception of type System.FileNotFoundException.
     /// </summary>
     /// <param name="fileName">The full file name of the file that was not found.</param>
     /// <returns>A new instance of System.FileNotFoundException.</returns>
@@ -111,17 +111,17 @@ namespace Linq2Acad
     }
 
     /// <summary>
-    /// Creates an exception of type System.Exception that indicates that an AutoCAD exception occured.
+    /// Creates an exception of type System.Exception that indicates that an AutoCAD exception occurred.
     /// </summary>
     /// <param name="innerException">The that is the cause of the current exception.</param>
     /// <returns>A new instance of System.Exception.</returns>
     public static Exception AutoCadException(Exception innerException)
     {
-      return AutoCadException(innerException, "An AutoCAD error occured. See inner exception for more details.");
+      return AutoCadException(innerException, "An AutoCAD error occurred. See inner exception for more details.");
     }
 
     /// <summary>
-    /// Creates an exception of type System.Exception that indicates that an AutoCAD exception occured.
+    /// Creates an exception of type System.Exception that indicates that an AutoCAD exception occurred.
     /// </summary>
     /// <param name="innerException">The that is the cause of the current exception.</param>
     /// <param name="message">The message that describes the error.</param>
@@ -153,7 +153,7 @@ namespace Linq2Acad
     }
 
     /// <summary>
-    /// Creates a new System.Excetion that indicates that an Entity belongs to another block.
+    /// Creates a new System.Exception that indicates that an Entity belongs to another block.
     /// </summary>
     /// <returns>A new instance of System.Exception.</returns>
     public static Exception EntityBelongsToBlock()

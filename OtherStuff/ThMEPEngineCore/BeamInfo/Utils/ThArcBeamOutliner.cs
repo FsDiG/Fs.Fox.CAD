@@ -21,7 +21,7 @@ namespace ThMEPEngineCore.BeamInfo.Utils
             var arcPolyLine1 = arc_1.TessellateArcWithChord(arc_1.Radius * (Math.Sin(Math.PI / 360.0)));
             var arcPolyLine2 = arc_2.TessellateArcWithChord(arc_2.Radius * (Math.Sin(Math.PI / 360.0)));
 
-            // 获取两段新的arc的端点形成两段PolylineSegement
+            // 获取两段新的arc的端点形成两段PolylineSegment
             PolylineSegment lineSegment_1 = new PolylineSegment(arcPolyLine1.EndPoint.ToPoint2D(), arcPolyLine2.EndPoint.ToPoint2D());
             PolylineSegment lineSegment_2 = new PolylineSegment(arcPolyLine2.StartPoint.ToPoint2D(), arcPolyLine1.StartPoint.ToPoint2D());
 
@@ -57,7 +57,7 @@ namespace ThMEPEngineCore.BeamInfo.Utils
             PolylineSegment arcSegment_1 = new PolylineSegment(arc_1.StartPoint.ToPoint2D(), arc_1.EndPoint.ToPoint2D(), arcBulge1);
             PolylineSegment arcSegment_2 = new PolylineSegment(arc_2.EndPoint.ToPoint2D(), arc_2.StartPoint.ToPoint2D(), -arcBulge2);
 
-            // 获取两段新的arc的端点形成两段PolylineSegement
+            // 获取两段新的arc的端点形成两段PolylineSegment
             PolylineSegment lineSegment_1 = new PolylineSegment(arcSegment_1.EndPoint, arcSegment_2.StartPoint);
             PolylineSegment lineSegment_2 = new PolylineSegment(arcSegment_2.EndPoint, arcSegment_1.StartPoint);
 

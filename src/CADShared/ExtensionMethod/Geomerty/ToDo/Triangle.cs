@@ -192,7 +192,7 @@ namespace GeometryExtensions
         }
 
         /// <summary>
-        /// Applies ToString() to each element and concatenate the results separted with commas.
+        /// Applies ToString() to each element and concatenate the results separated with commas.
         /// </summary>
         /// <returns>A string containing the three elements separated with commas.</returns>
         public override string ToString()

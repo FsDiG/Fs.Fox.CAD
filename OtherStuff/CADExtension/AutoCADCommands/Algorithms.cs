@@ -89,7 +89,7 @@ namespace Dreambuild.AutoCAD
         /// </summary>
         /// <param name="fileName">The file name.</param>
         /// <param name="result">The result.</param>
-        /// <returns>A value indicating if suceeded.</returns>
+        /// <returns>A value indicating if succeeded.</returns>
         public static bool ParseIniFile(string fileName, IniData result)
         {
             var groupPattern = @"^\[[^\[\]]+\]$";
@@ -153,7 +153,7 @@ namespace Dreambuild.AutoCAD
         /// </summary>
         /// <param name="cv">The curve.</param>
         /// <param name="dist">The distance.</param>
-        /// <returns>The paramter.</returns>
+        /// <returns>The parameter.</returns>
         public static double GetParamAtDist(this Curve cv, double dist)
         {
             if (dist < 0)

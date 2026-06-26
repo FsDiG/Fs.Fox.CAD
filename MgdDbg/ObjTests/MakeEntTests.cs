@@ -44,7 +44,7 @@ namespace MgdDbg.Test
     ///           normals, and angles that the database will expect.
     ///
     /// This method allows you to "pretend" that everything is in WCS and you don't
-    /// have to bother with trasforming individual points and reverse engineering
+    /// have to bother with transforming individual points and reverse engineering
     /// any angles input by the user.
     ///
     /// Also, I try to demonstrate several different "styles" of handling errors and

@@ -87,7 +87,7 @@ namespace Dreambuild.AutoCAD
         /// <param name="center">The center.</param>
         /// <param name="lookAt">The look at direction.</param>
         /// <param name="scale">The scale.</param>
-        /// <returns>The layout coordintes.</returns>
+        /// <returns>The layout coordinates.</returns>
         public static Point3d GetLayoutCoord(this Point3d modelCoord, Point3d center, Point3d lookAt, double scale)
         {
             return center + (modelCoord - lookAt) / scale;

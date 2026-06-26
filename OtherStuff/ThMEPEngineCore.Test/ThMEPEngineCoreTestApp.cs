@@ -200,8 +200,8 @@ namespace ThMEPEngineCore.Test
             }
         }
 
-        [CommandMethod("TIANHUACAD", "THLineSimplifer", CommandFlags.Modal)]
-        public void THLineSimplifer()
+        [CommandMethod("TIANHUACAD", "THLineSimplifier", CommandFlags.Modal)]
+        public void THLineSimplifier()
         {
             using (AcadDatabase acadDatabase = AcadDatabase.Active())
             {

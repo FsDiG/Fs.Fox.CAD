@@ -32,7 +32,7 @@ namespace MgdDbg.ObjTests.Forms {
             this.m_grpFlags = new System.Windows.Forms.GroupBox();
             this.m_cbSinglePickInSpace = new System.Windows.Forms.CheckBox();
             this.m_cbSingleOnly = new System.Windows.Forms.CheckBox();
-            this.m_cbSelectEverythingInAperature = new System.Windows.Forms.CheckBox();
+            this.m_cbSelectEverythingInAperture = new System.Windows.Forms.CheckBox();
             this.m_cbRejectPaperSpaceViewport = new System.Windows.Forms.CheckBox();
             this.m_cbForceSubSelections = new System.Windows.Forms.CheckBox();
             this.m_cbAllowSubSelections = new System.Windows.Forms.CheckBox();
@@ -114,7 +114,7 @@ namespace MgdDbg.ObjTests.Forms {
             // 
             this.m_grpFlags.Controls.Add(this.m_cbSinglePickInSpace);
             this.m_grpFlags.Controls.Add(this.m_cbSingleOnly);
-            this.m_grpFlags.Controls.Add(this.m_cbSelectEverythingInAperature);
+            this.m_grpFlags.Controls.Add(this.m_cbSelectEverythingInAperture);
             this.m_grpFlags.Controls.Add(this.m_cbRejectPaperSpaceViewport);
             this.m_grpFlags.Controls.Add(this.m_cbForceSubSelections);
             this.m_grpFlags.Controls.Add(this.m_cbAllowSubSelections);
@@ -148,15 +148,15 @@ namespace MgdDbg.ObjTests.Forms {
             this.m_cbSingleOnly.Text = "Single Only";
             this.m_cbSingleOnly.UseVisualStyleBackColor = true;
             // 
-            // m_cbSelectEverythingInAperature
+            // m_cbSelectEverythingInAperture
             // 
-            this.m_cbSelectEverythingInAperature.AutoSize = true;
-            this.m_cbSelectEverythingInAperature.Location = new System.Drawing.Point(7, 163);
-            this.m_cbSelectEverythingInAperature.Name = "m_cbSelectEverythingInAperature";
-            this.m_cbSelectEverythingInAperature.Size = new System.Drawing.Size(164, 17);
-            this.m_cbSelectEverythingInAperature.TabIndex = 6;
-            this.m_cbSelectEverythingInAperature.Text = "Select Everything In Aperture";
-            this.m_cbSelectEverythingInAperature.UseVisualStyleBackColor = true;
+            this.m_cbSelectEverythingInAperture.AutoSize = true;
+            this.m_cbSelectEverythingInAperture.Location = new System.Drawing.Point(7, 163);
+            this.m_cbSelectEverythingInAperture.Name = "m_cbSelectEverythingInAperture";
+            this.m_cbSelectEverythingInAperture.Size = new System.Drawing.Size(164, 17);
+            this.m_cbSelectEverythingInAperture.TabIndex = 6;
+            this.m_cbSelectEverythingInAperture.Text = "Select Everything In Aperture";
+            this.m_cbSelectEverythingInAperture.UseVisualStyleBackColor = true;
             // 
             // m_cbRejectPaperSpaceViewport
             // 
@@ -401,7 +401,7 @@ namespace MgdDbg.ObjTests.Forms {
         private System.Windows.Forms.TextBox m_ebMsgRemove;
         private System.Windows.Forms.CheckBox m_cbSinglePickInSpace;
         private System.Windows.Forms.CheckBox m_cbSingleOnly;
-        private System.Windows.Forms.CheckBox m_cbSelectEverythingInAperature;
+        private System.Windows.Forms.CheckBox m_cbSelectEverythingInAperture;
         private System.Windows.Forms.CheckBox m_cbRejectPaperSpaceViewport;
         private System.Windows.Forms.GroupBox m_grpFilter;
         private System.Windows.Forms.CheckBox m_cbDoIsKindOfTest;

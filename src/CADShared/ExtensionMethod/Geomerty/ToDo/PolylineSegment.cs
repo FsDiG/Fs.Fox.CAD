@@ -294,7 +294,7 @@ namespace GeometryExtensions
         /// <summary>
         /// Serves as a hash function for the PolylineSegment type. 
         /// </summary>
-        /// <returns>A hash code for the current PolylineSegemnt.</returns>
+        /// <returns>A hash code for the current PolylineSegment.</returns>
         public override int GetHashCode()
         {
             return _startPoint.GetHashCode() ^
@@ -305,9 +305,9 @@ namespace GeometryExtensions
         }
 
         /// <summary>
-        /// Applies ToString() to each property and concatenate the results separted with commas.
+        /// Applies ToString() to each property and concatenate the results separated with commas.
         /// </summary>
-        /// <returns>A string containing the current PolylineSegemnt properties separated with commas.</returns>
+        /// <returns>A string containing the current PolylineSegment properties separated with commas.</returns>
         public override string ToString()
         {
             return string.Format("{0}, {1}, {2}, {3}, {4}",

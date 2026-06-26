@@ -132,7 +132,7 @@ namespace NFox.Cad
             /// <summary>
             /// 实心闭合
             /// </summary>
-            Defult,
+            Default,
 
             /// <summary>
             /// 点
@@ -240,7 +240,7 @@ namespace NFox.Cad
                 string s = (string)Application.GetSystemVariable("dimblk");
                 if (string.IsNullOrEmpty(s))
                 {
-                    return DimblkType.Defult;
+                    return DimblkType.Default;
                 }
                 else
                 {
@@ -261,7 +261,7 @@ namespace NFox.Cad
         public static string GetDimblkName(DimblkType dimblk)
         {
             return
-                dimblk == DimblkType.Defult
+                dimblk == DimblkType.Default
                 ?
                 "."
                 :

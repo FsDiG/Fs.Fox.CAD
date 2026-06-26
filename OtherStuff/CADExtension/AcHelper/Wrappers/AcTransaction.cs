@@ -64,7 +64,7 @@ namespace AcHelper.Wrappers
             }
             catch (Exception ex)
             {
-                throw new AcTransactionException("An unexpected error occured while starting a transaction.", ex);
+                throw new AcTransactionException("An unexpected error occurred while starting a transaction.", ex);
             }
         }
         #endregion

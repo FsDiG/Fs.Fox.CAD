@@ -8,13 +8,13 @@ namespace ThCADExtension
     {
         public static SelectionFilter Build(string[] dxfNames)
         {
-            return OpFilter.Bulid(o =>
+            return OpFilter.Build(o =>
                 o.Dxf((int)DxfCode.Start) == string.Join(",", dxfNames));
         }
 
         public static SelectionFilter Build(string[] dxfNames, string[] layerNames)
         {
-            return OpFilter.Bulid(o =>
+            return OpFilter.Build(o =>
             o.Dxf((int)DxfCode.Start) == string.Join(",", dxfNames) &
             o.Dxf((int)DxfCode.LayerName) == string.Join(",", layerNames));
         }

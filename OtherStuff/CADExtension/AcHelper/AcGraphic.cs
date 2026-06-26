@@ -114,7 +114,7 @@ namespace AcHelper
                     double dViewRatio;
                     dViewRatio = (acView.Width / acView.Height);
 
-                    // Tranform the extents of the view
+                    // Transform the extents of the view
                     matWCS2DCS = matWCS2DCS.Inverse();
                     eExtents.TransformBy(matWCS2DCS);
 

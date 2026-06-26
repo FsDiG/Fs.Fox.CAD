@@ -10,7 +10,7 @@ namespace AcHelper.Collections
 
         #region Dictionary
         /// <summary>
-        /// Retreive Dictionary from database with specific type and name
+        /// Retrieve Dictionary from database with specific type and name
         /// </summary>
         /// <param name="transaction"></param>
         /// <param name="dictionaryType"></param>

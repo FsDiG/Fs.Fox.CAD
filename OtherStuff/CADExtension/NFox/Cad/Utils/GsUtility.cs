@@ -20,7 +20,7 @@ namespace NFox.Cad
         public const string strActive = "*Active";
         public const string strActiveSettings = "ACAD_RENDER_ACTIVE_SETTINGS";
 
-        public static void CustomUpdate(System.IntPtr parmeter, int left, int right, int bottom, int top)
+        public static void CustomUpdate(System.IntPtr parameter, int left, int right, int bottom, int top)
         {
             MessageBox.Show("Left:" + left + "Right" + right + "Bottom" + bottom + "Top" + top);
         }
@@ -594,7 +594,7 @@ namespace NFox.Cad
             private PenStyles penStyle;
             private int BLACK_PEN = 0;
 
-            // Default contructor - sets member fields
+            // Default constructor - sets member fields
             public RubberbandRectangle()
             {
                 penStyle = PenStyles.PS_DOT;
@@ -676,7 +676,7 @@ namespace NFox.Cad
                     int X1,				// x-coordinate of top left corner
                     int Y1,				// y-cordinate of top left corner
                     int X2,				// x-coordinate of bottom right corner
-                    int Y2				// y-coordinate of bottm right corner
+                    int Y2				// y-coordinate of bottom right corner
                     );
 
             [System.Runtime.InteropServices.DllImportAttribute("gdi32.dll")]

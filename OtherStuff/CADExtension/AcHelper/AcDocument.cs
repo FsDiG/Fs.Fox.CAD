@@ -43,7 +43,7 @@ namespace AcHelper
         }
 
         /// <summary>
-        /// Retreive the value of an AutoCAD Variable
+        /// Retrieve the value of an AutoCAD Variable
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>

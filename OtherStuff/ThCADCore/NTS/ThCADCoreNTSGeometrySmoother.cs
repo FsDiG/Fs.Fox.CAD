@@ -4,7 +4,7 @@ using NetTopologySuite.Geometries;
 
 namespace ThCADCore.NTS
 {
-    public class ThCADCoreNTSGeometrySmoother
+    public class ThCADCoreNTSgeometriesmoother
     {
         public class SmootherControl
         {
@@ -27,7 +27,7 @@ namespace ThCADCore.NTS
 
         private Dictionary<int, InterpPoint[]> lookup;
 
-        public ThCADCoreNTSGeometrySmoother()
+        public ThCADCoreNTSgeometriesmoother()
         {
             Control = new SmootherControl()
             {

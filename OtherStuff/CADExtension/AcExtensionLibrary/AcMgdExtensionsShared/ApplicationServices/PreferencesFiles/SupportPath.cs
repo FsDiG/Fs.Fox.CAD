@@ -10,9 +10,9 @@ namespace Autodesk.AutoCAD.ApplicationServices.PreferencesFiles
     public class SupportPath : IAcadPathRepository
     {
         /// <summary>
-        /// The seperator
+        /// The separator
         /// </summary>
-        private static char[] seperator = new char[] { ';' };
+        private static char[] separator = new char[] { ';' };
 
         /// <summary>
         /// The paths
@@ -155,7 +155,7 @@ namespace Autodesk.AutoCAD.ApplicationServices.PreferencesFiles
         /// <returns></returns>
         private static List<string> CreatepathList(string pathString)
         {
-            return pathString.Split(seperator).ToList();
+            return pathString.Split(separator).ToList();
         }
 
         /// <summary>

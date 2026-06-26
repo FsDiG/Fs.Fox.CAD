@@ -711,7 +711,7 @@ namespace Dreambuild.AutoCAD
                     // Calculate the ratio between the width and height of the current view
                     double viewRatio = currentView.Width / currentView.Height;
 
-                    // Tranform the extents of the view
+                    // Transform the extents of the view
                     matWCS2DCS = matWCS2DCS.Inverse();
                     extents.TransformBy(matWCS2DCS);
 

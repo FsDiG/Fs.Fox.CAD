@@ -163,11 +163,11 @@ namespace ThMEPEngineCore.Engine
             {
                 if (o is ThIfcLineBeam lineBeam)
                 {
-                    return ThStructureBeamUtils.IsLooseCollinear(thIfcLineBeam, lineBeam);
+                    return ThStructureBeaMultils.IsLooseCollinear(thIfcLineBeam, lineBeam);
                 }
                 else
                 {
-                    return ThStructureBeamUtils.IsLooseCollinear(thIfcLineBeam, portPt, o as ThIfcArcBeam);
+                    return ThStructureBeaMultils.IsLooseCollinear(thIfcLineBeam, portPt, o as ThIfcArcBeam);
                 }
             }).ToList();
         }
@@ -199,11 +199,11 @@ namespace ThMEPEngineCore.Engine
             {
                 if (o is ThIfcLineBeam lineBeam)
                 {
-                    return ThStructureBeamUtils.IsSpacedTType(thIfcLineBeam, lineBeam);
+                    return ThStructureBeaMultils.IsSpacedTType(thIfcLineBeam, lineBeam);
                 }
                 else
                 {
-                    return ThStructureBeamUtils.IsSpacedTType(thIfcLineBeam, o as ThIfcArcBeam);
+                    return ThStructureBeaMultils.IsSpacedTType(thIfcLineBeam, o as ThIfcArcBeam);
                 }
             }).ToList();
         }

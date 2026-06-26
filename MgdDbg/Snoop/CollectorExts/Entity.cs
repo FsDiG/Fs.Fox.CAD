@@ -874,8 +874,8 @@ namespace MgdDbg.Snoop.CollectorExts {
             data.Add(new Snoop.Data.String("Justification", mline.Justification.ToString()));
             data.Add(new Snoop.Data.Distance("Scale", mline.Scale));
             data.Add(new Snoop.Data.Vector3d("Normal", mline.Normal));
-            data.Add(new Snoop.Data.Bool("Suppress start caps", mline.SupressStartCaps));
-            data.Add(new Snoop.Data.Bool("Suppress end caps", mline.SupressEndCaps));
+            data.Add(new Snoop.Data.Bool("Suppress start caps", mline.SuppressStartCaps));
+            data.Add(new Snoop.Data.Bool("Suppress end caps", mline.SuppressEndCaps));
 
             data.Add(new Snoop.Data.Int("Number of vertices", mline.NumberOfVertices));
 

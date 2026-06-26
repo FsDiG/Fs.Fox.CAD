@@ -33,9 +33,9 @@ namespace ThCADCore.NTS
             MultiPolygon multiPolygon = ThCADCoreNTSService.Instance.GeometryFactory.CreateMultiPolygon(polygons.ToArray());
             ThCADCoreNTSBuildArea buildArea = new ThCADCoreNTSBuildArea();
             var result = buildArea.Build(multiPolygon);
-            foreach (var ploygon in FilterPolygons(result))
+            foreach (var polygon in FilterPolygons(result))
             {
-                results.Add(ploygon.ToDbEntity());
+                results.Add(polygon.ToDbEntity());
             }
             return results;
         }

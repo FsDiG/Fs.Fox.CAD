@@ -67,7 +67,7 @@ namespace ThMEPEngineCore
         /// <summary>
         /// 梁边界与其它物体靠近的距离
         /// </summary>
-        public const double BeamIntersectExtentionTolerance = 50.0;
+        public const double BeamIntersectExtensionTolerance = 50.0;
         /// <summary>
         /// 梁与梁间隔最大容差
         /// </summary>

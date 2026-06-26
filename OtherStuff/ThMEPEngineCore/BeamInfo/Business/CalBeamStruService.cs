@@ -182,7 +182,7 @@ namespace ThMEPEngineCore.BeamInfo.Business
                             break;
                         }
 
-                        var tempMacthNum = matchLines.Where(x =>
+                        var tempMatchNum = matchLines.Where(x =>
                         {
                             double xMaxX = x.StartPoint.X;
                             double xMinX = x.EndPoint.X;
@@ -206,7 +206,7 @@ namespace ThMEPEngineCore.BeamInfo.Business
                             }
                             return true;
                         });
-                        if (tempMacthNum.Count() > 0)
+                        if (tempMatchNum.Count() > 0)
                         {
                             break;
                         }
@@ -254,7 +254,7 @@ namespace ThMEPEngineCore.BeamInfo.Business
             {
                 for (int j = i + 1; j < arcs.Count; j++)
                 {
-                    if (IsRepeteArcs(arcs[i], arcs[j]))
+                    if (IsRepeatArcs(arcs[i], arcs[j]))
                     {
                         arcs[i] = (arcs[i].Length >= arcs[j].Length) ? (arcs[i].ArcMerge(arcs[j])) : (arcs[i] = arcs[j].ArcMerge(arcs[i]));
                         arcs.RemoveAt(j);
@@ -336,7 +336,7 @@ namespace ThMEPEngineCore.BeamInfo.Business
         }
 
         // 判断Arcs是否重复
-        private bool IsRepeteArcs(Arc arc1, Arc arc2)
+        private bool IsRepeatArcs(Arc arc1, Arc arc2)
         {
             var overlapEstimate = arc1.OverlapAngle(arc2);
             var startAngle = overlapEstimate.Item2;

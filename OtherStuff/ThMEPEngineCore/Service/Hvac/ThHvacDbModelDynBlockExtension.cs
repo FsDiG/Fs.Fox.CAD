@@ -64,13 +64,13 @@ namespace ThMEPEngineCore.Service.Hvac
         {
             double position_x = 0, position_y = 0;
             var dynamicProperties = obj.GetDynProperties();
-            if (dynamicProperties.Contains(ThHvacCommon.BLOCK_DYNMAIC_PROPERTY_BASE_POINT_X))
+            if (dynamicProperties.Contains(ThHvacCommon.BLOCK_DYNAMIC_PROPERTY_BASE_POINT_X))
             {
-                position_x = (double)dynamicProperties.GetValue(ThHvacCommon.BLOCK_DYNMAIC_PROPERTY_BASE_POINT_X);
+                position_x = (double)dynamicProperties.GetValue(ThHvacCommon.BLOCK_DYNAMIC_PROPERTY_BASE_POINT_X);
             }
-            if (dynamicProperties.Contains(ThHvacCommon.BLOCK_DYNMAIC_PROPERTY_BASE_POINT_Y))
+            if (dynamicProperties.Contains(ThHvacCommon.BLOCK_DYNAMIC_PROPERTY_BASE_POINT_Y))
             {
-                position_y = (double)dynamicProperties.GetValue(ThHvacCommon.BLOCK_DYNMAIC_PROPERTY_BASE_POINT_Y);
+                position_y = (double)dynamicProperties.GetValue(ThHvacCommon.BLOCK_DYNAMIC_PROPERTY_BASE_POINT_Y);
             }
             return new Point3d(position_x, position_y, 0);
         }
@@ -79,13 +79,13 @@ namespace ThMEPEngineCore.Service.Hvac
         {
             double position_x = 0, position_y = 0;
             var dynamicProperties = obj.GetDynProperties();
-            if (dynamicProperties.Contains(ThHvacCommon.BLOCK_DYNMAIC_PROPERTY_ANNOTATION_BASE_POINT_X))
+            if (dynamicProperties.Contains(ThHvacCommon.BLOCK_DYNAMIC_PROPERTY_ANNOTATION_BASE_POINT_X))
             {
-                position_x = (double)dynamicProperties.GetValue(ThHvacCommon.BLOCK_DYNMAIC_PROPERTY_ANNOTATION_BASE_POINT_X);
+                position_x = (double)dynamicProperties.GetValue(ThHvacCommon.BLOCK_DYNAMIC_PROPERTY_ANNOTATION_BASE_POINT_X);
             }
-            if (dynamicProperties.Contains(ThHvacCommon.BLOCK_DYNMAIC_PROPERTY_ANNOTATION_BASE_POINT_Y))
+            if (dynamicProperties.Contains(ThHvacCommon.BLOCK_DYNAMIC_PROPERTY_ANNOTATION_BASE_POINT_Y))
             {
-                position_y = (double)dynamicProperties.GetValue(ThHvacCommon.BLOCK_DYNMAIC_PROPERTY_ANNOTATION_BASE_POINT_Y);
+                position_y = (double)dynamicProperties.GetValue(ThHvacCommon.BLOCK_DYNAMIC_PROPERTY_ANNOTATION_BASE_POINT_Y);
             }
             return new Point3d(position_x, position_y, 0);
         }
@@ -96,16 +96,16 @@ namespace ThMEPEngineCore.Service.Hvac
             // 不同动态属性之间会互相影响，设置动态属性的顺序影响到最终的结果
             var dynamicProperties = obj.GetDynProperties();
             foreach (var property in new string[] {
-                ThHvacCommon.BLOCK_DYNMAIC_PROPERTY_BASE_POINT_X,
-                ThHvacCommon.BLOCK_DYNMAIC_PROPERTY_BASE_POINT_Y,
+                ThHvacCommon.BLOCK_DYNAMIC_PROPERTY_BASE_POINT_X,
+                ThHvacCommon.BLOCK_DYNAMIC_PROPERTY_BASE_POINT_Y,
                 ThHvacCommon.BLOCK_DYNAMIC_PROPERTY_ANGLE2,
                 ThHvacCommon.BLOCK_DYNAMIC_PROPERTY_ANGLE1,
                 ThHvacCommon.BLOCK_DYNAMIC_PROPERTY_POSITION1_X,
                 ThHvacCommon.BLOCK_DYNAMIC_PROPERTY_POSITION1_Y,
                 ThHvacCommon.BLOCK_DYNAMIC_PROPERTY_MODEL_TEXT_HEIGHT,
                 ThHvacCommon.BLOCK_DYNAMIC_PROPERTY_ANNOTATION_TEXT_HEIGHT,
-                ThHvacCommon.BLOCK_DYNMAIC_PROPERTY_ANNOTATION_BASE_POINT_X,
-                ThHvacCommon.BLOCK_DYNMAIC_PROPERTY_ANNOTATION_BASE_POINT_Y,
+                ThHvacCommon.BLOCK_DYNAMIC_PROPERTY_ANNOTATION_BASE_POINT_X,
+                ThHvacCommon.BLOCK_DYNAMIC_PROPERTY_ANNOTATION_BASE_POINT_Y,
             })
             {
                 if (dynamicProperties.Contains(property) && properties.Contains(property))

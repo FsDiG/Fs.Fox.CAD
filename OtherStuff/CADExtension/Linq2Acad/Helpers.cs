@@ -64,7 +64,7 @@ namespace Linq2Acad
     /// </summary>
     /// <typeparam name="T">The actual type of the item.</typeparam>
     /// <param name="item">The item to perform the action on.</param>
-    /// <param name="action">The action to perfrom.</param>
+    /// <param name="action">The action to perform.</param>
     /// <param name="keepUpgraded">True, if the item should stay write enabled after the action has been performed.</param>
     public static void WriteWrap<T>(T item, Action action, bool keepUpgraded = false) where T : DBObject
     {

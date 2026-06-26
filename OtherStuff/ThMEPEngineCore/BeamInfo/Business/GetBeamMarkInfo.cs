@@ -269,11 +269,11 @@ namespace ThMEPEngineCore.BeamInfo.Business
             foreach (var mark in resMarkings)
             {
                 //防止两个梁都搜索到了同一个标注，需要根据规则计算标注到底属于哪个梁
-                var serchMarking = allMarking.Where(x => x.Marking.Id.Handle == mark.Marking.Id.Handle).ToList();
-                if (serchMarking.Count() > 0)
+                var searchMarking = allMarking.Where(x => x.Marking.Id.Handle == mark.Marking.Id.Handle).ToList();
+                if (searchMarking.Count() > 0)
                 {
                     originMarking.Add(mark);
-                    allMarking.Remove(serchMarking.First());
+                    allMarking.Remove(searchMarking.First());
                 }
                 else
                 {

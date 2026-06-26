@@ -28,7 +28,7 @@ namespace ThMEPEngineCore.Model
         {
             get
             {
-                return ThStructureBeamUtils.Coordinate(Attributes[ThMEPEngineCoreCommon.BEAM_GEOMETRY_STARTPOINT]);
+                return ThStructureBeaMultils.Coordinate(Attributes[ThMEPEngineCoreCommon.BEAM_GEOMETRY_STARTPOINT]);
             }
         }
 
@@ -36,7 +36,7 @@ namespace ThMEPEngineCore.Model
         {
             get
             {
-                return ThStructureBeamUtils.Coordinate(Attributes[ThMEPEngineCoreCommon.BEAM_GEOMETRY_ENDPOINT]);
+                return ThStructureBeaMultils.Coordinate(Attributes[ThMEPEngineCoreCommon.BEAM_GEOMETRY_ENDPOINT]);
             }
         }
 
@@ -44,7 +44,7 @@ namespace ThMEPEngineCore.Model
         {
             get
             {
-                return ThStructureBeamUtils.Size(Attributes[ThMEPEngineCoreCommon.BEAM_GEOMETRY_SIZE]);
+                return ThStructureBeaMultils.Size(Attributes[ThMEPEngineCoreCommon.BEAM_GEOMETRY_SIZE]);
             }
         }
 

@@ -21,16 +21,16 @@ namespace ThMEPEngineCore.Algorithm
             var objs = new DBObjectCollection();
             foreach (var polygon in results)
             {
-                var vectices = new List<Point2d>();
+                var vertices = new List<Point2d>();
                 for (int i = 0; i < polygon.Count(); i += 2)
                 {
-                    vectices.Add(new Point2d(polygon[i], polygon[i + 1]));
+                    vertices.Add(new Point2d(polygon[i], polygon[i + 1]));
                 }
                 var item = new Polyline()
                 {
                     Closed = true,
                 };
-                item.CreatePolyline(vectices.ToArray());
+                item.CreatePolyline(vertices.ToArray());
                 objs.Add(item);
             }
             return objs;

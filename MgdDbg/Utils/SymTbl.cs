@@ -63,7 +63,7 @@ namespace MgdDbg.Utils
   		}
 		
 		/// <summary>
-        /// Add newly allocated Entites to the Current Space (ModelSpace or PaperSpace).
+        /// Add newly allocated Entities to the Current Space (ModelSpace or PaperSpace).
         /// Use this function as a simple way to add isolated entities.  For "real" situations
         /// where you need to add several entities (like when creating a BlockTableRecord),
         /// use a CompBldr object.
@@ -107,7 +107,7 @@ namespace MgdDbg.Utils
         }
         
         /// <summary>
-        /// Add newly allocated Entites to the Current Space (ModelSpace or PaperSpace).
+        /// Add newly allocated Entities to the Current Space (ModelSpace or PaperSpace).
         /// Use this function as a simple way to add isolated entities.  For "real" situations
         /// where you need to add several entities (like when creating a BlockTableRecord),
         /// use a CompBldr object.  This version will Start and Commit a Transaction.

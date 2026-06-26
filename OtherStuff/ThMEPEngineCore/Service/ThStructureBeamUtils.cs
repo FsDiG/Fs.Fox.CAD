@@ -8,11 +8,11 @@ using Autodesk.AutoCAD.DatabaseServices;
 
 namespace ThMEPEngineCore.Service
 {
-    public class ThStructureBeamUtils
+    public class ThStructureBeaMultils
     {
         public static Scale2d Size(string str)
         {
-            var match = BeamAnnotaionMatch(str);
+            var match = BeamAnnotationMatch(str);
             if (!match.Success)
             {
                 return new Scale2d();
@@ -22,15 +22,15 @@ namespace ThMEPEngineCore.Service
                 Convert.ToDouble(match.Groups[2].Value));
         }
 
-        private static Match BeamAnnotaionMatch(string str)
+        private static Match BeamAnnotationMatch(string str)
         {
             var match = Regex.Match(str, @"^(\s*\d*[.]?\d*\s*)[xX](\s*\d*[.]?\d*)");
             return match;
         }
 
-        public static bool IsBeamAnnotaion(string str)
+        public static bool IsBeamAnnotation(string str)
         {
-            var match = BeamAnnotaionMatch(str);
+            var match = BeamAnnotationMatch(str);
             return match.Success;
         }
 

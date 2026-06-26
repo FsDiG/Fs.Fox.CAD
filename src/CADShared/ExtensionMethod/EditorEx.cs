@@ -880,12 +880,12 @@ public static class EditorEx
     /// 获取有效的数据库范围
     /// </summary>
     /// <param name="db">数据库</param>
-    /// <param name="extention">容差值:图元包围盒会超过数据库边界,用此参数扩大边界</param>
+    /// <param name="extension">容差值:图元包围盒会超过数据库边界,用此参数扩大边界</param>
     /// <returns></returns>
-    public static Extents3d? GetValidExtents3d(this Database db, double extention = 1e-6)
+    public static Extents3d? GetValidExtents3d(this Database db, double extension = 1e-6)
     {
         db.UpdateExt(true); // 更新当前模型空间的范围
-        var ve = new Vector3d(extention, extention, extention);
+        var ve = new Vector3d(extension, extension, extension);
         // 数据库没有图元的时候,min是大,max是小,导致新建出错
         // 数据如下:
         // min.X == 1E20 && min.Y == 1E20 && min.Z == 1E20 &&

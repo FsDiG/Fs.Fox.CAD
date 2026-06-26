@@ -53,7 +53,7 @@ namespace ThMEPEngineCore.Engine
                 Polyline outline = o.Outline as Polyline;
                 if (beamComponentType == BeamComponentType.OverhangingPrimaryBeam)
                 {
-                    outline = ThLineBeamOutliner.Extend(o, 0, ThMEPEngineCoreCommon.BeamIntersectExtentionTolerance);
+                    outline = ThLineBeamOutliner.Extend(o, 0, ThMEPEngineCoreCommon.BeamIntersectExtensionTolerance);
                 }
                 DBObjectCollection passComponents = BeamConnectRecogitionEngine.SpatialIndexManager.
                 BeamSpatialIndex.SelectCrossingPolygon(outline);

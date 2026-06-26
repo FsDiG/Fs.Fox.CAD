@@ -10,7 +10,7 @@ namespace GeometryExtensions
     public static class Point2dExtensions
     {
         /// <summary>
-        /// Converts a 2d point into a 3d point with Z coodinate equal to 0.
+        /// Converts a 2d point into a 3d point with Z coordinate equal to 0.
         /// </summary>
         /// <param name="pt">The instance to which the method applies.</param>
         /// <returns>The corresponding 3d point.</returns>

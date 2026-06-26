@@ -34,7 +34,7 @@ namespace ThCADExtension
         }
 
         /// <summary>
-        /// Returns the Matrix3d that tranforms from the given coordinate
+        /// Returns the Matrix3d that transforms from the given coordinate
         /// system to the world coordinate system.
         /// </summary>
         public static Matrix3d ToWorld(this CoordinateSystem3d ucs)

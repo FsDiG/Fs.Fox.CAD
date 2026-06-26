@@ -188,14 +188,14 @@ namespace ThCADCore.NTS
 
         public static List<Polyline> Differences(this Region pRegion, DBObjectCollection sRegions)
         {
-            var pGeometrys = new List<Polygon>();
+            var pGeometries = new List<Polygon>();
             try
             {
-                pGeometrys.Add(pRegion.ToNTSPolygon());
+                pGeometries.Add(pRegion.ToNTSPolygon());
                 foreach (DBObject sGe in sRegions)
                 {
                     var sGeometry = new DBObjectCollection() { sGe }.ToNTSMultiPolygon();
-                    foreach (var pGeometry in pGeometrys)
+                    foreach (var pGeometry in pGeometries)
                     {
                         if (pGeometry == null || sGeometry == null)
                         {
@@ -212,14 +212,14 @@ namespace ThCADCore.NTS
                         var rGeometry = pGeometry.Difference(sGeometry);
                         if (rGeometry is Polygon polygon)
                         {
-                            pGeometrys = new List<Polygon>() { polygon };
+                            pGeometries = new List<Polygon>() { polygon };
                         }
                         else if (rGeometry is MultiPolygon mPolygon)
                         {
-                            pGeometrys = new List<Polygon>();
+                            pGeometries = new List<Polygon>();
                             foreach (Polygon rPolygon in mPolygon.Geometries)
                             {
-                                pGeometrys.Add(rPolygon);
+                                pGeometries.Add(rPolygon);
                             }
                         }
                         else
@@ -235,7 +235,7 @@ namespace ThCADCore.NTS
                 // 在某些情况下，NTS会抛出异常
                 // 这里只捕捉异常，不做特殊的处理
             }
-            return pGeometrys.Select(x => x.Shell.ToDbPolyline()).ToList();
+            return pGeometries.Select(x => x.Shell.ToDbPolyline()).ToList();
         }
     }
 }

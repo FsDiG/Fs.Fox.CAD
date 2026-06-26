@@ -8,9 +8,9 @@ namespace Autodesk.AutoCAD.EditorInput
     public class PromptKeywords
     {
         /// <summary>
-        /// The seperator
+        /// The separator
         /// </summary>
-        private static char[] seperator = new char[] { '/' };
+        private static char[] separator = new char[] { '/' };
 
         /// <summary>
         /// Sets the keywords.
@@ -49,7 +49,7 @@ namespace Autodesk.AutoCAD.EditorInput
             }
 
             string keywords = meassageAndKeywords.Substring(startOfKeywordsIndex + 1, endOfKeywordsIndex - startOfKeywordsIndex - 1);
-            string[] keywordsArray = keywords.Split(seperator);
+            string[] keywordsArray = keywords.Split(separator);
             keywords = String.Join(" ", keywordsArray);
             return new PromptKeywordOptions(meassageAndKeywords, keywords);
         }

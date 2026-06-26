@@ -33,14 +33,14 @@ namespace NFox.ComponentModel
             _grid = grid;
         }
 
-        private bool _isWritting;
+        private bool _isWriting;
 
         /// <summary>
         /// 从实体获取数据
         /// </summary>
         public void RefreshToGrid()
         {
-            if (!_isWritting)
+            if (!_isWriting)
             {
                 foreach (XDataProperty xdp in this)
                 {
@@ -58,7 +58,7 @@ namespace NFox.ComponentModel
         /// </summary>
         public void RefreshToEntity()
         {
-            _isWritting = true;
+            _isWriting = true;
             if (_grid.SelectedObject == null)
                 _grid.SelectedObject = this;
 
@@ -67,7 +67,7 @@ namespace NFox.ComponentModel
                 foreach (var value in xdp)
                     xdp.SetProperty(value);
             }
-            _isWritting = false;
+            _isWriting = false;
         }
 
         public XDataProperty this[string category]

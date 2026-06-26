@@ -730,9 +730,9 @@ namespace MgdDbg.Snoop.CollectorExts
             data.Add(new Snoop.Data.ClassSeparator(typeof(Solid3dMassProperties)));
             
             data.Add(new Snoop.Data.Point3d("Centroid", massProps.Centroid));
-            data.Add(new Snoop.Data.Vector3d("Moment of inertia", massProps.MomentsOfIntertia));
+            data.Add(new Snoop.Data.Vector3d("Moment of inertia", massProps.MomentsOfInertia));
             data.Add(new Snoop.Data.Vector3d("Principal moments", massProps.PrincipalMoments));
-            data.Add(new Snoop.Data.Vector3d("Products of inertia", massProps.ProductsOfIntertia));
+            data.Add(new Snoop.Data.Vector3d("Products of inertia", massProps.ProductsOfInertia));
             data.Add(new Snoop.Data.Vector3d("Radii of gyration", massProps.RadiiOfGyration));
             data.Add(new Snoop.Data.Double("Volume", massProps.Volume));
             data.Add(new Snoop.Data.Vector3d("Principle axis X", massProps[0]));
@@ -1428,8 +1428,8 @@ namespace MgdDbg.Snoop.CollectorExts
         {
             data.Add(new Snoop.Data.ClassSeparator(typeof(MeshPointMaps)));
 
-            data.Add(new Snoop.Data.Enumerable("Destination points", meshPtMaps.DestPonints));
-            data.Add(new Snoop.Data.Enumerable("Source points", meshPtMaps.SourcePonints)); // TBD: Property spelt incorrectly
+            data.Add(new Snoop.Data.Enumerable("Destination points", meshPtMaps.DestPoints));
+            data.Add(new Snoop.Data.Enumerable("Source points", meshPtMaps.SourcePoints)); // TBD: Property spelt incorrectly
         }
 
         private void

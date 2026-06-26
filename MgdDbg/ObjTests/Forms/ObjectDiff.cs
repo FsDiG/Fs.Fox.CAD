@@ -314,7 +314,7 @@ namespace MgdDbg.Test
                     lvItem.BackColor = Color.Red;
                 }
                 else {
-                    /// regular occurence of unequal objects
+                    /// regular occurrence of unequal objects
                     if (!obj1.Equals(obj2)) {
                         /// we know this is diff., so highlight it
                         lvItem.BackColor = Color.Red;

@@ -15,7 +15,7 @@ namespace StraightSkeletonNet.Events.Chains
         {
             get
             {
-                if (!(_splitEvent is VertexSplitEvent))
+                if (!(_splitEvent is VerticesplitEvent))
                     return _splitEvent.OppositeEdge;
 
                 return null;

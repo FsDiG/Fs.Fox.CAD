@@ -8,12 +8,12 @@ namespace Autodesk.AutoCAD.DatabaseServices
     public static class BlockTableExtensions
     {
         ///<overloads>
-        /// <summmary>
+        /// <summary>
         /// You can not edit a dependent block(a block that is inside from xref) from the referenced drawing. 
         /// The default is not to include dependent blocks since typically you will work on blocks that are contained 
         /// inside the drawing, and it saves time by not opening the DbObject and comparing 
         /// BlockTableRecord.ObjectId.OriginalDatabase.UnmanagedObject to the BlockTable.Database.UnmanagedObject property.
-        /// </summmary>
+        /// </summary>
         /// </overloads>
         /// <summary>
         /// Gets the block table records.

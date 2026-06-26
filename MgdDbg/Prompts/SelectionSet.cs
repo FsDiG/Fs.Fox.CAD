@@ -126,7 +126,7 @@ namespace MgdDbg.ObjTests.Forms {
             selOpts.RejectObjectsFromNonCurrentSpace = m_cbRejectNonCurrentSpace.Checked;
             selOpts.RejectObjectsOnLockedLayers = m_cbFilterLockedLayers.Checked;
             selOpts.RejectPaperspaceViewport = m_cbRejectPaperSpaceViewport.Checked;
-            selOpts.SelectEverythingInAperture = m_cbSelectEverythingInAperature.Checked;
+            selOpts.SelectEverythingInAperture = m_cbSelectEverythingInAperture.Checked;
             selOpts.SingleOnly = m_cbSingleOnly.Checked;
             selOpts.SinglePickInSpace = m_cbSinglePickInSpace.Checked;
 
@@ -449,10 +449,10 @@ namespace MgdDbg.ObjTests.Forms {
                     // see if they want this class plus all derived classes
                 if (m_cbDoIsKindOfTest.Checked == false) {
                         // just this class, use a simple filter
-                    TypedValue[] fitlerPairs = {
+                    TypedValue[] filterPairs = {
                         new TypedValue((int)DxfCode.Start, selectedClass.DxfName),
                     };
-                    return new SelectionFilter(fitlerPairs);
+                    return new SelectionFilter(filterPairs);
                 }
                 else {
                         // look up all derived classes and use a big "OR" statement

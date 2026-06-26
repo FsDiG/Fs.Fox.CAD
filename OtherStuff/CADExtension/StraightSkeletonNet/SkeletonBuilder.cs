@@ -33,7 +33,7 @@ namespace StraightSkeletonNet
             polygon = InitPolygon(polygon);
             holes = MakeClockwise(holes);
 
-            var queue = new PriorityQueue<SkeletonEvent>(3, new SkeletonEventDistanseComparer());
+            var queue = new PriorityQueue<SkeletonEvent>(3, new SkeletonEventDistanceComparer());
             var sLav = new HashSet<CircularList<Vertex>>();
             var faces = new List<FaceQueue>();
             var edges = new List<Edge>();
@@ -432,7 +432,7 @@ namespace StraightSkeletonNet
                     edgeCluster.Add((EdgeEvent) skeletonEvent);
                 else
                 {
-                    if (skeletonEvent is VertexSplitEvent)
+                    if (skeletonEvent is VerticesplitEvent)
                     {
                         // It will be processed in next loop to find unique split
                         // events for one parent.
@@ -450,9 +450,9 @@ namespace StraightSkeletonNet
 
             foreach (var skeletonEvent in cluster)
             {
-                if (skeletonEvent is VertexSplitEvent)
+                if (skeletonEvent is VerticesplitEvent)
                 {
-                    var vertexEvent = (VertexSplitEvent) skeletonEvent;
+                    var vertexEvent = (VerticesplitEvent) skeletonEvent;
                     if (!vertexEventsParents.Contains(vertexEvent.Parent))
                     {
                         // It can be created multiple vertex events for one parent.
@@ -854,7 +854,7 @@ namespace StraightSkeletonNet
                 if (oppositeEdge.OppositePoint != Vector2d.Empty)
                 {
                     // some of vertex event can share the same opposite point
-                    queue.Add(new VertexSplitEvent(point, oppositeEdge.Distance, vertex));
+                    queue.Add(new VerticesplitEvent(point, oppositeEdge.Distance, vertex));
                     continue;
                 }
                 queue.Add(new SplitEvent(point, oppositeEdge.Distance, vertex, oppositeEdge.OppositeEdge));
@@ -1172,7 +1172,7 @@ namespace StraightSkeletonNet
 
         #region Nested classes
 
-        private class SkeletonEventDistanseComparer : IComparer<SkeletonEvent>
+        private class SkeletonEventDistanceComparer : IComparer<SkeletonEvent>
         {
             public int Compare(SkeletonEvent left, SkeletonEvent right)
             {

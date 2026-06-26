@@ -365,8 +365,8 @@ namespace MgdDbg.Snoop
             StringFormat valueFormat = new StringFormat();
 
             centerFormat.Alignment = StringAlignment.Center;
-            fieldFormat.Alignment = HorizontalAlignmentToStringAligment(lv.Columns[0].TextAlign);
-            valueFormat.Alignment = HorizontalAlignmentToStringAligment(lv.Columns[1].TextAlign);
+            fieldFormat.Alignment = HorizontalAlignmentToStringAlignment(lv.Columns[0].TextAlign);
+            valueFormat.Alignment = HorizontalAlignmentToStringAlignment(lv.Columns[1].TextAlign);
 
             //Draw the title of the list.
             //
@@ -438,7 +438,7 @@ namespace MgdDbg.Snoop
         /// <param name="ha"></param>
         /// <returns></returns>
         public static StringAlignment
-        HorizontalAlignmentToStringAligment (HorizontalAlignment ha)
+        HorizontalAlignmentToStringAlignment (HorizontalAlignment ha)
         {
             switch (ha)
             {

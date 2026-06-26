@@ -114,7 +114,7 @@ namespace AcHelper.Wrappers
             catch (XRecordHandlerException) { throw; }
             catch (Exception ex)
             {
-                string err_message = string.Format("Unexpected error occured while retrieving xRecord '{0}' from Named Objects Dictionary '{1}'.", xKey, dictionaryName);
+                string err_message = string.Format("Unexpected error occurred while retrieving xRecord '{0}' from Named Objects Dictionary '{1}'.", xKey, dictionaryName);
                 throw new XRecordHandlerException(dictionaryName, xKey, err_message, ex, ErrorCode.XrecordNotFound);
             }
 
@@ -167,7 +167,7 @@ namespace AcHelper.Wrappers
                 }
                 catch (System.Exception ex)
                 {
-                    string err_message = string.Format("Unexpected error occured while retrieving xRecord '{0}' from Entity Named Objects Dictionary.", xKey);
+                    string err_message = string.Format("Unexpected error occurred while retrieving xRecord '{0}' from Entity Named Objects Dictionary.", xKey);
                     throw new XRecordHandlerException(err_message, ex);
                 }
             }
@@ -217,7 +217,7 @@ namespace AcHelper.Wrappers
             }
             catch (Exception ex)
             {
-                err_message = string.Format("An unexpected error occured while updating Xrecord '{0}' in Named Objects Dictionary '{1}'.", xKey, dictionaryName);
+                err_message = string.Format("An unexpected error occurred while updating Xrecord '{0}' in Named Objects Dictionary '{1}'.", xKey, dictionaryName);
                 throw new XRecordHandlerException(dictionaryName, xKey, err_message, ex);
             }
 
@@ -275,7 +275,7 @@ namespace AcHelper.Wrappers
             }
             catch (System.Exception ex)
             {
-                errMessage = string.Format("An unexpected error occured while updating Xrecord '{1}'.", xKey);
+                errMessage = string.Format("An unexpected error occurred while updating Xrecord '{1}'.", xKey);
                 throw new XRecordHandlerException(errMessage, ex);
             }
         }
@@ -367,7 +367,7 @@ namespace AcHelper.Wrappers
             }
             catch (Exception ex)
             {
-                err_message = string.Format("An unexpected error occured while removing Xrecord '{0}' from Named Objects Dictionary '{1}'", xKey, dictionaryName);
+                err_message = string.Format("An unexpected error occurred while removing Xrecord '{0}' from Named Objects Dictionary '{1}'", xKey, dictionaryName);
                 throw new XRecordHandlerException(dictionaryName, xKey, err_message, ex);
             }
         }
@@ -421,7 +421,7 @@ namespace AcHelper.Wrappers
             }
             catch (Exception ex)
             {
-                err_message = string.Format("An unexpected error occured while removing Xrecord '{0}' from Named Objects Dictionary", xKey);
+                err_message = string.Format("An unexpected error occurred while removing Xrecord '{0}' from Named Objects Dictionary", xKey);
                 throw new XRecordHandlerException(err_message, ex);
             }
         }

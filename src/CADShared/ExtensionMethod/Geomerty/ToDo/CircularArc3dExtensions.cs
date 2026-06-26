@@ -18,7 +18,7 @@ namespace GeometryExtensions
         /// </remarks>
         /// <param name="arc">The instance to which this method applies.</param>
         /// <param name="pt">The Point3d to which tangents are searched</param>
-        /// <returns>An array of LineSegement3d representing the tangents (2) or null if there is none.</returns>
+        /// <returns>An array of LineSegment3d representing the tangents (2) or null if there is none.</returns>
         /// <exception cref="Autodesk.AutoCAD.Runtime.Exception">
         /// eNonCoplanarGeometry is thrown if the objects do not lies on the same plane.</exception>
         public static LineSegment3d[]? GetTangentsTo(this CircularArc3d arc, Point3d pt)

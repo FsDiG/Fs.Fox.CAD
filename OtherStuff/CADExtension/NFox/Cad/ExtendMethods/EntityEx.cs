@@ -22,7 +22,7 @@ namespace NFox.Cad
         /// <param name="ent">复合实体</param>
         /// <param name="tr">事务实例</param>
         /// <returns>子实体迭代器</returns>
-        public static IEnumerable<Vertex> GetVertexs<T>(this T ent, Transaction tr) where T : Entity, IEnumerable
+        public static IEnumerable<Vertex> GetVertices<T>(this T ent, Transaction tr) where T : Entity, IEnumerable
         {
             foreach (ObjectId id in ent)
             {
@@ -38,7 +38,7 @@ namespace NFox.Cad
         /// <param name="tr">事务实例</param>
         /// <param name="mode">打开模式(读/写)</param>
         /// <returns>子实体迭代器</returns>
-        public static IEnumerable<Vertex> GetVertexs<T>(this T ent, Transaction tr, OpenMode mode) where T : Entity, IEnumerable
+        public static IEnumerable<Vertex> GetVertices<T>(this T ent, Transaction tr, OpenMode mode) where T : Entity, IEnumerable
         {
             foreach (ObjectId id in ent)
             {

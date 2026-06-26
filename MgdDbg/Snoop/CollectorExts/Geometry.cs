@@ -1175,7 +1175,7 @@ namespace MgdDbg.Snoop.CollectorExts
             data.Add(new Snoop.Data.Bool("Is bounded below", interval.IsBoundedBelow));
             data.Add(new Snoop.Data.Bool("Is singleton", interval.IsSingleton));
             data.Add(new Snoop.Data.Bool("Is unbounded", interval.IsUnbounded));
-            data.Add(new Snoop.Data.Double("Lenght", interval.Length));
+            data.Add(new Snoop.Data.Double("Length", interval.Length));
             data.Add(new Snoop.Data.Double("Lower bound", interval.LowerBound));
             data.Add(new Snoop.Data.Double("Tolerance", interval.Tolerance));
             data.Add(new Snoop.Data.Double("Upper bound", interval.UpperBound));            

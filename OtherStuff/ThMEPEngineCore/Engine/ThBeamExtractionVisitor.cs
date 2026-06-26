@@ -42,7 +42,7 @@ namespace ThMEPEngineCore.Engine
             var results = new List<ThRawIfcBuildingElementData>();
             if (CheckLayerValid(dBText) &&
                 IsBuildElement(dBText) &&
-                IsBeamAnnotaion(dBText))
+                IsBeamAnnotation(dBText))
             {
                 results.Add(new ThRawIfcBuildingElementData()
                 {
@@ -52,9 +52,9 @@ namespace ThMEPEngineCore.Engine
             return results;
         }
 
-        private bool IsBeamAnnotaion(DBText dBText)
+        private bool IsBeamAnnotation(DBText dBText)
         {
-            return ThStructureBeamUtils.IsBeamAnnotaion(dBText.TextString);
+            return ThStructureBeaMultils.IsBeamAnnotation(dBText.TextString);
         }
     }
 }

@@ -3000,7 +3000,7 @@ namespace MgdDbg.Prompts
         }
         
         /// <summary>
-        /// Some prompts have an optional base point to use.  This just retrives that dynamically
+        /// Some prompts have an optional base point to use.  This just retrieves that dynamically
         /// before the actual prompt is issued (otherwise, we'd be typing in a point value in the
         /// dialog, which would be no fun).
         /// </summary>

@@ -21,11 +21,11 @@ namespace ThMEPEngineCore.Operation
         /// <param name="points"></param>
         /// <param name="xLength"></param>
         /// <param name="yLength"></param>
-        public List<KeyValuePair<Vector3d, List<Polyline>>> CreateGrid(Polyline polyline, List<Polyline> colums, Matrix3d transMatrix, double spacingValue)
+        public List<KeyValuePair<Vector3d, List<Polyline>>> CreateGrid(Polyline polyline, List<Polyline> columns, Matrix3d transMatrix, double spacingValue)
         {
             minSpace = spacingValue;
 
-            List<Point3d> points = GetColumCenter(colums);
+            List<Point3d> points = GetColumCenter(columns);
             Matrix3d matrix = ThMEPEngineCoreGeUtils.GetGridMatrix(Vector3d.XAxis);
 
             var firGrids = MoveClosedGrid(CreateGridLine(matrix, points, polyline));
@@ -146,12 +146,12 @@ namespace ThMEPEngineCore.Operation
         /// <summary>
         /// 计算柱中点
         /// </summary>
-        /// <param name="colums"></param>
+        /// <param name="columns"></param>
         /// <returns></returns>
-        public List<Point3d> GetColumCenter(List<Polyline> colums)
+        public List<Point3d> GetColumCenter(List<Polyline> columns)
         {
             List<Point3d> resPoints = new List<Point3d>();
-            foreach (var col in colums)
+            foreach (var col in columns)
             {
                 List<Point3d> points = new List<Point3d>();
                 for (int i = 0; i < col.NumberOfVertices; i++)

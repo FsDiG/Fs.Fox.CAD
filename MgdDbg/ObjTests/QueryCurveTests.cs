@@ -155,7 +155,7 @@ namespace MgdDbg.Test
                 using (Autodesk.AutoCAD.DatabaseServices.Transaction tr = tm.StartTransaction()) {
                     Curve curve = (Curve)tr.GetObject(curveId, OpenMode.ForRead);
                     
-                        // get StartPoint (if appliacable) and make a point entity in Red
+                        // get StartPoint (if applicable) and make a point entity in Red
                         // to graphically depict it.
                     try {
                         Point3d startPt = curve.StartPoint;
@@ -169,7 +169,7 @@ namespace MgdDbg.Test
                             throw e;
                     }
 
-                        // get EndPoint (if appliacable) and make a point entity in Yellow
+                        // get EndPoint (if applicable) and make a point entity in Yellow
                         // to graphically depict it.
                     try {
                         Point3d endPt = curve.EndPoint;

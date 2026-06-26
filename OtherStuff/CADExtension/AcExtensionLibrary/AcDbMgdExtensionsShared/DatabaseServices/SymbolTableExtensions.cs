@@ -56,11 +56,11 @@ namespace Autodesk.AutoCAD.DatabaseServices
         /// <param name="trx">The TRX.</param>
         /// <param name="mode">The mode.</param>
         /// <param name="filter">The filter.</param>
-        /// <param name="filterDependecyById">if set to <c>true</c> [filter dependecy by identifier].</param>
+        /// <param name="filterDependencyById">if set to <c>true</c> [filter dependency by identifier].</param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
         internal static IEnumerable<T> GetSymbolTableRecords<T>(this SymbolTable symbolTbl, Transaction trx,
-            OpenMode mode, SymbolTableRecordFilter filter, bool filterDependecyById) where T : SymbolTableRecord
+            OpenMode mode, SymbolTableRecordFilter filter, bool filterDependencyById) where T : SymbolTableRecord
         {
             if (trx == null)
             {
@@ -78,7 +78,7 @@ namespace Autodesk.AutoCAD.DatabaseServices
             }
             else
             {
-                if (filterDependecyById)
+                if (filterDependencyById)
                 {
                     IntPtr dbIntPtr = symbolTbl.Database.UnmanagedObject;
                     foreach (ObjectId id in includingErased ? symbolTbl.IncludingErased : symbolTbl)

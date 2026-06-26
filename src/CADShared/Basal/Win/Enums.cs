@@ -397,7 +397,7 @@ public enum WM : uint
     /// <summary>
     /// 当用户已经登入或退出后发送此消息给所有的窗口,当用户登入或退出时系统更新用户的具体设置信息,在用户更新设置时系统马上发送此消息
     /// </summary>
-    WM_USERCHANGED = 0x54,
+    WM_USEARCHANGED = 0x54,
     /// <summary>
     /// 公用控件,自定义控件和他们的父窗口通过此消息来判断控件是使用ANSI还是UNICODE结构
     /// </summary>

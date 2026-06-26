@@ -30,7 +30,7 @@ namespace ThCADCore.NTS
                 {
                     if (geometryFactory == null)
                     {
-                        geometryFactory = NtsGeometryServices.Instance.CreateGeometryFactory(PrecisionModel);
+                        geometryFactory = Ntsgeometrieservices.Instance.CreateGeometryFactory(PrecisionModel);
                     }
                     return geometryFactory;
 
@@ -39,7 +39,7 @@ namespace ThCADCore.NTS
                 {
                     if (defaultGeometryFactory == null)
                     {
-                        defaultGeometryFactory = NtsGeometryServices.Instance.CreateGeometryFactory();
+                        defaultGeometryFactory = Ntsgeometrieservices.Instance.CreateGeometryFactory();
                     }
                     return defaultGeometryFactory;
                 }
@@ -68,13 +68,13 @@ namespace ThCADCore.NTS
                 {
                     if (precisionModel == null)
                     {
-                        precisionModel = NtsGeometryServices.Instance.CreatePrecisionModel(PrecisionModels.Fixed);
+                        precisionModel = Ntsgeometrieservices.Instance.CreatePrecisionModel(PrecisionModels.Fixed);
                     }
                     return precisionModel;
                 }
                 else
                 {
-                    return NtsGeometryServices.Instance.DefaultPrecisionModel;
+                    return Ntsgeometrieservices.Instance.DefaultPrecisionModel;
                 }
             }
         }
