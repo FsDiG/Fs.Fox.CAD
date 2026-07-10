@@ -29,7 +29,7 @@ namespace DotNetARX
             if (Math.Abs(lengthX) < 0.00001 || Math.Abs(lengthY) < 0.00001 ||
                 Math.Abs(lengthZ) < 0.00001)
             {
-                ed.WriteMessage("\n参数不当,创建长方体失败！");
+                ed.WriteMessage("\n参数不当, 创建长方体失败!");
                 return ObjectId.Null;
             }
 
@@ -67,7 +67,7 @@ namespace DotNetARX
 
             if (radius < 0.00001 || Math.Abs(height) < 0.00001)
             {
-                ed.WriteMessage("\n参数不当,创建圆柱体失败！");
+                ed.WriteMessage("\n参数不当, 创建圆柱体失败!");
                 return ObjectId.Null;
             }
 
@@ -105,7 +105,7 @@ namespace DotNetARX
 
             if (radius < 0.00001 || Math.Abs(height) < 0.00001)
             {
-                ed.WriteMessage("\n参数不当,创建圆锥体失败！");
+                ed.WriteMessage("\n参数不当, 创建圆锥体失败!");
                 return ObjectId.Null;
             }
 
@@ -151,7 +151,7 @@ namespace DotNetARX
 
             if (radius < 0.00001)
             {
-                ed.WriteMessage("\n参数不当,创建球体失败！");
+                ed.WriteMessage("\n参数不当, 创建球体失败!");
                 return ObjectId.Null;
             }
 
@@ -188,7 +188,7 @@ namespace DotNetARX
 
             if (Math.Abs(majorRadius) < 0.00001 || minorRadius < 0.00001)
             {
-                ed.WriteMessage("\n参数不当,创建圆锥体失败！");
+                ed.WriteMessage("\n参数不当, 创建圆锥体失败!");
                 return ObjectId.Null;
             }
 
@@ -214,7 +214,7 @@ namespace DotNetARX
             }
             catch
             {
-                ed.WriteMessage("\n参数不当,创建圆锥体失败！");
+                ed.WriteMessage("\n参数不当, 创建圆锥体失败!");
                 return ObjectId.Null;
             }
         }
@@ -235,7 +235,7 @@ namespace DotNetARX
 
             if (Math.Abs(lengthAlongX) < 0.00001 || Math.Abs(lengthAlongX) < 0.00001 || Math.Abs(lengthAlongX) < 0.00001)
             {
-                ed.WriteMessage("\n参数不当,创建楔体失败！");
+                ed.WriteMessage("\n参数不当, 创建楔体失败!");
                 return ObjectId.Null;
             }
 
@@ -273,7 +273,7 @@ namespace DotNetARX
 
             if (Math.Abs(height) < 0.00001 || radius < 0.00001 || sides < 3 || sides > 32)
             {
-                ed.WriteMessage("\n参数不当,创建棱柱失败！");
+                ed.WriteMessage("\n参数不当, 创建棱柱失败!");
                 return ObjectId.Null;
             }
 
@@ -312,7 +312,7 @@ namespace DotNetARX
 
             if (Math.Abs(height) < 0.00001 || radius < 0.00001 || sides < 3 || sides > 32)
             {
-                ed.WriteMessage("\n参数不当,创建棱柱失败！");
+                ed.WriteMessage("\n参数不当, 创建棱柱失败!");
                 return ObjectId.Null;
             }
 
@@ -373,7 +373,7 @@ namespace DotNetARX
             }
             catch
             {
-                ed.WriteMessage("\n参数不当,创建拉伸体失败！");
+                ed.WriteMessage("\n参数不当, 创建拉伸体失败!");
                 return ObjectId.Null;
             }
         }
@@ -406,7 +406,7 @@ namespace DotNetARX
             }
             catch
             {
-                ed.WriteMessage("\n参数不当,创建拉伸体失败！");
+                ed.WriteMessage("\n参数不当, 创建拉伸体失败!");
                 return ObjectId.Null;
             }
         }
@@ -440,7 +440,7 @@ namespace DotNetARX
             }
             catch
             {
-                ed.WriteMessage("\n参数不当,创建旋转体失败！");
+                ed.WriteMessage("\n参数不当, 创建旋转体失败!");
                 return ObjectId.Null;
             }
         }
@@ -467,7 +467,7 @@ namespace DotNetARX
 
                     if (ent1 == null || ent2 == null)
                     {
-                        ed.WriteMessage("\n布尔操作失败！");
+                        ed.WriteMessage("\n布尔操作失败!");
                         return false;
                     }
 
@@ -489,7 +489,7 @@ namespace DotNetARX
                 }
                 catch
                 {
-                    ed.WriteMessage("\n布尔操作失败！");
+                    ed.WriteMessage("\n布尔操作失败!");
                     return false;
                 }
                 trans.Commit();

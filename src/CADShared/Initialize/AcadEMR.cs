@@ -62,7 +62,7 @@ internal class AcadEMR
         if (moduleHandle == IntPtr.Zero)
         {
             if (echoes)
-                Env.Printl(typeof(AcadEMR).FullName + "." + nameof(Remove) + "找不到模块：" + dllName);
+                Env.Printl(typeof(AcadEMR).FullName + "." + nameof(Remove) + "找不到模块: " + dllName);
             return;
         }
 
@@ -76,7 +76,7 @@ internal class AcadEMR
         if (funcAddress == IntPtr.Zero)
         {
             if (echoes)
-                Env.Printl("无法找指定函数：" + funcName);
+                Env.Printl("无法找指定函数: " + funcName);
             return;
         }
 
@@ -86,15 +86,15 @@ internal class AcadEMR
 
         if (!CheckFunc(ref ptr, 51, 2)) // 08 通过此处
             if (echoes)
-                Env.Printl("无法验证函数体：0x33");
+                Env.Printl("无法验证函数体: 0x33");
         var destPtr = ptr;
 
         if (!CheckFunc(ref ptr, 57, 6)) // 08 无法通过此处,所以只是打印提示
             if (echoes)
-                Env.Printl("无法验证函数体：0x39");
+                Env.Printl("无法验证函数体: 0x39");
         if (!CheckFunc(ref ptr, 15, 2)) // 08 无法通过此处,所以只是打印提示
             if (echoes)
-                Env.Printl("无法验证函数体：0x0F");
+                Env.Printl("无法验证函数体: 0x0F");
 
         uint flag = default;
         // ReSharper disable once IdentifierTypo

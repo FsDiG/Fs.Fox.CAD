@@ -87,7 +87,7 @@ namespace MgdDbg.Snoop.CollectorExts {
             data.Add(new Snoop.Data.ObjectCollection("Hyperlinks", (System.Collections.ICollection)ent.Hyperlinks));
             data.Add(new Snoop.Data.Object("Transparency", ent.Transparency));
             data.Add(new Snoop.Data.Bool("Cast shadows", ent.CastShadows));
-            data.Add(new Snoop.Data.Bool("Recieve shadows", ent.ReceiveShadows));
+            data.Add(new Snoop.Data.Bool("Receive shadows", ent.ReceiveShadows));
             data.Add(new Snoop.Data.Object("Material mapper", ent.MaterialMapper));
             data.Add(new Snoop.Data.String("Material", ent.Material));
             data.Add(new Snoop.Data.ObjectId("Material ID", ent.MaterialId));

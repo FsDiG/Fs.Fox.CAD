@@ -139,7 +139,7 @@ public class Cmd_IFoxInitializeInterface : IFoxAutoGo
     int TestInt = 0;
     public Cmd_IFoxInitializeInterface()
     {
-        Env.Printl($"开始自动执行,{nameof(IFoxAutoGo)}接口调用:{nameof(Cmd_IFoxInitializeInterface)}::{TestInt}");
+        Env.Printl($"开始自动执行, {nameof(IFoxAutoGo)}接口调用: {nameof(Cmd_IFoxInitializeInterface)}: {TestInt}");
     }
 
     public Sequence SequenceId()
@@ -149,12 +149,12 @@ public class Cmd_IFoxInitializeInterface : IFoxAutoGo
 
     public void Initialize()
     {
-        Env.Printl($"开始自动执行,{nameof(IFoxAutoGo)}接口调用:{nameof(Initialize)}::{TestInt}");
+        Env.Printl($"开始自动执行, {nameof(IFoxAutoGo)}接口调用: {nameof(Initialize)}: {TestInt}");
     }
 
     public void Terminate()
     {
-        Debugx.Printl($"开始自动执行,{nameof(IFoxAutoGo)}接口调用:{nameof(Terminate)}::{TestInt}");
+        Debugx.Printl($"开始自动执行, {nameof(IFoxAutoGo)}接口调用: {nameof(Terminate)}: {TestInt}");
         //    try
         //    {
         //        // 注意此时编辑器已经回收,所以此句没用,并引发错误

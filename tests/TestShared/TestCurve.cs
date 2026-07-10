@@ -165,10 +165,10 @@ public partial class TestCurve
                 if (bulge < 0) arc.ReverseCurve();
                 arc.ColorIndex = 1;
                 tr.CurrentSpace.AddEntity(arc);
-                Env.Printl($"arc的ge:ReferenceVector：{MathEx.ConvertRadToDeg(arc2d.ReferenceVector.Angle)}");
-                Env.Printl($"arc的ge:顺时针：{arc2d.IsClockWise}");
-                Env.Printl($"arc的ge:起点角度：{MathEx.ConvertRadToDeg(arc2d.StartAngle)},终点角度：{MathEx.ConvertRadToDeg(arc2d.EndAngle)}");
-                Env.Printl($"arc的db:起点角度：{MathEx.ConvertRadToDeg(arc.StartAngle)},终点角度：{MathEx.ConvertRadToDeg(arc.EndAngle)}");
+                Env.Printl($"arc的ge: ReferenceVector: {MathEx.ConvertRadToDeg(arc2d.ReferenceVector.Angle)}");
+                Env.Printl($"arc的ge: 顺时针: {arc2d.IsClockWise}");
+                Env.Printl($"arc的ge: 起点角度: {MathEx.ConvertRadToDeg(arc2d.StartAngle)}, 终点角度: {MathEx.ConvertRadToDeg(arc2d.EndAngle)}");
+                Env.Printl($"arc的db: 起点角度: {MathEx.ConvertRadToDeg(arc.StartAngle)}, 终点角度: {MathEx.ConvertRadToDeg(arc.EndAngle)}");
 
                 //将  CircularArc2d 转为Arc 颜色为黄
                 CircularArc2d arc2d1 = pl0.GetArcSegment2dAt(FFF);
@@ -176,10 +176,10 @@ public partial class TestCurve
                 if (bulge < 0) arc1.ReverseCurve();
                 arc1.ColorIndex = 2;
                 tr.CurrentSpace.AddEntity(arc1);
-                Env.Printl($"arc1的ge:ReferenceVector：{MathEx.ConvertRadToDeg(arc2d1.ReferenceVector.Angle)}");
-                Env.Printl($"arc的ge:顺时针：{arc2d1.IsClockWise}");
-                Env.Printl($"arc1的ge:起点角度：{MathEx.ConvertRadToDeg(arc2d1.StartAngle)} ,终点角度： {MathEx.ConvertRadToDeg(arc2d1.EndAngle)}");
-                Env.Printl($"arc1的db:起点角度：{MathEx.ConvertRadToDeg(arc1.StartAngle)} ,终点角度： {MathEx.ConvertRadToDeg(arc1.EndAngle)}");
+                Env.Printl($"arc1的ge: ReferenceVector: {MathEx.ConvertRadToDeg(arc2d1.ReferenceVector.Angle)}");
+                Env.Printl($"arc的ge: 顺时针: {arc2d1.IsClockWise}");
+                Env.Printl($"arc1的ge: 起点角度: {MathEx.ConvertRadToDeg(arc2d1.StartAngle)}, 终点角度: {MathEx.ConvertRadToDeg(arc2d1.EndAngle)}");
+                Env.Printl($"arc1的db: 起点角度: {MathEx.ConvertRadToDeg(arc1.StartAngle)}, 终点角度: {MathEx.ConvertRadToDeg(arc1.EndAngle)}");
                
                 //将 CircularArc3d 转为Arc 颜色为黄色
                 CircularArc3d arc3d = pl0.GetArcSegmentAt(FFF);
@@ -187,9 +187,9 @@ public partial class TestCurve
                 
                 arc2.ColorIndex = 3;
                 tr.CurrentSpace.AddEntity(arc2);
-                Env.Printl($"arc2的ge:ReferenceVector：{MathEx.ConvertRadToDeg(arc3d.ReferenceVector.AngleOnPlane(new Plane()))}");
-                Env.Printl($"arc2的ge:起点角度：{MathEx.ConvertRadToDeg(arc3d.StartAngle)} ,终点角度： {MathEx.ConvertRadToDeg(arc3d.EndAngle)}");
-                Env.Printl($"arc2的db:起点角度：{MathEx.ConvertRadToDeg(arc2.StartAngle)}  ,终点角度：  {MathEx.ConvertRadToDeg(arc2.EndAngle)}");
+                Env.Printl($"arc2的ge: ReferenceVector: {MathEx.ConvertRadToDeg(arc3d.ReferenceVector.AngleOnPlane(new Plane()))}");
+                Env.Printl($"arc2的ge: 起点角度: {MathEx.ConvertRadToDeg(arc3d.StartAngle)}, 终点角度: {MathEx.ConvertRadToDeg(arc3d.EndAngle)}");
+                Env.Printl($"arc2的db: 起点角度: {MathEx.ConvertRadToDeg(arc2.StartAngle)}, 终点角度: {MathEx.ConvertRadToDeg(arc2.EndAngle)}");
 
 /*
 
