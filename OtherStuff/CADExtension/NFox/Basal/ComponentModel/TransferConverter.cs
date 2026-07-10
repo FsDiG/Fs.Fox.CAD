@@ -62,7 +62,7 @@ namespace NFox.ComponentModel
         }
     }
 
-    public class TransferCoverter<TOld, TNew> : TypeConverter where TNew : ITransfer<TOld>, new()
+    public class TransferConverter<TOld, TNew> : TypeConverter where TNew : ITransfer<TOld>, new()
     {
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {

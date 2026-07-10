@@ -8,7 +8,7 @@ public class TestTrans
         using DBTrans tr = new();
         if (tr.Editor is null)
             return;
-        tr.Editor.WriteMessage("\n测试 Editor 属性是否工作！");
+        tr.Editor.WriteMessage("\n测试 Editor 属性是否工作!");
         tr.Editor.WriteMessage("\n----------开始测试--------------");
         tr.Editor.WriteMessage("\n测试document属性是否工作");
         if (tr.Document == Getdoc())

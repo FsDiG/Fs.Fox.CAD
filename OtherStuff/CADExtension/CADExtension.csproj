@@ -181,7 +181,7 @@
     <Compile Include="NFox\Basal\Collections\SerialList2.cs" />
     <Compile Include="NFox\Basal\Collections\Tree.cs" />
     <Compile Include="NFox\Basal\Collections\XmlNode.cs" />
-    <Compile Include="NFox\Basal\ComponentModel\TransferCoverter.cs" />
+    <Compile Include="NFox\Basal\ComponentModel\TransferConverter.cs" />
     <Compile Include="NFox\Basal\ComponentModel\TypeManager.cs" />
     <Compile Include="NFox\Basal\ComponentModel\XDataProperty.cs" />
     <Compile Include="NFox\Basal\ComponentModel\XEntityProperties.cs" />

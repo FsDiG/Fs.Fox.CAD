@@ -307,10 +307,10 @@ public class PeFunction
     /// </summary>
     /// <param name="peInfo">pe结构</param>
     /// <param name="findFuncName">用于查找的方法名</param>
-    /// <param name="funcAdress_Out">返回函数集合</param>
+    /// <param name="funcAddress_Out">返回函数集合</param>
     public static void Finds(PeInfo peInfo,
         string findFuncName,
-        List<PeFunction> funcAdress_Out)
+        List<PeFunction> funcAddress_Out)
     {
         if (findFuncName == null)
             throw new GetPeMethodException(2, "没有找到对应的函数:" + findFuncName);
@@ -336,7 +336,7 @@ public class PeFunction
                     ModuleFullName = peModuleFullName,
                     ModuleIntPtr = hModule
                 };
-                funcAdress_Out.Add(fn);
+                funcAddress_Out.Add(fn);
             }
         }
     }

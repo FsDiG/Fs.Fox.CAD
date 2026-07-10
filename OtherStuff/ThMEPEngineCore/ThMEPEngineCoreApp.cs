@@ -231,7 +231,7 @@ namespace ThMEPEngineCore
                     Active.Database, frame.Vertices());
                 stopwatch.Stop();
                 TimeSpan timespan = stopwatch.Elapsed; //  获取当前实例测量得出的总时间
-                Active.Editor.WriteMessage("\n本次使用了：" + timespan.TotalSeconds + "秒");
+                Active.Editor.WriteMessage("\n本次使用了: " + timespan.TotalSeconds + "秒");
 
                 thBeamTypeRecogitionEngine.PrimaryBeamLinks.ForEach(m => m.Beams.ForEach(n =>
                 {

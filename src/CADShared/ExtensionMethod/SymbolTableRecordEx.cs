@@ -233,7 +233,7 @@ public static class SymbolTableRecordEx
         var tr = DBTrans.GetTop(blockTableRecord.Database);
         if (!tr.BlockTable.Has(blockName))
         {
-            tr.Editor?.WriteMessage($"\n不存在名字为{blockName}的块定义。");
+            tr.Editor?.WriteMessage($"\n不存在名字为{blockName}的块定义.");
             return ObjectId.Null;
         }
 
@@ -262,7 +262,7 @@ public static class SymbolTableRecordEx
 
         if (!tr.BlockTable.Has(blockId))
         {
-            tr.Editor?.WriteMessage($"\n不存在块定义。");
+            tr.Editor?.WriteMessage($"\n不存在块定义.");
             return ObjectId.Null;
         }
 

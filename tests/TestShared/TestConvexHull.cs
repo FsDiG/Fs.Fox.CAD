@@ -70,7 +70,7 @@ public class TestConvexHull
         // Env.Editor.WriteMessage($"vec2 点乘 vec1= {area3} \n");
         // Env.Editor.WriteMessage($"vec1 点乘 vec2= {area4} \n");
 
-        Env.Editor.WriteMessage($"点集的有向面积：{area5} \n");
-        Env.Editor.WriteMessage($"点集的有向面积：{area6} \n");
+        Env.Editor.WriteMessage($"点集的有向面积: {area5} \n");
+        Env.Editor.WriteMessage($"点集的有向面积: {area6} \n");
     }
 }

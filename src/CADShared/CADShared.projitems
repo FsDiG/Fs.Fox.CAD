@@ -52,10 +52,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Entity\RegionEx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Enums.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\ErrorInfoEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Geomerty\Curve2dEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Geomerty\Curve3dEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Geomerty\GeometryEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Geomerty\PointEx.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Geometry\Curve2dEx.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Geometry\Curve3dEx.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Geometry\GeometryEx.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Geometry\PointEx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Hatch\HatchDialog.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Jig\JigEx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Jig\JigExTransient.cs" />
@@ -105,6 +105,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)SelectionFilter\OpLogi.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)ExtensionMethod\Geomerty\ToDo\" />
+    <Folder Include="$(MSBuildThisFileDirectory)ExtensionMethod\Geometry\ToDo\" />
   </ItemGroup>
 </Project>
