@@ -721,7 +721,7 @@ public static class Env
     public static void Printl(object message)
     {
         // ReSharper disable once ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
-        Document?.Editor.WriteMessage($"{Environment.NewLine}{message}\n");
+        Document?.Editor.WriteMessage($"\n{message}\n");
     }
 
     /// <summary>

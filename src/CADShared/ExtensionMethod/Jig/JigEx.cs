@@ -226,7 +226,7 @@ public class JigEx : DrawJig, IDisposable
         Dictionary<string, string>? keywords = null)
     {
         _options = JigPointOptions();
-        _options.Message = Environment.NewLine + msg;
+        _options.Message = "\n" + msg;
 
         if (keywords != null)
             foreach (var item in keywords)
