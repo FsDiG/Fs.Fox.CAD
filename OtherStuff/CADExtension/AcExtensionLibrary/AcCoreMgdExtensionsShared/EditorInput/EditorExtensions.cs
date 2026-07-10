@@ -12,9 +12,9 @@ namespace Autodesk.AutoCAD.EditorInput
     public static class EditorExtensions
     {
         /// <summary>
-        /// Private field holding the Environment's newline ("/r/n")
+        /// Private field holding the CAD command-line newline.
         /// </summary>
-        private static string newLine = Environment.NewLine;
+        private const string newLine = "\n";
 
         /// <summary>
         /// Private field holding IFormatProvider
