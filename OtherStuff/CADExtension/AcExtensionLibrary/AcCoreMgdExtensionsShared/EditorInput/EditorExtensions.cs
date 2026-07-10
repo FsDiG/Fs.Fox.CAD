@@ -14,7 +14,7 @@ namespace Autodesk.AutoCAD.EditorInput
         /// <summary>
         /// Private field holding the CAD command-line newline.
         /// </summary>
-        private static string newLine = "\n";
+        private const string newLine = "\n";
 
         /// <summary>
         /// Private field holding IFormatProvider

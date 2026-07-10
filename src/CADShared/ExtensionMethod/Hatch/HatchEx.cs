@@ -161,7 +161,7 @@ public static class HatchEx
                 }
                 catch (Exception ex)
                 {
-                    Env.Editor.WriteMessage("\n发生错误, 传入的边界不符合要求, 请核实传入的边界是否为封闭的");
+                    Env.Editor.WriteMessage("\n发生错误, 传入的边界不符合要求, 请核实传入的边界是否为封闭的.");
                     throw new Exception(ex.Message);
                 }
             });
