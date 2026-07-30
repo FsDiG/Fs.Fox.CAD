@@ -1,4 +1,4 @@
-﻿# IFoxCAD 项目：NuGet 发布工作流程使用指南
+﻿# Fs.Fox.CAD NuGet 发布工作流
 
 ## 1. 工作流程核心功能
 
@@ -102,8 +102,8 @@ flowchart TD
 |--------|---------|----------|---------|
 | `IFox.CAD.ACAD2019` | AutoCAD2019 | .NET Framework4.8 | MSBuild |
 | `IFox.CAD.ACAD2025` | AutoCAD2025 | .NET8.0 | dotnet CLI |
-| `IFox.CAD.ZCAD2022` | ZWCAD2022 | .NET Framework4.8 | MSBuild |
-| `IFox.CAD.ZCAD2025` | ZWCAD2025 | .NET Framework4.8 | MSBuild |
+| `IFox.CAD.ZCAD2022` | ZWCAD 2021-2024（以 2022 SDK 构建） | .NET Framework4.8 | MSBuild |
+| `IFox.CAD.ZCAD2025` | ZWCAD 2025-2026（以 2025 SDK 构建） | .NET Framework4.8 | MSBuild |
 
 产物位置：`artifacts/*.nupkg`。
 

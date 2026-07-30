@@ -122,8 +122,8 @@ jobs:
             ## NuGet 包 / NuGet Packages
             - IFox.CAD.ACAD2019 (AutoCAD 2019, .NET Framework 4.8)
             - IFox.CAD.ACAD2025 (AutoCAD 2025, .NET 8.0)
-            - IFox.CAD.ZCAD2022 (ZWCAD 2022, .NET Framework 4.8)
-            - IFox.CAD.ZCAD2025 (ZWCAD 2025, .NET Framework 4.8)
+            - IFox.CAD.ZCAD2022 (ZWCAD 2021-2024, .NET Framework 4.8)
+            - IFox.CAD.ZCAD2025 (ZWCAD 2025-2026, .NET Framework 4.8)
           files: ./artifacts/*.nupkg
           draft: false
           prerelease: false

@@ -1,150 +1,130 @@
 # Fs.Fox.CAD
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/FsDiG/Fs.Fox.CAD/blob/main/LICENSE)
 [![AutoCAD 2019](https://img.shields.io/nuget/v/IFox.CAD.ACAD2019.svg?label=AutoCAD%202019)](https://www.nuget.org/packages/IFox.CAD.ACAD2019/)
 [![AutoCAD 2025](https://img.shields.io/nuget/v/IFox.CAD.ACAD2025.svg?label=AutoCAD%202025)](https://www.nuget.org/packages/IFox.CAD.ACAD2025/)
-[![中望CAD 2022](https://img.shields.io/nuget/v/IFox.CAD.ZCAD2022.svg?label=中望CAD%202022)](https://www.nuget.org/packages/IFox.CAD.ZCAD2022/)
-[![中望CAD 2025](https://img.shields.io/nuget/v/IFox.CAD.ZCAD2025.svg?label=中望CAD%202025)](https://www.nuget.org/packages/IFox.CAD.ZCAD2025/)
+[![ZWCAD 2021-2024](https://img.shields.io/nuget/v/IFox.CAD.ZCAD2022.svg?label=ZWCAD%202021--2024)](https://www.nuget.org/packages/IFox.CAD.ZCAD2022/)
+[![ZWCAD 2025-2026](https://img.shields.io/nuget/v/IFox.CAD.ZCAD2025.svg?label=ZWCAD%202025--2026)](https://www.nuget.org/packages/IFox.CAD.ZCAD2025/)
 
-## 项目简介
+Fs.Fox.CAD 是面向 Windows x64 的 .NET CAD 二次开发基础类库。它在 AutoCAD 和 ZWCAD 托管 API 之上提供轻量的事务封装、符号表访问、结果数据模型、选择过滤器及常用扩展方法，用于减少插件项目中的重复代码。
 
-Fs.Fox.CAD 是基于 .NET 的 CAD 二次开发基础类库，源于 [IFoxCAD](https://gitee.com/inspirefunction/ifoxcad) 项目。
+项目源于 [IFoxCAD](https://gitee.com/inspirefunction/ifoxcad)，由 Fs 团队独立维护。NuGet 包 ID 为兼容既有使用方式继续保留 `IFox.CAD.*`，公共命名空间为 `Fs.Fox.Cad`。
 
-本项目在 IFoxCAD 的基础上，将命名空间改为 Fs.Fox，作为 Fs 团队 AutoCAD 开发的基础库之一。我们致力于提供稳定、易用的 CAD 二次开发解决方案，支持 AutoCAD 和中望CAD 多个版本。
+## 设计定位
 
-> AutoCAD 2027 封装当前按 `net8.0-windows7.0` 构建，并用 ObjectARX2025 的 managed reference 避免 C# 编译期 `CS1705`；平台语义、包名和输出目录仍保持 2027。详见 [docs/AC_2027-net8-compatibility-decision.md](docs/AC_2027-net8-compatibility-decision.md)。
+- 以 `DBTrans` 为事务入口，集中访问当前文档、数据库、编辑器、符号表和命名字典。
+- 通过扩展方法补充实体、几何、选择集、块、图层、扩展数据和 XRecord 等常用操作。
+- 共享一套 `CADShared` 源码，并由不同平台项目绑定 Autodesk 或 ZwSoft 的托管程序集。
+- 保留宿主原生对象模型和类型语义，不试图用一套自定义类型替代厂商 SDK。
 
-### 主要特性
+Fs.Fox.CAD 不是 CAD SDK 的替代品，也不是可同时加载到所有宿主的单一二进制文件。插件项目仍需选择与目标宿主/API 代际匹配的包，并引用对应厂商命名空间。
 
-- 🚀 **多版本支持**: 支持 AutoCAD 2019/2025/2027 和中望CAD 2022/2025
-- 📦 **NuGet 发布**: 通过 NuGet 轻松集成到您的项目
-- 🔧 **丰富的 API**: 提供完整的 CAD 二次开发 API 封装
-- 📝 **详细文档**: 包含完整的使用文档和示例代码
-- ⚡ **持续更新**: 定期更新和维护，快速响应问题
+## 支持矩阵
 
-### 官方资源
+当前解决方案和发布工作流构建以下四个 NuGet 包：
 
-- **官方地址**: [IFoxCAD: 基于.NET的Cad二次开发类库](https://gitee.com/inspirefunction/ifoxcad)
-- **详细说明**: 参考本仓库的 [IFoxCAD 说明.md](./IFoxCAD%20说明.md)
-- **在线导图**: [.NET ARX_Fox 思维导图](https://boardmix.cn/app/share/CAE.CMvmgA4gASoQHBGpsUGmGR9LipooomyTSDAGQAE/U41nx2)
+| NuGet 包 | 目标宿主/API 代际 | 目标框架 | 输出程序集 |
+| --- | --- | --- | --- |
+| [`IFox.CAD.ACAD2019`](https://www.nuget.org/packages/IFox.CAD.ACAD2019/) | AutoCAD 2019 | .NET Framework 4.8 | `Fs.Fox.AutoCad.dll` |
+| [`IFox.CAD.ACAD2025`](https://www.nuget.org/packages/IFox.CAD.ACAD2025/) | AutoCAD 2025 | `net8.0-windows7.0` | `Fs.Fox.AutoCad.dll` |
+| [`IFox.CAD.ZCAD2022`](https://www.nuget.org/packages/IFox.CAD.ZCAD2022/) | ZWCAD 2021-2024 | .NET Framework 4.8 | `Fs.Fox.ZwCad.dll` |
+| [`IFox.CAD.ZCAD2025`](https://www.nuget.org/packages/IFox.CAD.ZCAD2025/) | ZWCAD 2025-2026 | .NET Framework 4.8 | `Fs.Fox.ZwCad.dll` |
 
-## NuGet 包
+以上目标均按 x64 构建。表中的 ZWCAD 范围表示厂商文档给出的二进制兼容代际；自动构建成功不等同于每个 CAD 宿主版本都已完成运行时验收。ZWCAD 2026 复用 2025 产物，依据、限制和待完成的宿主检查见 [ZWCAD 版本兼容性与迁移说明][zwcad-compatibility]。
 
-本项目提供以下 NuGet 包，支持通过 GitHub Actions 自动发布。当推送版本标签时，将自动构建并发布到 NuGet.org。
+仓库还包含 `Fs.Fox.AutoCad2021` 和 `Fs.Fox.AutoCad2027` 项目，但它们未纳入当前 `IFoxCAD.sln` 和 NuGet 发布工作流，不应据此推断为公开发布目标。AutoCAD 2027 当前的内部兼容策略见 [AC_2027 .NET 8 兼容策略记录][acad-2027-decision]。
 
-| 包名称 | 版本 | 支持平台 | .NET 框架 | 下载链接 |
-|--------|------|----------|-----------|----------|
-| **IFox.CAD.ACAD2019** | [![NuGet](https://img.shields.io/nuget/v/IFox.CAD.ACAD2019.svg)](https://www.nuget.org/packages/IFox.CAD.ACAD2019/) | AutoCAD 2019 | .NET Framework 4.8 | [下载](https://www.nuget.org/packages/IFox.CAD.ACAD2019/) |
-| **IFox.CAD.ACAD2025** | [![NuGet](https://img.shields.io/nuget/v/IFox.CAD.ACAD2025.svg)](https://www.nuget.org/packages/IFox.CAD.ACAD2025/) | AutoCAD 2025 | .NET 8.0 | [下载](https://www.nuget.org/packages/IFox.CAD.ACAD2025/) |
-| **IFox.CAD.ACAD2027** | 当前内部构建 | AutoCAD 2027 | .NET 8.0 | 当前随产品链路构建 |
-| **IFox.CAD.ZCAD2022** | [![NuGet](https://img.shields.io/nuget/v/IFox.CAD.ZCAD2022.svg)](https://www.nuget.org/packages/IFox.CAD.ZCAD2022/) | 中望CAD 2022 | .NET Framework 4.8 | [下载](https://www.nuget.org/packages/IFox.CAD.ZCAD2022/) |
-| **IFox.CAD.ZCAD2025** | [![NuGet](https://img.shields.io/nuget/v/IFox.CAD.ZCAD2025.svg)](https://www.nuget.org/packages/IFox.CAD.ZCAD2025/) | 中望CAD 2025 | .NET Framework 4.8 | [下载](https://www.nuget.org/packages/IFox.CAD.ZCAD2025/) |
+## 选择和安装
 
-### 安装方式
+一个插件项目只应引用一个目标平台包。需要支持多个宿主或 API 代际时，应建立独立的宿主项目并共享业务源码，避免在同一项目中同时引用多个 `IFox.CAD.*` 包。
 
-#### 使用 NuGet 包管理器
+例如，面向 AutoCAD 2025：
 
-```bash
-# AutoCAD 2019
-Install-Package IFox.CAD.ACAD2019
-
-# AutoCAD 2025
-Install-Package IFox.CAD.ACAD2025
-
-# 中望CAD 2022
-Install-Package IFox.CAD.ZCAD2022
-
-# 中望CAD 2025
-Install-Package IFox.CAD.ZCAD2025
+```powershell
+dotnet add .\YourPlugin.csproj package IFox.CAD.ACAD2025
 ```
 
-#### 使用 .NET CLI
+面向 ZWCAD 2025 或 2026：
 
-```bash
-# AutoCAD 2019
-dotnet add package IFox.CAD.ACAD2019
-
-# AutoCAD 2025
-dotnet add package IFox.CAD.ACAD2025
-
-# 中望CAD 2022
-dotnet add package IFox.CAD.ZCAD2022
-
-# 中望CAD 2025
-dotnet add package IFox.CAD.ZCAD2025
+```powershell
+dotnet add .\YourPlugin.csproj package IFox.CAD.ZCAD2025
 ```
+
+如需安装预发布版本，请在命令后增加 `--prerelease`，或在项目文件中明确指定版本。其他包名见上方支持矩阵。
 
 ## 快速开始
 
-### 基本使用示例
+以下 AutoCAD 示例使用 `DBTrans` 和 `AddEntity` 扩展方法在当前空间创建一条直线：
 
 ```csharp
-using Fs.Fox.CAD;
-using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.Geometry;
+using Autodesk.AutoCAD.Runtime;
+using Fs.Fox.Cad;
 
-// 创建直线
-[CommandMethod("CreateLine")]
-public void CreateLine()
+public sealed class FoxCommands
 {
-    var doc = Application.DocumentManager.MdiActiveDocument;
-    var db = doc.Database;
-    var ed = doc.Editor;
-    
-    using (var tr = db.TransactionManager.StartTransaction())
+    [CommandMethod("FOX_LINE")]
+    public static void CreateLine()
     {
-        var bt = (BlockTable)tr.GetObject(db.BlockTableId, OpenMode.ForRead);
-        var btr = (BlockTableRecord)tr.GetObject(bt[BlockTableRecord.ModelSpace], OpenMode.ForWrite);
-        
-        var line = new Line(new Point3d(0, 0, 0), new Point3d(100, 100, 0));
-        btr.AppendEntity(line);
-        tr.AddNewlyCreatedDBObject(line, true);
-        
-        tr.Commit();
+        using DBTrans tr = new();
+        var line = new Line(
+            new Point3d(0, 0, 0),
+            new Point3d(100, 100, 0));
+
+        tr.CurrentSpace.AddEntity(line);
     }
 }
 ```
 
-### 发布新版本
+`DBTrans` 默认在释放时提交事务。需要放弃修改时，应显式调用 `Abort()`，或在创建事务时传入 `commit: false`。
 
-```bash
-# 创建版本标签
-git tag v1.0.0
+ZWCAD 项目使用相同的 `Fs.Fox.Cad` API；将示例中的 Autodesk 命名空间替换为对应的 `ZwSoft.ZwCAD` 命名空间即可。编译插件后，在目标 CAD 中使用 `NETLOAD` 加载插件程序集，而不是直接加载 NuGet 包。
 
-# 推送标签到远程仓库
-git push origin v1.0.0
+## 项目结构
+
+```text
+src/
+  CADShared/                 跨平台共享实现
+  IFoxCAD.AutoCad/           AutoCAD 平台 using、别名和构建辅助文件
+  IFoxCAD.ZwCad/             ZWCAD 平台 using 和别名
+  Fs.Fox.AutoCad20xx/        AutoCAD 各 API 代际项目
+  Fs.Fox.ZwCad20xx/          ZWCAD 各 API 代际项目
+tests/
+  TestShared/                共享的 CAD 命令与宿主测试代码
+  TestAcad20xx/              AutoCAD 测试入口
+  TestZcad20xx/              ZWCAD 测试入口
 ```
 
-详细说明请参考：[发布工作流程文档](.github/workflows/release.md)
+平台项目导入相同的 `CADShared.projitems`，因此公共功能尽量保持一致；底层对象仍分别来自 Autodesk 和 ZwSoft 程序集。更详细的设计说明见 [Fs.Fox.CAD 架构说明][architecture]。
 
-## Fs.Fox 分支说明
+## 构建与验证
 
-### 项目背景
+本地开发和 CI 的目标、工具链、条件编译符号及输出目录见 [构建说明][building]。当前四个发布目标的产物统一输出到 `Build\<平台>_<版本>_<配置>\`。
 
-本分支在 IFoxCAD 的基础上进行了以下改进：
+测试项目主要用于编译覆盖和 CAD 宿主内的命令验证。构建通过只能证明源码与编译期引用兼容；发布前仍需在目标 CAD 中验证程序集解析、`NETLOAD`、命令注册、数据库操作和实际使用的界面入口。
 
-- **命名空间调整**: 将命名空间改为 `Fs.Fox`，便于 Fs 团队在生产环境中使用
-- **版本管理**: 避免 DLL 版本冲突，提供更灵活的维护和开发
-- **稳定性优先**: 保持 .NET Framework 4.8 支持，确保生产环境稳定性
-- **快速响应**: 更快速的问题响应和功能更新
+## 文档
 
-### 为什么选择 Fs.Fox？
+- [构建与项目结构][building]
+- [架构与核心抽象][architecture]
+- [ZWCAD 版本兼容性与迁移说明][zwcad-compatibility]
+- [AutoCAD 2027 .NET 8 兼容策略][acad-2027-decision]
+- [CAD 界面文字规范][cad-ui-text-style]
+- [上游 IFoxCAD 与本项目的关系][upstream]
+- [NuGet 发布工作流][release-workflow]
 
-1. **生产就绪**: 专为生产环境设计，稳定可靠
-2. **版本兼容**: 避免 DLL 版本冲突，支持多版本共存
-3. **灵活维护**: 独立维护，快速响应需求变化
-4. **持续更新**: 定期更新，紧跟 CAD 平台最新版本
-
-## 开发路线
-
-### 当前版本
-
-- ✅ 支持 AutoCAD 2019/2025
-- ✅ 支持中望CAD 2022/2025
-- ✅ GitHub Actions 自动化发布
-- ✅ NuGet 包发布
+问题和改进建议请提交到 [GitHub Issues](https://github.com/FsDiG/Fs.Fox.CAD/issues)。
 
 ## 许可证
 
-本项目采用 [MIT License](LICENSE) 开源协议。
+本项目采用 [MIT License][license]。原项目作者及贡献者信息见 [上游说明][upstream]。
+
+[building]: https://github.com/FsDiG/Fs.Fox.CAD/blob/main/%E7%BC%96%E8%AF%91%E8%AF%B4%E6%98%8E.md
+[architecture]: https://github.com/FsDiG/Fs.Fox.CAD/blob/main/docs/%E5%85%B3%E4%BA%8EIFoxCAD%E7%9A%84%E6%9E%B6%E6%9E%84%E8%AF%B4%E6%98%8E.md
+[zwcad-compatibility]: https://github.com/FsDiG/Fs.Fox.CAD/blob/main/docs/ZWCAD-version-compatibility.md
+[acad-2027-decision]: https://github.com/FsDiG/Fs.Fox.CAD/blob/main/docs/AC_2027-net8-compatibility-decision.md
+[cad-ui-text-style]: https://github.com/FsDiG/Fs.Fox.CAD/blob/main/docs/guides/cad-ui-text-style-guide.md
+[upstream]: https://github.com/FsDiG/Fs.Fox.CAD/blob/main/IFoxCAD%20%E8%AF%B4%E6%98%8E.md
+[release-workflow]: https://github.com/FsDiG/Fs.Fox.CAD/blob/main/.github/workflows/release.md
+[license]: https://github.com/FsDiG/Fs.Fox.CAD/blob/main/LICENSE

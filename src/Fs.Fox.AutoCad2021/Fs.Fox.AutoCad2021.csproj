@@ -11,10 +11,10 @@
     <!--nuget package-->
     <PropertyGroup>
         <PackageId>IFox.CAD.ACAD2021</PackageId>
-        <Title>IFox.CAD for AutoCAD 2021</Title>
+        <Title>Fs.Fox.CAD for AutoCAD 2021</Title>
         <Product>IFox.CAD.ACAD2021</Product>
         <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
-        <Description>基于.NET的AutoCAD二次开发基础类库，支持AutoCAD 2021（.NET Framework 4.8）。提供完整的CAD二次开发API封装，简化AutoCAD插件开发。源于IFoxCAD项目，由Fs团队维护。</Description>
+        <Description>面向 AutoCAD 2021 x64 和 .NET Framework 4.8 的 CAD 二次开发基础类库，提供 DBTrans、符号表封装及常用扩展方法。源于 IFoxCAD，由 Fs 团队维护。</Description>
         <Copyright>FS Team</Copyright>
         <PackageReleaseNotes>增加CI流程支持，完善NuGet包信息</PackageReleaseNotes>
     </PropertyGroup>

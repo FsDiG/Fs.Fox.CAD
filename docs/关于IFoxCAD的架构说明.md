@@ -1,202 +1,152 @@
-# Fs.Fox的架构说明
+# Fs.Fox.CAD 架构说明
 
-AutoCAD 的 .net api 的架构是如下这样的：
+## 1. 目标与边界
 
-1. Application 对象
+Fs.Fox.CAD 在 AutoCAD/ZWCAD 托管 API 之上提供一个尽量小的核心和一组扩展方法。它主要解决事务样板代码、符号表访问、实体操作、结果数据和选择过滤等高频问题，同时保留 CAD 厂商原生对象模型。
 
-```mermaid
-graph LR;
-a(Application)-->DocumentManager
-a-->DocumentWindowCollection
-a-->InfoCenter
-a-->MainWindow
-a-->MenuBar
-a-->MenuGroups
-a-->Preferences
-a-->Publisher
-a-->StatusBar
-a-->UserConfigurationManager
-```
+设计上的两个边界是：
 
-2. Document 对象
+1. 不用自定义对象体系替代 `Database`、`Transaction`、`DBObject`、`Entity` 等厂商类型。
+2. 不把 AutoCAD 与 ZWCAD 伪装成同一个运行时二进制；两类宿主共享源码，但分别编译和发布。
+
+因此，Fs.Fox.CAD 更接近“托管 CAD API 的基础工具层”，而不是跨厂商 CAD 适配器或完整业务框架。
+
+## 2. 分层关系
 
 ```mermaid
-graph LR;
-Application-->DocumentManager-->b[Document]
-b-->Database
-b-->Editor
-b-->GraphicsManager
-b-->StatusBar
-b-->TransactionManager
-b-->UserData
-b-->Window
+flowchart TB
+    Plugin[业务插件] --> Fox[Fs.Fox.Cad 公共 API]
+    Fox --> Core[CADShared 共享实现]
+    Core --> AutoProject[Fs.Fox.AutoCad20xx]
+    Core --> ZwProject[Fs.Fox.ZwCad20xx]
+    AutoProject --> AutoSdk[Autodesk AutoCAD managed API]
+    ZwProject --> ZwSdk[ZwSoft ZWCAD managed API]
 ```
 
-3. Database 对象
+`CADShared` 是源码共享项目，不会单独生成一个与宿主无关的运行时程序集。AutoCAD 与 ZWCAD 项目分别引入平台 `GlobalUsings.cs`，将共享源码中的 CAD 类型解析到对应厂商命名空间，然后生成：
+
+- AutoCAD：`Fs.Fox.AutoCad.dll`
+- ZWCAD：`Fs.Fox.ZwCad.dll`
+
+两类程序集都公开 `Fs.Fox.Cad` 和 `Fs.Fox.Basal` 命名空间，但其中 CAD 对象的真实类型分别来自 Autodesk 和 ZwSoft 程序集，不能跨宿主交换。
+
+## 3. CAD 对象模型
+
+Fs.Fox.CAD 沿用厂商托管 API 的基本关系：应用程序管理文档，文档持有数据库和编辑器，数据库对象通过事务读取或修改。
 
 ```mermaid
-flowchart TB;
-subgraph NamedDictionaris
-  direction TB
-  Layout-Dictionary-->Object
-  Others-->OtherObject
-end
-subgraph Tables
-  direction TB
-  BlockTable-->BlockTableRecord-->Entity
-  OthersTable-->OthersTableRecord
-end
-Application-->DocumentManager-->Document-->d[Database]-->Tables
-d-->NamedDictionaris
+flowchart LR
+    Application --> DocumentManager
+    DocumentManager --> Document
+    Document --> Database
+    Document --> Editor
+    Database --> TransactionManager
+    TransactionManager --> Transaction
+    Transaction --> DBObject
+    DBObject --> Entity
 ```
 
-4. Transation 对象
+数据库中的符号表、命名字典和实体都遵循这一事务模型。Fs.Fox.CAD 的封装重点是减少重复的打开、升级写模式、登记新对象和提交代码，而不是绕过事务规则。
 
-```mermaid
-flowchart LR;
-subgraph Transation
-    direction LR
-    f(StartTransation)--modify objects-->e{isOK}
-    e--Yes-->h(commit)
-    e--No-->abort
-end
-h--write-->d[Database]
-g[Document or Database]--start-->f
+## 4. 核心抽象
+
+### 4.1 DBTrans
+
+`DBTrans` 是类库的主要事务入口，内部持有厂商 `Transaction`，并根据使用场景关联：
+
+- `Document`、`Database` 和 `Editor`
+- 当前空间、模型空间和常用符号表
+- 命名对象字典及常见子字典
+- 当前线程/调用链中的 `DBTrans` 栈
+
+它支持三类入口：
+
+```csharp
+new DBTrans(Document? doc = null, bool commit = true, bool docLock = false)
+new DBTrans(Database database, bool commit = true)
+new DBTrans(string fileName, bool commit = true, ...)
 ```
 
-Fs.Fox是基于NFOX类库的重制版，主要是提供一个最小化的内核，即DBTrans、SymbolTable、ResultData、SelectFilter等基础类，其他的功能都通过扩展方法的方式来实现。
+典型实体写入代码如下：
 
-其重制的原因在于原NFOX类库的封装过于厚重，初学者理解起来困难，重制版希望做到最小化的内核，方便理解，然后丰富的扩展函数来实现大量的功能，便于学着现有的教程中那套基于Database扩展函数封装思路的初学者快速的入门。
+```csharp
+using DBTrans tr = new();
+var line = new Line(
+    new Point3d(0, 0, 0),
+    new Point3d(100, 0, 0));
 
-## 一、组织结构图
-
-- Fs.Fox
+ObjectId lineId = tr.CurrentSpace.AddEntity(line);
 ```
-├───bin                      -- 用于放置生成的nuget包和dll
-├───docs                     -- 架构及api定义说明文档
-├───src                      -- 源码目录
-│   ├───CADShared            -- 共享项目，所有的代码都在这里
-│   │   ├───Algorithms       -- 基础算法和数据结构
-│   │   ├───Assoc            -- 关联函数
-│   │   ├───Basal            -- 一些基础类的函数
-│   │   ├───ExtensionMethod  -- 扩展函数
-│   │   ├───Initialize       -- 初始化
-│   │   ├───PE               -- PE
-│   │   ├───ResultData       -- 扩展数据
-│   │   ├───Runtime          -- 核心类
-│   │   └───SelectionFilter  -- 选择集过滤器类
-│   ├───Fs.Fox.AutoCad      -- AutoCAD的类库，内部除了globalusing外无其他代码
-│   └───Fs.Fox.ZwCad        -- AutoCAD的类库，内部除了globalusing外无其他代码
-└───tests                    -- 测试类
-    ├───TestAcad2025         -- autocad测试
-    ├───TestShared           -- 共享项目，所有的测试代码都在这里
-    └───TestZcad2025         -- zwcad测试
-    
-  ```
 
-## 二、关于DBTrans类的说明
+默认 `commit: true`，释放 `DBTrans` 时提交事务。需要显式成功后再提交的流程可使用 `commit: false`，完成全部操作后调用 `Commit()`；需要放弃时调用 `Abort()`。`Commit()` 和 `Abort()` 都会释放当前事务，不应在调用后继续使用该 `DBTrans` 实例。
 
-### 2.1 为什么要构建DBTrans类？
+`DBTrans.Top` 用于获取当前栈顶事务，使扩展方法能够复用已有事务。调用方仍应清晰控制最外层事务的生命周期，避免把隐式栈状态扩散到无关流程。
 
-主要是为封装cad的Transaction类的，为何如此封装有如下原因：
+### 4.2 SymbolTable
 
-- 虽然可以继承Transaction类，但是由于其构造函数为受保护的，同时其参数不能很方便的传递，所以即便cad在使用的时候也是调用TransactionManager的StartTransaction方法，所以直接继承Transaction类进行扩展并不方便。
-- 由于cad实体图元和非实体图元几乎都存储在数据库里，也就是Database里，所以目前市面上的教程基本都是基于Database的扩展函数进行封装。但是cad本身其实推荐的都是利用事务（Transaction）来对数据库进行增删改的操作，但是默认的Transaction类仅仅提供了几个方法，每次操作数据库或者修改图元都需要手动进行大量的重复性操作，这部分操作几乎都被封装为函数活跃于每个重复的轮子里。那么狐哥转变思路，继续不考虑数据库的操作而是延续cad的思路，着重封装关于Transaction的操作。
-- 想到再说。。。
+厂商 API 中的图层表、块表、文字样式表等都继承自符号表体系，但具体记录类型不同。Fs.Fox.CAD 的泛型 `SymbolTable<TTable, TRecord>` 统一以下常见动作：
 
-### 2.2 关于DBTrans类的具体构成元素的意义
+- 按名称或 `ObjectId` 查找记录
+- 获取可读/可写记录
+- 添加、修改和复制记录
+- 判断记录是否存在
 
-DBTrans类里基本的封装就是Transaction，然后是Document、Database、Editor、符号表、命名字典等，而这些其实都是cad二次开发关于图元操作经常打交道的概念。
+`DBTrans` 暴露常用符号表属性，调用方无需反复从 `Database` 获取表 ID 并手动打开。块表的记录同时是实体容器，因此添加图元通常通过 `CurrentSpace`、`ModelSpace` 或指定 `BlockTableRecord` 完成。
 
-DBTrans的每个实例都具有这些属性，而这些属性就对应于cad的相关类库，通过这些属性就可以对数据进行相应的操作。特别是符号表中最常用的就是块表，通过对块表的操作来实现添加图元等。
+### 4.3 扩展方法
 
-### 2.3 DBTrans类应该具有的成员
+`src/CADShared/ExtensionMethod` 按对象职责组织扩展，主要覆盖：
 
-为了尽量少的封装方法，减少类的复杂度，目前计划的方法主要为：
+- `Database`、`Transaction`、`DBObject` 和 `ObjectId`
+- 块、图层、文字、曲线、圆、多段线、区域和填充
+- `Editor`、提示选项、选择集和窗口
+- 几何计算、重绘、外部参照和 Jig
 
-属性:
+扩展方法直接作用于厂商类型，便于与原生 API 混合使用。平台存在真实差异时，应使用平台/版本条件编译或独立实现，不应为了表面一致隐藏不兼容行为。
 
-- Top  ---返回当前DBTrans对象
-- Database  ---数据库
-- Document  ---文档
-- Editor  ---命令行
-- Transaction  ---事务
+### 4.4 ResultData 与 SelectionFilter
 
-构造函数:
+`ResultData` 目录提供 `TypedValueList`、`XDataList`、`XRecordDataList` 和 Lisp 列表等辅助类型，用于构造和解析 CAD 的类型值序列。
 
-- DBTrans(Document? doc = null, bool commit = true, bool docLock = false)
-- DBTrans(Database database, bool commit = true)
-- DBTrans(string fileName, bool commit = true, FileOpenMode fileOpenMode = FileOpenMode.OpenForReadAndWriteNoShare,
-  string? password = null, bool activeOpen = false)
+`SelectionFilter` 目录提供比较和逻辑操作对象，用更结构化的方式组合 DXF 选择条件，最终仍交由宿主 `Editor`/选择 API 执行。
 
-符号表:
+### 4.5 初始化与运行时辅助
 
-- BlockTable 块表
-- LayerTable 层表
-- TextStyleTable 文字样式表
-- RegAppTable 注册应用程序表
-- DimStyleTable 标注样式表
-- LinetypeTable 线型表
-- UcsTable 用户坐标系表
-- ViewTable 视图表
-- ViewportTable 视口表
+`Initialize`、`Runtime` 和 `PE` 包含程序集注册、延迟动作、系统变量、环境访问及部分协议扩展辅助。此类功能与宿主生命周期关系紧密，修改后除编译检查外还应执行 CAD 启动、加载、卸载和多文档场景验证。
 
-字典：
+## 5. 源码组织
 
-- NamedObjectsDict 命名对象字典
-- GroupDict  组字典
-- MLeaderStyleDict 多重引线样式字典
-- MLStyleDict 多线样式字典
-- MaterialDict 材质字典
-- TableStyleDict 表格样式字典
-- VisualStyleDict  视觉样式字典
-- ColorDict 颜色字典
-- PlotSettingsDict 打印设置字典
-- PlotStyleNameDict  打印样式表名字典
-- LayoutDict 布局字典
-- DataLinkDict  数据链接字典
-- DetailViewStyleDict 详细视图样式字典
-- SectionViewStyleDict 剖面视图样式字典
+```text
+src/
+  CADShared/
+    Algorithms/              基础算法和空间索引
+    Assoc/                   关联与子实体辅助
+    Basal/                   非 CAD 专属基础工具
+    ExtensionMethod/         CAD 类型扩展方法
+    Initialize/              初始化与自动注册
+    PE/                      协议扩展辅助
+    ResultData/              TypedValue、XData、XRecord、Lisp 数据
+    Runtime/                 DBTrans、环境和运行时服务
+    SelectionFilter/         选择过滤表达式
+  IFoxCAD.AutoCad/           AutoCAD 平台 using、别名及构建文件
+  IFoxCAD.ZwCad/             ZWCAD 平台 using 和别名
+  Fs.Fox.AutoCad20xx/        AutoCAD 版本项目
+  Fs.Fox.ZwCad20xx/          ZWCAD 版本项目
+tests/
+  TestShared/                共享 CAD 测试命令
+  TestAcad20xx/              AutoCAD 宿主测试入口
+  TestZcad20xx/              ZWCAD 宿主测试入口
+```
 
-方法:
+版本项目是 SDK/API 代际边界，不要求每个产品年度都有一个项目。只有厂商 API、目标框架或二进制兼容性发生变化时才应新增项目；可兼容年度优先复用已有产物，并用兼容性文档记录依据和宿主验收状态。
 
-- GetObject  ---根据对象id获取图元对象
-- Task   前台后台任务分别处理
+## 6. 测试边界
 
-接口:
+`TestShared` 同样以共享源码方式导入各宿主测试项目。这能验证同一功能是否可在不同平台编译，并提供 `NETLOAD` 后可执行的测试命令，但它不是脱离 CAD 进程运行的常规单元测试套件。
 
-- Abort ---放弃事务
-- Commit ---提交事务
-- Dispose --- 执行与释放非托管资源
+验证应分为两层：
 
-## 三、 关于SymbolTable类的说明
+1. 构建层：恢复依赖，编译类库与对应测试程序集。
+2. 宿主层：在目标 CAD 中验证加载、命令注册、事务/数据库操作、界面入口及部署机制。
 
-### 3.1 为什么要构建SymbolTable类
-
-主要是为了统一处理9个符号表，具体原因如下：
-
-- 其实cad的api对于符号表都是继承自SymbolTable类，符号表记录都是继承自SymbolTableRecord类，所以其实这个自定义的类叫SymbolTable是和cad的内部api有命名上的冲突的，希望给我给个贴近自定义的理念的类名。
-- cad的默认api关于符号表和符号表记录是隔离关系的，就是说符号表和符号表记录在api上是没有关系的，只是数据库里每个符号都映射着相应的符号表记录，所以为了对应符号表和符号表记录，写了SymbolTable类。
-- 通过这个类，就可以统一的处理符号表和符号表记录了，比如层表的处理就从原来首先获取层表对象->新建层表记录对象->打开层表的写模式->添加层表记录，变成新建层表的关联类实例->添加层表记录。
-- 有了这个类，DBTrans类就可以直接通过属性获取符号表的关联关系，然后进行符号表的处理。
-
-### 3.2 SymbolTable类应该具有的成员
-
-属性:
-
-- CurrentSymbolTable  ---当前的符号表对象
-
-方法:
-
-- this  ---索引器符号表记录函数
-- Add  ---添加符号表记录函数
-- Remove --- 删除符号表记录函数(层表请使用扩展方法Delete)
-- Change --- 修改符号表记录函数
-- GetRecord --- 获取符号表记录
-- GetRecordFrom --- 从源数据库拷贝符号表记录
-- Has --- 判断符号表是否有符号表记录的函数
-- 。。。
-
-特殊说明：当符号表为块表时，上述函数实际操作的是块定义、属性定义等。所以为了添加图元，需要特殊写法，原因在于cad的实体都是存在符号表记录里的，通常为模型这个块表记录。
-
-# 慢慢完善，想到哪写到哪。。。
+具体构建入口见根目录 [构建说明](../编译说明.md)，版本兼容结论应查阅对应平台文档。

@@ -25,7 +25,7 @@
         <Company>FS Team</Company>
         <Authors>xsfhlzh;vicwjb;liuqihong;DYH;FS Team</Authors>
         <Copyright>FS Team</Copyright>
-        <Description>基于.NET的CAD二次开发基础类库，支持AutoCAD和中望CAD多个版本。提供完整的API封装，简化CAD插件开发。源于IFoxCAD项目。</Description>
+        <Description>面向 Windows x64 的 .NET CAD 二次开发基础类库，以 DBTrans、符号表封装和扩展方法简化 AutoCAD/ZWCAD 托管插件开发。源于 IFoxCAD，由 Fs 团队维护。</Description>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <PackageProjectUrl>https://github.com/FsDiG/Fs.Fox.CAD</PackageProjectUrl>
         <RepositoryUrl>https://github.com/FsDiG/Fs.Fox.CAD.git</RepositoryUrl>
