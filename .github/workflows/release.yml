@@ -38,7 +38,7 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v2
+        uses: microsoft/setup-msbuild@v3
 
       - name: Build and Pack all targets
         run: |
@@ -50,12 +50,18 @@ jobs:
             msbuild $testProject '/t:Restore;Build' `
               /p:OutputPath="..\..\$outputPath\" `
               /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
+            if ($LASTEXITCODE -ne 0) {
+              throw "$name test build failed with exit code ${LASTEXITCODE}."
+            }
             
             Write-Host "Packing $name..."
             msbuild $packProject '/t:Restore;Pack' `
               /p:OutputPath="..\..\$outputPath\" `
               /p:Configuration=Release /p:Platform="Any CPU" `
               /p:PackageOutputPath="$artifactsPath" /verbosity:minimal
+            if ($LASTEXITCODE -ne 0) {
+              throw "$name pack failed with exit code ${LASTEXITCODE}."
+            }
             
             Write-Host "$name packed successfully."
           }
@@ -63,9 +69,15 @@ jobs:
           function BuildPack-DotNet([string]$testProject, [string]$packProject, [string]$name) {
             Write-Host "Building test project for $name..."
             dotnet build $testProject --configuration Release
+            if ($LASTEXITCODE -ne 0) {
+              throw "$name test build failed with exit code ${LASTEXITCODE}."
+            }
             
             Write-Host "Packing $name..."
             dotnet pack $packProject --configuration Release --output "$artifactsPath"
+            if ($LASTEXITCODE -ne 0) {
+              throw "$name pack failed with exit code ${LASTEXITCODE}."
+            }
             
             Write-Host "$name packed successfully."
           }
@@ -106,6 +118,9 @@ jobs:
               --api-key ${{ secrets.NUGET_API_KEY }} `
               --source https://api.nuget.org/v3/index.json `
               --skip-duplicate
+            if ($LASTEXITCODE -ne 0) {
+              throw "Publishing $($package.Name) failed with exit code ${LASTEXITCODE}."
+            }
           }
 
       - name: Create GitHub Release

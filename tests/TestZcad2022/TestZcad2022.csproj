@@ -28,7 +28,27 @@
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="System.Text.Json" Version="9.0.9" />
-        <PackageReference Include="ZWCAD.NetApi" Version="20.22.0" ExcludeAssets="runtime" />
+        <PackageReference Include="ZWCAD.NetApi" Version="20.22.0" ExcludeAssets="compile;runtime" />
+        <Reference Include="ZwDatabaseMgd">
+            <HintPath>$(FsLibsDir)SDK\ZRX2022\lib-x64\ZwDatabaseMgd.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="ZwDatabaseMgdBrep">
+            <HintPath>$(FsLibsDir)SDK\ZRX2022\lib-x64\ZwDatabaseMgdBrep.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="ZwManaged">
+            <HintPath>$(FsLibsDir)SDK\ZRX2022\lib-x64\ZwManaged.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="ZcWindows">
+            <HintPath>$(FsLibsDir)SDK\ZRX2022\lib-x64\ZcWindows.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="ZdWindows">
+            <HintPath>$(FsLibsDir)SDK\ZRX2022\lib-x64\ZdWindows.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
     </ItemGroup>
     
     <ItemGroup>

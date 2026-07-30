@@ -35,7 +35,7 @@ jobs:
         uses: actions/setup-dotnet@v5
 
       - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v2
+        uses: microsoft/setup-msbuild@v3
 
       - name: Build all (Debug & Release)
         run: |
@@ -47,11 +47,17 @@ jobs:
             msbuild $csproj '/t:Restore;Build' `
               /p:OutputPath="..\..\Build\${prefix}_Debug\" `
               /p:Configuration=Debug /p:Platform="Any CPU" /verbosity:minimal
+            if ($LASTEXITCODE -ne 0) {
+              throw "$prefix Debug build failed with exit code ${LASTEXITCODE}."
+            }
             
             Write-Host "Building $prefix - Release..."
             msbuild $csproj '/t:Restore;Build' `
               /p:OutputPath="..\..\Build\${prefix}_Release\" `
               /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
+            if ($LASTEXITCODE -ne 0) {
+              throw "$prefix Release build failed with exit code ${LASTEXITCODE}."
+            }
             
             Write-Host "$prefix builds completed."
           }
@@ -59,9 +65,15 @@ jobs:
           function Build-DotNet([string]$csproj, [string]$prefix) {
             Write-Host "Building $prefix - Debug..."
             dotnet build $csproj --configuration Debug
+            if ($LASTEXITCODE -ne 0) {
+              throw "$prefix Debug build failed with exit code ${LASTEXITCODE}."
+            }
             
             Write-Host "Building $prefix - Release..."
             dotnet build $csproj --configuration Release
+            if ($LASTEXITCODE -ne 0) {
+              throw "$prefix Release build failed with exit code ${LASTEXITCODE}."
+            }
             
             Write-Host "$prefix builds completed."
           }

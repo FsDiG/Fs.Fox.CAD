@@ -46,7 +46,7 @@ public class TestLisp
     [CommandMethod("CmdTest_RunLisp17", CommandFlags.Interruptible)]
     // 命令不会被记录在命令历史记录
     [CommandMethod("CmdTest_RunLisp18", CommandFlags.NoHistory)]
-#if (!zcad)
+#if ACAD
     // 命令不会被 UNDO取消
     [CommandMethod("CmdTest_RunLisp19", CommandFlags.NoUndoMarker)]
     // 不能在参照块中使用命令

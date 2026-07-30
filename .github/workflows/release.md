@@ -8,6 +8,7 @@
 - 单一作业（release）：顺序执行准备版本、构建打包四个目标、发布到 NuGet、创建 GitHub Release
 - 版本管理：从 Git 标签自动提取版本号并更新 `src/Directory.Build.props`
 - 多工具支持：同时支持 MSBuild（.NET Framework4.8）与 dotnet CLI（.NET8）
+- 失败即停：任一构建、打包或推送命令失败时立即终止发布
 - NuGet 发布：将打包产物发布到 NuGet.org（跳过重复版本）
 - GitHub Release：创建 Release 并附带生成的 `.nupkg`
 
