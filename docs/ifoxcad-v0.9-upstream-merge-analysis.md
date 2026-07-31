@@ -1,7 +1,7 @@
 # IFoxCAD v0.9 上游重要变更评估
 
-> 状态：分析结论，待分阶段实施
-> 跟踪：[Issue #26](https://github.com/FsDiG/Fs.Fox.CAD/issues/26)
+> 状态：分析结论，待分阶段实施<br>
+> 跟踪：[Issue #26](https://github.com/FsDiG/Fs.Fox.CAD/issues/26)<br>
 > 上游：[IFoxCAD v0.9](https://gitee.com/inspirefunction/ifoxcad/tree/v0.9)
 
 ## 1. 结论
