@@ -9,6 +9,8 @@ public static class TestEntMod
     public static void Test_EntMod()
     {
         var objectId = ObjectId.Null;
+        Exception? testFailure = null;
+        var successMessage = string.Empty;
 
         try
         {
@@ -43,17 +45,31 @@ public static class TestEntMod
             if (Env.EntMod(withoutEntityName))
                 throw new InvalidOperationException("EntMod accepted data without an entity name.");
 
-            Env.Printl($"EntMod/EntUpd passed for {objectId.Handle}.");
+            successMessage = $"EntMod/EntUpd passed for {objectId.Handle}.";
+        }
+        catch (Exception exception)
+        {
+            testFailure = exception;
+            throw;
         }
         finally
         {
-            if (objectId.IsOk())
+            try
             {
-                using var tr = new DBTrans();
-                var entity = tr.GetObject<Entity>(objectId, OpenMode.ForWrite);
-                entity?.Erase();
+                if (objectId.IsOk())
+                {
+                    using var tr = new DBTrans();
+                    var entity = tr.GetObject<Entity>(objectId, OpenMode.ForWrite);
+                    entity?.Erase();
+                }
+            }
+            catch (Exception cleanupException) when (testFailure is not null)
+            {
+                testFailure.Data["CleanupException"] = cleanupException;
             }
         }
+
+        Env.Printl(successMessage);
     }
 
     private static TypedValue[] ReplaceColor(TypedValue[] values, short colorIndex)

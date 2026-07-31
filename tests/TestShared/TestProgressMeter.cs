@@ -2,6 +2,10 @@ namespace Test;
 
 public static class TestProgressMeter
 {
+    private const int ProgressMinimum = 0;
+    private const int ProgressMaximum = 20;
+    private const int FailurePosition = 10;
+
     [CommandMethod(nameof(Test_ProgressMeter))]
     public static void Test_ProgressMeter()
     {
@@ -14,7 +18,7 @@ public static class TestProgressMeter
     {
         try
         {
-            RunProgressMeter(10);
+            RunProgressMeter(FailurePosition);
             throw new InvalidOperationException("The expected progress-meter failure was not raised.");
         }
         catch (ExpectedProgressMeterException)
@@ -28,8 +32,8 @@ public static class TestProgressMeter
         try
         {
             ProgressMeterUtils.SetApplicationStatusBarProgressMeter(
-                "Fs.Fox.CAD 进度测试", 0, 20);
-            for (var position = 0; position <= 20; position++)
+                "Fs.Fox.CAD 进度测试", ProgressMinimum, ProgressMaximum);
+            for (var position = ProgressMinimum; position <= ProgressMaximum; position++)
             {
                 ProgressMeterUtils.SetApplicationStatusBarProgressMeter(position);
                 System.Windows.Forms.Application.DoEvents();

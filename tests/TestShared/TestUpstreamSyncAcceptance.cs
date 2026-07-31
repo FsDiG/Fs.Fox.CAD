@@ -12,6 +12,7 @@ public static class TestUpstreamSyncAcceptance
         var jig = new JigEx();
         var externallyDisposedLine = new Line(Point3d.Origin, new Point3d(1, 0, 0));
         var jigOwnedLine = new Line(Point3d.Origin, new Point3d(2, 0, 0));
+        Exception? testFailure = null;
 
         try
         {
@@ -29,14 +30,26 @@ public static class TestUpstreamSyncAcceptance
             if (!jigOwnedLine.IsDisposed)
                 throw new InvalidOperationException("JigEx did not dispose its queued transient entity.");
         }
+        catch (Exception exception)
+        {
+            testFailure = exception;
+            throw;
+        }
         finally
         {
-            if (!jig.IsDisposed)
-                jig.Dispose();
-            if (!externallyDisposedLine.IsDisposed)
-                externallyDisposedLine.Dispose();
-            if (!jigOwnedLine.IsDisposed)
-                jigOwnedLine.Dispose();
+            try
+            {
+                if (!jig.IsDisposed)
+                    jig.Dispose();
+                if (!externallyDisposedLine.IsDisposed)
+                    externallyDisposedLine.Dispose();
+                if (!jigOwnedLine.IsDisposed)
+                    jigOwnedLine.Dispose();
+            }
+            catch (Exception cleanupException) when (testFailure is not null)
+            {
+                testFailure.Data["CleanupException"] = cleanupException;
+            }
         }
 
         Env.Printl("Jig dispose safety passed.");
@@ -50,6 +63,7 @@ public static class TestUpstreamSyncAcceptance
         var secondApp = $"FsFoxXDataB_{suffix}";
         var missingApp = $"FsFoxMissing_{suffix}";
         var lineId = ObjectId.Null;
+        Exception? testFailure = null;
 
         try
         {
@@ -86,6 +100,9 @@ public static class TestUpstreamSyncAcceptance
                 tr.Database.ObjectOpenedForModify += OnObjectOpenedForModify;
                 try
                 {
+                    var firstDataBefore = GetXDataValues(line, firstApp);
+                    var secondDataBefore = GetXDataValues(line, secondApp);
+
                     line.RemoveXData(missingApp);
                     if (openedForModify != 0)
                     {
@@ -93,8 +110,10 @@ public static class TestUpstreamSyncAcceptance
                             "Removing a missing RegApp opened the entity for modify.");
                     }
 
-                    AssertXDataValue(line, firstApp, "first");
-                    AssertXDataValue(line, secondApp, "second");
+                    AssertXDataValue(firstDataBefore, firstApp, "first");
+                    AssertXDataValue(secondDataBefore, secondApp, "second");
+                    AssertXDataSequence(line, firstApp, firstDataBefore);
+                    AssertXDataSequence(line, secondApp, secondDataBefore);
 
                     line.RemoveXData(firstApp);
                     if (openedForModify == 0)
@@ -106,7 +125,7 @@ public static class TestUpstreamSyncAcceptance
                     using var removedData = line.GetXDataForApplication(firstApp);
                     if (removedData is not null)
                         throw new InvalidOperationException("The target RegApp XData was not removed.");
-                    AssertXDataValue(line, secondApp, "second");
+                    AssertXDataSequence(line, secondApp, secondDataBefore);
                 }
                 finally
                 {
@@ -114,9 +133,21 @@ public static class TestUpstreamSyncAcceptance
                 }
             }
         }
+        catch (Exception exception)
+        {
+            testFailure = exception;
+            throw;
+        }
         finally
         {
-            EraseEntity(lineId);
+            try
+            {
+                EraseEntity(lineId);
+            }
+            catch (Exception cleanupException) when (testFailure is not null)
+            {
+                testFailure.Data["CleanupException"] = cleanupException;
+            }
         }
 
         Env.Printl("XData removal isolation passed.");
@@ -132,6 +163,7 @@ public static class TestUpstreamSyncAcceptance
         var blockName = $"FsFoxAttr_{Guid.NewGuid():N}";
         var blockId = ObjectId.Null;
         var blockReferenceId = ObjectId.Null;
+        Exception? testFailure = null;
 
         try
         {
@@ -178,23 +210,35 @@ public static class TestUpstreamSyncAcceptance
                 }
 
                 tr.Database.ObjectOpenedForModify += OnObjectOpenedForModify;
+                HashSet<ObjectId> targetUpdateIds;
+                HashSet<ObjectId> missingUpdateIds;
                 try
                 {
                     blockReference.ChangeBlockAttribute(new Dictionary<string, string>
                     {
                         { targetTag, updatedValue }
                     });
+                    targetUpdateIds = openedAttributeIds.ToHashSet();
+
+                    openedAttributeIds.Clear();
+                    blockReference.ChangeBlockAttribute(new Dictionary<string, string>
+                    {
+                        { "MISSING", "ignored" }
+                    });
+                    missingUpdateIds = openedAttributeIds.ToHashSet();
                 }
                 finally
                 {
                     tr.Database.ObjectOpenedForModify -= OnObjectOpenedForModify;
                 }
 
-                if (!openedAttributeIds.SetEquals(targetIds))
+                if (!targetUpdateIds.SetEquals(targetIds))
                 {
                     throw new InvalidOperationException(
-                        $"Unexpected attributes opened for modify. Expected={targetIds.Count}, Actual={openedAttributeIds.Count}.");
+                        $"Unexpected attributes opened for modify. Expected={targetIds.Count}, Actual={targetUpdateIds.Count}.");
                 }
+                if (missingUpdateIds.Count != 0)
+                    throw new InvalidOperationException("A missing attribute Tag opened an attribute for modify.");
 
                 if (targetAttributes.Any(attribute => attribute.TextString != updatedValue))
                     throw new InvalidOperationException("Not all duplicate target attributes were updated.");
@@ -202,24 +246,63 @@ public static class TestUpstreamSyncAcceptance
                     throw new InvalidOperationException("The unrelated attribute value was changed.");
             }
         }
+        catch (Exception exception)
+        {
+            testFailure = exception;
+            throw;
+        }
         finally
         {
-            EraseBlock(blockReferenceId, blockId);
+            try
+            {
+                EraseBlock(blockReferenceId, blockId);
+            }
+            catch (Exception cleanupException) when (testFailure is not null)
+            {
+                testFailure.Data["CleanupException"] = cleanupException;
+            }
         }
 
         Env.Printl("Block attribute write scope passed.");
     }
 
-    private static void AssertXDataValue(DBObject obj, string appName, string expectedValue)
+    private static TypedValue[] GetXDataValues(DBObject obj, string appName)
     {
         using var data = obj.GetXDataForApplication(appName);
-        var value = data?.AsArray()
+        return data?.AsArray() ?? Array.Empty<TypedValue>();
+    }
+
+    private static void AssertXDataValue(
+        IEnumerable<TypedValue> data, string appName, string expectedValue)
+    {
+        var value = data
             .FirstOrDefault(item => item.TypeCode == (int)DxfCode.ExtendedDataAsciiString)
             .Value?.ToString();
         if (!string.Equals(value, expectedValue, StringComparison.Ordinal))
         {
             throw new InvalidOperationException(
                 $"Unexpected XData for {appName}. Expected {expectedValue}, got {value}.");
+        }
+    }
+
+    private static void AssertXDataSequence(
+        DBObject obj, string appName, IReadOnlyList<TypedValue> expected)
+    {
+        var actual = GetXDataValues(obj, appName);
+        if (actual.Length != expected.Count)
+        {
+            throw new InvalidOperationException(
+                $"XData length changed for {appName}. Expected {expected.Count}, got {actual.Length}.");
+        }
+
+        for (var i = 0; i < actual.Length; i++)
+        {
+            if (actual[i].TypeCode != expected[i].TypeCode ||
+                !Equals(actual[i].Value, expected[i].Value))
+            {
+                throw new InvalidOperationException(
+                    $"XData item {i} changed for {appName}.");
+            }
         }
     }
 
