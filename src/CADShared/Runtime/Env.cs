@@ -926,4 +926,36 @@ public static class Env
     }
 
     #endregion
+
+    #region Native entity data
+
+    /// <summary>
+    /// Returns the DXF data for a resident database object.
+    /// </summary>
+    /// <param name="objectId">A valid, resident and non-erased database object identifier.</param>
+    /// <returns>The object's DXF typed values.</returns>
+    public static TypedValue[] EntGet(ObjectId objectId)
+    {
+        if (!objectId.IsOk())
+        {
+            throw new System.ArgumentException(
+                "EntGet requires a valid, resident and non-erased ObjectId.", nameof(objectId));
+        }
+
+        var status = PInvokeCad.GetAdsName(objectId, out var adsName);
+        if (status != (int)CadErrorStatus.OK)
+            throw new CadException((CadErrorStatus)status);
+
+        var nativeBuffer = PInvokeCad.EntGet(ref adsName);
+        if (nativeBuffer == IntPtr.Zero)
+        {
+            throw new CadException(CadErrorStatus.InvalidAdsName,
+                "EntGet returned no entity data.");
+        }
+
+        using var buffer = ResultBuffer.Create(nativeBuffer, true);
+        return buffer.AsArray();
+    }
+
+    #endregion
 }
