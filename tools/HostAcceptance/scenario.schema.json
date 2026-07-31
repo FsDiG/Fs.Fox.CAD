@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/FsDiG/Fs.Fox.CAD/tools/HostAcceptance/scenario.schema.json",
+  "title": "Fs.Fox.CAD host acceptance scenario",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "name",
+    "description",
+    "products",
+    "requiresDrawing",
+    "commands"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "schemaVersion": {
+      "const": 1
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "description": {
+      "type": "string"
+    },
+    "products": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "AutoCAD",
+          "ZWCAD"
+        ]
+      }
+    },
+    "requiresDrawing": {
+      "type": "boolean"
+    },
+    "commands": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "command",
+          "expectedText"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "command": {
+            "type": "string",
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+          },
+          "expectedText": {
+            "type": "string",
+            "minLength": 1
+          },
+          "products": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "enum": [
+                "AutoCAD",
+                "ZWCAD"
+              ]
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "failurePatterns": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "additionalProperties": false
+}
