@@ -11,9 +11,10 @@ internal static class PInvokeCad
     private const string GetZdsNameEntryPoint =
         "?zcdbGetZdsName@@YA?AW4ErrorStatus@Zcad@@AEAY01_JVZcDbObjectId@@@Z";
 
-    private const string ZcdbEntGetEntryPoint = "?zcdbEntGet@@YAPEAUresbuf@@QEB_J@Z";
-    private const string ZcdbEntModEntryPoint = "?zcdbEntMod@@YAHPEBUresbuf@@@Z";
-    private const string ZcdbEntUpdEntryPoint = "?zcdbEntUpd@@YAHQEB_J@Z";
+    // P/Invoke resolves the PE export names, not the C++ symbols exposed by ZWCAD.lib.
+    private const string ZcdbEntGetEntryPoint = "zcdbEntGet";
+    private const string ZcdbEntModEntryPoint = "zcdbEntMod";
+    private const string ZcdbEntUpdEntryPoint = "zcdbEntUpd";
 
 #if ZWCAD
     [DllImport("ZwDatabase.dll", CallingConvention = CallingConvention.Cdecl,
