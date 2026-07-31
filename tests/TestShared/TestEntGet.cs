@@ -2,10 +2,14 @@ namespace Test;
 
 public static class TestEntGet
 {
+    private const int ReadCount = 100;
+
     [CommandMethod(nameof(Test_EntGet))]
     public static void Test_EntGet()
     {
         var objectId = ObjectId.Null;
+        Exception? testFailure = null;
+        var successMessage = string.Empty;
 
         try
         {
@@ -15,9 +19,8 @@ public static class TestEntGet
                 objectId = tr.CurrentSpace.AddEntity(line);
             }
 
-            var values = Env.EntGet(objectId);
-
-            for (var i = 1; i < 100; i++)
+            var values = Array.Empty<TypedValue>();
+            for (var i = 0; i < ReadCount; i++)
             {
                 values = Env.EntGet(objectId);
                 if (values.Length == 0)
@@ -45,17 +48,31 @@ public static class TestEntGet
             }
 
             AssertNullObjectIdRejected();
-            Env.Printl($"EntGet passed for {dxfName} ({handle}).");
+            successMessage = $"EntGet passed for {dxfName} ({handle}).";
+        }
+        catch (Exception exception)
+        {
+            testFailure = exception;
+            throw;
         }
         finally
         {
-            if (objectId.IsOk())
+            try
             {
-                using var tr = new DBTrans();
-                var entity = tr.GetObject<Entity>(objectId, OpenMode.ForWrite);
-                entity?.Erase();
+                if (objectId.IsOk())
+                {
+                    using var tr = new DBTrans();
+                    var entity = tr.GetObject<Entity>(objectId, OpenMode.ForWrite);
+                    entity?.Erase();
+                }
+            }
+            catch (Exception cleanupException) when (testFailure is not null)
+            {
+                testFailure.Data["CleanupException"] = cleanupException;
             }
         }
+
+        Env.Printl(successMessage);
     }
 
     private static void AssertNullObjectIdRejected()
