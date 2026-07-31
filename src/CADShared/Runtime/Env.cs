@@ -929,6 +929,8 @@ public static class Env
 
     #region Native entity data
 
+    private const int AdsReturnNormal = 5100;
+
     /// <summary>
     /// Returns the DXF data for a resident database object.
     /// </summary>
@@ -955,6 +957,46 @@ public static class Env
 
         using var buffer = ResultBuffer.Create(nativeBuffer, true);
         return buffer.AsArray();
+    }
+
+    /// <summary>
+    /// Replaces a resident entity's DXF data without forcing a graphics refresh.
+    /// </summary>
+    /// <param name="typedValues">DXF data, normally obtained from <see cref="EntGet"/>.</param>
+    /// <returns><see langword="true"/> when the native operation returns RTNORM.</returns>
+    public static bool EntMod(IEnumerable<TypedValue> typedValues)
+    {
+        ArgumentNullException.ThrowIfNull(typedValues);
+
+        var values = typedValues.ToArray();
+        if (values.Length == 0)
+        {
+            throw new System.ArgumentException(
+                "EntMod requires at least one DXF typed value.", nameof(typedValues));
+        }
+
+        using var buffer = new ResultBuffer(values);
+        return PInvokeCad.EntMod(buffer.UnmanagedObject) == AdsReturnNormal;
+    }
+
+    /// <summary>
+    /// Regenerates the graphics for a resident database object after native DXF modification.
+    /// </summary>
+    /// <param name="objectId">A valid, resident and non-erased database object identifier.</param>
+    /// <returns><see langword="true"/> when the native operation returns RTNORM.</returns>
+    public static bool EntUpd(ObjectId objectId)
+    {
+        if (!objectId.IsOk())
+        {
+            throw new System.ArgumentException(
+                "EntUpd requires a valid, resident and non-erased ObjectId.", nameof(objectId));
+        }
+
+        var status = PInvokeCad.GetAdsName(objectId, out var adsName);
+        if (status != (int)CadErrorStatus.OK)
+            throw new CadException((CadErrorStatus)status);
+
+        return PInvokeCad.EntUpd(ref adsName) == AdsReturnNormal;
     }
 
     #endregion
