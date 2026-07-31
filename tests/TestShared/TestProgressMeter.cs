@@ -5,6 +5,26 @@ public static class TestProgressMeter
     [CommandMethod(nameof(Test_ProgressMeter))]
     public static void Test_ProgressMeter()
     {
+        RunProgressMeter();
+        Env.Printl("Progress meter completed and the status bar was restored.");
+    }
+
+    [CommandMethod(nameof(Test_ProgressMeterFailure))]
+    public static void Test_ProgressMeterFailure()
+    {
+        try
+        {
+            RunProgressMeter(10);
+            throw new InvalidOperationException("The expected progress-meter failure was not raised.");
+        }
+        catch (ExpectedProgressMeterException)
+        {
+            Env.Printl("Progress meter exception path restored the status bar.");
+        }
+    }
+
+    private static void RunProgressMeter(int? failurePosition = null)
+    {
         try
         {
             ProgressMeterUtils.SetApplicationStatusBarProgressMeter(
@@ -14,13 +34,17 @@ public static class TestProgressMeter
                 ProgressMeterUtils.SetApplicationStatusBarProgressMeter(position);
                 System.Windows.Forms.Application.DoEvents();
                 Thread.Sleep(50);
+                if (position == failurePosition)
+                    throw new ExpectedProgressMeterException();
             }
         }
         finally
         {
             ProgressMeterUtils.RestoreApplicationStatusBar();
         }
+    }
 
-        Env.Printl("Progress meter completed and the status bar was restored.");
+    private sealed class ExpectedProgressMeterException : Exception
+    {
     }
 }
