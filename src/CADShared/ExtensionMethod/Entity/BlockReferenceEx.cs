@@ -149,13 +149,13 @@ public static class BlockReferenceEx
                 att = (AttributeReference)item;
             }
 
+            if (!propertyNameValues.TryGetValue(att.Tag, out var value))
+                continue;
+
             using (att.ForWrite())
             {
-                if (propertyNameValues.TryGetValue(att.Tag, out var value))
-                {
-                    att.TextString = value;
-                    att.AdjustAlignment(blockReference.Database);
-                }
+                att.TextString = value;
+                att.AdjustAlignment(blockReference.Database);
             }
         }
     }
