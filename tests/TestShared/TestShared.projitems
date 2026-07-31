@@ -40,6 +40,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)TestMirrorFile.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestPoint.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestPointOnRegion.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TestProgressMeter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestQuadTree.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestSelectfilter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestSingleKeyWordHook.cs" />
