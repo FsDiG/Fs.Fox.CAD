@@ -142,7 +142,9 @@ public static class TestUpstreamSyncAcceptance
         {
             try
             {
+                RemoveEntityXData(lineId, firstApp, secondApp);
                 EraseEntity(lineId);
+                RemoveRegApps(firstApp, secondApp);
             }
             catch (Exception cleanupException) when (testFailure is not null)
             {
@@ -328,6 +330,20 @@ public static class TestUpstreamSyncAcceptance
         entity?.Erase();
     }
 
+    private static void RemoveEntityXData(ObjectId objectId, params string[] appNames)
+    {
+        if (!objectId.IsOk())
+            return;
+
+        using var tr = new DBTrans();
+        var entity = tr.GetObject<Entity>(objectId);
+        if (entity is null)
+            return;
+
+        foreach (var appName in appNames)
+            entity.RemoveXData(appName);
+    }
+
     private static void EraseBlock(ObjectId blockReferenceId, ObjectId blockId)
     {
         using var tr = new DBTrans();
@@ -341,6 +357,31 @@ public static class TestUpstreamSyncAcceptance
         {
             var block = tr.GetObject<BlockTableRecord>(blockId, OpenMode.ForWrite);
             block?.Erase(true);
+        }
+    }
+
+    private static void RemoveRegApps(params string[] appNames)
+    {
+        using (var tr = new DBTrans())
+        {
+            foreach (var appName in appNames)
+                tr.RegAppTable.Remove(appName);
+        }
+
+        using var verificationTransaction = new DBTrans();
+        foreach (var appName in appNames)
+        {
+            if (!verificationTransaction.RegAppTable.Has(appName))
+                continue;
+
+            // ZWCAD can keep an erased symbol-table ObjectId addressable until cleanup completes.
+            var record = verificationTransaction.RegAppTable.GetRecord(
+                appName, OpenMode.ForRead, openErased: true);
+            if (record is not null && !record.IsErased)
+            {
+                throw new InvalidOperationException(
+                    $"The temporary RegApp record {appName} was not removed.");
+            }
         }
     }
 }

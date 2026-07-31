@@ -41,10 +41,16 @@ public static class TestBlockVisibility
     public static void Test_BlockVisibilityInfoAll()
     {
         using var tr = new DBTrans();
-        var blockReferences = tr.CurrentSpace.GetEntities<BlockReference>().ToList();
+        var layoutSpaces = tr.BlockTable.GetRecords()
+            .Where(blockTableRecord => blockTableRecord.IsLayout)
+            .ToList();
+        var blockReferences = layoutSpaces
+            .SelectMany(blockTableRecord => blockTableRecord.GetEntities<BlockReference>())
+            .ToList();
         if (blockReferences.Count == 0)
         {
-            Env.Printl("[SKIP] Block visibility scan requires a drawing with block references.");
+            Env.Printl(
+                "[SKIP] Block visibility scan requires block references in a drawing layout space.");
             return;
         }
 
@@ -153,7 +159,7 @@ public static class TestBlockVisibility
         }
 
         Env.Printl(
-            $"Block visibility scan passed. Total={blockReferences.Count}, Dynamic={dynamicCount}, WithVisibility={visibilityCount}, WithoutVisibility={dynamicWithoutVisibilityCount}.");
+            $"Block visibility scan passed. Spaces={layoutSpaces.Count}, Total={blockReferences.Count}, Dynamic={dynamicCount}, WithVisibility={visibilityCount}, WithoutVisibility={dynamicWithoutVisibilityCount}.");
     }
 
     [CommandMethod(nameof(Test_BlockVisibilityInfoOrdinary))]
