@@ -130,6 +130,41 @@ public class Testenv
         Env.Printl($"getenv-osmode: {Env.GetEnv("osmode")}");
         Env.Printl($"getvar-osmode: {Env.GetVar("osmode")}");
     }
+
+#if ZWCAD
+    [CommandMethod(nameof(Test_ZwCadGetSetEnv))]
+    public static void Test_ZwCadGetSetEnv()
+    {
+        const string testName = "FsFoxCadZwcadInteropTest";
+        const string testValue = "Fs.Fox.CAD-ZWCAD-环境变量";
+        var originalValue = Env.GetEnv(testName);
+        var missingName = $"{testName}_{Guid.NewGuid():N}";
+
+        if (!string.IsNullOrEmpty(Env.GetEnv(missingName)))
+            throw new InvalidOperationException("A random environment variable unexpectedly exists.");
+
+        var setResult = 0;
+        var restoreResult = 0;
+        try
+        {
+            setResult = Env.SetEnv(testName, testValue);
+            var actualValue = Env.GetEnv(testName);
+            if (!string.Equals(actualValue, testValue, StringComparison.Ordinal))
+                throw new InvalidOperationException("ZWCAD environment variable read-back failed.");
+        }
+        finally
+        {
+            restoreResult = Env.SetEnv(testName, originalValue);
+        }
+
+        var restoredValue = Env.GetEnv(testName);
+        if (!string.Equals(restoredValue, originalValue, StringComparison.Ordinal))
+            throw new InvalidOperationException("ZWCAD environment variable restore failed.");
+
+        Env.Printl($"ZWCAD GetEnv/SetEnv passed. Set={setResult}, Restore={restoreResult}");
+    }
+#endif
+
     [CommandMethod(nameof(Test_AppendPath))]
     public static void Test_AppendPath()
     {

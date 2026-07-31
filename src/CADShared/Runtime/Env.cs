@@ -500,17 +500,17 @@ public static class Env
     static extern int AcedSetEnv(string? envName, StringBuilder NewValue);
 #endif
 
-    // TODO: 中望没有测试,此处仅为不报错;本工程所有含有"中望"均存在问题
 #if ZWCAD
-    [System.Security.SuppressUnmanagedCodeSecurity]
-    [DllImport("zced.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.Cdecl, EntryPoint =
- "zcedGetEnv")]
-    static extern int AcedGetEnv(string? envName, StringBuilder ReturnValue);
+    // ZRX2022/2025 export the size_t overload from ZWCAD.exe under the same x64 decorated name.
+    [SuppressUnmanagedCodeSecurity]
+    [DllImport("zwcad.exe", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl,
+        ExactSpelling = true, EntryPoint = "?zcedGetEnv@@YAHPEB_WPEA_W_K@Z")]
+    private static extern int AcedGetEnv(string? envName, StringBuilder returnValue, UIntPtr bufferLength);
 
-    [System.Security.SuppressUnmanagedCodeSecurity]
-    [DllImport("zced.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.Cdecl, EntryPoint =
- "zcedSetEnv")]
-    static extern int AcedSetEnv(string? envName, StringBuilder NewValue);
+    [SuppressUnmanagedCodeSecurity]
+    [DllImport("zwcad.exe", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl,
+        ExactSpelling = true, EntryPoint = "zcedSetEnv")]
+    private static extern int AcedSetEnv(string? envName, string newValue);
 #endif
 
     /// <summary>
@@ -531,7 +531,11 @@ public static class Env
         // https://docs.microsoft.com/zh-cn/windows/win32/sysinfo/registry-element-size-limits
 
         var sbRes = new StringBuilder(1 << 23);
+#if ZWCAD
+        _ = AcedGetEnv(name, sbRes, new UIntPtr((uint)sbRes.Capacity));
+#else
         _ = AcedGetEnv(name, sbRes);
+#endif
         return sbRes.ToString();
     }
 
@@ -545,7 +549,11 @@ public static class Env
     /// <returns></returns>
     public static int SetEnv(string name, string var)
     {
+#if ZWCAD
+        return AcedSetEnv(name, var);
+#else
         return AcedSetEnv(name, new StringBuilder(var));
+#endif
     }
 
     #endregion
