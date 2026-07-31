@@ -12,6 +12,7 @@ public static class TestProgressMeter
             for (var position = 0; position <= 20; position++)
             {
                 ProgressMeterUtils.SetApplicationStatusBarProgressMeter(position);
+                System.Windows.Forms.Application.DoEvents();
                 Thread.Sleep(50);
             }
         }
