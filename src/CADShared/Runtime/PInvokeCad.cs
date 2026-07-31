@@ -12,6 +12,8 @@ internal static class PInvokeCad
         "?zcdbGetZdsName@@YA?AW4ErrorStatus@Zcad@@AEAY01_JVZcDbObjectId@@@Z";
 
     private const string ZcdbEntGetEntryPoint = "?zcdbEntGet@@YAPEAUresbuf@@QEB_J@Z";
+    private const string ZcdbEntModEntryPoint = "?zcdbEntMod@@YAHPEBUresbuf@@@Z";
+    private const string ZcdbEntUpdEntryPoint = "?zcdbEntUpd@@YAHQEB_J@Z";
 
 #if ZWCAD
     [DllImport("ZwDatabase.dll", CallingConvention = CallingConvention.Cdecl,
@@ -22,6 +24,14 @@ internal static class PInvokeCad
         EntryPoint = ZcdbEntGetEntryPoint, ExactSpelling = true)]
     private static extern IntPtr ZcdbEntGet(ref CadAdsName adsName);
 
+    [DllImport("zwcad.exe", CallingConvention = CallingConvention.Cdecl,
+        EntryPoint = ZcdbEntModEntryPoint, ExactSpelling = true)]
+    private static extern int ZcdbEntMod(IntPtr buffer);
+
+    [DllImport("zwcad.exe", CallingConvention = CallingConvention.Cdecl,
+        EntryPoint = ZcdbEntUpdEntryPoint, ExactSpelling = true)]
+    private static extern int ZcdbEntUpd(ref CadAdsName adsName);
+
     internal static int GetAdsName(ObjectId objectId, out CadAdsName adsName)
     {
         return ZcdbGetZdsName(out adsName, objectId);
@@ -30,6 +40,16 @@ internal static class PInvokeCad
     internal static IntPtr EntGet(ref CadAdsName adsName)
     {
         return ZcdbEntGet(ref adsName);
+    }
+
+    internal static int EntMod(IntPtr buffer)
+    {
+        return ZcdbEntMod(buffer);
+    }
+
+    internal static int EntUpd(ref CadAdsName adsName)
+    {
+        return ZcdbEntUpd(ref adsName);
     }
 #else
 #if AC_2019
@@ -52,6 +72,14 @@ internal static class PInvokeCad
         EntryPoint = "acdbEntGet", ExactSpelling = true)]
     private static extern IntPtr AcdbEntGet(ref CadAdsName adsName);
 
+    [DllImport("accore.dll", CallingConvention = CallingConvention.Cdecl,
+        EntryPoint = "acdbEntMod", ExactSpelling = true)]
+    private static extern int AcdbEntMod(IntPtr buffer);
+
+    [DllImport("accore.dll", CallingConvention = CallingConvention.Cdecl,
+        EntryPoint = "acdbEntUpd", ExactSpelling = true)]
+    private static extern int AcdbEntUpd(ref CadAdsName adsName);
+
     internal static int GetAdsName(ObjectId objectId, out CadAdsName adsName)
     {
         return AcdbGetAdsName(out adsName, objectId);
@@ -60,6 +88,16 @@ internal static class PInvokeCad
     internal static IntPtr EntGet(ref CadAdsName adsName)
     {
         return AcdbEntGet(ref adsName);
+    }
+
+    internal static int EntMod(IntPtr buffer)
+    {
+        return AcdbEntMod(buffer);
+    }
+
+    internal static int EntUpd(ref CadAdsName adsName)
+    {
+        return AcdbEntUpd(ref adsName);
     }
 #endif
 }

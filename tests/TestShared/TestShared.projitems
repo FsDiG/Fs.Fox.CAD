@@ -22,6 +22,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)TestDwgMark.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestEditor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestEntGet.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TestEntMod.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestEntity\TestAddEntity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestEnv.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestExtents.cs" />
