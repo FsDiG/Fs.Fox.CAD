@@ -9,6 +9,12 @@ namespace Fs.Fox.Cad;
 /// </summary>
 public static class BlockReferenceEx
 {
+    private const string EnhancedBlockDictionaryKey = "ACAD_ENHANCEDBLOCK";
+    private const string VisibilityParameterDxfName = "BLOCKVISIBILITYPARAMETER";
+    private const int HardOwnerIdCode = 360;
+    private const int VisibilityPropertyNameCode = 301;
+    private const int VisibilityAllowedValueCode = 303;
+
     #region 裁剪块参照
 
     private const string kFilterDictName = "ACAD_FILTER";
@@ -323,4 +329,89 @@ public static class BlockReferenceEx
             }
         }
     }
+
+    /// <summary>
+    /// Gets the visibility parameter metadata for a dynamic block reference.
+    /// </summary>
+    /// <param name="blockReference">Block reference to inspect.</param>
+    /// <returns>Visibility metadata, or an empty result when no visibility parameter exists.</returns>
+    public static BlockVisibilityInfo GetVisibilityInfo(this BlockReference blockReference)
+    {
+        ArgumentNullException.ThrowIfNull(blockReference);
+
+        if (!blockReference.IsDynamicBlock || !blockReference.DynamicBlockTableRecord.IsOk())
+            return new BlockVisibilityInfo();
+
+        var tr = DBTrans.GetTopTransaction(blockReference.Database);
+        return tr.GetObject(blockReference.DynamicBlockTableRecord) is BlockTableRecord blockTableRecord
+            ? blockTableRecord.GetVisibilityInfo()
+            : new BlockVisibilityInfo();
+    }
+
+    /// <summary>
+    /// Gets the visibility parameter metadata stored in a dynamic block definition.
+    /// </summary>
+    /// <param name="blockTableRecord">Dynamic block definition to inspect.</param>
+    /// <returns>Visibility metadata, or an empty result when no visibility parameter exists.</returns>
+    public static BlockVisibilityInfo GetVisibilityInfo(this BlockTableRecord blockTableRecord)
+    {
+        ArgumentNullException.ThrowIfNull(blockTableRecord);
+
+        var info = new BlockVisibilityInfo();
+        if (!blockTableRecord.IsDynamicBlock || !blockTableRecord.ExtensionDictionary.IsOk())
+            return info;
+
+        var tr = DBTrans.GetTopTransaction(blockTableRecord.Database);
+        if (tr.GetObject(blockTableRecord.ExtensionDictionary) is not DBDictionary dictionary ||
+            !dictionary.Contains(EnhancedBlockDictionaryKey))
+        {
+            return info;
+        }
+
+        var enhancedBlockId = dictionary.GetAt(EnhancedBlockDictionaryKey);
+        if (!enhancedBlockId.IsOk())
+            return info;
+
+        var parameterId = Env.EntGet(enhancedBlockId)
+            .Where(value => value.TypeCode == HardOwnerIdCode)
+            .Select(value => value.Value)
+            .OfType<ObjectId>()
+            .FirstOrDefault(id => id.IsOk() && string.Equals(id.ObjectClass.DxfName,
+                VisibilityParameterDxfName, StringComparison.OrdinalIgnoreCase));
+        if (!parameterId.IsOk())
+            return info;
+
+        var parameterValues = Env.EntGet(parameterId);
+        info.Has = true;
+        info.PropertyName = parameterValues
+            .FirstOrDefault(value => value.TypeCode == VisibilityPropertyNameCode)
+            .Value?.ToString() ?? string.Empty;
+        info.AllowedValues = parameterValues
+            .Where(value => value.TypeCode == VisibilityAllowedValueCode)
+            .Select(value => value.Value?.ToString() ?? string.Empty)
+            .Where(value => !string.IsNullOrWhiteSpace(value))
+            .ToList();
+        return info;
+    }
+}
+
+/// <summary>
+/// Dynamic block visibility parameter metadata.
+/// </summary>
+public class BlockVisibilityInfo
+{
+    /// <summary>
+    /// Gets or sets whether the block definition contains a visibility parameter.
+    /// </summary>
+    public bool Has { get; set; }
+
+    /// <summary>
+    /// Gets or sets the visibility property name.
+    /// </summary>
+    public string PropertyName { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Gets or sets the allowed visibility values in definition order.
+    /// </summary>
+    public List<string> AllowedValues { get; set; } = new();
 }
