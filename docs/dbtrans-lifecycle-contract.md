@@ -268,12 +268,22 @@ PR #45 已在 `DBTrans.Task` 中捕获进入前的 `WorkingDatabase`，并通过
 
 ## 12. 源码索引
 
-- [S1] [`_dBTrans`、`GetTop` 与 `Top`](https://github.com/FsDiG/Fs.Fox.CAD/blob/4d1bb7237ac020b16bf5d198c952b9a55cc3a1de/src/CADShared/Runtime/DBTrans.cs#L38-L116)
-- [S2] [`Top` 的扩展方法调用示例](https://github.com/FsDiG/Fs.Fox.CAD/blob/4d1bb7237ac020b16bf5d198c952b9a55cc3a1de/src/CADShared/ExtensionMethod/EditorEx.cs#L30-L38)
-- [S3] [Document/Database 构造函数与入栈](https://github.com/FsDiG/Fs.Fox.CAD/blob/4d1bb7237ac020b16bf5d198c952b9a55cc3a1de/src/CADShared/Runtime/DBTrans.cs#L147-L180)
-- [S4] [文件构造函数、Database 来源与入栈](https://github.com/FsDiG/Fs.Fox.CAD/blob/4d1bb7237ac020b16bf5d198c952b9a55cc3a1de/src/CADShared/Runtime/DBTrans.cs#L182-L278)
-- [S5] [`Task` 的 WorkingDatabase 恢复](https://github.com/FsDiG/Fs.Fox.CAD/blob/4d1bb7237ac020b16bf5d198c952b9a55cc3a1de/src/CADShared/Runtime/DBTrans.cs#L526-L576)
-- [S6] [`Abort()` / `Commit()`](https://github.com/FsDiG/Fs.Fox.CAD/blob/4d1bb7237ac020b16bf5d198c952b9a55cc3a1de/src/CADShared/Runtime/DBTrans.cs#L580-L598)
-- [S7] [`IsDisposed`、公开 Dispose 与终结器](https://github.com/FsDiG/Fs.Fox.CAD/blob/4d1bb7237ac020b16bf5d198c952b9a55cc3a1de/src/CADShared/Runtime/DBTrans.cs#L600-L620)
-- [S8] [`Dispose(bool)` 的完整清理顺序](https://github.com/FsDiG/Fs.Fox.CAD/blob/4d1bb7237ac020b16bf5d198c952b9a55cc3a1de/src/CADShared/Runtime/DBTrans.cs#L622-L677)
-- [S9] [`GetTop` 的 Database 匹配调用示例](https://github.com/FsDiG/Fs.Fox.CAD/blob/4d1bb7237ac020b16bf5d198c952b9a55cc3a1de/src/CADShared/ExtensionMethod/SymbolTableRecordEx.cs#L224-L235)
+- [S1] `_dBTrans`、`GetTop` 与 `Top`
+- [S2] `Top` 的扩展方法调用示例
+- [S3] Document/Database 构造函数与入栈
+- [S4] 文件构造函数、Database 来源与入栈
+- [S5] `Task` 的 WorkingDatabase 恢复
+- [S6] `Abort()` / `Commit()`
+- [S7] `IsDisposed`、公开 Dispose 与终结器
+- [S8] `Dispose(bool)` 的完整清理顺序
+- [S9] `GetTop` 的 Database 匹配调用示例
+
+[S1]: https://github.com/FsDiG/Fs.Fox.CAD/blob/4d1bb7237ac020b16bf5d198c952b9a55cc3a1de/src/CADShared/Runtime/DBTrans.cs#L38-L116
+[S2]: https://github.com/FsDiG/Fs.Fox.CAD/blob/4d1bb7237ac020b16bf5d198c952b9a55cc3a1de/src/CADShared/ExtensionMethod/EditorEx.cs#L30-L38
+[S3]: https://github.com/FsDiG/Fs.Fox.CAD/blob/4d1bb7237ac020b16bf5d198c952b9a55cc3a1de/src/CADShared/Runtime/DBTrans.cs#L147-L180
+[S4]: https://github.com/FsDiG/Fs.Fox.CAD/blob/4d1bb7237ac020b16bf5d198c952b9a55cc3a1de/src/CADShared/Runtime/DBTrans.cs#L182-L278
+[S5]: https://github.com/FsDiG/Fs.Fox.CAD/blob/4d1bb7237ac020b16bf5d198c952b9a55cc3a1de/src/CADShared/Runtime/DBTrans.cs#L526-L576
+[S6]: https://github.com/FsDiG/Fs.Fox.CAD/blob/4d1bb7237ac020b16bf5d198c952b9a55cc3a1de/src/CADShared/Runtime/DBTrans.cs#L580-L598
+[S7]: https://github.com/FsDiG/Fs.Fox.CAD/blob/4d1bb7237ac020b16bf5d198c952b9a55cc3a1de/src/CADShared/Runtime/DBTrans.cs#L600-L620
+[S8]: https://github.com/FsDiG/Fs.Fox.CAD/blob/4d1bb7237ac020b16bf5d198c952b9a55cc3a1de/src/CADShared/Runtime/DBTrans.cs#L622-L677
+[S9]: https://github.com/FsDiG/Fs.Fox.CAD/blob/4d1bb7237ac020b16bf5d198c952b9a55cc3a1de/src/CADShared/ExtensionMethod/SymbolTableRecordEx.cs#L224-L235
