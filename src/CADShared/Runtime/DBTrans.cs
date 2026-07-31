@@ -534,6 +534,7 @@ public sealed class DBTrans : IDisposable
     ///      在 参照绑定/深度克隆 的底层共用此函数导致<br/>
     /// 0x02 后台是利用前台当前数据库进行处理的<br/>
     /// 0x03 跨进程通讯暂无测试(可能存在bug)<br/>
+    /// 0x04 委托正常返回或抛出异常时都会恢复进入前的 WorkingDatabase<br/>
     /// </remarks>
     /// <param name="action">委托</param>
     /// <param name="handlingDBTextDeviation">开启单行文字偏移处理</param>
@@ -562,10 +563,16 @@ public sealed class DBTrans : IDisposable
         // 处理单行文字偏移
         // 前台绑定参照的时候不能用它,否则抛出异常:eWasErased
         // 所以本函数自动识别前后台做处理
-        var dbBak = doc.Database;
-        HostApplicationServices.WorkingDatabase = Database;
-        action.Invoke();
-        HostApplicationServices.WorkingDatabase = dbBak;
+        var previousWorkingDatabase = HostApplicationServices.WorkingDatabase;
+        try
+        {
+            HostApplicationServices.WorkingDatabase = Database;
+            action.Invoke();
+        }
+        finally
+        {
+            HostApplicationServices.WorkingDatabase = previousWorkingDatabase;
+        }
     }
 
     #endregion
