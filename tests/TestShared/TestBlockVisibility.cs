@@ -36,4 +36,230 @@ public static class TestBlockVisibility
         Env.Printl(
             $"Visibility: Has={info.Has}, Property={info.PropertyName}, Values={allowedValues}");
     }
+
+    [CommandMethod(nameof(Test_BlockVisibilityInfoAll))]
+    public static void Test_BlockVisibilityInfoAll()
+    {
+        using var tr = new DBTrans();
+        var layoutSpaces = tr.BlockTable.GetRecords()
+            .Where(blockTableRecord => blockTableRecord.IsLayout)
+            .ToList();
+        var blockReferences = layoutSpaces
+            .SelectMany(blockTableRecord => blockTableRecord.GetEntities<BlockReference>())
+            .ToList();
+        if (blockReferences.Count == 0)
+        {
+            Env.Printl(
+                "[SKIP] Block visibility scan requires block references in a drawing layout space.");
+            return;
+        }
+
+        var mutationEvents = new List<string>();
+        var dynamicCount = 0;
+        var visibilityCount = 0;
+        var dynamicWithoutVisibilityCount = 0;
+
+        void OnObjectOpenedForModify(object sender, ObjectEventArgs args)
+        {
+            mutationEvents.Add($"OpenedForModify:{args.DBObject.ObjectId}");
+        }
+
+        void OnObjectAppended(object sender, ObjectEventArgs args)
+        {
+            mutationEvents.Add($"Appended:{args.DBObject.ObjectId}");
+        }
+
+        void OnObjectModified(object sender, ObjectEventArgs args)
+        {
+            mutationEvents.Add($"Modified:{args.DBObject.ObjectId}");
+        }
+
+        void OnObjectErased(object sender, ObjectErasedEventArgs args)
+        {
+            mutationEvents.Add($"Erased:{args.DBObject.ObjectId}");
+        }
+
+        tr.Database.ObjectOpenedForModify += OnObjectOpenedForModify;
+        tr.Database.ObjectAppended += OnObjectAppended;
+        tr.Database.ObjectModified += OnObjectModified;
+        tr.Database.ObjectErased += OnObjectErased;
+        try
+        {
+            foreach (var blockReference in blockReferences)
+            {
+                var isDynamicBlock = blockReference.IsDynamicBlock;
+                var blockDefinitionId = isDynamicBlock
+                    ? blockReference.DynamicBlockTableRecord
+                    : blockReference.BlockTableRecord;
+                var blockDefinition = tr.GetObject<BlockTableRecord>(blockDefinitionId)
+                                      ?? throw new InvalidOperationException(
+                                          $"Block definition {blockDefinitionId} could not be opened.");
+                var extensionDictionaryBefore = blockDefinition.ExtensionDictionary;
+                var info = blockReference.GetVisibilityInfo();
+                if (blockDefinition.ExtensionDictionary != extensionDictionaryBefore)
+                {
+                    throw new InvalidOperationException(
+                        $"Block {blockReference.Handle} visibility query changed its extension dictionary.");
+                }
+
+                if (isDynamicBlock)
+                    dynamicCount++;
+                else if (info.Has)
+                    throw new InvalidOperationException("A non-dynamic block reported visibility metadata.");
+
+                if (!info.Has)
+                {
+                    if (isDynamicBlock)
+                        dynamicWithoutVisibilityCount++;
+                    continue;
+                }
+
+                visibilityCount++;
+                if (string.IsNullOrWhiteSpace(info.PropertyName) || info.AllowedValues.Count == 0)
+                {
+                    throw new InvalidOperationException(
+                        $"Block {blockReference.Handle} returned incomplete visibility metadata.");
+                }
+
+                Env.Printl(
+                    $"Visibility block {blockReference.Handle}: {info.PropertyName} = {string.Join(", ", info.AllowedValues)}");
+            }
+        }
+        finally
+        {
+            tr.Database.ObjectOpenedForModify -= OnObjectOpenedForModify;
+            tr.Database.ObjectAppended -= OnObjectAppended;
+            tr.Database.ObjectModified -= OnObjectModified;
+            tr.Database.ObjectErased -= OnObjectErased;
+        }
+
+        if (mutationEvents.Count != 0)
+        {
+            throw new InvalidOperationException(
+                $"Visibility query mutated the database: {string.Join("; ", mutationEvents)}");
+        }
+
+        if (dynamicCount == 0)
+        {
+            Env.Printl("[SKIP] Block visibility scan requires at least one dynamic block reference.");
+            return;
+        }
+
+        if (visibilityCount == 0)
+        {
+            Env.Printl("[SKIP] Block visibility scan requires at least one visibility parameter.");
+            return;
+        }
+
+        if (dynamicWithoutVisibilityCount == 0)
+        {
+            Env.Printl(
+                "[SKIP] Block visibility scan requires at least one dynamic block without a visibility parameter.");
+            return;
+        }
+
+        Env.Printl(
+            $"Block visibility scan passed. Spaces={layoutSpaces.Count}, Total={blockReferences.Count}, Dynamic={dynamicCount}, WithVisibility={visibilityCount}, WithoutVisibility={dynamicWithoutVisibilityCount}.");
+    }
+
+    [CommandMethod(nameof(Test_BlockVisibilityInfoOrdinary))]
+    public static void Test_BlockVisibilityInfoOrdinary()
+    {
+        var blockName = $"FsFoxOrdinary_{Guid.NewGuid():N}";
+        var blockId = ObjectId.Null;
+        var blockReferenceId = ObjectId.Null;
+        Exception? testFailure = null;
+
+        try
+        {
+            using (var tr = new DBTrans())
+            {
+                blockId = tr.BlockTable.Add(blockName,
+                    new Entity[] { new Line(Point3d.Origin, new Point3d(5, 0, 0)) });
+                blockReferenceId = tr.CurrentSpace.InsertBlock(Point3d.Origin, blockId,
+                    new Scale3d(1));
+            }
+
+            using (var tr = new DBTrans())
+            {
+                var blockReference = tr.GetObject<BlockReference>(blockReferenceId)
+                                     ?? throw new InvalidOperationException(
+                                         "The temporary ordinary block reference was not found.");
+                var blockDefinition = tr.GetObject<BlockTableRecord>(blockId)
+                                      ?? throw new InvalidOperationException(
+                                          "The temporary ordinary block definition was not found.");
+                var extensionDictionaryBefore = blockDefinition.ExtensionDictionary;
+                var mutationEvents = new List<string>();
+
+                void OnObjectOpenedForModify(object sender, ObjectEventArgs args)
+                {
+                    mutationEvents.Add($"OpenedForModify:{args.DBObject.ObjectId}");
+                }
+
+                void OnObjectAppended(object sender, ObjectEventArgs args)
+                {
+                    mutationEvents.Add($"Appended:{args.DBObject.ObjectId}");
+                }
+
+                void OnObjectModified(object sender, ObjectEventArgs args)
+                {
+                    mutationEvents.Add($"Modified:{args.DBObject.ObjectId}");
+                }
+
+                void OnObjectErased(object sender, ObjectErasedEventArgs args)
+                {
+                    mutationEvents.Add($"Erased:{args.DBObject.ObjectId}");
+                }
+
+                tr.Database.ObjectOpenedForModify += OnObjectOpenedForModify;
+                tr.Database.ObjectAppended += OnObjectAppended;
+                tr.Database.ObjectModified += OnObjectModified;
+                tr.Database.ObjectErased += OnObjectErased;
+                BlockVisibilityInfo info;
+                try
+                {
+                    info = blockReference.GetVisibilityInfo();
+                }
+                finally
+                {
+                    tr.Database.ObjectOpenedForModify -= OnObjectOpenedForModify;
+                    tr.Database.ObjectAppended -= OnObjectAppended;
+                    tr.Database.ObjectModified -= OnObjectModified;
+                    tr.Database.ObjectErased -= OnObjectErased;
+                }
+
+                if (info.Has)
+                    throw new InvalidOperationException("An ordinary block reported visibility metadata.");
+                if (blockDefinition.ExtensionDictionary != extensionDictionaryBefore)
+                    throw new InvalidOperationException("The visibility query created an extension dictionary.");
+                if (mutationEvents.Count != 0)
+                {
+                    throw new InvalidOperationException(
+                        $"Ordinary block visibility query mutated the database: {string.Join("; ", mutationEvents)}");
+                }
+            }
+        }
+        catch (Exception exception)
+        {
+            testFailure = exception;
+            throw;
+        }
+        finally
+        {
+            try
+            {
+                using var tr = new DBTrans();
+                if (blockReferenceId.IsOk())
+                    tr.GetObject<BlockReference>(blockReferenceId, OpenMode.ForWrite)?.Erase();
+                if (blockId.IsOk())
+                    tr.GetObject<BlockTableRecord>(blockId, OpenMode.ForWrite)?.Erase(true);
+            }
+            catch (Exception cleanupException) when (testFailure is not null)
+            {
+                testFailure.Data["CleanupException"] = cleanupException;
+            }
+        }
+
+        Env.Printl("Ordinary block visibility query passed.");
+    }
 }

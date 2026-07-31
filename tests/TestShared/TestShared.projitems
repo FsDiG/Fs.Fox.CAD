@@ -45,6 +45,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)TestSelectfilter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestSingleKeyWordHook.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestText.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TestUpstreamSyncAcceptance.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestXdata.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestXRecord.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestXrefEx.cs" />
