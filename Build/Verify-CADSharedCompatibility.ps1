@@ -76,6 +76,201 @@ function Get-TextHash {
     }
 }
 
+function Get-SnapshotValueKind {
+    param($Value)
+
+    if ($null -eq $Value) {
+        return 'null'
+    }
+    if ($Value -is [Array]) {
+        return 'array'
+    }
+    if ($Value -is [Management.Automation.PSCustomObject]) {
+        return 'object'
+    }
+    return 'scalar'
+}
+
+function Format-SnapshotValue {
+    param($Value)
+
+    if ($null -eq $Value) {
+        return 'null'
+    }
+    $text = $Value | ConvertTo-Json -Depth 20 -Compress
+    if ($text.Length -le 320) {
+        return $text
+    }
+    return $text.Substring(0, 317) + '...'
+}
+
+function Get-FirstSnapshotDifference {
+    param(
+        $Expected,
+        $Actual,
+        [string]$Path
+    )
+
+    $expectedKind = Get-SnapshotValueKind $Expected
+    $actualKind = Get-SnapshotValueKind $Actual
+    if ($expectedKind -cne $actualKind) {
+        return [pscustomobject]@{
+            path = $Path
+            expected = Format-SnapshotValue $Expected
+            actual = Format-SnapshotValue $Actual
+        }
+    }
+
+    if ($expectedKind -eq 'null') {
+        return $null
+    }
+
+    if ($expectedKind -eq 'array') {
+        $sharedCount = [Math]::Min($Expected.Count, $Actual.Count)
+        for ($index = 0; $index -lt $sharedCount; $index++) {
+            $difference = Get-FirstSnapshotDifference $Expected[$index] $Actual[$index] "$Path[$index]"
+            if ($null -ne $difference) {
+                return $difference
+            }
+        }
+        if ($Expected.Count -ne $Actual.Count) {
+            return [pscustomobject]@{
+                path = "$Path.Count"
+                expected = $Expected.Count.ToString()
+                actual = $Actual.Count.ToString()
+            }
+        }
+        return $null
+    }
+
+    if ($expectedKind -eq 'object') {
+        $expectedProperties = @($Expected.PSObject.Properties.Name)
+        $actualProperties = @($Actual.PSObject.Properties.Name)
+        $propertyNames = @($expectedProperties + $actualProperties | Sort-Object -Unique)
+        foreach ($propertyName in $propertyNames) {
+            if ($propertyName -notin $expectedProperties) {
+                return [pscustomobject]@{
+                    path = "$Path.$propertyName"
+                    expected = '<missing>'
+                    actual = Format-SnapshotValue $Actual.$propertyName
+                }
+            }
+            if ($propertyName -notin $actualProperties) {
+                return [pscustomobject]@{
+                    path = "$Path.$propertyName"
+                    expected = Format-SnapshotValue $Expected.$propertyName
+                    actual = '<missing>'
+                }
+            }
+            $difference = Get-FirstSnapshotDifference $Expected.$propertyName $Actual.$propertyName "$Path.$propertyName"
+            if ($null -ne $difference) {
+                return $difference
+            }
+        }
+        return $null
+    }
+
+    $expectedJson = $Expected | ConvertTo-Json -Compress
+    $actualJson = $Actual | ConvertTo-Json -Compress
+    if ($expectedJson -cne $actualJson) {
+        return [pscustomobject]@{
+            path = $Path
+            expected = $expectedJson
+            actual = $actualJson
+        }
+    }
+    return $null
+}
+
+function Add-SnapshotCategoryDifference {
+    param(
+        [Collections.Generic.List[object]]$Differences,
+        [string]$Target,
+        [string]$Category,
+        $Expected,
+        $Actual
+    )
+
+    $difference = Get-FirstSnapshotDifference $Expected $Actual $Category
+    if ($null -ne $difference) {
+        $Differences.Add([pscustomobject]@{
+                target = $Target
+                category = $Category
+                path = $difference.path
+                expected = $difference.expected
+                actual = $difference.actual
+            }) | Out-Null
+    }
+}
+
+function Get-CompatibilityDifferences {
+    param(
+        $Expected,
+        $Actual
+    )
+
+    $differences = [Collections.Generic.List[object]]::new()
+    Add-SnapshotCategoryDifference $differences '<root>' 'schemaVersion' $Expected.schemaVersion $Actual.schemaVersion
+
+    foreach ($expectedTarget in $Expected.targets) {
+        $actualTargets = @($Actual.targets | Where-Object { $_.name -ceq $expectedTarget.name })
+        if ($actualTargets.Count -ne 1) {
+            $differences.Add([pscustomobject]@{
+                    target = $expectedTarget.name
+                    category = 'target'
+                    path = 'target'
+                    expected = 'exactly one target'
+                    actual = "$($actualTargets.Count) targets"
+                }) | Out-Null
+            continue
+        }
+
+        $actualTarget = $actualTargets[0]
+        Add-SnapshotCategoryDifference $differences $expectedTarget.name 'identity' $expectedTarget.assembly.identity $actualTarget.assembly.identity
+        Add-SnapshotCategoryDifference $differences $expectedTarget.name 'references' $expectedTarget.assembly.references $actualTarget.assembly.references
+        $expectedPublicApi = [pscustomobject]@{
+            recordCount = $expectedTarget.assembly.publicApiRecordCount
+            types = $expectedTarget.assembly.publicApi
+        }
+        $actualPublicApi = [pscustomobject]@{
+            recordCount = $actualTarget.assembly.publicApiRecordCount
+            types = $actualTarget.assembly.publicApi
+        }
+        Add-SnapshotCategoryDifference $differences $expectedTarget.name 'publicApi' $expectedPublicApi $actualPublicApi
+        $expectedPackageMetadata = [pscustomobject]@{
+            id = $expectedTarget.package.id
+            version = $expectedTarget.package.version
+            repository = $expectedTarget.package.repository
+            dependencies = $expectedTarget.package.dependencies
+            frameworkReferences = $expectedTarget.package.frameworkReferences
+        }
+        $actualPackageMetadata = [pscustomobject]@{
+            id = $actualTarget.package.id
+            version = $actualTarget.package.version
+            repository = $actualTarget.package.repository
+            dependencies = $actualTarget.package.dependencies
+            frameworkReferences = $actualTarget.package.frameworkReferences
+        }
+        Add-SnapshotCategoryDifference $differences $expectedTarget.name 'packageMetadata' $expectedPackageMetadata $actualPackageMetadata
+        Add-SnapshotCategoryDifference $differences $expectedTarget.name 'packageAssets' $expectedTarget.package.assets $actualTarget.package.assets
+    }
+
+    $expectedTargetNames = @($Expected.targets.name)
+    foreach ($actualTarget in $Actual.targets) {
+        if ($actualTarget.name -notin $expectedTargetNames) {
+            $differences.Add([pscustomobject]@{
+                    target = $actualTarget.name
+                    category = 'target'
+                    path = 'target'
+                    expected = '<missing>'
+                    actual = 'unexpected target'
+                }) | Out-Null
+        }
+    }
+
+    return $differences
+}
+
 function Get-MetadataToken {
     param([Reflection.Metadata.Handle]$Handle)
     return [Reflection.Metadata.Ecma335.MetadataTokens]::GetToken($Handle)
@@ -614,7 +809,14 @@ try {
         $baselineJson = $baseline | ConvertTo-Json -Depth 30 -Compress
         $snapshotJson = $snapshot | ConvertTo-Json -Depth 30 -Compress
         if ($baselineJson -cne $snapshotJson) {
-            throw 'Current public API, assembly references, or package layout differs from the committed baseline.'
+            $normalizedSnapshot = $snapshotJson | ConvertFrom-Json
+            $differences = @(Get-CompatibilityDifferences $baseline $normalizedSnapshot)
+            foreach ($difference in $differences) {
+                Write-Host "Compatibility difference: target=$($difference.target); category=$($difference.category); path=$($difference.path)"
+                Write-Host "  expected: $($difference.expected)"
+                Write-Host "  actual:   $($difference.actual)"
+            }
+            throw "CADShared compatibility baseline differs in $($differences.Count) target/category entries."
         }
     }
 }
