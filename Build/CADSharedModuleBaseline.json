@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
   "normalizedSourceHash": "sha256-utf8-lf",
-  "expectedCompileCount": 125,
+  "expectedCompileCount": 126,
   "moduleCounts": {
     "Foundation": 11,
     "Platform.Windows": 5,
     "Cad.Interop": 3,
     "Cad.Geometry": 16,
-    "Cad.Database": 41,
+    "Cad.Database": 42,
     "Cad.Editor": 19,
     "Cad.Application": 8,
     "Cad.Runtime": 14,
@@ -257,10 +257,25 @@
         },
         {
           "rule": "ApplicationServices",
-          "count": 5
+          "count": 2
         }
       ],
-      "sourceSha256": "8615c232ab929ec2172035c82af01241c41c0d4da77cf1ea182cbece21231e3e"
+      "sourceSha256": "6cbed08713176af5259e5cda20719d1b8b9793b392771c0d85f147695ab2f6d2"
+    },
+    {
+      "order": "0241",
+      "fileName": "SwitchDatabase.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [
+        "BD-02"
+      ],
+      "boundaryFindings": [
+        {
+          "rule": "ApplicationServices",
+          "count": 3
+        }
+      ],
+      "sourceSha256": "49770ba4e8769aa8b38232c2750b4ec3d5e9bd6465261a65d5e8971e18900720"
     },
     {
       "order": "0250",
