@@ -263,7 +263,7 @@
       <FsFoxOrder>0590</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-06</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\TangentEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Interop\ThirdParty\Tianzheng\TangentEx.cs">
       <FsFoxModule>Cad.Interop</FsFoxModule>
       <FsFoxOrder>0600</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-14</FsFoxBoundaryDebt>
@@ -330,7 +330,7 @@
       <FsFoxModule>Cad.Runtime</FsFoxModule>
       <FsFoxOrder>0740</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)PE\AcadPeInfo.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Interop\Native\AcadPeInfo.cs">
       <FsFoxModule>Cad.Interop</FsFoxModule>
       <FsFoxOrder>0750</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-14</FsFoxBoundaryDebt>
@@ -389,7 +389,7 @@
       <FsFoxOrder>0870</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-12</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Runtime\PInvokeCad.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Interop\Native\PInvokeCad.cs">
       <FsFoxModule>Cad.Interop</FsFoxModule>
       <FsFoxOrder>0880</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-14</FsFoxBoundaryDebt>
