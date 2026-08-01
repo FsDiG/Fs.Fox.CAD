@@ -460,9 +460,25 @@
       <FsFoxModule>Cad.Editor</FsFoxModule>
       <FsFoxOrder>0950</FsFoxOrder>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Selection\Filters\OpAnd.cs">
+      <FsFoxModule>Cad.Editor</FsFoxModule>
+      <FsFoxOrder>0951</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Selection\Filters\OpOr.cs">
+      <FsFoxModule>Cad.Editor</FsFoxModule>
+      <FsFoxOrder>0952</FsFoxOrder>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Selection\Filters\OpLogi.cs">
       <FsFoxModule>Cad.Editor</FsFoxModule>
       <FsFoxOrder>0960</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Selection\Filters\OpNot.cs">
+      <FsFoxModule>Cad.Editor</FsFoxModule>
+      <FsFoxOrder>0961</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Selection\Filters\OpXor.cs">
+      <FsFoxModule>Cad.Editor</FsFoxModule>
+      <FsFoxOrder>0962</FsFoxOrder>
     </Compile>
   </ItemGroup>
   <ItemGroup>
