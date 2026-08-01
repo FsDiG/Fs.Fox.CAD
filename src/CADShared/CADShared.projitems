@@ -355,6 +355,14 @@
       <FsFoxModule>Cad.Runtime</FsFoxModule>
       <FsFoxOrder>0690</FsFoxOrder>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Registration\AssemLoadType.cs">
+      <FsFoxModule>Cad.Runtime</FsFoxModule>
+      <FsFoxOrder>0691</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Registration\AutoRegConfig.cs">
+      <FsFoxModule>Cad.Runtime</FsFoxModule>
+      <FsFoxOrder>0692</FsFoxOrder>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Registration\AutoReg.cs">
       <FsFoxModule>Cad.Runtime</FsFoxModule>
       <FsFoxOrder>0700</FsFoxOrder>
