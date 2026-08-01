@@ -106,6 +106,7 @@ tests/
 
 ## 文档
 
+- [文档与代码协同治理方案][documentation-architecture]
 - [构建与项目结构][building]
 - [架构与核心抽象][architecture]
 - [DBTrans 生命周期与释放契约][dbtrans-lifecycle]
@@ -121,6 +122,7 @@ tests/
 
 本项目采用 [MIT License][license]。原项目作者及贡献者信息见 [上游说明][upstream]。
 
+[documentation-architecture]: https://github.com/FsDiG/Fs.Fox.CAD/blob/main/docs/documentation-architecture.md
 [building]: https://github.com/FsDiG/Fs.Fox.CAD/blob/main/%E7%BC%96%E8%AF%91%E8%AF%B4%E6%98%8E.md
 [architecture]: https://github.com/FsDiG/Fs.Fox.CAD/blob/main/docs/%E5%85%B3%E4%BA%8EIFoxCAD%E7%9A%84%E6%9E%B6%E6%9E%84%E8%AF%B4%E6%98%8E.md
 [dbtrans-lifecycle]: https://github.com/FsDiG/Fs.Fox.CAD/blob/main/docs/dbtrans-lifecycle-contract.md
