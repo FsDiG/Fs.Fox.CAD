@@ -1,0 +1,930 @@
+{
+  "schemaVersion": 1,
+  "normalizedSourceHash": "sha256-utf8-lf",
+  "expectedCompileCount": 96,
+  "moduleCounts": {
+    "Foundation": 9,
+    "Platform.Windows": 5,
+    "Cad.Interop": 3,
+    "Cad.Geometry": 10,
+    "Cad.Database": 35,
+    "Cad.Editor": 13,
+    "Cad.Application": 6,
+    "Cad.Runtime": 8,
+    "Cad.UI": 7
+  },
+  "items": [
+    {
+      "order": "0010",
+      "fileName": "QuadEntity.cs",
+      "module": "Cad.Geometry",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "49c54077d74c3938ced0b1788da1821a06a7b2d2172ddc04932a66f8adfa9f61"
+    },
+    {
+      "order": "0020",
+      "fileName": "QuadTree.cs",
+      "module": "Cad.Geometry",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "5ae85e934edcc624ddca54bd5ec0282bc82d5f03f22c2e58b02848297e89bad2"
+    },
+    {
+      "order": "0030",
+      "fileName": "QuadTreeEvn.cs",
+      "module": "Cad.Geometry",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "bfc6ce726f10359449bd92b517c98ad5cf06786da72a875b17620d39ef2faeef"
+    },
+    {
+      "order": "0040",
+      "fileName": "QuadTreeNode.cs",
+      "module": "Cad.Geometry",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "5c3f037132f35d74670c9d8a3d3527ed65e38e115bdc2f61a6b948bff5f16e02"
+    },
+    {
+      "order": "0050",
+      "fileName": "QuadTreeSelectMode.cs",
+      "module": "Cad.Geometry",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "39660902c2961b54af812d1dc5eec617f44c6307638b24c0048a23db5436f014"
+    },
+    {
+      "order": "0060",
+      "fileName": "Rect.cs",
+      "module": "Cad.Geometry",
+      "boundaryDebt": [
+        "BD-24"
+      ],
+      "boundaryFindings": [
+        {
+          "rule": "DatabaseServices",
+          "count": 1
+        }
+      ],
+      "sourceSha256": "5d605cdc53d630e885af3334f8b9cba06fce1aab033d1ae7f1be4b2fc86e47df"
+    },
+    {
+      "order": "0070",
+      "fileName": "AssocPersSubentityIdPEEx.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [
+        "BD-16"
+      ],
+      "boundaryFindings": [],
+      "sourceSha256": "feba2cacd8333ca69c144b78a8df291558a9b6050f09095434cb22dd32d6abb0"
+    },
+    {
+      "order": "0080",
+      "fileName": "AssocUtils.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [
+        "BD-16"
+      ],
+      "boundaryFindings": [],
+      "sourceSha256": "f808dadf8fdec499a30521399a63b25391ed04e2422c7ff889e72dca086f2011"
+    },
+    {
+      "order": "0090",
+      "fileName": "ArrayEx.cs",
+      "module": "Foundation",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "a7fb6090b6e229ff1da8f36dcf5148e75f20cca7e670505b937a981fd05a43c7"
+    },
+    {
+      "order": "0100",
+      "fileName": "DebugHelper.cs",
+      "module": "Foundation",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "a380b660c0376b0ec064a1ab21ff29241d9d96ee1d5dbcf9228f87a221a5a3bc"
+    },
+    {
+      "order": "0110",
+      "fileName": "EnumEx.cs",
+      "module": "Foundation",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "6babe7f16d5af861ba2fd4150794ca51ca335ee6976d17580c595d2155fb1161"
+    },
+    {
+      "order": "0120",
+      "fileName": "LinqEx.cs",
+      "module": "Foundation",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "142774cd0d3f9a48ae86a8de3f8c62d1f095142b134c08feff14ffd33436b2f9"
+    },
+    {
+      "order": "0130",
+      "fileName": "LoopList.cs",
+      "module": "Foundation",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "689dffc51be7322cbedf5fb36f098a494525149d677913c0418c36c1498272e0"
+    },
+    {
+      "order": "0140",
+      "fileName": "LoopState.cs",
+      "module": "Foundation",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "7b077f08c143f94fad78a5831201a0d3eb98ac1b4418f3e282ade66979204d78"
+    },
+    {
+      "order": "0150",
+      "fileName": "ArgumentNullEx.cs",
+      "module": "Foundation",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "6d48544f9318ea9f026a1758e60dcfbd61510937f549bcaaf33bd784cc81b420"
+    },
+    {
+      "order": "0160",
+      "fileName": "CallerArgumentExpressionAttribute.cs",
+      "module": "Foundation",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "cfa334d82700cf37eed51a2f5fc705bb21b678575e5984ef4fc84de0d421e1f5"
+    },
+    {
+      "order": "0170",
+      "fileName": "Enums.cs",
+      "module": "Platform.Windows",
+      "boundaryDebt": [
+        "BD-15"
+      ],
+      "boundaryFindings": [],
+      "sourceSha256": "0eb51f02c0989cfa05b982e3f47781d67399d0251c3a6b355df9838592d5135e"
+    },
+    {
+      "order": "0180",
+      "fileName": "SystemEx.cs",
+      "module": "Platform.Windows",
+      "boundaryDebt": [
+        "BD-15"
+      ],
+      "boundaryFindings": [],
+      "sourceSha256": "2b97480e8bdb0a560a4c0454f6d0bbd2ff327cbb4d2e1b75497dd6f30a2a70fd"
+    },
+    {
+      "order": "0190",
+      "fileName": "PInvokeUser32.cs",
+      "module": "Platform.Windows",
+      "boundaryDebt": [
+        "BD-15"
+      ],
+      "boundaryFindings": [],
+      "sourceSha256": "b2cfc5672802248c4460edb9551d2c157088a224c52dee5514002c3144417cf1"
+    },
+    {
+      "order": "0200",
+      "fileName": "WindowsAPI.cs",
+      "module": "Platform.Windows",
+      "boundaryDebt": [
+        "BD-15"
+      ],
+      "boundaryFindings": [],
+      "sourceSha256": "ffb3c0ed98231ff115a46a9825c710e915dfcfa97836520cf6ba00d1845273a2"
+    },
+    {
+      "order": "0210",
+      "fileName": "BaseEx.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "498c8fde7485257f9a3b94b9d9c687f7d49647ae8c25fc80545e4cc3a7c3eaad"
+    },
+    {
+      "order": "0220",
+      "fileName": "BulgeVertexWidth.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "2cc7380d62f1d0fab9765b52514db36b6063b935d0624435325fc9efb8ecc6fd"
+    },
+    {
+      "order": "0230",
+      "fileName": "CollectionEx.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [
+        "BD-01"
+      ],
+      "boundaryFindings": [],
+      "sourceSha256": "8e3e0082d1454ba78f5f7bddeedcd9d25a2e1538a197fcaa9d04532a7df892e9"
+    },
+    {
+      "order": "0240",
+      "fileName": "DatabaseEx.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [
+        "BD-02"
+      ],
+      "boundaryFindings": [
+        {
+          "rule": "DesktopUi",
+          "count": 2
+        },
+        {
+          "rule": "ApplicationServices",
+          "count": 5
+        }
+      ],
+      "sourceSha256": "8615c232ab929ec2172035c82af01241c41c0d4da77cf1ea182cbece21231e3e"
+    },
+    {
+      "order": "0250",
+      "fileName": "DBDictionaryEx.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "949d7222384a2ebf0a764635bebeab4bc8c8c4d314c2337d56bb0fe56f92fa32"
+    },
+    {
+      "order": "0260",
+      "fileName": "DBObjectEx.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "43648123689a1c4677a2f8c2d35f4a80690070b7c9bc2693fc044a5b966a1c40"
+    },
+    {
+      "order": "0270",
+      "fileName": "DBTransEx.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "b1c1c46701894bcb8a02581125289118b5e882ec69a843621475748e4ffeadc8"
+    },
+    {
+      "order": "0280",
+      "fileName": "DocumentLockManager.cs",
+      "module": "Cad.Application",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "9829caa40cb312e101c1a9d7c502aed386df00a86aaba1227c93ad995ebe12ab"
+    },
+    {
+      "order": "0290",
+      "fileName": "DwgMark.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "9fa7cee321ccf30110c98054409c1f0e6d005215a87fea4bfce4104a339f9267"
+    },
+    {
+      "order": "0300",
+      "fileName": "EditorEx.cs",
+      "module": "Cad.Editor",
+      "boundaryDebt": [
+        "BD-07"
+      ],
+      "boundaryFindings": [
+        {
+          "rule": "DesktopUi",
+          "count": 12
+        }
+      ],
+      "sourceSha256": "2d4b00541b974ad2182fef93fcaba3248333b323e5abfa57275ec26c4ef48080"
+    },
+    {
+      "order": "0310",
+      "fileName": "ArcEx.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "1d63864a95d98187b54e92c02b33dd2870fa85e4ac951b1b2adc8e567ea1308c"
+    },
+    {
+      "order": "0320",
+      "fileName": "BlockReferenceEx.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [
+        "BD-17"
+      ],
+      "boundaryFindings": [
+        {
+          "rule": "ApplicationServices",
+          "count": 1
+        }
+      ],
+      "sourceSha256": "4f60fe77eb1f97b8f79cd4800711f0692d57ed2a998231a0ff94d54f97201c38"
+    },
+    {
+      "order": "0330",
+      "fileName": "BoundingBox9.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "b7050660ed6f3d2b9e6e0060cb50137f21edb9a4df316c8ada215b1eeeb9ca56"
+    },
+    {
+      "order": "0340",
+      "fileName": "CircleEx.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "e26f3be71d6f331e47ed26e6231656b76396940e0906354e33f8c0f712a0e68e"
+    },
+    {
+      "order": "0350",
+      "fileName": "CurveEx.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "d19c16f505f14013d492f62f7b2d2623b8263a68507081001d803511c6468e89"
+    },
+    {
+      "order": "0360",
+      "fileName": "DBTextEx.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [
+        "BD-18"
+      ],
+      "boundaryFindings": [
+        {
+          "rule": "ApplicationServices",
+          "count": 1
+        }
+      ],
+      "sourceSha256": "37314dd53c9bb3afa1df5a30f46cc90a4862f278129e42e5ae1653f4ce699e12"
+    },
+    {
+      "order": "0370",
+      "fileName": "EntityBoundingInfo.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "0700103513a0c1d6fdf24ecddad1d11b2399fbec7c1a900d08882ce6895b5fd0"
+    },
+    {
+      "order": "0380",
+      "fileName": "EntityEx.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "59172f552b4abb68e194930b7e606093f5a14f6a00a9750335ac61fb04b1594c"
+    },
+    {
+      "order": "0390",
+      "fileName": "MTextEx.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "c92eebce7c244644c80d2b9d49c9a933bdfa772a42b5100a83a3785c2e8456ca"
+    },
+    {
+      "order": "0400",
+      "fileName": "PolylineEx.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "73b7ebc51401133ae1bb75dddca60ea905bdb33450e500454e288caec6d29c32"
+    },
+    {
+      "order": "0410",
+      "fileName": "RegionEx.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "15aa08f907490bd4079e0c37b25786e4064785910e626059b4d335b40a41aa1e"
+    },
+    {
+      "order": "0420",
+      "fileName": "Enums.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [
+        "BD-19"
+      ],
+      "boundaryFindings": [],
+      "sourceSha256": "beff4608ad8c2b80e2103572b4680fb87875a0e26a6920f7760a36349de57e43"
+    },
+    {
+      "order": "0430",
+      "fileName": "ErrorInfoEx.cs",
+      "module": "Cad.UI",
+      "boundaryDebt": [
+        "BD-23"
+      ],
+      "boundaryFindings": [],
+      "sourceSha256": "e4ff1b387ccae282f3b8c10fe718f512257e04cfd019ebfe6a297cc8f203a299"
+    },
+    {
+      "order": "0440",
+      "fileName": "Curve2dEx.cs",
+      "module": "Cad.Geometry",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "de29d341004267838d4ffe31fc679ab3830a4abeca59bdeaa56be59e4db88061"
+    },
+    {
+      "order": "0450",
+      "fileName": "Curve3dEx.cs",
+      "module": "Cad.Geometry",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "325654520c64b962243b6640060ec19dd88ac9f687f4beaaae4052681f0c83ce"
+    },
+    {
+      "order": "0460",
+      "fileName": "GeometryEx.cs",
+      "module": "Cad.Geometry",
+      "boundaryDebt": [
+        "BD-04"
+      ],
+      "boundaryFindings": [
+        {
+          "rule": "EditorInput",
+          "count": 6
+        },
+        {
+          "rule": "GraphicsInterface",
+          "count": 2
+        }
+      ],
+      "sourceSha256": "a6951a6235b6b71e87f63f86eb5436613b28bd85fe20a362aa760c587d9e9fa3"
+    },
+    {
+      "order": "0470",
+      "fileName": "PointEx.cs",
+      "module": "Cad.Geometry",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "ff9a42062ff7a8a72db943f90fc2c48f0628150345de813464c43c7fec6ba36a"
+    },
+    {
+      "order": "0480",
+      "fileName": "HatchDialog.cs",
+      "module": "Cad.UI",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "305c1ce8ed222b6b5537a5608b2195595088c72f50c6d0d7f5b3ff0d8f6cfaca"
+    },
+    {
+      "order": "0490",
+      "fileName": "JigEx.cs",
+      "module": "Cad.Editor",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "a13d5ab38ec215cc6dace235103fb8b1bb66e18655886ea60153de269fa689af"
+    },
+    {
+      "order": "0500",
+      "fileName": "JigExTransient.cs",
+      "module": "Cad.Editor",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "1d3eb6c05e094fd439c80848541cc9b3796fb699642ad555a9658085f58044dd"
+    },
+    {
+      "order": "0510",
+      "fileName": "ObjectIdEx.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "37f0dee292d6989950ed516bfa106a1d3a94f839bd01d0b55a8e5dc8dbc9e1d7"
+    },
+    {
+      "order": "0520",
+      "fileName": "PaneEx.cs",
+      "module": "Cad.UI",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "63abbbb854a3e41e9e3153339700834ccd8b7d1b1939b6ec00c4eacd739fd50f"
+    },
+    {
+      "order": "0530",
+      "fileName": "PromptOptionsEx.cs",
+      "module": "Cad.Editor",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "e4baaf3530bd764223fee16db96414eee63e89bfec84375a945d6c30977c4419"
+    },
+    {
+      "order": "0540",
+      "fileName": "RandomEx.cs",
+      "module": "Foundation",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "5d8763e7834d6965386984da710c7deb86a8da507aa2df7c66bb336d2071a762"
+    },
+    {
+      "order": "0550",
+      "fileName": "RedrawEx.cs",
+      "module": "Cad.Editor",
+      "boundaryDebt": [
+        "BD-08"
+      ],
+      "boundaryFindings": [
+        {
+          "rule": "DesktopUi",
+          "count": 2
+        }
+      ],
+      "sourceSha256": "87dbacabf93acd458b36d36c7c9976ebacb32ed63aee5c1056bc50b2d339ea96"
+    },
+    {
+      "order": "0560",
+      "fileName": "SelectionSetEx.cs",
+      "module": "Cad.Editor",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "31f7c297a97b9bbfe4f15c9d6e1a6d36bb8315c2880583e0fe3de839ab521cf0"
+    },
+    {
+      "order": "0570",
+      "fileName": "SingleKeyWordHook.cs",
+      "module": "Cad.Editor",
+      "boundaryDebt": [
+        "BD-21"
+      ],
+      "boundaryFindings": [
+        {
+          "rule": "DesktopUi",
+          "count": 1
+        }
+      ],
+      "sourceSha256": "788dfbfd87238783c212bbfa383b0a87178634a8f0fba7475665d833e7aebbbe"
+    },
+    {
+      "order": "0580",
+      "fileName": "SymbolTableEx.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "8971a3dd297a6bc194b29798fc9a060c5189ce3e42f8a33cff3ccb1bcf9008c6"
+    },
+    {
+      "order": "0590",
+      "fileName": "SymbolTableRecordEx.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [
+        "BD-06"
+      ],
+      "boundaryFindings": [],
+      "sourceSha256": "ef8b4d5ca424a164bd0e6964cd06a32ce3e2289ca403cb5042a0d0483bfd87cc"
+    },
+    {
+      "order": "0600",
+      "fileName": "TangentEx.cs",
+      "module": "Cad.Interop",
+      "boundaryDebt": [
+        "BD-14"
+      ],
+      "boundaryFindings": [],
+      "sourceSha256": "018afa7775a4f74b0d44afe44098036fbc94aca5206bdaa073212b79ac0019f2"
+    },
+    {
+      "order": "0610",
+      "fileName": "IFoxUtils.cs",
+      "module": "Cad.UI",
+      "boundaryDebt": [
+        "BD-10"
+      ],
+      "boundaryFindings": [],
+      "sourceSha256": "e1247bcb715f052e69f4871951dfeee842c8627316a35c11f8b8acfe5a0b10de"
+    },
+    {
+      "order": "0620",
+      "fileName": "TransactionEx.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "8e2f07f33bc479031891132b4c5c7bf3f11afb71ba55150fdab7b5dac57534e1"
+    },
+    {
+      "order": "0630",
+      "fileName": "WindowEx.cs",
+      "module": "Cad.UI",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "531598127532ca3eecf0eb50d27a8f83b960636dbfd62ab74dba27074e6e8920"
+    },
+    {
+      "order": "0640",
+      "fileName": "XrefEx.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "252e0d68be9a0c96619f4d24fd4c08211b20e630347c410cf64000a501cec912"
+    },
+    {
+      "order": "0650",
+      "fileName": "HatchConverter.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "606cf66639b2a83483f68c7e7cd7fcdea72276b528e72c9c44381c3450bbb8b2"
+    },
+    {
+      "order": "0660",
+      "fileName": "HatchEx.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [
+        "BD-05"
+      ],
+      "boundaryFindings": [
+        {
+          "rule": "EditorInput",
+          "count": 1
+        }
+      ],
+      "sourceSha256": "6fd5d9592a61f72143607e90e0746083ea954b9da9bbc66edcfa6702fbc8502e"
+    },
+    {
+      "order": "0670",
+      "fileName": "HatchInfo.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [
+        "BD-05"
+      ],
+      "boundaryFindings": [
+        {
+          "rule": "EditorInput",
+          "count": 2
+        }
+      ],
+      "sourceSha256": "b26f7dc92981ec2ebf719aee5cbb508c65a55584a826d022c9f3c8d94e9d18fc"
+    },
+    {
+      "order": "0680",
+      "fileName": "AcadEMR.cs",
+      "module": "Cad.Runtime",
+      "boundaryDebt": [
+        "BD-13"
+      ],
+      "boundaryFindings": [],
+      "sourceSha256": "e6bf1e519471fd957f9c77b41f89fe6153e1bc784901abe7116f3fad78d09afd"
+    },
+    {
+      "order": "0690",
+      "fileName": "AssemInfo.cs",
+      "module": "Cad.Runtime",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "57ab4c2ee39d4026e760b8fd7659b23a4cfb1e2a873e9c22f9a4a5df33f36b36"
+    },
+    {
+      "order": "0700",
+      "fileName": "AutoReg.cs",
+      "module": "Cad.Runtime",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "fa4c05ab523de992a19ad95dafae8f7d7136f7b9adcbbc574b93650ddf962d10"
+    },
+    {
+      "order": "0710",
+      "fileName": "AutoRegAssem.cs",
+      "module": "Cad.Runtime",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "8e588b0448aab6a595e366336a7179afd15967cde6dda9363194c62504ec92e9"
+    },
+    {
+      "order": "0720",
+      "fileName": "CheckFactory.cs",
+      "module": "Cad.Runtime",
+      "boundaryDebt": [
+        "BD-11"
+      ],
+      "boundaryFindings": [
+        {
+          "rule": "DesktopUi",
+          "count": 2
+        }
+      ],
+      "sourceSha256": "16e24edc02d1950776012b148aee01203c93496b40683acf7d4089fd4f5c2c99"
+    },
+    {
+      "order": "0730",
+      "fileName": "IAutoGo.cs",
+      "module": "Cad.Runtime",
+      "boundaryDebt": [
+        "BD-20"
+      ],
+      "boundaryFindings": [],
+      "sourceSha256": "7141e6d121686b92779f95e68f01f876d5850b277bb8fedf63d2dcb555e9532c"
+    },
+    {
+      "order": "0740",
+      "fileName": "MethodInfoHelper.cs",
+      "module": "Cad.Runtime",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "1fb8424559ce73c4b1719b61a711d02e6b31cf7aa8c34100575d0c2e9b423761"
+    },
+    {
+      "order": "0750",
+      "fileName": "AcadPeInfo.cs",
+      "module": "Cad.Interop",
+      "boundaryDebt": [
+        "BD-14"
+      ],
+      "boundaryFindings": [],
+      "sourceSha256": "f394fdaa2eb0bc4c9006bf029e4c30cd89a81e4e8812e5a95af9fe561a53d840"
+    },
+    {
+      "order": "0760",
+      "fileName": "DBmod.cs",
+      "module": "Cad.Application",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "107ba242d745703f7e7d6d16216a8f029d2bc781edbf5ec108105422b01ebf97"
+    },
+    {
+      "order": "0770",
+      "fileName": "PostCmd.cs",
+      "module": "Cad.Editor",
+      "boundaryDebt": [
+        "BD-22"
+      ],
+      "boundaryFindings": [],
+      "sourceSha256": "2a5589410e25e4d45e963511adc706f81fb33a357b8fdffbe24164a661241f34"
+    },
+    {
+      "order": "0780",
+      "fileName": "ProgramPE.cs",
+      "module": "Platform.Windows",
+      "boundaryDebt": [
+        "BD-15"
+      ],
+      "boundaryFindings": [],
+      "sourceSha256": "a13daf801eef1230f26183034501155ebaaa86475b00dd76a8c2c193f8de95f5"
+    },
+    {
+      "order": "0790",
+      "fileName": "LispList.cs",
+      "module": "Cad.Runtime",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "1f52af5d5fded38c3b1490b0bd0a77a06ab985407699bc851a99f045b5d3f481"
+    },
+    {
+      "order": "0800",
+      "fileName": "TypedValueList.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "d6cc93aa7167d323cf4ec8acfaeb5941f84b6577c6c1342b73e91c587bcccd1f"
+    },
+    {
+      "order": "0810",
+      "fileName": "XDataList.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "b9edb4091f9ae1236e98b04c1220dcab27f03f63e273b2cc4f20461556e662e0"
+    },
+    {
+      "order": "0820",
+      "fileName": "XRecordDataList.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "a90ef8af17b8441bb47277717a42cf025358a663e836de4b5447b2c5243f584a"
+    },
+    {
+      "order": "0830",
+      "fileName": "AcPreferences.cs",
+      "module": "Cad.UI",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "1d02cd0f1cb92d0518b46df1445f870e9841a26f51516684e710b49bd47c2926"
+    },
+    {
+      "order": "0840",
+      "fileName": "DBTrans.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [
+        "BD-03"
+      ],
+      "boundaryFindings": [
+        {
+          "rule": "ApplicationServices",
+          "count": 19
+        }
+      ],
+      "sourceSha256": "75f706dc330bb219ec9a643a6436e4851c3e18abe893ebd2a487833511b1e85b"
+    },
+    {
+      "order": "0850",
+      "fileName": "Env.cs",
+      "module": "Cad.Application",
+      "boundaryDebt": [
+        "BD-09"
+      ],
+      "boundaryFindings": [],
+      "sourceSha256": "1237cb0d2ac3f73ff95a8ecdf76b0bf5e2105e19dd5b1c4b4a0233b9e8232197"
+    },
+    {
+      "order": "0860",
+      "fileName": "IdleAction.cs",
+      "module": "Cad.Application",
+      "boundaryDebt": [
+        "BD-12"
+      ],
+      "boundaryFindings": [
+        {
+          "rule": "DesktopUi",
+          "count": 1
+        }
+      ],
+      "sourceSha256": "3377ae42a2a538b171fbec4ec0ed04075434fb414141ce23dba4f90e11b42ce1"
+    },
+    {
+      "order": "0870",
+      "fileName": "IdleNoCommandAction.cs",
+      "module": "Cad.Application",
+      "boundaryDebt": [
+        "BD-12"
+      ],
+      "boundaryFindings": [
+        {
+          "rule": "DesktopUi",
+          "count": 2
+        }
+      ],
+      "sourceSha256": "7faa36ac4b3da7e8e7556041162fce723efe0c8e26e95a749b084548c189e81d"
+    },
+    {
+      "order": "0880",
+      "fileName": "PInvokeCad.cs",
+      "module": "Cad.Interop",
+      "boundaryDebt": [
+        "BD-14"
+      ],
+      "boundaryFindings": [],
+      "sourceSha256": "cb262627cb8142284bf745892e9b1db6c48ea5e7b101d3bd33bba034f961f263"
+    },
+    {
+      "order": "0890",
+      "fileName": "ProgressMeterUtils.cs",
+      "module": "Cad.UI",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "6c1c43467bbe9a709f2b5772946237236d8ced1a47f6108a2b0cca3c9352e37e"
+    },
+    {
+      "order": "0900",
+      "fileName": "SymbolTable.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "8f04f91d1764e65c6e4eed5741617081ade197772d9ef9384208c6c73d15e2fe"
+    },
+    {
+      "order": "0910",
+      "fileName": "SystemVariableManager.cs",
+      "module": "Cad.Application",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "3a16caec21fc1f80e4a6dd922700854725be18e16bb3b2a68e9b6438204758aa"
+    },
+    {
+      "order": "0920",
+      "fileName": "OpComp.cs",
+      "module": "Cad.Editor",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "6f801d645e24b085bb3070b5e3f449f63936bb5944c5379ec3e184f664efbe53"
+    },
+    {
+      "order": "0930",
+      "fileName": "OpEqual.cs",
+      "module": "Cad.Editor",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "716298d029135789f0d0b3027dee7fc8bbcd0170c8b0f41911dc10fb2d105b30"
+    },
+    {
+      "order": "0940",
+      "fileName": "OpFilter.cs",
+      "module": "Cad.Editor",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "6d3bb1f8a586be7b51826c4ed2d16bad36baed12ad28a4f23852b603191ca039"
+    },
+    {
+      "order": "0950",
+      "fileName": "OpList.cs",
+      "module": "Cad.Editor",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "801ce44209b33b9e83fab2cd865c9f276de8abe8f3e12bbe98c001a2162e80cb"
+    },
+    {
+      "order": "0960",
+      "fileName": "OpLogi.cs",
+      "module": "Cad.Editor",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "fcf1217e01b68c7e6af91d0b4f20eadcac0b10ce7e46b5ddee7d420a4f6e8711"
+    }
+  ]
+}
