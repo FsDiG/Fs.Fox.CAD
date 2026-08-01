@@ -6,6 +6,7 @@
 > 跟踪：[Issue #48](https://github.com/FsDiG/Fs.Fox.CAD/issues/48)<br>
 > 现行约定：[文档与代码协同治理方案](documentation-architecture.md)<br>
 > 站点仓库：[FsDiG/Fs.Fox.CAD.Site](https://github.com/FsDiG/Fs.Fox.CAD.Site)（Bootstrap 已创建，EdgeOne 尚未连接）<br>
+> 站点实施：[事件同步 Issue #1](https://github.com/FsDiG/Fs.Fox.CAD.Site/issues/1)；[EdgeOne 交接 Issue #2](https://github.com/FsDiG/Fs.Fox.CAD.Site/issues/2)<br>
 > 本轮范围：评估并建立仓库边界、精确来源获取和 GitHub 同步；不选择最终前端框架，不代替仓库所有者配置 EdgeOne
 
 ## 1. 结论
