@@ -185,10 +185,33 @@
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0410</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Enums.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Xrefs\PathConverterModes.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0420</FsFoxOrder>
-      <FsFoxBoundaryDebt>BD-19</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Xrefs\XrefModes.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0421</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\SymbolTables\SymModes.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0422</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\CoordinateSystemCode.cs">
+      <FsFoxModule>Cad.Geometry</FsFoxModule>
+      <FsFoxOrder>0423</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\OrientationType.cs">
+      <FsFoxModule>Cad.Geometry</FsFoxModule>
+      <FsFoxOrder>0424</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\PointOnRegionType.cs">
+      <FsFoxModule>Cad.Geometry</FsFoxModule>
+      <FsFoxOrder>0425</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Text\FontTTF.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0426</FsFoxOrder>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Cad\UI\Dialogs\ErrorInfoEx.cs">
       <FsFoxModule>Cad.UI</FsFoxModule>
