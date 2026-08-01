@@ -304,9 +304,17 @@
       <FsFoxModule>Foundation</FsFoxModule>
       <FsFoxOrder>0540</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Display\RedrawEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Display\BrightEntity.cs">
       <FsFoxModule>Cad.Editor</FsFoxModule>
       <FsFoxOrder>0550</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Display\BrightEditor.cs">
+      <FsFoxModule>Cad.Editor</FsFoxModule>
+      <FsFoxOrder>0551</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Display\RedrawEx.cs">
+      <FsFoxModule>Cad.Editor</FsFoxModule>
+      <FsFoxOrder>0552</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-08</FsFoxBoundaryDebt>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Selection\SelectionSetEx.cs">

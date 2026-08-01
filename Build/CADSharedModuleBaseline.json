@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
   "normalizedSourceHash": "sha256-utf8-lf",
-  "expectedCompileCount": 126,
+  "expectedCompileCount": 128,
   "moduleCounts": {
     "Foundation": 11,
     "Platform.Windows": 5,
     "Cad.Interop": 3,
     "Cad.Geometry": 16,
     "Cad.Database": 42,
-    "Cad.Editor": 19,
+    "Cad.Editor": 21,
     "Cad.Application": 8,
     "Cad.Runtime": 14,
     "Cad.UI": 8
@@ -649,6 +649,22 @@
     },
     {
       "order": "0550",
+      "fileName": "BrightEntity.cs",
+      "module": "Cad.Editor",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "8b37ee4411292de1e6356928859bb69f9dd298a9296f4a9dccab3be0718ca825"
+    },
+    {
+      "order": "0551",
+      "fileName": "BrightEditor.cs",
+      "module": "Cad.Editor",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "84833b6847c144660a779328491c94f4457ff7e8c9cab5642ff1ed4a2ac3367f"
+    },
+    {
+      "order": "0552",
       "fileName": "RedrawEx.cs",
       "module": "Cad.Editor",
       "boundaryDebt": [
@@ -660,7 +676,7 @@
           "count": 2
         }
       ],
-      "sourceSha256": "87dbacabf93acd458b36d36c7c9976ebacb32ed63aee5c1056bc50b2d339ea96"
+      "sourceSha256": "05109086486c48d01283255cfb3c49d1fcdf8ecc80440b3e4225f5ff7077ac1e"
     },
     {
       "order": "0560",
