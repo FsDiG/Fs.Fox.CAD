@@ -9,7 +9,7 @@
 > 命名参考：[FeiSiDev/Fs.Zfgk.CAD](https://github.com/FeiSiDev/Fs.Zfgk.CAD) @ `c38ce32`（只参考领域词汇，不复制其目录层级）<br>
 > SDK 依据：[AutoCAD 2026 Managed .NET Developer's Guide](https://help.autodesk.com/view/OARX/2026/ENU/?guid=GUID-C3F3C736-40CF-44A0-9210-55F6A939B6F2)（用于校正子系统边界，不采用厂商命名作为公共目录）<br>
 > 跟踪 Issue：[Issue #25](https://github.com/FsDiG/Fs.Fox.CAD/issues/25)（与本计划同步维护）<br>
-> 前序提案：[渐进式模块化重构建议](refactoring-proposal.md)（保留决策背景；单程序集目录迁移以本计划为准）<br>
+> 前序提案：[渐进式模块化重构建议](refactoring-proposal.md)（已取代，仅保留决策背景；单程序集目录迁移以本计划为准）<br>
 > 审查基线：[Issue #42](https://github.com/FsDiG/Fs.Fox.CAD/issues/42)<br>
 > 并行专项：[Issue #43](https://github.com/FsDiG/Fs.Fox.CAD/issues/43)
 
