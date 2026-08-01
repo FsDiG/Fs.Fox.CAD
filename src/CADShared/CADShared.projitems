@@ -104,7 +104,7 @@
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0220</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\CollectionEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Collections\CollectionEx.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0230</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-01</FsFoxBoundaryDebt>
@@ -130,7 +130,7 @@
       <FsFoxModule>Cad.Application</FsFoxModule>
       <FsFoxOrder>0280</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\DwgMark.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Files\DwgMark.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0290</FsFoxOrder>
     </Compile>
@@ -353,15 +353,15 @@
       <FsFoxModule>Cad.Runtime</FsFoxModule>
       <FsFoxOrder>0790</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ResultData\TypedValueList.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\ResultData\TypedValueList.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0800</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ResultData\XDataList.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\ResultData\XDataList.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0810</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ResultData\XRecordDataList.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\ResultData\XRecordDataList.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0820</FsFoxOrder>
     </Compile>
