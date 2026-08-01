@@ -37,7 +37,7 @@ B 的正式发布目标包括 AutoCAD 2019、AutoCAD 2025、ZWCAD 2022 和 ZWCAD
 ### 3.1 Jig 释放顺序
 
 - 上游提交：[`bc7a242`](https://gitee.com/inspirefunction/ifoxcad/commit/bc7a2429c144ab627fcfaddde05f20d2be07589e)
-- B 对应位置：[`JigEx.cs`](../src/CADShared/ExtensionMethod/Jig/JigEx.cs)
+- B 对应位置：[`JigEx.cs`](../src/CADShared/Cad/Editor/Jig/JigEx.cs)
 - 建议：移植。
 
 B 当前先访问 `ent.Database`，再判断 `ent.IsDisposed`。如果图元已在 Jig 外部释放，访问 `Database` 本身可能抛出异常。应先判断 `!ent.IsDisposed`，再检查它是否尚未加入数据库并执行释放。
@@ -67,7 +67,7 @@ B 当前 `RemoveXData(obj, appName)` 只检查对象是否存在任意 XData。�
 ## 4. 第二阶段：ZWCAD 环境变量互操作
 
 - 上游提交：[`159c076`](https://gitee.com/inspirefunction/ifoxcad/commit/159c0761cf6289c0195e8c5b7fe7ca99210b9fa1)
-- B 对应位置：[`Env.cs`](../src/CADShared/Runtime/Env.cs)
+- B 对应位置：[`Env.cs`](../src/CADShared/Cad/Application/Context/Env.cs)
 - 建议：按 SDK 重新实现，禁止直接复制上游声明。
 
 B 当前 ZWCAD 分支从 `zced.dll` 导入 `zcedGetEnv/zcedSetEnv`，而 ZWCAD 2022 安装目录并不存在该 DLL。ZRX2022 与 ZRX2025 的头文件都声明：
