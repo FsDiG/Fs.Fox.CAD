@@ -57,7 +57,7 @@ B 当前 `RemoveXData(obj, appName)` 只检查对象是否存在任意 XData。�
 ### 3.3 块属性命中后再提权
 
 - 上游提交：[`6744217`](https://gitee.com/inspirefunction/ifoxcad/commit/67442178d7b9909ded07536acf0527246ef17dbe)、[`0d3bf68`](https://gitee.com/inspirefunction/ifoxcad/commit/0d3bf6889574e55c41ce12c9101eb4c1fd26bd8f)、[`d600dbf`](https://gitee.com/inspirefunction/ifoxcad/commit/d600dbf9377af205d7cfa6c0adf34487541d3e2d)
-- B 对应位置：[`BlockReferenceEx.cs`](../src/CADShared/ExtensionMethod/Entity/BlockReferenceEx.cs)
+- B 对应位置：[`BlockReferenceEx.cs`](../src/CADShared/Cad/Database/Entities/Blocks/BlockReferenceEx.cs)
 - 建议：移植最终状态，不逐提交照搬。
 
 最终上游状态是先执行 `TryGetValue(att.Tag, out value)`，只有命中目标属性时才调用 `ForWrite()`。这能避免无关属性进入写状态。
