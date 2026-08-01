@@ -34,12 +34,12 @@
       <FsFoxOrder>0060</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-24</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Assoc\AssocPersSubentityIdPEEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Associativity\AssocPersSubentityIdPEEx.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0070</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-16</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Assoc\AssocUtils.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Associativity\AssocUtils.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0080</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-16</FsFoxBoundaryDebt>
@@ -96,7 +96,7 @@
       <FsFoxOrder>0200</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-15</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\BaseEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\SymbolTables\BaseEx.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0210</FsFoxOrder>
     </Compile>
@@ -109,20 +109,20 @@
       <FsFoxOrder>0230</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-01</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\DatabaseEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\DatabaseEx.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0240</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-02</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\DBDictionaryEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Dictionaries\DBDictionaryEx.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0250</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\DBObjectEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Objects\DBObjectEx.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0260</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\DBTransEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Transactions\DBTransEx.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0270</FsFoxOrder>
     </Compile>
@@ -185,7 +185,7 @@
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0410</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Enums.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Enums.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0420</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-19</FsFoxBoundaryDebt>
@@ -224,7 +224,7 @@
       <FsFoxModule>Cad.Editor</FsFoxModule>
       <FsFoxOrder>0500</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\ObjectIdEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Objects\ObjectIdEx.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0510</FsFoxOrder>
     </Compile>
@@ -254,11 +254,11 @@
       <FsFoxOrder>0570</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-21</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\SymbolTableEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\SymbolTables\SymbolTableEx.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0580</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\SymbolTableRecordEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\SymbolTables\SymbolTableRecordEx.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0590</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-06</FsFoxBoundaryDebt>
@@ -273,7 +273,7 @@
       <FsFoxOrder>0610</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-10</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\TransactionEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Transactions\TransactionEx.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0620</FsFoxOrder>
     </Compile>
@@ -281,7 +281,7 @@
       <FsFoxModule>Cad.UI</FsFoxModule>
       <FsFoxOrder>0630</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\XrefEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Xrefs\XrefEx.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0640</FsFoxOrder>
     </Compile>
@@ -369,7 +369,7 @@
       <FsFoxModule>Cad.UI</FsFoxModule>
       <FsFoxOrder>0830</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Runtime\DBTrans.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Transactions\DBTrans.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0840</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-03</FsFoxBoundaryDebt>
@@ -398,7 +398,7 @@
       <FsFoxModule>Cad.UI</FsFoxModule>
       <FsFoxOrder>0890</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Runtime\SymbolTable.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\SymbolTables\SymbolTable.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0900</FsFoxOrder>
     </Compile>

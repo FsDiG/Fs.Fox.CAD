@@ -95,39 +95,96 @@ ObjectId lineId = tr.CurrentSpace.AddEntity(line);
 
 ### 4.3 扩展方法
 
-`src/CADShared/ExtensionMethod` 按对象职责组织扩展，主要覆盖：
+扩展方法不再集中在一个 `ExtensionMethod` 根目录，而是与其主要扩展目标或所拥有的资源放在同一逻辑模块：
 
-- `Database`、`Transaction`、`DBObject` 和 `ObjectId`
-- 块、图层、文字、曲线、圆、多段线、区域和填充
-- `Editor`、提示选项、选择集和窗口
-- 几何计算、重绘、外部参照和 Jig
+- `Cad/Database`：`Database`、`Transaction`、`DBObject`、`ObjectId`、实体、符号表、字典和外部参照。
+- `Cad/Geometry`：点、曲线、坐标运算和空间索引。
+- `Cad/Editor`：`Editor`、提示选项、选择集、Jig、命令派发和显示刷新。
+- `Cad/Application`、`Cad/UI` 与 `Cad/Interop`：分别承载运行中会话、桌面界面和受限的宿主互操作能力。
 
-扩展方法直接作用于厂商类型，便于与原生 API 混合使用。平台存在真实差异时，应使用平台/版本条件编译或独立实现，不应为了表面一致隐藏不兼容行为。
+这种调整只改变源码所有权和可发现性，不改变 `Fs.Fox.Cad`、`Fs.Fox.Basal` 等公共命名空间。扩展方法仍直接作用于厂商类型，便于与原生 API 混合使用。平台存在真实差异时，应使用平台/版本条件编译或独立实现，不应为了表面一致隐藏不兼容行为。
 
-### 4.4 ResultData 与 SelectionFilter
+`ExtensionMethod/Geometry/ToDo` 下的 21 个文件仍是未编译的待整理源码，不属于当前公共实现。
 
-`ResultData` 目录提供 `TypedValueList`、`XDataList`、`XRecordDataList` 和 Lisp 列表等辅助类型，用于构造和解析 CAD 的类型值序列。
+### 4.4 ResultData、Lisp 与选择过滤
 
-`SelectionFilter` 目录提供比较和逻辑操作对象，用更结构化的方式组合 DXF 选择条件，最终仍交由宿主 `Editor`/选择 API 执行。
+`Cad/Database/ResultData` 提供 `TypedValueList`、`XDataList` 和 `XRecordDataList`，用于构造和解析数据库相关的类型值序列。`LispList` 保留既有继承关系，但按运行时所有权放在 `Cad/Runtime/Lisp`。
 
-### 4.5 初始化与运行时辅助
+`Cad/Editor/Selection/Filters` 提供比较和逻辑操作对象，用更结构化的方式组合 DXF 选择条件，最终仍交由宿主 `Editor`/选择 API 执行。
 
-`Initialize`、`Runtime` 和 `PE` 包含程序集注册、延迟动作、系统变量、环境访问及部分协议扩展辅助。此类功能与宿主生命周期关系紧密，修改后除编译检查外还应执行 CAD 启动、加载、卸载和多文档场景验证。
+### 4.5 应用、运行时与互操作辅助
+
+相关能力按生命周期和边界拆分：
+
+- `Cad/Application`：当前会话、文档锁、系统变量和 Idle 调度。
+- `Cad/Runtime`：程序集初始化发现、注册、加载/终止入口和 Lisp 运行时数据。
+- `Cad/Interop`：CAD native ABI、宿主导出解析适配和第三方 ARX 接口。
+- `Platform/Windows`：不依赖 CAD SDK 的 Win32 声明和 PE 文件解析。
+
+这些目录表达主要所有权，并不宣称现有跨模块依赖已经清理完成。涉及宿主生命周期、native 调用或界面的行为修改，除编译检查外还应执行对应 CAD 版本的加载、卸载、多文档或交互场景验证。
 
 ## 5. 源码组织
 
 ```text
 src/
   CADShared/
-    Algorithms/              基础算法和空间索引
-    Assoc/                   关联与子实体辅助
-    Basal/                   非 CAD 专属基础工具
-    ExtensionMethod/         CAD 类型扩展方法
-    Initialize/              初始化与自动注册
-    PE/                      协议扩展辅助
-    ResultData/              TypedValue、XData、XRecord、Lisp 数据
-    Runtime/                 DBTrans、环境和运行时服务
-    SelectionFilter/         选择过滤表达式
+    Foundation/              不感知 CAD/Windows 的通用能力
+      Compatibility/
+    Platform/
+      Windows/               Win32 与 PE 文件能力
+        Interop/
+        PortableExecutable/
+    Cad/
+      Interop/               CAD native 与第三方 ARX 边界
+        Native/
+        ThirdParty/
+          Tianzheng/
+      Geometry/              数学几何与空间索引
+        SpatialIndex/
+          QuadTree/
+      Database/              DWG 对象与数据库生命周期
+        Associativity/
+        Collections/
+        Dictionaries/
+        Entities/
+          Blocks/
+          Bounds/
+          Curves/
+            Polylines/
+          Hatch/
+          Text/
+        Files/
+        Objects/
+        ResultData/
+        SymbolTables/
+        Transactions/
+        Xrefs/
+      Editor/                输入、选择、Jig 与编辑器显示
+        Commands/
+        Display/
+        Input/
+        Jig/
+        Selection/
+          Filters/
+      Application/           运行中的应用与文档会话
+        Context/
+        Documents/
+        Scheduling/
+        SystemVariables/
+      Runtime/               程序集初始化、注册与 Lisp
+        Initialization/
+        Lisp/
+        Registration/
+      UI/                    对话框、窗口、状态栏与首选项
+        Dialogs/
+        Preferences/
+        StatusBar/
+        Windows/
+    ExtensionMethod/
+      Geometry/
+        ToDo/                21 个未编译待整理文件
+    CADShared.projitems       唯一共享编译入口
+    CADShared.shproj
   IFoxCAD.AutoCad/           AutoCAD 平台 using、别名及构建文件
   IFoxCAD.ZwCad/             ZWCAD 平台 using 和别名
   Fs.Fox.AutoCad20xx/        AutoCAD 版本项目
@@ -137,6 +194,8 @@ tests/
   TestAcad20xx/              AutoCAD 宿主测试入口
   TestZcad20xx/              ZWCAD 宿主测试入口
 ```
+
+`CADShared.projitems` 当前显式列出 96 个共享编译项，并通过 `FsFoxModule` 和 `FsFoxOrder` 记录九个逻辑模块及稳定编译顺序。目录只表达源码所有权，不改变公共命名空间，也不意味着九个独立 DLL；完整映射和已知边界债务见[单程序集逻辑模块化执行计划](logical-modularization-plan.md)。
 
 版本项目是 SDK/API 代际边界，不要求每个产品年度都有一个项目。只有厂商 API、目标框架或二进制兼容性发生变化时才应新增项目；可兼容年度优先复用已有产物，并用兼容性文档记录依据和宿主验收状态。
 
