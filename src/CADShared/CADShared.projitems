@@ -126,7 +126,7 @@
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0270</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\DocumentLockManager.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Application\Documents\DocumentLockManager.cs">
       <FsFoxModule>Cad.Application</FsFoxModule>
       <FsFoxOrder>0280</FsFoxOrder>
     </Compile>
@@ -335,7 +335,7 @@
       <FsFoxOrder>0750</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-14</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)PE\DBmod.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Application\SystemVariables\DBmod.cs">
       <FsFoxModule>Cad.Application</FsFoxModule>
       <FsFoxOrder>0760</FsFoxOrder>
     </Compile>
@@ -374,17 +374,17 @@
       <FsFoxOrder>0840</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-03</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Runtime\Env.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Application\Context\Env.cs">
       <FsFoxModule>Cad.Application</FsFoxModule>
       <FsFoxOrder>0850</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-09</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Runtime\IdleAction.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Application\Scheduling\IdleAction.cs">
       <FsFoxModule>Cad.Application</FsFoxModule>
       <FsFoxOrder>0860</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-12</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Runtime\IdleNoCommandAction.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Application\Scheduling\IdleNoCommandAction.cs">
       <FsFoxModule>Cad.Application</FsFoxModule>
       <FsFoxOrder>0870</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-12</FsFoxBoundaryDebt>
@@ -402,7 +402,7 @@
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0900</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Runtime\SystemVariableManager.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Application\SystemVariables\SystemVariableManager.cs">
       <FsFoxModule>Cad.Application</FsFoxModule>
       <FsFoxOrder>0910</FsFoxOrder>
     </Compile>
