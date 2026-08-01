@@ -299,34 +299,34 @@
       <FsFoxOrder>0670</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-05</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Initialize\AcadEMR.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Initialization\AcadEMR.cs">
       <FsFoxModule>Cad.Runtime</FsFoxModule>
       <FsFoxOrder>0680</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-13</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Initialize\AssemInfo.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Registration\AssemInfo.cs">
       <FsFoxModule>Cad.Runtime</FsFoxModule>
       <FsFoxOrder>0690</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Initialize\AutoReg.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Registration\AutoReg.cs">
       <FsFoxModule>Cad.Runtime</FsFoxModule>
       <FsFoxOrder>0700</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Initialize\AutoRegAssem.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Registration\AutoRegAssem.cs">
       <FsFoxModule>Cad.Runtime</FsFoxModule>
       <FsFoxOrder>0710</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Initialize\CheckFactory.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Initialization\CheckFactory.cs">
       <FsFoxModule>Cad.Runtime</FsFoxModule>
       <FsFoxOrder>0720</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-11</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Initialize\IAutoGo.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Initialization\IAutoGo.cs">
       <FsFoxModule>Cad.Runtime</FsFoxModule>
       <FsFoxOrder>0730</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-20</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Initialize\MethodInfoHelper.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Initialization\MethodInfoHelper.cs">
       <FsFoxModule>Cad.Runtime</FsFoxModule>
       <FsFoxOrder>0740</FsFoxOrder>
     </Compile>
@@ -349,7 +349,7 @@
       <FsFoxOrder>0780</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-15</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ResultData\LispList.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Lisp\LispList.cs">
       <FsFoxModule>Cad.Runtime</FsFoxModule>
       <FsFoxOrder>0790</FsFoxOrder>
     </Compile>
