@@ -405,13 +405,15 @@ function Get-CustomAttributes {
             value = Convert-BytesToHex $Reader.GetBlobBytes($attribute.Value)
         }
     }
-    return @($items | Sort-Object {
+    return @($items | Sort-Object -Stable -Culture en-US -CaseSensitive -Property {
             $_.constructor.type
         }, {
             $_.constructor.name
         }, {
             $_.constructor.signature
-        }, value)
+        }, {
+            $_.value
+        })
 }
 
 function Get-DefaultConstant {
@@ -447,11 +449,11 @@ function Get-GenericParameters {
             index = $parameter.Index
             name = $Reader.GetString($parameter.Name)
             attributes = [int]$parameter.Attributes
-            constraints = @($constraints | Sort-Object)
+            constraints = @($constraints | Sort-Object -Stable -Culture en-US -CaseSensitive)
             customAttributes = Get-CustomAttributes $Reader $parameter.GetCustomAttributes() $TypeNameCache
         }
     }
-    return @($items | Sort-Object index)
+    return @($items | Sort-Object -Stable -Property { $_.index })
 }
 
 function Test-MethodVisible {
@@ -502,7 +504,7 @@ function Get-PublicApi {
             signature = ''
             attributes = [int]$type.Attributes
             baseType = Get-TypeHandleName $Reader $type.BaseType $typeNameCache
-            interfaces = @($interfaces | Sort-Object)
+            interfaces = @($interfaces | Sort-Object -Stable -Culture en-US -CaseSensitive)
             layout = [ordered]@{
                 packingSize = $layout.PackingSize
                 size = $layout.Size
@@ -538,7 +540,7 @@ function Get-PublicApi {
                 signature = Convert-BytesToHex $Reader.GetBlobBytes($method.Signature)
                 attributes = [int]$method.Attributes
                 implementationAttributes = [int]$method.ImplAttributes
-                parameters = @($parameters | Sort-Object sequence)
+                parameters = @($parameters | Sort-Object -Stable -Property { $_.sequence })
                 genericParameters = Get-GenericParameters $Reader $method.GetGenericParameters() $typeNameCache
                 customAttributes = Get-CustomAttributes $Reader $method.GetCustomAttributes() $typeNameCache
             })
@@ -601,7 +603,15 @@ function Get-PublicApi {
         }
     }
 
-    return @($records | Sort-Object kind, declaringType, name, signature)
+    return @($records | Sort-Object -Stable -Culture en-US -CaseSensitive -Property {
+            $_.kind
+        }, {
+            $_.declaringType
+        }, {
+            $_.name
+        }, {
+            $_.signature
+        })
 }
 
 function Get-AssemblySnapshot {
@@ -647,9 +657,17 @@ function Get-AssemblySnapshot {
                     culture = $assemblyName.CultureName ?? ''
                     publicKeyToken = Convert-BytesToHex $assemblyName.GetPublicKeyToken()
                 }
-                references = @($references | Sort-Object name, version, culture, publicKeyOrToken)
+                references = @($references | Sort-Object -Stable -Culture en-US -CaseSensitive -Property {
+                        $_.name
+                    }, {
+                        $_.version
+                    }, {
+                        $_.culture
+                    }, {
+                        $_.publicKeyOrToken
+                    })
                 publicApiRecordCount = $publicApiRecords.Count
-                publicApi = @($publicApi | Sort-Object type)
+                publicApi = @($publicApi | Sort-Object -Stable -Culture en-US -CaseSensitive -Property { $_.type })
             }
         }
         finally {
@@ -688,11 +706,11 @@ function Get-CanonicalXmlHash {
     }
     $canonical = [ordered]@{
         assembly = $assemblyName
-        members = @($members | Sort-Object {
+        members = @($members | Sort-Object -Stable -Culture en-US -CaseSensitive -Property {
                 $_.name
             }, {
                 $_.content
-            } -CaseSensitive)
+            })
     }
     return Get-TextHash ($canonical | ConvertTo-Json -Depth 20 -Compress)
 }
@@ -736,7 +754,11 @@ function Get-PackageSnapshot {
             }
             [ordered]@{
                 targetFramework = $group.GetAttribute('targetFramework')
-                items = @($items | Sort-Object id, version)
+                items = @($items | Sort-Object -Stable -Culture en-US -CaseSensitive -Property {
+                        $_.id
+                    }, {
+                        $_.version
+                    })
             }
         }
         $frameworkReferences = foreach ($group in $metadata.SelectNodes("*[local-name()='frameworkReferences']/*[local-name()='group']")) {
@@ -745,7 +767,7 @@ function Get-PackageSnapshot {
             }
             [ordered]@{
                 targetFramework = $group.GetAttribute('targetFramework')
-                items = @($items | Sort-Object)
+                items = @($items | Sort-Object -Stable -Culture en-US -CaseSensitive)
             }
         }
 
@@ -815,9 +837,9 @@ function Get-PackageSnapshot {
                 type = if ($null -eq $repository) { '' } else { $repository.GetAttribute('type') }
                 url = if ($null -eq $repository) { '' } else { $repository.GetAttribute('url') }
             }
-            dependencies = @($dependencies | Sort-Object targetFramework)
-            frameworkReferences = @($frameworkReferences | Sort-Object targetFramework)
-            assets = @($assets | Sort-Object path)
+            dependencies = @($dependencies | Sort-Object -Stable -Culture en-US -CaseSensitive -Property { $_.targetFramework })
+            frameworkReferences = @($frameworkReferences | Sort-Object -Stable -Culture en-US -CaseSensitive -Property { $_.targetFramework })
+            assets = @($assets | Sort-Object -Stable -Culture en-US -CaseSensitive -Property { $_.path })
         }
     }
     finally {
