@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
   "normalizedSourceHash": "sha256-utf8-lf",
-  "expectedCompileCount": 96,
+  "expectedCompileCount": 102,
   "moduleCounts": {
     "Foundation": 9,
     "Platform.Windows": 5,
     "Cad.Interop": 3,
-    "Cad.Geometry": 10,
-    "Cad.Database": 35,
+    "Cad.Geometry": 13,
+    "Cad.Database": 38,
     "Cad.Editor": 13,
     "Cad.Application": 6,
     "Cad.Runtime": 8,
@@ -397,13 +397,59 @@
     },
     {
       "order": "0420",
-      "fileName": "Enums.cs",
+      "fileName": "PathConverterModes.cs",
       "module": "Cad.Database",
-      "boundaryDebt": [
-        "BD-19"
-      ],
+      "boundaryDebt": [],
       "boundaryFindings": [],
-      "sourceSha256": "beff4608ad8c2b80e2103572b4680fb87875a0e26a6920f7760a36349de57e43"
+      "sourceSha256": "82105033319a12cd28aa4a02caf3315b120f7b8aec65086cf7927a66caf46f62"
+    },
+    {
+      "order": "0421",
+      "fileName": "XrefModes.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "00a3aac0517d81944688194f83bf280db684d9114e8f54d3e5ddd4fc3daeeb70"
+    },
+    {
+      "order": "0422",
+      "fileName": "SymModes.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "b425f54f8a0cabd61bcc0fc1f5776e221db2de692be44e89dcf310504e261f60"
+    },
+    {
+      "order": "0423",
+      "fileName": "CoordinateSystemCode.cs",
+      "module": "Cad.Geometry",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "5a54ac28b0cc7df691ccc9493c3b5b6cc10fb22263b4952a600df715fd7306c7"
+    },
+    {
+      "order": "0424",
+      "fileName": "OrientationType.cs",
+      "module": "Cad.Geometry",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "10737bf8fd72e909997008a43cbe97bb250b2ee556146f914ef05a664cf6d467"
+    },
+    {
+      "order": "0425",
+      "fileName": "PointOnRegionType.cs",
+      "module": "Cad.Geometry",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "3339576d85413be279d7dec9d3ad1efe655d227ae4e10009a531b9224754b9f3"
+    },
+    {
+      "order": "0426",
+      "fileName": "FontTTF.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "2ca0ce704f6d3135c0eb690f2bd113c81646d88b4a2d1d96859f52b600c0b580"
     },
     {
       "order": "0430",

@@ -28,13 +28,13 @@ $BaselinePath = [IO.Path]::GetFullPath($BaselinePath)
 $sourceRoot = [IO.Path]::GetFullPath((Split-Path -Parent $ProjectItemsPath))
 $sourceRootPrefix = $sourceRoot.TrimEnd([IO.Path]::DirectorySeparatorChar) + [IO.Path]::DirectorySeparatorChar
 
-$expectedCompileCount = 96
+$expectedCompileCount = 102
 $expectedModuleCounts = [ordered]@{
     'Foundation'       = 9
     'Platform.Windows' = 5
     'Cad.Interop'      = 3
-    'Cad.Geometry'     = 10
-    'Cad.Database'     = 35
+    'Cad.Geometry'     = 13
+    'Cad.Database'     = 38
     'Cad.Editor'       = 13
     'Cad.Application'  = 6
     'Cad.Runtime'      = 8
