@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "normalizedSourceHash": "sha256-utf8-lf",
-  "expectedCompileCount": 102,
+  "expectedCompileCount": 106,
   "moduleCounts": {
     "Foundation": 9,
     "Platform.Windows": 5,
@@ -10,7 +10,7 @@
     "Cad.Database": 38,
     "Cad.Editor": 13,
     "Cad.Application": 6,
-    "Cad.Runtime": 8,
+    "Cad.Runtime": 12,
     "Cad.UI": 7
   },
   "items": [
@@ -749,13 +749,43 @@
     },
     {
       "order": "0730",
-      "fileName": "IAutoGo.cs",
+      "fileName": "Sequence.cs",
       "module": "Cad.Runtime",
-      "boundaryDebt": [
-        "BD-20"
-      ],
+      "boundaryDebt": [],
       "boundaryFindings": [],
-      "sourceSha256": "7141e6d121686b92779f95e68f01f876d5850b277bb8fedf63d2dcb555e9532c"
+      "sourceSha256": "af0c81b7581e3a1509d45d8b7bd3d211627d2d658e4798038a67cf4be6426992"
+    },
+    {
+      "order": "0731",
+      "fileName": "IFoxAutoGo.cs",
+      "module": "Cad.Runtime",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "d07e0d05b7bdb3448beeaf002ba98bcaa6312960a7952631e112078d5950fe8e"
+    },
+    {
+      "order": "0732",
+      "fileName": "IFoxInitializeAttribute.cs",
+      "module": "Cad.Runtime",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "3b3844b076bb73d1b09d3e37fd0623d3af8bbf177427142b0abb3b803f9e2ded"
+    },
+    {
+      "order": "0733",
+      "fileName": "RunClass.cs",
+      "module": "Cad.Runtime",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "181192838750f94892f0acc5e792b229f59ed886622d8b209f34f51c2bfadf98"
+    },
+    {
+      "order": "0734",
+      "fileName": "AutoReflection.cs",
+      "module": "Cad.Runtime",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "6b4727550011f98234bd30f20bdb3a295f5d3822cb154a257d213b0faf056236"
     },
     {
       "order": "0740",

@@ -344,10 +344,25 @@
       <FsFoxOrder>0720</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-11</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Initialization\IAutoGo.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Initialization\Sequence.cs">
       <FsFoxModule>Cad.Runtime</FsFoxModule>
       <FsFoxOrder>0730</FsFoxOrder>
-      <FsFoxBoundaryDebt>BD-20</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Initialization\IFoxAutoGo.cs">
+      <FsFoxModule>Cad.Runtime</FsFoxModule>
+      <FsFoxOrder>0731</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Initialization\IFoxInitializeAttribute.cs">
+      <FsFoxModule>Cad.Runtime</FsFoxModule>
+      <FsFoxOrder>0732</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Initialization\RunClass.cs">
+      <FsFoxModule>Cad.Runtime</FsFoxModule>
+      <FsFoxOrder>0733</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Initialization\AutoReflection.cs">
+      <FsFoxModule>Cad.Runtime</FsFoxModule>
+      <FsFoxOrder>0734</FsFoxOrder>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Initialization\MethodInfoHelper.cs">
       <FsFoxModule>Cad.Runtime</FsFoxModule>
