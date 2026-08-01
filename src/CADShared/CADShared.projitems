@@ -60,13 +60,21 @@
       <FsFoxModule>Foundation</FsFoxModule>
       <FsFoxOrder>0120</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Foundation\LoopList.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Foundation\LoopListNode.cs">
       <FsFoxModule>Foundation</FsFoxModule>
       <FsFoxOrder>0130</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Foundation\LoopList.cs">
+      <FsFoxModule>Foundation</FsFoxModule>
+      <FsFoxOrder>0131</FsFoxOrder>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Foundation\LoopState.cs">
       <FsFoxModule>Foundation</FsFoxModule>
       <FsFoxOrder>0140</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Foundation\ProState.cs">
+      <FsFoxModule>Foundation</FsFoxModule>
+      <FsFoxOrder>0141</FsFoxOrder>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Foundation\Compatibility\ArgumentNullEx.cs">
       <FsFoxModule>Foundation</FsFoxModule>

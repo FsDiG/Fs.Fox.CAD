@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
   "normalizedSourceHash": "sha256-utf8-lf",
-  "expectedCompileCount": 110,
+  "expectedCompileCount": 112,
   "moduleCounts": {
-    "Foundation": 9,
+    "Foundation": 11,
     "Platform.Windows": 5,
     "Cad.Interop": 3,
     "Cad.Geometry": 13,
@@ -123,11 +123,19 @@
     },
     {
       "order": "0130",
+      "fileName": "LoopListNode.cs",
+      "module": "Foundation",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "322dc62c8ee1de4fa3d61b4f17ca204f6ce98c857922499cf33cded571aa8a07"
+    },
+    {
+      "order": "0131",
       "fileName": "LoopList.cs",
       "module": "Foundation",
       "boundaryDebt": [],
       "boundaryFindings": [],
-      "sourceSha256": "689dffc51be7322cbedf5fb36f098a494525149d677913c0418c36c1498272e0"
+      "sourceSha256": "73950af1e043a006f121d7d6bc3e6a90f023b1f2df04364fcd2a8b0aa35dddd6"
     },
     {
       "order": "0140",
@@ -135,7 +143,15 @@
       "module": "Foundation",
       "boundaryDebt": [],
       "boundaryFindings": [],
-      "sourceSha256": "7b077f08c143f94fad78a5831201a0d3eb98ac1b4418f3e282ade66979204d78"
+      "sourceSha256": "f45f00057901c3acee465f83cae88be6b3aeac6fd28ee81986a569ef093e8440"
+    },
+    {
+      "order": "0141",
+      "fileName": "ProState.cs",
+      "module": "Foundation",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "a2af5484eb6379de89a7013d58c9022257a65a9afa96d19deddcbf1005b5b086"
     },
     {
       "order": "0150",
