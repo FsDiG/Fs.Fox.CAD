@@ -8,6 +8,7 @@ on:
   pull_request:
     branches:
       - main
+      - refactor/cad-modules
   workflow_dispatch:
     inputs:
       deploy:
@@ -20,10 +21,11 @@ jobs:
   build:
     name: Build All Targets
     runs-on: self-hosted
-    # 简化条件：main 分支、PR 到 main、包含 [build]/[deploy] 或手动触发
+    # main、长期重构分支的 PR、包含 [build]/[deploy] 的推送或手动触发
     if: |
       github.ref == 'refs/heads/main' ||
       github.base_ref == 'main' ||
+      github.base_ref == 'refactor/cad-modules' ||
       contains(github.event.head_commit.message, '[build]') ||
       contains(github.event.head_commit.message, '[deploy]') ||
       github.event_name == 'workflow_dispatch'
