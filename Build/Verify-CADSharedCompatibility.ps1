@@ -21,24 +21,28 @@ $targets = @(
         name = 'AC_2019'
         project = 'src\Fs.Fox.AutoCad2019\Fs.Fox.AutoCad2019.csproj'
         assembly = 'Build\AC_2019_Release\Fs.Fox.AutoCad.dll'
+        testAssembly = 'Build\AC_2019_Release\TestAcad2019.dll'
         packageId = 'IFox.CAD.ACAD2019'
     },
     [pscustomobject]@{
         name = 'AC_2025'
         project = 'src\Fs.Fox.AutoCad2025\Fs.Fox.AutoCad2025.csproj'
         assembly = 'Build\AC_2025_Release\Fs.Fox.AutoCad.dll'
+        testAssembly = 'Build\AC_2025_Release\TestAcad2025.dll'
         packageId = 'IFox.CAD.ACAD2025'
     },
     [pscustomobject]@{
         name = 'ZW_2022'
         project = 'src\Fs.Fox.ZwCad2022\Fs.Fox.ZwCad2022.csproj'
         assembly = 'Build\ZW_2022_Release\Fs.Fox.ZwCad.dll'
+        testAssembly = 'Build\ZW_2022_Release\TestZcad2022.dll'
         packageId = 'IFox.CAD.ZCAD2022'
     },
     [pscustomobject]@{
         name = 'ZW_2025'
         project = 'src\Fs.Fox.ZwCad2025\Fs.Fox.ZwCad2025.csproj'
         assembly = 'Build\ZW_2025_Release\Fs.Fox.ZwCad.dll'
+        testAssembly = 'Build\ZW_2025_Release\TestZcad2025.dll'
         packageId = 'IFox.CAD.ZCAD2025'
     }
 )
@@ -357,18 +361,57 @@ function Get-TypeHandleName {
     }
 }
 
+function Get-CustomAttributeConstructorIdentity {
+    param(
+        [Reflection.Metadata.MetadataReader]$Reader,
+        [Reflection.Metadata.EntityHandle]$Handle,
+        [hashtable]$TypeNameCache
+    )
+
+    switch ($Handle.Kind) {
+        ([Reflection.Metadata.HandleKind]::MethodDefinition) {
+            $method = $Reader.GetMethodDefinition([Reflection.Metadata.MethodDefinitionHandle]$Handle)
+            return [ordered]@{
+                type = Get-TypeDefinitionName $Reader $method.GetDeclaringType() $TypeNameCache
+                name = $Reader.GetString($method.Name)
+                signature = Convert-BytesToHex $Reader.GetBlobBytes($method.Signature)
+            }
+        }
+        ([Reflection.Metadata.HandleKind]::MemberReference) {
+            $member = $Reader.GetMemberReference([Reflection.Metadata.MemberReferenceHandle]$Handle)
+            return [ordered]@{
+                type = Get-TypeHandleName $Reader $member.Parent $TypeNameCache
+                name = $Reader.GetString($member.Name)
+                signature = Convert-BytesToHex $Reader.GetBlobBytes($member.Signature)
+            }
+        }
+        default {
+            throw "Unsupported custom attribute constructor handle: $($Handle.Kind)"
+        }
+    }
+}
+
 function Get-CustomAttributes {
     param(
         [Reflection.Metadata.MetadataReader]$Reader,
-        $Handles
+        $Handles,
+        [hashtable]$TypeNameCache
     )
 
     $items = foreach ($handle in $Handles) {
         $attribute = $Reader.GetCustomAttribute($handle)
-        '{0:x8}:{1}' -f (Get-MetadataToken $attribute.Constructor),
-            (Convert-BytesToHex $Reader.GetBlobBytes($attribute.Value))
+        [ordered]@{
+            constructor = Get-CustomAttributeConstructorIdentity $Reader $attribute.Constructor $TypeNameCache
+            value = Convert-BytesToHex $Reader.GetBlobBytes($attribute.Value)
+        }
     }
-    return @($items | Sort-Object)
+    return @($items | Sort-Object {
+            $_.constructor.type
+        }, {
+            $_.constructor.name
+        }, {
+            $_.constructor.signature
+        }, value)
 }
 
 function Get-DefaultConstant {
@@ -405,7 +448,7 @@ function Get-GenericParameters {
             name = $Reader.GetString($parameter.Name)
             attributes = [int]$parameter.Attributes
             constraints = @($constraints | Sort-Object)
-            customAttributes = Get-CustomAttributes $Reader $parameter.GetCustomAttributes()
+            customAttributes = Get-CustomAttributes $Reader $parameter.GetCustomAttributes() $TypeNameCache
         }
     }
     return @($items | Sort-Object index)
@@ -465,7 +508,7 @@ function Get-PublicApi {
                 size = $layout.Size
             }
             genericParameters = Get-GenericParameters $Reader $type.GetGenericParameters() $typeNameCache
-            customAttributes = Get-CustomAttributes $Reader $type.GetCustomAttributes()
+            customAttributes = Get-CustomAttributes $Reader $type.GetCustomAttributes() $typeNameCache
         })
 
         foreach ($methodHandle in $type.GetMethods()) {
@@ -485,7 +528,7 @@ function Get-PublicApi {
                     name = $Reader.GetString($parameter.Name)
                     attributes = [int]$parameter.Attributes
                     default = Get-DefaultConstant $Reader $parameter.GetDefaultValue()
-                    customAttributes = Get-CustomAttributes $Reader $parameter.GetCustomAttributes()
+                    customAttributes = Get-CustomAttributes $Reader $parameter.GetCustomAttributes() $typeNameCache
                 }
             }
             $records.Add([ordered]@{
@@ -497,7 +540,7 @@ function Get-PublicApi {
                 implementationAttributes = [int]$method.ImplAttributes
                 parameters = @($parameters | Sort-Object sequence)
                 genericParameters = Get-GenericParameters $Reader $method.GetGenericParameters() $typeNameCache
-                customAttributes = Get-CustomAttributes $Reader $method.GetCustomAttributes()
+                customAttributes = Get-CustomAttributes $Reader $method.GetCustomAttributes() $typeNameCache
             })
         }
 
@@ -518,7 +561,7 @@ function Get-PublicApi {
                 signature = Convert-BytesToHex $Reader.GetBlobBytes($field.Signature)
                 attributes = [int]$field.Attributes
                 default = Get-DefaultConstant $Reader $field.GetDefaultValue()
-                customAttributes = Get-CustomAttributes $Reader $field.GetCustomAttributes()
+                customAttributes = Get-CustomAttributes $Reader $field.GetCustomAttributes() $typeNameCache
             })
         }
 
@@ -535,7 +578,7 @@ function Get-PublicApi {
                 name = $Reader.GetString($property.Name)
                 signature = Convert-BytesToHex $Reader.GetBlobBytes($property.Signature)
                 attributes = [int]$property.Attributes
-                customAttributes = Get-CustomAttributes $Reader $property.GetCustomAttributes()
+                customAttributes = Get-CustomAttributes $Reader $property.GetCustomAttributes() $typeNameCache
             })
         }
 
@@ -553,7 +596,7 @@ function Get-PublicApi {
                 name = $Reader.GetString($event.Name)
                 signature = Get-TypeHandleName $Reader $event.Type $typeNameCache
                 attributes = [int]$event.Attributes
-                customAttributes = Get-CustomAttributes $Reader $event.GetCustomAttributes()
+                customAttributes = Get-CustomAttributes $Reader $event.GetCustomAttributes() $typeNameCache
             })
         }
     }
@@ -630,8 +673,35 @@ function Get-XmlNodeText {
     return $selected.InnerText
 }
 
+function Get-CanonicalXmlHash {
+    param([IO.Stream]$Stream)
+
+    $document = [Xml.XmlDocument]::new()
+    $document.PreserveWhitespace = $false
+    $document.Load($Stream)
+    $assemblyName = Get-XmlNodeText $document "/*[local-name()='doc']/*[local-name()='assembly']/*[local-name()='name']"
+    $members = foreach ($member in $document.SelectNodes("/*[local-name()='doc']/*[local-name()='members']/*[local-name()='member']")) {
+        [ordered]@{
+            name = $member.GetAttribute('name')
+            content = $member.InnerXml
+        }
+    }
+    $canonical = [ordered]@{
+        assembly = $assemblyName
+        members = @($members | Sort-Object {
+                $_.name
+            }, {
+                $_.content
+            } -CaseSensitive)
+    }
+    return Get-TextHash ($canonical | ConvertTo-Json -Depth 20 -Compress)
+}
+
 function Get-PackageSnapshot {
-    param([string]$Path)
+    param(
+        [string]$Path,
+        [hashtable]$ExpectedBinaryAssets
+    )
 
     $archive = [IO.Compression.ZipFile]::OpenRead($Path)
     try {
@@ -688,21 +758,53 @@ function Get-PackageSnapshot {
                 $pathName.EndsWith('/')) {
                 continue
             }
+            $isBinary = $pathName.EndsWith('.dll', [StringComparison]::OrdinalIgnoreCase) -or
+                $pathName.EndsWith('.pdb', [StringComparison]::OrdinalIgnoreCase)
             $hash = $null
-            if (-not $pathName.EndsWith('.dll', [StringComparison]::OrdinalIgnoreCase) -and
-                -not $pathName.EndsWith('.pdb', [StringComparison]::OrdinalIgnoreCase)) {
-                $entryStream = $entry.Open()
-                try {
+            $hashKind = 'raw-sha256'
+            $binarySource = $null
+            $entryStream = $entry.Open()
+            try {
+                if ($isBinary) {
+                    $fileName = [IO.Path]::GetFileName($pathName)
+                    if (-not $ExpectedBinaryAssets.ContainsKey($fileName)) {
+                        throw "Package contains an unexpected binary asset: $pathName"
+                    }
+                    $binarySource = $ExpectedBinaryAssets[$fileName]
+                    $sourcePath = Join-Path $repoRoot $binarySource
+                    if (-not (Test-Path -LiteralPath $sourcePath -PathType Leaf)) {
+                        throw "Expected binary source does not exist: $binarySource"
+                    }
+                    $packageHash = Get-StreamHash $entryStream
+                    $sourceStream = [IO.File]::OpenRead($sourcePath)
+                    try {
+                        $sourceHash = Get-StreamHash $sourceStream
+                    }
+                    finally {
+                        $sourceStream.Dispose()
+                    }
+                    if ($packageHash -cne $sourceHash) {
+                        throw "Package binary does not match its current build output: $pathName != $binarySource"
+                    }
+                    $hashKind = 'matches-build-output-sha256'
+                }
+                elseif ($pathName.EndsWith('.xml', [StringComparison]::OrdinalIgnoreCase)) {
+                    $hash = Get-CanonicalXmlHash $entryStream
+                    $hashKind = 'canonical-xml-v1'
+                }
+                else {
                     $hash = Get-StreamHash $entryStream
                 }
-                finally {
-                    $entryStream.Dispose()
-                }
+            }
+            finally {
+                $entryStream.Dispose()
             }
             [ordered]@{
                 path = $pathName
-                length = $entry.Length
+                length = if ($isBinary) { $null } else { $entry.Length }
+                hashKind = $hashKind
                 contentSha256 = $hash
+                binarySource = $binarySource
             }
         }
 
@@ -758,6 +860,9 @@ function Assert-ReleaseAssembliesAreFresh {
         if ($assembly.LastWriteTimeUtc -lt $latestInput.LastWriteTimeUtc) {
             throw "Release assembly for $($target.name) is older than $($latestInput.FullName). Rebuild before compatibility verification."
         }
+        if (-not (Test-Path -LiteralPath (Join-Path $repoRoot $target.testAssembly) -PathType Leaf)) {
+            throw "Release test assembly not found for $($target.name). Build all Release targets before compatibility verification."
+        }
     }
 }
 
@@ -784,15 +889,19 @@ try {
         if ($packages.Count -ne 1) {
             throw "Expected one package for $($target.packageId), found $($packages.Count)."
         }
+        $expectedBinaryAssets = @{}
+        foreach ($binarySource in @($target.assembly, $target.testAssembly)) {
+            $expectedBinaryAssets[[IO.Path]::GetFileName($binarySource)] = $binarySource.Replace('\', '/')
+        }
         [ordered]@{
             name = $target.name
             assembly = Get-AssemblySnapshot $assemblyPath
-            package = Get-PackageSnapshot $packages[0].FullName
+            package = Get-PackageSnapshot $packages[0].FullName $expectedBinaryAssets
         }
     }
 
     $snapshot = [ordered]@{
-        schemaVersion = 1
+        schemaVersion = 2
         targets = @($targetSnapshots)
     }
 

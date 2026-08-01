@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "targets": [
     {
       "name": "AC_2019",
@@ -108,47 +108,47 @@
           {
             "type": "Fs.Fox.Basal.ArgumentNullEx",
             "recordCount": 2,
-            "contractSha256": "3c645478d5e90b8860739c2d470c7e17a9a84fd5dce2cd3192f61a25fabd5f95"
+            "contractSha256": "172f493209c5bd93a7816df36c917874fe365b21ba44e68e76295fc896b8fb2b"
           },
           {
             "type": "Fs.Fox.Cad.OpList",
             "recordCount": 10,
-            "contractSha256": "0309b5dc09b1e43257323a62bad34e2f8af33f0273aadf8bb1206e9f026b8f99"
+            "contractSha256": "b2bd7c69c6f351d161aabb225d437346547535b246b8b3af651ba4d506a673b2"
           },
           {
             "type": "Fs.Fox.Cad.OpLogi",
             "recordCount": 8,
-            "contractSha256": "fcc0a5e52abab924870102a9fbbc923ff996dbe21d761e0e185ea44eb47a51aa"
+            "contractSha256": "b8da372566c4721493d9c822ba73dbd4632d51eb984007ae22cb027aef8b146f"
           },
           {
             "type": "Fs.Fox.Cad.OpNot",
             "recordCount": 5,
-            "contractSha256": "4bc14d552f473029b5ffbc942ad804b797cbebad98828c22bda504d4b1a79b43"
+            "contractSha256": "57ab43181337189c3440b64f178b6b83244c69c5ead0bee9d91933ba4f250a38"
           },
           {
             "type": "Fs.Fox.Cad.OpOr",
             "recordCount": 5,
-            "contractSha256": "f6d0e8cf8b23c74cbe20f9183d5125f2026479dc48aae1d04684bfd3ad000f09"
+            "contractSha256": "0e5e694267fdabc2447dcfb2f08e64dd14917f057e3f8da6afe0ad9582ed3d13"
           },
           {
             "type": "Fs.Fox.Cad.OptionalDirAttrib",
             "recordCount": 5,
-            "contractSha256": "0d7a58cf0b0106e43236fd4a4f04bc6ab4fa305f6dee89134e89be53c6d2046e"
+            "contractSha256": "d20466d9e05cdcc58dcee87fab38e38a57b33026f447f319325ac7a1bfe4d532"
           },
           {
             "type": "Fs.Fox.Cad.OptionalDirAttrib+DirAttrib",
             "recordCount": 4,
-            "contractSha256": "e4f133349cb3d0fc7d54883d9f349f824a2fceb7a1af4d98cd0017e8e60bfecf"
+            "contractSha256": "93c078ce8d309e7e579ef758a88c3016e777d93bf76ff044174054664c732aea"
           },
           {
             "type": "Fs.Fox.Cad.OptionalHeader",
             "recordCount": 34,
-            "contractSha256": "b6481a5120f1c93fd048af12b80f018ff533e7cfe69de8890be4f62824a87b80"
+            "contractSha256": "367fdff6a86fc520af706295da90e5e27f3384f9d9dd70b5b13675d42238056f"
           },
           {
             "type": "Fs.Fox.Cad.OpXor",
             "recordCount": 9,
-            "contractSha256": "31024bd92ba0273d004d5144a2c6413d21450c0894babf3017d2d2d86d66d027"
+            "contractSha256": "beb9bc06092c7c8ca7802937f054107467a995a835cf8ce32a1b900417a05e4f"
           },
           {
             "type": "Fs.Fox.Cad.OrientationType",
@@ -158,7 +158,7 @@
           {
             "type": "Fs.Fox.Cad.PaneEx",
             "recordCount": 4,
-            "contractSha256": "b26049961edb3c7466e60dd1b3d737f2f2204d6760723bee56ef0e0d16d43f08"
+            "contractSha256": "90429da910ca389b0131b90fd214e37f54a8e368607db7d412fab874e1595d46"
           },
           {
             "type": "Fs.Fox.Cad.PaneMarginType",
@@ -173,32 +173,32 @@
           {
             "type": "Fs.Fox.Cad.PeFunction",
             "recordCount": 9,
-            "contractSha256": "3a74b7987076d2174638ff70c59b64be24cd256018b86ca54e61d8a63700d69b"
+            "contractSha256": "6b22f6e5691b81e3a35c1c2296b77cac5747f6aa25b3fe256952afe5b90f5d48"
           },
           {
             "type": "Fs.Fox.Cad.PEHeader",
             "recordCount": 12,
-            "contractSha256": "6abebf3b43d9d807c54baee9567564f7710183274d34de94622f0dbb71def480"
+            "contractSha256": "9d254d21c806deda70ff9a88fbb1bf1e4c898309048ae7a2e890bd5f5bc37885"
           },
           {
             "type": "Fs.Fox.Cad.PeInfo",
             "recordCount": 24,
-            "contractSha256": "91df767f2b4e1a01b05c4da6fd847b5228698622d96638fa3c78e7465f85132d"
+            "contractSha256": "c076a7e279e3df6d0a331b50fb3ea983e502546207cf93832256968ff24d2b81"
           },
           {
             "type": "Fs.Fox.Cad.PlaneEx",
             "recordCount": 4,
-            "contractSha256": "864d77b4e25f56fdec69656dc2f1075a0e7014b678b9bbac833b2df24471bb2f"
+            "contractSha256": "d0561067c70386cdf83cbd70f1ffb77da8c351ee0c0b4805868d0cc85ba3c675"
           },
           {
             "type": "Fs.Fox.Cad.PointEx",
             "recordCount": 22,
-            "contractSha256": "348e037cbbc3eb1d7be5691e99aa7e7c0ba264d610709d1b731a02e95de60746"
+            "contractSha256": "d66d302217726c14408828079ebbb2f0dd7ba3562fbb9e8f80738dc6e0f114ec"
           },
           {
             "type": "Fs.Fox.Cad.OpFilter+Op",
             "recordCount": 19,
-            "contractSha256": "7017331fdfc24f8e1d3c0ad5f28cb232953b5d6ca71b74ef56b7081130273b1a"
+            "contractSha256": "25cb450644700926354e24547aedd907c2be7e67707c0ab52703f5c6bec3e416"
           },
           {
             "type": "Fs.Fox.Cad.PointOnRegionType",
@@ -208,27 +208,27 @@
           {
             "type": "Fs.Fox.Cad.OpFilter",
             "recordCount": 12,
-            "contractSha256": "86fde46436715d3e03a7a3a746c5ed659594ea0f63a3303067346f3dc1bef2cd"
+            "contractSha256": "394e399073cd150bf4e802fe80b511f0ae8ce0ac4fb94b8e228b35364b3e720c"
           },
           {
             "type": "Fs.Fox.Cad.OpComp",
             "recordCount": 10,
-            "contractSha256": "1df571cad20cd6f76a93fccb4ad919a83ae931f94ec1281ea17ed252628f2482"
+            "contractSha256": "9df14123909f508ea641b538e81309a95af11dbb3b3337bfbd2d6f1be4f2bedc"
           },
           {
             "type": "Fs.Fox.Cad.HatchInfo+GradientName",
             "recordCount": 11,
-            "contractSha256": "d5bfb0ea9b7a841c2975f45dc1490f034c543f7aee2e82d10104c3a5816742d3"
+            "contractSha256": "f1ad209480227ac57f067d2679042a66dad3b5ae32af1109ee7d0b8eba3810c4"
           },
           {
             "type": "Fs.Fox.Cad.IdleAction",
             "recordCount": 4,
-            "contractSha256": "050dfbccc9819b2bf66c0bf341b730bdcd04efcadbcaa742d4900c573528777c"
+            "contractSha256": "0567653a7d1a063eefbbc34a507079e0e3053c471d2bfa22756ae84dc680d847"
           },
           {
             "type": "Fs.Fox.Cad.IdleNoCmdAction",
             "recordCount": 4,
-            "contractSha256": "122b51d55afcc3293725f7ef0ba682d3f504755df3cb564c0e20214cd8fd151e"
+            "contractSha256": "b4a597af552021383e4c4c80bf0970fcf81076cef2faaa9d82f52563bdbc3643"
           },
           {
             "type": "Fs.Fox.Cad.IFoxAutoGo",
@@ -238,27 +238,27 @@
           {
             "type": "Fs.Fox.Cad.IFoxInitializeAttribute",
             "recordCount": 2,
-            "contractSha256": "0c6a9b1ba0aad9c52c3589339bada14f68a6b8691b50bc7f3e925476be20ae44"
+            "contractSha256": "f34fea35c18c3b5ddc9518c14501c3c8affe55f12cf2fdd63a862f968fd365a1"
           },
           {
             "type": "Fs.Fox.Cad.IFoxUtils",
             "recordCount": 6,
-            "contractSha256": "8dc17ecbf008fa83e3bb32352e2e978fe530a4be9bd27001fc628648383da24a"
+            "contractSha256": "d82b0894d5bf409274a7c562b66195bd9a655a2e810072f089d8d0132f1d229d"
           },
           {
             "type": "Fs.Fox.Cad.ImportDirectory",
             "recordCount": 5,
-            "contractSha256": "470c0160f82738fb6bff0136b6260953b1e95d6adaf0c44dfcb201d8c7e887f6"
+            "contractSha256": "020f4e55b483ecc2246ece0637fff61d66569d0cb5bf34fec20e80f108eff090"
           },
           {
             "type": "Fs.Fox.Cad.ImportDirectory+ImportDate",
             "recordCount": 9,
-            "contractSha256": "bcef2b708f6c6446edb8e889c17334afd98f4f822f635868c0fe2dd52f30aa0a"
+            "contractSha256": "88c8b2647681674feb4764bc8382e1721e17b4a75ce48a92d85ea62a759d23e2"
           },
           {
             "type": "Fs.Fox.Cad.ImportDirectory+ImportDate+FunctionList",
             "recordCount": 5,
-            "contractSha256": "680c2c371e9020f92b89dbae4b8d5fd492602463316a70a0fd0c61cccaabf8a8"
+            "contractSha256": "f04c040d27c5bba57d735218fa5e0eb257feef8ad6ef1b9bf04477fe79b8da77"
           },
           {
             "type": "Fs.Fox.Cad.IXrefBindModes",
@@ -268,52 +268,52 @@
           {
             "type": "Fs.Fox.Cad.JigEx",
             "recordCount": 22,
-            "contractSha256": "0be0aa21ca6b57091702e5bcac87447b614c6167c7ec50a73d8edaf3577ade0d"
+            "contractSha256": "fda64d301db6c35c476996d32524faaefe86b46c677531adeb16421537c44413"
           },
           {
             "type": "Fs.Fox.Cad.JigExTransient",
             "recordCount": 20,
-            "contractSha256": "0662a9f39495c8e5965db95c8c9dbde13e8d9774f7f76c2d9450f0d6ce5a64a0"
+            "contractSha256": "cab7bdea39cbcd54cf10fd21a8c2900b432da3eb1c6d1962133966154bd8f1d7"
           },
           {
             "type": "Fs.Fox.Cad.KeywordException",
             "recordCount": 4,
-            "contractSha256": "b60ef7719b0434662102eb161ef8712c433c8c5d3308a64647120c17e37008e4"
+            "contractSha256": "0e702cb066c014702f1d5d1578ea25dcb83d3229c29b346e2bb96a19a2646c62"
           },
           {
             "type": "Fs.Fox.Cad.LispList",
             "recordCount": 23,
-            "contractSha256": "78f5a0a47656f27df527db48ab1b174e5b462b66f58b6c50d8819d44585143e6"
+            "contractSha256": "20b003b41dd4e7f547bfc90b571c264c8ce038edc114668f97e68579f95d37cd"
           },
           {
             "type": "Fs.Fox.Cad.MTextEx",
             "recordCount": 4,
-            "contractSha256": "3476b22635bd773d90a0ffc7bf190199e9edf73fdf37e2878f719f640dd7df0d"
+            "contractSha256": "918cb23a2f853f79b0ee5ba9759f5383fe8e655ace2352640e5d76ec52a28eca"
           },
           {
             "type": "Fs.Fox.Cad.ObjectIdEx",
             "recordCount": 11,
-            "contractSha256": "3d0299c4f2e9b96bb5070762cbda703733ff8440bb15688a366ef68740aca14a"
+            "contractSha256": "6debc88b78e5380cd52180ab9cacb4fd26d467f8863e4965b8dc8144d148172a"
           },
           {
             "type": "Fs.Fox.Cad.OpAnd",
             "recordCount": 5,
-            "contractSha256": "8d225d75d90e9fdb560ad8c99d838016022b5ae2bf4ab72973878e839dd2b708"
+            "contractSha256": "22ac4026f48cf3ca6016babc08c90f2746246c547644b6dbe9ef3982393e35c4"
           },
           {
             "type": "Fs.Fox.Cad.OpEqual",
             "recordCount": 11,
-            "contractSha256": "733e2d4775d64e9fff6d0dd9efe6810371853fb074685c2c0b3191dee275c0aa"
+            "contractSha256": "0665f9931e5c413553135bb47ac8c2b9b8a400a96fcbaf06a74c3a03f16314d8"
           },
           {
             "type": "Fs.Fox.Cad.PolylineEx",
             "recordCount": 9,
-            "contractSha256": "21d2d2c9bf139a3a099e1fd7711c6f3b6c1c139fe8c6853f7317bd0d301faaef"
+            "contractSha256": "b9b9f1c8e814c10fcd590561a2836b569872cbafbd6b8bcb80355f99383af8dc"
           },
           {
             "type": "Fs.Fox.Cad.PostCmd",
             "recordCount": 5,
-            "contractSha256": "2d78734a03e1693c123249e8c9c0907dd0cc006860a032c71a4583566c674b1a"
+            "contractSha256": "e7880b4a1d46891a941b2d7dda4dd93fbb03af00ca847b91cc213d1d127666e3"
           },
           {
             "type": "Fs.Fox.Cad.PostCmd+RunCmdFlag",
@@ -323,32 +323,32 @@
           {
             "type": "Fs.Fox.Cad.SwitchDatabase",
             "recordCount": 3,
-            "contractSha256": "4ec2c5e310f34a99d435712ad2daf8f3a18ccf6dfff4ce70026df400c95f4baf"
+            "contractSha256": "4755d85c5ad99b0fbd5a540256e713b48165b85b0529d2b21bc139646b8b7050"
           },
           {
             "type": "Fs.Fox.Cad.SymbolTable`2",
             "recordCount": 23,
-            "contractSha256": "c0e16b49e80d0cb27ccce1aadff633fcc754ee8b4034d1627aff7df4559d6b8a"
+            "contractSha256": "e83a0fe92d0918b760f42a942d894d2b484c34ec3ad9332d1d8a649a3e1b3dd7"
           },
           {
             "type": "Fs.Fox.Cad.SymbolTableEx",
             "recordCount": 16,
-            "contractSha256": "5310aa6e7d25168f3a0d8adbe3efc4c43ef494d72a9e3855318a80139badabfd"
+            "contractSha256": "a8d347b6b13492f56ace0a5e11a37da5e8e07ca754a082c61ee736be3763efe4"
           },
           {
             "type": "Fs.Fox.Cad.SymbolTableRecordEx",
             "recordCount": 15,
-            "contractSha256": "fdaf65bd5638563b4877a8e0742627213da1eff72040aefc1747f7ac79107333"
+            "contractSha256": "62d66fec9e6fdbd3c3ffc086957025471da4cd2b80cca16f1a3ff5d5fefdb266"
           },
           {
             "type": "Fs.Fox.Cad.SymModes",
             "recordCount": 14,
-            "contractSha256": "3fe96b6c56b3a15bc8b92a047549df13c15fb9630acd664cd526e1d21ff318f5"
+            "contractSha256": "1b771cb59989b88ba5ac83c96f8a0bf6ce55fa6f3c724c5ecbc628372e1ca529"
           },
           {
             "type": "Fs.Fox.Cad.SystemVariableManager",
             "recordCount": 106,
-            "contractSha256": "83e0b13fd4ab40eadb1084e9d164350b5212a2b726fe495a031d94839c724b7e"
+            "contractSha256": "7f52b0305df696508468d0168c101039126933634c1de178c09f0320bee7f463"
           },
           {
             "type": "Fs.Fox.Cad.TangentEx",
@@ -363,47 +363,47 @@
           {
             "type": "Fs.Fox.Cad.TransactionEx",
             "recordCount": 3,
-            "contractSha256": "0c6e8cbae0c9c0e4dba9f326bc3f8734e647f3264d6dd3e18c9e901ff6be3661"
+            "contractSha256": "8432cf4d8beb70db7fce15de9001836c08881b0eb9e2fab5099f4054ecb6a021"
           },
           {
             "type": "Fs.Fox.Cad.TypedValueList",
             "recordCount": 9,
-            "contractSha256": "ff734065ae0ee47e0f8b1eb69947c5471fcaa99308ea646ec5c653b2f4096c5e"
+            "contractSha256": "0e85da540be18266b8589100b80c64094a46228255296ad4f6ef290fa2af06d9"
           },
           {
             "type": "Fs.Fox.Cad.VectorEx",
             "recordCount": 7,
-            "contractSha256": "d663c2cb54a0331e5e0a17714cd9a42616064240319af6eac431110a59a29070"
+            "contractSha256": "2f546822ff69cb63c2adab8a0018b10a790e2cc1d680dd874da00249e61f73a3"
           },
           {
             "type": "Fs.Fox.Cad.WindowEx",
             "recordCount": 6,
-            "contractSha256": "500088ce81fc7ec76c3737b590f6752b2fded2b16a9cfb62232acc7403247e11"
+            "contractSha256": "50577fcddc20199218e53983f497c9e5db236a78c0c4368a7b399b4366302ea5"
           },
           {
             "type": "Fs.Fox.Cad.WorldDrawEvent",
             "recordCount": 5,
-            "contractSha256": "858cee6cbcaa190ac0fefda505690017f4ac2d17fcebeca134273a2c97047fdc"
+            "contractSha256": "0b3d2127e0998ecfa6628b91c3ed40e29948b40d36d2a95151152368e3074968"
           },
           {
             "type": "Fs.Fox.Cad.XDataList",
             "recordCount": 12,
-            "contractSha256": "695cbfa337b2714faba1bd7bb43cdb92d742c098dd6f71025f19f0ac4d2e58ca"
+            "contractSha256": "323de6204b15c0b2fd4e6fd62a5062f3a703269da368df33e6b358da4cae95b4"
           },
           {
             "type": "Fs.Fox.Cad.XRecordDataList",
             "recordCount": 9,
-            "contractSha256": "0149b5a04d0ce39c78b2eb1839128827417e13f3a25165c666849cbea2630156"
+            "contractSha256": "56506eb420386b1adaff2eb424e0c29fdb405e66dfa77a292d2ab7e6f52b412f"
           },
           {
             "type": "Fs.Fox.Cad.XrefEx",
             "recordCount": 2,
-            "contractSha256": "791fd88c26afb2b0c6c950184deb5ef893831fd7c444428c388333d06ab9d140"
+            "contractSha256": "79acd577433dfffede0927cfa87c2283152caea36af6e8b861133cc7ab07ab6f"
           },
           {
             "type": "Fs.Fox.Cad.XrefFactory",
             "recordCount": 13,
-            "contractSha256": "056c76edadfa21f18280d83fd7fe991d63921d9728d5bd12bfd5f6a205dc86df"
+            "contractSha256": "a2da3aff931bba97207025268c253ecd5c6d48c017b27d1802214d465948d8e2"
           },
           {
             "type": "Fs.Fox.Cad.SingleKeyWordWorkType",
@@ -413,42 +413,42 @@
           {
             "type": "Fs.Fox.Cad.SingleKeywordHookEx",
             "recordCount": 2,
-            "contractSha256": "e3487af78c448b46016f85c68d08479e2e516625e9d35a13c39f872d47de5976"
+            "contractSha256": "6e5565789e52ac4a24a0ab1d9734ac27daa5abed65a88d8aeeea5fda45059523"
           },
           {
             "type": "Fs.Fox.Cad.SingleKeyWordHook",
             "recordCount": 19,
-            "contractSha256": "45ac3174e43a6d183977e45fc395aa1a75e4af283c111ad1010c5c37670c2681"
+            "contractSha256": "d35dc90aec7c7089e4766b31e6b1948a901cf738f5a3a3a5820d464e123e40f0"
           },
           {
             "type": "Fs.Fox.Cad.Sequence",
             "recordCount": 4,
-            "contractSha256": "6720bb61e7b3f7e8daff2b68cecef2373254e25692a1afa60690629317ffc92a"
+            "contractSha256": "549c6e5b7796ad02bbcd46840d069e2d6b14ae635c286b684cd79a0a43cea0b5"
           },
           {
             "type": "Fs.Fox.Cad.ProgressMeterUtils",
             "recordCount": 4,
-            "contractSha256": "4fbeb9b376354d2da4362698338911d9639b9587ed03874be79564d12c7618d8"
+            "contractSha256": "195694b3e073e09cd03caf88514ab83767e18c858e91a8d7ae53cdb732b2cfad"
           },
           {
             "type": "Fs.Fox.Cad.PromptOptionsEx",
             "recordCount": 3,
-            "contractSha256": "4924bc7813324289bcfa17942bf79fa821c8c33461b3479661fae074c1e59b6c"
+            "contractSha256": "56f56f4be2d72377599806c3cae48ab5b3bbdd0bb5b5f4412da710513bc4fcb2"
           },
           {
             "type": "Fs.Fox.Cad.QuadEntity",
             "recordCount": 2,
-            "contractSha256": "9d14f0fa785a33252e93cf58df28faecbb738f001559379e537274789e521d43"
+            "contractSha256": "958a7bf983639e345eb8fb0d98e92e74d9459549850b19e35e1ef4a064077a1f"
           },
           {
             "type": "Fs.Fox.Cad.QuadTree`1",
             "recordCount": 11,
-            "contractSha256": "d8ccf0acdf83e9507106310037d344a1e74a59258c0a66ab6d7391735ed68f34"
+            "contractSha256": "eeb3f4e6c7d9dab4322bb8ceb67261ab78c77eded704346036a62486506fc8aa"
           },
           {
             "type": "Fs.Fox.Cad.QuadTree`1+QTAction",
             "recordCount": 5,
-            "contractSha256": "ae20b095a7dd7fb6e872a714143c35fa0f66bff759cbb8b60c4cb6d8474b63cf"
+            "contractSha256": "e31bcacca211840ca31af297786341766c2706b7a0c8f15d76f9838ab81ee4ee"
           },
           {
             "type": "Fs.Fox.Cad.QuadTreeEvn",
@@ -463,12 +463,12 @@
           {
             "type": "Fs.Fox.Cad.QuadTreeNode`1",
             "recordCount": 19,
-            "contractSha256": "31e4bd340775db729abe60e685f4003bfab65d2782af49e8157d06f981a5a51d"
+            "contractSha256": "c412dafac16926ccc5bf70d213c53538a877746f137e4cf43e4f8ce59d953291"
           },
           {
             "type": "Fs.Fox.Cad.HatchInfo",
             "recordCount": 12,
-            "contractSha256": "338e3648081332a83d5a36b40c98fdff696bef20d97a71255bc114ac8dbf997d"
+            "contractSha256": "1025b15e1c10527996a8a586391c700c4f8b7f1ac9cbb71e6817bb57c2d2590b"
           },
           {
             "type": "Fs.Fox.Cad.QuadTreeSelectMode",
@@ -478,47 +478,47 @@
           {
             "type": "Fs.Fox.Cad.RedrawEx",
             "recordCount": 4,
-            "contractSha256": "7c9be97126bc4788be457a4b5a4d90db674cb8e11270efcc05328bb1eacebc3f"
+            "contractSha256": "59c084d54025aecb5f60066c46af8151151d44032bdb8c386a5240c268b3d15c"
           },
           {
             "type": "Fs.Fox.Cad.RegionEx",
             "recordCount": 1,
-            "contractSha256": "4a5b6d9916144d32fc79ced4a8a13e453d21cbc6f4860b3f4e4ee08852113f1d"
+            "contractSha256": "45c402e6cc2687e06ef95b034ea0371a566bc79afd7715f7336ab3f55e44739a"
           },
           {
             "type": "Fs.Fox.Cad.ResourceDirectory",
             "recordCount": 12,
-            "contractSha256": "d5dcc22e9856ace7b69b7342ea46d0aa722d478af16c1e15ba44d9b3cd391299"
+            "contractSha256": "791beef8c0cbcc54637e261649781912b25b275ef95dacba805d9ca9efbaf839"
           },
           {
             "type": "Fs.Fox.Cad.ResourceDirectory+DirectoryEntry",
             "recordCount": 6,
-            "contractSha256": "3658757de213276bb1fc70a6ae228ec1d8ddfed54222f617505e4d666160d3dd"
+            "contractSha256": "7409feca89cab43893c3885eb9ed4758fe4e151510ef853f7abe394e6ccd3cc6"
           },
           {
             "type": "Fs.Fox.Cad.ResourceDirectory+DirectoryEntry+DataEntry",
             "recordCount": 8,
-            "contractSha256": "ae3fe8d2fdfb1f04bce2d4b93f282a23d55556f602450deb5ec050ecb0f99ef4"
+            "contractSha256": "7ff97971d08530db8d64b201c3565fd65be77417af1538f471ac76b171416d9d"
           },
           {
             "type": "Fs.Fox.Cad.SectionTable",
             "recordCount": 5,
-            "contractSha256": "66de114b673ec42a75db3663729273637b977b2234342bb655e60b8d18461ae8"
+            "contractSha256": "878f21e27b22f3c326e060cc59c0fc1628194b8091e2611bca435c8222b50274"
           },
           {
             "type": "Fs.Fox.Cad.SectionTable+SectionData",
             "recordCount": 12,
-            "contractSha256": "ce741e4f05add77cc112a2d43ae1d9c73562969410f452ecd6faa50ece4a7941"
+            "contractSha256": "d9e353d040f8fbae52589da4e4f8d3858190d22577f803c232c9bebd268fbc92"
           },
           {
             "type": "Fs.Fox.Cad.SelectionSetEx",
             "recordCount": 6,
-            "contractSha256": "f89042873fe25508eb90be525fb19d28bec12ae2e6dad4e9489d2d6b294d6642"
+            "contractSha256": "74f90cf3799c758a7e49d2862aa70927bbded15624f1ef8c3b7881e3505ba25e"
           },
           {
             "type": "Fs.Fox.Cad.Rect",
             "recordCount": 76,
-            "contractSha256": "4814c8b78a9103f305ad22321dd2f53ded60c00fa035cea1caaaa0ff3783ddaf"
+            "contractSha256": "9a3c7ecd7f26a0fd03d4604578df049d1c0537d1b329acfa7f889ae725092587"
           },
           {
             "type": "Fs.Fox.Cad.XrefModes",
@@ -528,42 +528,42 @@
           {
             "type": "Fs.Fox.Cad.HatchEx",
             "recordCount": 5,
-            "contractSha256": "451f9ba726551b206ba3979f2a16b93c9a06358e830ff3f0155f41e40b7a6da1"
+            "contractSha256": "d9226ccebf0b9031a5668f3957b230624c97f8f6c15f179585c5b789949858aa"
           },
           {
             "type": "Fs.Fox.Cad.HatchConverter",
             "recordCount": 9,
-            "contractSha256": "0e53707c2b73b5e81a3cbf7925450472c7816bbd04e623e8d1c1323a28367ba7"
+            "contractSha256": "2e6bc214c71eaf6ad217ee813bd3318c0572c9a5a3522acadad34c718b39ab96"
           },
           {
             "type": "Fs.Fox.Basal.WindowsAPI+CallBack",
             "recordCount": 5,
-            "contractSha256": "df8409e959fc35849fe0e3536bedbe74e999130dbd989327093516e13ca3e35d"
+            "contractSha256": "53f5939c0920f575f051c4f162394c5931b0e74a99819f327bbbe65c6c86992c"
           },
           {
             "type": "Fs.Fox.Basal.WindowsAPI+IntRect",
             "recordCount": 23,
-            "contractSha256": "6bdd9c00a34e7226c6f6427e54d6d7d88819357707b2320fab259e21ec4b6fb0"
+            "contractSha256": "e71692b5db53563eefe6c968080905869cb09d899d0e036b75ef39bbb0b7471b"
           },
           {
             "type": "Fs.Fox.Basal.WindowsAPI+IntSize",
             "recordCount": 5,
-            "contractSha256": "c1e8b8d6e387db8c56296f6450d9bf743214a405d30409327e63ccc3fa8e2b88"
+            "contractSha256": "26e7c625726f74175107649bc453b032b4ab6a6ba177dcb856deb691cbbb16db"
           },
           {
             "type": "Fs.Fox.Basal.WindowsAPI+KeyboardHookStruct",
             "recordCount": 8,
-            "contractSha256": "6ff8a1d06e85b790854c0a5132aa0d155a71530e8c29403cf86964cfd6d8d6bf"
+            "contractSha256": "ac3a26ac77e84e58b9e7e327a93a17e9e147beecff2c78751afed12327562d60"
           },
           {
             "type": "Fs.Fox.Basal.WindowsAPI+Point3D",
             "recordCount": 13,
-            "contractSha256": "2448337a4f21a601fef5a2d390c5f9cc336b7186e0d8e94cc33c8f6467b87729"
+            "contractSha256": "f311ebef342b0d9dc061bbc4ac376f0b63dd823a1d9745058683a2b1fa14b262"
           },
           {
             "type": "Fs.Fox.Basal.WM",
             "recordCount": 122,
-            "contractSha256": "59639483558a178040f3133cdfbf878cb6015b5399a9318cd1180b91ad4e490b"
+            "contractSha256": "bbb19837f33a17fcfb01358f5176291e64d5f35e43586746ebbef3b903892844"
           },
           {
             "type": "Fs.Fox.Basal.WS",
@@ -573,32 +573,32 @@
           {
             "type": "Fs.Fox.Cad.AcadPeEnum",
             "recordCount": 6,
-            "contractSha256": "95f852e8e1fcad24b6aebbcaf9a3a3f34dfdf3a01ac5477feeb4a353f1439bed"
+            "contractSha256": "d993138cd4291333723a7dee1b0efa6c7f83dbef576754b98b27c9e7cdc61888"
           },
           {
             "type": "Fs.Fox.Cad.AcadPeInfo",
             "recordCount": 12,
-            "contractSha256": "fd03606fd734d650d460534404efa5dbf8ec9a94775d685f38690fb4021b67f7"
+            "contractSha256": "64602bca6019b653d8c051065683eda4e62fb4121761a36dac0395c336877a65"
           },
           {
             "type": "Fs.Fox.Cad.AcPreferences",
             "recordCount": 1,
-            "contractSha256": "1564ed4510fbc651ab52891125d2682d282c6af77a01ed484f36c296ce8a6046"
+            "contractSha256": "201257e8b8d06dce87c73add60779dac80a3dbf0098e3ba81d6e43705cda04dd"
           },
           {
             "type": "Fs.Fox.Cad.AcPreferences+Display",
             "recordCount": 76,
-            "contractSha256": "13fda10dc5114c9382d1cf4a8ddb66852c358ae691e06c9ca5ce1533e93e1645"
+            "contractSha256": "d805e0c56c51afd99726498300a207e0adb3684646591684b45c963857be0611"
           },
           {
             "type": "Fs.Fox.Cad.ArcEx",
             "recordCount": 5,
-            "contractSha256": "0f25809e1829a5977f464c5c4c8eb9dd21b90187839eb028ae58a8c341968b12"
+            "contractSha256": "6279525ad5ee204234f5a3a321853e8960158e9c774552452ee7ba67c10b5826"
           },
           {
             "type": "Fs.Fox.Cad.AssemInfo",
             "recordCount": 7,
-            "contractSha256": "adac99c81930fab83d15155a759867771d85c3487e004c1166d4c06e81fb165b"
+            "contractSha256": "36c506706ac18660f0fd8cd14b3ce2b9a8696e4fb1ea2c0013aea56fc4a72c42"
           },
           {
             "type": "Fs.Fox.Cad.AssemLoadType",
@@ -608,52 +608,52 @@
           {
             "type": "Fs.Fox.Cad.Assoc.AssocPersSubentityIdPEEx",
             "recordCount": 4,
-            "contractSha256": "061779d5f2685c349457c40382ce638bf7e0c6ac6c85cb2305f46320d56cf71c"
+            "contractSha256": "f1323b2b01e499fa7dedcf2d8eade3c0d87291ede1cbb36dbe82b652ff873b19"
           },
           {
             "type": "Fs.Fox.Cad.Assoc.AssocUtils",
             "recordCount": 2,
-            "contractSha256": "8b98cdce12c15ad3810b8b0c2df90a5b6b717e8eb5b2477d52d6fae9b88e5a10"
+            "contractSha256": "1cecf6da243ec5cab4bfc62ec5677403c74369218ff420fe03bc3c8f041d0f3a"
           },
           {
             "type": "Fs.Fox.Cad.AutoReflection",
             "recordCount": 5,
-            "contractSha256": "290641585f968737103cf0e8413cb8eda877fbe11fe0fcc5712bc9640c07ad17"
+            "contractSha256": "2f93282d7f450d0b13fb4552952a4466e3c6c4a4ce9aa9f11817563aca0ee4fa"
           },
           {
             "type": "Fs.Fox.Basal.WindowsAPI",
             "recordCount": 22,
-            "contractSha256": "6cf541125d779c6bd0a8c869ae216d00f1906a43396cc0bd03c74c90e333013d"
+            "contractSha256": "fc22ae9e05f22ec3ff342447eb433d29dc315dbce227249bb3894747227cb9a9"
           },
           {
             "type": "Fs.Fox.Cad.AutoReg",
             "recordCount": 7,
-            "contractSha256": "b1e0a33e673f5ce0d0e6f92e945a9dedb19e8ac1f60b66ea1656bca770c0ad83"
+            "contractSha256": "c21ae3e2d8da5ea61725cfe486b0f00306351577604d69736c357e8b14838219"
           },
           {
             "type": "Fs.Fox.Basal.VK",
             "recordCount": 153,
-            "contractSha256": "5878365f01d6874eb38aa29a137be4bc803d0fc9fd3c0f095e2554bc7b9391c4"
+            "contractSha256": "66206fa1b4b48e7efbdfde4d8d6de9f22a74f3ecdb75cdcb7f47b383faef7c48"
           },
           {
             "type": "Fs.Fox.Basal.SystemEx",
             "recordCount": 3,
-            "contractSha256": "2bd0972caabd3bde7eeff590972705e82652c9ff68bcf00d2949ba0fbded6e80"
+            "contractSha256": "652ce2bf5ccbaf35c5744da58d8ea1c4172f4ed2af286b479d878d6733f468a1"
           },
           {
             "type": "Fs.Fox.Basal.ArrayEx",
             "recordCount": 3,
-            "contractSha256": "4e5986ea515b3977bc7ba2dc7b058dffc7dc2777b9c290cb919e547d7cd9a3e5"
+            "contractSha256": "31f828129800bde37ec8c57ef9c736792af4632c39965a3fe44f0a1fde39f9bc"
           },
           {
             "type": "Fs.Fox.Basal.DebugEx",
             "recordCount": 2,
-            "contractSha256": "35bd1cf402a571aff29493de6165d8605e4cb42ec6d064894290a99ad2105735"
+            "contractSha256": "80ca10a968ec57dce19749126044f2c903d691227ee112d4506a61158d7df43d"
           },
           {
             "type": "Fs.Fox.Basal.EnumEx",
             "recordCount": 6,
-            "contractSha256": "a8e6ecbb2a72c59d2ed795d1c006669f545a6cd5f3ab5288e93a3ee20096a06b"
+            "contractSha256": "cc95794818a9c7d954b32f835a1790e8cf695af8cc24c3857ececf6f813e9067"
           },
           {
             "type": "Fs.Fox.Basal.GetWindowCmd",
@@ -668,22 +668,22 @@
           {
             "type": "Fs.Fox.Basal.HookType",
             "recordCount": 18,
-            "contractSha256": "7d07d9603a024ebc9fd4dd63d1e184fa23c2231d4932058e0d924178ef47ac45"
+            "contractSha256": "95e84d9403973304bcf2da60547b7b288fedf1219f3d0e4e92003588f7d08442"
           },
           {
             "type": "Fs.Fox.Basal.LinqEx",
             "recordCount": 12,
-            "contractSha256": "6f1a6d0035f12beebeaa08040341398cb7f61a3eae024a81d6cc9c6a3261c8d1"
+            "contractSha256": "c3242ffd6bd4f1655ce8059a2245e3771948921db133b828b564ef5d3f1c5c56"
           },
           {
             "type": "Fs.Fox.Basal.LoopList`1",
             "recordCount": 37,
-            "contractSha256": "3717b24dbb5dc1f3d17a39ab223b29ae42d646431b870c25f779d00527218062"
+            "contractSha256": "21aca2ca69ada624f34583a3f2829380b2eec8d29ac057f01d82cccd59af95c7"
           },
           {
             "type": "Fs.Fox.Basal.LoopListNode`1",
             "recordCount": 10,
-            "contractSha256": "743350989d026ea77183aa1b0422246b2e337b44f6e97a17ee5f967eea5dd781"
+            "contractSha256": "4af6e10dd6c22bf1adc286128571c0bdc0164006d7c1d49ff8b63724e54260a1"
           },
           {
             "type": "Fs.Fox.Basal.LoopState",
@@ -698,17 +698,17 @@
           {
             "type": "Fs.Fox.Basal.NCmdShow",
             "recordCount": 15,
-            "contractSha256": "a664a42c8601289dcca257e7a64cfda4b89458d4fea559e043b8f34f8e19fc7d"
+            "contractSha256": "09932ab5c9593441e2b04ea70c8aa5f8837d67eb6b3d067be544a40bddf0a973"
           },
           {
             "type": "Fs.Fox.Basal.PInvokeUser32",
             "recordCount": 24,
-            "contractSha256": "20104485fa969c7a3c53be4f4685fe2560f4e96d3d7aa32f65360226dcf1f0b5"
+            "contractSha256": "78be2412a9b8b1b6d05fc69e79fa897703590ab42cb6598ff06471be64ce426c"
           },
           {
             "type": "Fs.Fox.Basal.PInvokeUser32+GuiThreadInfo",
             "recordCount": 11,
-            "contractSha256": "ed68f6cb46ba24ab4f58035519fa7b7c09c1ec220d51e4accfdea77b5335f1cd"
+            "contractSha256": "565702c5843706f8706c6bb0a5256696688e889d4f4e38ce2b1e11c5469f4031"
           },
           {
             "type": "Fs.Fox.Basal.ProState",
@@ -718,227 +718,227 @@
           {
             "type": "Fs.Fox.Basal.RandomEx",
             "recordCount": 16,
-            "contractSha256": "0ac7651866845bd07e137463e89a477609d5b16505656636b4d8fb596bac7ceb"
+            "contractSha256": "3969fde052aa0f0c77d3c643a4bed18556b5c0fb0e2a7daf9496db7ff35ed463"
           },
           {
             "type": "Fs.Fox.Basal.SC",
             "recordCount": 6,
-            "contractSha256": "5a6de1766135ca8c0272da44ed903c51456b366a4f3a9089e84817c11a517961"
+            "contractSha256": "787b6745e6d2f84cdb35237eb9a7c80e2119713f5b37c56cc9b7e6ba1a9677bb"
           },
           {
             "type": "Fs.Fox.Basal.TH32CS",
             "recordCount": 9,
-            "contractSha256": "bd95d9075e67f188177dfba245fd128c4c95bfbd165489da454fead03c182a3c"
+            "contractSha256": "b3dd98ba039574a2b6a6f8a1e52d43c346214fa1cf02cc4d6c674dca2d085719"
           },
           {
             "type": "Fs.Fox.Cad.AutoRegAssem",
             "recordCount": 10,
-            "contractSha256": "cd56e94b26f30d0b2fd1089b0f1d933e0ba031bdee6f415294b312950cb9e8c1"
+            "contractSha256": "b7dff4322a378690670228a7244ccbb2516becec607c0b3ce5481a340a7354c0"
           },
           {
             "type": "Fs.Fox.Cad.AutoRegConfig",
             "recordCount": 8,
-            "contractSha256": "3627c1f28e60356560964a42bfa559d0572ed3804b808df3da919f585d759fa6"
+            "contractSha256": "98200f283b2f89b75232e3f25faaddd86736ee0d0be844af2335adcc566eb5e5"
           },
           {
             "type": "Fs.Fox.Cad.BaseEx",
             "recordCount": 2,
-            "contractSha256": "df1675ccf4c5a4ce51fa9536edc728de8afcdf344ebe42d3fe978b02d2b31b09"
+            "contractSha256": "7f1722b68c8039d1ac9a30c0eda0301cfe4102f20a7562c70086f1d50100e6fa"
           },
           {
             "type": "Fs.Fox.Cad.DocumentLockManager",
             "recordCount": 4,
-            "contractSha256": "c460ec3afd36136576946ce36cf9b981530a6536b5ae67a89bc2b56aa6f76c5c"
+            "contractSha256": "cf801bc11c865133063173e58c3c8d58ddf575f3881f355b4bd19ec7b7163616"
           },
           {
             "type": "Fs.Fox.Cad.DocumentLockManagerExtension",
             "recordCount": 2,
-            "contractSha256": "7c17cac0755ed158101a1dee74ca20165b2ffb167f95c3de525caabe27e61d75"
+            "contractSha256": "c7f7fbc326e3dcb8a4cda159f9074f26a837ba8353895a2de6ecbc32dfaa782d"
           },
           {
             "type": "Fs.Fox.Cad.DosHeader",
             "recordCount": 23,
-            "contractSha256": "1cbac706fba81e751496d27938c1391034487f3dc5e7343c817b1853145cfe54"
+            "contractSha256": "7503b1cec4f389627de9b8aa6b75ae9fce17a92c267c46aa93430e4718c02cdc"
           },
           {
             "type": "Fs.Fox.Cad.DosStub",
             "recordCount": 5,
-            "contractSha256": "730fb3872afcbf887f47a2f04293bf7e15e88499d2697c33faf0e0c820047f39"
+            "contractSha256": "fbc7a82fa36f14e06ef6767bac4b7bc1accaa5606fa79c6f31c02a23aa469193"
           },
           {
             "type": "Fs.Fox.Cad.DwgMark",
             "recordCount": 4,
-            "contractSha256": "09ffb417a173da08eac9b61f7344571766efc50a185287da58e29b54e8aff0a4"
+            "contractSha256": "731b0d312cede81d26619de03d4a760c431c5af330e3bbcf12d93d93f994d4cf"
           },
           {
             "type": "Fs.Fox.Cad.EditorEx",
             "recordCount": 45,
-            "contractSha256": "30de1b6c2142922944cf7c291f733dfe72133c9f03544c4fdafbbcdbc343a4f4"
+            "contractSha256": "d391c5290d5e22eb4f5b9205bb3de89b76c63dd7fc105c943f78e4c69af11237"
           },
           {
             "type": "Fs.Fox.Cad.EditorEx+RunLispFlag",
             "recordCount": 5,
-            "contractSha256": "875ed2287882e4779bae35ea682b7991f1a1da05b656305a47487e051b04492c"
+            "contractSha256": "a0d6b9d3fca5908191785f77ad4c6226e30eb801a49424e75339512b1d7b0b61"
           },
           {
             "type": "Fs.Fox.Cad.EntityEx",
             "recordCount": 12,
-            "contractSha256": "1410b981b69abd3a2a8227fbb7ff60b18c82a05ca6b5b7929c3dceac924e2c3f"
+            "contractSha256": "e73bb70ab0d79c929890eff092257fc7fc9d595360a1a6d66f40ed92aef20c9e"
           },
           {
             "type": "Fs.Fox.Cad.Env",
             "recordCount": 53,
-            "contractSha256": "99651e201620d0bc2ef24906ad28c503192ae3e33300c85bcd83fbf6ebfa475a"
+            "contractSha256": "573f3258573a2ee9dae758fe9c3b76b3d30e9f890a8073e6b37e7f5d10bc98b0"
           },
           {
             "type": "Fs.Fox.Cad.Env+DimblkType",
             "recordCount": 22,
-            "contractSha256": "75bc79ce606ecef102ce8ac2db817e53107ef3572d25ffb5cfc30a3d74753381"
+            "contractSha256": "eb7bc22c06d4a77c26351fea23a211fa9728dfe0081df7d4fbb7cdc92df32299"
           },
           {
             "type": "Fs.Fox.Cad.Env+OSModeType",
             "recordCount": 17,
-            "contractSha256": "133c6b809884d553bb1c03498406bd7e597e990d6a8e00281143f563ecde5c10"
+            "contractSha256": "2bdae549cf20e5d0fda5b783d6536925217bcc923c471d32e98469ed5009ce1e"
           },
           {
             "type": "Fs.Fox.Cad.ErrorInfoEx",
             "recordCount": 1,
-            "contractSha256": "cf21cd0e3961e88e302031e3a3ae9978ca190f062320525ac7bcdc5c214ea8e5"
+            "contractSha256": "d1ca1dafec0b960cd33b85770f3251d0915872e73055b5cc4fd4c74f09aa049c"
           },
           {
             "type": "Fs.Fox.Cad.ExportDirectory",
             "recordCount": 20,
-            "contractSha256": "b3cbd65eee4cdd8273bbcf854610c196b2bd6172e3677a6587dc510413a78633"
+            "contractSha256": "b3558b0614ba33eef34e2659d63093e477dc174a7124df4f709d59f349a0b8b5"
           },
           {
             "type": "Fs.Fox.Cad.FontTTF",
             "recordCount": 7,
-            "contractSha256": "d1b4dc995edb61e73d22623c94b4063317fd09e3884b476dd155eee3f06f5fc7"
+            "contractSha256": "d1d7f4d19f7ff61ca3cd8ed9e246369f6b4fd4b5a586d4e7317d4b7891d9b3a1"
           },
           {
             "type": "Fs.Fox.Cad.GeometryEx",
             "recordCount": 26,
-            "contractSha256": "be5dda2a4ecb55fc0cf16037d22f44c39b04a10328b369ceecab794b5fc42b6a"
+            "contractSha256": "a9ce6719badc243cbdeccf5c26ea34f57fe445731a30c5c2b942f1a52179a66b"
           },
           {
             "type": "Fs.Fox.Cad.GetMethodErrorNum",
             "recordCount": 5,
-            "contractSha256": "a2de997e421e0e084bda4a9f7992f61ae8530517e08e7da816eb466b473243c1"
+            "contractSha256": "0903f9d53b0cf27c9b57170e6d32823e20a23ed0b21391704c5ee27fc7dc17c7"
           },
           {
             "type": "Fs.Fox.Cad.GetPeMethodException",
             "recordCount": 7,
-            "contractSha256": "019b31f29272f2709b0e0c0227859f457bdb818ebf2a236edeb0faa3b12392fe"
+            "contractSha256": "5a9a48816a9dd3161047a66fb9469c3fb7cc71588b9ff270dec662a568572b17"
           },
           {
             "type": "Fs.Fox.Cad.DBTransEx",
             "recordCount": 2,
-            "contractSha256": "4004d3c17dfec4694559c70f72dea3987af4735a1cf2d345e26930dcdbd58888"
+            "contractSha256": "56d11cbbeea89217d42da87a1c6175ba5646f3ead992dc422c0e50d9f4e89269"
           },
           {
             "type": "Fs.Fox.Cad.DBTrans",
             "recordCount": 77,
-            "contractSha256": "305662226f1a9b1debace2e01c7ee2a4a198f2e20d5d9806d9ae9c8dec693817"
+            "contractSha256": "54dd0d3fb66abe11db68f8605c4ee55d8e7f4f9bfccfe2cb93fe9bba603d0b73"
           },
           {
             "type": "Fs.Fox.Cad.DBTextEx",
             "recordCount": 3,
-            "contractSha256": "24ab9f383e11a3769e5427f42544b8b8559f1ecb2b650187d8108e62a8c0ea3c"
+            "contractSha256": "a2469a31e26e7621fe53c6cc8219175c6953f731984253b7b89d5ed0a8490191"
           },
           {
             "type": "Fs.Fox.Cad.DBObjectEx+UpgradeOpenManager",
             "recordCount": 2,
-            "contractSha256": "0244e0c43bfc43ad0494309bb81e26643478e7e42bab2c628893be5ebaa3d2c4"
+            "contractSha256": "68bfebd0d80ef729c1182fbfc4b7d4ca303cc52b9767c580afcb127637b54a3f"
           },
           {
             "type": "Fs.Fox.Cad.BlockReferenceEx",
             "recordCount": 16,
-            "contractSha256": "e6eb40a58aecef2e9d9743adc849be377090afde54401fc580c4b14bb1e90723"
+            "contractSha256": "23e77008f1d59ff29e07af2fa50fcad11375218409145d836c608a7ebb49c86b"
           },
           {
             "type": "Fs.Fox.Cad.BlockVisibilityInfo",
             "recordCount": 11,
-            "contractSha256": "e240469ae63762cffd87f13cdafa8538ba48ea067475f582887f1808131fc7d2"
+            "contractSha256": "aa8af227bd5b0126357d6fc2cfbdb3b514526dfb8e06d66967f89e6f85f93841"
           },
           {
             "type": "Fs.Fox.Cad.BoundingBox9",
             "recordCount": 45,
-            "contractSha256": "5ff8e5744e24685a9ce015762a9e3d51f63ada31e48123054f75e02212ca0b21"
+            "contractSha256": "bf652885ea3e9c42281ed1bf9a2f578a234bcdd164d3d4f7efd5a52866e261e3"
           },
           {
             "type": "Fs.Fox.Cad.BrightEditor",
             "recordCount": 7,
-            "contractSha256": "1a4c21ca1538849c7c3fee349f3fbce49d12bc28afd139be49aa3a1d89fba40e"
+            "contractSha256": "be9b8c7c53e00da6f28ca644055196ddbfbff8f18e25903e9e761285ab030b88"
           },
           {
             "type": "Fs.Fox.Cad.BrightEntity",
             "recordCount": 10,
-            "contractSha256": "cf73ec071259d7ef98ec961ccb618b00c21f3c18775a848515ae9011e43cd57b"
+            "contractSha256": "2c16a853907b075cf75cd3d604842ae7fe05e5e0b9c6278058ddea6c05107f44"
           },
           {
             "type": "Fs.Fox.Cad.BulgeVertexWidth",
             "recordCount": 14,
-            "contractSha256": "9c837b38b2c8fbf912ffe0eabae609b4716cb7587df3c5782b680f50debbbc8e"
+            "contractSha256": "bb60dfd358865d31847264332007ea318031f3f5b027ff8334d715e3f4259d89"
           },
           {
             "type": "Fs.Fox.Cad.CircleEx",
             "recordCount": 4,
-            "contractSha256": "3a022f481f899cbe6dc22865c7153c4603574d4ff3b6114d1d170b11c0c2ed7b"
+            "contractSha256": "6c15780f3c40c0e8f2f504d2b75dd5b8d6f1484c1f6f605310d06f4a8135452c"
           },
           {
             "type": "Fs.Fox.Cad.CollectionEx",
             "recordCount": 17,
-            "contractSha256": "daeaf5115fe89b23deb206010a462d166f95ba4d3ca723ef42c7625f2a21fba4"
+            "contractSha256": "77842954baa5d859922da39f1a0c3eb1a3edd25d808e291251760f6b92f6214f"
           },
           {
             "type": "Fs.Fox.Cad.HatchDialog",
             "recordCount": 9,
-            "contractSha256": "163f5b90373a2bf7738635ab565617d52a1aca144a6b607eb5fc56e4b0e55eca"
+            "contractSha256": "e610b2847b7b18cb6158138bae008453f489dcc797ec0526251172e84235497a"
           },
           {
             "type": "Fs.Fox.Cad.CollectionEx+KeywordName",
             "recordCount": 5,
-            "contractSha256": "c591654ac61e683e6d0d0366c27815814af174a593aaf199397e372e1951424d"
+            "contractSha256": "575a5f0987f1135ec19ac10f67bfc09767bdf146f4bbec0ff52ad136ea3e5c7b"
           },
           {
             "type": "Fs.Fox.Cad.Curve2dEx",
             "recordCount": 16,
-            "contractSha256": "141bcb3108b4631237898a67fcca76af5726245aa4119af01657a45f72640995"
+            "contractSha256": "7545688049dd61567c681f214f3080ed6506dd0a4323161dcfafd0f9ef47f92b"
           },
           {
             "type": "Fs.Fox.Cad.Curve3dEx",
             "recordCount": 21,
-            "contractSha256": "4ab41e17dcdaac0b9e5b7f944fa83c22e75f3c03f97dbb5c073aa18049a16cc4"
+            "contractSha256": "3aecf5927dc057aac0543e0ff73e60ae56126668ecd7e443aa7974adc9f9acad"
           },
           {
             "type": "Fs.Fox.Cad.CurveEx",
             "recordCount": 31,
-            "contractSha256": "5f43c3cdf0dbae487d9f00399f53470567d0f99e12904383f811adfc5f6293bb"
+            "contractSha256": "64e3e3030bada36b252a7db0b7fc380d94608df9f63bb76e29d10446d2568281"
           },
           {
             "type": "Fs.Fox.Cad.DatabaseEx",
             "recordCount": 4,
-            "contractSha256": "e8a5fbf0e2b9d9280a9a36836a7fc7a5f78b7865560c4853f743ea11c94eb9c3"
+            "contractSha256": "638b14c83c672ad18330fdde651b31ef01293ac269518f44d71d5515ab3763dd"
           },
           {
             "type": "Fs.Fox.Cad.DBDictionaryEx",
             "recordCount": 17,
-            "contractSha256": "d18e06511d857e7facb085237132f0eb58670ddf2914e05bfbf067b69118de51"
+            "contractSha256": "1e8da83d7a116de3771e03e90c25addb4d4ef9849d1daed4e587527c83db2652"
           },
           {
             "type": "Fs.Fox.Cad.DBmod",
             "recordCount": 8,
-            "contractSha256": "d879455d344826061e0246ee9181ebd123eb5b6c96f2c9e4b002260b2e44ab63"
+            "contractSha256": "6df2f8e4b0159e54f38097b0b30c8187430eae6a7c4cf0e2c12f198e2333b0a7"
           },
           {
             "type": "Fs.Fox.Cad.DBmodEx",
             "recordCount": 7,
-            "contractSha256": "a55670489f04c146edff98aba613ee2d370c55453d9b889918eed0cbf984c980"
+            "contractSha256": "d1d75eb04bc42592d2374791f0c5f8611ef431735b9aaa120b3357c7c4840ba0"
           },
           {
             "type": "Fs.Fox.Cad.DBObjectEx",
             "recordCount": 8,
-            "contractSha256": "5a24ad03feb18fcfc92fa106aeb4682a2da676c7fe1e9771823c90545e69215b"
+            "contractSha256": "3b5ee4ad38d6ffb2cd9163d82512d366b0a3443959ad7e1f4ed20b6a0c9ef229"
           },
           {
             "type": "Fs.Fox.Cad.CoordinateSystemCode",
@@ -948,7 +948,7 @@
           {
             "type": "Fs.Fox.Cad.XrefPath",
             "recordCount": 14,
-            "contractSha256": "5c89ae4c11766ee02b60ed4b39d7db8fb5f0143cc6e430e270418c6d1817cc1d"
+            "contractSha256": "53f188549c388d9aef7c8af3c7d02de83691a6d722506933c06a7c4d40e05e93"
           }
         ]
       },
@@ -977,42 +977,58 @@
           {
             "path": "AutoCAD.props",
             "length": 1175,
-            "contentSha256": "672b61e458c2bac6ee54d17aa36d066b7ddd4061a7c3aa6bb70866a8aea14cd6"
+            "hashKind": "raw-sha256",
+            "contentSha256": "672b61e458c2bac6ee54d17aa36d066b7ddd4061a7c3aa6bb70866a8aea14cd6",
+            "binarySource": null
           },
           {
             "path": "GlobalUsings.cs",
             "length": 3764,
-            "contentSha256": "1f1a2e3d29e703f4c4f3c6c71e987580f205f644aef68ec097aeefdb4ac4c976"
+            "hashKind": "raw-sha256",
+            "contentSha256": "1f1a2e3d29e703f4c4f3c6c71e987580f205f644aef68ec097aeefdb4ac4c976",
+            "binarySource": null
           },
           {
             "path": "LICENSE",
             "length": 1091,
-            "contentSha256": "a2943fc061379a06f57c4a7ea027980ffd3b1f29488cb00519402fd27113d3fd"
+            "hashKind": "raw-sha256",
+            "contentSha256": "a2943fc061379a06f57c4a7ea027980ffd3b1f29488cb00519402fd27113d3fd",
+            "binarySource": null
           },
           {
             "path": "copyToDigBuild.ps1",
             "length": 5848,
-            "contentSha256": "73fab892a1b519b3e6a2f378885c46597655ec2e7d87921166de59adf343965b"
+            "hashKind": "raw-sha256",
+            "contentSha256": "73fab892a1b519b3e6a2f378885c46597655ec2e7d87921166de59adf343965b",
+            "binarySource": null
           },
           {
             "path": "readme.md",
             "length": 7873,
-            "contentSha256": "00ccca236e22a69663270c28e1fd111575561d3708e5ff863b469273cbdc9b9a"
+            "hashKind": "raw-sha256",
+            "contentSha256": "00ccca236e22a69663270c28e1fd111575561d3708e5ff863b469273cbdc9b9a",
+            "binarySource": null
           },
           {
             "path": "lib/net48/Fs.Fox.AutoCad.dll",
-            "length": 365056,
-            "contentSha256": null
+            "length": null,
+            "hashKind": "matches-build-output-sha256",
+            "contentSha256": null,
+            "binarySource": "Build/AC_2019_Release/Fs.Fox.AutoCad.dll"
           },
           {
             "path": "lib/net48/Fs.Fox.AutoCad.xml",
             "length": 490259,
-            "contentSha256": "f647a628cd394e94f0a2357b8f86b8587285f91e11979f0d01a8f6e2f844906d"
+            "hashKind": "canonical-xml-v1",
+            "contentSha256": "72fa29ed9b6b937a33d45de4b6b6e6cff656bca402a8d728e2f005a4253c205d",
+            "binarySource": null
           },
           {
             "path": "lib/net48/TestAcad2019.dll",
-            "length": 123392,
-            "contentSha256": null
+            "length": null,
+            "hashKind": "matches-build-output-sha256",
+            "contentSha256": null,
+            "binarySource": "Build/AC_2019_Release/TestAcad2019.dll"
           }
         ]
       }
@@ -1201,42 +1217,42 @@
           {
             "type": "Fs.Fox.Basal.ArrayEx",
             "recordCount": 3,
-            "contractSha256": "301c1c8fead21bbe30aafa3e499a4db1e9104e85e98a75cdbe7e89a93efe0031"
+            "contractSha256": "1a264b27d9de582a9d6a4de46267ac89184444102b4981fe33e0ab1ccf54e7d4"
           },
           {
             "type": "Fs.Fox.Cad.OpLogi",
             "recordCount": 8,
-            "contractSha256": "bd45ae3199f9afaaf79cacb33b299c97bdef23f97d0951345aff149e9c1ced02"
+            "contractSha256": "a654fc3279e4f4cafd57c8ab5b34fbb95568fba57a9f966b75eb862909ff012c"
           },
           {
             "type": "Fs.Fox.Cad.OpNot",
             "recordCount": 5,
-            "contractSha256": "a1e1b1f76d87c0435986f4763ed3f7cd02e1406b4fc130254975db054190f747"
+            "contractSha256": "b10be60116434d2d4486d15610b9c6093e5ed17208db60c5bf9db0c7970d5a64"
           },
           {
             "type": "Fs.Fox.Cad.OpOr",
             "recordCount": 5,
-            "contractSha256": "090e1d6cfb4fed1ecdd5f09fd4afe99ba6b6fa9c1b0fdde6bcef178304bed6f9"
+            "contractSha256": "d63d8376ec3a3f2e08fc213f5a2df14216be87d32617814b841bb908883826c3"
           },
           {
             "type": "Fs.Fox.Cad.OptionalDirAttrib",
             "recordCount": 5,
-            "contractSha256": "3c85370728be887959a044b16d358b0687f0b897f622b8090ca0e59a8ec234d0"
+            "contractSha256": "47728eca80ebf9a9e1a58cd46fac4332699b4dd1d10183b8abce3e52c17e53a9"
           },
           {
             "type": "Fs.Fox.Cad.OptionalDirAttrib+DirAttrib",
             "recordCount": 4,
-            "contractSha256": "f08af9de2f66e2807f8f9a4ab4e6ee18a51c5801cb4412b67d6109749670a2bd"
+            "contractSha256": "93c078ce8d309e7e579ef758a88c3016e777d93bf76ff044174054664c732aea"
           },
           {
             "type": "Fs.Fox.Cad.OptionalHeader",
             "recordCount": 34,
-            "contractSha256": "3fe8f9ca91ed2dc2d797fcc4d1c921122289034b089d9db72eb216983f001a7d"
+            "contractSha256": "9382ba1d4d3ec53c7a77c38c30b501b61e59f9c9afc65f0c7f486cc2279b86a0"
           },
           {
             "type": "Fs.Fox.Cad.OpXor",
             "recordCount": 9,
-            "contractSha256": "1930829c7a9c68b683773501edf5f2173164fc48573e05a04f409bc044a17d21"
+            "contractSha256": "d958d760888301ad108827c5e951909849fd8e2527a11b3270d0358bf2c1a7c3"
           },
           {
             "type": "Fs.Fox.Cad.OrientationType",
@@ -1246,7 +1262,7 @@
           {
             "type": "Fs.Fox.Cad.PaneEx",
             "recordCount": 4,
-            "contractSha256": "cf79cf28d2f2ca0d3821728974c0b20af21814f0e428ea2e9e8a1f9809073bd4"
+            "contractSha256": "2e10a5b30781132984b189a55d3acd4f113f9dc700f2ca3d36e332fa360ad7c2"
           },
           {
             "type": "Fs.Fox.Cad.PaneMarginType",
@@ -1261,27 +1277,27 @@
           {
             "type": "Fs.Fox.Cad.PeFunction",
             "recordCount": 9,
-            "contractSha256": "29b73c223ae6d07b762c303a482bfc471884a249ef2cbfedd2258b17396ce684"
+            "contractSha256": "2781122a8b21df3cb7178ddc2a1f55e87fa385a0c70749e0ce884978471b98f8"
           },
           {
             "type": "Fs.Fox.Cad.PEHeader",
             "recordCount": 12,
-            "contractSha256": "ddb4d984384725d16213535717eb09f59258064430450a89a62cf9309771de22"
+            "contractSha256": "5a399a98fbeedbefc12c60d641c2566ad7a6a48625e4764da9e2de969b35c198"
           },
           {
             "type": "Fs.Fox.Cad.PeInfo",
             "recordCount": 24,
-            "contractSha256": "869e66dda9708f98bd69ac5efdaeb334aa098c3dd352002b6f3b98100a8d7ad4"
+            "contractSha256": "47c2d41fc9341f6f8023161d6fc56f0a3b8a487323c94a55b4523fc7e87c7fca"
           },
           {
             "type": "Fs.Fox.Cad.PlaneEx",
             "recordCount": 4,
-            "contractSha256": "9ab0d0c1ebb006af0d82b49b80918fef3663e67f74a73f654164c03356f9d487"
+            "contractSha256": "1c5e0fcd5234eb3d8f56d866add5f9c8cf8eda625fbd7791c5c62a4869bf2013"
           },
           {
             "type": "Fs.Fox.Cad.PointEx",
             "recordCount": 22,
-            "contractSha256": "5b5806bd84f4ce156af04449d2ecb83e1d8eed0c042c62c743cfa34fab192ce5"
+            "contractSha256": "e9003220a7a8ee665eb659ad8a04657ab2f24680f6ee8d7ec46563c88b27cdaf"
           },
           {
             "type": "Fs.Fox.Cad.PointOnRegionType",
@@ -1291,32 +1307,32 @@
           {
             "type": "Fs.Fox.Cad.OpList",
             "recordCount": 10,
-            "contractSha256": "cff0746145dc3e60dfc09c17c4a62227e9ed7ba5de418a712c8efcad1daae244"
+            "contractSha256": "28709bbde89a17d97f8a0923a5c3d047cf262e011dd279f6e152184f37442b9e"
           },
           {
             "type": "Fs.Fox.Cad.PolylineEx",
             "recordCount": 9,
-            "contractSha256": "7a4c6e2449311474c3abe3fb590d6b35a5e899e33b87aed27ef0f069618f8dff"
+            "contractSha256": "13d5975369a262906a5c2be7beb9959dc738001cc5fa01d329aa042d60c0ac7f"
           },
           {
             "type": "Fs.Fox.Cad.OpFilter+Op",
             "recordCount": 19,
-            "contractSha256": "94216072cc846bc1e7db3c0502cb3e4000b6d641d985b7a6ae25b0a7ba7cb650"
+            "contractSha256": "ed7bb592bec5bf4a8c6b29b1e3bdd23d60e3c83df5e6df845f609ccc1015119a"
           },
           {
             "type": "Fs.Fox.Cad.OpEqual",
             "recordCount": 11,
-            "contractSha256": "9a8ab18a345f39352660b1d802ac61db19e5b631ac2cf6115441680299dff492"
+            "contractSha256": "4f9441da36693e0aebdffc76a4cc21ad767df6cf2129c40abd34d7bb7b5613f9"
           },
           {
             "type": "Fs.Fox.Cad.IdleAction",
             "recordCount": 4,
-            "contractSha256": "5a5458cf9083f6792e551457aece8f98c05ef0a6c28b164def92a61134914267"
+            "contractSha256": "0ac7068c018f8ddafdb2841823b1312ca297f6fed91ed7a0af1ea72b42f14360"
           },
           {
             "type": "Fs.Fox.Cad.IdleNoCmdAction",
             "recordCount": 4,
-            "contractSha256": "c7d67be13d9b7284a37bb90bc6ccbd6926b10c6c375834dc008594e22d2db51e"
+            "contractSha256": "4f59a26b2e4c44dd3e33d907fe3ab7429c9d933c66203aaa2e2e88a5e808face"
           },
           {
             "type": "Fs.Fox.Cad.IFoxAutoGo",
@@ -1326,27 +1342,27 @@
           {
             "type": "Fs.Fox.Cad.IFoxInitializeAttribute",
             "recordCount": 2,
-            "contractSha256": "57414b0f0531deb709a9dc9f8b58c9b43250754e881740816379a3e5f9776872"
+            "contractSha256": "1e8a54d3370f46dcd006087f7ca26a2acc2510c487e58f524b705c44ca24442e"
           },
           {
             "type": "Fs.Fox.Cad.IFoxUtils",
             "recordCount": 6,
-            "contractSha256": "aa97997efa7af1c703fd37f6f92a26cd515b4bfea6d20bce5a7fd07f3cb90684"
+            "contractSha256": "a293787b2722377a43ad41e82510a0b9f6a9fcf0c4a2614e5ad2667dacd99efe"
           },
           {
             "type": "Fs.Fox.Cad.ImportDirectory",
             "recordCount": 5,
-            "contractSha256": "be0f6885cf29ba4ad9e669cdf0db6e7840576b21177db70c6b2eb3630fcc3591"
+            "contractSha256": "ac2cf245b1764e1d2f3eab22ad372ac7b8aa1c9d3093211a67556acec796b4d6"
           },
           {
             "type": "Fs.Fox.Cad.ImportDirectory+ImportDate",
             "recordCount": 9,
-            "contractSha256": "3f00a8485c8980282a183096417483ed72b6918066d3ab696c02cea658539b84"
+            "contractSha256": "74e8fde11bfcf664d955962da013870245ee27dc529c837915e15509ac2acd1b"
           },
           {
             "type": "Fs.Fox.Cad.ImportDirectory+ImportDate+FunctionList",
             "recordCount": 5,
-            "contractSha256": "427c0e82a91b15bbcac3f7794f1b4b9e4a68c7fc5bb0a43cf386dc17c424f753"
+            "contractSha256": "f04c040d27c5bba57d735218fa5e0eb257feef8ad6ef1b9bf04477fe79b8da77"
           },
           {
             "type": "Fs.Fox.Cad.IXrefBindModes",
@@ -1356,92 +1372,92 @@
           {
             "type": "Fs.Fox.Cad.JigEx",
             "recordCount": 22,
-            "contractSha256": "3b199d29e7498ea10696ad035a3c4b4aec0253cad263ef8bdd97eee06d9e923b"
+            "contractSha256": "74b422bfda7943a23f0d35351fc105fadaad3c71dd441b1a684d27f745308624"
           },
           {
             "type": "Fs.Fox.Cad.JigExTransient",
             "recordCount": 20,
-            "contractSha256": "14e0f4b46fafdefee3e8a36e3b909a4d8acda38e1f4eebae4ca8b6e23921d313"
+            "contractSha256": "925374303c7b155f6be99bdc6eca40c4b69bd3d8c9767801c67edfb8fe0a7862"
           },
           {
             "type": "Fs.Fox.Cad.KeywordException",
             "recordCount": 4,
-            "contractSha256": "58dfdb2673fdeef951cee894a20cc12fe8f50d61cea03a692baf84d7036df1f6"
+            "contractSha256": "de5d5c6e72a340981f8e3942c37c21f43b0299e7cc0bf7a4b16ecdfa879f1035"
           },
           {
             "type": "Fs.Fox.Cad.LispList",
             "recordCount": 23,
-            "contractSha256": "7eda97f4aecc3c81487d8a3eb0cee819428c7c57376855dea7d116b562474dac"
+            "contractSha256": "eb78f9ec3d4b5e997962e4c5256a5014f354d8e131e554ce82a4f0791493ceb0"
           },
           {
             "type": "Fs.Fox.Cad.MTextEx",
             "recordCount": 4,
-            "contractSha256": "99f95971907ddd04150b519fede4826b8b0734d73d0cede772161a6f7a0130ab"
+            "contractSha256": "62b187f10ada07c5c4522a7769511b839edb33927972e84ebb59f2bd35e6b4ad"
           },
           {
             "type": "Fs.Fox.Cad.ObjectIdEx",
             "recordCount": 11,
-            "contractSha256": "3c8594941a47e0d022a9b105c7685eb8b788b04ba3d05836db3453ddfd380f90"
+            "contractSha256": "11492573e6f33309ad8e1bf5dac104af50797ad21927a484c5f687b5daf600f6"
           },
           {
             "type": "Fs.Fox.Cad.OpAnd",
             "recordCount": 5,
-            "contractSha256": "66202d5743158f0ec85ab35acfe81b053690890699eb74b75253d2b9ac43ff54"
+            "contractSha256": "bcb002a4e1b39d52d66cbcb6afcdc2dd8e55ed5b6e5cef49da2ce76f18c573b5"
           },
           {
             "type": "Fs.Fox.Cad.OpComp",
             "recordCount": 10,
-            "contractSha256": "c6585559d0fe5869e6cd7d1ea8b8c2168f179166476f47fe984afe74fa141780"
+            "contractSha256": "02946107ec79a54825f88006d178b38db10618c2df3e9fc2659b6e4e89cf15f7"
           },
           {
             "type": "Fs.Fox.Cad.OpFilter",
             "recordCount": 12,
-            "contractSha256": "f36e1da13a5b3d054f39b185405658f5f4775ff2d9e591eca28224bccbae2c27"
+            "contractSha256": "7370db7e0aaec9747a1e76bcc47328adfc82ebca81e1a668b83372cc25cae69d"
           },
           {
             "type": "Fs.Fox.Cad.HatchInfo+GradientName",
             "recordCount": 11,
-            "contractSha256": "dd79b1cb0148437138cdba5885d3fe1add3e22d9496e65c1469b18ca30dac452"
+            "contractSha256": "c42e9369649580be83d64993c88d6f067bff9133b293d84d83baebbd42c08c93"
           },
           {
             "type": "Fs.Fox.Cad.PostCmd",
             "recordCount": 5,
-            "contractSha256": "5316f5cfb4639754e5b663a7d4d0f811bcd13f62b560443085b9e6bbd47de397"
+            "contractSha256": "85b6bae4b9002f4ca3488ae3018f08f9d8226a55b93990cf849c1bf5ab22f9c6"
           },
           {
             "type": "Fs.Fox.Cad.ProgressMeterUtils",
             "recordCount": 4,
-            "contractSha256": "d51a76b0c3d49eb07cb59718143d7a9aca6f0193d280cba0fb52cc5b4d18587b"
+            "contractSha256": "614286fbf6d72d44ff377613f3105e9d46a094408be99e40c270e7a4189897b7"
           },
           {
             "type": "Fs.Fox.Cad.SwitchDatabase",
             "recordCount": 3,
-            "contractSha256": "c6048e589366ea28b6df22ce42bbf56b162f9fcbaa8bf7d01b2e039ad7fe90db"
+            "contractSha256": "2da931b7a072568dad1aa9ef08a2b7526e229f795db5301fe86ebb82475c8719"
           },
           {
             "type": "Fs.Fox.Cad.SymbolTable`2",
             "recordCount": 23,
-            "contractSha256": "ecd14ec07397b72b4de7309dc5fe8c85b2a180ac68add58fa43c4d95476c43a8"
+            "contractSha256": "2783de3381f52b1e2bf42e13a184c77c804d10ebf99e83351aa004c5c0b0b2eb"
           },
           {
             "type": "Fs.Fox.Cad.SymbolTableEx",
             "recordCount": 16,
-            "contractSha256": "323e7f8f93f72977e584d46f878834796c7883b2f28667e7e3d088e8c2eedfca"
+            "contractSha256": "237f24fe5171681a21dcb5ab029d6ed66cdda8f0a44dcb4d74d7093582d259b6"
           },
           {
             "type": "Fs.Fox.Cad.SymbolTableRecordEx",
             "recordCount": 15,
-            "contractSha256": "cc1c2c7f691b656aef91cce2c442fa611d829d19afac1c5fcc2a6f05badc8819"
+            "contractSha256": "79dded0edaf0d53bc0bc3dbb800f6064d98c52892d3dc08d91e26dd03f383996"
           },
           {
             "type": "Fs.Fox.Cad.SymModes",
             "recordCount": 14,
-            "contractSha256": "60bc67df3481837d3c06556dbab28dc5a1d6e5c25e4e0917a9cd34b358ad09bd"
+            "contractSha256": "0d053d3a568be86ccc589a4b0fa3bb6aebf0f197c8ccd589484fe40c8b4ab29c"
           },
           {
             "type": "Fs.Fox.Cad.SystemVariableManager",
             "recordCount": 106,
-            "contractSha256": "4eba2df4d9132b1144bafe11b2451d645428dfe083b2c00e9a3e141c7ddcc740"
+            "contractSha256": "5ff368876391188e578595d50a26f29e2d65c03632109dc02f135b03add25d6d"
           },
           {
             "type": "Fs.Fox.Cad.TangentEx",
@@ -1456,47 +1472,47 @@
           {
             "type": "Fs.Fox.Cad.TransactionEx",
             "recordCount": 3,
-            "contractSha256": "7c354328fcf0358fbf20dcfe2bd534eb9260ee5334d4aff5fbb9842fb58c7252"
+            "contractSha256": "ea6e6e6ed13c5253dad2bd695f1b8fc1fd1f7ce94c441ac6932e6632d3779b74"
           },
           {
             "type": "Fs.Fox.Cad.TypedValueList",
             "recordCount": 9,
-            "contractSha256": "0e90020fd84e17306eaf1d184323d94eb2ce4aadd78f7bf7ad9c1af891ab564e"
+            "contractSha256": "24a5836670dd2acbe4f6d9bc7665bd5ae98cc2efd94f070bd835732a480aad4e"
           },
           {
             "type": "Fs.Fox.Cad.VectorEx",
             "recordCount": 7,
-            "contractSha256": "f45b793de1f109212cf692af54d333135e62d1608f0940ac1ca715f88ec66a93"
+            "contractSha256": "5703649de839c033cc958db463918eebfeaaaa8237b2270edf97620feb9011e0"
           },
           {
             "type": "Fs.Fox.Cad.WindowEx",
             "recordCount": 6,
-            "contractSha256": "8ed6f8846281c01be0ff84a9a3f2fd958d075a99abf19e3893b822e44881c7c9"
+            "contractSha256": "e79a39f0c244c2ce658d0227bb6a1d534f384efc06a90b74dc2f83fe67f34fd2"
           },
           {
             "type": "Fs.Fox.Cad.WorldDrawEvent",
             "recordCount": 5,
-            "contractSha256": "5d1361fd09d515c443a5140a7765cc13f9092d0b9c9b23b8583d4508514f84a0"
+            "contractSha256": "0a5606e55c2cbee0b176c476084e4f29feb4fe10f9314884ddbc9949d4ba580c"
           },
           {
             "type": "Fs.Fox.Cad.XDataList",
             "recordCount": 12,
-            "contractSha256": "46c3b88b681cca795deceaf0d1850cf44cf35f8fba9336823868a87d088dc5b5"
+            "contractSha256": "6afacc6bd631c355f75c0b1ce656a6801bc7b69ae5832ddd99234608af30769b"
           },
           {
             "type": "Fs.Fox.Cad.XRecordDataList",
             "recordCount": 9,
-            "contractSha256": "dd02e34515d3b78264f6e0f4c60d6a8d7d6a964eaa73b48f222e2fb2318f67f5"
+            "contractSha256": "2f00c4381f4557fc6d0315e2ac9002729155c3f8b744752489a45ea3b53eb2ae"
           },
           {
             "type": "Fs.Fox.Cad.XrefEx",
             "recordCount": 2,
-            "contractSha256": "97d471a5bcc25c8f7161a62a0ccb8ccd39cf38dc04c4a5e01f722468e70b1278"
+            "contractSha256": "2161e8e28abcf8c1ec12b93dfe8f87e11b555bb232677481d17c6987dcb47ae4"
           },
           {
             "type": "Fs.Fox.Cad.XrefFactory",
             "recordCount": 13,
-            "contractSha256": "480e793b4ca2c4243830efd129cf1d7f5f427211b681c0ee835b58a9cf73cfc3"
+            "contractSha256": "cf3573aa0bee4aa41497737660b6da7f2eecba36d18fdc37f1c218d4bc89cd58"
           },
           {
             "type": "Fs.Fox.Cad.SingleKeyWordWorkType",
@@ -1511,32 +1527,32 @@
           {
             "type": "Fs.Fox.Cad.SingleKeywordHookEx",
             "recordCount": 2,
-            "contractSha256": "41896157b02bce9e5eb61ea439292e227c0349e31e2c2d645bab4b6ccacc4f7a"
+            "contractSha256": "89ea1491155a1b615ac17cd16bf819fc2214ebe496a26886a98157675689bf20"
           },
           {
             "type": "Fs.Fox.Cad.Sequence",
             "recordCount": 4,
-            "contractSha256": "a41c8987636ced7ee9cf4e959c1886f2d345e259fcf3bf66d278e18688c643c6"
+            "contractSha256": "09a6545c3bbfbb804551f39c6a30efe081ee6351cf3b59560be047fa8e5db0e0"
           },
           {
             "type": "Fs.Fox.Cad.PromptOptionsEx",
             "recordCount": 3,
-            "contractSha256": "0b75e40cc091b14f98685e357f45b74f7e5db09820071a4175dfb5e067871336"
+            "contractSha256": "83d5eaa9a0e8a0d4fd173f74c90efe1eb184260d73e19a86a8dd346092830a39"
           },
           {
             "type": "Fs.Fox.Cad.QuadEntity",
             "recordCount": 2,
-            "contractSha256": "3dbfd42abaf524f2711b64917ee28b9d72b451ed92bdfac0f93e76d7dfd8f704"
+            "contractSha256": "d5a34d39e693f7dd851ff5765cbd6e2b6c4935902a0948e715f7ff1b4fcaa84b"
           },
           {
             "type": "Fs.Fox.Cad.QuadTree`1",
             "recordCount": 11,
-            "contractSha256": "b40e79c8b9d95024a668ea5f45733d708a3b0ac4a45272e65a9e02cc1d8fb60f"
+            "contractSha256": "117979817c22ef234279cbfe195f525954391b501e94f086d017276f12ff043a"
           },
           {
             "type": "Fs.Fox.Cad.QuadTree`1+QTAction",
             "recordCount": 5,
-            "contractSha256": "16f16f5492c13f52459e179e65ffdee0f57a8c91b8308e862e61a60555137657"
+            "contractSha256": "dd824a8d861e62110bfa00b259350f4d64010a854d1726a7c7abc6864ad5f555"
           },
           {
             "type": "Fs.Fox.Cad.QuadTreeEvn",
@@ -1551,7 +1567,7 @@
           {
             "type": "Fs.Fox.Cad.QuadTreeNode`1",
             "recordCount": 19,
-            "contractSha256": "a3428c8d6a5f667bd6671e3f74f28c4b84b345e79ca91331a8ff2e5a0178a2b2"
+            "contractSha256": "78fd021d08b0050f7306b7de5159e5123beea34b455a5f3acc077aeb7585fb4b"
           },
           {
             "type": "Fs.Fox.Cad.QuadTreeSelectMode",
@@ -1561,92 +1577,92 @@
           {
             "type": "Fs.Fox.Cad.Rect",
             "recordCount": 76,
-            "contractSha256": "7cdd3bf39e130916ac9f403935296189c7cde59b44210abb1d95a8b2ecd36ea3"
+            "contractSha256": "380a82a6ee6f0ee14528cb6ef5fd4b775a9c6db371e0b82a845ba4eaddd1185e"
           },
           {
             "type": "Fs.Fox.Cad.RedrawEx",
             "recordCount": 4,
-            "contractSha256": "5cd758174cd3c52c6e20da239a7a1bf009b9a19fc422eaca0da17fd20d393476"
+            "contractSha256": "083abd6b4c21b65fe4ad2be15d0661815816d4461cec167914630d97029f7767"
           },
           {
             "type": "Fs.Fox.Cad.RegionEx",
             "recordCount": 1,
-            "contractSha256": "4a5b6d9916144d32fc79ced4a8a13e453d21cbc6f4860b3f4e4ee08852113f1d"
+            "contractSha256": "45c402e6cc2687e06ef95b034ea0371a566bc79afd7715f7336ab3f55e44739a"
           },
           {
             "type": "Fs.Fox.Cad.ResourceDirectory",
             "recordCount": 12,
-            "contractSha256": "7c3b09b1618d4165e7471e16fc45f7cedd68ea696d99fe9c4472e667138a8e84"
+            "contractSha256": "8030ba88cd88bfcb7fa26ad719c9d7363644299ca294bd62d265616f3104cc84"
           },
           {
             "type": "Fs.Fox.Cad.ResourceDirectory+DirectoryEntry",
             "recordCount": 6,
-            "contractSha256": "4fba05fd8bc4e74ec7007fd88bedfe8a749669f8d4ae7030fcc7715971929e58"
+            "contractSha256": "02f8f20315cc6835b1c5263c4385c38b500a2541794aa352b913d83abd4ae253"
           },
           {
             "type": "Fs.Fox.Cad.ResourceDirectory+DirectoryEntry+DataEntry",
             "recordCount": 8,
-            "contractSha256": "bf1c2aa3ba1a6deb2f2a5a33dcc353cbf11f9b7bc303273594a243992aedccfa"
+            "contractSha256": "7ff97971d08530db8d64b201c3565fd65be77417af1538f471ac76b171416d9d"
           },
           {
             "type": "Fs.Fox.Cad.SectionTable",
             "recordCount": 5,
-            "contractSha256": "523aa08b0253b607edb210ac8d5755f3cfb75e0fe0cc8b3e2162846c73f044b8"
+            "contractSha256": "dc1e30db0c4afb03e9cc216610312c12de865cfc5279dd6170122145a870f245"
           },
           {
             "type": "Fs.Fox.Cad.SectionTable+SectionData",
             "recordCount": 12,
-            "contractSha256": "e61190d53a930ccb5b76aa8e6b491909d9564161f83dc7376fc8a5fa0e7d85a1"
+            "contractSha256": "d9e353d040f8fbae52589da4e4f8d3858190d22577f803c232c9bebd268fbc92"
           },
           {
             "type": "Fs.Fox.Cad.SelectionSetEx",
             "recordCount": 6,
-            "contractSha256": "65e8cae14aa8eafbf4f75dcc539422f91994aaed3e604c95727a950c1b6278b6"
+            "contractSha256": "f31fa15c98c5b249eabb8c9a7e51d0704d17ec2110be34764c74be2ca640c69e"
           },
           {
             "type": "Fs.Fox.Cad.SingleKeyWordHook",
             "recordCount": 19,
-            "contractSha256": "c9ea3e839b081b3929dc96a694d7138fb1cba31fe833bfcb0bc91f31b3fd356a"
+            "contractSha256": "d93fc00ef4f206a6fbd720aa0fd8d59b989542bd775bafb9a6feca3ba5f278c3"
           },
           {
             "type": "Fs.Fox.Cad.HatchInfo",
             "recordCount": 12,
-            "contractSha256": "4aa9365894aa5332439ed870d09a0e41a9275f7284d33bf58bb348c04e652b03"
+            "contractSha256": "ac7cf9f41600db39d71bda83fe23f4068849fc00ebf5619ef5fbd64f0d24a4a7"
           },
           {
             "type": "Fs.Fox.Cad.HatchEx",
             "recordCount": 5,
-            "contractSha256": "e16f6d5ed1470888e1f47dee602ac2e8150ff4cfe5e475d37c4a0cef30c93035"
+            "contractSha256": "542664d30e9898313d5fe2b3b5b6072cc8268a6e07df86b2c2c1b2dd6b97d9b3"
           },
           {
             "type": "Fs.Fox.Cad.HatchDialog",
             "recordCount": 9,
-            "contractSha256": "e7654ce028ce4e4069409c9228ddf3722acf64ef4231cf2e5396ec6636894243"
+            "contractSha256": "7431de218c312dc45be19b4b66a6c182011ad1a15739d96a4f0586726cdc03f7"
           },
           {
             "type": "Fs.Fox.Basal.WindowsAPI+IntRect",
             "recordCount": 23,
-            "contractSha256": "00d53462aae6e7832accc67c2d14e11f1b4b90fd8ae818a50e546226eaaa54b9"
+            "contractSha256": "7e9b13ad4eb503da4b951e5ede6b2c84744d801bc3c83fbaeff2c9d7133a8f1f"
           },
           {
             "type": "Fs.Fox.Basal.WindowsAPI+IntSize",
             "recordCount": 5,
-            "contractSha256": "af4db8dea19bbc452032c4fd68b31805473dca1e690122e9ac5349523d0e7168"
+            "contractSha256": "89b71fbb2dba3d3d38b5d4db05ad3d2147ffea88deb11629b8a8333b20fc6caf"
           },
           {
             "type": "Fs.Fox.Basal.WindowsAPI+KeyboardHookStruct",
             "recordCount": 8,
-            "contractSha256": "aa4097bbaf739fb5cebfef90fb38592f14d44027acf14a1f5bba7bea845de43f"
+            "contractSha256": "e07063b34bdd6884cb66c0e59b285012b22eab1a75a043056e05794512fc3abc"
           },
           {
             "type": "Fs.Fox.Basal.WindowsAPI+Point3D",
             "recordCount": 13,
-            "contractSha256": "28f465629c881fd0a51833ca7c88c878b33224d3c746ba1be7578e0b81d287d0"
+            "contractSha256": "03a785ad02d105963ecc66a9885b13cce5835054b1cb6acdd30ac0e7a4e93b31"
           },
           {
             "type": "Fs.Fox.Basal.WM",
             "recordCount": 122,
-            "contractSha256": "8ae210ad8687950bfca7ba0d1a250220cf9e3ddba59c47740eb90897c07a459d"
+            "contractSha256": "df483c903344992e498328a7ded2461d69e5000c8f864df5250aaf4e3e2fded5"
           },
           {
             "type": "Fs.Fox.Basal.WS",
@@ -1656,32 +1672,32 @@
           {
             "type": "Fs.Fox.Cad.AcadPeEnum",
             "recordCount": 6,
-            "contractSha256": "c508d724f444eb760f7877584d3f2511a1acdf4a406e645732083af1a351d71d"
+            "contractSha256": "30cda8e6eba2694b94206218713eed642fa5f41add749a9d0ec19695eb328735"
           },
           {
             "type": "Fs.Fox.Cad.AcadPeInfo",
             "recordCount": 12,
-            "contractSha256": "d1072762914967582139e733e2254d2ff523d1f64456d6c33419603fe32cf74e"
+            "contractSha256": "68d2e2bca2ee48edfafa99ba87a9a215a33a5dea7fdebc74d48a450c29fd097c"
           },
           {
             "type": "Fs.Fox.Cad.AcPreferences",
             "recordCount": 1,
-            "contractSha256": "53cc611e7a504f9b7029a8b788796f3b440df131264fce274f259cf094acce68"
+            "contractSha256": "201257e8b8d06dce87c73add60779dac80a3dbf0098e3ba81d6e43705cda04dd"
           },
           {
             "type": "Fs.Fox.Cad.AcPreferences+Display",
             "recordCount": 76,
-            "contractSha256": "91e8e1b0e2b1c6c5a0b92096d50d4015bb31932d8d5cec00e16a8e8ed0631e92"
+            "contractSha256": "da800deb0bdfa4b18656adc2b68caed9bb399873255ffa49444c416b27bf5284"
           },
           {
             "type": "Fs.Fox.Cad.ArcEx",
             "recordCount": 5,
-            "contractSha256": "5e295e2e42ddf7de6b44eebb64e1c2eae8c148918bf3e48b6c18d99b4256b5c4"
+            "contractSha256": "1f999f9187685f31984f726e7df30de0ba88c7d37169462f1288c02eebcb4e6e"
           },
           {
             "type": "Fs.Fox.Cad.AssemInfo",
             "recordCount": 7,
-            "contractSha256": "4d5f5cdb2ad6435dacab906696a3590d8a1dc7fdbd6074193a6012d18b661dd5"
+            "contractSha256": "d15eaa765da4ac78008727fe825c809bd913c57934417a9a80d6ac1f5d3d7828"
           },
           {
             "type": "Fs.Fox.Cad.AssemLoadType",
@@ -1691,52 +1707,52 @@
           {
             "type": "Fs.Fox.Cad.Assoc.AssocPersSubentityIdPEEx",
             "recordCount": 4,
-            "contractSha256": "f4f3335d9b9f98a8f4c43f01586768ba439e22b64e7de9247c93168b33935fc4"
+            "contractSha256": "d106f554e13545cf21a2a7fe9be5d1f688fac825e3da479d65f3fb366cd8cc47"
           },
           {
             "type": "Fs.Fox.Cad.Assoc.AssocUtils",
             "recordCount": 2,
-            "contractSha256": "f142ee559f00e51d851c5f64debc007dd719e5f7bfdf2d91b99a12873203d417"
+            "contractSha256": "fcbd8c538f346926eed833f774e0ec00aa39e202e209d957db1cd9da9691a3dd"
           },
           {
             "type": "Fs.Fox.Cad.AutoReflection",
             "recordCount": 5,
-            "contractSha256": "b99bd6d08b2c8b84670d4ef1a4582016d429cd456d46d8c0da5394b2441fdf3d"
+            "contractSha256": "53e2f642429c815c78537344f46f8b8a675aeccff9df235245ebcd237a081537"
           },
           {
             "type": "Fs.Fox.Cad.AutoReg",
             "recordCount": 7,
-            "contractSha256": "df0531c8f2820f4fcbd2ba109bd83c99077e4039a408bcfa66ada2816b4f9518"
+            "contractSha256": "beb4c5764f8209c4dda3eb21d69f017442f97f201570e560daa910ae4511432d"
           },
           {
             "type": "Fs.Fox.Basal.WindowsAPI+CallBack",
             "recordCount": 5,
-            "contractSha256": "f1a395695712182072a7c7092ffa0e7d71c15958fb274436b91940c5676a5700"
+            "contractSha256": "22a7751eae848cc3d4f1a93b28022cacc4d4a0a12df67188b6e6ba381f60affc"
           },
           {
             "type": "Fs.Fox.Cad.AutoRegAssem",
             "recordCount": 10,
-            "contractSha256": "0486a2c2d9fb0685b7dd8106e8272f53ddf7d3de9e378ed385213b4ec0724046"
+            "contractSha256": "6e82f4e50356751035ac16952a3ec14686e275278378b6316dbedb7debac0ef8"
           },
           {
             "type": "Fs.Fox.Basal.WindowsAPI",
             "recordCount": 22,
-            "contractSha256": "a0d8494601ec5b244e3c0e001d201a8c156985bef4612a48e7c885c1041e9deb"
+            "contractSha256": "4707abfddf5dd9280a9196b56d7904a60c68c26f8954aa69f757f7977a69aa4a"
           },
           {
             "type": "Fs.Fox.Basal.TH32CS",
             "recordCount": 9,
-            "contractSha256": "33da6e4248b33072220d971ed5fd1e9f9fd93aa4ec6b844303c53b58e6fc5da5"
+            "contractSha256": "88ce35844d824acd2a3e9c7f072634b5c066daad81dcb74b092c27f8cff8a785"
           },
           {
             "type": "Fs.Fox.Basal.DebugEx",
             "recordCount": 2,
-            "contractSha256": "43fcbc7b8bb6970eae83667b3c7cd505ae8a86bf6aca98b6847f74496474b9fd"
+            "contractSha256": "80ca10a968ec57dce19749126044f2c903d691227ee112d4506a61158d7df43d"
           },
           {
             "type": "Fs.Fox.Basal.EnumEx",
             "recordCount": 6,
-            "contractSha256": "7ffade474c302ecd558040c2c1aa3cd74da91ade0004846b5f561ca1261b7d77"
+            "contractSha256": "8d17f356bdc977753265128ab5cdaab9aa72631538d6ed4aa74b8ae1e9255917"
           },
           {
             "type": "Fs.Fox.Basal.GetWindowCmd",
@@ -1751,22 +1767,22 @@
           {
             "type": "Fs.Fox.Basal.HookType",
             "recordCount": 18,
-            "contractSha256": "717bd01f64c0eb42a25c17d71f00f370c47ad5a44cfa6bc74c998f596ef40619"
+            "contractSha256": "3350d08e38db1c425a5e4a3bc37c4b5f91f177034636baa251b78d360196df8f"
           },
           {
             "type": "Fs.Fox.Basal.LinqEx",
             "recordCount": 12,
-            "contractSha256": "41d6c9bf1b889968182641c87151b4c982fa038b5b75ead8bced49a5a9f2d386"
+            "contractSha256": "9551263056f327435552374a8efeac9ed2d76850dd87476688be5b2378bafd58"
           },
           {
             "type": "Fs.Fox.Basal.LoopList`1",
             "recordCount": 37,
-            "contractSha256": "882909a4a1af52fc458fd38ab1dde02c0f1a7871d5b5c8c31eae9333ef22508f"
+            "contractSha256": "687b5b7ab00b1091d4e0b811e60582966e7f682935195f73f73b08e74edd0931"
           },
           {
             "type": "Fs.Fox.Basal.LoopListNode`1",
             "recordCount": 10,
-            "contractSha256": "7b269d5823f2a062e04381820a9ed67da8c02ef32591e3d92be070e94d958733"
+            "contractSha256": "8a58f758d7b7561a0e183a6aa049d5a394524af24fb1357bd6e97cb163d7caf9"
           },
           {
             "type": "Fs.Fox.Basal.LoopState",
@@ -1781,17 +1797,17 @@
           {
             "type": "Fs.Fox.Basal.NCmdShow",
             "recordCount": 15,
-            "contractSha256": "cdbe65fd97273546af0031dd6862282ac4dd31ef7b5864adb4815bfde44bcd0b"
+            "contractSha256": "31a62219de6f490e5b9bbaf3cf1afd790d615252347f7cb79e1b3eded67f8d13"
           },
           {
             "type": "Fs.Fox.Basal.PInvokeUser32",
             "recordCount": 24,
-            "contractSha256": "5489839a0f28f47de6c58eab08c7ed3a6b63f8fbe4870d86eb7c1287f0ff633f"
+            "contractSha256": "646ec643e0589f980448719f69f6ad6680842c9a573662473eeba3e7bd8d9321"
           },
           {
             "type": "Fs.Fox.Basal.PInvokeUser32+GuiThreadInfo",
             "recordCount": 11,
-            "contractSha256": "ee5db627f034d106ca1077dd74b269518ef044f8a1d47466f64c2627e8d3186f"
+            "contractSha256": "00317dce50d592b68977d9fd68916143749d5b3b5c84cab66a788e70f216d647"
           },
           {
             "type": "Fs.Fox.Basal.ProState",
@@ -1801,182 +1817,182 @@
           {
             "type": "Fs.Fox.Basal.RandomEx",
             "recordCount": 16,
-            "contractSha256": "bae722eb0ef81e0bc391d0f8beba1dd280d5d6cca79214f80d5ece7b49b9757f"
+            "contractSha256": "7aa90db22017abbb4d057365a398c556106fcc086612942c1547e0c2ba2a8837"
           },
           {
             "type": "Fs.Fox.Basal.SC",
             "recordCount": 6,
-            "contractSha256": "580986598397e227016a1b7f2d91aa50897be191edbaaa595bee731ab321d599"
+            "contractSha256": "8e83d8f01201ef4bbf32692cee492d1a10cd2c839b163ad742b1b94a7bb6247d"
           },
           {
             "type": "Fs.Fox.Basal.SystemEx",
             "recordCount": 3,
-            "contractSha256": "b3df8248101f4e53b9ad84d89d61eab149bdc7461838f026870835b306b1a820"
+            "contractSha256": "908751148426821d6ff6f112fb3f109f9f58b06e0faf550a1d9ef066faf6535b"
           },
           {
             "type": "Fs.Fox.Basal.VK",
             "recordCount": 153,
-            "contractSha256": "779df164d08689c7dc36c46cb607e932950c5ac9e77d9bfc244c200033caf590"
+            "contractSha256": "4adc429bdf7a345cefd9824a005a1cfb6a33213d5df21c76f1d9c2712546756a"
           },
           {
             "type": "Fs.Fox.Cad.AutoRegConfig",
             "recordCount": 8,
-            "contractSha256": "01dd230680e2b05f24121d26ee0cc8d210cdfcb8e5816bd1e9a10172663ab643"
+            "contractSha256": "c8b9abe46e62c032c290ca3bf0f1217d835d075e67dc7e20dbc79b09c3f54a06"
           },
           {
             "type": "Fs.Fox.Cad.BaseEx",
             "recordCount": 2,
-            "contractSha256": "5ce74401046b0c8d57bf18ba8f952e7125b3a7ca2ac641e24209dfa2a4c45b74"
+            "contractSha256": "7f1722b68c8039d1ac9a30c0eda0301cfe4102f20a7562c70086f1d50100e6fa"
           },
           {
             "type": "Fs.Fox.Cad.BlockReferenceEx",
             "recordCount": 16,
-            "contractSha256": "6af4d73d1c22f2e79ea7e9c10019a80751b63fbd2f39bf09c128059d2a309159"
+            "contractSha256": "f44aae699141a4be8b1eadb02cbaba0870bbc52451e604571db5963f74d763fc"
           },
           {
             "type": "Fs.Fox.Cad.DocumentLockManagerExtension",
             "recordCount": 2,
-            "contractSha256": "968ed8d09529e1639c279cc15f0f75ef7ffc098e958e35a651b36f2617eb211d"
+            "contractSha256": "04304f5616cc2f5631a5610dfc6426887821674f40517823aae834eb4e287202"
           },
           {
             "type": "Fs.Fox.Cad.DosHeader",
             "recordCount": 23,
-            "contractSha256": "3be8b4c8d57ed4ca9bd3878fd7104678e2475836e358ee4fd64c2727a10ab77e"
+            "contractSha256": "8e629d7e2addb6a5aa98cf810080e4f4185b60dffbc019e6ee3ef84ebac7cf61"
           },
           {
             "type": "Fs.Fox.Cad.DosStub",
             "recordCount": 5,
-            "contractSha256": "863222cdc7aa87fd4a7acb2c2c5d3d0a4cae273d7a33e15c299758babd8ffc8f"
+            "contractSha256": "0f6b79844ca649a1788a7d3affa0b40f7df143adbcf57e5b98c21dcd05230e52"
           },
           {
             "type": "Fs.Fox.Cad.DwgMark",
             "recordCount": 4,
-            "contractSha256": "b747b59162b64ac419cb486e0e61e1f285d6045b9989c11235f1c9dd0196d978"
+            "contractSha256": "aa5a90af88a6a8a7f17f8aabf9a6b7ba4ce4d4305daa8c4fc3368f55d613f551"
           },
           {
             "type": "Fs.Fox.Cad.EditorEx",
             "recordCount": 45,
-            "contractSha256": "acc0c939488696f1e7234628e86051ba820d1b25a5162e06c81382ea147b2829"
+            "contractSha256": "43ad1938841892a0fc9c15913deaf785abfdc633784899de8a2d7d4e64503bb4"
           },
           {
             "type": "Fs.Fox.Cad.EditorEx+RunLispFlag",
             "recordCount": 5,
-            "contractSha256": "c8519ed2df2a1426799610e095e514c87af6204b75580b7c91c881467ef7b877"
+            "contractSha256": "d3a4d281f7e3f17829ead6d172e0db59f688bd706b2eb01450c5768aede4ecec"
           },
           {
             "type": "Fs.Fox.Cad.EntityEx",
             "recordCount": 12,
-            "contractSha256": "1683b294b67a0dbe2787a7f45acabb645e83a2fd1a30dfe4c9b96986bd13c3b1"
+            "contractSha256": "d29b62be2a0566e0ac95c6e8f3c186974f0cb249a4c95e6b14a46dcc8f9b1abd"
           },
           {
             "type": "Fs.Fox.Cad.Env",
             "recordCount": 53,
-            "contractSha256": "985339491993901f94781af73621b1e2f4bd73b37a495e1fb281fc5bed6019f5"
+            "contractSha256": "40dc87ce7c0c44708bff4efa091a5c9b5fa2e1cabc22f88a88b5540865ea5ae0"
           },
           {
             "type": "Fs.Fox.Cad.Env+DimblkType",
             "recordCount": 22,
-            "contractSha256": "0d8f6374c2c33948ce6355ab50c472c0c75a44875b3d976a77bb1831915428ec"
+            "contractSha256": "df84eda090f81ddc378fd6d57210cff1b781e3f34a1ca2479987c941ea1fd308"
           },
           {
             "type": "Fs.Fox.Cad.Env+OSModeType",
             "recordCount": 17,
-            "contractSha256": "826c278619178be905ab967c215eeaa5f91f842955138b5e9ad8808cd45f9632"
+            "contractSha256": "959caaa7f0ba6d31e3a099f32dd1091b8a2ba75647ec624d426244c60929e44d"
           },
           {
             "type": "Fs.Fox.Cad.ErrorInfoEx",
             "recordCount": 1,
-            "contractSha256": "cf21cd0e3961e88e302031e3a3ae9978ca190f062320525ac7bcdc5c214ea8e5"
+            "contractSha256": "d1ca1dafec0b960cd33b85770f3251d0915872e73055b5cc4fd4c74f09aa049c"
           },
           {
             "type": "Fs.Fox.Cad.ExportDirectory",
             "recordCount": 20,
-            "contractSha256": "1d8b9b23027491db1f4b3b8c0ddeb9e25e53aae4d709656a97108860ab6cbd46"
+            "contractSha256": "9ceb4fccbff68a36531c14022317ecb57fd187e8c68cab88a563a652998f504c"
           },
           {
             "type": "Fs.Fox.Cad.FontTTF",
             "recordCount": 7,
-            "contractSha256": "1f2fe7e5c75cb664d7d6b4c02727292362e604ef18dde30d3a8face8c3f4c3a1"
+            "contractSha256": "ea188e02be41a35e1a6db95018fbd053cd35a90ae8b341bbec608f900c80a770"
           },
           {
             "type": "Fs.Fox.Cad.GeometryEx",
             "recordCount": 26,
-            "contractSha256": "f1d213e6fffaa900054399e075ccd7b9f88df9a453217a0018a7376dac30414f"
+            "contractSha256": "62c2ec3af6ce3ab69fc0789b196514c67c7d80e4e7c61b946c73d07806b2a83e"
           },
           {
             "type": "Fs.Fox.Cad.GetMethodErrorNum",
             "recordCount": 5,
-            "contractSha256": "4bf329059f2408ccc18f2674b2e167fb3d4c0e2a4feb18b937f6d8a513f7cbb5"
+            "contractSha256": "73bb5ca07adb487080854c49d0cef1ea4766d42e9f7946b16d55f9716e785fd6"
           },
           {
             "type": "Fs.Fox.Cad.GetPeMethodException",
             "recordCount": 7,
-            "contractSha256": "fe76b805cd3de615d7b8684f825a2df1cb4b5ef961d9787d64002e5864f24174"
+            "contractSha256": "8e80e48d49a3bb65582873a1c06e4b9b0c628069b33ad1bccbc99293acc5b66d"
           },
           {
             "type": "Fs.Fox.Cad.HatchConverter",
             "recordCount": 9,
-            "contractSha256": "bee80b93ce3b9fc2474e7807bd7c89226c436e435aab4eca78d189a038be223e"
+            "contractSha256": "030d430814c293d3150be8a34cad6c919e98f977300c3dbd212c38c902b51d4d"
           },
           {
             "type": "Fs.Fox.Cad.DocumentLockManager",
             "recordCount": 4,
-            "contractSha256": "318df14a22c2f976fd6d7d8ee652f3e5028fe913a99ea514ed56f66b70eb7e2f"
+            "contractSha256": "c23c532232fcb85cb6f73b00d16cd83b94a96e8acaab37a8225bd59f70abba2e"
           },
           {
             "type": "Fs.Fox.Cad.DBTransEx",
             "recordCount": 2,
-            "contractSha256": "af76032b905f734da4f6a55f1fa935e4763d65317af31ef5e1e3766885363447"
+            "contractSha256": "e821a9c8adb837b1a93018752551b770dba08cf7dd9ddf0616dacdccefa56d8c"
           },
           {
             "type": "Fs.Fox.Cad.DBTrans",
             "recordCount": 77,
-            "contractSha256": "4b9df8867aedbefce6010cec0d8a5a96d088304abd333007c5f1ec782cfee6d4"
+            "contractSha256": "1dfec10ef76c7464fd273318faa8d4f133a9a527a6b7d668fed12cbf8c52af53"
           },
           {
             "type": "Fs.Fox.Cad.DBTextEx",
             "recordCount": 3,
-            "contractSha256": "842a866eb14423f72bb7a407c877205ec5150507a54b25615eb3eada7f45c258"
+            "contractSha256": "711190565a388cf8f6596ef3c8449f5691b3f509a331f5917f4d995959abd146"
           },
           {
             "type": "Fs.Fox.Cad.BlockVisibilityInfo",
             "recordCount": 11,
-            "contractSha256": "0f5bfc1b734705719408e4fd68a3f91c26fafa7be2783df1c6ac3fdab0a3ef8e"
+            "contractSha256": "ff5bcb13e24cdd2f9b65cccb0364aa4ba9706d5361a1adb1f2ab5c453b08e49e"
           },
           {
             "type": "Fs.Fox.Cad.BoundingBox9",
             "recordCount": 45,
-            "contractSha256": "43bcd3026d8900df5ed6fb1c44cefed95c24c5dc1f103b3dc50a3dd401496e3e"
+            "contractSha256": "6bdb489696b09869173f68b8bf989331d41bd705a5059f3e296e57da55242b4a"
           },
           {
             "type": "Fs.Fox.Cad.BrightEditor",
             "recordCount": 7,
-            "contractSha256": "03ebf4d8007d90c6a8d224a8f84b90921c7dc702cdde91595c6887d98593ab69"
+            "contractSha256": "10d812fa8bd65efa98a04437a6fce7d03f46ee0fc8dec94d98aa2006405866a8"
           },
           {
             "type": "Fs.Fox.Cad.BrightEntity",
             "recordCount": 10,
-            "contractSha256": "b28c45840c649ac03a3a05c886c4665d37b701de5358f845ed56c8a2a8dd3461"
+            "contractSha256": "92376c6017682c5ac5b0bab057264eb0cc7120ad4a5a1e63e44cd8c29f8c30f0"
           },
           {
             "type": "Fs.Fox.Cad.BulgeVertexWidth",
             "recordCount": 14,
-            "contractSha256": "0775486a377a2b70d01a7bc8584b892eb78fc3dfe337b1b0fce309fd96285067"
+            "contractSha256": "bf12d6bff3a80a5b36714376b9b00165fb7352130e1a2b7de4eb9350e31c0b3f"
           },
           {
             "type": "Fs.Fox.Cad.CircleEx",
             "recordCount": 4,
-            "contractSha256": "1cdd67728cd7357cf610132db19590823590b3006ea914531bbe4f7a3430fc98"
+            "contractSha256": "7e2510a11c4b26861604fc1078f3a367e12cc035fafdbbb15feba554416e90cd"
           },
           {
             "type": "Fs.Fox.Cad.CollectionEx",
             "recordCount": 17,
-            "contractSha256": "247a4b3b80a5c37226069d38ed9c5591beab4ed72de01f47c9063b54ad97af4b"
+            "contractSha256": "8e23ae159e3499c90b663b99dbb7db482bb3ac0e640ce10dd11ab033167f98f8"
           },
           {
             "type": "Fs.Fox.Cad.CollectionEx+KeywordName",
             "recordCount": 5,
-            "contractSha256": "0be3756fe4a9d69fe7b039a99244192cf2c047306948cda79464564f760f9816"
+            "contractSha256": "aed0d79d61bf504a0f26eecd5d4c9aeb4bfcc96605843a31a64e9cf5f3f17c7e"
           },
           {
             "type": "Fs.Fox.Cad.XrefModes",
@@ -1991,52 +2007,52 @@
           {
             "type": "Fs.Fox.Cad.Curve3dEx",
             "recordCount": 21,
-            "contractSha256": "9a7eb715ca606fb9c620f8a67e64a12a9165f033c6e4369a3f6f20666aa779b7"
+            "contractSha256": "125b57cfed05f15ff6985e263b7ad9bdf3498a5672aa590347f268312c9e8e1d"
           },
           {
             "type": "Fs.Fox.Cad.CurveEx",
             "recordCount": 31,
-            "contractSha256": "26778a09c2b06026ca028bbe491fde22b624f8c68f49b79afcb70a122e77e4fb"
+            "contractSha256": "007132fc529a66af903b882505b7b11dc4018d3488863fbd0fdb1846885c29c6"
           },
           {
             "type": "Fs.Fox.Cad.DatabaseEx",
             "recordCount": 4,
-            "contractSha256": "cbfa8367d1a9f0b04bdf99aecd9cb4eebcdf03ca6eaa6c330e8bdcceafe2aab1"
+            "contractSha256": "776ecb92e1f9fccfe01886adb6a92afad0eee3110ccde66f8ed756fdddb7590c"
           },
           {
             "type": "Fs.Fox.Cad.DBDictionaryEx",
             "recordCount": 17,
-            "contractSha256": "2abc83da1522a6660f7c1a3fb102a9d82d079ff207b9e368f272b71bc304f45e"
+            "contractSha256": "d1baac0b714fab89653826b52c8dbfeea447ff34751dec9bb13ffbac93c30aaa"
           },
           {
             "type": "Fs.Fox.Cad.DBmod",
             "recordCount": 8,
-            "contractSha256": "0a0297d6a725f1bbd9fa351917ebac11daec526d3d7f73e67391a766fe98133b"
+            "contractSha256": "04f9b512f30ceb88820a234465914855ba20538b346b2e6e7157c57b644cce6e"
           },
           {
             "type": "Fs.Fox.Cad.DBmodEx",
             "recordCount": 7,
-            "contractSha256": "fc232efb202d5d7d64d87e380313b78d310dff298cac95c08894849ae31e0d6b"
+            "contractSha256": "97f7804fcc316b32bf96754ff914eb01de72ee305051044b4df067306902dd7b"
           },
           {
             "type": "Fs.Fox.Cad.DBObjectEx",
             "recordCount": 8,
-            "contractSha256": "487960fa8274d19be0de7f8482b8e5bc9b4adba2ade620625595a80a223f710e"
+            "contractSha256": "0c24771e6b8b48d4f6805addea186d7c85eaeafa65b2b73c7b13ae53e97fc335"
           },
           {
             "type": "Fs.Fox.Cad.DBObjectEx+UpgradeOpenManager",
             "recordCount": 2,
-            "contractSha256": "d20be544bfeafbf1bda1c05529969de2bd469e9718797a69e8e0b7ecd80ef740"
+            "contractSha256": "68bfebd0d80ef729c1182fbfc4b7d4ca303cc52b9767c580afcb127637b54a3f"
           },
           {
             "type": "Fs.Fox.Cad.Curve2dEx",
             "recordCount": 16,
-            "contractSha256": "bd648a825234ce7d28d564ec2bcc86ebf17d192ba18cdec0435aba05bb6884e7"
+            "contractSha256": "acbe6220ee6ec9e92c14beb8d60f5e2dcdfdb3c0a261a27be31e49260060f7ab"
           },
           {
             "type": "Fs.Fox.Cad.XrefPath",
             "recordCount": 14,
-            "contractSha256": "245e6c720446cea482c05344aa4b74aa4084dce289f26fc1bb92c043846e2040"
+            "contractSha256": "67ec9bfda777b770d2ce5229eae726c52f631836d14ac0e05320aa8541a20334"
           }
         ]
       },
@@ -2072,47 +2088,65 @@
           {
             "path": "AutoCAD.props",
             "length": 1175,
-            "contentSha256": "672b61e458c2bac6ee54d17aa36d066b7ddd4061a7c3aa6bb70866a8aea14cd6"
+            "hashKind": "raw-sha256",
+            "contentSha256": "672b61e458c2bac6ee54d17aa36d066b7ddd4061a7c3aa6bb70866a8aea14cd6",
+            "binarySource": null
           },
           {
             "path": "GlobalUsings.cs",
             "length": 3764,
-            "contentSha256": "1f1a2e3d29e703f4c4f3c6c71e987580f205f644aef68ec097aeefdb4ac4c976"
+            "hashKind": "raw-sha256",
+            "contentSha256": "1f1a2e3d29e703f4c4f3c6c71e987580f205f644aef68ec097aeefdb4ac4c976",
+            "binarySource": null
           },
           {
             "path": "LICENSE",
             "length": 1091,
-            "contentSha256": "a2943fc061379a06f57c4a7ea027980ffd3b1f29488cb00519402fd27113d3fd"
+            "hashKind": "raw-sha256",
+            "contentSha256": "a2943fc061379a06f57c4a7ea027980ffd3b1f29488cb00519402fd27113d3fd",
+            "binarySource": null
           },
           {
             "path": "copyToDigBuild.ps1",
             "length": 5848,
-            "contentSha256": "73fab892a1b519b3e6a2f378885c46597655ec2e7d87921166de59adf343965b"
+            "hashKind": "raw-sha256",
+            "contentSha256": "73fab892a1b519b3e6a2f378885c46597655ec2e7d87921166de59adf343965b",
+            "binarySource": null
           },
           {
             "path": "readme.md",
             "length": 7873,
-            "contentSha256": "00ccca236e22a69663270c28e1fd111575561d3708e5ff863b469273cbdc9b9a"
+            "hashKind": "raw-sha256",
+            "contentSha256": "00ccca236e22a69663270c28e1fd111575561d3708e5ff863b469273cbdc9b9a",
+            "binarySource": null
           },
           {
             "path": "lib/net8.0-windows7.0/Fs.Fox.AutoCad.dll",
-            "length": 357376,
-            "contentSha256": null
+            "length": null,
+            "hashKind": "matches-build-output-sha256",
+            "contentSha256": null,
+            "binarySource": "Build/AC_2025_Release/Fs.Fox.AutoCad.dll"
           },
           {
             "path": "lib/net8.0-windows7.0/Fs.Fox.AutoCad.runtimeconfig.json",
             "length": 464,
-            "contentSha256": "ccf34fe185a1c9a0114dae9b55958a70b3ccde47c8a236d361932c5b1efc5914"
+            "hashKind": "raw-sha256",
+            "contentSha256": "ccf34fe185a1c9a0114dae9b55958a70b3ccde47c8a236d361932c5b1efc5914",
+            "binarySource": null
           },
           {
             "path": "lib/net8.0-windows7.0/Fs.Fox.AutoCad.xml",
             "length": 452141,
-            "contentSha256": "d71414a2eb5d04d264c8d1b6f2cffbe8d4072f0d01ba1346c6a00c729c69152f"
+            "hashKind": "canonical-xml-v1",
+            "contentSha256": "5a03daa1f6069fc29edd2801df48f32ad5b57e0a52b1e4bb73227216ee79e700",
+            "binarySource": null
           },
           {
             "path": "lib/net8.0-windows7.0/TestAcad2025.dll",
-            "length": 117248,
-            "contentSha256": null
+            "length": null,
+            "hashKind": "matches-build-output-sha256",
+            "contentSha256": null,
+            "binarySource": "Build/AC_2025_Release/TestAcad2025.dll"
           }
         ]
       }
@@ -2217,42 +2251,42 @@
           {
             "type": "Fs.Fox.Basal.ArgumentNullEx",
             "recordCount": 2,
-            "contractSha256": "bd8a8b97a1414fcf0da2a3f41c1cb5a876dd72081985e1388925ca3f548b81b1"
+            "contractSha256": "877fa9d46586cab77256916bfbf4f169e4104e4d1149106a325afb4188182e8e"
           },
           {
             "type": "Fs.Fox.Cad.OpLogi",
             "recordCount": 8,
-            "contractSha256": "a6716a010cb9685c321e96285a1bef872746e16289c9805cccf3e48c6c319ddf"
+            "contractSha256": "4f608dc4c42b9131af2914da3cdbebcebf40826ccf200613921d284868cf6dab"
           },
           {
             "type": "Fs.Fox.Cad.OpNot",
             "recordCount": 5,
-            "contractSha256": "de705c6a63369bf7c40b33e626f5679681bd4f43782b185b54ad6ab7cd2b2c2f"
+            "contractSha256": "ed782ed36d8786be5005265b5c12c0dc79ee02fbcdd9951a6a397d5d169f24c5"
           },
           {
             "type": "Fs.Fox.Cad.OpOr",
             "recordCount": 5,
-            "contractSha256": "49728af9be6be28b7d3078eca2a7fb8170efa9794a5f345b7ba53b5241e5d43d"
+            "contractSha256": "acd36d5cd72aa454d0f8c417748722ac5ac25b8b011551d5793acbc09f95d67f"
           },
           {
             "type": "Fs.Fox.Cad.OptionalDirAttrib",
             "recordCount": 5,
-            "contractSha256": "a2389933488245de6d34f74bdfd677c254117c6e9a823f41286c5805bd77765b"
+            "contractSha256": "8b72af457da433c8245a8ee0a033e50c61a496fcb3bccec641fd65fcddef66df"
           },
           {
             "type": "Fs.Fox.Cad.OptionalDirAttrib+DirAttrib",
             "recordCount": 4,
-            "contractSha256": "e4f133349cb3d0fc7d54883d9f349f824a2fceb7a1af4d98cd0017e8e60bfecf"
+            "contractSha256": "93c078ce8d309e7e579ef758a88c3016e777d93bf76ff044174054664c732aea"
           },
           {
             "type": "Fs.Fox.Cad.OptionalHeader",
             "recordCount": 34,
-            "contractSha256": "221fd76addcb3dd8d93a7fc96fc6dcb0a97c5104562594dd2324a2aaa950d6a7"
+            "contractSha256": "c585f429c3a58c9bb1dd610c6d4034e07565cd9e0d8291fc0cbf1ba4ecb25558"
           },
           {
             "type": "Fs.Fox.Cad.OpXor",
             "recordCount": 9,
-            "contractSha256": "bb31974f162d97b007c7a9034097866c075a5cbc57076d9634905ee4d25edd67"
+            "contractSha256": "84481c6b695133f7e13338e573e1d9f19f1e8129cfc04de71ce7253e86f6f304"
           },
           {
             "type": "Fs.Fox.Cad.OrientationType",
@@ -2262,7 +2296,7 @@
           {
             "type": "Fs.Fox.Cad.PaneEx",
             "recordCount": 4,
-            "contractSha256": "37af692b82d4bd01028c044fcc7184e1c2e84e18394c25f6a7201ecb714278ef"
+            "contractSha256": "59239b745798191a68fbfe0aa7acd717d92e63185ceea353a2ce2f79d5e839a3"
           },
           {
             "type": "Fs.Fox.Cad.PaneMarginType",
@@ -2277,27 +2311,27 @@
           {
             "type": "Fs.Fox.Cad.PeFunction",
             "recordCount": 9,
-            "contractSha256": "a7ed7f9096d4638773eeed7e0c208ca530844688edd34810315dc9e8776a7c98"
+            "contractSha256": "9cfb55b7114b2f615ba9ca738c342d3575413d24bb102e9f6e56430eaacee0dc"
           },
           {
             "type": "Fs.Fox.Cad.PEHeader",
             "recordCount": 12,
-            "contractSha256": "84f47f69863982b8b2852f0f7cfbd39ec6ac5594531d159a20c48f8a24eace68"
+            "contractSha256": "9e318a7555a377f9ff9c8e29f7e8213e65544fd712daa16a528834f412a80610"
           },
           {
             "type": "Fs.Fox.Cad.PeInfo",
             "recordCount": 24,
-            "contractSha256": "a41cf1819c212190f851bb0cfd05eeb614bb19ef9e0ba98b44dffca9e9d51a5f"
+            "contractSha256": "bd1499506db62a08cbefcde801bc6c82d18fa1f113bef689360c457acd8f3a3e"
           },
           {
             "type": "Fs.Fox.Cad.PlaneEx",
             "recordCount": 4,
-            "contractSha256": "f82f1ee662019ea48b2b4e2eca13eed9093eedd74e4cd1a0fa96cf4ea1d7c530"
+            "contractSha256": "47cf8edcab69331919fd8993397ee196f6b4c6d7a2faa9f038030d1f96ffddb0"
           },
           {
             "type": "Fs.Fox.Cad.PointEx",
             "recordCount": 22,
-            "contractSha256": "2d21528f507e29e01110fc06f1ee4903f018a161c8d0907e4708dcad617baef2"
+            "contractSha256": "5a4edd3c2aae53cfb5846fdee38db317059634705d934d0f73a2b365aa22c41c"
           },
           {
             "type": "Fs.Fox.Cad.PointOnRegionType",
@@ -2307,32 +2341,32 @@
           {
             "type": "Fs.Fox.Cad.OpList",
             "recordCount": 10,
-            "contractSha256": "c81ab932336b7b65a686c771c167976f2d377215a6f7ee468234d2f692f91eb3"
+            "contractSha256": "be845336086e91deaae70b704aa743ed7b171fd0890293d31330a04970123d2e"
           },
           {
             "type": "Fs.Fox.Cad.PolylineEx",
             "recordCount": 9,
-            "contractSha256": "25b19a080e6c4a286dc6eb6d110e0ee990b773c2b10b8fa10eb562ba4f179508"
+            "contractSha256": "9bd3fe4e52b8a501ed31fa290726a9bce1730bf1b0416d1819fa1c14eac1159c"
           },
           {
             "type": "Fs.Fox.Cad.OpFilter+Op",
             "recordCount": 19,
-            "contractSha256": "3dd4524ec521a4924e9af87b619a9e36d6d77acbaab74f5bcc5ed6a8b971c909"
+            "contractSha256": "6492b5c4ea1cd9475fd87d9520e30432d01ed2b89cc4936309c516ffc5d59e44"
           },
           {
             "type": "Fs.Fox.Cad.OpEqual",
             "recordCount": 11,
-            "contractSha256": "d653e446cdc4e87d49c0e5ed379d0d03b43367fc5e21ebc8ebc9def9fc51c757"
+            "contractSha256": "8165f40a7d5de42091b165fc6cfcf672bfa1cdb61222b52b37cec34310ed35f4"
           },
           {
             "type": "Fs.Fox.Cad.IdleAction",
             "recordCount": 4,
-            "contractSha256": "050dfbccc9819b2bf66c0bf341b730bdcd04efcadbcaa742d4900c573528777c"
+            "contractSha256": "0567653a7d1a063eefbbc34a507079e0e3053c471d2bfa22756ae84dc680d847"
           },
           {
             "type": "Fs.Fox.Cad.IdleNoCmdAction",
             "recordCount": 4,
-            "contractSha256": "122b51d55afcc3293725f7ef0ba682d3f504755df3cb564c0e20214cd8fd151e"
+            "contractSha256": "b4a597af552021383e4c4c80bf0970fcf81076cef2faaa9d82f52563bdbc3643"
           },
           {
             "type": "Fs.Fox.Cad.IFoxAutoGo",
@@ -2342,27 +2376,27 @@
           {
             "type": "Fs.Fox.Cad.IFoxInitializeAttribute",
             "recordCount": 2,
-            "contractSha256": "7725d9dce35235e5ee4062e26700e8eef24558a14fcd0c77d1bfc4091031bea9"
+            "contractSha256": "7f8881c16ad3ca8f0a9c50ee30dd1b54905af67552fc2fd99be36afe968f75d4"
           },
           {
             "type": "Fs.Fox.Cad.IFoxUtils",
             "recordCount": 6,
-            "contractSha256": "6e503ea150135664ffdc9fdee89b57d34725058314f33f63fd99fab7303f74b9"
+            "contractSha256": "a2e3c9865e8517b5d89b7bb1bbcbbc2399e1fd92b59e945475ecae9a620b4922"
           },
           {
             "type": "Fs.Fox.Cad.ImportDirectory",
             "recordCount": 5,
-            "contractSha256": "fbc26f81369f56882abd1b923b524d3953ca8984f99c6bff3a656365d25387f9"
+            "contractSha256": "8fef17fa213a9915593e4c9031063a17d4fa50d24c643cdb09cb3d39d1395f2e"
           },
           {
             "type": "Fs.Fox.Cad.ImportDirectory+ImportDate",
             "recordCount": 9,
-            "contractSha256": "42bddece158995a9eaf9143e4e2854a06c4233859f996a8683f6e5e278780a5f"
+            "contractSha256": "eb104798b1eb287070a266d27577e3c6cf2edd15c268de4cde71a2c6e0a8ff6d"
           },
           {
             "type": "Fs.Fox.Cad.ImportDirectory+ImportDate+FunctionList",
             "recordCount": 5,
-            "contractSha256": "680c2c371e9020f92b89dbae4b8d5fd492602463316a70a0fd0c61cccaabf8a8"
+            "contractSha256": "f04c040d27c5bba57d735218fa5e0eb257feef8ad6ef1b9bf04477fe79b8da77"
           },
           {
             "type": "Fs.Fox.Cad.IXrefBindModes",
@@ -2372,92 +2406,92 @@
           {
             "type": "Fs.Fox.Cad.JigEx",
             "recordCount": 22,
-            "contractSha256": "e611d05d6204642a22bdf5dd0e83d80524a75bc67cfbff5573aa9d25afbd9e6b"
+            "contractSha256": "22c836c99dba84cdf9e764c71d1e0bfb4bfb003924a4f370a6cb170097614d90"
           },
           {
             "type": "Fs.Fox.Cad.JigExTransient",
             "recordCount": 20,
-            "contractSha256": "4c69dd72689b682b0e7fb171d239f8e4e017c8ae38530e03fc57f43893c48d04"
+            "contractSha256": "0cac3f90322f96da56a82739f54afc8d6c0a0390d1c34910dfaf7490dffb9444"
           },
           {
             "type": "Fs.Fox.Cad.KeywordException",
             "recordCount": 4,
-            "contractSha256": "ba5ce478a66be30ac15d830bf845545e4e07e0c86884bb09dbd6beef6d21a37b"
+            "contractSha256": "de5d5c6e72a340981f8e3942c37c21f43b0299e7cc0bf7a4b16ecdfa879f1035"
           },
           {
             "type": "Fs.Fox.Cad.LispList",
             "recordCount": 23,
-            "contractSha256": "340fc1f8142ceaa73f854e884c073e39f7c0a48a7149d82cf6bf77fcfcec0e30"
+            "contractSha256": "b1fe10e5e85e7bcfc82dab77697ace23c8639f8eb359ac361a7871d9dda58f1f"
           },
           {
             "type": "Fs.Fox.Cad.MTextEx",
             "recordCount": 4,
-            "contractSha256": "6921c2880687e8d1f578caed1bc117d3f9b684f1d738188992ec7ad616dc150a"
+            "contractSha256": "c47830d222ea4fe53b918f7facdbf5c7301f480ad6da3a65d9bee90d1d41622d"
           },
           {
             "type": "Fs.Fox.Cad.ObjectIdEx",
             "recordCount": 11,
-            "contractSha256": "77b8b8771d413af3af49678eb52ecc7778c314120568f90be0a048e5975c04fc"
+            "contractSha256": "7deeff4c28065cd1296fce3d723814d6ee1de85153f2de07d733fae1906948be"
           },
           {
             "type": "Fs.Fox.Cad.OpAnd",
             "recordCount": 5,
-            "contractSha256": "39c69de40d650b4663151c0f5e597c081a0c7a6f57fc9303713aa51a717c9b05"
+            "contractSha256": "88152c244ba3348ccb9c7cc385853a61986985952de8aab671cde5a7bf34cf30"
           },
           {
             "type": "Fs.Fox.Cad.OpComp",
             "recordCount": 10,
-            "contractSha256": "42deb29a6dea84451407d33ce4f213dc3cbf67ea53d4f2f4fd1673d4d1a430bb"
+            "contractSha256": "24b72bcc2d6aeaf53dc039e00890df0ae71305f0f17417b2bb83c971ade7317c"
           },
           {
             "type": "Fs.Fox.Cad.OpFilter",
             "recordCount": 12,
-            "contractSha256": "deacc990dd83c61fbfad935767e2f0ee6425168249aad3cba5e84a102377e6e1"
+            "contractSha256": "451048e7596597b9ef39a2e44ccf1816ee6354867ad5f7faca5f4b213d95e0a1"
           },
           {
             "type": "Fs.Fox.Cad.HatchInfo+GradientName",
             "recordCount": 11,
-            "contractSha256": "bc7a6fa73c2f0b01cd2a0426345bccf1abd2bb16d0a9e74893e3faaef27e294c"
+            "contractSha256": "b6da25fe44a7363886c2567507fe432e922e8bf5180a8ebaa213f10a70248165"
           },
           {
             "type": "Fs.Fox.Cad.PostCmd",
             "recordCount": 5,
-            "contractSha256": "edd24bbffc82b7530f7a036b7a73b175f4babc8c01d7ef0415a06f34e96154dd"
+            "contractSha256": "3c5ad688e215465a1ebd93011d58c41c543b5569f6191abdb96e29aa1b36f01d"
           },
           {
             "type": "Fs.Fox.Cad.ProgressMeterUtils",
             "recordCount": 4,
-            "contractSha256": "f749484d348f6d153578e93312d4ef74ced37bdd9225f7a082507485b7e0bba6"
+            "contractSha256": "998c2a808911034031c98a794c461e84269c1a7c0121cab62c713fde3b940585"
           },
           {
             "type": "Fs.Fox.Cad.SwitchDatabase",
             "recordCount": 3,
-            "contractSha256": "4ec2c5e310f34a99d435712ad2daf8f3a18ccf6dfff4ce70026df400c95f4baf"
+            "contractSha256": "4755d85c5ad99b0fbd5a540256e713b48165b85b0529d2b21bc139646b8b7050"
           },
           {
             "type": "Fs.Fox.Cad.SymbolTable`2",
             "recordCount": 23,
-            "contractSha256": "868f8a23cc70d8647ee331531c50f9a3d211c58212faa7feef5809696c84c841"
+            "contractSha256": "536779c0ed800975b6900e18c8253c7079ac653a820574641c0244b85664810c"
           },
           {
             "type": "Fs.Fox.Cad.SymbolTableEx",
             "recordCount": 16,
-            "contractSha256": "83b91d4c5e9755724fc9407adbca23e737ff545a14d05feab339b1d127c0bd2b"
+            "contractSha256": "1ce372837639ad95c4231e2f978fcbceb2e16c30ea042d6c3cee88ed0afc105d"
           },
           {
             "type": "Fs.Fox.Cad.SymbolTableRecordEx",
             "recordCount": 15,
-            "contractSha256": "765d68cfca57150453ac9eab70d4ae9fc4b5b51788bc28f03b83c40f186a6cc0"
+            "contractSha256": "b0a839274ee6041c554cd8fa876ccdda280b80edadbe9f9b6e671dde5a23f92c"
           },
           {
             "type": "Fs.Fox.Cad.SymModes",
             "recordCount": 14,
-            "contractSha256": "51d460da7d4b1cf8573bf2077fa019bf3d7436d7a0eea6e79cca612725f3a10b"
+            "contractSha256": "ac9c10e092969294089ee92b6b9f8919a00b074a8f7314157646ccedaf499da0"
           },
           {
             "type": "Fs.Fox.Cad.SystemVariableManager",
             "recordCount": 106,
-            "contractSha256": "a0e8a762b61569c2c7cedc1136e642f2ba79558c33dc8828c56b1a8dea48244a"
+            "contractSha256": "ac8a6967fd2953197444b01cf55287606acdd8d9b9ea76b2a6d654ac977456bd"
           },
           {
             "type": "Fs.Fox.Cad.TangentEx",
@@ -2472,47 +2506,47 @@
           {
             "type": "Fs.Fox.Cad.TransactionEx",
             "recordCount": 3,
-            "contractSha256": "4eecdbba06278db8640a4ad31edd2f6079353e9f5358e705bcba6a3534ca1dc2"
+            "contractSha256": "2a0743be43459a980b70ebc8d29b67eeb40ab905937e751d7dd711baa9834768"
           },
           {
             "type": "Fs.Fox.Cad.TypedValueList",
             "recordCount": 9,
-            "contractSha256": "9cd69ad7fc439c51914a2cac260cec8ac5819e4c7457983335b7035421275b83"
+            "contractSha256": "99e0d7447efd6d4a9cc33d9287ec36a8d40e372f46bf372437608cb15beb9e62"
           },
           {
             "type": "Fs.Fox.Cad.VectorEx",
             "recordCount": 7,
-            "contractSha256": "87858f86712d1b39886c4910c8ea2b8595c2ce8c1a446ed5a25761ee0309e70b"
+            "contractSha256": "f405c7f171648f4bf2010071b9c9e841a1d5e05572cca744ea8dd346e66021ee"
           },
           {
             "type": "Fs.Fox.Cad.WindowEx",
             "recordCount": 6,
-            "contractSha256": "5a9d9d9d1d1d0f28b531795fc5d5a6f6fa975788a8ff6d497c757a980e4fc1b4"
+            "contractSha256": "dffc0ca4a78cdae67ed0cc67604e9077ce435b9e24ebbaf784833120cb6a7a8d"
           },
           {
             "type": "Fs.Fox.Cad.WorldDrawEvent",
             "recordCount": 5,
-            "contractSha256": "455c3e6b4f4f03aeac67ab61bc8f8d47c3059ad4ef8cb3422300bd49eac4cc12"
+            "contractSha256": "e805b96f3b1c8353bf04ca8dbd170f0974b847280939e2a49f08db6b43daaf2a"
           },
           {
             "type": "Fs.Fox.Cad.XDataList",
             "recordCount": 12,
-            "contractSha256": "d15b69c0c8b9d706beac6d3cff5d39ab88a5a5e921a5e1627a6339262102384f"
+            "contractSha256": "6a054fe477bcd08eb6f9d772a443fc509a60536aeb911291203789042b9521bb"
           },
           {
             "type": "Fs.Fox.Cad.XRecordDataList",
             "recordCount": 9,
-            "contractSha256": "0a3d9f0afc5e272e4fa4a3c554091da745751799b66ba98144d0d01f98b58984"
+            "contractSha256": "bc08310d5e469aed6a3eb1de9c17e1ec146723345aed06e611d713b28df56767"
           },
           {
             "type": "Fs.Fox.Cad.XrefEx",
             "recordCount": 2,
-            "contractSha256": "639ca1b0c285f0fce239e04ace579d8941182f43ced3685f04e14f80df5e1427"
+            "contractSha256": "f1ba32d5554d681107595f327cf1a05b03449edbbfdbb9f1fc2065a76cb92549"
           },
           {
             "type": "Fs.Fox.Cad.XrefFactory",
             "recordCount": 13,
-            "contractSha256": "803115f71f1d68e8907fb4743da45f89d1bd4567ff25ed617475d4b768e79add"
+            "contractSha256": "8a0035a5356dd821f5f6a55f5883b92dc7cbe0fecef697cdcb94db16f4e60ede"
           },
           {
             "type": "Fs.Fox.Cad.SingleKeyWordWorkType",
@@ -2527,32 +2561,32 @@
           {
             "type": "Fs.Fox.Cad.SingleKeywordHookEx",
             "recordCount": 2,
-            "contractSha256": "07c4d1763d13dcf58d54b7a35bb9ed2c1a224cb0e579404c1a82b59f086e9ca9"
+            "contractSha256": "39f52382e625766adc0c9e009c7e31339f627b916d7b25e15f169c6ea6c47752"
           },
           {
             "type": "Fs.Fox.Cad.Sequence",
             "recordCount": 4,
-            "contractSha256": "63548a6f868f796791dac57d266c80f844e2031a1a1f920cde7f5937791b49cf"
+            "contractSha256": "3932e15384394d1ae3c65049b06c3463501d84bd68b981962779d1b9ca91dbeb"
           },
           {
             "type": "Fs.Fox.Cad.PromptOptionsEx",
             "recordCount": 3,
-            "contractSha256": "1149340fe9f6fe34dbcb729a88b7cabe0c8e90d38ec3bb2346d6acc8d46565f7"
+            "contractSha256": "a201a048b68c50b50a9ebf5c0981c0b0ec29f31bc2e3ddeb48df04af3901d981"
           },
           {
             "type": "Fs.Fox.Cad.QuadEntity",
             "recordCount": 2,
-            "contractSha256": "22af5e7142bcb96a5fdd77592b707269627ce068c57bbf2db79ad1c4ce5b3f61"
+            "contractSha256": "51a33def347d8c5e97c64abdd29d09855f2da062a40abd1f97a829d0dc5cbbdd"
           },
           {
             "type": "Fs.Fox.Cad.QuadTree`1",
             "recordCount": 11,
-            "contractSha256": "739c97d8fb1704676eb79375400a3430620e5e701a681cbab0edfab5f93ea09f"
+            "contractSha256": "daa883fdceccea3992ae5f00a7a3717134a1dc95584635afdefa1bed0b272140"
           },
           {
             "type": "Fs.Fox.Cad.QuadTree`1+QTAction",
             "recordCount": 5,
-            "contractSha256": "ba2d68ded7ca150bb9dbc639a2d5575ef52450cc201bdad2dd7263d127d1fa7f"
+            "contractSha256": "2cabfad0d637fc7eca6714d49d7aa1d6ea67f82295df23564b9f01a53796c38e"
           },
           {
             "type": "Fs.Fox.Cad.QuadTreeEvn",
@@ -2567,7 +2601,7 @@
           {
             "type": "Fs.Fox.Cad.QuadTreeNode`1",
             "recordCount": 19,
-            "contractSha256": "e40a3614d2f6b5320109273a1f6a225ffe93a6f490ed748b776da3bacabd270a"
+            "contractSha256": "6f03ab2e7900baa5f77b6370a46c66aa5c6e2b7f2a135c94f8150cfdc512dcd4"
           },
           {
             "type": "Fs.Fox.Cad.QuadTreeSelectMode",
@@ -2577,52 +2611,52 @@
           {
             "type": "Fs.Fox.Cad.Rect",
             "recordCount": 76,
-            "contractSha256": "56777969c5289af7edd635e640208ffb91bcc5f785baedc304d6b8ee407c9370"
+            "contractSha256": "b881490e08e6fa9a9184a87b55c0675212c56a74e71633d272f9bb4a2d73031f"
           },
           {
             "type": "Fs.Fox.Cad.RedrawEx",
             "recordCount": 4,
-            "contractSha256": "06a42a8aad670c705d57fe0e5ff50c9cad16381211b04ddcc2bc86cba19b38fc"
+            "contractSha256": "b8a724ab8a968ac89e580259dfe07bece74928b79f6ae99885b634a7fc885663"
           },
           {
             "type": "Fs.Fox.Cad.RegionEx",
             "recordCount": 1,
-            "contractSha256": "4a5b6d9916144d32fc79ced4a8a13e453d21cbc6f4860b3f4e4ee08852113f1d"
+            "contractSha256": "45c402e6cc2687e06ef95b034ea0371a566bc79afd7715f7336ab3f55e44739a"
           },
           {
             "type": "Fs.Fox.Cad.ResourceDirectory",
             "recordCount": 12,
-            "contractSha256": "0230c70d2f6957ff0e5e070c1c4049e91bd35c0797ae8b5ca438f9b3eaa8b0d4"
+            "contractSha256": "82d406e47ce453d490bbc361b80b95eabf762360566cc2481f67198dad0384d6"
           },
           {
             "type": "Fs.Fox.Cad.ResourceDirectory+DirectoryEntry",
             "recordCount": 6,
-            "contractSha256": "705dd76142bb85373c0555cbc02d50985a55ad2abc034e28051677e664db5e23"
+            "contractSha256": "f5a0d5d8ef9907792264f453b51660f30c36ab80985ae3f5e72640b899b442bb"
           },
           {
             "type": "Fs.Fox.Cad.ResourceDirectory+DirectoryEntry+DataEntry",
             "recordCount": 8,
-            "contractSha256": "ae3fe8d2fdfb1f04bce2d4b93f282a23d55556f602450deb5ec050ecb0f99ef4"
+            "contractSha256": "7ff97971d08530db8d64b201c3565fd65be77417af1538f471ac76b171416d9d"
           },
           {
             "type": "Fs.Fox.Cad.SectionTable",
             "recordCount": 5,
-            "contractSha256": "4d2c04d05bcd926879319fb152ce62eb1c04ff0a634887ed203f762ecbf02e49"
+            "contractSha256": "4fddca58d000586d780d817e86d3b5676710e2de2cee371ddfd2eb6c564b282b"
           },
           {
             "type": "Fs.Fox.Cad.SectionTable+SectionData",
             "recordCount": 12,
-            "contractSha256": "f0db366f5b27a6c0cd35b0ad74db1f0f95f0d4a7711efeef0ec1bb9b7df6560d"
+            "contractSha256": "2bfe04f78527c5db4b8ae720e54723a51938049707e769f04aee0b4b6aed9d4a"
           },
           {
             "type": "Fs.Fox.Cad.SelectionSetEx",
             "recordCount": 6,
-            "contractSha256": "29e3672ae90b3ba15322b24e17ba47f4b7241b831131361effda8a819d44ce11"
+            "contractSha256": "2f2da3934f2620e6e221f693e2265f33ee5fe7cb4964c179d476e7bed388b0b3"
           },
           {
             "type": "Fs.Fox.Cad.SingleKeyWordHook",
             "recordCount": 19,
-            "contractSha256": "2f8141ccf078d195e700ccd94972dae39622dd573b7a076ae435dfc18e4906da"
+            "contractSha256": "ce398b27e42c8cfe5333b46ea49550afd15f59ac555a93744caf263d3f8e86a5"
           },
           {
             "type": "Fs.Fox.Cad.XrefModes",
@@ -2632,42 +2666,42 @@
           {
             "type": "Fs.Fox.Cad.HatchInfo",
             "recordCount": 12,
-            "contractSha256": "334978e8ff78a1703eb4d307295384e6ff505fabdd5b2453ef843e8ecd654cc2"
+            "contractSha256": "5d793a0eeb30385363b01e80342b222d1717e3fda69725b277cbcbea6e43e555"
           },
           {
             "type": "Fs.Fox.Cad.HatchConverter",
             "recordCount": 9,
-            "contractSha256": "778b186d82a05d08d9c8dcca43653e441375ff2614495711b9f4259fd190d662"
+            "contractSha256": "9fcd61e2b910811a30b437fa0bdbaf3270ea7b87d5d208605e0d23ce69175c19"
           },
           {
             "type": "Fs.Fox.Basal.WindowsAPI+CallBack",
             "recordCount": 5,
-            "contractSha256": "41c5f3923ab9b4cf30e852cba746856a45cb34138c2d902703468319979f57a0"
+            "contractSha256": "8817b4181156a766a3bd9f1d692e931f5058452dfab6067c08113bbae7778e97"
           },
           {
             "type": "Fs.Fox.Basal.WindowsAPI+IntRect",
             "recordCount": 23,
-            "contractSha256": "bca66d3deafddbe78000e8fd86c614b3f4f4c1ac6887047d668d798bb6abd8cb"
+            "contractSha256": "4fda464f00ce9797a208cc576fa1af839c7ee529399bcd5be32e49c1018805c0"
           },
           {
             "type": "Fs.Fox.Basal.WindowsAPI+IntSize",
             "recordCount": 5,
-            "contractSha256": "7ec2bf0f966e705cb1bc426ee1759767f96baf921ad9cd16ee424970b74d0a9c"
+            "contractSha256": "438e079562e4b9bcdd1a8dfd224f742b1d2c5bbf8e658cb3ab083a41641c2177"
           },
           {
             "type": "Fs.Fox.Basal.WindowsAPI+KeyboardHookStruct",
             "recordCount": 8,
-            "contractSha256": "82c864d67336dfb96596ee2cbe843a19a3f8d3dcedb51c007a894de0a0c5885b"
+            "contractSha256": "831984f5f95e48ce6e0ab56cdda5bff3575f4bb6cde86c45ca95532b281bfe52"
           },
           {
             "type": "Fs.Fox.Basal.WindowsAPI+Point3D",
             "recordCount": 13,
-            "contractSha256": "b7d1b6bad93f297380bd780ba0b49be026879df8151dbfccbb1f539553de5971"
+            "contractSha256": "397e05303b1ae9faaf9faf1267f1b3e4aaa2f0346ac3cef84b5aadb38d89df53"
           },
           {
             "type": "Fs.Fox.Basal.WM",
             "recordCount": 122,
-            "contractSha256": "3932850e413b078295a38924154fd831ae39f689e576486a09bfaa5e5db20a9f"
+            "contractSha256": "ee816c98aa0858e72411f21b1903aa4810c7d723fd0f34fff09c182e54ff07f9"
           },
           {
             "type": "Fs.Fox.Basal.WS",
@@ -2677,32 +2711,32 @@
           {
             "type": "Fs.Fox.Cad.AcadPeEnum",
             "recordCount": 6,
-            "contractSha256": "51fc3250f8e340b9ecf0f7e6b1cbc25036789ed241da08cf652b30b8b04df034"
+            "contractSha256": "f02dfac9c1391853b88f200df79d93d9a94e4be69f07a93b82e531540ef6b84c"
           },
           {
             "type": "Fs.Fox.Cad.AcadPeInfo",
             "recordCount": 12,
-            "contractSha256": "26b80ce70b1442b501fd923d1813dc8af2ba9c8a0003d3e5b9c3e956d2878ebc"
+            "contractSha256": "243472808d7668d6f9df83edd5d874703a5cbffb558be0a14131647f72b920c4"
           },
           {
             "type": "Fs.Fox.Cad.AcPreferences",
             "recordCount": 1,
-            "contractSha256": "1564ed4510fbc651ab52891125d2682d282c6af77a01ed484f36c296ce8a6046"
+            "contractSha256": "201257e8b8d06dce87c73add60779dac80a3dbf0098e3ba81d6e43705cda04dd"
           },
           {
             "type": "Fs.Fox.Cad.AcPreferences+Display",
             "recordCount": 76,
-            "contractSha256": "20963722d03f0b0fd1338c0161d7d4ec82fda8861e2e96684fe7bac811581fdc"
+            "contractSha256": "0e92e4fa67b1bb3e58bcc59051dbc46231f80212dfd09143ce17d0941dc3173d"
           },
           {
             "type": "Fs.Fox.Cad.ArcEx",
             "recordCount": 5,
-            "contractSha256": "0f25809e1829a5977f464c5c4c8eb9dd21b90187839eb028ae58a8c341968b12"
+            "contractSha256": "6279525ad5ee204234f5a3a321853e8960158e9c774552452ee7ba67c10b5826"
           },
           {
             "type": "Fs.Fox.Cad.AssemInfo",
             "recordCount": 7,
-            "contractSha256": "267e86a4aaa731db382c2ae80edbf65f0ff19b869ca822ec7e7ba7e318e2de67"
+            "contractSha256": "a29b15599982372de36fb9ec083d82f213b15eff00c529050c6a60e06967d248"
           },
           {
             "type": "Fs.Fox.Cad.AssemLoadType",
@@ -2717,47 +2751,47 @@
           {
             "type": "Fs.Fox.Cad.AutoReflection",
             "recordCount": 5,
-            "contractSha256": "1b772e0a0c62e3cf229f997357f17f3c9e703fed5021794015cef26f12c5ee64"
+            "contractSha256": "b257a30a3baf3f4ad95ba89f0975f489540618fa94baa2a9f23818e83cfdc50b"
           },
           {
             "type": "Fs.Fox.Cad.AutoReg",
             "recordCount": 7,
-            "contractSha256": "190b06c1aca4dd34ea75c787ea85d77f6b9593e6a67296feb09502f660352778"
+            "contractSha256": "d726a807b9fe7997445bbf89c110e8325754ecd3868834003be35b98d2fb8c4a"
           },
           {
             "type": "Fs.Fox.Basal.WindowsAPI",
             "recordCount": 22,
-            "contractSha256": "b5a707b2454277e7f253a6d73f49b5adf1f323f261bba6f1760557e955dceb26"
+            "contractSha256": "ddebcfe9eca8fddeec8b498c5f26a063c13d1e5e654e37b4e15dc0e62ee46601"
           },
           {
             "type": "Fs.Fox.Cad.AutoRegAssem",
             "recordCount": 10,
-            "contractSha256": "2b84738fde00e88d01d1c2b3ee82f21047dc9688342cab2ff4353145b85b5b3d"
+            "contractSha256": "e5ec35dd7eff91cfdf4def0ae042d59f0aa8ee1690cd1bae67d5cedb3a720b6b"
           },
           {
             "type": "Fs.Fox.Basal.VK",
             "recordCount": 153,
-            "contractSha256": "ca5bbe7daa05c687db910f0841948ab3f860f93cda484f1aaf539c3a11d41958"
+            "contractSha256": "7fe424fa1adbf981e1798b1442a547be98b368d4d08ff66a261a7f779e978e54"
           },
           {
             "type": "Fs.Fox.Basal.SystemEx",
             "recordCount": 3,
-            "contractSha256": "726ce9dea23dbd6d5af60a50f0becbab8224612165171d555edabf19f6a73499"
+            "contractSha256": "4bd866334f3a53685dc0cc6124c89a8d4428305bc669fc6474ec34ac5d536afa"
           },
           {
             "type": "Fs.Fox.Basal.ArrayEx",
             "recordCount": 3,
-            "contractSha256": "4e5986ea515b3977bc7ba2dc7b058dffc7dc2777b9c290cb919e547d7cd9a3e5"
+            "contractSha256": "31f828129800bde37ec8c57ef9c736792af4632c39965a3fe44f0a1fde39f9bc"
           },
           {
             "type": "Fs.Fox.Basal.DebugEx",
             "recordCount": 2,
-            "contractSha256": "35bd1cf402a571aff29493de6165d8605e4cb42ec6d064894290a99ad2105735"
+            "contractSha256": "80ca10a968ec57dce19749126044f2c903d691227ee112d4506a61158d7df43d"
           },
           {
             "type": "Fs.Fox.Basal.EnumEx",
             "recordCount": 6,
-            "contractSha256": "a8e6ecbb2a72c59d2ed795d1c006669f545a6cd5f3ab5288e93a3ee20096a06b"
+            "contractSha256": "cc95794818a9c7d954b32f835a1790e8cf695af8cc24c3857ececf6f813e9067"
           },
           {
             "type": "Fs.Fox.Basal.GetWindowCmd",
@@ -2772,22 +2806,22 @@
           {
             "type": "Fs.Fox.Basal.HookType",
             "recordCount": 18,
-            "contractSha256": "52b814d1d805a14c7fcb0139792892d291ad7e2fedff3e20af275aacca53519f"
+            "contractSha256": "b01063311d324fcb062830bc52fe4a61be7bedf999625b80070ce8e0ff64bc11"
           },
           {
             "type": "Fs.Fox.Basal.LinqEx",
             "recordCount": 12,
-            "contractSha256": "28df67955ebb53918201ea6f619af17e1ad7c3dfbb5e042dabf3bec14986a1dc"
+            "contractSha256": "5dad36916688d5137a48d880e0e4270bc3b109075709d5d721fbce85d058a101"
           },
           {
             "type": "Fs.Fox.Basal.LoopList`1",
             "recordCount": 37,
-            "contractSha256": "72e434a61f4e266b2c57f26d4ada3f16aca37d6cae0cba4de0e3eb6083e94832"
+            "contractSha256": "96468506c8834458b4b3d7fced1dc0866a5c91135ca021b7f78478ba03ad921f"
           },
           {
             "type": "Fs.Fox.Basal.LoopListNode`1",
             "recordCount": 10,
-            "contractSha256": "40757fe4850cdda1041ee6f41c4b4a3e286f45f363d932c1e5364b1ee18bd9b8"
+            "contractSha256": "16b498c275483d865c146d027ef7c9f25d8717f0e524969e6d4f21550445fa6f"
           },
           {
             "type": "Fs.Fox.Basal.LoopState",
@@ -2802,17 +2836,17 @@
           {
             "type": "Fs.Fox.Basal.NCmdShow",
             "recordCount": 15,
-            "contractSha256": "f8862e644ffd228c3be08f23bebe1d2b9fbacfc7bc39f027761221bf25713a25"
+            "contractSha256": "630b8fa9982218e0a7e95be8dd4a264bff88155ad6650f5e20ab4722b62585b7"
           },
           {
             "type": "Fs.Fox.Basal.PInvokeUser32",
             "recordCount": 24,
-            "contractSha256": "c9c84d3e73d800d6e9864c17df55e6f1c9dc377c45cffd0e2bff4016d5bca8a4"
+            "contractSha256": "4918e192b28ab34cfbe1c00e8c9d5bd342440b991218b8b831f1661ce2f3aacd"
           },
           {
             "type": "Fs.Fox.Basal.PInvokeUser32+GuiThreadInfo",
             "recordCount": 11,
-            "contractSha256": "8cd4370f765d6eecc20cbe331f4c353d02d782467eed569e7940d7bc9570982b"
+            "contractSha256": "2ee148d9fb696e34cedd42818813506726c39b3c4b92cb18fe7a62a7a349c88d"
           },
           {
             "type": "Fs.Fox.Basal.ProState",
@@ -2822,177 +2856,177 @@
           {
             "type": "Fs.Fox.Basal.RandomEx",
             "recordCount": 16,
-            "contractSha256": "6b83900e9cabda9352ea5796518060fd7f898ad09e2e3507caf007421092f340"
+            "contractSha256": "40ddb7937199b8dbf028c7c01acc57645a68a07d1e6ba5db23912baa12934de6"
           },
           {
             "type": "Fs.Fox.Basal.SC",
             "recordCount": 6,
-            "contractSha256": "95beff88adc3aabc7a0fb2fffdbfc25fe8cea6cbf4ffee6a9cbc588c4edbbf30"
+            "contractSha256": "b2dd063ef998baa3ecf2322e648e4eb30290f33336b6c12e6e84207518ee5062"
           },
           {
             "type": "Fs.Fox.Basal.TH32CS",
             "recordCount": 9,
-            "contractSha256": "019872ca6e24c10d32b9bb4dffd0a0f7cab346f5561714b9d7d032a060c74a0c"
+            "contractSha256": "75ed2278bf8ad6bea8735b269a18ed759eabb073afa09dc4bdacb80d8137c474"
           },
           {
             "type": "Fs.Fox.Cad.HatchEx",
             "recordCount": 5,
-            "contractSha256": "11a883211b487ed01180311e24c430ba31c1371f2519baa8c79e7ac17a981a7e"
+            "contractSha256": "7f29d6d4838e96fd9f4e5c333566287b7eee9cf77c28215e1a2d28fc14d6bf08"
           },
           {
             "type": "Fs.Fox.Cad.AutoRegConfig",
             "recordCount": 8,
-            "contractSha256": "f3155780b4844ba9cc15018add67aca20410067ad48a808da781b49e06889578"
+            "contractSha256": "418df02dbf2fa931ed6074f5fae6052b8dc08b22e15a43dbfd6ff89cd375a76e"
           },
           {
             "type": "Fs.Fox.Cad.BlockReferenceEx",
             "recordCount": 16,
-            "contractSha256": "0025bd6290dc52d08e9d0670c813959dbd891ed3943bfea076fd4435be33fdd5"
+            "contractSha256": "9bb88b98c3e083dfb2cbde2a74941522c549d674ad9c306ba9d6131bd7e7ecd6"
           },
           {
             "type": "Fs.Fox.Cad.DocumentLockManager",
             "recordCount": 4,
-            "contractSha256": "c2448c603d55e597383076254a7d1c68d4c5e8b642139d40c9e0d6d6fc0f6f37"
+            "contractSha256": "7dc305ff422de827f3e4c2bb79b98f5ec21f833ffd01dc18f6c978cef12352d9"
           },
           {
             "type": "Fs.Fox.Cad.DocumentLockManagerExtension",
             "recordCount": 2,
-            "contractSha256": "7c17cac0755ed158101a1dee74ca20165b2ffb167f95c3de525caabe27e61d75"
+            "contractSha256": "c7f7fbc326e3dcb8a4cda159f9074f26a837ba8353895a2de6ecbc32dfaa782d"
           },
           {
             "type": "Fs.Fox.Cad.DosHeader",
             "recordCount": 23,
-            "contractSha256": "610c121bc869b743a20505ff9920c405f5e6aacd15a6d39a364e4ca547a3219b"
+            "contractSha256": "af7a7611b8de105dbc81bfd6a347b6da59a5d21098b0f28d67028b7401adb736"
           },
           {
             "type": "Fs.Fox.Cad.DosStub",
             "recordCount": 5,
-            "contractSha256": "a7e1c17e7bcd49917d173a8b11ad7b58d064d717119e2489bedf2fda50ea0d6c"
+            "contractSha256": "b986eceefb2d65ffaa08337015c416f0765d18136cf8258d1b36c8fe8cb4c4a4"
           },
           {
             "type": "Fs.Fox.Cad.DwgMark",
             "recordCount": 4,
-            "contractSha256": "c20f812d7ed14ef9c3ba269792267df133b17cae317ff186940a12d5e52e09ad"
+            "contractSha256": "fa2e6b8831bdd5029806d1cf89b163ccfde41a01f893dd8768554b3cee320145"
           },
           {
             "type": "Fs.Fox.Cad.EditorEx",
             "recordCount": 45,
-            "contractSha256": "67e25754d531a4e9265be53e652480a120bcb67d107ce13c6d128d4b454b98bb"
+            "contractSha256": "b3dbaf84b0a2947912e2f563a6ed93fe11b34379b77a95195d81f38951f54183"
           },
           {
             "type": "Fs.Fox.Cad.EditorEx+RunLispFlag",
             "recordCount": 5,
-            "contractSha256": "de9fc5f476ecd5ed618c496cdb1b1066a89acc7e204ff9dc474d564c65a56c63"
+            "contractSha256": "e4d22e213ff3c03d0e1a40ce181025a1c8cb477f4ebbcff12cb074f348b1648f"
           },
           {
             "type": "Fs.Fox.Cad.EntityEx",
             "recordCount": 12,
-            "contractSha256": "fcdfb141c3258e257a63a3c9e5c513edc5f608e1652e66c12b1ce066c9202aa2"
+            "contractSha256": "1e13ac0741f2639ddaa03b2eaeab98ebbc407295c42a757a33d045ceffe0c75f"
           },
           {
             "type": "Fs.Fox.Cad.Env",
             "recordCount": 50,
-            "contractSha256": "caa6ec2b0f5c9d97d5fcf6cbfa36f43a7f732771d3501db4d7ec935c02830054"
+            "contractSha256": "516ed097f68a72f4b52ba7babdb352d8a8e9b385175a4a93489d86ae4903cdd1"
           },
           {
             "type": "Fs.Fox.Cad.Env+DimblkType",
             "recordCount": 22,
-            "contractSha256": "503f198a7d90f36a9cde06669c74917de162c369a8a2cc3a730da291232b891f"
+            "contractSha256": "83cf5c0420aadf32f7dbf2dbbc4c1be187d068a1fdc551d5ea1973cf50b13deb"
           },
           {
             "type": "Fs.Fox.Cad.Env+OSModeType",
             "recordCount": 17,
-            "contractSha256": "bcd23d39fea5f057f2b45bf75949463a85177b015ad3b4b287ce7194af3223b2"
+            "contractSha256": "6e3307ea973b0e1d3451bf18bdb2d73ee79a5a28dfbacc4ef1dc59cf1acfcd85"
           },
           {
             "type": "Fs.Fox.Cad.ErrorInfoEx",
             "recordCount": 1,
-            "contractSha256": "cf21cd0e3961e88e302031e3a3ae9978ca190f062320525ac7bcdc5c214ea8e5"
+            "contractSha256": "d1ca1dafec0b960cd33b85770f3251d0915872e73055b5cc4fd4c74f09aa049c"
           },
           {
             "type": "Fs.Fox.Cad.ExportDirectory",
             "recordCount": 20,
-            "contractSha256": "6d5180a12cdfaec0a9192f52fdb522dbd74fcd31c448d54fca8fef8cc782665c"
+            "contractSha256": "aa2835d56502f03ffaf3a43a9b32e0a9f1cf6ad4e55a8701558920295ffcc2fe"
           },
           {
             "type": "Fs.Fox.Cad.FontTTF",
             "recordCount": 7,
-            "contractSha256": "2614c9dd36ef2d4277d837049d5d2d3a2622d12ae74efe3cafe6a53595358927"
+            "contractSha256": "61663752563e60e9a2e6596c194cf8ace37d6054c3abdbe552f8341192b9afce"
           },
           {
             "type": "Fs.Fox.Cad.GeometryEx",
             "recordCount": 26,
-            "contractSha256": "7cd7ae4972c7fc66cfb037a98a82795a645371dbad35a37bde1041d1639ef4f8"
+            "contractSha256": "8962e0eded2bf00ba5aa8d6e3dde3625de8bcad415604f7c1f4d825fe72c0dcc"
           },
           {
             "type": "Fs.Fox.Cad.GetMethodErrorNum",
             "recordCount": 5,
-            "contractSha256": "1be80b035ece0aa6d64aa2f46f3ceb777f9852890a8473c3da20076ae45d0fa6"
+            "contractSha256": "002f4997afd31b54d9249623057974ac785210ca769d0a9d5fab9abe36ef913b"
           },
           {
             "type": "Fs.Fox.Cad.GetPeMethodException",
             "recordCount": 7,
-            "contractSha256": "c141c0d0197d40c6df3d03f13eb41b35180d502cd08fa3fadae64cdd17e35a9b"
+            "contractSha256": "7193188c6e8125da88a7b71006e0f9618f31936974740286ad0edf656f84363c"
           },
           {
             "type": "Fs.Fox.Cad.DBTransEx",
             "recordCount": 2,
-            "contractSha256": "7820e48cea270ebad6bb0aa7c3152ff21a2884447bfc76d8281d03463be18e7c"
+            "contractSha256": "188c5dd138de2bf7fac34450be7205e30a697e09c66b153f4611fda879212b33"
           },
           {
             "type": "Fs.Fox.Cad.BaseEx",
             "recordCount": 2,
-            "contractSha256": "df1675ccf4c5a4ce51fa9536edc728de8afcdf344ebe42d3fe978b02d2b31b09"
+            "contractSha256": "7f1722b68c8039d1ac9a30c0eda0301cfe4102f20a7562c70086f1d50100e6fa"
           },
           {
             "type": "Fs.Fox.Cad.DBTrans",
             "recordCount": 71,
-            "contractSha256": "48994b22b90da4ba216864a054d565f94550f587224695d2f2e316124f37a500"
+            "contractSha256": "63735b7766318952663feec47ad158410e64aae9313a0f215ee87edbfe3a4a52"
           },
           {
             "type": "Fs.Fox.Cad.DBObjectEx+UpgradeOpenManager",
             "recordCount": 2,
-            "contractSha256": "0a1ac85aef77d1e366691c5ec521aae17a28ef80f42c9fa4e5e20f2c9b5f1c69"
+            "contractSha256": "0a3107b8da13f226456f6c649c63b7911a3790707faeefbdeed889192d20ef6a"
           },
           {
             "type": "Fs.Fox.Cad.BlockVisibilityInfo",
             "recordCount": 11,
-            "contractSha256": "64a34e421f2945715e21586fd9a7f4e71b06fe18ce29587dae906da19c50a178"
+            "contractSha256": "1a5343a9fc511e3b6f572118374d35c41ace48dfbf240bba782a6dd224d673bf"
           },
           {
             "type": "Fs.Fox.Cad.BoundingBox9",
             "recordCount": 45,
-            "contractSha256": "71ba4b5c7aed0f075999f9ee056411e9bae34fdd5bf15fda6129aaf29d1d69a3"
+            "contractSha256": "34309c6a5967814609c8972264b56ae85b7c560b9058172351b6dbef3c8fa35e"
           },
           {
             "type": "Fs.Fox.Cad.BrightEditor",
             "recordCount": 7,
-            "contractSha256": "5ca77344fe175340e73a5d9abb505601626a9eff939c37ead3e63b3277b33e65"
+            "contractSha256": "d95c2326a717573f60bb58d9e0e94065c5f973e697e37ed0be2abb58b61e2834"
           },
           {
             "type": "Fs.Fox.Cad.BrightEntity",
             "recordCount": 10,
-            "contractSha256": "98d34f589c3ac029ca9e6005e7745ce91824b75984d7d3294200154db271a678"
+            "contractSha256": "ffb2c2c1d616c0a26ecaed795dfe05e7fca19e8a5db9bc3aa92f6c5459138591"
           },
           {
             "type": "Fs.Fox.Cad.BulgeVertexWidth",
             "recordCount": 14,
-            "contractSha256": "9ad544ed76afebd7e0acb63d40e3fc28f2b2221717de7eb63539381ee2734b21"
+            "contractSha256": "87c059fdd9ec0e8555b830b7f3c5f80df9f255650a2685747f860e185ab4a2f5"
           },
           {
             "type": "Fs.Fox.Cad.CircleEx",
             "recordCount": 4,
-            "contractSha256": "5d5dd4a648a5ecc82d3fbc075619de29752a1c80eec538314216ed71d33ecf8b"
+            "contractSha256": "67f5073f96fbde4faa0a31652a0d17c40865e75ad405c54926c83a969d3d6b0a"
           },
           {
             "type": "Fs.Fox.Cad.CollectionEx",
             "recordCount": 17,
-            "contractSha256": "5e118d5a24caabbca75ba0f475d005cc53e88b4860806d8119955ff5a871e237"
+            "contractSha256": "fd320ff85361a3ec1fadd320b64d7376ed60fa00ad1b5b2dd43af1167bac7ad2"
           },
           {
             "type": "Fs.Fox.Cad.CollectionEx+KeywordName",
             "recordCount": 5,
-            "contractSha256": "51b08ba828f44a80414c88efe4c8e981cc497c6739a2fd4e5f99992e13ff01b0"
+            "contractSha256": "fa44172090ade32f68f6a91ceebc2cc1f0a9f977ce24fac919529d1a477ad828"
           },
           {
             "type": "Fs.Fox.Cad.CoordinateSystemCode",
@@ -3002,52 +3036,52 @@
           {
             "type": "Fs.Fox.Cad.Curve2dEx",
             "recordCount": 16,
-            "contractSha256": "3f7bb0ba690a67a4097d8b56bdc4519e6f395e4b76386b074209dcd4659d6f64"
+            "contractSha256": "f2f45cd43690c85a24360939ec33c0e17ffdd224aa5589e6292f227d7e233acd"
           },
           {
             "type": "Fs.Fox.Cad.Curve3dEx",
             "recordCount": 21,
-            "contractSha256": "4cde06141da8a48ecfae38df9a4592ffd53834111403c1db6ad9f05be845ac64"
+            "contractSha256": "dc7490f5c2ff14e62e2e20def95f9908999d769ecddd0918fa00038f07bb9141"
           },
           {
             "type": "Fs.Fox.Cad.CurveEx",
             "recordCount": 31,
-            "contractSha256": "aa8b740a192af7e3872c5cd28d6ffc50f20a43f85a8776379772fa86d209c958"
+            "contractSha256": "ce1d865af6c3f141a5febbd96623474c9547307d7a9870e4295264bb79841b96"
           },
           {
             "type": "Fs.Fox.Cad.DatabaseEx",
             "recordCount": 4,
-            "contractSha256": "e8a5fbf0e2b9d9280a9a36836a7fc7a5f78b7865560c4853f743ea11c94eb9c3"
+            "contractSha256": "638b14c83c672ad18330fdde651b31ef01293ac269518f44d71d5515ab3763dd"
           },
           {
             "type": "Fs.Fox.Cad.DBDictionaryEx",
             "recordCount": 17,
-            "contractSha256": "7c47761e3de9b1df195baaefc5c6f0f1705ef07760e27e2aa2af2d21175c6f20"
+            "contractSha256": "11bd76c7a8f7287134da89247069657d8eb6a8d8c227fc060e1c1d44f28f426e"
           },
           {
             "type": "Fs.Fox.Cad.DBmod",
             "recordCount": 8,
-            "contractSha256": "a1fd6a40eb78aa6a3ff2cd9c50a5d3599b85222432a226983b87bcab4c8cb1f4"
+            "contractSha256": "18b13779f03398c8d71a3f031259ca546955bd7283cca493c77654e07e720e7a"
           },
           {
             "type": "Fs.Fox.Cad.DBmodEx",
             "recordCount": 7,
-            "contractSha256": "e45d5657cbd175eb003901df9da888904616aa7f9df5ebb03b7993f173ae0beb"
+            "contractSha256": "001f731134da8bedb2bdb167a15dc6df1f306619a64061b8813ef3b4d8fc79aa"
           },
           {
             "type": "Fs.Fox.Cad.DBObjectEx",
             "recordCount": 8,
-            "contractSha256": "4b6a5bc8dacfa452ef5c7ecb5cec261475e93dd2cb0bc89c5aa3e45bbbb1e05a"
+            "contractSha256": "c7eec2903ac370581638c5749247f1d08c2a54d235fdf3f83322da4674bf2ae4"
           },
           {
             "type": "Fs.Fox.Cad.DBTextEx",
             "recordCount": 3,
-            "contractSha256": "6936e647be09670b58dd6c4430ae83134bb36c3b42bb370bf1ee2461b26a3d50"
+            "contractSha256": "3f0ebd4e437267ef9164cb4ddd1f8bc33aaa915cdd5ec428898ec0f552945741"
           },
           {
             "type": "Fs.Fox.Cad.XrefPath",
             "recordCount": 14,
-            "contractSha256": "56f575abe9246ad8c819e3fc41cd935d641e93ba22d5c29e1c41e3d491848752"
+            "contractSha256": "834334ef6cec3916a78bfa69854a24df22838def11354af02049c908c8ad0723"
           }
         ]
       },
@@ -3076,32 +3110,44 @@
           {
             "path": "GlobalUsings.cs",
             "length": 3818,
-            "contentSha256": "e97634db95f0f376f5f23c064b68a13837c4c658c5abffb04cd540b57752401f"
+            "hashKind": "raw-sha256",
+            "contentSha256": "e97634db95f0f376f5f23c064b68a13837c4c658c5abffb04cd540b57752401f",
+            "binarySource": null
           },
           {
             "path": "LICENSE",
             "length": 1091,
-            "contentSha256": "a2943fc061379a06f57c4a7ea027980ffd3b1f29488cb00519402fd27113d3fd"
+            "hashKind": "raw-sha256",
+            "contentSha256": "a2943fc061379a06f57c4a7ea027980ffd3b1f29488cb00519402fd27113d3fd",
+            "binarySource": null
           },
           {
             "path": "readme.md",
             "length": 7873,
-            "contentSha256": "00ccca236e22a69663270c28e1fd111575561d3708e5ff863b469273cbdc9b9a"
+            "hashKind": "raw-sha256",
+            "contentSha256": "00ccca236e22a69663270c28e1fd111575561d3708e5ff863b469273cbdc9b9a",
+            "binarySource": null
           },
           {
             "path": "lib/net48/Fs.Fox.ZwCad.dll",
-            "length": 360960,
-            "contentSha256": null
+            "length": null,
+            "hashKind": "matches-build-output-sha256",
+            "contentSha256": null,
+            "binarySource": "Build/ZW_2022_Release/Fs.Fox.ZwCad.dll"
           },
           {
             "path": "lib/net48/Fs.Fox.ZwCad.xml",
             "length": 481181,
-            "contentSha256": "046c6ebcf1f04a04c551882b00ce3f2b2f6b9be9497a6c126216372a1457d633"
+            "hashKind": "canonical-xml-v1",
+            "contentSha256": "f09fcfd070924351e1bcaa575c8eaaf1b818393b0465a69d8ad15a8b9cd8cc3a",
+            "binarySource": null
           },
           {
             "path": "lib/net48/TestZcad2022.dll",
-            "length": 124416,
-            "contentSha256": null
+            "length": null,
+            "hashKind": "matches-build-output-sha256",
+            "contentSha256": null,
+            "binarySource": "Build/ZW_2022_Release/TestZcad2022.dll"
           }
         ]
       }
@@ -3206,42 +3252,42 @@
           {
             "type": "Fs.Fox.Basal.ArgumentNullEx",
             "recordCount": 2,
-            "contractSha256": "642a670bd8c62db232a9ffa4b93e8e50b688ba37c77e70793d9fef4a99d3887f"
+            "contractSha256": "877fa9d46586cab77256916bfbf4f169e4104e4d1149106a325afb4188182e8e"
           },
           {
             "type": "Fs.Fox.Cad.OpLogi",
             "recordCount": 8,
-            "contractSha256": "ea48db0445e4b08a79f75da20dfed7a7dc9f9a89ef2c99dc91fd3ca651028454"
+            "contractSha256": "d9686c640d0095b470575efefe576e8d4d7abe17406ee895bd8cf2f553be5a74"
           },
           {
             "type": "Fs.Fox.Cad.OpNot",
             "recordCount": 5,
-            "contractSha256": "c3759df03b0718c8543c0e72cbf11d200d486a5a6b0edbcb271251fa2d1bcf8b"
+            "contractSha256": "8936ce9200edf75dc3112149f40a6f8abe8f1e058c5d480bd1a1ec9e9654c8ad"
           },
           {
             "type": "Fs.Fox.Cad.OpOr",
             "recordCount": 5,
-            "contractSha256": "73047d7c715a3c9818a02ad7a9739073e7253689d2518c15eef6eb09dc6c57ee"
+            "contractSha256": "422109d42730efffeeb8537024d0fbdf0f23e82f0b667895dfa0e848bfaec22d"
           },
           {
             "type": "Fs.Fox.Cad.OptionalDirAttrib",
             "recordCount": 5,
-            "contractSha256": "bba9bf2dc1992ab711a37e4e33643269a88207b876df99d9230710985b606d34"
+            "contractSha256": "a692cb3e8af71e0f586bd11a96643650d8de1ece599bc63017498e6a4cea2a0f"
           },
           {
             "type": "Fs.Fox.Cad.OptionalDirAttrib+DirAttrib",
             "recordCount": 4,
-            "contractSha256": "00f4f6b7cb6cac397966d38de76f2591ea17cb6547e0451a34a0cca220e1567d"
+            "contractSha256": "93c078ce8d309e7e579ef758a88c3016e777d93bf76ff044174054664c732aea"
           },
           {
             "type": "Fs.Fox.Cad.OptionalHeader",
             "recordCount": 34,
-            "contractSha256": "b02c795db5eb1f4945dba3d2b8ea2ca131b44ae4c0290674b6b7dea7706ecff3"
+            "contractSha256": "fd0910de7374281830141beb8b084d9ae13bd6101a1421587cdd0db98564d248"
           },
           {
             "type": "Fs.Fox.Cad.OpXor",
             "recordCount": 9,
-            "contractSha256": "70712a0c5abad2db7f1d648860a0f0b318797af901ef4e4af6831c9ae94e9c0a"
+            "contractSha256": "f39588d88e1d84a33d8e15496583bafc9f78f609b80656705e081eca22123b02"
           },
           {
             "type": "Fs.Fox.Cad.OrientationType",
@@ -3251,7 +3297,7 @@
           {
             "type": "Fs.Fox.Cad.PaneEx",
             "recordCount": 4,
-            "contractSha256": "60313e42a70c247ad91d44abf5ae6e8574f03150927eb300c39e4fb584764b17"
+            "contractSha256": "a3d428cf396f76d60d83d3ad9fdd986eef22ab8146932fc612a7088241ec16b6"
           },
           {
             "type": "Fs.Fox.Cad.PaneMarginType",
@@ -3266,27 +3312,27 @@
           {
             "type": "Fs.Fox.Cad.PeFunction",
             "recordCount": 9,
-            "contractSha256": "f3e9cfe237a81a38aa86bf63b55f08770805432a5e3fa052381ea194d4a16539"
+            "contractSha256": "d89588e4cb96b2570454c5e8ec1c0cc1f52ca09941b1468256b0bbe0b283bdd1"
           },
           {
             "type": "Fs.Fox.Cad.PEHeader",
             "recordCount": 12,
-            "contractSha256": "df156a461b244d6d6dc0e1299f40eb2d2055f617d72a5d96319c34ae6fc856c5"
+            "contractSha256": "9e318a7555a377f9ff9c8e29f7e8213e65544fd712daa16a528834f412a80610"
           },
           {
             "type": "Fs.Fox.Cad.PeInfo",
             "recordCount": 24,
-            "contractSha256": "f20c253a183975602c8b279b38c32d8a106a62873fc961f73ed7911b087799c5"
+            "contractSha256": "41e523a75680c608762710c565b58889fdadaeb8e5969183521627d2f7d14c29"
           },
           {
             "type": "Fs.Fox.Cad.PlaneEx",
             "recordCount": 4,
-            "contractSha256": "3982a8d2755da32fdc3b08f72d95daac66e1583d0db294e4a867ab2a984d7b17"
+            "contractSha256": "533504d57b330ee7641662e359e51f591412641ccb27697b9ada00b249f07faa"
           },
           {
             "type": "Fs.Fox.Cad.PointEx",
             "recordCount": 22,
-            "contractSha256": "5e29e387ff34276d5980dae5bebb97fc5d45ceee275b616448744e3567ce0e80"
+            "contractSha256": "93db38bfb109cdabdfd5e8fb58b5713c77bf68941d956b93ad47176ac48f1897"
           },
           {
             "type": "Fs.Fox.Cad.PointOnRegionType",
@@ -3296,32 +3342,32 @@
           {
             "type": "Fs.Fox.Cad.OpList",
             "recordCount": 10,
-            "contractSha256": "293785febe3b077a7d635a1ec2059d99f4de2363b6c89aaae67019ef5e7fac3a"
+            "contractSha256": "5844bde5824e5ca8a96a2df0191cd54bacaa4c59f47dcb610b5f63c9f6f5f43a"
           },
           {
             "type": "Fs.Fox.Cad.PolylineEx",
             "recordCount": 9,
-            "contractSha256": "80497deebc8035ef64f3ddf92b38b996428b2d2c43c49cb2ab05e6def81fb28a"
+            "contractSha256": "6a1586b387c0c547ccc0a28b08268463f0e6b2011f98c108259eaf928b668170"
           },
           {
             "type": "Fs.Fox.Cad.OpFilter+Op",
             "recordCount": 19,
-            "contractSha256": "4dcbc13d3370353407fed4b0eae5389ef2ee1157ae1e3453defc4cf4d2e2fd21"
+            "contractSha256": "13145a18982dfe63b5110bda382791ad0d33bb92d8a4495e45fe912a70c2ecb6"
           },
           {
             "type": "Fs.Fox.Cad.OpEqual",
             "recordCount": 11,
-            "contractSha256": "e3bbd48dbd706a36863f099923835f7cf08df48a49214180b9d055ca2934e843"
+            "contractSha256": "8c1e7cd68cd2dfa5d421bd8bbe172d42c50f75a6042da8e45f5649645353b78d"
           },
           {
             "type": "Fs.Fox.Cad.IdleAction",
             "recordCount": 4,
-            "contractSha256": "ebd51bd779babb23717c3ef39fe0d9953fe7167cc6d61190d577db9575708180"
+            "contractSha256": "cd0d87cf419ad9dc80c403812a35c8f1cee471c74379eec266f4de6d51375d10"
           },
           {
             "type": "Fs.Fox.Cad.IdleNoCmdAction",
             "recordCount": 4,
-            "contractSha256": "8dd84b458806d2bf86aaf8cd3f66adc4e07dbff9a1e40dd86e297b9d7afe66ab"
+            "contractSha256": "1341589c4dac61bf78466a280d6ca071be38aca932b605a72f1de4eacc7e5e9b"
           },
           {
             "type": "Fs.Fox.Cad.IFoxAutoGo",
@@ -3331,27 +3377,27 @@
           {
             "type": "Fs.Fox.Cad.IFoxInitializeAttribute",
             "recordCount": 2,
-            "contractSha256": "bc9eb09f3f7d4d2682dbd7041556a37918f4567b7a2013f78a9dfcdd6a0a3522"
+            "contractSha256": "f9f065315bb041251a5731b023cd86b3501f87deafd7afdf3cb4abe8f212f9b7"
           },
           {
             "type": "Fs.Fox.Cad.IFoxUtils",
             "recordCount": 6,
-            "contractSha256": "d80cba8c5d379a3953751afaa616cced421f0d1ed80209d51b3ecec3516bbf1c"
+            "contractSha256": "d3769741229e174943411166bdf9f518386b031770a9ecd90a1704af03f0f4c2"
           },
           {
             "type": "Fs.Fox.Cad.ImportDirectory",
             "recordCount": 5,
-            "contractSha256": "1b237998bf56b6ca62c587e6daa1b2f57bfd59f9f48522b0a90f815372234efe"
+            "contractSha256": "965db4832cc978d366b36140953e7f54aaeb7ad1087895ae03fb0af00735ce1f"
           },
           {
             "type": "Fs.Fox.Cad.ImportDirectory+ImportDate",
             "recordCount": 9,
-            "contractSha256": "c93b20dd95c7e966c1989963d511c26edb4a38e76d7ee195fec7584d393012a4"
+            "contractSha256": "0878800d02e67220831775cbddcdd648342469b6de27207f5797acae3048f97b"
           },
           {
             "type": "Fs.Fox.Cad.ImportDirectory+ImportDate+FunctionList",
             "recordCount": 5,
-            "contractSha256": "879f997889497218562069104c430e8464fa886dffddc826c120cbb8599386ed"
+            "contractSha256": "f04c040d27c5bba57d735218fa5e0eb257feef8ad6ef1b9bf04477fe79b8da77"
           },
           {
             "type": "Fs.Fox.Cad.IXrefBindModes",
@@ -3361,92 +3407,92 @@
           {
             "type": "Fs.Fox.Cad.JigEx",
             "recordCount": 22,
-            "contractSha256": "e51c52f956612c3e881b7c0e94cbfa1ad2ffdebc212fde9df15757b5f3711ad1"
+            "contractSha256": "be859a3cb6f0bf96ee578cd1d8bb5ab8af47d866b74fd84f32bc6680f59df11c"
           },
           {
             "type": "Fs.Fox.Cad.JigExTransient",
             "recordCount": 20,
-            "contractSha256": "b45e4adef0c41965931141870897d12126e12454e6d188c9116ee9653e0f67a2"
+            "contractSha256": "c64d51881dd76ad2d456dbcbdca2c5866371c5ec8be70b76ed9c8d29e1229b7a"
           },
           {
             "type": "Fs.Fox.Cad.KeywordException",
             "recordCount": 4,
-            "contractSha256": "9c329031cea8fbc034a49746f1617362ac217e4174c679b6534775294045dedf"
+            "contractSha256": "324ef93477c364b49dc04cfff2cd51984afd92ec5c8df8fec7ae9de68400aff3"
           },
           {
             "type": "Fs.Fox.Cad.LispList",
             "recordCount": 23,
-            "contractSha256": "9a8e4e00db072669305b8c0194e4e33d590ae6487364b9fbd95e13a7c910b8fe"
+            "contractSha256": "ac209702104069c133f4c27a21504c7dfea839782f178ff2b5e5e3b04099ab51"
           },
           {
             "type": "Fs.Fox.Cad.MTextEx",
             "recordCount": 4,
-            "contractSha256": "372cacbf60525b53cb01378cfef53c5a5a1a49a03a3ff1663fb0a192a97bcad5"
+            "contractSha256": "96d45088f75c03ac036d68e8263ecc5a75d87caf14d413f7897cb4305695a5b7"
           },
           {
             "type": "Fs.Fox.Cad.ObjectIdEx",
             "recordCount": 11,
-            "contractSha256": "a2411b5b4a7120df580904a6910bb0ba00f589a77de9892ef4b42418a45ca71d"
+            "contractSha256": "9d2ca4902bdd1e1ae6a6b40b8870a92a080080ed9b7a5767094fd4b5ebc105c5"
           },
           {
             "type": "Fs.Fox.Cad.OpAnd",
             "recordCount": 5,
-            "contractSha256": "41b8d7ca8ba9710234b30f57e795d0b0f16688e0cd0fe6d208da416b7269e01f"
+            "contractSha256": "d258640c7e1a52c05335fc9b82415fce2ee3d4f620dd71e7fe6f5be50db1b4f7"
           },
           {
             "type": "Fs.Fox.Cad.OpComp",
             "recordCount": 10,
-            "contractSha256": "d9d5d9d04f52804fab12bcd62f7f860b7ded5935c38b12944b9a185c51df147e"
+            "contractSha256": "3d922f336523be5207ee302e45d0476f95a397b203592850ee4490a6366f70cf"
           },
           {
             "type": "Fs.Fox.Cad.OpFilter",
             "recordCount": 12,
-            "contractSha256": "ed8c91401ab233dfd83191f13997ba6f144cd1c5610dd71b2ab3ecd0025f2cd9"
+            "contractSha256": "73e6d93d2d486ae97edb282a17348c74e6fa8d3db097e0425d4e337b97b55cc1"
           },
           {
             "type": "Fs.Fox.Cad.HatchInfo+GradientName",
             "recordCount": 11,
-            "contractSha256": "33bdcf47b2a1290cd63eabc6c5da253704a4f3be0908da3c26853a6a196dc08e"
+            "contractSha256": "05c05b6f27195ab1b6e230ab7989b9a755c3f1f3e37ae9e54bc5cff4987cf00a"
           },
           {
             "type": "Fs.Fox.Cad.PostCmd",
             "recordCount": 5,
-            "contractSha256": "696fe2ad8fd964aa4e1b5da4c10c4da728c9fae3cabe94253a10f731245be43a"
+            "contractSha256": "ab7f0e3bec0f52a6132dc50983a05250cf84d7d458955ce217a756c51bbe2ad8"
           },
           {
             "type": "Fs.Fox.Cad.ProgressMeterUtils",
             "recordCount": 4,
-            "contractSha256": "5dd96886434fb23cda7ed0692d637b8c60d0a015c8e7b6583ac7a9cb23c98e51"
+            "contractSha256": "e3c62c4f6a2b46da059feaffff48dca973c955b64d171118d9b639051a28fdfa"
           },
           {
             "type": "Fs.Fox.Cad.SwitchDatabase",
             "recordCount": 3,
-            "contractSha256": "390a44a5c4806e2330ebd7accaf751884f83dddbdd6469cc3285c9ed13f8dde5"
+            "contractSha256": "292cb5b361694b3731b4c7a92b9758b753f48f66877e41f14c68b5370c7d0963"
           },
           {
             "type": "Fs.Fox.Cad.SymbolTable`2",
             "recordCount": 23,
-            "contractSha256": "a9cb1c93e57f7d5fa7844c3647e5ff64daaa679b98924954e13518465811afed"
+            "contractSha256": "afa7673ca848eec7aabee93b4ba4f8183ea0300c9fe638fdb084f12c282eb381"
           },
           {
             "type": "Fs.Fox.Cad.SymbolTableEx",
             "recordCount": 16,
-            "contractSha256": "35d20fe0491ea19287622658ec2123ae91c85d7022d8e420d5da1e35409a7f83"
+            "contractSha256": "4935524692d0f037222d6dec70eea107940417bd5782a5d5e0f365a2b3b2337a"
           },
           {
             "type": "Fs.Fox.Cad.SymbolTableRecordEx",
             "recordCount": 15,
-            "contractSha256": "6779552fd0c1ced16e79a54a672c543fcf53a23b983f53aa0a0b332a08aa7405"
+            "contractSha256": "067b599a48278d41115c43d8a0e6adb508642a932f260dfecd7aee9ab9fa1609"
           },
           {
             "type": "Fs.Fox.Cad.SymModes",
             "recordCount": 14,
-            "contractSha256": "f19c89ac92d603c5ce33867ac75b890c076f251ec521c254b6e095633ac7a49d"
+            "contractSha256": "ff6271ac1d9fe98152d61fc54f4493d12d755793044d7cc036424469ab3d342c"
           },
           {
             "type": "Fs.Fox.Cad.SystemVariableManager",
             "recordCount": 106,
-            "contractSha256": "2757522ba411466e9c1c72e3d9e6768ef5199b26c01752bf22f13917b23dd02c"
+            "contractSha256": "33924d0b8343bf94e67c2038a08ddd9d5c8206d62b94defdee3a55519da27ab5"
           },
           {
             "type": "Fs.Fox.Cad.TangentEx",
@@ -3461,47 +3507,47 @@
           {
             "type": "Fs.Fox.Cad.TransactionEx",
             "recordCount": 3,
-            "contractSha256": "5204538c25d543916b0900b00a8150eac189173a14e6e3f788f76faa2226b128"
+            "contractSha256": "a4f3a32fe74c85f62a97da19b8edf83c5b3ce3f8ee09a9fe4c1eaa8016b2ca26"
           },
           {
             "type": "Fs.Fox.Cad.TypedValueList",
             "recordCount": 9,
-            "contractSha256": "fe54245f804113a58ba4a45290f2667eb9c00ddff71cfecbfc39e820b49979d0"
+            "contractSha256": "aea1e44de67b74fbb9217f65bc7b0248fc7d658b84bd0f798688ffd6a7496908"
           },
           {
             "type": "Fs.Fox.Cad.VectorEx",
             "recordCount": 7,
-            "contractSha256": "d0d903e9eb42f760be832121477f7df053681020431a949cb6400cca86424d11"
+            "contractSha256": "029e6fd8a026740b663973a47ef4b50dd6f4c8c4d525ec26212e5bc9fa9389e1"
           },
           {
             "type": "Fs.Fox.Cad.WindowEx",
             "recordCount": 6,
-            "contractSha256": "6ce88ad3cce14bbd59eed1017795b5da8abc66a59f1f9c7f947e4e8ca2734fa8"
+            "contractSha256": "a4282a9065d1acf267cead15e0f18cef9ce37dfe322090395f3dd70f79053dc3"
           },
           {
             "type": "Fs.Fox.Cad.WorldDrawEvent",
             "recordCount": 5,
-            "contractSha256": "931003f3b4652e73e152110921661e9edbc2e712a09273b311facec6a75c3da1"
+            "contractSha256": "8a7647d5fa76be2f2f7cf2a9205d51138b68b3963115b3fe367c9f5c9e7eaf0b"
           },
           {
             "type": "Fs.Fox.Cad.XDataList",
             "recordCount": 12,
-            "contractSha256": "6d98b3f33fc2f7ff439db710bdfde0900b4e66b83ba00452cef88aa181fe4bfe"
+            "contractSha256": "586dec2404c956f1d6f10e22f92f44f8ed3c7f153eceab069f1076921dfb9e1e"
           },
           {
             "type": "Fs.Fox.Cad.XRecordDataList",
             "recordCount": 9,
-            "contractSha256": "df27c7b1c18633c7047cb4e906d8ca9968cbf5ec11b5bb1f75525f60d11b69e2"
+            "contractSha256": "16bf4b232a58d723160b00a02465de58aab95850e566e3b83520d2715978eb1d"
           },
           {
             "type": "Fs.Fox.Cad.XrefEx",
             "recordCount": 2,
-            "contractSha256": "efff94439c679a2e2b896457074312208ae7bf618bae3d72be5bc55620f624d6"
+            "contractSha256": "db7b87043c5c283b08ec16014bb8ceb5a0ce2c4a6b88b1fe950dc86a0cc9efba"
           },
           {
             "type": "Fs.Fox.Cad.XrefFactory",
             "recordCount": 13,
-            "contractSha256": "e22cbb248c6dba54ac8d06d13815d7131f65f3f1272ef84dd57f9942b44b2810"
+            "contractSha256": "c4bc9f233ccba0ffd3425b859c855fa57bde0d0e2f88ede0e080333cd30996ee"
           },
           {
             "type": "Fs.Fox.Cad.SingleKeyWordWorkType",
@@ -3516,32 +3562,32 @@
           {
             "type": "Fs.Fox.Cad.SingleKeywordHookEx",
             "recordCount": 2,
-            "contractSha256": "8871d0ae41b01d23d00aca74387f5fb87a8aff2299acb044819baf085a6aed93"
+            "contractSha256": "fdc0f8d635567602a2d7dac74660ee33de4cd758cfe61903e3d5e2485dbbb095"
           },
           {
             "type": "Fs.Fox.Cad.Sequence",
             "recordCount": 4,
-            "contractSha256": "f8c35318c2b61f9c31979a16f42b488431a34e3122cba1e1bfc5be4f63d1a8c0"
+            "contractSha256": "8e403446e4fbf7f49f7b7311305b08ab40205ab4809af22941d910e3bd47c9d1"
           },
           {
             "type": "Fs.Fox.Cad.PromptOptionsEx",
             "recordCount": 3,
-            "contractSha256": "0264f6ba51463987d875acc8b64eb1e05c5cd4271ac410df1863e330db14cfb6"
+            "contractSha256": "04fd358351a3f184ea43f75a3e4884d46c3c08027b5bc52b4a8059cb455d5843"
           },
           {
             "type": "Fs.Fox.Cad.QuadEntity",
             "recordCount": 2,
-            "contractSha256": "7ab7231b469eae2ec2b33b849e0bc9ec2b33d8303e234d9e76ea0f52b3207ed5"
+            "contractSha256": "29c340c2dc595d6cdf23e5d03c47389c38f457da5543bfdf34fdcf3c9f94f835"
           },
           {
             "type": "Fs.Fox.Cad.QuadTree`1",
             "recordCount": 11,
-            "contractSha256": "e732a699d5f5f2cfad2b678a4d0dc9e1f7a023f72f901c2551ed5c83525d72f9"
+            "contractSha256": "aec62cb7e886d79899f568a5060e43000a924d10e2cc389380ee6af0c2c4f91a"
           },
           {
             "type": "Fs.Fox.Cad.QuadTree`1+QTAction",
             "recordCount": 5,
-            "contractSha256": "4c9285d1aef95e9ff223213a078b0652ff022b407b54589efcb7371cb9ba8adf"
+            "contractSha256": "069784bbef87cf187fcf7a27c5f7c6e3981cda20bdaad78b33d12047796f42ac"
           },
           {
             "type": "Fs.Fox.Cad.QuadTreeEvn",
@@ -3556,7 +3602,7 @@
           {
             "type": "Fs.Fox.Cad.QuadTreeNode`1",
             "recordCount": 19,
-            "contractSha256": "83b405f21d946782d5010bd8b0786d73adfd7f50f670d544e0672f5219cf9cb8"
+            "contractSha256": "d918aa491e1e7be07137b69c132e759e58ddc04ea8b15b2ed4c46d00e6a2b439"
           },
           {
             "type": "Fs.Fox.Cad.QuadTreeSelectMode",
@@ -3566,52 +3612,52 @@
           {
             "type": "Fs.Fox.Cad.Rect",
             "recordCount": 76,
-            "contractSha256": "07635d9a0402b7193f4bbda5abef554982fc521d6f7ae05e43ad4f10b059731d"
+            "contractSha256": "4853dd8c077c35ed809908cc8b341e6068cb6ba6dcea1f7118739e448504d0f0"
           },
           {
             "type": "Fs.Fox.Cad.RedrawEx",
             "recordCount": 4,
-            "contractSha256": "aecb4f9a94dc672172963d1f06f1f38a06577c4cd8ff9048c3f0daae99433ff3"
+            "contractSha256": "f8c803038a25ae2cd0acc6068e10a1b1ce25a00ba59687a1e510bb3d5ad33e52"
           },
           {
             "type": "Fs.Fox.Cad.RegionEx",
             "recordCount": 1,
-            "contractSha256": "4a5b6d9916144d32fc79ced4a8a13e453d21cbc6f4860b3f4e4ee08852113f1d"
+            "contractSha256": "45c402e6cc2687e06ef95b034ea0371a566bc79afd7715f7336ab3f55e44739a"
           },
           {
             "type": "Fs.Fox.Cad.ResourceDirectory",
             "recordCount": 12,
-            "contractSha256": "3da1453a1ab2d741df8e2268ea54237a12a799f69cbe3ff9c8584d5582c8f977"
+            "contractSha256": "6e1e2195b763d8d4e1b819ead5bb43cb3c84d0070163246bbb8302a7163ebcc8"
           },
           {
             "type": "Fs.Fox.Cad.ResourceDirectory+DirectoryEntry",
             "recordCount": 6,
-            "contractSha256": "a4e509f60abd3a880207d3995cb695b24a9a755e7db79c59d449a79f444698ba"
+            "contractSha256": "63620a8e51edd99a93f85821f6a257f0b4427dfaca4dc1e5e32dfa86f77b89c2"
           },
           {
             "type": "Fs.Fox.Cad.ResourceDirectory+DirectoryEntry+DataEntry",
             "recordCount": 8,
-            "contractSha256": "95bbba557314298fdac5a28d988ced645f27691b3bd0fac9adfa53413fef3f8b"
+            "contractSha256": "7ff97971d08530db8d64b201c3565fd65be77417af1538f471ac76b171416d9d"
           },
           {
             "type": "Fs.Fox.Cad.SectionTable",
             "recordCount": 5,
-            "contractSha256": "99c202dd7272358bd3253002e480866ab3415daca8ac32c278c8f5ad4c7d5566"
+            "contractSha256": "878f21e27b22f3c326e060cc59c0fc1628194b8091e2611bca435c8222b50274"
           },
           {
             "type": "Fs.Fox.Cad.SectionTable+SectionData",
             "recordCount": 12,
-            "contractSha256": "8c81a5fa65b581ed8c33ae9b41a5dfb6ef68fdb758d621cd32cc8f1b527dd575"
+            "contractSha256": "1077a4d37f0ce01a7c7d87564c744dfe89c4b3fcbc15f736a034023a51ec74c2"
           },
           {
             "type": "Fs.Fox.Cad.SelectionSetEx",
             "recordCount": 6,
-            "contractSha256": "4b4207311fd731e380ce30f977b7bb12ffdb36defd471bbae8065b6723f408f3"
+            "contractSha256": "9de2c01616d29c7dd5142641969fb182bbabbaaf16f3f847357e5e69f2c2cae6"
           },
           {
             "type": "Fs.Fox.Cad.SingleKeyWordHook",
             "recordCount": 19,
-            "contractSha256": "0b1fd7d3836dfa770cbe27001c7abac98f078a70299ad6f40e47fcb9ea939efb"
+            "contractSha256": "452b65844c1d726c11af1c494e198e50f3f6b16ffb74fed506a2371c8fbc15f1"
           },
           {
             "type": "Fs.Fox.Cad.XrefModes",
@@ -3621,42 +3667,42 @@
           {
             "type": "Fs.Fox.Cad.HatchInfo",
             "recordCount": 12,
-            "contractSha256": "194ecd6f9e6540437b71054cbfad43a0dbae144666ad1e2c1b1f98238247ad6b"
+            "contractSha256": "b0a982009fd695d1958cbcab35870034d5bd76b6c6c39ee043ba3568788025da"
           },
           {
             "type": "Fs.Fox.Cad.HatchConverter",
             "recordCount": 9,
-            "contractSha256": "256eb91f4403b9395784e8d78a4dce6edc654db5116ee7936bae2936b1f71aca"
+            "contractSha256": "13e92caac1c61b4e3cda15fdd01a49b23f601021e0b5ed1156e764448c231d32"
           },
           {
             "type": "Fs.Fox.Basal.WindowsAPI+CallBack",
             "recordCount": 5,
-            "contractSha256": "b12c349a16fc30547aad06c3452a0b60e620b8112d0280a03d44f80e37a83c4c"
+            "contractSha256": "7920ce14f72e1ade80b3c7fd49cc30ec5affd012eb37f71f103e0e29719cc0a9"
           },
           {
             "type": "Fs.Fox.Basal.WindowsAPI+IntRect",
             "recordCount": 23,
-            "contractSha256": "87bf98831b55ae622508a40f678bbb1668b2f0d21d1b546d87737593228dc573"
+            "contractSha256": "25ecce8324f69c5829a579537388869e827da286c4933551dfeade00057dbab3"
           },
           {
             "type": "Fs.Fox.Basal.WindowsAPI+IntSize",
             "recordCount": 5,
-            "contractSha256": "1e2254c7d2f2a771ee81b556e5d3b9ffa362bf550589b2db616b236fd6cd18cf"
+            "contractSha256": "25d80f48b138164f3a7245161dfcc3e35c60b458efeaa865ca336d2b27da2518"
           },
           {
             "type": "Fs.Fox.Basal.WindowsAPI+KeyboardHookStruct",
             "recordCount": 8,
-            "contractSha256": "37f96fe959862f04d242675d13a3f8671298e671c037fedfaf91ff0ff4fb9561"
+            "contractSha256": "7ac7afcbc7edf8ea80899d7c3c685d9a345dc2b46f309ead378f6100d9ab1f77"
           },
           {
             "type": "Fs.Fox.Basal.WindowsAPI+Point3D",
             "recordCount": 13,
-            "contractSha256": "96f7579142919db2de2c138c02e2d2737873527eef71b23e2d6e82f9206dc5d6"
+            "contractSha256": "ab1dc4cfabe263905982ca9c3d8e12caa73969ddf167f182ca1f4f18add02a9d"
           },
           {
             "type": "Fs.Fox.Basal.WM",
             "recordCount": 122,
-            "contractSha256": "37f1aa67a673a9dc631ea4e4b6279d3ab3e3a2890e37d7818a79de33ad5f4da7"
+            "contractSha256": "972bea5d8180b5eadbcc378b7f73727bb2ca41deda6b3f88028f6faf1dcadf71"
           },
           {
             "type": "Fs.Fox.Basal.WS",
@@ -3666,32 +3712,32 @@
           {
             "type": "Fs.Fox.Cad.AcadPeEnum",
             "recordCount": 6,
-            "contractSha256": "c424cd5956c9bde351e65d021d7def99c976871c1cc23a39095e46cecd852239"
+            "contractSha256": "deb5c3182e8f064e8f86e2dfdcfc975944fa4a9a89f5eeff6352a219a54f12c6"
           },
           {
             "type": "Fs.Fox.Cad.AcadPeInfo",
             "recordCount": 12,
-            "contractSha256": "be9ac6a703b770deeb883835373ca785a356718d503e0bda93c6e1740dc66e55"
+            "contractSha256": "abcdfa47cd0d34fa3d698c5457b1822482bd356b1c69b5463e93ee0f95966c61"
           },
           {
             "type": "Fs.Fox.Cad.AcPreferences",
             "recordCount": 1,
-            "contractSha256": "ba8f5df925f9b265095efad5ef4a8fecbadf2d552d62111d558eb7eb71208d70"
+            "contractSha256": "201257e8b8d06dce87c73add60779dac80a3dbf0098e3ba81d6e43705cda04dd"
           },
           {
             "type": "Fs.Fox.Cad.AcPreferences+Display",
             "recordCount": 76,
-            "contractSha256": "7af7278099db48783783e56332eb7420315a81e4636b5d5f50668733a56873c1"
+            "contractSha256": "c41957a7df413fd3059e5365be2fc892f2ab22578708a7e7fc4806dac19ed529"
           },
           {
             "type": "Fs.Fox.Cad.ArcEx",
             "recordCount": 5,
-            "contractSha256": "f51b6b8d9f23c0091ed650246356018a859fa42f83cc5e067b4df52c94f183b9"
+            "contractSha256": "c7d33b7c57eaac4a8ea6025a1152fd654637d50b47f5dfd9eb5be6bae2bc0491"
           },
           {
             "type": "Fs.Fox.Cad.AssemInfo",
             "recordCount": 7,
-            "contractSha256": "fde4adcd071c4bafb3220c2f37f32a4e1c4d379b0991aa9415fd37ed3286931d"
+            "contractSha256": "a634f432c1bf28985528ee717a37a8b1fa52dfb79a6f39a2f25de88f0658d11e"
           },
           {
             "type": "Fs.Fox.Cad.AssemLoadType",
@@ -3701,52 +3747,52 @@
           {
             "type": "Fs.Fox.Cad.Assoc.AssocPersSubentityIdPEEx",
             "recordCount": 4,
-            "contractSha256": "7d3d18ebbf4db80e5b21684cd5e6b06b7fa7b8917ec2454ef71ae2966497ce13"
+            "contractSha256": "45967f3a0cf8a8baf967d84ef80cb5fc5ff31fcfdec8800b0302ec84b32b4343"
           },
           {
             "type": "Fs.Fox.Cad.AutoReflection",
             "recordCount": 5,
-            "contractSha256": "6a569233ae10e35e5a3493fbf993f648450734a71218b8c5269b7dbe224a5e78"
+            "contractSha256": "95b7f13614a49be75c5668fb5b92f07b99cfa4fc7f0e64a804397b9705a264c4"
           },
           {
             "type": "Fs.Fox.Cad.AutoReg",
             "recordCount": 7,
-            "contractSha256": "ef600f3826bff1fb6f37ae23af57c5326d88b2fba7ef77ca3105d08c19f9b133"
+            "contractSha256": "8879a6f8e3f5682dc973ceb90d67d3db17c840e9b5a33b58c0fdf5e03378550a"
           },
           {
             "type": "Fs.Fox.Basal.WindowsAPI",
             "recordCount": 22,
-            "contractSha256": "bfeb2c4eec3034e72f99196b6f5bb82e7105b32cbf000a709cb0cf680dae38a7"
+            "contractSha256": "93d0d5b985dd78c4c87b586cc9d8513e83dd5fc407895151ac9541ab6b822953"
           },
           {
             "type": "Fs.Fox.Cad.AutoRegAssem",
             "recordCount": 10,
-            "contractSha256": "084ee7a79ecf209b4ed6fc3ae780d108d83ada781f5d4d072f8a08f9919e638a"
+            "contractSha256": "45103d6639711f871742ae535859b063474850f478312959b47fd6042c216bb7"
           },
           {
             "type": "Fs.Fox.Basal.VK",
             "recordCount": 153,
-            "contractSha256": "e8b24860bd3233a38db4409a1f926393b3f227fc07bec099a20f484be690183d"
+            "contractSha256": "634fe9e0bfc6428039c622a75b34d4f577cdd1a048c8f46dc9033f3694e80f01"
           },
           {
             "type": "Fs.Fox.Basal.SystemEx",
             "recordCount": 3,
-            "contractSha256": "7beb749c1555a4f66d2ab99f529056b72761c322bd7973c907f5ef118cc509b6"
+            "contractSha256": "b6b10227eca006995be7de654536fc44840c40ebfe7c3e3559ad657fcfd2426d"
           },
           {
             "type": "Fs.Fox.Basal.ArrayEx",
             "recordCount": 3,
-            "contractSha256": "8471dff0134556ee98cd6bd16611d701336f214a897a97eae16c5a39244bdab0"
+            "contractSha256": "2abfc49320131cef3a3a9b91f4d0225d19dd0bfea9470399ba47a56eb164cbec"
           },
           {
             "type": "Fs.Fox.Basal.DebugEx",
             "recordCount": 2,
-            "contractSha256": "d4f7fb12868616d2d37cbf41a026ac2775c69efa115abcc449f0696715ef9356"
+            "contractSha256": "80ca10a968ec57dce19749126044f2c903d691227ee112d4506a61158d7df43d"
           },
           {
             "type": "Fs.Fox.Basal.EnumEx",
             "recordCount": 6,
-            "contractSha256": "4b6f5036869324d2def6825c72539b9b4f9f60cc2cbfef847e07eff0c308d8c8"
+            "contractSha256": "74511dadf7dddeaa650ea6d96d6731b1141fb0aeeffb0eca50a38a3e1b452969"
           },
           {
             "type": "Fs.Fox.Basal.GetWindowCmd",
@@ -3761,22 +3807,22 @@
           {
             "type": "Fs.Fox.Basal.HookType",
             "recordCount": 18,
-            "contractSha256": "455a1c3798ad38d72bf08cbab149e051c2c955a2af073d4fc75ebafa1c263c60"
+            "contractSha256": "33872669a5a4f2e461af9dfaf2b19581b005f34381d80e034e574ff83bd94188"
           },
           {
             "type": "Fs.Fox.Basal.LinqEx",
             "recordCount": 12,
-            "contractSha256": "19ae40d3512f7918a91f404daa2b820e95e23c4488a569d05e78a5538ec8d2f7"
+            "contractSha256": "ee62eb3db1f6829686265b96ddb296597ed3333fb94a5ced9a7c0de2244d6822"
           },
           {
             "type": "Fs.Fox.Basal.LoopList`1",
             "recordCount": 37,
-            "contractSha256": "a3c75a754222c940886218b6d06ce6db0eceb6ab28f4ee889a34cb1054f5b138"
+            "contractSha256": "adf87c128143fa8ddfada0e5212c02d038db2a91f30b6e23814b2e509c26e890"
           },
           {
             "type": "Fs.Fox.Basal.LoopListNode`1",
             "recordCount": 10,
-            "contractSha256": "d5f6623d1a37f3318d6dc61cab02820c24c1cf0e630c6c7c3437c32026323f56"
+            "contractSha256": "e7fbd001622c15ec054c846bdd47a2842a00f6d461db33978459b603fb794558"
           },
           {
             "type": "Fs.Fox.Basal.LoopState",
@@ -3791,17 +3837,17 @@
           {
             "type": "Fs.Fox.Basal.NCmdShow",
             "recordCount": 15,
-            "contractSha256": "8b878b84cf31f21aa5592646ee84455b7924fcaaab84477631ea1eec86630856"
+            "contractSha256": "b5e438438d44b6ee6440a0b1f7d212a5ad24cc6e5c21def1994405319ea6de85"
           },
           {
             "type": "Fs.Fox.Basal.PInvokeUser32",
             "recordCount": 24,
-            "contractSha256": "ad44eb896f5b9fb4ecfa89bfb7d1f84bdf18ee1e448f698160d7e51ce53cf27c"
+            "contractSha256": "66dbbdef9e7579c86e7bf03500d70c3a2513ace18ce53c5ae93a0d847edabeff"
           },
           {
             "type": "Fs.Fox.Basal.PInvokeUser32+GuiThreadInfo",
             "recordCount": 11,
-            "contractSha256": "a3ee4e29c1f3a9d5d1ce9a75454a25f2810c2e49b406e35ca56fd5ab6759c9da"
+            "contractSha256": "b18a5311666b7a26415a2018a45f37326d8d6604c8fc6dff29b7026e6e7046d7"
           },
           {
             "type": "Fs.Fox.Basal.ProState",
@@ -3811,177 +3857,177 @@
           {
             "type": "Fs.Fox.Basal.RandomEx",
             "recordCount": 16,
-            "contractSha256": "15ea3ff399afa5957e8c00928eaae0d00fdd6319fc13353e3b93f6699517a5da"
+            "contractSha256": "53024d540470ad8160e2da74f7c53bdb6e51bd5058281bfb3cf027aaef4423d7"
           },
           {
             "type": "Fs.Fox.Basal.SC",
             "recordCount": 6,
-            "contractSha256": "a9cbfbd5ca1ae5288fe5f5fde52a43ca47d3753d795446bc88df20d8898b8b00"
+            "contractSha256": "40842218cfe21e652eb378ca0077e17e87367a59f147dcaf9b2ce3f4982beef8"
           },
           {
             "type": "Fs.Fox.Basal.TH32CS",
             "recordCount": 9,
-            "contractSha256": "84825850516f767fdcc21584e75b55592cb228a5b9c3e5b97fec2f78250026ab"
+            "contractSha256": "d7345659e2df554235029c81d6720c446218bdbfc1102abf61ae31a889639b85"
           },
           {
             "type": "Fs.Fox.Cad.HatchEx",
             "recordCount": 5,
-            "contractSha256": "b9d9591675ed297baef19286cf14c0b437bdeb5cf9b9c41c0bf08b98e9c1fd8e"
+            "contractSha256": "dcb3077f1490d8d8f4b221118cead808a0e63409ed5f6f2180aa9a4d7e36d80e"
           },
           {
             "type": "Fs.Fox.Cad.AutoRegConfig",
             "recordCount": 8,
-            "contractSha256": "c49cd3d9cb89cb17d36428c73a86542d5131c39eb5e72e699a170d7e347b7950"
+            "contractSha256": "5a231529d3b01d5416963a1a37d0042b0631d457ab73e2115dba97079e938389"
           },
           {
             "type": "Fs.Fox.Cad.BlockReferenceEx",
             "recordCount": 16,
-            "contractSha256": "284f887e7ab7a663c9ca905219685e65874d4aebe1370d8d2a655e9409754d49"
+            "contractSha256": "207d0cf0a0b4c217b517c45f6908cbd3a4481475033ac9e357c8cf8b492d4dbb"
           },
           {
             "type": "Fs.Fox.Cad.DocumentLockManager",
             "recordCount": 4,
-            "contractSha256": "68bc948c7184ec067cd121b7e5aa4d9feba3f67027c6be48a388c74d9108d147"
+            "contractSha256": "f2fbdb0df6084b1516c4f08782161265c1f0bc36b3866f8ad2d688f81f9ae965"
           },
           {
             "type": "Fs.Fox.Cad.DocumentLockManagerExtension",
             "recordCount": 2,
-            "contractSha256": "d4db9f9a1414d9f4da44175b2ea566491a6532b331328babf556a08961a6cb45"
+            "contractSha256": "dfe0a0f7c2a32adabeadf5c9433aa9067000b7a624a87392ffbcdf74258bfb95"
           },
           {
             "type": "Fs.Fox.Cad.DosHeader",
             "recordCount": 23,
-            "contractSha256": "9764d771e90a5607722abff92e7063143b41a53871af88bdffdb03ee918c63b8"
+            "contractSha256": "a0ee0d1bd52fb92870d4b447fb05e9e58ff8935da9fcadd0a1e3bee72bc002ff"
           },
           {
             "type": "Fs.Fox.Cad.DosStub",
             "recordCount": 5,
-            "contractSha256": "246da66e1068a09b665fc43951bf3356a1ea382c5cfc8e33a4970340433c85f4"
+            "contractSha256": "d93d3e9c908020b1e28800d17ef152f3459e76c650580abb0c14b9a260e655ea"
           },
           {
             "type": "Fs.Fox.Cad.DwgMark",
             "recordCount": 4,
-            "contractSha256": "59b1392ab13308359cd08bdd10bfd3a2223ba91f4b62c7a5a9e3f48f48dd19ed"
+            "contractSha256": "7f580bb6e538f58aa85373817a94ab965093f2e4f0746d51e5e729a0542ce4ba"
           },
           {
             "type": "Fs.Fox.Cad.EditorEx",
             "recordCount": 45,
-            "contractSha256": "ab0482eafbccac28fab04c399fa5ad8c904578f65542cfc2bdd2f8da27c20d9a"
+            "contractSha256": "1d84fdb9b558a45f3bdf419b1c06907eb46db9aff5aaed3ccf750dcf39b8d52e"
           },
           {
             "type": "Fs.Fox.Cad.EditorEx+RunLispFlag",
             "recordCount": 5,
-            "contractSha256": "65039596ad8321c1504eddb7e08571bf0580804cc526f49e2da72a26493d48bb"
+            "contractSha256": "7b74780c0a468a1fd8b0b72ee1c26c953baab24a4f4ec38f1ea02fdc0dc2e699"
           },
           {
             "type": "Fs.Fox.Cad.EntityEx",
             "recordCount": 12,
-            "contractSha256": "3db7e2c4d933104656ab906a68e5fd16599568da527bf2803a4c17b15adf6dcf"
+            "contractSha256": "70a6f6a4426786bbaa1407e3c2f6459a54339de6cbfc0accfd5962b53cbacc14"
           },
           {
             "type": "Fs.Fox.Cad.Env",
             "recordCount": 50,
-            "contractSha256": "af4305774a7eae6360fce62a058b17424318cb49471ad73fe5855d66931c8e12"
+            "contractSha256": "8a2138b4fb5d3b81d99758f0247de87571dfd6a579cf945ad5357fffb0ae58d9"
           },
           {
             "type": "Fs.Fox.Cad.Env+DimblkType",
             "recordCount": 22,
-            "contractSha256": "86c754879f72ceb197fc653475746e5ba1ba2808451531401cf57f29cb8592e7"
+            "contractSha256": "9c8929a7d9c3c1a195b5d6bba12adbd4f5cccbf730b8b1a68027b17e8148725e"
           },
           {
             "type": "Fs.Fox.Cad.Env+OSModeType",
             "recordCount": 17,
-            "contractSha256": "a56d9a8d4e3e1ba91f8a10cd75fd911c70aa2fe86dbcbc9389b93dabe2ff2298"
+            "contractSha256": "02657add5d1cf7f07e7c69d3c5caf2f0325a37acea8c961ac5c7a3a8c133ba0b"
           },
           {
             "type": "Fs.Fox.Cad.ErrorInfoEx",
             "recordCount": 1,
-            "contractSha256": "cf21cd0e3961e88e302031e3a3ae9978ca190f062320525ac7bcdc5c214ea8e5"
+            "contractSha256": "d1ca1dafec0b960cd33b85770f3251d0915872e73055b5cc4fd4c74f09aa049c"
           },
           {
             "type": "Fs.Fox.Cad.ExportDirectory",
             "recordCount": 20,
-            "contractSha256": "11e97d30e08865d4dc1907d9f8e4a93d52f2c6b69c752a5cd3b456d935460ab4"
+            "contractSha256": "deb4b4bd834bbe88fc4cf4a0b3499d1445cd50cf60dea84c1ec0c2c106b5502f"
           },
           {
             "type": "Fs.Fox.Cad.FontTTF",
             "recordCount": 7,
-            "contractSha256": "d38f0ee3d5d167ed03a964c280f017865d1bb3db6a753b140ce82d10a80d8fd0"
+            "contractSha256": "97f4368ce00f898ad13b733f96ae529ba7bb73269163eeef8c2d47b96061d77f"
           },
           {
             "type": "Fs.Fox.Cad.GeometryEx",
             "recordCount": 26,
-            "contractSha256": "4a5b60653dac3fae7fea2342eae38a1de5a935cfb8f8ea0e496f462205e23d08"
+            "contractSha256": "03979d45fe96ad0425046c1ca80fb0dde6d6f7942d533bd915afcf83eea7f7db"
           },
           {
             "type": "Fs.Fox.Cad.GetMethodErrorNum",
             "recordCount": 5,
-            "contractSha256": "7d7891eaa64c1b97e665cb793d1ecb64da4438fc35d5a35434297352a6d0a61b"
+            "contractSha256": "f2850ca5fe7860f697bd490a883a4cc3afe23dd96da415cb12fde8a86232e354"
           },
           {
             "type": "Fs.Fox.Cad.GetPeMethodException",
             "recordCount": 7,
-            "contractSha256": "71b67a0279cc9dd14eed1f65c77e8db498ea337bdb4ed460081fed46e3c1e437"
+            "contractSha256": "546684e1595559a396ba596cf0533b9a89be2cfe3b925eda0aed38a9c4cbaacf"
           },
           {
             "type": "Fs.Fox.Cad.DBTransEx",
             "recordCount": 2,
-            "contractSha256": "7ccf93d1b244d6c8df02d52e34122700ba83ee4edd789ed11593b616bd3320a3"
+            "contractSha256": "7a79a338f95cb75eb8b112be3ce9b12c09eba0ac2f2db083589e6d7db54a0243"
           },
           {
             "type": "Fs.Fox.Cad.BaseEx",
             "recordCount": 2,
-            "contractSha256": "4b1ec34e05da4c47d0cde72eff82a46b776b59a4345f8ce2a0ec18a4bda85629"
+            "contractSha256": "7f1722b68c8039d1ac9a30c0eda0301cfe4102f20a7562c70086f1d50100e6fa"
           },
           {
             "type": "Fs.Fox.Cad.DBTrans",
             "recordCount": 71,
-            "contractSha256": "b76e88fcde7c5b8b1279e97d3df81c7c32f5684f4404a5e7d18ef2cb45cc617b"
+            "contractSha256": "22aa8715700d8f51c16108564ebe14e9e8722d1e2a9b79c5e2b7ff5b8033a73f"
           },
           {
             "type": "Fs.Fox.Cad.DBObjectEx+UpgradeOpenManager",
             "recordCount": 2,
-            "contractSha256": "250671d4c311e8ec0d0273b490b6d68533d936ef5141939ef6311f384c016f61"
+            "contractSha256": "68bfebd0d80ef729c1182fbfc4b7d4ca303cc52b9767c580afcb127637b54a3f"
           },
           {
             "type": "Fs.Fox.Cad.BlockVisibilityInfo",
             "recordCount": 11,
-            "contractSha256": "04dffa2f86fc7b20a8a6b3eeb63fe7ee4f76a53914a8fd40bbd5b78b76147287"
+            "contractSha256": "3ea6b1ff892103a63d1d071f6fcaa993cdd948d92f527e8c261bfdba4e5f3541"
           },
           {
             "type": "Fs.Fox.Cad.BoundingBox9",
             "recordCount": 45,
-            "contractSha256": "90eeaecbbd7d31f2a428e85f99c3a61a39ee32571104d64a8cf8910ffd338e9f"
+            "contractSha256": "9fe86127fcb6d7b255137ff80e47207738e9c6ff4b035dce4103ec65d5ecc1d6"
           },
           {
             "type": "Fs.Fox.Cad.BrightEditor",
             "recordCount": 7,
-            "contractSha256": "bef43706c74e2b2368d5b1cf678bd188b35ec69e59ff0f478d4c3a13666acc86"
+            "contractSha256": "1092318c7d92670edf2e17e5a6c390dd618e112d32cea2c0152ab4788ef68b84"
           },
           {
             "type": "Fs.Fox.Cad.BrightEntity",
             "recordCount": 10,
-            "contractSha256": "85b6f231c678be67c9bea8be7570b431c39f9f71fd0923f964ae989a35d118b4"
+            "contractSha256": "46f3329165bf305c69cacddb741ca96895f3e1204b2f1a5179baeae6ef200a63"
           },
           {
             "type": "Fs.Fox.Cad.BulgeVertexWidth",
             "recordCount": 14,
-            "contractSha256": "d1a7fea005ac36e1fda16b60e92cf37094b0176bd23110e3ad8e7d476e7e8f6d"
+            "contractSha256": "8be210918eb871e9af05ec763dadd10603b23969ce898907b4e9abdfedbca3df"
           },
           {
             "type": "Fs.Fox.Cad.CircleEx",
             "recordCount": 4,
-            "contractSha256": "227f136efa6c0afbf38ca9a7c968c3f5e3d40cb847730c5c9a5c169737820474"
+            "contractSha256": "9397611ba8c297ef4dab616da17583d376f20e39d17682f255203072fdf177c1"
           },
           {
             "type": "Fs.Fox.Cad.CollectionEx",
             "recordCount": 17,
-            "contractSha256": "cbe16f7f461365df8006ea7a2370947f9a13167a7541901e1aee26cdb58cced6"
+            "contractSha256": "edf4bd54ade8354652cde94a9f99b69753f5f7a57889e6baff37eca03048b0cd"
           },
           {
             "type": "Fs.Fox.Cad.CollectionEx+KeywordName",
             "recordCount": 5,
-            "contractSha256": "d3193494121c45d5ee145f8c7580c4e7e5c6348870d2705edab6951e027b0d36"
+            "contractSha256": "7fc75f39ce8ea8dc4effe63eabadf0e6f7d372651f703dddb34554b5545367e1"
           },
           {
             "type": "Fs.Fox.Cad.CoordinateSystemCode",
@@ -3991,52 +4037,52 @@
           {
             "type": "Fs.Fox.Cad.Curve2dEx",
             "recordCount": 16,
-            "contractSha256": "6d5dd7447a98a862c56a59b4aeee7a77559a7f027a021c937b616b741310809c"
+            "contractSha256": "9b7ba8f0f925255cc51c471d3d8d39e9781f3f6e8b08d40a3ebbf6ca66807aaa"
           },
           {
             "type": "Fs.Fox.Cad.Curve3dEx",
             "recordCount": 21,
-            "contractSha256": "906bf90404c841916349a80f1a3b23aca202ce474c8ff36f14aa7548c8b82d0e"
+            "contractSha256": "7dd77bf2a70ce4179574f08e6953ccb4413e798a5d3c3d1488f404f6107e8282"
           },
           {
             "type": "Fs.Fox.Cad.CurveEx",
             "recordCount": 31,
-            "contractSha256": "fc214e506326b838f0727ecff319dbf724d3dbdba2cb5aa6ff15787091774f16"
+            "contractSha256": "12b9bd35b40eedede6723e93360e79ac5c832899d077b37a11b4d180915383e2"
           },
           {
             "type": "Fs.Fox.Cad.DatabaseEx",
             "recordCount": 4,
-            "contractSha256": "062ccbb9a54b27f6163f2bebfe9c116939c9903676cc264049e9219179df385b"
+            "contractSha256": "0789e6da045be1096b1c9d6fa3aaa399f89e7e496b1e6cbdb00142de6fb37607"
           },
           {
             "type": "Fs.Fox.Cad.DBDictionaryEx",
             "recordCount": 17,
-            "contractSha256": "3452bb495ae86e1a462509878b7deb912a204a7786796092287cfbc131a41337"
+            "contractSha256": "7b597ef6d96dfda8cffc793f18109e5403d68e07e8c013a72603e4343a76ea09"
           },
           {
             "type": "Fs.Fox.Cad.DBmod",
             "recordCount": 8,
-            "contractSha256": "2268a94e379ef4c3af36fcd7f5787e7777133273149b6a5c0b2610620de8dd95"
+            "contractSha256": "44518cacddec12d83798e8f1c9d6d6ba672eef121855f6fe1bc3cdbbca005fa5"
           },
           {
             "type": "Fs.Fox.Cad.DBmodEx",
             "recordCount": 7,
-            "contractSha256": "2c89a8067d81289b455a40f1ff706b5cb705c748e6191ddb6299e57f18207cfd"
+            "contractSha256": "d17b88dab3b046e97719899c20e6462f582eebc4c2a6f161d49ae4d90cc8a64e"
           },
           {
             "type": "Fs.Fox.Cad.DBObjectEx",
             "recordCount": 8,
-            "contractSha256": "a2267e0bfae005e933d7a92fdf5e4e3f3c7f8d57ec2919b26278d48e3e4931fb"
+            "contractSha256": "bfd0b5b3e75a219e00e8abc990ffb19f5698500909f5d22b2e19c8d2f49d708e"
           },
           {
             "type": "Fs.Fox.Cad.DBTextEx",
             "recordCount": 3,
-            "contractSha256": "989e377f16e252ff91807e99d3263a08e3c4bd8d311aa6df5333623f3e3a7371"
+            "contractSha256": "a7511f8e4ee0ca324f1adc932eb4cb3808fffd1248690f98e42d8bb87d6b69a9"
           },
           {
             "type": "Fs.Fox.Cad.XrefPath",
             "recordCount": 14,
-            "contractSha256": "5bb97429fd4fd9b651cd3a16179affddafb31e166a615c5cb9829d17b5b2dc72"
+            "contractSha256": "fcf0ac9bd5745732cbb52075579ef2afa3f6e111870a9c898fb5ead614311408"
           }
         ]
       },
@@ -4065,32 +4111,44 @@
           {
             "path": "GlobalUsings.cs",
             "length": 3818,
-            "contentSha256": "e97634db95f0f376f5f23c064b68a13837c4c658c5abffb04cd540b57752401f"
+            "hashKind": "raw-sha256",
+            "contentSha256": "e97634db95f0f376f5f23c064b68a13837c4c658c5abffb04cd540b57752401f",
+            "binarySource": null
           },
           {
             "path": "LICENSE",
             "length": 1091,
-            "contentSha256": "a2943fc061379a06f57c4a7ea027980ffd3b1f29488cb00519402fd27113d3fd"
+            "hashKind": "raw-sha256",
+            "contentSha256": "a2943fc061379a06f57c4a7ea027980ffd3b1f29488cb00519402fd27113d3fd",
+            "binarySource": null
           },
           {
             "path": "readme.md",
             "length": 7873,
-            "contentSha256": "00ccca236e22a69663270c28e1fd111575561d3708e5ff863b469273cbdc9b9a"
+            "hashKind": "raw-sha256",
+            "contentSha256": "00ccca236e22a69663270c28e1fd111575561d3708e5ff863b469273cbdc9b9a",
+            "binarySource": null
           },
           {
             "path": "lib/net48/Fs.Fox.ZwCad.dll",
-            "length": 361472,
-            "contentSha256": null
+            "length": null,
+            "hashKind": "matches-build-output-sha256",
+            "contentSha256": null,
+            "binarySource": "Build/ZW_2025_Release/Fs.Fox.ZwCad.dll"
           },
           {
             "path": "lib/net48/Fs.Fox.ZwCad.xml",
             "length": 480179,
-            "contentSha256": "3a3bf6081c93f25df392551744f557df4c24f724bdc29eb08db64a56e7bf526e"
+            "hashKind": "canonical-xml-v1",
+            "contentSha256": "519353b82cd52cebc019ae553522b9636c2c79ea381bf7ebdd0ebc5f53191bc8",
+            "binarySource": null
           },
           {
             "path": "lib/net48/TestZcad2025.dll",
-            "length": 124416,
-            "contentSha256": null
+            "length": null,
+            "hashKind": "matches-build-output-sha256",
+            "contentSha256": null,
+            "binarySource": "Build/ZW_2025_Release/TestZcad2025.dll"
           }
         ]
       }
