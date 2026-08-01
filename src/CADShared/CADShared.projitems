@@ -44,35 +44,35 @@
       <FsFoxOrder>0080</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-16</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Basal\General\ArrayEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Foundation\ArrayEx.cs">
       <FsFoxModule>Foundation</FsFoxModule>
       <FsFoxOrder>0090</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Basal\General\DebugHelper.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Foundation\DebugHelper.cs">
       <FsFoxModule>Foundation</FsFoxModule>
       <FsFoxOrder>0100</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Basal\General\EnumEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Foundation\EnumEx.cs">
       <FsFoxModule>Foundation</FsFoxModule>
       <FsFoxOrder>0110</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Basal\General\LinqEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Foundation\LinqEx.cs">
       <FsFoxModule>Foundation</FsFoxModule>
       <FsFoxOrder>0120</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Basal\General\LoopList.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Foundation\LoopList.cs">
       <FsFoxModule>Foundation</FsFoxModule>
       <FsFoxOrder>0130</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Basal\General\LoopState.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Foundation\LoopState.cs">
       <FsFoxModule>Foundation</FsFoxModule>
       <FsFoxOrder>0140</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Basal\Nullable\ArgumentNullEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Foundation\Compatibility\ArgumentNullEx.cs">
       <FsFoxModule>Foundation</FsFoxModule>
       <FsFoxOrder>0150</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Basal\Nullable\CallerArgumentExpressionAttribute.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Foundation\Compatibility\CallerArgumentExpressionAttribute.cs">
       <FsFoxModule>Foundation</FsFoxModule>
       <FsFoxOrder>0160</FsFoxOrder>
     </Compile>
@@ -236,7 +236,7 @@
       <FsFoxModule>Cad.Editor</FsFoxModule>
       <FsFoxOrder>0530</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\RandomEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Foundation\RandomEx.cs">
       <FsFoxModule>Foundation</FsFoxModule>
       <FsFoxOrder>0540</FsFoxOrder>
     </Compile>
