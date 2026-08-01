@@ -29,6 +29,10 @@
       <FsFoxModule>Cad.Geometry</FsFoxModule>
       <FsFoxOrder>0050</FsFoxOrder>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\SpatialIndex\QuadTree\QuadTreeFindMode.cs">
+      <FsFoxModule>Cad.Geometry</FsFoxModule>
+      <FsFoxOrder>0051</FsFoxOrder>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\SpatialIndex\QuadTree\Rect.cs">
       <FsFoxModule>Cad.Geometry</FsFoxModule>
       <FsFoxOrder>0060</FsFoxOrder>
@@ -238,6 +242,14 @@
       <FsFoxModule>Cad.Geometry</FsFoxModule>
       <FsFoxOrder>0460</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-04</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\VectorEx.cs">
+      <FsFoxModule>Cad.Geometry</FsFoxModule>
+      <FsFoxOrder>0461</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\PlaneEx.cs">
+      <FsFoxModule>Cad.Geometry</FsFoxModule>
+      <FsFoxOrder>0462</FsFoxOrder>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\PointEx.cs">
       <FsFoxModule>Cad.Geometry</FsFoxModule>
