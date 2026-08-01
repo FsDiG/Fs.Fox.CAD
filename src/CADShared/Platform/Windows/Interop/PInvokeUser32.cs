@@ -305,12 +305,3 @@ public static class PInvokeUser32
 
     #endregion
 }
-
-internal class WmMessage
-{
-    #region Message
-
-    public const uint Close = 0x0010;
-
-    #endregion
-}

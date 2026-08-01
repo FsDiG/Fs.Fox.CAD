@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "normalizedSourceHash": "sha256-utf8-lf",
-  "expectedCompileCount": 140,
+  "expectedCompileCount": 141,
   "moduleCounts": {
     "Foundation": 11,
-    "Platform.Windows": 14,
+    "Platform.Windows": 15,
     "Cad.Interop": 3,
     "Cad.Geometry": 16,
     "Cad.Database": 43,
@@ -295,7 +295,17 @@
         "BD-15"
       ],
       "boundaryFindings": [],
-      "sourceSha256": "b2cfc5672802248c4460edb9551d2c157088a224c52dee5514002c3144417cf1"
+      "sourceSha256": "97b1b38576c091ab28337124894bcb40ece0a73eb03f9edb111ee803e997f3d3"
+    },
+    {
+      "order": "0191",
+      "fileName": "WmMessage.cs",
+      "module": "Platform.Windows",
+      "boundaryDebt": [
+        "BD-15"
+      ],
+      "boundaryFindings": [],
+      "sourceSha256": "4656233a56f2aa6e4e7f7b1d5206d3b1672fc7579a0dbfe2bf45ac767d178fee"
     },
     {
       "order": "0200",
