@@ -9,27 +9,27 @@
     <Import_RootNamespace>CADShared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Algorithms\QuadTree\QuadEntity.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\SpatialIndex\QuadTree\QuadEntity.cs">
       <FsFoxModule>Cad.Geometry</FsFoxModule>
       <FsFoxOrder>0010</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Algorithms\QuadTree\QuadTree.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\SpatialIndex\QuadTree\QuadTree.cs">
       <FsFoxModule>Cad.Geometry</FsFoxModule>
       <FsFoxOrder>0020</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Algorithms\QuadTree\QuadTreeEvn.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\SpatialIndex\QuadTree\QuadTreeEvn.cs">
       <FsFoxModule>Cad.Geometry</FsFoxModule>
       <FsFoxOrder>0030</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Algorithms\QuadTree\QuadTreeNode.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\SpatialIndex\QuadTree\QuadTreeNode.cs">
       <FsFoxModule>Cad.Geometry</FsFoxModule>
       <FsFoxOrder>0040</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Algorithms\QuadTree\QuadTreeSelectMode.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\SpatialIndex\QuadTree\QuadTreeSelectMode.cs">
       <FsFoxModule>Cad.Geometry</FsFoxModule>
       <FsFoxOrder>0050</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Algorithms\QuadTree\Rect.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\SpatialIndex\QuadTree\Rect.cs">
       <FsFoxModule>Cad.Geometry</FsFoxModule>
       <FsFoxOrder>0060</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-24</FsFoxBoundaryDebt>
@@ -195,20 +195,20 @@
       <FsFoxOrder>0430</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-23</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Geometry\Curve2dEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\Curve2dEx.cs">
       <FsFoxModule>Cad.Geometry</FsFoxModule>
       <FsFoxOrder>0440</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Geometry\Curve3dEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\Curve3dEx.cs">
       <FsFoxModule>Cad.Geometry</FsFoxModule>
       <FsFoxOrder>0450</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Geometry\GeometryEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\GeometryEx.cs">
       <FsFoxModule>Cad.Geometry</FsFoxModule>
       <FsFoxOrder>0460</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-04</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Geometry\PointEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\PointEx.cs">
       <FsFoxModule>Cad.Geometry</FsFoxModule>
       <FsFoxOrder>0470</FsFoxOrder>
     </Compile>
