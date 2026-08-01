@@ -15,6 +15,13 @@ elseif (-not [IO.Path]::IsPathRooted($BaselinePath)) {
     $BaselinePath = Join-Path $repoRoot $BaselinePath
 }
 $BaselinePath = [IO.Path]::GetFullPath($BaselinePath)
+$signatureHelperPath = Join-Path $repoRoot 'tools\verification\CADSharedCompatibilitySignature.cs'
+if (-not (Test-Path -LiteralPath $signatureHelperPath -PathType Leaf)) {
+    throw "Compatibility signature helper does not exist: $signatureHelperPath"
+}
+if ($null -eq ('FsFoxCad.Build.StableMetadataSignature' -as [type])) {
+    Add-Type -Path $signatureHelperPath
+}
 
 $targets = @(
     [pscustomobject]@{
@@ -352,8 +359,9 @@ function Get-TypeHandleName {
             return Get-TypeReferenceName $Reader ([Reflection.Metadata.TypeReferenceHandle]$Handle) $Cache
         }
         ([Reflection.Metadata.HandleKind]::TypeSpecification) {
-            $specification = $Reader.GetTypeSpecification([Reflection.Metadata.TypeSpecificationHandle]$Handle)
-            return 'typespec:' + (Convert-BytesToHex $Reader.GetBlobBytes($specification.Signature))
+            return [FsFoxCad.Build.StableMetadataSignature]::DecodeTypeSpecification(
+                $Reader,
+                [Reflection.Metadata.TypeSpecificationHandle]$Handle)
         }
         default {
             return 'handle:{0}:{1:x8}' -f $Handle.Kind, (Get-MetadataToken $Handle)
@@ -374,7 +382,9 @@ function Get-CustomAttributeConstructorIdentity {
             return [ordered]@{
                 type = Get-TypeDefinitionName $Reader $method.GetDeclaringType() $TypeNameCache
                 name = $Reader.GetString($method.Name)
-                signature = Convert-BytesToHex $Reader.GetBlobBytes($method.Signature)
+                signature = [FsFoxCad.Build.StableMetadataSignature]::DecodeMethod(
+                    $Reader,
+                    [Reflection.Metadata.MethodDefinitionHandle]$Handle)
             }
         }
         ([Reflection.Metadata.HandleKind]::MemberReference) {
@@ -382,7 +392,9 @@ function Get-CustomAttributeConstructorIdentity {
             return [ordered]@{
                 type = Get-TypeHandleName $Reader $member.Parent $TypeNameCache
                 name = $Reader.GetString($member.Name)
-                signature = Convert-BytesToHex $Reader.GetBlobBytes($member.Signature)
+                signature = [FsFoxCad.Build.StableMetadataSignature]::DecodeMemberReferenceMethod(
+                    $Reader,
+                    [Reflection.Metadata.MemberReferenceHandle]$Handle)
             }
         }
         default {
@@ -537,7 +549,7 @@ function Get-PublicApi {
                 kind = 'method'
                 declaringType = $typeName
                 name = $Reader.GetString($method.Name)
-                signature = Convert-BytesToHex $Reader.GetBlobBytes($method.Signature)
+                signature = [FsFoxCad.Build.StableMetadataSignature]::DecodeMethod($Reader, $methodHandle)
                 attributes = [int]$method.Attributes
                 implementationAttributes = [int]$method.ImplAttributes
                 parameters = @($parameters | Sort-Object -Stable -Property { $_.sequence })
@@ -560,7 +572,7 @@ function Get-PublicApi {
                 kind = 'field'
                 declaringType = $typeName
                 name = $Reader.GetString($field.Name)
-                signature = Convert-BytesToHex $Reader.GetBlobBytes($field.Signature)
+                signature = [FsFoxCad.Build.StableMetadataSignature]::DecodeField($Reader, $fieldHandle)
                 attributes = [int]$field.Attributes
                 default = Get-DefaultConstant $Reader $field.GetDefaultValue()
                 customAttributes = Get-CustomAttributes $Reader $field.GetCustomAttributes() $typeNameCache
@@ -578,7 +590,7 @@ function Get-PublicApi {
                 kind = 'property'
                 declaringType = $typeName
                 name = $Reader.GetString($property.Name)
-                signature = Convert-BytesToHex $Reader.GetBlobBytes($property.Signature)
+                signature = [FsFoxCad.Build.StableMetadataSignature]::DecodeProperty($Reader, $propertyHandle)
                 attributes = [int]$property.Attributes
                 customAttributes = Get-CustomAttributes $Reader $property.GetCustomAttributes() $typeNameCache
             })
@@ -923,7 +935,7 @@ try {
     }
 
     $snapshot = [ordered]@{
-        schemaVersion = 2
+        schemaVersion = 3
         targets = @($targetSnapshots)
     }
 
