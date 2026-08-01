@@ -131,10 +131,10 @@ Fs.Fox.CAD/
 | `docs/dbtrans-lifecycle-contract.md` | `docs/maintainers/contracts/dbtrans-lifecycle.md` | 保留 Issue 和基线证据，明确 Proposal/Accepted 状态。 |
 | `docs/ZWCAD-version-compatibility.md` | `docs/reference/compatibility/zwcad.md` | 去除本机绝对路径，保留可复核来源。 |
 | `docs/AC_2027-net8-compatibility-decision.md` | `docs/decisions/0001-autocad-2027-net8.md` | 转为 ADR，记录状态和回迁条件。 |
-| `docs/guides/cad-ui-text-style-guide.md` | `docs/maintainers/contributing/cad-ui-text.md` | 解决多仓库“同名文件保持同步”的双事实源问题。 |
+| `docs/guides/cad-ui-text-style-guide.md` | `docs/maintainers/contributing/cad-ui-text.md` | 已取消多仓库同名文件人工同步要求；后续移动到维护者规则目录。 |
 | `docs/logical-modularization-plan.md` | `docs/plans/active/cad-modules.md` | 实施期间保持 active；完成后提炼 ADR/架构并归档。 |
-| `docs/refactoring-proposal.md` | `docs/plans/archive/refactoring-proposal.md` | 标记 `superseded`，指向逻辑模块化执行计划。 |
-| `docs/ifoxcad-v0.9-upstream-merge-analysis.md` | `docs/plans/archive/upstream-v0.9.md` | 根据 Issue #26 结果标记 completed/historical。 |
+| `docs/refactoring-proposal.md` | `docs/plans/archive/refactoring-proposal.md` | 已标记 `superseded` 并指向逻辑模块化执行计划；后续移动归档。 |
+| `docs/ifoxcad-v0.9-upstream-merge-analysis.md` | `docs/plans/archive/upstream-v0.9.md` | Issue #26 已完成，已标记 `historical`；后续移动归档。 |
 | `编译说明.md` | `docs/maintainers/contributing/building.md` | 与实际构建矩阵和 CI 命令统一。 |
 | `Fs分支说明.md` | `docs/maintainers/contributing/branches.md` 或归档 | 先验证当前分支策略，删除过时内容。 |
 | `IFoxCAD 说明.md` | `docs/concepts/history-and-positioning.md` | 只保留仍准确的来源与定位。 |
@@ -275,7 +275,7 @@ AGENTS.md
 - 未来生成的 `llms.txt` 只聚合 `published: true` 且 `status: current` 的精选页面；不得把整个仓库 Markdown 拼接成单个上下文。
 - 页面顶部和站点构建清单显示来源仓库、提交、产品版本和文档状态，使人和代理都能判断时效。
 
-当前 `docs/refactoring-proposal.md` 与 `docs/logical-modularization-plan.md` 是需要首批治理的实例：后者已声明前者只是背景，但前者自身仍显示为 Proposal。迁移阶段必须把前者标记为 `superseded` 并指向当前执行计划。
+`docs/refactoring-proposal.md` 与 `docs/logical-modularization-plan.md` 已完成首批状态收口：前者明确标记为 `superseded` 并指向后者，后者是 Issue #25 的 active plan。后续目录迁移仍按第 4.3 节分批完成。
 
 ## 9. 公开站点边界
 
@@ -362,10 +362,10 @@ Release tag 完成正式构建和包检查后，以相同来源生成 `stable`�
 
 ### Phase A：建立治理入口
 
-- 新增本方案和跟踪 Issue。
-- 新增 `docs/README.md`，建立 current/proposal/superseded/historical 索引。
-- 新增根 `AGENTS.md` 的文档路由规则。
-- 定义 front matter schema 和最小校验脚本。
+- [x] 新增本方案和跟踪 Issue。
+- [x] 新增 `docs/README.md`，建立 current/proposal/superseded/historical 索引。
+- [x] 新增根 `AGENTS.md` 的文档路由规则。
+- [ ] 定义 front matter schema 和最小校验脚本。
 
 退出条件：开发者或编码代理能从一个入口找到现行契约，并能识别旧提案不具权威性。
 

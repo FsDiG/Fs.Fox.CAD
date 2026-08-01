@@ -1,8 +1,10 @@
 # IFoxCAD v0.9 上游重要变更评估
 
-> 状态：分析结论，待分阶段实施<br>
-> 跟踪：[Issue #26](https://github.com/FsDiG/Fs.Fox.CAD/issues/26)<br>
+> 状态：历史记录（Historical）<br>
+> 跟踪：[Issue #26](https://github.com/FsDiG/Fs.Fox.CAD/issues/26)（已完成）<br>
 > 上游：[IFoxCAD v0.9](https://gitee.com/inspirefunction/ifoxcad/tree/v0.9)
+
+> 本文只记录 2026-07-31 基线上的上游评估。Issue #26 的分阶段移植和暂缓决定已经收口；后续需求必须重新核对实时上游、当前 `main` 和新的宿主证据。
 
 ## 1. 结论
 

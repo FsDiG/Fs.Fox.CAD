@@ -1,9 +1,12 @@
 # Fs.Fox.CAD 渐进式模块化重构建议
 
-> 状态：提案（Proposal）  
-> 基线：`main` @ `80f8da3`，2026-07-31  
-> 跟踪：[Issue #25](https://github.com/FsDiG/Fs.Fox.CAD/issues/25)  
-> 参考：[Issue #18](https://github.com/FsDiG/Fs.Fox.CAD/issues/18)
+> 状态：已取代（Superseded）<br>
+> 基线：`main` @ `80f8da3`，2026-07-31<br>
+> 跟踪：[Issue #25](https://github.com/FsDiG/Fs.Fox.CAD/issues/25)<br>
+> 参考：[Issue #18](https://github.com/FsDiG/Fs.Fox.CAD/issues/18)<br>
+> 取代文档：[单程序集逻辑模块化执行计划](logical-modularization-plan.md)
+
+> 本文只保留前序调研和决策背景，不再作为实施规格。当前模块、目录、逐文件映射、阶段门槛和长期分支策略均以取代文档及 Issue #25 为准。
 
 ## 1. 结论
 
