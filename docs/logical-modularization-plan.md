@@ -2,8 +2,8 @@
 
 > 状态：执行计划（Implementation Plan）<br>
 > 基线：`main` @ `2ef03ce`，2026-08-01<br>
-> 文档交付：本计划直接提交到 `main`；本次不创建或修改生产代码分支。<br>
-> 后续实施分支：建议使用 `refactor/cadshared-logical-modularization`，从实施时最新 `origin/main` 创建并作为共享长期分支维护。<br>
+> 文档交付：本计划已先行直接提交到 `main`，不包含生产代码改动。<br>
+> 长期实施分支：`refactor/cad-modules`，从创建时最新 `main` 建立并作为后续重构 PR 的合入目标。<br>
 > 原始参考：[Issue #18](https://github.com/FsDiG/Fs.Fox.CAD/issues/18)（仅作历史输入，不作为实施规格）<br>
 > 可用性注记：2026-08-01 复核时 GitHub API 已无法解析 Issue #18，因此正文不依赖其内容。<br>
 > 命名参考：[FeiSiDev/Fs.Zfgk.CAD](https://github.com/FeiSiDev/Fs.Zfgk.CAD) @ `c38ce32`（只参考领域词汇，不复制其目录层级）<br>
@@ -538,14 +538,14 @@ ExtensionMethod/WindowEx.cs -> Cad/UI/Windows/WindowEx.cs
 
 ## 8. 长期实施分支与阶段检查点
 
-本计划文档直接进入 `main`，让后续产品迭代在修改 `CADShared` 时可以看到目标归属；本次交付不创建实施分支，也不移动源码。真正开始实施时，从当时最新的 `origin/main` 创建一个共享长期分支，建议命名为 `refactor/cadshared-logical-modularization`。Phase A 至 Phase D 都在这个分支内完成，只作为可审查的提交组和验收检查点，不再为每个移动批次创建短期分支并串行合入 `main`。
+本计划文档直接进入 `main`，让后续产品迭代在修改 `CADShared` 时可以看到目标归属。共享长期分支固定为 `refactor/cad-modules`，从创建时最新 `main` 建立；后续重构 PR 均以它作为 base。Phase A 至 Phase D 都在这个分支内完成，只作为可审查的提交组和验收检查点，不再为每个移动批次创建短期分支并串行合入 `main`。
 
 ### 8.1 两条并行轨道
 
 | 轨道 | 负责内容 | 合入策略 |
 | --- | --- | --- |
 | `main` | 正常功能、缺陷修复、发布和必要文档；继续拥有最新生产行为。 | 按现有节奏持续合入，不等待目录重构。 |
-| `refactor/cadshared-logical-modularization` | 本计划的映射守卫、机械移动、兼容性基线和必要的迁移记录。 | 共享并长期维护，完成全部最终门槛后才考虑合回 `main`。 |
+| `refactor/cad-modules` | 本计划的映射守卫、机械移动、兼容性基线和必要的迁移记录；后续重构 PR 以该分支为 base。 | 共享并长期维护，完成全部最终门槛后才考虑合回 `main`。 |
 
 并行期间遵循以下规则：
 
