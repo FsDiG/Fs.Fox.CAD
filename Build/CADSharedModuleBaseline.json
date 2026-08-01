@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
   "normalizedSourceHash": "sha256-utf8-lf",
-  "expectedCompileCount": 106,
+  "expectedCompileCount": 110,
   "moduleCounts": {
     "Foundation": 9,
     "Platform.Windows": 5,
     "Cad.Interop": 3,
     "Cad.Geometry": 13,
     "Cad.Database": 38,
-    "Cad.Editor": 13,
+    "Cad.Editor": 17,
     "Cad.Application": 6,
     "Cad.Runtime": 12,
     "Cad.UI": 7
@@ -992,7 +992,23 @@
       "module": "Cad.Editor",
       "boundaryDebt": [],
       "boundaryFindings": [],
-      "sourceSha256": "801ce44209b33b9e83fab2cd865c9f276de8abe8f3e12bbe98c001a2162e80cb"
+      "sourceSha256": "4abecace8630587d671298bfe8b4dbec4fdb8174869be1b5527d8cd4d4af5e4b"
+    },
+    {
+      "order": "0951",
+      "fileName": "OpAnd.cs",
+      "module": "Cad.Editor",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "343abe871149577a4497401c1efc1903080d2aab966243277a61f1038304258d"
+    },
+    {
+      "order": "0952",
+      "fileName": "OpOr.cs",
+      "module": "Cad.Editor",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "46b46a5a53a7db47726293ce2582654c63751eee75774a4780ecda7ab1a7f7d2"
     },
     {
       "order": "0960",
@@ -1000,7 +1016,23 @@
       "module": "Cad.Editor",
       "boundaryDebt": [],
       "boundaryFindings": [],
-      "sourceSha256": "fcf1217e01b68c7e6af91d0b4f20eadcac0b10ce7e46b5ddee7d420a4f6e8711"
+      "sourceSha256": "61b5874369b172941454cc20581b4bda2eae5de4d76b06558331cb0de6e44284"
+    },
+    {
+      "order": "0961",
+      "fileName": "OpNot.cs",
+      "module": "Cad.Editor",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "261c2f4d3747418a4da944fadc8d1d50dfe3edecf27bd4e45acee681cd927ead"
+    },
+    {
+      "order": "0962",
+      "fileName": "OpXor.cs",
+      "module": "Cad.Editor",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "bedbc78b4b0b49654969ffc71c245c59a243beb2979ff3cf3c35f2968e785e93"
     }
   ]
 }
