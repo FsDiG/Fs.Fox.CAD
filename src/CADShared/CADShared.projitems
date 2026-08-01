@@ -100,7 +100,7 @@
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0210</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\BulgeVertexWidth.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Curves\Polylines\BulgeVertexWidth.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0220</FsFoxOrder>
     </Compile>
@@ -139,49 +139,49 @@
       <FsFoxOrder>0300</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-07</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Entity\ArcEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Curves\ArcEx.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0310</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Entity\BlockReferenceEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Blocks\BlockReferenceEx.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0320</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-17</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Entity\BoundingBox9.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Bounds\BoundingBox9.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0330</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Entity\CircleEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Curves\CircleEx.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0340</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Entity\CurveEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Curves\CurveEx.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0350</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Entity\DBTextEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Text\DBTextEx.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0360</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-18</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Entity\EntityBoundingInfo.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Bounds\EntityBoundingInfo.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0370</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Entity\EntityEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\EntityEx.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0380</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Entity\MTextEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Text\MTextEx.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0390</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Entity\PolylineEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Curves\Polylines\PolylineEx.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0400</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Entity\RegionEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\RegionEx.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0410</FsFoxOrder>
     </Compile>
@@ -285,16 +285,16 @@
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0640</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Hatch\HatchConverter.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Hatch\HatchConverter.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0650</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Hatch\HatchEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Hatch\HatchEx.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0660</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-05</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Hatch\HatchInfo.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Hatch\HatchInfo.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0670</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-05</FsFoxBoundaryDebt>
