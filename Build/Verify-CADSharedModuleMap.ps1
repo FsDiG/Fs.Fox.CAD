@@ -28,7 +28,7 @@ $BaselinePath = [IO.Path]::GetFullPath($BaselinePath)
 $sourceRoot = [IO.Path]::GetFullPath((Split-Path -Parent $ProjectItemsPath))
 $sourceRootPrefix = $sourceRoot.TrimEnd([IO.Path]::DirectorySeparatorChar) + [IO.Path]::DirectorySeparatorChar
 
-$expectedCompileCount = 117
+$expectedCompileCount = 119
 $expectedModuleCounts = [ordered]@{
     'Foundation'       = 11
     'Platform.Windows' = 5
@@ -37,7 +37,7 @@ $expectedModuleCounts = [ordered]@{
     'Cad.Database'     = 38
     'Cad.Editor'       = 17
     'Cad.Application'  = 8
-    'Cad.Runtime'      = 12
+    'Cad.Runtime'      = 14
     'Cad.UI'           = 7
 }
 $allowedModules = @($expectedModuleCounts.Keys)

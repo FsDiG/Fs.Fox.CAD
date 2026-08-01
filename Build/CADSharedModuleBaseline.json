@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "normalizedSourceHash": "sha256-utf8-lf",
-  "expectedCompileCount": 117,
+  "expectedCompileCount": 119,
   "moduleCounts": {
     "Foundation": 11,
     "Platform.Windows": 5,
@@ -10,7 +10,7 @@
     "Cad.Database": 38,
     "Cad.Editor": 17,
     "Cad.Application": 8,
-    "Cad.Runtime": 12,
+    "Cad.Runtime": 14,
     "Cad.UI": 7
   },
   "items": [
@@ -762,7 +762,23 @@
       "module": "Cad.Runtime",
       "boundaryDebt": [],
       "boundaryFindings": [],
-      "sourceSha256": "57ab4c2ee39d4026e760b8fd7659b23a4cfb1e2a873e9c22f9a4a5df33f36b36"
+      "sourceSha256": "b21e097b1342beea8cb7c40c5c0e2ead232e91157edf8b92207299cd346ea382"
+    },
+    {
+      "order": "0691",
+      "fileName": "AssemLoadType.cs",
+      "module": "Cad.Runtime",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "22d8540719d32a9ccef32caf2c0e0c0db2b2f5fb844b48973bfbb349423376f1"
+    },
+    {
+      "order": "0692",
+      "fileName": "AutoRegConfig.cs",
+      "module": "Cad.Runtime",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "c50609f11e8a4b68c0767a7acc1c73fa4156720277cf766ef4c519336f3c382a"
     },
     {
       "order": "0700",
