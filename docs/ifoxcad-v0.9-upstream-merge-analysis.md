@@ -47,7 +47,7 @@ B 当前先访问 `ent.Database`，再判断 `ent.IsDisposed`。如果图元已�
 ### 3.2 XData 按应用名精确判断
 
 - 上游提交：[`e13eecd`](https://gitee.com/inspirefunction/ifoxcad/commit/e13eecd58995986775845548f9d46b828eb66724)
-- B 对应位置：[`DBObjectEx.cs`](../src/CADShared/ExtensionMethod/DBObjectEx.cs)
+- B 对应位置：[`DBObjectEx.cs`](../src/CADShared/Cad/Database/Objects/DBObjectEx.cs)
 - 建议：移植。
 
 B 当前 `RemoveXData(obj, appName)` 只检查对象是否存在任意 XData。如果对象只有其他 RegApp 的数据，仍会进入目标应用的清理逻辑。应改为检查 `GetXDataForApplication(appName)`，目标应用不存在时直接返回。
