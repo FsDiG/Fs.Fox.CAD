@@ -11,7 +11,7 @@
 > 跟踪 Issue：[Issue #25](https://github.com/FsDiG/Fs.Fox.CAD/issues/25)（与本计划同步维护）<br>
 > 前序提案：[渐进式模块化重构建议](refactoring-proposal.md)（已取代，仅保留决策背景；单程序集目录迁移以本计划为准）<br>
 > 审查基线：[Issue #42](https://github.com/FsDiG/Fs.Fox.CAD/issues/42)<br>
-> 并行专项：[Issue #43](https://github.com/FsDiG/Fs.Fox.CAD/issues/43)
+> 并行专项：[Issue #43](https://github.com/FsDiG/Fs.Fox.CAD/issues/43)、[Issue #51](https://github.com/FsDiG/Fs.Fox.CAD/issues/51)
 
 ## 1. 结论
 
@@ -535,6 +535,7 @@ ExtensionMethod/WindowEx.cs -> Cad/UI/Windows/WindowEx.cs
 | `BD-21` | `Cad.Editor` | `SingleKeyWordHook.cs` | 关键字输入通过 Application `PreTranslateMessage`、WinForms Keys 和内部焦点 API 实现。 | 保留在 `Editor/Input`，后续封装宿主输入适配并验证 AutoCAD/ZWCAD 消息契约。 |
 | `BD-22` | `Cad.Editor` | `PostCmd.cs` | 同一类型混合同步/异步命令派发、Application context、COM 和 native 导出调用。 | 分离高层命令派发与各宿主执行适配；保留旧入口和导出字段名。 |
 | `BD-23` | `Cad.UI` | `ErrorInfoEx.cs` | ErrorStatus 文本映射与 `ShowAlertDialog` 呈现耦合。 | 将纯错误映射下沉，UI 只负责呈现；保持现有内部扩展入口。 |
+| `BD-24` | `Cad.Geometry` | `Rect.cs` | 公开 `ToPolyLine()` 直接返回 `Entity`、构造 `Polyline` 并调用数据库默认值，违反 Geometry 不依赖 DatabaseServices 的目标。 | 本轮只登记并整体移动；由 [Issue #51](https://github.com/FsDiG/Fs.Fox.CAD/issues/51) 设计 CAD 适配拆分与公共 API 兼容方案。 |
 
 ## 8. 长期实施分支与阶段检查点
 
@@ -717,4 +718,4 @@ CI 继续执行四个目标的 Debug + Release。任何子进程失败都必须�
 - [ ] 架构文档已反映新源码树，并明确单程序集状态。
 - [ ] 没有把未执行的 CAD 宿主测试报告为通过。
 
-完成本计划后，下一步才是按 `BD-01` 至 `BD-23` 逐项清理真实依赖。优先处理会形成反向依赖或宿主风险放大的 `BD-02` 至 `BD-09`、`BD-12` 至 `BD-15`、`BD-17`、`BD-18` 及 `BD-21` 至 `BD-23`；`BD-19`、`BD-20` 只做兼容友好的文件拆分，不与行为修复混在同一提交。依赖清理必须继续保持“小范围、单契约、可独立验收”，不回到一次性全库重写。
+完成本计划后，下一步才是按 `BD-01` 至 `BD-24` 逐项清理真实依赖。优先处理会形成反向依赖或宿主风险放大的 `BD-02` 至 `BD-09`、`BD-12` 至 `BD-15`、`BD-17`、`BD-18` 及 `BD-21` 至 `BD-24`；`BD-19`、`BD-20` 只做兼容友好的文件拆分，不与行为修复混在同一提交。依赖清理必须继续保持“小范围、单契约、可独立验收”，不回到一次性全库重写。
