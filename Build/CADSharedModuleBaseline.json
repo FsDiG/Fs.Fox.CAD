@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
   "normalizedSourceHash": "sha256-utf8-lf",
-  "expectedCompileCount": 112,
+  "expectedCompileCount": 115,
   "moduleCounts": {
     "Foundation": 11,
     "Platform.Windows": 5,
     "Cad.Interop": 3,
-    "Cad.Geometry": 13,
+    "Cad.Geometry": 16,
     "Cad.Database": 38,
     "Cad.Editor": 17,
     "Cad.Application": 6,
@@ -52,7 +52,15 @@
       "module": "Cad.Geometry",
       "boundaryDebt": [],
       "boundaryFindings": [],
-      "sourceSha256": "39660902c2961b54af812d1dc5eec617f44c6307638b24c0048a23db5436f014"
+      "sourceSha256": "2243c870ae2be73d3bdf055a5f57a571789a385366b81b50b272f78cc3033591"
+    },
+    {
+      "order": "0051",
+      "fileName": "QuadTreeFindMode.cs",
+      "module": "Cad.Geometry",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "4d4ad976ecf2f5987a1f03fbeda94b2f2d026607a7fd2b876c00c97101cbd669"
     },
     {
       "order": "0060",
@@ -510,7 +518,23 @@
           "count": 2
         }
       ],
-      "sourceSha256": "a6951a6235b6b71e87f63f86eb5436613b28bd85fe20a362aa760c587d9e9fa3"
+      "sourceSha256": "9db341689b47b8036e9784b265e3fed78830acc038d5f8bdf12d4bcffc3291ad"
+    },
+    {
+      "order": "0461",
+      "fileName": "VectorEx.cs",
+      "module": "Cad.Geometry",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "b87b83fd65d006a986d007eb26d485e31466eabef7b82903241bb39747786434"
+    },
+    {
+      "order": "0462",
+      "fileName": "PlaneEx.cs",
+      "module": "Cad.Geometry",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "9c39e6df975e633cf1eafa40dba8c5c4cf124b9c2b095e75fbd357d42fb929d2"
     },
     {
       "order": "0470",
