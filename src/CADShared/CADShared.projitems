@@ -126,6 +126,11 @@
       <FsFoxOrder>0240</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-02</FsFoxBoundaryDebt>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\SwitchDatabase.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0241</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-02</FsFoxBoundaryDebt>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Dictionaries\DBDictionaryEx.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0250</FsFoxOrder>
