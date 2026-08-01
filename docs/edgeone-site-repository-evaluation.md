@@ -5,11 +5,12 @@
 > 源码基线：`FsDiG/Fs.Fox.CAD` `main` @ `416c65f`<br>
 > 跟踪：[Issue #48](https://github.com/FsDiG/Fs.Fox.CAD/issues/48)<br>
 > 现行约定：[文档与代码协同治理方案](documentation-architecture.md)<br>
-> 本轮范围：评估仓库边界、内容获取、构建触发、权限和 EdgeOne 部署约束；不创建站点仓库，不选择最终前端框架
+> 站点仓库：[FsDiG/Fs.Fox.CAD.Site](https://github.com/FsDiG/Fs.Fox.CAD.Site)（Bootstrap 已创建，EdgeOne 尚未连接）<br>
+> 本轮范围：评估并建立仓库边界、精确来源获取和 GitHub 同步；不选择最终前端框架，不代替仓库所有者配置 EdgeOne
 
 ## 1. 结论
 
-建议后续创建 `FsDiG/Fs.Fox.CAD.Site`，并由 EdgeOne Makers 直接连接该仓库完成构建和部署。这个仓库不是第二个帮助文档仓库，也不是生成 HTML 的镜像仓库；它是**可编辑的展示与部署实现仓库**。
+`FsDiG/Fs.Fox.CAD.Site` 已创建，并由其自身 Actions 验证精确 source commit 获取、Git tree 校验和 Bootstrap 静态构建；后续由 EdgeOne Makers 直接连接该仓库完成云端构建和部署。这个仓库不是第二个帮助文档仓库，也不是生成 HTML 的镜像仓库；它是**可编辑的展示与部署实现仓库**。
 
 三个边界已经明确：
 
@@ -65,7 +66,7 @@ EdgeOne Makers
 | 类型 | 是否需要 | 是否可人工编辑 | 典型内容 |
 | --- | --- | --- | --- |
 | 产品内容源仓库 | 已有：`Fs.Fox.CAD` | 是 | 代码、XML 注释、Markdown、samples、内容状态和代码关联。 |
-| 展示/部署仓库 | 建议创建：`Fs.Fox.CAD.Site` | 是，但仅限站点实现 | 框架依赖、主题、布局、组件、搜索适配、来源锁、EdgeOne 配置。 |
+| 展示/部署仓库 | 已创建：[Fs.Fox.CAD.Site](https://github.com/FsDiG/Fs.Fox.CAD.Site) | 是，但仅限站点实现 | 框架依赖、主题、布局、组件、搜索适配、来源锁、EdgeOne 配置。 |
 | 生成产物仓库 | 当前不需要 | 否 | HTML、搜索索引、生成 API 页面、压缩包等可重建输出。 |
 
 原治理方案排除的是“第二个可人工编辑的产品内容仓库”和“只提交生成结果的仓库”。现在提出的 `Fs.Fox.CAD.Site` 不属于这两类：它拥有可维护的前端实现，但不能拥有产品帮助内容。
@@ -333,32 +334,34 @@ Fs.Fox.CAD.Site/
 
 ## 13. 分阶段落地
 
+截至 2026-08-01，站点仓库 Bootstrap 已完成：`latest` 锁定 source `main` @ `416c65f`，`stable` 锁定 Release `v1.0.3` @ `d4120af`；本地和 GitHub Actions 均已验证精确 SHA 获取、Git tree、一致性测试和静态构建。EdgeOne 连接、最终框架和产品内容渲染仍未执行。
+
 ### Phase 0：确认架构和边界
 
 - 评审本文与更新后的治理方案；
 - 在 Issue #48 记录接受项、待决项和验收；
-- 不创建云资源、不引入前端依赖。
+- 本源码仓库不引入前端依赖；本轮不创建 EdgeOne 云资源或密钥。
 
 退出条件：所有参与者能区分产品内容源、展示部署仓库和生成产物。
 
 ### Phase 1：最小站点 POC
 
-- 创建 `FsDiG/Fs.Fox.CAD.Site`；
-- 仅选一个最小 Node 候选和 3 至 5 篇公开 Markdown；
-- 手工锁定一个完整 source commit；
-- 验证 archive 获取、GFM、资源、中文路径、构建清单和生成目录排除；
-- 连接 EdgeOne，验证 production 构建、一次站点 PR preview 和失败保持上一成功部署；
-- 不生成 API，不绑定正式域名。
+- [x] 创建 `FsDiG/Fs.Fox.CAD.Site`，加入零依赖 Node Bootstrap、维护规则和来源集成契约；
+- [x] 锁定 latest/stable 的完整 source commit 和 Git tree；
+- [x] 验证精确 SHA 获取、远端一致性、构建清单和生成目录排除；
+- [ ] 比较最小站点框架候选，并选择 3 至 5 篇公开 Markdown 验证产品内容渲染；
+- [ ] 由仓库所有者连接 EdgeOne，验证 production、一次站点 PR preview 和失败保持上一成功部署；
+- [ ] 保持本阶段不生成 API、不绑定正式域名。
 
 退出条件：干净构建可重现，页面显示 source/site commit，站点仓库没有产品内容副本。
 
 ### Phase 2：自动更新 `latest`
 
-- 创建最小权限 GitHub App；
-- 来源 CI 计算内容摘要并发送 dispatch；
-- 站点 workflow 校验并提交来源锁；
-- 加入 concurrency、重复摘要跳过、失败通知和手工 reconciliation；
-- 统计每月构建数、耗时和输出文件数。
+- [ ] 创建最小权限 GitHub App；
+- [ ] 来源 CI 计算发布内容摘要并发送 dispatch；
+- [x] 站点 workflow 支持 schedule、手工 reconciliation 和受控 `repository_dispatch`，校验后只提交来源锁；
+- [x] 加入 concurrency、相同 commit/tree 跳过和失败非零退出；
+- [ ] 增加失败通知，并统计每月构建数、耗时和输出文件数。
 
 退出条件：一次合格内容变更只产生一次可追溯部署；无关源码提交不消耗站点构建。
 
@@ -407,7 +410,7 @@ Fs.Fox.CAD.Site/
 
 ### 本提案建议
 
-- 仓库名使用 `FsDiG/Fs.Fox.CAD.Site`；
+- 已按建议创建 `FsDiG/Fs.Fox.CAD.Site`；
 - 用 `content-source.json` 锁定 latest/stable 的完整 source commit；
 - 使用 GitHub App + repository dispatch 更新锁；
 - EdgeOne 原生 Git 集成负责生产构建；

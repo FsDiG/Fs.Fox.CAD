@@ -16,7 +16,7 @@
 - Issue #25 的 `CADShared` 单程序集逻辑模块化在长期分支 `refactor/cad-modules` 上实施，相关 PR 以该分支为 base。
 - `refactor/cad-modules` 只合并最新 `main`，不 rebase、不强推；主线修复和文档变更进入 `main` 后再同步过去。
 - 不在逻辑模块化的机械移动中夹带行为修改、公共 API 修改、全文件格式化或无关文档重写。
-- 文档治理与发布能力由 Issue #48 跟踪；`Fs.Fox.CAD` 保持唯一产品内容源，后续展示/部署仓库边界见 [EdgeOne 站点仓库评估](docs/edgeone-site-repository-evaluation.md)。站点框架尚未确定，不要在本仓库提前引入框架专用目录或生成产物。
+- 文档治理与发布能力由 Issue #48 跟踪；`Fs.Fox.CAD` 保持唯一产品内容源，已创建的展示/部署仓库及其边界见 [EdgeOne 站点仓库评估](docs/edgeone-site-repository-evaluation.md)和 [Fs.Fox.CAD.Site](https://github.com/FsDiG/Fs.Fox.CAD.Site)。站点框架尚未确定，不要在本仓库提前引入框架专用目录或生成产物。
 
 ## 代码与文档责任
 

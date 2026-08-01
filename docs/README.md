@@ -70,7 +70,7 @@ front matter schema 和自动校验尚未落地。在迁移完成前，本页状
 | --- | --- | --- | --- |
 | `current` | `plan.cad-modules` | [单程序集逻辑模块化执行计划](logical-modularization-plan.md) | Issue #25 的 active plan；不进入公共站点，且不授权修改运行时行为。 |
 | `proposal` | `contract.dbtrans-lifecycle` | [DBTrans 生命周期与释放契约](dbtrans-lifecycle-contract.md) | 同时记录 Confirmed、Decision 与 Not run；不能把后续决定表述为已实施。 |
-| `proposal` | `proposal.edgeone-site-repository` | [EdgeOne Makers 站点仓库架构评估](edgeone-site-repository-evaluation.md) | Issue #48 的实施提案；已确认内容/展示边界，但仓库、框架、权限和云资源尚未创建。 |
+| `proposal` | `proposal.edgeone-site-repository` | [EdgeOne Makers 站点仓库架构评估](edgeone-site-repository-evaluation.md) | Issue #48 的实施提案；展示仓库与精确来源链路已创建，最终框架、GitHub App、EdgeOne 和云资源仍未完成。 |
 
 ## 6. 已取代与历史文档
 
