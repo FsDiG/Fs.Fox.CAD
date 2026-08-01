@@ -279,9 +279,17 @@
       <FsFoxModule>Cad.UI</FsFoxModule>
       <FsFoxOrder>0520</FsFoxOrder>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\UI\StatusBar\PaneMarginType.cs">
+      <FsFoxModule>Cad.UI</FsFoxModule>
+      <FsFoxOrder>0521</FsFoxOrder>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\PromptOptionsEx.cs">
       <FsFoxModule>Cad.Editor</FsFoxModule>
       <FsFoxOrder>0530</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\KeywordException.cs">
+      <FsFoxModule>Cad.Editor</FsFoxModule>
+      <FsFoxOrder>0531</FsFoxOrder>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Foundation\RandomEx.cs">
       <FsFoxModule>Foundation</FsFoxModule>

@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
   "normalizedSourceHash": "sha256-utf8-lf",
-  "expectedCompileCount": 119,
+  "expectedCompileCount": 121,
   "moduleCounts": {
     "Foundation": 11,
     "Platform.Windows": 5,
     "Cad.Interop": 3,
     "Cad.Geometry": 16,
     "Cad.Database": 38,
-    "Cad.Editor": 17,
+    "Cad.Editor": 18,
     "Cad.Application": 8,
     "Cad.Runtime": 14,
-    "Cad.UI": 7
+    "Cad.UI": 8
   },
   "items": [
     {
@@ -590,7 +590,15 @@
       "module": "Cad.UI",
       "boundaryDebt": [],
       "boundaryFindings": [],
-      "sourceSha256": "63abbbb854a3e41e9e3153339700834ccd8b7d1b1939b6ec00c4eacd739fd50f"
+      "sourceSha256": "1dc8ba8f68eba3368834c4d4495827f9561d1e85b357edbe105bdea3b30817ee"
+    },
+    {
+      "order": "0521",
+      "fileName": "PaneMarginType.cs",
+      "module": "Cad.UI",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "73f324c135dee848c565046161fea331f19d15d6bcd870ee9f0876fab044d2f6"
     },
     {
       "order": "0530",
@@ -598,7 +606,15 @@
       "module": "Cad.Editor",
       "boundaryDebt": [],
       "boundaryFindings": [],
-      "sourceSha256": "e4baaf3530bd764223fee16db96414eee63e89bfec84375a945d6c30977c4419"
+      "sourceSha256": "c21174af6d84db69ccaf5bbe655872f7985b50b98e05472b8f33a6f876d56c06"
+    },
+    {
+      "order": "0531",
+      "fileName": "KeywordException.cs",
+      "module": "Cad.Editor",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "4ec1b840941926c4761a24241ff83a21c63ba9e6f442670892424178346689ca"
     },
     {
       "order": "0540",
