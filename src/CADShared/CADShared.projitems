@@ -134,7 +134,7 @@
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0290</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\EditorEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\EditorEx.cs">
       <FsFoxModule>Cad.Editor</FsFoxModule>
       <FsFoxOrder>0300</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-07</FsFoxBoundaryDebt>
@@ -216,11 +216,11 @@
       <FsFoxModule>Cad.UI</FsFoxModule>
       <FsFoxOrder>0480</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Jig\JigEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Jig\JigEx.cs">
       <FsFoxModule>Cad.Editor</FsFoxModule>
       <FsFoxOrder>0490</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Jig\JigExTransient.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Jig\JigExTransient.cs">
       <FsFoxModule>Cad.Editor</FsFoxModule>
       <FsFoxOrder>0500</FsFoxOrder>
     </Compile>
@@ -232,7 +232,7 @@
       <FsFoxModule>Cad.UI</FsFoxModule>
       <FsFoxOrder>0520</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\PromptOptionsEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\PromptOptionsEx.cs">
       <FsFoxModule>Cad.Editor</FsFoxModule>
       <FsFoxOrder>0530</FsFoxOrder>
     </Compile>
@@ -240,16 +240,16 @@
       <FsFoxModule>Foundation</FsFoxModule>
       <FsFoxOrder>0540</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\RedrawEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Display\RedrawEx.cs">
       <FsFoxModule>Cad.Editor</FsFoxModule>
       <FsFoxOrder>0550</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-08</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\SelectionSetEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Selection\SelectionSetEx.cs">
       <FsFoxModule>Cad.Editor</FsFoxModule>
       <FsFoxOrder>0560</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\SingleKeyWordHook.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Input\SingleKeyWordHook.cs">
       <FsFoxModule>Cad.Editor</FsFoxModule>
       <FsFoxOrder>0570</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-21</FsFoxBoundaryDebt>
@@ -339,7 +339,7 @@
       <FsFoxModule>Cad.Application</FsFoxModule>
       <FsFoxOrder>0760</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)PE\PostCmd.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Commands\PostCmd.cs">
       <FsFoxModule>Cad.Editor</FsFoxModule>
       <FsFoxOrder>0770</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-22</FsFoxBoundaryDebt>
@@ -406,23 +406,23 @@
       <FsFoxModule>Cad.Application</FsFoxModule>
       <FsFoxOrder>0910</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)SelectionFilter\OpComp.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Selection\Filters\OpComp.cs">
       <FsFoxModule>Cad.Editor</FsFoxModule>
       <FsFoxOrder>0920</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)SelectionFilter\OpEqual.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Selection\Filters\OpEqual.cs">
       <FsFoxModule>Cad.Editor</FsFoxModule>
       <FsFoxOrder>0930</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)SelectionFilter\OpFilter.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Selection\Filters\OpFilter.cs">
       <FsFoxModule>Cad.Editor</FsFoxModule>
       <FsFoxOrder>0940</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)SelectionFilter\OpList.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Selection\Filters\OpList.cs">
       <FsFoxModule>Cad.Editor</FsFoxModule>
       <FsFoxOrder>0950</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)SelectionFilter\OpLogi.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Selection\Filters\OpLogi.cs">
       <FsFoxModule>Cad.Editor</FsFoxModule>
       <FsFoxOrder>0960</FsFoxOrder>
     </Compile>
