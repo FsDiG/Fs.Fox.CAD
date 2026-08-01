@@ -76,22 +76,22 @@
       <FsFoxModule>Foundation</FsFoxModule>
       <FsFoxOrder>0160</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Basal\Win\Enums.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Windows\Interop\Enums.cs">
       <FsFoxModule>Platform.Windows</FsFoxModule>
       <FsFoxOrder>0170</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-15</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Basal\Win\SystemEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Windows\Interop\SystemEx.cs">
       <FsFoxModule>Platform.Windows</FsFoxModule>
       <FsFoxOrder>0180</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-15</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Basal\Win\PInvokeUser32.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Windows\Interop\PInvokeUser32.cs">
       <FsFoxModule>Platform.Windows</FsFoxModule>
       <FsFoxOrder>0190</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-15</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Basal\Win\WindowsAPI.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Windows\Interop\WindowsAPI.cs">
       <FsFoxModule>Platform.Windows</FsFoxModule>
       <FsFoxOrder>0200</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-15</FsFoxBoundaryDebt>
@@ -126,7 +126,7 @@
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0270</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\DocumentLockManager.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Application\Documents\DocumentLockManager.cs">
       <FsFoxModule>Cad.Application</FsFoxModule>
       <FsFoxOrder>0280</FsFoxOrder>
     </Compile>
@@ -134,7 +134,7 @@
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0290</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\EditorEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\EditorEx.cs">
       <FsFoxModule>Cad.Editor</FsFoxModule>
       <FsFoxOrder>0300</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-07</FsFoxBoundaryDebt>
@@ -190,7 +190,7 @@
       <FsFoxOrder>0420</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-19</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\ErrorInfoEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\UI\Dialogs\ErrorInfoEx.cs">
       <FsFoxModule>Cad.UI</FsFoxModule>
       <FsFoxOrder>0430</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-23</FsFoxBoundaryDebt>
@@ -212,15 +212,15 @@
       <FsFoxModule>Cad.Geometry</FsFoxModule>
       <FsFoxOrder>0470</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Hatch\HatchDialog.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\UI\Dialogs\HatchDialog.cs">
       <FsFoxModule>Cad.UI</FsFoxModule>
       <FsFoxOrder>0480</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Jig\JigEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Jig\JigEx.cs">
       <FsFoxModule>Cad.Editor</FsFoxModule>
       <FsFoxOrder>0490</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Jig\JigExTransient.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Jig\JigExTransient.cs">
       <FsFoxModule>Cad.Editor</FsFoxModule>
       <FsFoxOrder>0500</FsFoxOrder>
     </Compile>
@@ -228,11 +228,11 @@
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0510</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\PaneEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\UI\StatusBar\PaneEx.cs">
       <FsFoxModule>Cad.UI</FsFoxModule>
       <FsFoxOrder>0520</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\PromptOptionsEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\PromptOptionsEx.cs">
       <FsFoxModule>Cad.Editor</FsFoxModule>
       <FsFoxOrder>0530</FsFoxOrder>
     </Compile>
@@ -240,16 +240,16 @@
       <FsFoxModule>Foundation</FsFoxModule>
       <FsFoxOrder>0540</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\RedrawEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Display\RedrawEx.cs">
       <FsFoxModule>Cad.Editor</FsFoxModule>
       <FsFoxOrder>0550</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-08</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\SelectionSetEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Selection\SelectionSetEx.cs">
       <FsFoxModule>Cad.Editor</FsFoxModule>
       <FsFoxOrder>0560</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\SingleKeyWordHook.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Input\SingleKeyWordHook.cs">
       <FsFoxModule>Cad.Editor</FsFoxModule>
       <FsFoxOrder>0570</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-21</FsFoxBoundaryDebt>
@@ -263,12 +263,12 @@
       <FsFoxOrder>0590</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-06</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\TangentEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Interop\ThirdParty\Tianzheng\TangentEx.cs">
       <FsFoxModule>Cad.Interop</FsFoxModule>
       <FsFoxOrder>0600</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-14</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\IFoxUtils.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\UI\IFoxUtils.cs">
       <FsFoxModule>Cad.UI</FsFoxModule>
       <FsFoxOrder>0610</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-10</FsFoxBoundaryDebt>
@@ -277,7 +277,7 @@
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0620</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\WindowEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\UI\Windows\WindowEx.cs">
       <FsFoxModule>Cad.UI</FsFoxModule>
       <FsFoxOrder>0630</FsFoxOrder>
     </Compile>
@@ -299,57 +299,57 @@
       <FsFoxOrder>0670</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-05</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Initialize\AcadEMR.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Initialization\AcadEMR.cs">
       <FsFoxModule>Cad.Runtime</FsFoxModule>
       <FsFoxOrder>0680</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-13</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Initialize\AssemInfo.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Registration\AssemInfo.cs">
       <FsFoxModule>Cad.Runtime</FsFoxModule>
       <FsFoxOrder>0690</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Initialize\AutoReg.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Registration\AutoReg.cs">
       <FsFoxModule>Cad.Runtime</FsFoxModule>
       <FsFoxOrder>0700</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Initialize\AutoRegAssem.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Registration\AutoRegAssem.cs">
       <FsFoxModule>Cad.Runtime</FsFoxModule>
       <FsFoxOrder>0710</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Initialize\CheckFactory.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Initialization\CheckFactory.cs">
       <FsFoxModule>Cad.Runtime</FsFoxModule>
       <FsFoxOrder>0720</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-11</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Initialize\IAutoGo.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Initialization\IAutoGo.cs">
       <FsFoxModule>Cad.Runtime</FsFoxModule>
       <FsFoxOrder>0730</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-20</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Initialize\MethodInfoHelper.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Initialization\MethodInfoHelper.cs">
       <FsFoxModule>Cad.Runtime</FsFoxModule>
       <FsFoxOrder>0740</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)PE\AcadPeInfo.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Interop\Native\AcadPeInfo.cs">
       <FsFoxModule>Cad.Interop</FsFoxModule>
       <FsFoxOrder>0750</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-14</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)PE\DBmod.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Application\SystemVariables\DBmod.cs">
       <FsFoxModule>Cad.Application</FsFoxModule>
       <FsFoxOrder>0760</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)PE\PostCmd.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Commands\PostCmd.cs">
       <FsFoxModule>Cad.Editor</FsFoxModule>
       <FsFoxOrder>0770</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-22</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)PE\ProgramPE.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Windows\PortableExecutable\ProgramPE.cs">
       <FsFoxModule>Platform.Windows</FsFoxModule>
       <FsFoxOrder>0780</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-15</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ResultData\LispList.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Lisp\LispList.cs">
       <FsFoxModule>Cad.Runtime</FsFoxModule>
       <FsFoxOrder>0790</FsFoxOrder>
     </Compile>
@@ -365,7 +365,7 @@
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0820</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Runtime\AcPreferences.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\UI\Preferences\AcPreferences.cs">
       <FsFoxModule>Cad.UI</FsFoxModule>
       <FsFoxOrder>0830</FsFoxOrder>
     </Compile>
@@ -374,27 +374,27 @@
       <FsFoxOrder>0840</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-03</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Runtime\Env.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Application\Context\Env.cs">
       <FsFoxModule>Cad.Application</FsFoxModule>
       <FsFoxOrder>0850</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-09</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Runtime\IdleAction.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Application\Scheduling\IdleAction.cs">
       <FsFoxModule>Cad.Application</FsFoxModule>
       <FsFoxOrder>0860</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-12</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Runtime\IdleNoCommandAction.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Application\Scheduling\IdleNoCommandAction.cs">
       <FsFoxModule>Cad.Application</FsFoxModule>
       <FsFoxOrder>0870</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-12</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Runtime\PInvokeCad.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Interop\Native\PInvokeCad.cs">
       <FsFoxModule>Cad.Interop</FsFoxModule>
       <FsFoxOrder>0880</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-14</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Runtime\ProgressMeterUtils.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\UI\StatusBar\ProgressMeterUtils.cs">
       <FsFoxModule>Cad.UI</FsFoxModule>
       <FsFoxOrder>0890</FsFoxOrder>
     </Compile>
@@ -402,27 +402,27 @@
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0900</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Runtime\SystemVariableManager.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Application\SystemVariables\SystemVariableManager.cs">
       <FsFoxModule>Cad.Application</FsFoxModule>
       <FsFoxOrder>0910</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)SelectionFilter\OpComp.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Selection\Filters\OpComp.cs">
       <FsFoxModule>Cad.Editor</FsFoxModule>
       <FsFoxOrder>0920</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)SelectionFilter\OpEqual.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Selection\Filters\OpEqual.cs">
       <FsFoxModule>Cad.Editor</FsFoxModule>
       <FsFoxOrder>0930</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)SelectionFilter\OpFilter.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Selection\Filters\OpFilter.cs">
       <FsFoxModule>Cad.Editor</FsFoxModule>
       <FsFoxOrder>0940</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)SelectionFilter\OpList.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Selection\Filters\OpList.cs">
       <FsFoxModule>Cad.Editor</FsFoxModule>
       <FsFoxOrder>0950</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)SelectionFilter\OpLogi.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Selection\Filters\OpLogi.cs">
       <FsFoxModule>Cad.Editor</FsFoxModule>
       <FsFoxOrder>0960</FsFoxOrder>
     </Compile>
