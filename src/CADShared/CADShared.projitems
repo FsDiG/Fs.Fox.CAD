@@ -340,9 +340,21 @@
       <FsFoxModule>Cad.UI</FsFoxModule>
       <FsFoxOrder>0630</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Xrefs\XrefEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Xrefs\IXrefBindModes.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0640</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Xrefs\XrefFactory.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0641</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Xrefs\XrefEx.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0642</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Xrefs\XrefPath.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0643</FsFoxOrder>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Hatch\HatchConverter.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
