@@ -195,7 +195,7 @@ tests/
   TestZcad20xx/              ZWCAD 宿主测试入口
 ```
 
-`CADShared.projitems` 当前显式列出 110 个共享编译项，并通过 `FsFoxModule` 和 `FsFoxOrder` 记录九个逻辑模块及稳定编译顺序。目录只表达源码所有权，不改变公共命名空间，也不意味着九个独立 DLL；完整映射和已知边界债务见[单程序集逻辑模块化执行计划](logical-modularization-plan.md)。
+`CADShared.projitems` 当前显式列出 112 个共享编译项，并通过 `FsFoxModule` 和 `FsFoxOrder` 记录九个逻辑模块及稳定编译顺序。目录只表达源码所有权，不改变公共命名空间，也不意味着九个独立 DLL；完整映射和已知边界债务见[单程序集逻辑模块化执行计划](logical-modularization-plan.md)。
 
 版本项目是 SDK/API 代际边界，不要求每个产品年度都有一个项目。只有厂商 API、目标框架或二进制兼容性发生变化时才应新增项目；可兼容年度优先复用已有产物，并用兼容性文档记录依据和宿主验收状态。
 
