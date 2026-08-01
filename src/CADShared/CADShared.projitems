@@ -190,7 +190,7 @@
       <FsFoxOrder>0420</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-19</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\ErrorInfoEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\UI\Dialogs\ErrorInfoEx.cs">
       <FsFoxModule>Cad.UI</FsFoxModule>
       <FsFoxOrder>0430</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-23</FsFoxBoundaryDebt>
@@ -212,7 +212,7 @@
       <FsFoxModule>Cad.Geometry</FsFoxModule>
       <FsFoxOrder>0470</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Hatch\HatchDialog.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\UI\Dialogs\HatchDialog.cs">
       <FsFoxModule>Cad.UI</FsFoxModule>
       <FsFoxOrder>0480</FsFoxOrder>
     </Compile>
@@ -228,7 +228,7 @@
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0510</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\PaneEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\UI\StatusBar\PaneEx.cs">
       <FsFoxModule>Cad.UI</FsFoxModule>
       <FsFoxOrder>0520</FsFoxOrder>
     </Compile>
@@ -268,7 +268,7 @@
       <FsFoxOrder>0600</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-14</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\IFoxUtils.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\UI\IFoxUtils.cs">
       <FsFoxModule>Cad.UI</FsFoxModule>
       <FsFoxOrder>0610</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-10</FsFoxBoundaryDebt>
@@ -277,7 +277,7 @@
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0620</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\WindowEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\UI\Windows\WindowEx.cs">
       <FsFoxModule>Cad.UI</FsFoxModule>
       <FsFoxOrder>0630</FsFoxOrder>
     </Compile>
@@ -365,7 +365,7 @@
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0820</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Runtime\AcPreferences.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\UI\Preferences\AcPreferences.cs">
       <FsFoxModule>Cad.UI</FsFoxModule>
       <FsFoxOrder>0830</FsFoxOrder>
     </Compile>
@@ -394,7 +394,7 @@
       <FsFoxOrder>0880</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-14</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Runtime\ProgressMeterUtils.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\UI\StatusBar\ProgressMeterUtils.cs">
       <FsFoxModule>Cad.UI</FsFoxModule>
       <FsFoxOrder>0890</FsFoxOrder>
     </Compile>
