@@ -169,6 +169,10 @@
       <FsFoxOrder>0320</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-17</FsFoxBoundaryDebt>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Blocks\BlockVisibilityInfo.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0321</FsFoxOrder>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Bounds\BoundingBox9.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0330</FsFoxOrder>
