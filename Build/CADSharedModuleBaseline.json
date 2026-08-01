@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "normalizedSourceHash": "sha256-utf8-lf",
-  "expectedCompileCount": 131,
+  "expectedCompileCount": 140,
   "moduleCounts": {
     "Foundation": 11,
-    "Platform.Windows": 5,
+    "Platform.Windows": 14,
     "Cad.Interop": 3,
     "Cad.Geometry": 16,
     "Cad.Database": 43,
@@ -179,13 +179,103 @@
     },
     {
       "order": "0170",
-      "fileName": "Enums.cs",
+      "fileName": "TH32CS.cs",
       "module": "Platform.Windows",
       "boundaryDebt": [
         "BD-15"
       ],
       "boundaryFindings": [],
-      "sourceSha256": "0eb51f02c0989cfa05b982e3f47781d67399d0251c3a6b355df9838592d5135e"
+      "sourceSha256": "ecea0ab5a8253d56dd6805038678bb94d6fc16cf0eceba750cafae11cd2604ce"
+    },
+    {
+      "order": "0171",
+      "fileName": "HookType.cs",
+      "module": "Platform.Windows",
+      "boundaryDebt": [
+        "BD-15"
+      ],
+      "boundaryFindings": [],
+      "sourceSha256": "f6fc80bdbbd48b7a9d7d8fdf1cba6de03bbc78ced7d16e5308cb6d861ec698c5"
+    },
+    {
+      "order": "0172",
+      "fileName": "WM.cs",
+      "module": "Platform.Windows",
+      "boundaryDebt": [
+        "BD-15"
+      ],
+      "boundaryFindings": [],
+      "sourceSha256": "872944a79c88e933b79f02c5eba190185f4b656679019cfc258c2301c3360e84"
+    },
+    {
+      "order": "0173",
+      "fileName": "MOUSEEVENTF.cs",
+      "module": "Platform.Windows",
+      "boundaryDebt": [
+        "BD-15"
+      ],
+      "boundaryFindings": [],
+      "sourceSha256": "dac20b3f13d397389bcee1a718e02a6a9595d72f91e0529c4d9fd475b6aacd65"
+    },
+    {
+      "order": "0174",
+      "fileName": "VK.cs",
+      "module": "Platform.Windows",
+      "boundaryDebt": [
+        "BD-15"
+      ],
+      "boundaryFindings": [],
+      "sourceSha256": "5bd198d3f2321050eddee8f165600316b70df37d0f0dc45ce23257c4f09d6e81"
+    },
+    {
+      "order": "0175",
+      "fileName": "SC.cs",
+      "module": "Platform.Windows",
+      "boundaryDebt": [
+        "BD-15"
+      ],
+      "boundaryFindings": [],
+      "sourceSha256": "6624b41bc814b3c16837b7606889216a438df4982cd42ba89e38fc58c9b8cba4"
+    },
+    {
+      "order": "0176",
+      "fileName": "NCmdShow.cs",
+      "module": "Platform.Windows",
+      "boundaryDebt": [
+        "BD-15"
+      ],
+      "boundaryFindings": [],
+      "sourceSha256": "e20940874d28a878e09cc8411b7136eb9374c167bff02f0cc9a55db35854d805"
+    },
+    {
+      "order": "0177",
+      "fileName": "WS.cs",
+      "module": "Platform.Windows",
+      "boundaryDebt": [
+        "BD-15"
+      ],
+      "boundaryFindings": [],
+      "sourceSha256": "596ce8c5f57ddbc346d55c784f78200e97bb91bb10607af9832cd4b9f0d6b1a7"
+    },
+    {
+      "order": "0178",
+      "fileName": "GWL.cs",
+      "module": "Platform.Windows",
+      "boundaryDebt": [
+        "BD-15"
+      ],
+      "boundaryFindings": [],
+      "sourceSha256": "f654e72ae834654db42412c4a8785883a25926abd03bbb30e506dabbd21fb909"
+    },
+    {
+      "order": "0179",
+      "fileName": "GetWindowCmd.cs",
+      "module": "Platform.Windows",
+      "boundaryDebt": [
+        "BD-15"
+      ],
+      "boundaryFindings": [],
+      "sourceSha256": "b3a40623db9202bc795405eb91cef5797a4336133deb7844eca344c0e4e1d82e"
     },
     {
       "order": "0180",
