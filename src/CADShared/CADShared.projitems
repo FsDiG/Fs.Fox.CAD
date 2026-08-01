@@ -148,6 +148,11 @@
       <FsFoxOrder>0190</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-15</FsFoxBoundaryDebt>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Windows\Interop\WmMessage.cs">
+      <FsFoxModule>Platform.Windows</FsFoxModule>
+      <FsFoxOrder>0191</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-15</FsFoxBoundaryDebt>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Platform\Windows\Interop\WindowsAPI.cs">
       <FsFoxModule>Platform.Windows</FsFoxModule>
       <FsFoxOrder>0200</FsFoxOrder>
