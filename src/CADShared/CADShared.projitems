@@ -88,9 +88,54 @@
       <FsFoxModule>Foundation</FsFoxModule>
       <FsFoxOrder>0160</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Platform\Windows\Interop\Enums.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Windows\Interop\TH32CS.cs">
       <FsFoxModule>Platform.Windows</FsFoxModule>
       <FsFoxOrder>0170</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-15</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Windows\Interop\HookType.cs">
+      <FsFoxModule>Platform.Windows</FsFoxModule>
+      <FsFoxOrder>0171</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-15</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Windows\Interop\WM.cs">
+      <FsFoxModule>Platform.Windows</FsFoxModule>
+      <FsFoxOrder>0172</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-15</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Windows\Interop\MOUSEEVENTF.cs">
+      <FsFoxModule>Platform.Windows</FsFoxModule>
+      <FsFoxOrder>0173</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-15</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Windows\Interop\VK.cs">
+      <FsFoxModule>Platform.Windows</FsFoxModule>
+      <FsFoxOrder>0174</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-15</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Windows\Interop\SC.cs">
+      <FsFoxModule>Platform.Windows</FsFoxModule>
+      <FsFoxOrder>0175</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-15</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Windows\Interop\NCmdShow.cs">
+      <FsFoxModule>Platform.Windows</FsFoxModule>
+      <FsFoxOrder>0176</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-15</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Windows\Interop\WS.cs">
+      <FsFoxModule>Platform.Windows</FsFoxModule>
+      <FsFoxOrder>0177</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-15</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Windows\Interop\GWL.cs">
+      <FsFoxModule>Platform.Windows</FsFoxModule>
+      <FsFoxOrder>0178</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-15</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Windows\Interop\GetWindowCmd.cs">
+      <FsFoxModule>Platform.Windows</FsFoxModule>
+      <FsFoxOrder>0179</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-15</FsFoxBoundaryDebt>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Platform\Windows\Interop\SystemEx.cs">
