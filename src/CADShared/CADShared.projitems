@@ -326,6 +326,14 @@
       <FsFoxOrder>0570</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-21</FsFoxBoundaryDebt>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Input\SingleKeywordHookEx.cs">
+      <FsFoxModule>Cad.Editor</FsFoxModule>
+      <FsFoxOrder>0571</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Input\SingleKeyWordWorkType.cs">
+      <FsFoxModule>Cad.Editor</FsFoxModule>
+      <FsFoxOrder>0572</FsFoxOrder>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\SymbolTables\SymbolTableEx.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0580</FsFoxOrder>
