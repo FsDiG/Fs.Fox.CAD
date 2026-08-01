@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
   "normalizedSourceHash": "sha256-utf8-lf",
-  "expectedCompileCount": 122,
+  "expectedCompileCount": 125,
   "moduleCounts": {
     "Foundation": 11,
     "Platform.Windows": 5,
     "Cad.Interop": 3,
     "Cad.Geometry": 16,
-    "Cad.Database": 38,
+    "Cad.Database": 41,
     "Cad.Editor": 19,
     "Cad.Application": 8,
     "Cad.Runtime": 14,
@@ -726,11 +726,35 @@
     },
     {
       "order": "0640",
+      "fileName": "IXrefBindModes.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "72ca38a46095c85f83810c936ed2b9d961426c23ccfeafd6cde6d0e60da20db7"
+    },
+    {
+      "order": "0641",
+      "fileName": "XrefFactory.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "e2ed2953ab8bf5378341fdf1178642fae1ba4084273d22efb9db584ed3d6a05f"
+    },
+    {
+      "order": "0642",
       "fileName": "XrefEx.cs",
       "module": "Cad.Database",
       "boundaryDebt": [],
       "boundaryFindings": [],
-      "sourceSha256": "252e0d68be9a0c96619f4d24fd4c08211b20e630347c410cf64000a501cec912"
+      "sourceSha256": "c9bf7e240d7bae4d812ef0481dad80514ed8efe238904cab9ba1a52fbe0566a1"
+    },
+    {
+      "order": "0643",
+      "fileName": "XrefPath.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "d8ef01f14e03792247aeb85753ab3d8701c448158f0a791dc833e160681de0a6"
     },
     {
       "order": "0650",
