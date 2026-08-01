@@ -15,12 +15,6 @@ namespace Fs.Fox.Cad;
  *  博客: https://www.cnblogs.com/JJBox/p/15650770.html
  */
 /// <summary>
-/// 重绘事件
-/// </summary>
-/// <param name="draw"></param>
-public delegate void WorldDrawEvent(WorldDraw draw);
-
-/// <summary>
 /// jig扩展类
 /// </summary>
 // ReSharper disable once ClassWithVirtualMembersNeverInherited.Global
