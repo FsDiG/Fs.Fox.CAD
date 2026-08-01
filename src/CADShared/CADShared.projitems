@@ -76,22 +76,22 @@
       <FsFoxModule>Foundation</FsFoxModule>
       <FsFoxOrder>0160</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Basal\Win\Enums.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Windows\Interop\Enums.cs">
       <FsFoxModule>Platform.Windows</FsFoxModule>
       <FsFoxOrder>0170</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-15</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Basal\Win\SystemEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Windows\Interop\SystemEx.cs">
       <FsFoxModule>Platform.Windows</FsFoxModule>
       <FsFoxOrder>0180</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-15</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Basal\Win\PInvokeUser32.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Windows\Interop\PInvokeUser32.cs">
       <FsFoxModule>Platform.Windows</FsFoxModule>
       <FsFoxOrder>0190</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-15</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Basal\Win\WindowsAPI.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Windows\Interop\WindowsAPI.cs">
       <FsFoxModule>Platform.Windows</FsFoxModule>
       <FsFoxOrder>0200</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-15</FsFoxBoundaryDebt>
@@ -344,7 +344,7 @@
       <FsFoxOrder>0770</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-22</FsFoxBoundaryDebt>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)PE\ProgramPE.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Windows\PortableExecutable\ProgramPE.cs">
       <FsFoxModule>Platform.Windows</FsFoxModule>
       <FsFoxOrder>0780</FsFoxOrder>
       <FsFoxBoundaryDebt>BD-15</FsFoxBoundaryDebt>
