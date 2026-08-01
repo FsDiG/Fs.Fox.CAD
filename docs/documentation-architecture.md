@@ -1,7 +1,7 @@
 # Fs.Fox.CAD 文档与代码协同治理方案
 
 > 状态：已确认方案（Accepted）<br>
-> 基线：`main` @ `9a95707`，2026-08-01<br>
+> 基线：`main` @ `416c65f`，2026-08-01<br>
 > 跟踪：[Issue #48](https://github.com/FsDiG/Fs.Fox.CAD/issues/48)；关联重构：[Issue #25](https://github.com/FsDiG/Fs.Fox.CAD/issues/25)<br>
 > 适用范围：`Fs.Fox.CAD` 单产品仓库、API 注释、示例、维护者文档和公开静态站点<br>
 > 参考项目：[FastAPI](https://github.com/fastapi/fastapi)、[uv](https://github.com/astral-sh/uv)、[Aider](https://github.com/Aider-AI/aider)、[Continue](https://github.com/continuedev/continue)、[Codex](https://github.com/openai/codex)、[ifoxdoc](https://github.com/InspireFunction/ifoxdoc)
@@ -14,9 +14,9 @@ Fs.Fox.CAD 是一个面向多种 CAD 宿主的单产品通用基础类库。文�
 
 | 边界 | 已确认决定 | 当前不做 |
 | --- | --- | --- |
-| 事实源与仓库边界 | `Fs.Fox.CAD` 是代码、XML API 注释、手写 Markdown、示例和站点配置的唯一可编辑事实源；代码与相关文档在同一个 PR 中评审和合入。 | 不建立第二个可人工编辑的文档仓库；首轮也不建立只存放生成结果的 `Fs.Fox.CAD.Docs`。 |
+| 事实源与仓库边界 | `Fs.Fox.CAD` 是代码、XML API 注释、手写 Markdown、示例和内容级元数据的唯一可编辑事实源；代码与相关文档在同一个 PR 中评审和合入。后续 `Fs.Fox.CAD.Site` 只承载前端展示、构建适配和部署配置。 | 不建立第二个可人工编辑的产品内容仓库，也不建立只存放生成结果的 `Fs.Fox.CAD.Docs`。 |
 | 内容与公开边界 | 公开站点同时服务类库使用者和维护者，并分为两个导航区；当前架构、生命周期契约和适合公开的 ADR 可以发布。active/archive plans、临时分析和未验证假设不进入公共导航，也不进入精选代理语料。 | 不把所有 Markdown、Issue 评论、AI 对话或开发过程等同于产品文档。 |
-| 版本与发布边界 | 首轮只发布 `latest` 和当前 `stable`；静态站点由 CI 从确定提交或 Release tag 生成并直接部署 artifact。 | 不一次性托管全部历史 NuGet 版本，不把 HTML、搜索索引或生成 API 页面提交回源码历史。 |
+| 版本与发布边界 | 首轮只发布 `latest` 和当前 `stable`；站点仓库用来源锁固定源码 commit/tag，EdgeOne Makers 直接连接站点仓库完成构建。 | 不一次性托管全部历史 NuGet 版本，不把 HTML、搜索索引或生成 API 页面提交回任一 Git 仓库。 |
 
 ### 1.2 由边界导出的约定
 
@@ -24,8 +24,9 @@ Fs.Fox.CAD 是一个面向多种 CAD 宿主的单产品通用基础类库。文�
 2. Markdown 同时是开发者和编码代理的上下文。仓库必须显式区分现行契约、提案、已取代文档和历史材料，不能把所有 `.md` 当成同等权威语料。
 3. 重要决策证据通过 current contract、ADR 或必要的 historical 记录保留；普通阶段计划完成后应提炼结论并归档或删除，不能长期与现行规范并列。
 4. 文档站点框架暂不确定。目录、元数据、关联和发布契约不得依赖 DocFX、VitePress、Docusaurus、MkDocs 或其他具体实现。
+5. 可编辑的站点实现与可编辑的产品内容是两个边界。主题、组件和部署配置可以独立演进，但页面正文、API 语义、示例和内容级导航只能从 `Fs.Fox.CAD` 的确定提交取得。
 
-当前不创建 `Fs.Fox.CAD.Docs` 仓库。只有出现多产品聚合、独立发布权限、大量历史版本产物或明显仓库体积压力时，才重新评估生成产物仓库；即使创建，它也只能接收自动生成内容，不能成为第二个文档源。
+已接受后续建立独立展示/部署仓库的边界，建议名称为 `FsDiG/Fs.Fox.CAD.Site`；它尚未在本方案提交中创建。详细的 EdgeOne 能力、来源锁、跨仓触发、权限、API 数据包和 POC 门槛见 [EdgeOne Makers 站点仓库架构评估](edgeone-site-repository-evaluation.md)。当前仍不创建 `Fs.Fox.CAD.Docs` 等生成产物仓库；即使未来创建，它也只能接收自动生成内容，不能成为第二个文档源。
 
 ## 2. 为什么采用同仓事实源
 
@@ -61,11 +62,13 @@ Fs.Fox.CAD 的文档高度依赖真实代码和宿主矩阵：
 | `Fs.Fox.CAD/src` | 是 | 生产代码和 XML API 注释 | API 事实源；行为和签名变化必须同步注释。 |
 | `Fs.Fox.CAD/docs` | 是 | 手写指南、概念、参考、维护者契约、决策和计划 | Markdown 唯一事实源；必须声明状态和受众。 |
 | `Fs.Fox.CAD/samples` | 是 | 面向文档的最小可编译示例 | 由 CI 构建；文档不得复制维护另一份完整实现。 |
-| `Fs.Fox.CAD/site` | 是 | 站点配置、导航适配、主题资源 | 只保存输入和配置，不保存生成站点。框架未选定前可以不存在。 |
-| `Fs.Fox.CAD/tools/docs` | 是 | 文档校验、API 数据生成和发布辅助 | 使用确定版本；失败必须传播非零退出码。 |
-| CI artifact / Pages | 否 | HTML、搜索索引、生成 API 和 `llms.txt` | 完全可重建；记录来源提交和产品版本。 |
+| `Fs.Fox.CAD/tools/docs` | 是 | 文档校验、API 数据生成和来源发布辅助 | 使用确定版本；失败必须传播非零退出码。 |
+| `Fs.Fox.CAD.Site` | 是，但仅限站点实现 | 前端框架、主题、组件、搜索/导航渲染适配和 EdgeOne 配置 | 不保存产品帮助正文；不成为第二个文档事实源。 |
+| `Fs.Fox.CAD.Site/config/content-source.json` | 自动化为主 | `latest` / `stable` 的精确源码 commit 和内容摘要 | 构建不得直接跟随浮动 `main`；变更必须可审计。 |
+| CI artifact / API 数据包 | 否 | 从正式程序集/XML 生成的 API 模型和来源清单 | 完全可重建；与 source commit 和摘要绑定，不提交回 Git。 |
+| EdgeOne Makers 部署 | 否 | HTML、搜索索引、生成 API 和 `llms.txt` | 由站点仓库直接构建；记录 source/site commit 和产品版本。 |
 | GitHub Issue | 是 | 工作项、讨论、验收状态 | 不是现行技术契约；最终结论必须回写 Markdown。 |
-| 可选发布仓库 | 否 | 多产品或多版本静态产物 | 当前不创建；只允许自动化身份写入。 |
+| 可选生成产物仓库 | 否 | 多产品或多版本静态产物 | 当前不创建；只允许自动化身份写入。 |
 
 任何手写内容都不能从发布站点反向复制回源码仓库。发现线上错误时，在 `Fs.Fox.CAD` 提交修正，再重新生成站点。
 
@@ -91,12 +94,13 @@ Fs.Fox.CAD/
       archive/
     assets/
   samples/
-  site/                 # 站点实现确定后再建立
   tools/
-    docs/               # 校验/生成工具确定后再建立
+    docs/               # 源内容校验/API 数据生成工具确定后再建立
 ```
 
 目录按读者问题组织，不与 `src/CADShared` 的九个逻辑模块一一镜像。源码目录回答“谁拥有代码”，文档目录回答“读者想完成什么、理解什么或维护什么”。模块与文档通过元数据关联，不通过相同目录名绑定。
+
+站点实现不放入此树。`Fs.Fox.CAD.Site` 的建议职责与骨架见 [EdgeOne 站点仓库评估](edgeone-site-repository-evaluation.md)，但框架未确定前不据此引入框架专用目录。
 
 ### 4.1 各目录职责
 
@@ -307,7 +311,7 @@ AGENTS.md
 | `latest` | `main` 的已验证提交 | 展示下一发布版本的当前能力。 |
 | `stable` | 当前正式 NuGet Release tag | 与用户安装的当前稳定包一致。 |
 
-每次站点生成记录 `source_repository`、`source_commit`、`package_version`、`channel` 和 `generated_at`。新稳定版本发布后，`stable` 原子切换到新 tag；首轮不长期托管所有旧版本页面，旧 tag 的 Markdown 和 XML 注释仍可在 Git 中追溯。
+每次站点生成记录 `source_repository`、`source_commit`、`site_commit`、`package_version`、`channel` 和 `generated_at`。`Fs.Fox.CAD.Site` 使用来源锁保存 `latest` / `stable` 的完整 source commit；新稳定版本发布后，`stable` 原子切换到新 tag 对应的确定 commit。首轮不长期托管所有旧版本页面，旧 tag 的 Markdown 和 XML 注释仍可在 Git 中追溯。
 
 ### 10.2 AutoCAD 与 ZWCAD
 
@@ -329,34 +333,33 @@ AGENTS.md
 3. 校验 `docs/README.md` 索引覆盖；禁止未登记的 current 文档。
 4. 从 XML/API inventory 校验 `related_symbols`；从工作区校验 `related_sources` 和 `related_tests`。
 5. 构建受影响的 `samples`；文档片段若由样例提取，检查生成结果无漂移。
-6. 严格构建站点，但 PR 不部署生产地址；可以上传临时 artifact 或受控预览。
-7. 扫描 `_site`、生成 API、DLL/XML 副本和个人绝对路径，防止进入提交。
-8. PR 描述记录文档影响；公共 API/行为变化没有文档说明时先警告，规则成熟后再评估阻断。
+6. 源码 PR 校验可发布内容契约；站点仓库建立后，可按受控的精确 source SHA 做集成预览，但不得部署 production。
+7. 站点仓库 PR 使用固定来源或测试 fixture 严格构建站点，并可部署 preview；不得在其中修补产品正文来让构建通过。
+8. 两个仓库都扫描 `_site`、生成 API、DLL/XML 副本、内容缓存和个人绝对路径，防止生成内容或敏感信息进入提交。
+9. PR 描述记录文档影响；公共 API/行为变化没有文档说明时先警告，规则成熟后再评估阻断。
 
 ### 11.2 `main` 发布
 
-1. 从已合入的确定提交检出源码。
-2. 复用正式构建输出生成 AutoCAD/ZWCAD API inventory，不手工复制 DLL/XML。
-3. 只发布允许命名空间和 `published: true` 内容。
-4. 构建 `latest` 站点、搜索索引和精选 `llms.txt`。
-5. 上传不可变 artifact，并通过 GitHub Pages 或其他静态托管服务部署。
-6. 部署失败不回写半成品到源码仓库；保留上一成功站点。
+1. `Fs.Fox.CAD` 从已合入的确定提交校验手写内容，并在 Windows/CAD SDK CI 中生成与该 commit 绑定的 AutoCAD/ZWCAD API 数据包。
+2. 内容摘要变化时，源码仓库向 `Fs.Fox.CAD.Site` 发送受控事件；站点工作流校验后只更新 `latest` 来源锁。
+3. EdgeOne Makers 看到站点仓库提交后，直接检出站点代码，并按来源锁获取精确 source commit 和匹配的 API 数据包。
+4. 只发布允许命名空间和 `published: true` 内容，构建 `latest`、搜索索引和精选 `llms.txt`。
+5. 输出清单记录 source/site commit、内容摘要、包版本和生成时间；生成内容不提交回任一仓库。
+6. 部署失败不更新生产入口并保留上一成功站点；回滚通过 revert 站点代码或来源锁重建。
 
 ### 11.3 Release 发布
 
-Release tag 完成正式构建和包检查后，以相同来源生成 `stable`。文档发布不能先于对应包/API 基线，也不能从工作区未提交文件生成。站点与 Release 互相链接，并显示精确 tag 和 commit。
+Release tag 完成正式构建、包检查和发布后，源码仓库才发送 stable 事件；站点仓库校验 tag 与完整 commit 后更新 `stable` 来源锁。文档发布不能先于对应包/API 基线，也不能从工作区未提交文件生成。站点与 Release 互相链接，并显示精确 tag、source commit 和 site commit。
 
-## 12. 独立发布仓库的重新评估条件
+## 12. 独立站点仓库与生成产物仓库
 
-当前单产品阶段不建立发布仓库。满足以下任一实际需求时再开 Issue 评估：
+### 12.1 展示/部署仓库
 
-- FsDiG 要把多个产品发布到同一域名和统一导航；
-- 需要保留多个历史版本，生成文件体积或文件数明显拖慢源码仓库/Pages 部署；
-- 文档发布需要与源码仓库不同的权限、审核或运维团队；
-- 托管平台要求持久化静态文件而不能直接接收 artifact；
-- 有量化证据表明独立仓库能降低而不是增加跨仓同步成本。
+后续建立 `Fs.Fox.CAD.Site` 是已接受的仓库边界：它隔离 Node/前端依赖、主题代码和 EdgeOne 权限，同时允许站点展示独立迭代。它必须通过精确来源锁读取 `Fs.Fox.CAD`，不得人工维护产品内容或提交生成页面。仓库创建、权限和 POC 仍需按 [专项评估](edgeone-site-repository-evaluation.md) 分阶段执行。
 
-若将来创建，建议命名为 `Fs.Fox.CAD.Docs` 或组织级文档仓库，并遵守：源仓库单向生成、机器人身份最小权限、发布 PR 可审计、禁止手工编辑产物、生成清单关联源提交。
+### 12.2 生成产物仓库
+
+当前不建立 `Fs.Fox.CAD.Docs` 或类似的 HTML 输出仓库。只有出现多产品聚合、长期保存大量历史版本、托管平台必须读取持久化产物，或有量化证据表明产物仓库能降低运维成本时，再开独立 Issue 评估。即使创建，也必须遵守源仓库单向生成、自动化身份最小权限、禁止手工编辑产物和生成清单关联源提交等规则。
 
 ## 13. 简要实施计划
 
@@ -365,6 +368,7 @@ Release tag 完成正式构建和包检查后，以相同来源生成 `stable`�
 - [x] 新增本方案和跟踪 Issue。
 - [x] 新增 `docs/README.md`，建立 current/proposal/superseded/historical 索引。
 - [x] 新增根 `AGENTS.md` 的文档路由规则。
+- [x] 记录 EdgeOne 展示/部署仓库的边界、约束和分阶段 POC 提案。
 - [ ] 定义 front matter schema 和最小校验脚本。
 
 退出条件：开发者或编码代理能从一个入口找到现行契约，并能识别旧提案不具权威性。
@@ -389,22 +393,23 @@ Release tag 完成正式构建和包检查后，以相同来源生成 `stable`�
 
 ### Phase D：发布 `latest` 与 `stable`
 
-- 在不改变事实源结构的前提下选择站点生成器。
-- 建立使用者区、维护者区、AutoCAD/ZWCAD API 变体和来源清单。
-- PR 只构建预览，`main` 发布 latest，Release tag 发布 stable。
-- 首轮直接部署 artifact，不创建独立发布仓库。
+- 创建只承载展示/部署实现的 `Fs.Fox.CAD.Site`，先用最小内容集完成 EdgeOne POC。
+- 在不改变事实源结构的前提下比较并选择站点生成器。
+- 建立精确来源锁、使用者区、维护者区、AutoCAD/ZWCAD API 变体和来源清单。
+- 站点 PR 构建 preview，来源 main 推进 latest，Release 成功事件推进 stable。
+- EdgeOne 直接连接站点仓库构建；不创建生成产物仓库。
 
 退出条件：线上页面可追溯到精确提交/版本，构建可从干净 checkout 重现，失败不会污染源码历史。
 
 ### Phase E：基于证据演进
 
 - 观察文档变更频率、构建时间、站点体积、死链、搜索质量和代理误用旧文档的情况。
-- 只有第 12 节条件出现时才评估独立发布仓库或更多历史版本。
+- 只有第 12.2 节条件出现时才评估生成产物仓库或更多历史版本。
 - 站点框架替换不得改变文档 `id`、状态、代码关联和唯一事实源原则。
 
 ## 14. 完成定义
 
-- [ ] `Fs.Fox.CAD` 是唯一可编辑文档事实源，没有第二套手写 Markdown 仓库。
+- [ ] `Fs.Fox.CAD` 是唯一可编辑产品内容事实源，`Fs.Fox.CAD.Site` 没有第二套帮助正文。
 - [ ] 公开使用者文档与维护者文档分区清晰，plans 默认不发布。
 - [ ] 所有现行文档具有唯一 `id`、明确状态、受众和索引。
 - [ ] proposal/superseded/historical 不会被编码代理误当成当前规格。
@@ -412,12 +417,13 @@ Release tag 完成正式构建和包检查后，以相同来源生成 `stable`�
 - [ ] 完整示例可编译，宿主运行结论与编译结论明确区分。
 - [ ] PR 能检查链接、元数据、关联符号、样例和生成文件污染。
 - [ ] `latest` 对应已验证 main 提交，`stable` 对应当前正式 Release tag。
-- [ ] 站点能显示来源提交、包版本、宿主变体和生成时间。
-- [ ] 静态产物不进入源码历史；当前没有无实际需求的独立发布仓库。
+- [ ] 站点能显示 source/site commit、包版本、宿主变体和生成时间。
+- [ ] 静态产物不进入任一 Git 历史；展示仓库与生成产物仓库边界清晰。
 
 ## 15. 非目标
 
 - 本方案不选择最终站点框架、主题、搜索服务或域名。
+- 本方案不直接创建 `Fs.Fox.CAD.Site`、EdgeOne 项目、GitHub App 或云端密钥。
 - 本方案不立即生成 API 网站、`llms.txt` 或历史版本站点。
 - 本方案不在一次提交中移动全部现有文档或重写内容。
 - 本方案不把文档完整性等同于 CAD 宿主验收。

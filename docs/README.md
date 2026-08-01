@@ -42,8 +42,9 @@ front matter schema 和自动校验尚未落地。在迁移完成前，本页状
 | 修改 `DBTrans` | 实时 [`DBTrans.cs`](../src/CADShared/Runtime/DBTrans.cs)、[生命周期设计提案](dbtrans-lifecycle-contract.md) | 文档中的 Confirmed 可作证据；Decision 仍需独立实现和验证。 |
 | 修改宿主、SDK 或目标框架 | [ZWCAD 兼容性](ZWCAD-version-compatibility.md)、[AutoCAD 2027 决策](AC_2027-net8-compatibility-decision.md)、[构建说明](../编译说明.md) | 检查公开发布目标与仓库中的实验/预备项目差异。 |
 | 修改 CAD 命令行或 UI 文案 | [CAD/UI 文案风格指南](guides/cad-ui-text-style-guide.md) | 只机械修正低风险格式；流程和业务含义需要单独评审。 |
-| 追溯真实宿主结果 | [`Build/HostAcceptance`](../Build/HostAcceptance/) 和对应 Issue/PR | 证据只适用于记录的宿主、版本、提交和场景。 |
+| 追溯真实宿主结果 | 对应 Issue/PR；仅当目标提交确实包含 `Build/HostAcceptance` 时再读取其中记录 | 当前 main 尚无该目录；证据只适用于记录的宿主、版本、提交和场景。 |
 | 新增或调整文档 | [文档治理方案](documentation-architecture.md)、根 [`AGENTS.md`](../AGENTS.md) | 先维护事实源、状态和关联，不提前选择站点框架。 |
+| 规划站点仓库或 EdgeOne 发布 | [文档治理方案](documentation-architecture.md)、[EdgeOne 站点仓库评估](edgeone-site-repository-evaluation.md)、[Issue #48](https://github.com/FsDiG/Fs.Fox.CAD/issues/48) | 产品内容仍只在本仓库维护；展示仓库、来源锁和生成产物是不同边界。 |
 
 ## 4. 当前文档
 
@@ -58,7 +59,7 @@ front matter schema 和自动校验尚未落地。在迁移完成前，本页状
 | `decision.autocad-2027-net8` | `current` | [AutoCAD 2027 .NET 8 兼容策略](AC_2027-net8-compatibility-decision.md) | maintainer | 预备项目当前使用 .NET 8 的原因、限制和回迁条件。 |
 | `concept.upstream-relationship` | `current` | [上游 IFoxCAD 与 Fs.Fox.CAD 的关系](<../IFoxCAD 说明.md>) | user, maintainer | 项目来源、独立维护边界和问题归属。 |
 | `guide.repository-maintenance` | `current` | [Fs.Fox.CAD 维护说明](../Fs分支说明.md) | maintainer | 命名、远程仓库和上游贡献边界。 |
-| `governance.documentation` | `current` | [文档与代码协同治理方案](documentation-architecture.md) | maintainer | 唯一事实源、公开范围、版本发布和 Vibe Coding 上下文约定。 |
+| `governance.documentation` | `current` | [文档与代码协同治理方案](documentation-architecture.md) | maintainer | 唯一产品内容源、展示/部署仓库边界、公开范围、版本发布和 Vibe Coding 上下文约定。 |
 | `guide.cad-ui-text` | `current` | [CAD/UI 文案风格指南](guides/cad-ui-text-style-guide.md) | maintainer | CAD 命令行和桌面 UI 的用户可见文字规则。 |
 | `workflow.build` | `current` | [构建检查工作流](../.github/workflows/build-and-deploy.md) | maintainer | `build-and-deploy.yml` 的触发、构建目标和诊断说明。 |
 | `workflow.release` | `current` | [NuGet 发布工作流](../.github/workflows/release.md) | maintainer | `release.yml` 的标签发布、打包和 Release 流程。 |
@@ -69,6 +70,7 @@ front matter schema 和自动校验尚未落地。在迁移完成前，本页状
 | --- | --- | --- | --- |
 | `current` | `plan.cad-modules` | [单程序集逻辑模块化执行计划](logical-modularization-plan.md) | Issue #25 的 active plan；不进入公共站点，且不授权修改运行时行为。 |
 | `proposal` | `contract.dbtrans-lifecycle` | [DBTrans 生命周期与释放契约](dbtrans-lifecycle-contract.md) | 同时记录 Confirmed、Decision 与 Not run；不能把后续决定表述为已实施。 |
+| `proposal` | `proposal.edgeone-site-repository` | [EdgeOne Makers 站点仓库架构评估](edgeone-site-repository-evaluation.md) | Issue #48 的实施提案；已确认内容/展示边界，但仓库、框架、权限和云资源尚未创建。 |
 
 ## 6. 已取代与历史文档
 
@@ -84,11 +86,11 @@ front matter schema 和自动校验尚未落地。在迁移完成前，本页状
 | 路径 | 状态/用途 | 默认处理 |
 | --- | --- | --- |
 | `.github/ISSUE_TEMPLATE.zh-CN.md`、`.github/PULL_REQUEST_TEMPLATE.zh-CN.md` | GitHub 操作模板 | 由 GitHub UI 使用，不作为技术文档。 |
-| `Build/HostAcceptance/*.md` | `historical` 宿主证据快照 | 只在追溯匹配 Issue、PR、提交和宿主版本时读取，不发布。 |
+| 未来可能进入特定 PR/提交的 `Build/HostAcceptance/*.md` | `historical` 宿主证据快照 | 当前 main 尚无该目录；只在目标 Git 状态确实包含它且需追溯匹配 Issue、PR、提交和宿主版本时读取，不发布。 |
 | `tests/TestShared/readme.md` | `draft` 子树说明 | 内容未覆盖实时测试结构，不作为测试清单。 |
 | `MgdDbg/README.md` | 组件范围的 `current` README | 只说明 MgdDbg，不外推到 Fs.Fox.CAD 构建或支持矩阵。 |
 
-生成站点、API 中间文件、搜索索引、DLL/XML 副本及其他可重建输出不属于手写 Markdown，不得进入 Git 历史或编码代理默认上下文。
+生成站点、API 中间文件、搜索索引、DLL/XML 副本及其他可重建输出不属于手写 Markdown，不得进入本仓库或后续展示仓库的 Git 历史，也不得进入编码代理默认上下文。
 
 ## 8. 维护本索引
 
