@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
   "normalizedSourceHash": "sha256-utf8-lf",
-  "expectedCompileCount": 121,
+  "expectedCompileCount": 122,
   "moduleCounts": {
     "Foundation": 11,
     "Platform.Windows": 5,
     "Cad.Interop": 3,
     "Cad.Geometry": 16,
     "Cad.Database": 38,
-    "Cad.Editor": 18,
+    "Cad.Editor": 19,
     "Cad.Application": 8,
     "Cad.Runtime": 14,
     "Cad.UI": 8
@@ -562,11 +562,19 @@
     },
     {
       "order": "0490",
+      "fileName": "WorldDrawEvent.cs",
+      "module": "Cad.Editor",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "1cf78148ef0d76154ad6b43a144f134e0443a122845b1ca20e220c808bbf9ec5"
+    },
+    {
+      "order": "0491",
       "fileName": "JigEx.cs",
       "module": "Cad.Editor",
       "boundaryDebt": [],
       "boundaryFindings": [],
-      "sourceSha256": "a13d5ab38ec215cc6dace235103fb8b1bb66e18655886ea60153de269fa689af"
+      "sourceSha256": "2e0cf112fc2c65d163e59627adb06885813558922571bf9542473ed3982aaabd"
     },
     {
       "order": "0500",

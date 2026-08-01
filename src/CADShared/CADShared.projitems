@@ -263,9 +263,13 @@
       <FsFoxModule>Cad.UI</FsFoxModule>
       <FsFoxOrder>0480</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Jig\JigEx.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Jig\WorldDrawEvent.cs">
       <FsFoxModule>Cad.Editor</FsFoxModule>
       <FsFoxOrder>0490</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Jig\JigEx.cs">
+      <FsFoxModule>Cad.Editor</FsFoxModule>
+      <FsFoxOrder>0491</FsFoxOrder>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Jig\JigExTransient.cs">
       <FsFoxModule>Cad.Editor</FsFoxModule>
