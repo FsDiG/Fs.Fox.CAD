@@ -408,4 +408,8 @@ healthchecksdb
 
 #ifoxcad
 **/Properties/launchSettings.json
-/Build
+/Build/*
+!/Build/Verify-CADSharedModuleMap.ps1
+!/Build/CADSharedModuleBaseline.json
+!/Build/Verify-CADSharedCompatibility.ps1
+!/Build/CADSharedCompatibilityBaseline.json

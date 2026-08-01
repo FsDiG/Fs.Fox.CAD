@@ -88,7 +88,7 @@ front matter schema 和自动校验尚未落地。在迁移完成前，本页状
 | `tests/TestShared/readme.md` | `draft` 子树说明 | 内容未覆盖实时测试结构，不作为测试清单。 |
 | `MgdDbg/README.md` | 组件范围的 `current` README | 只说明 MgdDbg，不外推到 Fs.Fox.CAD 构建或支持矩阵。 |
 
-生成站点、API 中间文件、搜索索引、DLL/XML 副本及其他可重建输出不属于手写 Markdown，不得进入 Git 历史或编码代理默认上下文。
+生成站点、API 中间文件、搜索索引、DLL/XML 副本及其他可丢弃的构建输出不属于手写 Markdown，不得进入 Git 历史或编码代理默认上下文。用于比较前后状态、必须经代码评审更新的确定性契约基线可以入库；当前仅包括 `Build/CADSharedModuleBaseline.json` 和 `Build/CADSharedCompatibilityBaseline.json`。
 
 ## 8. 维护本索引
 

@@ -5,9 +5,10 @@
 本指南介绍 `.github/workflows/build-and-deploy.yml` 的 GitHub Actions 工作流程，用于自动化项目的构建检查。
 
 ### 主要功能
+- **模块边界检查**：构建前校验 96 个共享编译项的模块、顺序、源码基线和已登记边界债务
 - **串行构建**：单一作业依次编译 4 个目标（Debug/Release）
 - **多工具支持**：自动选择 MSBuild 或 dotnet CLI 进行构建
-- **持续集成**：确保代码变更不会破坏构建
+- **兼容性检查**：构建后比较四目标程序集身份、引用、公共 API 和 NuGet 包布局
 - **失败即停**：任一原生构建命令返回非零退出码时立即终止作业
 
 ### 触发条件
@@ -16,6 +17,7 @@
 |----------|------|------|
 | 推送到 main 分支 | 自动执行所有目标的构建检查 | `git push origin main` |
 | 向 main 分支发起 PR | 执行构建检查（PR 校验） | 创建 Pull Request |
+| 向 `refactor/cad-modules` 发起 PR | 执行长期重构分支的完整检查 | 创建重构 Pull Request |
 | 提交含 `[build]` 到任意分支 | 在任意分支触发构建检查 | `git commit -m "feat: new feature [build]"` |
 | 提交含 `[deploy]` 到任意分支 | 触发构建检查（保留未来扩展） | `git commit -m "fix: bug fix [deploy]"` |
 | 手动触发 (workflow_dispatch) | 通过 GitHub UI 手动触发构建 | Actions 页面点击 "Run workflow" |
@@ -62,6 +64,7 @@
 ### 不使用标签
 - main 分支的所有推送自动触发构建
 - PR 到 main 分支自动触发构建检查
+- PR 到 `refactor/cad-modules` 长期分支自动触发构建检查
 
 ## 4. 工作流程执行流程（单作业顺序）
 
@@ -70,14 +73,24 @@ flowchart TD
  A[触发事件] --> B{检查触发条件}
  B -->|满足| C[Checkout]
  B -->|不满足| Z[跳过]
- C --> D[Setup .NET8]
+ C --> D[Setup .NET]
  D --> E[Setup MSBuild]
- E --> F1[Build AC_2019 Debug/Release (MSBuild)]
+ E --> V1[Verify CADShared module map]
+ V1 --> F1[Build AC_2019 Debug/Release (MSBuild)]
  F1 --> F2[Build AC_2025 Debug/Release (dotnet)]
  F2 --> F3[Build ZW_2022 Debug/Release (MSBuild)]
  F3 --> F4[Build ZW_2025 Debug/Release (MSBuild)]
- F4 --> G[完成]
+ F4 --> V2[Verify CADShared compatibility baseline]
+ V2 --> G[完成]
 ```
+
+### 受控兼容性基线
+
+`Build/CADSharedModuleBaseline.json` 和 `Build/CADSharedCompatibilityBaseline.json` 是评审过的契约输入，不是可丢弃的构建输出。校验脚本需要将当前结果与前一批准状态比较，因此这两份小型、确定性的 JSON 基线必须进入版本控制。
+
+只有计划内源码归属或兼容面确实变化并经评审时，才能使用 `-UpdateBaseline` 更新对应文件。普通构建不得自动回写基线；基线 diff 必须与引起变化的代码在同一个 PR 中审查。
+
+兼容性基线使用语义稳定的表示：方法、字段、属性和自定义特性签名由 `System.Reflection.Metadata` 解码为类型全名而不是 PE token，记录集合使用固定文化和键排序，XML 文档按成员名规范排序后计算哈希。包内 DLL 会在每次检查中计算 SHA-256 并与同一次构建输出逐个核对；由于编译器版本会改变 MVID、生成类型顺序和二进制字节，跨环境基线只记录 DLL 的路径与构建输出来源，不保存原始 DLL 哈希。
 
 ## 5. 构建工具说明
 
@@ -107,7 +120,7 @@ dotnet build {项目路径} --configuration {config}
 |------|---------|------|
 | MSBuild | Visual Studio 2019+ | 构建 .NET Framework 项目 |
 | .NET SDK | 8.0.x | 构建 .NET 8 项目 |
-| PowerShell | 5.1+ | 执行构建脚本 |
+| PowerShell | 7.x | 通过 `pwsh` 执行构建脚本和兼容性签名解码器 |
 | Git | 最新版 | 代码检出 |
 
 ### 验证环境配置
