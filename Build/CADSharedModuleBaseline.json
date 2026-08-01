@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "normalizedSourceHash": "sha256-utf8-lf",
-  "expectedCompileCount": 115,
+  "expectedCompileCount": 117,
   "moduleCounts": {
     "Foundation": 11,
     "Platform.Windows": 5,
@@ -9,7 +9,7 @@
     "Cad.Geometry": 16,
     "Cad.Database": 38,
     "Cad.Editor": 17,
-    "Cad.Application": 6,
+    "Cad.Application": 8,
     "Cad.Runtime": 12,
     "Cad.UI": 7
   },
@@ -292,7 +292,15 @@
       "module": "Cad.Application",
       "boundaryDebt": [],
       "boundaryFindings": [],
-      "sourceSha256": "9829caa40cb312e101c1a9d7c502aed386df00a86aaba1227c93ad995ebe12ab"
+      "sourceSha256": "799838cd9d330d6608211502458c03d88db3f8fdc4f8c7dd39fb67142ff50013"
+    },
+    {
+      "order": "0281",
+      "fileName": "DocumentLockManagerExtension.cs",
+      "module": "Cad.Application",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "7bfc9e5df1c433887cd890e9ca64555121c0becf4d8b93c2336e532180e01524"
     },
     {
       "order": "0290",
@@ -851,7 +859,15 @@
       "module": "Cad.Application",
       "boundaryDebt": [],
       "boundaryFindings": [],
-      "sourceSha256": "107ba242d745703f7e7d6d16216a8f029d2bc781edbf5ec108105422b01ebf97"
+      "sourceSha256": "6de4fc3c5d388e5fd656d5ce4d24f08cbbce0b289c56872bf77ebd8b13fa89c2"
+    },
+    {
+      "order": "0761",
+      "fileName": "DBmodEx.cs",
+      "module": "Cad.Application",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "f2d4ecd36a2e8f6d6da6714e7e6402178e936f6d55a15d6908baab4cea09511b"
     },
     {
       "order": "0770",
