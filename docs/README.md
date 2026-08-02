@@ -39,7 +39,7 @@ front matter schema 和自动校验尚未落地。在迁移完成前，本页状
 | 修改项目、构建或发布 | [构建与项目结构](../编译说明.md)、[构建工作流](../.github/workflows/build-and-deploy.md)、[发布工作流](../.github/workflows/release.md) | 以实时 `.csproj` 和 `.yml` 为最终事实。 |
 | 理解整体架构 | [架构说明](关于IFoxCAD的架构说明.md)、[文档治理方案](documentation-architecture.md) | 前者描述产品，后者描述文档。 |
 | 移动或重组 `CADShared` | [单程序集逻辑模块化计划](logical-modularization-plan.md)、[Issue #25](https://github.com/FsDiG/Fs.Fox.CAD/issues/25) | 相关实现进入 `refactor/cad-modules`；计划中的数量和路径表是 Phase A 快照，实时映射以目标分支的项目清单和模块基线为准。 |
-| 修改 `DBTrans` | 实时 [`DBTrans.cs`](../src/CADShared/Runtime/DBTrans.cs)、[生命周期设计提案](dbtrans-lifecycle-contract.md) | 文档中的 Confirmed 可作证据；Decision 仍需独立实现和验证。 |
+| 修改 `DBTrans` | 实时 [`DBTrans.cs`](../src/CADShared/Cad/Database/Transactions/DBTrans.cs)、[生命周期设计提案](dbtrans-lifecycle-contract.md) | 文档中的 Confirmed 可作证据；Decision 仍需独立实现和验证。 |
 | 修改宿主、SDK 或目标框架 | [ZWCAD 兼容性](ZWCAD-version-compatibility.md)、[AutoCAD 2027 决策](AC_2027-net8-compatibility-decision.md)、[构建说明](../编译说明.md) | 检查公开发布目标与仓库中的实验/预备项目差异。 |
 | 修改 CAD 命令行或 UI 文案 | [CAD/UI 文案风格指南](guides/cad-ui-text-style-guide.md) | 只机械修正低风险格式；流程和业务含义需要单独评审。 |
 | 追溯真实宿主结果 | 对应 Issue/PR；仅当目标提交确实包含 `Build/HostAcceptance` 时再读取其中记录 | 当前 main 尚无该目录；证据只适用于记录的宿主、版本、提交和场景。 |
@@ -90,7 +90,7 @@ front matter schema 和自动校验尚未落地。在迁移完成前，本页状
 | `tests/TestShared/readme.md` | `draft` 子树说明 | 内容未覆盖实时测试结构，不作为测试清单。 |
 | `MgdDbg/README.md` | 组件范围的 `current` README | 只说明 MgdDbg，不外推到 Fs.Fox.CAD 构建或支持矩阵。 |
 
-生成站点、API 中间文件、搜索索引、DLL/XML 副本及其他可重建输出不属于手写 Markdown，不得进入本仓库或后续展示仓库的 Git 历史，也不得进入编码代理默认上下文。
+生成站点、API 中间文件、搜索索引、DLL/XML 副本及其他可丢弃的构建输出不属于手写 Markdown，不得进入本仓库或展示仓库的 Git 历史，也不得进入编码代理默认上下文。用于比较前后状态、必须经代码评审更新的确定性契约基线不属于可丢弃输出，可以入库；当前仅包括 `Build/CADSharedModuleBaseline.json` 和 `Build/CADSharedCompatibilityBaseline.json`。
 
 ## 8. 维护本索引
 
