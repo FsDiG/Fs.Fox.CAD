@@ -1,15 +1,16 @@
 # Fs.Fox.CAD 单程序集逻辑模块化执行计划
 
-> 状态：已完成（Completed；结构与实施约束仍有效，数量和路径表为 Phase A 快照）<br>
+> 状态：已完成（Historical；仅用于追溯决策、实施阶段和 Phase A 快照，不作为新实现规格）<br>
 > 基线：`main` @ `2ef03ce`，2026-08-01<br>
-> 实施交付：长期实施分支 `refactor/cad-modules` 已由 [PR #100](https://github.com/FsDiG/Fs.Fox.CAD/pull/100) 合入 `main` @ `302c60f`。<br>
-> 历史实施分支：`refactor/cad-modules`；完成后的实时事实以 `main` 为准，不再以该分支作为后续 PR 的合入目标。<br>
+> 实施交付：[PR #100](https://github.com/FsDiG/Fs.Fox.CAD/pull/100) 已将本轮结果合入 `main` @ `302c60f`。<br>
+> 历史实施分支：`refactor/cad-modules` 只用于审计，不再作为工作入口或后续 PR 的 base。<br>
+> 现行入口：[架构说明](关于IFoxCAD的架构说明.md)、[`CADShared.projitems`](../src/CADShared/CADShared.projitems) 和 [`CADSharedModuleBaseline.json`](../Build/CADSharedModuleBaseline.json)。<br>
 > 原始参考：[Issue #18](https://github.com/FsDiG/Fs.Fox.CAD/issues/18)（仅作历史输入，不作为实施规格）<br>
 > 可用性注记：2026-08-01 复核时 GitHub API 已无法解析 Issue #18，因此正文不依赖其内容。<br>
 > 命名参考：[FeiSiDev/Fs.Zfgk.CAD](https://github.com/FeiSiDev/Fs.Zfgk.CAD) @ `c38ce32`（只参考领域词汇，不复制其目录层级）<br>
 > SDK 依据：[AutoCAD 2026 Managed .NET Developer's Guide](https://help.autodesk.com/view/OARX/2026/ENU/?guid=GUID-C3F3C736-40CF-44A0-9210-55F6A939B6F2)（用于校正子系统边界，不采用厂商命名作为公共目录）<br>
-> 跟踪 Issue：[Issue #25](https://github.com/FsDiG/Fs.Fox.CAD/issues/25)（维护阶段摘要；逐文件实时事实以目标 Git 状态中的项目清单和模块基线为准）<br>
-> 前序提案：[渐进式模块化重构建议](refactoring-proposal.md)（已取代，仅保留决策背景；单程序集目录迁移以本计划为准）<br>
+> 跟踪 Issue：[Issue #25](https://github.com/FsDiG/Fs.Fox.CAD/issues/25)（只保存最终决策与实施摘要，不作为现行技术契约）<br>
+> 前序提案：[渐进式模块化重构建议](refactoring-proposal.md)（已取代，仅保留决策背景）<br>
 > 审查基线：[Issue #42](https://github.com/FsDiG/Fs.Fox.CAD/issues/42)<br>
 > 并行专项：[Issue #43](https://github.com/FsDiG/Fs.Fox.CAD/issues/43)、[Issue #51](https://github.com/FsDiG/Fs.Fox.CAD/issues/51)
 
@@ -27,13 +28,13 @@
 
 ### 1.1 快照与实时事实来源
 
-本计划同时保存仍然有效的模块边界和 Phase A 的可审计输入。两者不能混作同一种事实：
+本计划保存当时采用的模块边界、实施过程和 Phase A 可审计输入。现行维护规则已提炼到[架构说明](关于IFoxCAD的架构说明.md)，历史快照与实时事实不能混作同一种事实：
 
 | 需要确认的内容 | 事实来源 |
 | --- | --- |
 | 当前 `main` 的正式编译集合和路径 | 目标提交中的 `src/CADShared/CADShared.projitems`。 |
 | 已完成模块化结果的编译集合、模块、顺序和边界债务 | `main` 中的 [`CADShared.projitems`](../src/CADShared/CADShared.projitems) 和 [`CADSharedModuleBaseline.json`](../Build/CADSharedModuleBaseline.json)。 |
-| 阶段进度、PR 和验收摘要 | [Issue #25](https://github.com/FsDiG/Fs.Fox.CAD/issues/25)；它不是逐文件机器事实源。 |
+| 最终决策、PR 和验收摘要 | [Issue #25](https://github.com/FsDiG/Fs.Fox.CAD/issues/25)；它不是现行技术契约或逐文件机器事实源。 |
 | 最初 96 项如何分配和迁移 | 本文第 5、6、7 节的 `main` @ `2ef03ce` / Phase A 快照。 |
 
 Phase A-D 和已经单独批准的低风险文件拆分完成后，本轮自 2026-08-02 起不再以提高“一类型一文件”覆盖率为目标。剩余多类型文件只有在出现明确的所有权、兼容性或维护收益时，才通过独立 Issue 评估；文件长度或顶层类型数量本身不是继续拆分的理由。

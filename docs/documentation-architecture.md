@@ -136,7 +136,7 @@ Fs.Fox.CAD/
 | `docs/ZWCAD-version-compatibility.md` | `docs/reference/compatibility/zwcad.md` | 去除本机绝对路径，保留可复核来源。 |
 | `docs/AC_2027-net8-compatibility-decision.md` | `docs/decisions/0001-autocad-2027-net8.md` | 转为 ADR，记录状态和回迁条件。 |
 | `docs/guides/cad-ui-text-style-guide.md` | `docs/maintainers/contributing/cad-ui-text.md` | 已取消多仓库同名文件人工同步要求；后续移动到维护者规则目录。 |
-| `docs/logical-modularization-plan.md` | `docs/plans/active/cad-modules.md` | 实施期间保持 active；完成后提炼 ADR/架构并归档。 |
+| `docs/logical-modularization-plan.md` | `docs/plans/archive/cad-modules.md` | 已标记 `historical`，现行维护规则已提炼到架构说明；路径迁移留给 Issue #48 的整体文档迁移阶段。 |
 | `docs/refactoring-proposal.md` | `docs/plans/archive/refactoring-proposal.md` | 已标记 `superseded` 并指向逻辑模块化执行计划；后续移动归档。 |
 | `docs/ifoxcad-v0.9-upstream-merge-analysis.md` | `docs/plans/archive/upstream-v0.9.md` | Issue #26 已完成，已标记 `historical`；后续移动归档。 |
 | `编译说明.md` | `docs/maintainers/contributing/building.md` | 与实际构建矩阵和 CI 命令统一。 |
@@ -279,7 +279,7 @@ AGENTS.md
 - 未来生成的 `llms.txt` 只聚合 `published: true` 且 `status: current` 的精选页面；不得把整个仓库 Markdown 拼接成单个上下文。
 - 页面顶部和站点构建清单显示来源仓库、提交、产品版本和文档状态，使人和代理都能判断时效。
 
-`docs/refactoring-proposal.md` 与 `docs/logical-modularization-plan.md` 已完成状态收口：前者明确标记为 `superseded` 并指向后者，后者记录 Issue #25 已完成的实施约束和审计证据。目录迁移已由 PR #100 合入，实时结构以 `main` 的项目清单和模块基线为准。
+`docs/refactoring-proposal.md` 与 `docs/logical-modularization-plan.md` 已完成状态收口：前者为 `superseded`，后者为 `historical`；仍有效的模块维护规则已提炼到现行架构说明。目录迁移已由 PR #100 合入，实时结构以 `main` 的项目清单和模块基线为准，历史决策与实施详情仍可通过计划和 Issue #25 追溯。文件暂不移动，后续目录迁移继续由 Issue #48 统一处理。
 
 ## 9. 公开站点边界
 

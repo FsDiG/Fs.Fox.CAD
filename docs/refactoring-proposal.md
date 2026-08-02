@@ -2,11 +2,12 @@
 
 > 状态：已取代（Superseded）<br>
 > 基线：`main` @ `80f8da3`，2026-07-31<br>
-> 跟踪：[Issue #25](https://github.com/FsDiG/Fs.Fox.CAD/issues/25)<br>
+> 历史跟踪：[Issue #25](https://github.com/FsDiG/Fs.Fox.CAD/issues/25)<br>
 > 参考：[Issue #18](https://github.com/FsDiG/Fs.Fox.CAD/issues/18)<br>
-> 取代文档：[单程序集逻辑模块化执行计划](logical-modularization-plan.md)
+> 历史实施：[单程序集逻辑模块化执行计划](logical-modularization-plan.md)<br>
+> 现行入口：[架构说明](关于IFoxCAD的架构说明.md)、[`CADShared.projitems`](../src/CADShared/CADShared.projitems) 和 [`CADSharedModuleBaseline.json`](../Build/CADSharedModuleBaseline.json)
 
-> 本文只保留前序调研和决策背景，不再作为实施规格。当前模块、目录、逐文件映射、阶段门槛和长期分支策略均以取代文档及 Issue #25 为准。
+> 本文只保留前序调研和决策背景，不再作为实施规格。模块化计划和 Issue #25 只用于追溯；当前结构、维护规则和逐文件事实以上述现行入口及最新 `main` 为准，后续边界调整使用独立 Issue/PR 和短期分支。
 
 ## 1. 结论
 
