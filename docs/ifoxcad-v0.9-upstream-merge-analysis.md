@@ -1,8 +1,10 @@
 # IFoxCAD v0.9 上游重要变更评估
 
-> 状态：分析结论，待分阶段实施<br>
-> 跟踪：[Issue #26](https://github.com/FsDiG/Fs.Fox.CAD/issues/26)<br>
+> 状态：历史记录（Historical）<br>
+> 跟踪：[Issue #26](https://github.com/FsDiG/Fs.Fox.CAD/issues/26)（已完成）<br>
 > 上游：[IFoxCAD v0.9](https://gitee.com/inspirefunction/ifoxcad/tree/v0.9)
+
+> 本文只记录 2026-07-31 基线上的上游评估。Issue #26 的分阶段移植和暂缓决定已经收口；后续需求必须重新核对实时上游、当前 `main` 和新的宿主证据。
 
 ## 1. 结论
 
@@ -35,7 +37,7 @@ B 的正式发布目标包括 AutoCAD 2019、AutoCAD 2025、ZWCAD 2022 和 ZWCAD
 ### 3.1 Jig 释放顺序
 
 - 上游提交：[`bc7a242`](https://gitee.com/inspirefunction/ifoxcad/commit/bc7a2429c144ab627fcfaddde05f20d2be07589e)
-- B 对应位置：[`JigEx.cs`](../src/CADShared/ExtensionMethod/Jig/JigEx.cs)
+- B 对应位置：[`JigEx.cs`](../src/CADShared/Cad/Editor/Jig/JigEx.cs)
 - 建议：移植。
 
 B 当前先访问 `ent.Database`，再判断 `ent.IsDisposed`。如果图元已在 Jig 外部释放，访问 `Database` 本身可能抛出异常。应先判断 `!ent.IsDisposed`，再检查它是否尚未加入数据库并执行释放。
@@ -45,7 +47,7 @@ B 当前先访问 `ent.Database`，再判断 `ent.IsDisposed`。如果图元已�
 ### 3.2 XData 按应用名精确判断
 
 - 上游提交：[`e13eecd`](https://gitee.com/inspirefunction/ifoxcad/commit/e13eecd58995986775845548f9d46b828eb66724)
-- B 对应位置：[`DBObjectEx.cs`](../src/CADShared/ExtensionMethod/DBObjectEx.cs)
+- B 对应位置：[`DBObjectEx.cs`](../src/CADShared/Cad/Database/Objects/DBObjectEx.cs)
 - 建议：移植。
 
 B 当前 `RemoveXData(obj, appName)` 只检查对象是否存在任意 XData。如果对象只有其他 RegApp 的数据，仍会进入目标应用的清理逻辑。应改为检查 `GetXDataForApplication(appName)`，目标应用不存在时直接返回。
@@ -55,7 +57,7 @@ B 当前 `RemoveXData(obj, appName)` 只检查对象是否存在任意 XData。�
 ### 3.3 块属性命中后再提权
 
 - 上游提交：[`6744217`](https://gitee.com/inspirefunction/ifoxcad/commit/67442178d7b9909ded07536acf0527246ef17dbe)、[`0d3bf68`](https://gitee.com/inspirefunction/ifoxcad/commit/0d3bf6889574e55c41ce12c9101eb4c1fd26bd8f)、[`d600dbf`](https://gitee.com/inspirefunction/ifoxcad/commit/d600dbf9377af205d7cfa6c0adf34487541d3e2d)
-- B 对应位置：[`BlockReferenceEx.cs`](../src/CADShared/ExtensionMethod/Entity/BlockReferenceEx.cs)
+- B 对应位置：[`BlockReferenceEx.cs`](../src/CADShared/Cad/Database/Entities/Blocks/BlockReferenceEx.cs)
 - 建议：移植最终状态，不逐提交照搬。
 
 最终上游状态是先执行 `TryGetValue(att.Tag, out value)`，只有命中目标属性时才调用 `ForWrite()`。这能避免无关属性进入写状态。
@@ -65,7 +67,7 @@ B 当前 `RemoveXData(obj, appName)` 只检查对象是否存在任意 XData。�
 ## 4. 第二阶段：ZWCAD 环境变量互操作
 
 - 上游提交：[`159c076`](https://gitee.com/inspirefunction/ifoxcad/commit/159c0761cf6289c0195e8c5b7fe7ca99210b9fa1)
-- B 对应位置：[`Env.cs`](../src/CADShared/Runtime/Env.cs)
+- B 对应位置：[`Env.cs`](../src/CADShared/Cad/Application/Context/Env.cs)
 - 建议：按 SDK 重新实现，禁止直接复制上游声明。
 
 B 当前 ZWCAD 分支从 `zced.dll` 导入 `zcedGetEnv/zcedSetEnv`，而 ZWCAD 2022 安装目录并不存在该 DLL。ZRX2022 与 ZRX2025 的头文件都声明：

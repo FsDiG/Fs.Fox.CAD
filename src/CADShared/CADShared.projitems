@@ -9,102 +9,612 @@
     <Import_RootNamespace>CADShared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Algorithms\QuadTree\QuadEntity.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Algorithms\QuadTree\QuadTree.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Algorithms\QuadTree\QuadTreeEvn.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Algorithms\QuadTree\QuadTreeNode.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Algorithms\QuadTree\QuadTreeSelectMode.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Algorithms\QuadTree\Rect.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Assoc\AssocPersSubentityIdPEEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Assoc\AssocUtils.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Basal\General\ArrayEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Basal\General\DebugHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Basal\General\EnumEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Basal\General\LinqEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Basal\General\LoopList.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Basal\General\LoopState.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Basal\Nullable\ArgumentNullEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Basal\Nullable\CallerArgumentExpressionAttribute.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Basal\Win\Enums.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Basal\Win\SystemEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Basal\Win\PInvokeUser32.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Basal\Win\WindowsAPI.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\BaseEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\BulgeVertexWidth.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\CollectionEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\DatabaseEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\DBDictionaryEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\DBObjectEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\DBTransEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\DocumentLockManager.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\DwgMark.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\EditorEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Entity\ArcEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Entity\BlockReferenceEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Entity\BoundingBox9.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Entity\CircleEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Entity\CurveEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Entity\DBTextEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Entity\EntityBoundingInfo.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Entity\EntityEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Entity\MTextEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Entity\PolylineEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Entity\RegionEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Enums.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\ErrorInfoEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Geometry\Curve2dEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Geometry\Curve3dEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Geometry\GeometryEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Geometry\PointEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Hatch\HatchDialog.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Jig\JigEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Jig\JigExTransient.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\ObjectIdEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\PaneEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\PromptOptionsEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\RandomEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\RedrawEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\SelectionSetEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\SingleKeyWordHook.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\SymbolTableEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\SymbolTableRecordEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\TangentEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\IFoxUtils.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\TransactionEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\WindowEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\XrefEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Hatch\HatchConverter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Hatch\HatchEx.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ExtensionMethod\Hatch\HatchInfo.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Initialize\AcadEMR.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Initialize\AssemInfo.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Initialize\AutoReg.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Initialize\AutoRegAssem.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Initialize\CheckFactory.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Initialize\IAutoGo.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Initialize\MethodInfoHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)PE\AcadPeInfo.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)PE\DBmod.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)PE\PostCmd.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)PE\ProgramPE.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ResultData\LispList.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ResultData\TypedValueList.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ResultData\XDataList.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ResultData\XRecordDataList.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Runtime\AcPreferences.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Runtime\DBTrans.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Runtime\Env.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Runtime\IdleAction.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Runtime\IdleNoCommandAction.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Runtime\PInvokeCad.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Runtime\ProgressMeterUtils.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Runtime\SymbolTable.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Runtime\SystemVariableManager.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)SelectionFilter\OpComp.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)SelectionFilter\OpEqual.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)SelectionFilter\OpFilter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)SelectionFilter\OpList.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)SelectionFilter\OpLogi.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\SpatialIndex\QuadTree\QuadEntity.cs">
+      <FsFoxModule>Cad.Geometry</FsFoxModule>
+      <FsFoxOrder>0010</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\SpatialIndex\QuadTree\QuadTree.cs">
+      <FsFoxModule>Cad.Geometry</FsFoxModule>
+      <FsFoxOrder>0020</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\SpatialIndex\QuadTree\QuadTreeEvn.cs">
+      <FsFoxModule>Cad.Geometry</FsFoxModule>
+      <FsFoxOrder>0030</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\SpatialIndex\QuadTree\QuadTreeNode.cs">
+      <FsFoxModule>Cad.Geometry</FsFoxModule>
+      <FsFoxOrder>0040</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\SpatialIndex\QuadTree\QuadTreeSelectMode.cs">
+      <FsFoxModule>Cad.Geometry</FsFoxModule>
+      <FsFoxOrder>0050</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\SpatialIndex\QuadTree\QuadTreeFindMode.cs">
+      <FsFoxModule>Cad.Geometry</FsFoxModule>
+      <FsFoxOrder>0051</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\SpatialIndex\QuadTree\Rect.cs">
+      <FsFoxModule>Cad.Geometry</FsFoxModule>
+      <FsFoxOrder>0060</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-24</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Associativity\AssocPersSubentityIdPEEx.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0070</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-16</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Associativity\AssocUtils.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0080</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-16</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Foundation\ArrayEx.cs">
+      <FsFoxModule>Foundation</FsFoxModule>
+      <FsFoxOrder>0090</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Foundation\DebugHelper.cs">
+      <FsFoxModule>Foundation</FsFoxModule>
+      <FsFoxOrder>0100</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Foundation\EnumEx.cs">
+      <FsFoxModule>Foundation</FsFoxModule>
+      <FsFoxOrder>0110</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Foundation\LinqEx.cs">
+      <FsFoxModule>Foundation</FsFoxModule>
+      <FsFoxOrder>0120</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Foundation\LoopListNode.cs">
+      <FsFoxModule>Foundation</FsFoxModule>
+      <FsFoxOrder>0130</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Foundation\LoopList.cs">
+      <FsFoxModule>Foundation</FsFoxModule>
+      <FsFoxOrder>0131</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Foundation\LoopState.cs">
+      <FsFoxModule>Foundation</FsFoxModule>
+      <FsFoxOrder>0140</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Foundation\ProState.cs">
+      <FsFoxModule>Foundation</FsFoxModule>
+      <FsFoxOrder>0141</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Foundation\Compatibility\ArgumentNullEx.cs">
+      <FsFoxModule>Foundation</FsFoxModule>
+      <FsFoxOrder>0150</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Foundation\Compatibility\CallerArgumentExpressionAttribute.cs">
+      <FsFoxModule>Foundation</FsFoxModule>
+      <FsFoxOrder>0160</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Windows\Interop\TH32CS.cs">
+      <FsFoxModule>Platform.Windows</FsFoxModule>
+      <FsFoxOrder>0170</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-15</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Windows\Interop\HookType.cs">
+      <FsFoxModule>Platform.Windows</FsFoxModule>
+      <FsFoxOrder>0171</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-15</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Windows\Interop\WM.cs">
+      <FsFoxModule>Platform.Windows</FsFoxModule>
+      <FsFoxOrder>0172</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-15</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Windows\Interop\MOUSEEVENTF.cs">
+      <FsFoxModule>Platform.Windows</FsFoxModule>
+      <FsFoxOrder>0173</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-15</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Windows\Interop\VK.cs">
+      <FsFoxModule>Platform.Windows</FsFoxModule>
+      <FsFoxOrder>0174</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-15</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Windows\Interop\SC.cs">
+      <FsFoxModule>Platform.Windows</FsFoxModule>
+      <FsFoxOrder>0175</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-15</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Windows\Interop\NCmdShow.cs">
+      <FsFoxModule>Platform.Windows</FsFoxModule>
+      <FsFoxOrder>0176</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-15</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Windows\Interop\WS.cs">
+      <FsFoxModule>Platform.Windows</FsFoxModule>
+      <FsFoxOrder>0177</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-15</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Windows\Interop\GWL.cs">
+      <FsFoxModule>Platform.Windows</FsFoxModule>
+      <FsFoxOrder>0178</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-15</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Windows\Interop\GetWindowCmd.cs">
+      <FsFoxModule>Platform.Windows</FsFoxModule>
+      <FsFoxOrder>0179</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-15</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Windows\Interop\SystemEx.cs">
+      <FsFoxModule>Platform.Windows</FsFoxModule>
+      <FsFoxOrder>0180</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-15</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Windows\Interop\PInvokeUser32.cs">
+      <FsFoxModule>Platform.Windows</FsFoxModule>
+      <FsFoxOrder>0190</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-15</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Windows\Interop\WmMessage.cs">
+      <FsFoxModule>Platform.Windows</FsFoxModule>
+      <FsFoxOrder>0191</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-15</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Windows\Interop\WindowsAPI.cs">
+      <FsFoxModule>Platform.Windows</FsFoxModule>
+      <FsFoxOrder>0200</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-15</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\SymbolTables\BaseEx.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0210</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Curves\Polylines\BulgeVertexWidth.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0220</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Collections\CollectionEx.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0230</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-01</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\DatabaseEx.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0240</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-02</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\SwitchDatabase.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0241</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-02</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Dictionaries\DBDictionaryEx.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0250</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Objects\DBObjectEx.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0260</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Transactions\DBTransEx.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0270</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Application\Documents\DocumentLockManager.cs">
+      <FsFoxModule>Cad.Application</FsFoxModule>
+      <FsFoxOrder>0280</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Application\Documents\DocumentLockManagerExtension.cs">
+      <FsFoxModule>Cad.Application</FsFoxModule>
+      <FsFoxOrder>0281</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Files\DwgMark.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0290</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\EditorEx.cs">
+      <FsFoxModule>Cad.Editor</FsFoxModule>
+      <FsFoxOrder>0300</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-07</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Curves\ArcEx.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0310</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Blocks\BlockReferenceEx.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0320</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-17</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Blocks\BlockVisibilityInfo.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0321</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Bounds\BoundingBox9.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0330</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Curves\CircleEx.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0340</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Curves\CurveEx.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0350</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Text\DBTextEx.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0360</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-18</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Bounds\EntityBoundingInfo.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0370</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\EntityEx.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0380</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Text\MTextEx.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0390</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Curves\Polylines\PolylineEx.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0400</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\RegionEx.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0410</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Xrefs\PathConverterModes.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0420</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Xrefs\XrefModes.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0421</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\SymbolTables\SymModes.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0422</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\CoordinateSystemCode.cs">
+      <FsFoxModule>Cad.Geometry</FsFoxModule>
+      <FsFoxOrder>0423</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\OrientationType.cs">
+      <FsFoxModule>Cad.Geometry</FsFoxModule>
+      <FsFoxOrder>0424</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\PointOnRegionType.cs">
+      <FsFoxModule>Cad.Geometry</FsFoxModule>
+      <FsFoxOrder>0425</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Text\FontTTF.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0426</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\UI\Dialogs\ErrorInfoEx.cs">
+      <FsFoxModule>Cad.UI</FsFoxModule>
+      <FsFoxOrder>0430</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-23</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\Curve2dEx.cs">
+      <FsFoxModule>Cad.Geometry</FsFoxModule>
+      <FsFoxOrder>0440</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\Curve3dEx.cs">
+      <FsFoxModule>Cad.Geometry</FsFoxModule>
+      <FsFoxOrder>0450</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\GeometryEx.cs">
+      <FsFoxModule>Cad.Geometry</FsFoxModule>
+      <FsFoxOrder>0460</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-04</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\VectorEx.cs">
+      <FsFoxModule>Cad.Geometry</FsFoxModule>
+      <FsFoxOrder>0461</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\PlaneEx.cs">
+      <FsFoxModule>Cad.Geometry</FsFoxModule>
+      <FsFoxOrder>0462</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\PointEx.cs">
+      <FsFoxModule>Cad.Geometry</FsFoxModule>
+      <FsFoxOrder>0470</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\UI\Dialogs\HatchDialog.cs">
+      <FsFoxModule>Cad.UI</FsFoxModule>
+      <FsFoxOrder>0480</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Jig\WorldDrawEvent.cs">
+      <FsFoxModule>Cad.Editor</FsFoxModule>
+      <FsFoxOrder>0490</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Jig\JigEx.cs">
+      <FsFoxModule>Cad.Editor</FsFoxModule>
+      <FsFoxOrder>0491</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Jig\JigExTransient.cs">
+      <FsFoxModule>Cad.Editor</FsFoxModule>
+      <FsFoxOrder>0500</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Objects\ObjectIdEx.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0510</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\UI\StatusBar\PaneEx.cs">
+      <FsFoxModule>Cad.UI</FsFoxModule>
+      <FsFoxOrder>0520</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\UI\StatusBar\PaneMarginType.cs">
+      <FsFoxModule>Cad.UI</FsFoxModule>
+      <FsFoxOrder>0521</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\PromptOptionsEx.cs">
+      <FsFoxModule>Cad.Editor</FsFoxModule>
+      <FsFoxOrder>0530</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\KeywordException.cs">
+      <FsFoxModule>Cad.Editor</FsFoxModule>
+      <FsFoxOrder>0531</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Foundation\RandomEx.cs">
+      <FsFoxModule>Foundation</FsFoxModule>
+      <FsFoxOrder>0540</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Display\BrightEntity.cs">
+      <FsFoxModule>Cad.Editor</FsFoxModule>
+      <FsFoxOrder>0550</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Display\BrightEditor.cs">
+      <FsFoxModule>Cad.Editor</FsFoxModule>
+      <FsFoxOrder>0551</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Display\RedrawEx.cs">
+      <FsFoxModule>Cad.Editor</FsFoxModule>
+      <FsFoxOrder>0552</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-08</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Selection\SelectionSetEx.cs">
+      <FsFoxModule>Cad.Editor</FsFoxModule>
+      <FsFoxOrder>0560</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Input\SingleKeyWordHook.cs">
+      <FsFoxModule>Cad.Editor</FsFoxModule>
+      <FsFoxOrder>0570</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-21</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Input\SingleKeywordHookEx.cs">
+      <FsFoxModule>Cad.Editor</FsFoxModule>
+      <FsFoxOrder>0571</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Input\SingleKeyWordWorkType.cs">
+      <FsFoxModule>Cad.Editor</FsFoxModule>
+      <FsFoxOrder>0572</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\SymbolTables\SymbolTableEx.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0580</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\SymbolTables\SymbolTableRecordEx.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0590</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-06</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Interop\ThirdParty\Tianzheng\TangentEx.cs">
+      <FsFoxModule>Cad.Interop</FsFoxModule>
+      <FsFoxOrder>0600</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-14</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\UI\IFoxUtils.cs">
+      <FsFoxModule>Cad.UI</FsFoxModule>
+      <FsFoxOrder>0610</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-10</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Transactions\TransactionEx.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0620</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\UI\Windows\WindowEx.cs">
+      <FsFoxModule>Cad.UI</FsFoxModule>
+      <FsFoxOrder>0630</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Xrefs\IXrefBindModes.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0640</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Xrefs\XrefFactory.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0641</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Xrefs\XrefEx.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0642</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Xrefs\XrefPath.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0643</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Hatch\HatchConverter.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0650</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Hatch\HatchEx.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0660</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-05</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Hatch\HatchInfo.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0670</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-05</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Initialization\AcadEMR.cs">
+      <FsFoxModule>Cad.Runtime</FsFoxModule>
+      <FsFoxOrder>0680</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-13</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Registration\AssemInfo.cs">
+      <FsFoxModule>Cad.Runtime</FsFoxModule>
+      <FsFoxOrder>0690</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Registration\AssemLoadType.cs">
+      <FsFoxModule>Cad.Runtime</FsFoxModule>
+      <FsFoxOrder>0691</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Registration\AutoRegConfig.cs">
+      <FsFoxModule>Cad.Runtime</FsFoxModule>
+      <FsFoxOrder>0692</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Registration\AutoReg.cs">
+      <FsFoxModule>Cad.Runtime</FsFoxModule>
+      <FsFoxOrder>0700</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Registration\AutoRegAssem.cs">
+      <FsFoxModule>Cad.Runtime</FsFoxModule>
+      <FsFoxOrder>0710</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Initialization\CheckFactory.cs">
+      <FsFoxModule>Cad.Runtime</FsFoxModule>
+      <FsFoxOrder>0720</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-11</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Initialization\Sequence.cs">
+      <FsFoxModule>Cad.Runtime</FsFoxModule>
+      <FsFoxOrder>0730</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Initialization\IFoxAutoGo.cs">
+      <FsFoxModule>Cad.Runtime</FsFoxModule>
+      <FsFoxOrder>0731</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Initialization\IFoxInitializeAttribute.cs">
+      <FsFoxModule>Cad.Runtime</FsFoxModule>
+      <FsFoxOrder>0732</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Initialization\RunClass.cs">
+      <FsFoxModule>Cad.Runtime</FsFoxModule>
+      <FsFoxOrder>0733</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Initialization\AutoReflection.cs">
+      <FsFoxModule>Cad.Runtime</FsFoxModule>
+      <FsFoxOrder>0734</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Initialization\MethodInfoHelper.cs">
+      <FsFoxModule>Cad.Runtime</FsFoxModule>
+      <FsFoxOrder>0740</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Interop\Native\AcadPeInfo.cs">
+      <FsFoxModule>Cad.Interop</FsFoxModule>
+      <FsFoxOrder>0750</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-14</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Application\SystemVariables\DBmod.cs">
+      <FsFoxModule>Cad.Application</FsFoxModule>
+      <FsFoxOrder>0760</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Application\SystemVariables\DBmodEx.cs">
+      <FsFoxModule>Cad.Application</FsFoxModule>
+      <FsFoxOrder>0761</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Commands\PostCmd.cs">
+      <FsFoxModule>Cad.Editor</FsFoxModule>
+      <FsFoxOrder>0770</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-22</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Platform\Windows\PortableExecutable\ProgramPE.cs">
+      <FsFoxModule>Platform.Windows</FsFoxModule>
+      <FsFoxOrder>0780</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-15</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Runtime\Lisp\LispList.cs">
+      <FsFoxModule>Cad.Runtime</FsFoxModule>
+      <FsFoxOrder>0790</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\ResultData\TypedValueList.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0800</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\ResultData\XDataList.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0810</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\ResultData\XRecordDataList.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0820</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\UI\Preferences\AcPreferences.cs">
+      <FsFoxModule>Cad.UI</FsFoxModule>
+      <FsFoxOrder>0830</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Transactions\DBTrans.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0840</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-03</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Application\Context\Env.cs">
+      <FsFoxModule>Cad.Application</FsFoxModule>
+      <FsFoxOrder>0850</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-09</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Application\Scheduling\IdleAction.cs">
+      <FsFoxModule>Cad.Application</FsFoxModule>
+      <FsFoxOrder>0860</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-12</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Application\Scheduling\IdleNoCommandAction.cs">
+      <FsFoxModule>Cad.Application</FsFoxModule>
+      <FsFoxOrder>0870</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-12</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Interop\Native\PInvokeCad.cs">
+      <FsFoxModule>Cad.Interop</FsFoxModule>
+      <FsFoxOrder>0880</FsFoxOrder>
+      <FsFoxBoundaryDebt>BD-14</FsFoxBoundaryDebt>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\UI\StatusBar\ProgressMeterUtils.cs">
+      <FsFoxModule>Cad.UI</FsFoxModule>
+      <FsFoxOrder>0890</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\SymbolTables\SymbolTable.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0900</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Application\SystemVariables\SystemVariableManager.cs">
+      <FsFoxModule>Cad.Application</FsFoxModule>
+      <FsFoxOrder>0910</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Selection\Filters\OpComp.cs">
+      <FsFoxModule>Cad.Editor</FsFoxModule>
+      <FsFoxOrder>0920</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Selection\Filters\OpEqual.cs">
+      <FsFoxModule>Cad.Editor</FsFoxModule>
+      <FsFoxOrder>0930</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Selection\Filters\OpFilter.cs">
+      <FsFoxModule>Cad.Editor</FsFoxModule>
+      <FsFoxOrder>0940</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Selection\Filters\OpList.cs">
+      <FsFoxModule>Cad.Editor</FsFoxModule>
+      <FsFoxOrder>0950</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Selection\Filters\OpAnd.cs">
+      <FsFoxModule>Cad.Editor</FsFoxModule>
+      <FsFoxOrder>0951</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Selection\Filters\OpOr.cs">
+      <FsFoxModule>Cad.Editor</FsFoxModule>
+      <FsFoxOrder>0952</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Selection\Filters\OpLogi.cs">
+      <FsFoxModule>Cad.Editor</FsFoxModule>
+      <FsFoxOrder>0960</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Selection\Filters\OpNot.cs">
+      <FsFoxModule>Cad.Editor</FsFoxModule>
+      <FsFoxOrder>0961</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Selection\Filters\OpXor.cs">
+      <FsFoxModule>Cad.Editor</FsFoxModule>
+      <FsFoxOrder>0962</FsFoxOrder>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)ExtensionMethod\Geometry\ToDo\" />

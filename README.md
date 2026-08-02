@@ -106,8 +106,11 @@ tests/
 
 ## 文档
 
+- [文档索引与阅读顺序][documentation-index]
+- [文档与代码协同治理方案][documentation-architecture]
 - [构建与项目结构][building]
 - [架构与核心抽象][architecture]
+- [DBTrans 生命周期与释放契约][dbtrans-lifecycle]
 - [ZWCAD 版本兼容性与迁移说明][zwcad-compatibility]
 - [AutoCAD 2027 .NET 8 兼容策略][acad-2027-decision]
 - [CAD 界面文字规范][cad-ui-text-style]
@@ -120,8 +123,11 @@ tests/
 
 本项目采用 [MIT License][license]。原项目作者及贡献者信息见 [上游说明][upstream]。
 
+[documentation-index]: docs/README.md
+[documentation-architecture]: docs/documentation-architecture.md
 [building]: https://github.com/FsDiG/Fs.Fox.CAD/blob/main/%E7%BC%96%E8%AF%91%E8%AF%B4%E6%98%8E.md
 [architecture]: https://github.com/FsDiG/Fs.Fox.CAD/blob/main/docs/%E5%85%B3%E4%BA%8EIFoxCAD%E7%9A%84%E6%9E%B6%E6%9E%84%E8%AF%B4%E6%98%8E.md
+[dbtrans-lifecycle]: https://github.com/FsDiG/Fs.Fox.CAD/blob/main/docs/dbtrans-lifecycle-contract.md
 [zwcad-compatibility]: https://github.com/FsDiG/Fs.Fox.CAD/blob/main/docs/ZWCAD-version-compatibility.md
 [acad-2027-decision]: https://github.com/FsDiG/Fs.Fox.CAD/blob/main/docs/AC_2027-net8-compatibility-decision.md
 [cad-ui-text-style]: https://github.com/FsDiG/Fs.Fox.CAD/blob/main/docs/guides/cad-ui-text-style-guide.md
