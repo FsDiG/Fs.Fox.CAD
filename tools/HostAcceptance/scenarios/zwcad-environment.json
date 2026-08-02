@@ -1,0 +1,18 @@
+{
+  "$schema": "../scenario.schema.json",
+  "schemaVersion": 1,
+  "name": "zwcad-environment",
+  "description": "ZWCAD-only GetEnv and SetEnv native interop regression.",
+  "products": [
+    "ZWCAD"
+  ],
+  "requiresDrawing": false,
+  "commands": [
+    {
+      "name": "ZWCAD GetEnv and SetEnv",
+      "command": "Test_ZwCadGetSetEnv",
+      "expectedText": "ZWCAD GetEnv/SetEnv passed."
+    }
+  ],
+  "failurePatterns": []
+}

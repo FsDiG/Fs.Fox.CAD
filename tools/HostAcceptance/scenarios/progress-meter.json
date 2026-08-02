@@ -1,0 +1,29 @@
+{
+  "$schema": "../scenario.schema.json",
+  "schemaVersion": 1,
+  "name": "progress-meter",
+  "description": "Normal, expected-exception, and repeat progress-meter command sequence.",
+  "products": [
+    "AutoCAD",
+    "ZWCAD"
+  ],
+  "requiresDrawing": false,
+  "commands": [
+    {
+      "name": "Progress meter first run",
+      "command": "Test_ProgressMeter",
+      "expectedText": "Progress meter completed and the status bar was restored."
+    },
+    {
+      "name": "Progress meter expected failure",
+      "command": "Test_ProgressMeterFailure",
+      "expectedText": "Progress meter exception path restored the status bar."
+    },
+    {
+      "name": "Progress meter second run",
+      "command": "Test_ProgressMeter",
+      "expectedText": "Progress meter completed and the status bar was restored."
+    }
+  ],
+  "failurePatterns": []
+}

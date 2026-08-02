@@ -1,0 +1,47 @@
+{
+  "$schema": "../scenario.schema.json",
+  "schemaVersion": 1,
+  "name": "shared-smoke",
+  "description": "Self-contained database and interop checks shared by AutoCAD and ZWCAD.",
+  "products": [
+    "AutoCAD",
+    "ZWCAD"
+  ],
+  "requiresDrawing": false,
+  "commands": [
+    {
+      "name": "Jig dispose safety",
+      "command": "Test_JigDisposeSafety",
+      "expectedText": "Jig dispose safety passed."
+    },
+    {
+      "name": "XData removal isolation",
+      "command": "Test_XDataRemovalIsolation",
+      "expectedText": "XData removal isolation passed."
+    },
+    {
+      "name": "Block attribute write scope",
+      "command": "Test_BlockAttributeWriteScope",
+      "expectedText": "Block attribute write scope passed."
+    },
+    {
+      "name": "Ordinary block visibility",
+      "command": "Test_BlockVisibilityInfoOrdinary",
+      "expectedText": "Ordinary block visibility query passed."
+    },
+    {
+      "name": "EntGet",
+      "command": "Test_EntGet",
+      "expectedText": "EntGet passed for LINE"
+    },
+    {
+      "name": "EntMod and EntUpd",
+      "command": "Test_EntMod",
+      "expectedText": "EntMod/EntUpd passed for"
+    }
+  ],
+  "failurePatterns": [
+    "eInvalidObjectId",
+    "FATAL ERROR"
+  ]
+}

@@ -34,7 +34,9 @@
 - 文档变更至少执行 `git diff --check`、相对链接检查，并检查 GitHub Flavored Markdown 的实际渲染。
 - 构建命令和正式目标以 [构建与项目结构](编译说明.md)及实时项目/工作流为准。
 - 构建或 CI 通过只代表编译和自动检查通过，不能表述为 AutoCAD/ZWCAD 宿主验收通过。
+- 真实 CAD 宿主验收优先使用 [`tools/HostAcceptance`](tools/HostAcceptance/README.md)，并分别记录编译目标、测试程序集和实际运行的 CAD 产品/完整版本；不能用项目名中的 SDK 年代代替宿主版本。
 - 涉及加载、事务、数据库、Editor/Jig、UI、native interop 或宿主生命周期时，明确记录实际运行的宿主、版本和未执行项。
+- 在 Issue #40 的隔离 profile、宿主内身份握手和命令级结果协议完成前，不使用日常 CAD profile 或已打开的 CAD 会话执行自动验收，也不自动修改 Trusted Paths、注册表、启动组或全局 CAD 配置。
 - 除非任务明确要求，不启动 CAD 进行人工验收；未运行时写明 `Not run`，不要推断结果。
 
 ## 上下文与生成内容
