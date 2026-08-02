@@ -77,7 +77,6 @@ front matter schema 和自动校验尚未落地。在迁移完成前，本页状
 | 状态 | 稳定 ID | 文档 | 当前入口 |
 | --- | --- | --- | --- |
 | `historical` | `plan.cad-modules` | [单程序集逻辑模块化执行计划](logical-modularization-plan.md) | 现行入口为[架构说明](关于IFoxCAD的架构说明.md)、根 [`AGENTS.md`](../AGENTS.md)、项目清单和模块基线；本文只追溯 Phase A 快照和实施过程。 |
-| `superseded` | `proposal.cad-modules` | [渐进式模块化重构建议](refactoring-proposal.md) | 现行入口同上；历史取舍可继续查阅执行计划和 Issue #25。 |
 | `historical` | `history.upstream-v0.9` | [IFoxCAD v0.9 上游重要变更评估](ifoxcad-v0.9-upstream-merge-analysis.md) | Issue #26 已完成；后续需求重新核对实时上游和当前源码。 |
 
 ## 7. 专项 Markdown 与排除规则
