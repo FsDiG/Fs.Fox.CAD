@@ -1,9 +1,9 @@
 # Fs.Fox.CAD 单程序集逻辑模块化执行计划
 
-> 状态：执行计划（Implementation Plan；结构与实施约束仍有效，数量和路径表为 Phase A 快照）<br>
+> 状态：已完成（Completed；结构与实施约束仍有效，数量和路径表为 Phase A 快照）<br>
 > 基线：`main` @ `2ef03ce`，2026-08-01<br>
-> 文档交付：本计划已先行直接提交到 `main`，不包含生产代码改动。<br>
-> 长期实施分支：`refactor/cad-modules`，从创建时最新 `main` 建立并作为后续重构 PR 的合入目标。<br>
+> 实施交付：长期实施分支 `refactor/cad-modules` 已由 [PR #100](https://github.com/FsDiG/Fs.Fox.CAD/pull/100) 合入 `main` @ `302c60f`。<br>
+> 历史实施分支：`refactor/cad-modules`；完成后的实时事实以 `main` 为准，不再以该分支作为后续 PR 的合入目标。<br>
 > 原始参考：[Issue #18](https://github.com/FsDiG/Fs.Fox.CAD/issues/18)（仅作历史输入，不作为实施规格）<br>
 > 可用性注记：2026-08-01 复核时 GitHub API 已无法解析 Issue #18，因此正文不依赖其内容。<br>
 > 命名参考：[FeiSiDev/Fs.Zfgk.CAD](https://github.com/FeiSiDev/Fs.Zfgk.CAD) @ `c38ce32`（只参考领域词汇，不复制其目录层级）<br>
@@ -32,7 +32,7 @@
 | 需要确认的内容 | 事实来源 |
 | --- | --- |
 | 当前 `main` 的正式编译集合和路径 | 目标提交中的 `src/CADShared/CADShared.projitems`。 |
-| 长期分支的实时编译集合、模块、顺序和边界债务 | [`refactor/cad-modules` 的 `CADShared.projitems`](https://github.com/FsDiG/Fs.Fox.CAD/blob/refactor/cad-modules/src/CADShared/CADShared.projitems)和[`CADSharedModuleBaseline.json`](https://github.com/FsDiG/Fs.Fox.CAD/blob/refactor/cad-modules/Build/CADSharedModuleBaseline.json)。 |
+| 已完成模块化结果的编译集合、模块、顺序和边界债务 | `main` 中的 [`CADShared.projitems`](../src/CADShared/CADShared.projitems) 和 [`CADSharedModuleBaseline.json`](../Build/CADSharedModuleBaseline.json)。 |
 | 阶段进度、PR 和验收摘要 | [Issue #25](https://github.com/FsDiG/Fs.Fox.CAD/issues/25)；它不是逐文件机器事实源。 |
 | 最初 96 项如何分配和迁移 | 本文第 5、6、7 节的 `main` @ `2ef03ce` / Phase A 快照。 |
 
@@ -366,7 +366,7 @@ flowchart LR
 
 ## 6. Phase A 完整路径映射
 
-以下映射记录 `main` @ `2ef03ce` 的 Phase A 迁移输入和初始目标，是机械移动的审计快照，不是当前 `main` 或长期分支的实时文件清单。左侧为当时相对 `src/CADShared` 的路径，右侧为初始目标路径；后续获批拆分及实时状态按第 1.1 节确认。
+以下映射记录 `main` @ `2ef03ce` 的 Phase A 迁移输入和初始目标，是机械移动的审计快照，不是当前 `main` 的实时文件清单。左侧为当时相对 `src/CADShared` 的路径，右侧为初始目标路径；后续获批拆分及实时状态按第 1.1 节确认。
 
 ### 6.1 Foundation（9）
 
@@ -550,16 +550,16 @@ ExtensionMethod/WindowEx.cs -> Cad/UI/Windows/WindowEx.cs
 | `BD-23` | `Cad.UI` | `ErrorInfoEx.cs` | ErrorStatus 文本映射与 `ShowAlertDialog` 呈现耦合。 | 将纯错误映射下沉，UI 只负责呈现；保持现有内部扩展入口。 |
 | `BD-24` | `Cad.Geometry` | `Rect.cs` | 公开 `ToPolyLine()` 直接返回 `Entity`、构造 `Polyline` 并调用数据库默认值，违反 Geometry 不依赖 DatabaseServices 的目标。 | 本轮只登记并整体移动；由 [Issue #51](https://github.com/FsDiG/Fs.Fox.CAD/issues/51) 设计 CAD 适配拆分与公共 API 兼容方案。 |
 
-## 8. 长期实施分支与阶段检查点
+## 8. 长期实施分支与阶段检查点（已完成）
 
-本计划文档直接进入 `main`，让后续产品迭代在修改 `CADShared` 时可以看到目标归属。共享长期分支固定为 `refactor/cad-modules`，从创建时最新 `main` 建立；后续重构 PR 均以它作为 base。Phase A 至 Phase D 都在这个分支内完成，只作为可审查的提交组和验收检查点，不再为每个移动批次创建短期分支并串行合入 `main`。
+本计划文档先行进入 `main`，让实施期间的产品迭代在修改 `CADShared` 时可以看到目标归属。共享长期分支固定为 `refactor/cad-modules`，从创建时最新 `main` 建立；Phase A 至 Phase D 均在该分支内完成，并最终由 PR #100 合回 `main`。以下规则保留为实施记录，不再约束完成后的新 PR。
 
 ### 8.1 两条并行轨道
 
 | 轨道 | 负责内容 | 合入策略 |
 | --- | --- | --- |
 | `main` | 正常功能、缺陷修复、发布和必要文档；继续拥有最新生产行为。 | 按现有节奏持续合入，不等待目录重构。 |
-| `refactor/cad-modules` | 本计划的映射守卫、机械移动、兼容性基线和必要的迁移记录；后续重构 PR 以该分支为 base。 | 共享并长期维护，完成全部最终门槛后才考虑合回 `main`。 |
+| `refactor/cad-modules` | 本计划的映射守卫、机械移动、兼容性基线和必要的迁移记录；实施 PR 以该分支为 base。 | 实施期间共享维护，完成最终门槛后由 PR #100 合回 `main`。 |
 
 并行期间遵循以下规则：
 
@@ -719,16 +719,16 @@ CI 继续执行四个目标的 Debug + Release。任何子进程失败都必须�
 
 ## 12. 完成定义
 
-- [ ] 最终同步的 `origin/main` 中所有正式编译项都位于已审查的目标目录；最终数量以长期分支的模块基线为准，不使用本文的 96 项快照代替实时核对。
-- [ ] 模块计数已与最终同步基线逐项核对，并在 Issue #25 记录阶段摘要；不使用第 5 节的 Phase A 计数代替实时核对。
-- [ ] 每个编译项有唯一 `FsFoxModule` 与 `FsFoxOrder`，顺序与基线一致。
-- [ ] `CADShared.shproj`、六个正式/非正式平台项目的 import 方式及正式包身份未改变。
-- [ ] 21 个 `Geometry/ToDo` 文件保持未编译且未被顺手移动。
-- [ ] 机械移动提交中的生产 `.cs` 正文不变；单独批准的文件拆分具有源码声明、公共 API 和适用元数据兼容证据。
-- [ ] 四个正式测试项目 Release 构建通过，CI 的 Debug + Release 通过。
-- [ ] 公共 API、程序集引用和包布局没有意外差异。
-- [ ] 已知边界债务仍有编号和后续方向，没有被目录名称掩盖。
-- [ ] 架构文档已反映新源码树，并明确单程序集状态。
-- [ ] 没有把未执行的 CAD 宿主测试报告为通过。
+- [x] 最终同步的 `origin/main` 中所有正式编译项都位于已审查的目标目录；最终数量以模块基线为准，不使用本文的 96 项快照代替实时核对。
+- [x] 模块计数已与最终同步基线逐项核对，并在 Issue #25 记录阶段摘要；不使用第 5 节的 Phase A 计数代替实时核对。
+- [x] 每个编译项有唯一 `FsFoxModule` 与 `FsFoxOrder`，顺序与基线一致。
+- [x] `CADShared.shproj`、六个正式/非正式平台项目的 import 方式及正式包身份未改变。
+- [x] 21 个 `Geometry/ToDo` 文件保持未编译且未被顺手移动。
+- [x] 机械移动提交中的生产 `.cs` 正文不变；单独批准的文件拆分具有源码声明、公共 API 和适用元数据兼容证据。
+- [x] 四个正式测试项目 Release 构建通过，CI 的 Debug + Release 通过。
+- [x] 公共 API、程序集引用和包布局没有意外差异。
+- [x] 已知边界债务仍有编号和后续方向，没有被目录名称掩盖。
+- [x] 架构文档已反映新源码树，并明确单程序集状态。
+- [x] 没有把未执行的 CAD 宿主测试报告为通过。
 
 完成本计划后，下一步才是按 `BD-01` 至 `BD-24` 逐项清理真实依赖。优先处理会形成反向依赖或宿主风险放大的 `BD-02` 至 `BD-09`、`BD-12` 至 `BD-15`、`BD-17`、`BD-18` 及 `BD-21` 至 `BD-24`；`BD-19`、`BD-20` 只做兼容友好的文件拆分，不与行为修复混在同一提交。依赖清理必须继续保持“小范围、单契约、可独立验收”，不回到一次性全库重写。

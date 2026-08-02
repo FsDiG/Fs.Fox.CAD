@@ -279,7 +279,7 @@ AGENTS.md
 - 未来生成的 `llms.txt` 只聚合 `published: true` 且 `status: current` 的精选页面；不得把整个仓库 Markdown 拼接成单个上下文。
 - 页面顶部和站点构建清单显示来源仓库、提交、产品版本和文档状态，使人和代理都能判断时效。
 
-`docs/refactoring-proposal.md` 与 `docs/logical-modularization-plan.md` 已完成首批状态收口：前者明确标记为 `superseded` 并指向后者，后者是 Issue #25 的 active plan。后续目录迁移仍按第 4.3 节分批完成。
+`docs/refactoring-proposal.md` 与 `docs/logical-modularization-plan.md` 已完成状态收口：前者明确标记为 `superseded` 并指向后者，后者记录 Issue #25 已完成的实施约束和审计证据。目录迁移已由 PR #100 合入，实时结构以 `main` 的项目清单和模块基线为准。
 
 ## 9. 公开站点边界
 
