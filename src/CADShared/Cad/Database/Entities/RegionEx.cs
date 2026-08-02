@@ -1,9 +1,9 @@
-#if ACAD
+#if FSFOX_ENABLE_REGION_TO_CURVES && ACAD
 using Autodesk.AutoCAD.BoundaryRepresentation;
-
-#elif ZWCAD
+#elif FSFOX_ENABLE_REGION_TO_CURVES && ZWCAD
 using ZwSoft.ZwCAD.BoundaryRepresentation;
 #endif
+
 namespace Fs.Fox.Cad;
 
 /// <summary>
@@ -11,10 +11,10 @@ namespace Fs.Fox.Cad;
 /// </summary>
 public static class RegionEx
 {
-    
-
-#if AutoCAD
- 
+    // 面域边界提取具有通用类库价值，历史实现暂予保留。
+    // 当前尚未验证临时几何对象的所有权与异常清理，也未完成 ZWCAD 2022 的 API 适配和真实宿主验收，
+    // 因此正式项目均不定义 FSFOX_ENABLE_REGION_TO_CURVES。重新启用前须补齐跨宿主实现、资源清理及真实宿主用例。
+#if FSFOX_ENABLE_REGION_TO_CURVES
     /// <summary>
     /// 面域转曲线
     /// </summary>
@@ -24,6 +24,7 @@ public static class RegionEx
     {
         if (region.IsNull)
             yield break;
+
         using var brep = new Brep(region);
         var loops = brep.Complexes.SelectMany(complex => complex.Shells)
             .SelectMany(shell => shell.Faces)
@@ -45,9 +46,8 @@ public static class RegionEx
             yield return cur;
         }
     }
-
 #endif
-    
+
     /// <summary>
     /// 按首尾相连对曲线集合进行排序
     /// </summary>
