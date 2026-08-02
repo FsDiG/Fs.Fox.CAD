@@ -140,6 +140,24 @@ try {
     $dynamicScenario = Join-Path $scenarioRoot "dynamic-block-visibility.json"
     $progressScenario = Join-Path $scenarioRoot "progress-meter.json"
     $zwcadEnvironmentScenario = Join-Path $scenarioRoot "zwcad-environment.json"
+    $invalidScenario = Join-Path $tempRoot "invalid-scenario.json"
+    @'
+{
+  "schemaVersion": 1,
+  "name": "invalid-extra-property",
+  "description": "Proves that the complete JSON Schema is enforced.",
+  "products": ["AutoCAD"],
+  "requiresDrawing": false,
+  "commands": [
+    {
+      "name": "Synthetic command",
+      "command": "Test_Synthetic",
+      "expectedText": "Synthetic command passed."
+    }
+  ],
+  "unexpectedProperty": true
+}
+'@ | Set-Content -LiteralPath $invalidScenario -Encoding UTF8
 
     foreach ($product in @("AutoCAD", "ZWCAD")) {
         $generateOutput = Join-Path $tempRoot ("generate-" + $product)
@@ -168,6 +186,23 @@ try {
             $generatedScript -match 'SECURELOAD') {
             throw "$product generated script did not satisfy the expected safety contract."
         }
+    }
+
+    $invalidScenarioOutput = Join-Path $tempRoot "generate-invalid-scenario"
+    $exitCode = Invoke-RunnerProcess -Arguments @(
+        "-Product", "AutoCAD",
+        "-Scenario", $invalidScenario,
+        "-CadExecutable", (Join-Path $tempRoot "not-installed-AutoCAD.exe"),
+        "-TestAssembly", $fakeAssembly,
+        "-OutputDirectory", $invalidScenarioOutput,
+        "-GenerateOnly"
+    )
+    Assert-Equal -Expected 1 -Actual $exitCode -Message "Invalid scenario exit code."
+    $invalidScenarioResult = Get-SingleResult -Directory $invalidScenarioOutput
+    Assert-Equal -Expected "InfrastructureError" -Actual $invalidScenarioResult.status `
+        -Message "Invalid scenario status."
+    if (($invalidScenarioResult.diagnostics -join "`n") -notmatch "scenario\.schema\.json") {
+        throw "Invalid scenario diagnostics did not identify JSON Schema validation."
     }
 
     $notRunOutput = Join-Path $tempRoot "run-not-started"

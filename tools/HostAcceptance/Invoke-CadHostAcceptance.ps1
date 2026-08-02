@@ -162,6 +162,19 @@ function Read-Scenario {
     )
 
     $scenarioText = Get-Content -LiteralPath $ScenarioPath -Raw
+    $scenarioSchemaPath = Join-Path $PSScriptRoot "scenario.schema.json"
+    $schemaErrors = @()
+    $schemaIsValid = $scenarioText | Test-Json -SchemaFile $scenarioSchemaPath `
+        -ErrorAction SilentlyContinue -ErrorVariable schemaErrors
+    if (-not $schemaIsValid) {
+        $schemaError = "No validation detail was returned."
+        if ($schemaErrors.Count -gt 0) {
+            $schemaError = $schemaErrors[0].Exception.Message
+        }
+
+        throw "Scenario does not match scenario.schema.json: $schemaError"
+    }
+
     $scenarioObject = $scenarioText | ConvertFrom-Json
 
     if (-not (Test-ObjectProperty -InputObject $scenarioObject -Name "schemaVersion") -or

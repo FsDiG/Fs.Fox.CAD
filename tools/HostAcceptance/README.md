@@ -32,6 +32,7 @@
 ## GenerateOnly
 
 `GenerateOnly` 不启动 CAD，也不要求 `CadExecutable` 已安装。它仍会验证场景和测试程序集，并生成 `.scr`、`result.json` 和 `summary.md`。
+场景会在执行前完整校验 `scenario.schema.json`；未知字段、错误产品值、空命令集合或字段类型错误均报告为 `InfrastructureError`。
 
 ```powershell
 pwsh -NoProfile -ExecutionPolicy Bypass `
