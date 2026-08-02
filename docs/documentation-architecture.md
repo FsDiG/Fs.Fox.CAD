@@ -26,7 +26,7 @@ Fs.Fox.CAD 是一个面向多种 CAD 宿主的单产品通用基础类库。文�
 4. 文档站点框架暂不确定。目录、元数据、关联和发布契约不得依赖 DocFX、VitePress、Docusaurus、MkDocs 或其他具体实现。
 5. 可编辑的站点实现与可编辑的产品内容是两个边界。主题、组件和部署配置可以独立演进，但页面正文、API 语义、示例和内容级导航只能从 `Fs.Fox.CAD` 的确定提交取得。
 
-独立展示/部署仓库 [FsDiG/Fs.Fox.CAD.Site](https://github.com/FsDiG/Fs.Fox.CAD.Site) 已创建，当前提供框架无关的精确来源锁、GitHub 同步和 Bootstrap 构建；EdgeOne 尚未连接，最终框架尚未选择。详细能力、权限、API 数据包和 POC 门槛见 [EdgeOne Makers 站点仓库架构评估](edgeone-site-repository-evaluation.md)。当前仍不创建 `Fs.Fox.CAD.Docs` 等生成产物仓库；即使未来创建，它也只能接收自动生成内容，不能成为第二个文档源。
+独立展示/部署仓库 [FeiSiPub/Fs.Fox.CAD.Site](https://github.com/FeiSiPub/Fs.Fox.CAD.Site) 已创建，当前提供框架无关的精确来源锁、GitHub 同步和 Bootstrap 构建；EdgeOne 尚未连接，最终框架尚未选择。详细能力、权限、API 数据包和 POC 门槛见 [EdgeOne Makers 站点仓库架构评估](edgeone-site-repository-evaluation.md)。当前仍不创建 `Fs.Fox.CAD.Docs` 等生成产物仓库；即使未来创建，它也只能接收自动生成内容，不能成为第二个文档源。
 
 ## 2. 为什么采用同仓事实源
 
@@ -355,7 +355,7 @@ Release tag 完成正式构建、包检查和发布后，源码仓库才发送 s
 
 ### 12.1 展示/部署仓库
 
-已创建的 [Fs.Fox.CAD.Site](https://github.com/FsDiG/Fs.Fox.CAD.Site) 落实了展示/部署仓库边界：它隔离 Node/前端依赖、主题代码和后续 EdgeOne 权限，同时允许站点展示独立迭代。它必须通过精确来源锁读取 `Fs.Fox.CAD`，不得人工维护产品内容或提交生成页面。最终框架、EdgeOne 和产品内容 POC 仍按 [专项评估](edgeone-site-repository-evaluation.md) 分阶段执行。
+已创建的 [Fs.Fox.CAD.Site](https://github.com/FeiSiPub/Fs.Fox.CAD.Site) 落实了展示/部署仓库边界：它隔离 Node/前端依赖、主题代码和后续 EdgeOne 权限，同时允许站点展示独立迭代。它必须通过精确来源锁读取 `Fs.Fox.CAD`，不得人工维护产品内容或提交生成页面。最终框架、EdgeOne 和产品内容 POC 仍按 [专项评估](edgeone-site-repository-evaluation.md) 分阶段执行。
 
 ### 12.2 生成产物仓库
 

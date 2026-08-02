@@ -38,7 +38,7 @@ front matter schema 和自动校验尚未落地。在迁移完成前，本页状
 | 选择包、安装或编写第一个命令 | [产品 README](../README.md)、[ZWCAD 版本兼容性](ZWCAD-version-compatibility.md) | 按宿主和 API 代际选择包；构建兼容不等于宿主通过。 |
 | 修改项目、构建或发布 | [构建与项目结构](../编译说明.md)、[构建工作流](../.github/workflows/build-and-deploy.md)、[发布工作流](../.github/workflows/release.md) | 以实时 `.csproj` 和 `.yml` 为最终事实。 |
 | 理解整体架构 | [架构说明](关于IFoxCAD的架构说明.md)、[文档治理方案](documentation-architecture.md) | 前者描述产品，后者描述文档。 |
-| 移动或重组 `CADShared` | [单程序集逻辑模块化计划](logical-modularization-plan.md)、[Issue #25](https://github.com/FsDiG/Fs.Fox.CAD/issues/25) | 相关实现进入 `refactor/cad-modules`；旧五模块提案不再是规格。 |
+| 移动或重组 `CADShared` | [单程序集逻辑模块化计划](logical-modularization-plan.md)、[Issue #25](https://github.com/FsDiG/Fs.Fox.CAD/issues/25) | 相关实现进入 `refactor/cad-modules`；计划中的数量和路径表是 Phase A 快照，实时映射以目标分支的项目清单和模块基线为准。 |
 | 修改 `DBTrans` | 实时 [`DBTrans.cs`](../src/CADShared/Cad/Database/Transactions/DBTrans.cs)、[生命周期设计提案](dbtrans-lifecycle-contract.md) | 文档中的 Confirmed 可作证据；Decision 仍需独立实现和验证。 |
 | 修改宿主、SDK 或目标框架 | [ZWCAD 兼容性](ZWCAD-version-compatibility.md)、[AutoCAD 2027 决策](AC_2027-net8-compatibility-decision.md)、[构建说明](../编译说明.md) | 检查公开发布目标与仓库中的实验/预备项目差异。 |
 | 修改 CAD 命令行或 UI 文案 | [CAD/UI 文案风格指南](guides/cad-ui-text-style-guide.md) | 只机械修正低风险格式；流程和业务含义需要单独评审。 |
@@ -68,7 +68,7 @@ front matter schema 和自动校验尚未落地。在迁移完成前，本页状
 
 | 状态 | 稳定 ID | 文档 | 使用边界 |
 | --- | --- | --- | --- |
-| `current` | `plan.cad-modules` | [单程序集逻辑模块化执行计划](logical-modularization-plan.md) | Issue #25 的 active plan；不进入公共站点，且不授权修改运行时行为。 |
+| `current` | `plan.cad-modules` | [单程序集逻辑模块化执行计划](logical-modularization-plan.md) | Issue #25 的 active plan；结构与实施约束仍有效，数量和路径表保留为 Phase A 快照，不进入公共站点。 |
 | `proposal` | `contract.dbtrans-lifecycle` | [DBTrans 生命周期与释放契约](dbtrans-lifecycle-contract.md) | 同时记录 Confirmed、Decision 与 Not run；不能把后续决定表述为已实施。 |
 | `proposal` | `proposal.edgeone-site-repository` | [EdgeOne Makers 站点仓库架构评估](edgeone-site-repository-evaluation.md) | Issue #48 的实施提案；展示仓库与精确来源链路已创建，最终框架、GitHub App、EdgeOne 和云资源仍未完成。 |
 

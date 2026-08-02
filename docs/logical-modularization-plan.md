@@ -1,6 +1,6 @@
 # Fs.Fox.CAD 单程序集逻辑模块化执行计划
 
-> 状态：执行计划（Implementation Plan）<br>
+> 状态：执行计划（Implementation Plan；结构与实施约束仍有效，数量和路径表为 Phase A 快照）<br>
 > 基线：`main` @ `2ef03ce`，2026-08-01<br>
 > 文档交付：本计划已先行直接提交到 `main`，不包含生产代码改动。<br>
 > 长期实施分支：`refactor/cad-modules`，从创建时最新 `main` 建立并作为后续重构 PR 的合入目标。<br>
@@ -8,7 +8,7 @@
 > 可用性注记：2026-08-01 复核时 GitHub API 已无法解析 Issue #18，因此正文不依赖其内容。<br>
 > 命名参考：[FeiSiDev/Fs.Zfgk.CAD](https://github.com/FeiSiDev/Fs.Zfgk.CAD) @ `c38ce32`（只参考领域词汇，不复制其目录层级）<br>
 > SDK 依据：[AutoCAD 2026 Managed .NET Developer's Guide](https://help.autodesk.com/view/OARX/2026/ENU/?guid=GUID-C3F3C736-40CF-44A0-9210-55F6A939B6F2)（用于校正子系统边界，不采用厂商命名作为公共目录）<br>
-> 跟踪 Issue：[Issue #25](https://github.com/FsDiG/Fs.Fox.CAD/issues/25)（与本计划同步维护）<br>
+> 跟踪 Issue：[Issue #25](https://github.com/FsDiG/Fs.Fox.CAD/issues/25)（维护阶段摘要；逐文件实时事实以目标 Git 状态中的项目清单和模块基线为准）<br>
 > 前序提案：[渐进式模块化重构建议](refactoring-proposal.md)（已取代，仅保留决策背景；单程序集目录迁移以本计划为准）<br>
 > 审查基线：[Issue #42](https://github.com/FsDiG/Fs.Fox.CAD/issues/42)<br>
 > 并行专项：[Issue #43](https://github.com/FsDiG/Fs.Fox.CAD/issues/43)、[Issue #51](https://github.com/FsDiG/Fs.Fox.CAD/issues/51)
@@ -17,19 +17,32 @@
 
 本轮只完成 `CADShared` 在**现有单程序集发布模型内**的逻辑模块化：
 
-1. 96 个正式共享编译项全部归入 `Foundation`、`Platform.Windows`、`Cad.Interop`、`Cad.Database`、`Cad.Geometry`、`Cad.Editor`、`Cad.Application`、`Cad.Runtime` 或 `Cad.UI`。
+1. 以 `main` @ `2ef03ce` 的 96 个正式共享编译项作为 Phase A 输入，全部归入 `Foundation`、`Platform.Windows`、`Cad.Interop`、`Cad.Database`、`Cad.Geometry`、`Cad.Editor`、`Cad.Application`、`Cad.Runtime` 或 `Cad.UI`。
 2. 源码最终只保留 `Foundation`、`Platform`、`Cad` 三个所有权根目录，再按平台或 CAD SDK 子系统细分；公共命名空间、类型、成员和运行时行为保持不变。
 3. `CADShared.projitems` 继续作为唯一共享编译入口；平台项目和测试项目的引用关系不变。
-4. 本轮不按模块拆分 DLL，也不清理跨模块依赖。混合职责文件只整体移动并登记边界债务。
+4. Phase A-D 不按模块拆分 DLL，也不清理跨模块依赖。混合职责文件先整体移动并登记边界债务；后续已经批准的低风险拆分由 Issue #25 单独记录，当前阶段不再扩张该范围。
 5. 先建立可机器校验的模块归属和编译顺序，再分批移动文件；每个移动批次只包含路径变化和对应的 MSBuild 路径更新。
 
 完成后的目录结构是后续依赖清理的地图，不是已经证明依赖纯净的结论。
+
+### 1.1 快照与实时事实来源
+
+本计划同时保存仍然有效的模块边界和 Phase A 的可审计输入。两者不能混作同一种事实：
+
+| 需要确认的内容 | 事实来源 |
+| --- | --- |
+| 当前 `main` 的正式编译集合和路径 | 目标提交中的 `src/CADShared/CADShared.projitems`。 |
+| 长期分支的实时编译集合、模块、顺序和边界债务 | [`refactor/cad-modules` 的 `CADShared.projitems`](https://github.com/FsDiG/Fs.Fox.CAD/blob/refactor/cad-modules/src/CADShared/CADShared.projitems)和[`CADSharedModuleBaseline.json`](https://github.com/FsDiG/Fs.Fox.CAD/blob/refactor/cad-modules/Build/CADSharedModuleBaseline.json)。 |
+| 阶段进度、PR 和验收摘要 | [Issue #25](https://github.com/FsDiG/Fs.Fox.CAD/issues/25)；它不是逐文件机器事实源。 |
+| 最初 96 项如何分配和迁移 | 本文第 5、6、7 节的 `main` @ `2ef03ce` / Phase A 快照。 |
+
+Phase A-D 和已经单独批准的低风险文件拆分完成后，本轮自 2026-08-02 起不再以提高“一类型一文件”覆盖率为目标。剩余多类型文件只有在出现明确的所有权、兼容性或维护收益时，才通过独立 Issue 评估；文件长度或顶层类型数量本身不是继续拆分的理由。
 
 ## 2. 范围与不变量
 
 ### 2.1 本轮处理
 
-- `src/CADShared/CADShared.projitems` 当前列出的 96 个 `Compile` 项。
+- `main` @ `2ef03ce` 的 `src/CADShared/CADShared.projitems` 所列 96 个 `Compile` 项。
 - 每个编译项的逻辑模块、稳定顺序和目标路径。
 - `src/CADShared` 下的生产源码目录重排。
 - 模块映射守卫和边界回归守卫，用于检查归属、数量、重复项、文件存在性、顺序及新增禁止依赖。
@@ -67,7 +80,7 @@
 
 为避免把“清单整理”变成潜在运行时变化，本轮采用以下实现：
 
-- 保留一个 `CADShared.projitems` 和当前 96 个 `Compile` 节点的相对顺序。
+- 保留一个 `CADShared.projitems` 和 Phase A 基线中 96 个 `Compile` 节点的相对顺序。
 - 在每个 `Compile` 项上增加 `FsFoxModule` 和单调递增的 `FsFoxOrder` 元数据。
 - 移动文件时只修改原节点的 `Include` 路径，不按模块重排节点。
 - 不使用 `**/*.cs` 编译 glob；新文件、ToDo 文件或临时文件不能被隐式纳入。
@@ -336,12 +349,12 @@ flowchart LR
 
 因此，最终结构既参考 `Fs.Zfgk.CAD` 的领域可发现性，也受 ObjectARX/.NET 的真实层级约束；它不是任一参考仓库或 Autodesk 程序集布局的复制品。
 
-## 5. 模块清单
+## 5. Phase A 基线模块清单
 
-| 模块 | 编译项数 | 当前主要内容 | 当前边界状态 |
+| 模块 | 基线编译项数 | 基线主要内容 | 基线边界状态 |
 | --- | ---: | --- | --- |
-| `Foundation` | 9 | 通用集合、枚举、循环、Guard、随机数 | 当前 9 个文件未发现 CAD、Windows UI 或 native 依赖。 |
-| `Platform.Windows` | 5 | Win32 声明、Windows 辅助、PE 文件解析 | 当前未引用 CAD SDK；以平台风险而非 CAD 领域隔离。 |
+| `Foundation` | 9 | 通用集合、枚举、循环、Guard、随机数 | 基线 9 个文件未发现 CAD、Windows UI 或 native 依赖。 |
+| `Platform.Windows` | 5 | Win32 声明、Windows 辅助、PE 文件解析 | 基线未引用 CAD SDK；以平台风险而非 CAD 领域隔离。 |
 | `Cad.Interop` | 3 | CAD native bridge、PE 导出解析适配、天正接口 | 所有权清楚，但 ABI、宿主版本和第三方模块可用性风险高。 |
 | `Cad.Geometry` | 10 | AcGe 风格曲线/点运算、坐标变换、QuadTree | `GeometryEx` 仍读取当前 Editor 并含 GraphicsInterface 扩展。 |
 | `Cad.Database` | 35 | DBObject/Entity、关联、事务、符号表、字典、ResultData、Xref、DWG 文件 | 主体数据库模块；仍存在 Application/Editor 反向依赖和混合枚举文件。 |
@@ -349,11 +362,11 @@ flowchart LR
 | `Cad.Application` | 6 | 当前会话、DocumentLock、系统变量、Idle 调度 | `Env` 过大；Idle 调度仍依赖 WinForms Cursor。 |
 | `Cad.Runtime` | 8 | LISP 数据、自动注册、初始化反射、加载与终止入口 | 与宿主加载紧密相关；仍有 MessageBox、原生内存操作和多类型文件。 |
 | `Cad.UI` | 7 | CAD 对话框、错误呈现、状态栏、窗口、首选项 | UI 边界基本明确，`IFoxUtils` 仍为混合职责文件。 |
-| **总计** | **96** |  | 必须与 `CADShared.projitems` 一致。 |
+| **总计** | **96** |  | 与 `main` @ `2ef03ce` 的 `CADShared.projitems` 一致。 |
 
-## 6. 完整路径映射
+## 6. Phase A 完整路径映射
 
-以下映射是本轮的文件级事实来源。左侧为当前相对 `src/CADShared` 的路径，右侧为目标路径。文件名和文件正文不变。
+以下映射记录 `main` @ `2ef03ce` 的 Phase A 迁移输入和初始目标，是机械移动的审计快照，不是当前 `main` 或长期分支的实时文件清单。左侧为当时相对 `src/CADShared` 的路径，右侧为初始目标路径；后续获批拆分及实时状态按第 1.1 节确认。
 
 ### 6.1 Foundation（9）
 
@@ -553,7 +566,7 @@ ExtensionMethod/WindowEx.cs -> Cad/UI/Windows/WindowEx.cs
 1. 长期分支一旦由多人共享，只通过 `git merge origin/main` 吸收主线，不 rebase，不强推改写公共历史。
 2. 至少每周同步一次 `origin/main`，并在每个 Phase 开始前、检查点确认前再次同步。只要 `main` 修改了 `src/CADShared` 下的映射文件、源码或项目清单，应立即同步，不等到下一固定周期。
 3. 合并冲突先保留 `main` 的最新生产行为，再重新应用目标路径和映射元数据；不得用长期分支中的旧文件覆盖主线修复。
-4. 每次同步后重新读取 `CADShared.projitems`。如果 `main` 合法新增、删除或重命名编译项，应在长期分支中更新本计划的逐文件映射、模块计数、`FsFoxOrder` 基线和守卫期望值，并记录对应的 `main` 提交；本文的 96 项和 `9 / 5 / 3 / 10 / 35 / 13 / 6 / 8 / 7` 是 `2ef03ce` 快照，不是阻止主线演进的永久常量。
+4. 每次同步后重新读取 `CADShared.projitems`。如果 `main` 合法新增、删除或重命名编译项，应在长期分支中更新项目清单、模块基线、`FsFoxOrder` 和守卫期望值，并在 Issue #25 记录阶段摘要；本文第 5、6、7 节的 96 项和 `9 / 5 / 3 / 10 / 35 / 13 / 6 / 8 / 7` 固定保留为 `2ef03ce` 快照，不作为实时基线重复维护。
 5. `main` 上涉及已映射文件的 PR 应在描述中注明当前路径、计划模块/目标路径以及是否增删编译项，并避免夹带目录搬迁、全文件格式化或无关重命名。紧急缺陷仍先在 `main` 修复，再由长期分支同步。
 6. 机械移动与逻辑修改必须位于不同提交。发现只有修改行为才能继续时，先停止当前移动提交组并登记独立 Issue；可独立交付的修复从 `main` 的专用分支完成后再同步，确属迁移前置条件的改动也必须形成独立提交组和独立验收记录。
 
@@ -677,7 +690,7 @@ CI 继续执行四个目标的 Debug + Release。任何子进程失败都必须�
 
 如果批准上述行为变化，应进入独立 Issue 和独立代码提交/PR，并按涉及的 AutoCAD/ZWCAD 宿主记录 `Passed` 或 `Not run`，不能沿用机械移动的构建结论。
 
-## 11. 边界评价与后续建议
+## 11. 本轮收口后的边界评价与后续原则
 
 第二轮边界对**单程序集内的代码所有权**是合理的，而且比首轮七个平铺目录更接近真实 SDK 和现有代码。合理性来自四点：
 
@@ -694,24 +707,24 @@ CI 继续执行四个目标的 Debug + Release。任何子进程失败都必须�
 - `Cad.Runtime` 同时承载加载生命周期与 LISP 数据，是当前规模下的可接受聚合；若以后出现多个命令注册器、Overrule 或独立 LISP 服务，再细分内部目录，不预先拆程序集。
 - `GraphicsInterface` 暂不独立是有意决定，不代表其不存在。新增第二类可复用图形服务时必须重新评估，而不是继续塞入 `GeometryEx` 或 Jig。
 
-建议按以下顺序继续：
+以下内容不继续纳入当前目录重构分支；出现明确收益和验收条件后，再通过独立 Issue 实施：
 
-1. **先完成纯移动并停下来观察。** 不在同一批次拆类、改命名空间或改变行为；目录稳定后至少经历一个正常发布周期，再评价可发现性和冲突率是否改善。
+1. **完成纯移动后停下来观察。** 不在同一批次拆类、改命名空间或改变行为；目录稳定后至少经历一个正常发布周期，再评价可发现性和冲突率是否改善。
 2. **把“新文件放哪里”固化为守卫和评审清单。** 依次判断主要公开扩展目标、拥有的状态/资源、外部副作用和最低允许依赖层；无法回答时必须新增边界债务，不能新建兜底目录。
-3. **先消除低层反向依赖。** 优先把 `DatabaseEx`、`GeometryEx`、`HatchEx`、`SymbolTableRecordEx` 中的 MessageBox、Editor 输出和当前会话读取移到调用方或窄策略接口。这比先改类型名风险低，也最接近目标依赖图。
-4. **先拆文件，再讨论改类名。** 优先处理 `Enums.cs`、`CollectionEx.cs`、`IAutoGo.cs` 和 `Op*.cs` 的一文件多职责；只移动现有成员并保留兼容入口。公共类型重命名应有 obsolete 转发、版本策略和 API diff，不能作为“整理命名”直接完成。
-5. **再拆三个上下文热点。** `Env`、`EditorEx`、`DBTrans` 分别超过或接近 700 行，并公开跨层能力；应按现有成员簇小步拆分，不能一次重写。`DBTrans` 的任何行为变化继续由 #43 及其后续专项决定。
+3. **后续优先消除低层反向依赖。** 可分别评估把 `DatabaseEx`、`GeometryEx`、`HatchEx`、`SymbolTableRecordEx` 中的 MessageBox、Editor 输出和当前会话读取移到调用方或窄策略接口。这比先改类型名风险低，也最接近目标依赖图。
+4. **不再追求“一类型一文件”覆盖率。** 已经单独批准的低风险拆分保留其审计证据；`CollectionEx.cs`、native/PE 类型和其他剩余多类型文件不再作为普通机械批次。只有出现明确收益并具备兼容方案时才通过独立 Issue 重新评估。公共类型重命名仍须有 obsolete 转发、版本策略和 API diff，不能作为“整理命名”直接完成。
+5. **三个上下文热点只走独立专项。** `Env`、`EditorEx`、`DBTrans` 分别超过或接近 700 行，并公开跨层能力；如需调整，应按现有成员簇小步实施，不能一次重写。`DBTrans` 的任何行为变化继续由 #43 及其后续专项决定。
 6. **单独加固 native 边界。** `Cad.Interop`、`Platform.Windows`、`AcadEMR` 和功能内 P/Invoke 分别定义模块存在性、符号解析、版本支持和失败行为，并建立 AutoCAD/ZWCAD 能力矩阵；不能用一次“统一 Interop 重构”同时改完。
 7. **最后才评估物理拆分。** 只有当语义依赖守卫稳定、反向依赖归零、至少出现一个真实独立消费者或部署需求，并完成 AutoCAD/ZWCAD 宿主矩阵后，才讨论把某个逻辑模块变为程序集。目录数量和 Autodesk 的 NuGet/DLL 划分都不是拆 DLL 的充分依据。
 
 ## 12. 完成定义
 
-- [ ] 最终同步的 `origin/main` 中所有正式编译项都位于已审查的目标目录；如果编译集合仍与本文基线一致，则应为 96 项。
-- [ ] 模块计数已与最终同步基线逐项核对；如果编译集合未变化，则应为 `Foundation 9 / Platform.Windows 5 / Cad.Interop 3 / Cad.Geometry 10 / Cad.Database 35 / Cad.Editor 13 / Cad.Application 6 / Cad.Runtime 8 / Cad.UI 7`。
+- [ ] 最终同步的 `origin/main` 中所有正式编译项都位于已审查的目标目录；最终数量以长期分支的模块基线为准，不使用本文的 96 项快照代替实时核对。
+- [ ] 模块计数已与最终同步基线逐项核对，并在 Issue #25 记录阶段摘要；不使用第 5 节的 Phase A 计数代替实时核对。
 - [ ] 每个编译项有唯一 `FsFoxModule` 与 `FsFoxOrder`，顺序与基线一致。
 - [ ] `CADShared.shproj`、六个正式/非正式平台项目的 import 方式及正式包身份未改变。
 - [ ] 21 个 `Geometry/ToDo` 文件保持未编译且未被顺手移动。
-- [ ] 所有生产 `.cs` 只有路径变化，没有正文变化。
+- [ ] 机械移动提交中的生产 `.cs` 正文不变；单独批准的文件拆分具有源码声明、公共 API 和适用元数据兼容证据。
 - [ ] 四个正式测试项目 Release 构建通过，CI 的 Debug + Release 通过。
 - [ ] 公共 API、程序集引用和包布局没有意外差异。
 - [ ] 已知边界债务仍有编号和后续方向，没有被目录名称掩盖。
