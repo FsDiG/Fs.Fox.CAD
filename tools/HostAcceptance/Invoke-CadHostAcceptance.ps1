@@ -28,6 +28,10 @@ param(
     [Parameter(Mandatory = $true, ParameterSetName = "Analyze")]
     [string] $LogFile,
 
+    [Parameter(ParameterSetName = "Analyze")]
+    [ValidatePattern('^[A-Za-z0-9][A-Za-z0-9-]{0,127}$')]
+    [string] $LogRunId,
+
     [string] $HostLabel,
 
     [string] $OutputDirectory = (Join-Path $PSScriptRoot "artifacts"),
@@ -40,6 +44,7 @@ Set-StrictMode -Version 2.0
 $ErrorActionPreference = "Stop"
 
 $script:DefaultFailurePatterns = @(
+    "[FAIL]",
     "System.EntryPointNotFoundException",
     "System.DllNotFoundException",
     "System.AccessViolationException",
@@ -122,7 +127,8 @@ function ConvertTo-WindowsArgument {
         throw "A CAD process argument contains an unsupported double quote: $Value"
     }
 
-    return '"' + $Value + '"'
+    $escapedValue = [regex]::Replace($Value, '(\\+)$', '$1$1')
+    return '"' + $escapedValue + '"'
 }
 
 function Get-GitCommit {
@@ -303,6 +309,7 @@ function Evaluate-LogText {
     )
 
     $missingExpectations = 0
+    $missingOccurrences = 0
     foreach ($expectation in $Expectations) {
         $expectation.observed = Get-TextOccurrenceCount -Text $Text -Needle $expectation.text
         if ($expectation.observed -ge $expectation.required) {
@@ -311,6 +318,7 @@ function Evaluate-LogText {
         else {
             $expectation.status = "Missing"
             $missingExpectations += 1
+            $missingOccurrences += $expectation.required - $expectation.observed
         }
     }
 
@@ -333,7 +341,7 @@ function Evaluate-LogText {
     elseif ($missingExpectations -eq 0) {
         $status = "Passed"
     }
-    elseif ($skipLines.Count -gt 0) {
+    elseif ($skipLines.Count -ge $missingOccurrences) {
         $status = "Skipped"
     }
 
@@ -342,6 +350,32 @@ function Evaluate-LogText {
         matchedFailures = $matchedFailures.ToArray()
         skipLines       = $skipLines
     }
+}
+
+function Get-RunLogText {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string] $Text,
+
+        [Parameter(Mandatory = $true)]
+        [string] $StartToken,
+
+        [Parameter(Mandatory = $true)]
+        [string] $EndToken
+    )
+
+    $startIndex = $Text.IndexOf($StartToken, [System.StringComparison]::Ordinal)
+    if ($startIndex -lt 0) {
+        throw "CAD log does not contain the start token for this run."
+    }
+
+    $contentStart = $startIndex + $StartToken.Length
+    $endIndex = $Text.IndexOf($EndToken, $contentStart, [System.StringComparison]::Ordinal)
+    if ($endIndex -lt 0) {
+        throw "CAD log does not contain the end token for this run."
+    }
+
+    return $Text.Substring($contentStart, $endIndex - $contentStart)
 }
 
 function New-CadScript {
@@ -359,24 +393,34 @@ function New-CadScript {
         [string] $CompletionToken,
 
         [Parameter(Mandatory = $true)]
+        [string] $LogStartToken,
+
+        [Parameter(Mandatory = $true)]
+        [string] $LogEndToken,
+
+        [Parameter(Mandatory = $true)]
         [string] $Destination
     )
 
     $assemblyValue = ConvertTo-AutoLispString -Value $AssemblyPath -Description "Test assembly path"
     $markerValue = ConvertTo-AutoLispString -Value $MarkerPath -Description "Marker path"
     $completionValue = ConvertTo-AutoLispString -Value $CompletionToken -Description "Completion token"
+    $logStartValue = ConvertTo-AutoLispString -Value $LogStartToken -Description "Log start token"
+    $logEndValue = ConvertTo-AutoLispString -Value $LogEndToken -Description "Log end token"
 
     $lines = New-Object System.Collections.Generic.List[string]
     $lines.Add("(vl-load-com)")
     $lines.Add('(vl-catch-all-apply ''setvar (list "FILEDIA" 0))')
     $lines.Add('(vl-catch-all-apply ''setvar (list "CMDECHO" 1))')
     $lines.Add('(vl-catch-all-apply ''setvar (list "LOGFILEMODE" 1))')
+    $lines.Add(('(princ "\n{0}\n")' -f $logStartValue))
     $lines.Add(('(command "_.NETLOAD" "{0}")' -f $assemblyValue))
 
     foreach ($command in $Commands) {
         $lines.Add(('(command "{0}")' -f $command.command))
     }
 
+    $lines.Add(('(princ "\n{0}\n")' -f $logEndValue))
     $lines.Add(('(setq fsfox-file (open "{0}" "w"))' -f $markerValue))
     $lines.Add(('(write-line "{0}" fsfox-file)' -f $completionValue))
     $lines.Add('(setq fsfox-log (vl-catch-all-apply ''getvar (list "LOGFILENAME")))')
@@ -422,6 +466,7 @@ function Write-ResultArtifacts {
     $summary.Add("| Host label | $(ConvertTo-MarkdownCell $Result.host.label) |")
     $summary.Add("| Host version | $(ConvertTo-MarkdownCell $Result.host.fileVersion) |")
     $summary.Add("| Scenario | $(ConvertTo-MarkdownCell $Result.scenario.name) |")
+    $summary.Add("| Log scope | $(ConvertTo-MarkdownCell $Result.logScope.mode) |")
     $summary.Add("| Git commit | $(ConvertTo-MarkdownCell $Result.gitCommit) |")
     $summary.Add("| Test assembly SHA-256 | $(ConvertTo-MarkdownCell $Result.testAssembly.sha256) |")
     $summary.Add("| Process exit code | $(ConvertTo-MarkdownCell $Result.process.exitCode) |")
@@ -501,6 +546,11 @@ $result = [ordered] @{
     completionMarker      = $null
     completionMarkerFound = $false
     logPath               = $null
+    logScope              = [ordered] @{
+        mode       = $null
+        startToken = $null
+        endToken   = $null
+    }
     process               = [ordered] @{
         id       = $null
         exited   = $null
@@ -527,6 +577,18 @@ try {
     if ($PSCmdlet.ParameterSetName -eq "Analyze") {
         $resolvedLog = Resolve-InputFile -Path $LogFile -Description "CAD log"
         $logText = Get-Content -LiteralPath $resolvedLog -Raw
+        if (-not [string]::IsNullOrWhiteSpace($LogRunId)) {
+            $logStartToken = "FSFOX_HOST_ACCEPTANCE_BEGIN $LogRunId"
+            $logEndToken = "FSFOX_HOST_ACCEPTANCE_END $LogRunId"
+            $logText = Get-RunLogText -Text $logText `
+                -StartToken $logStartToken -EndToken $logEndToken
+            $result.logScope.mode = "RunSegment"
+            $result.logScope.startToken = $logStartToken
+            $result.logScope.endToken = $logEndToken
+        }
+        else {
+            $result.logScope.mode = "WholeFile"
+        }
         $evaluation = Evaluate-LogText -Text $logText -Expectations $expectations -FailurePatterns $failurePatterns
         $result.logPath = $resolvedLog
         $result.status = $evaluation.status
@@ -569,8 +631,14 @@ try {
         $scriptPath = Join-Path $runDirectory "run.scr"
         $markerPath = Join-Path $runDirectory "completion.marker"
         $completionToken = "FSFOX_HOST_ACCEPTANCE_COMPLETED $runId"
+        $logStartToken = "FSFOX_HOST_ACCEPTANCE_BEGIN $runId"
+        $logEndToken = "FSFOX_HOST_ACCEPTANCE_END $runId"
+        $result.logScope.mode = "RunSegment"
+        $result.logScope.startToken = $logStartToken
+        $result.logScope.endToken = $logEndToken
         New-CadScript -AssemblyPath $assemblyPath -Commands $scenarioDefinition.commands `
-            -MarkerPath $markerPath -CompletionToken $completionToken -Destination $scriptPath
+            -MarkerPath $markerPath -CompletionToken $completionToken `
+            -LogStartToken $logStartToken -LogEndToken $logEndToken -Destination $scriptPath
 
         $result.generatedScript = $scriptPath
         $result.completionMarker = $markerPath
@@ -617,12 +685,19 @@ try {
                 $result.status = "TimedOut"
                 $result.process.exited = $false
                 $result.diagnostics += "CAD did not exit within $TimeoutSeconds seconds. Process id: $($process.Id)."
-                if ($TerminateOnTimeout -and -not $process.HasExited) {
-                    $process.Kill()
-                    $process.WaitForExit()
-                    $result.process.exited = $true
-                    $result.process.exitCode = $process.ExitCode
-                    $result.diagnostics += "The runner terminated the process it created after timeout."
+                if ($TerminateOnTimeout) {
+                    try {
+                        if (-not $process.HasExited) {
+                            $process.Kill()
+                            $process.WaitForExit()
+                            $result.process.exited = $true
+                            $result.process.exitCode = $process.ExitCode
+                            $result.diagnostics += "The runner terminated the process it created after timeout."
+                        }
+                    }
+                    catch {
+                        $result.diagnostics += "The runner could not terminate the process after timeout: $($_.Exception.Message)"
+                    }
                 }
             }
             else {
@@ -654,12 +729,21 @@ try {
                         }
                         else {
                             $logText = Get-Content -LiteralPath $cadLogPath -Raw
-                            $evaluation = Evaluate-LogText -Text $logText -Expectations $expectations -FailurePatterns $failurePatterns
-                            $result.status = $evaluation.status
-                            $result.matchedFailurePatterns = $evaluation.matchedFailures
-                            $result.skipLines = $evaluation.skipLines
-                            if ($evaluation.matchedFailures.Count -gt 0) {
-                                $result.diagnostics += "CAD log contains a configured failure pattern."
+                            try {
+                                $runLogText = Get-RunLogText -Text $logText `
+                                    -StartToken $logStartToken -EndToken $logEndToken
+                                $evaluation = Evaluate-LogText -Text $runLogText `
+                                    -Expectations $expectations -FailurePatterns $failurePatterns
+                                $result.status = $evaluation.status
+                                $result.matchedFailurePatterns = $evaluation.matchedFailures
+                                $result.skipLines = $evaluation.skipLines
+                                if ($evaluation.matchedFailures.Count -gt 0) {
+                                    $result.diagnostics += "CAD log contains a configured failure pattern."
+                                }
+                            }
+                            catch {
+                                $result.status = "Failed"
+                                $result.diagnostics += $_.Exception.Message
                             }
                         }
                     }

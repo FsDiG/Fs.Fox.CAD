@@ -75,16 +75,20 @@ powershell -NoProfile -ExecutionPolicy Bypass `
   -LogFile C:\path\to\Drawing1.log
 ```
 
+对于由本 runner 生成且可能包含多次运行的日志，可从 `result.json` 取得目标 `runId`，再传入 `-LogRunId <runId>`，只分析对应 begin/end token 之间的内容。没有 token 的旧日志不能使用该参数。
+
 ## 结果判定
 
-- `Passed`：所有必需文本达到期望次数，并且没有失败模式。
+- `Passed`：本次运行的唯一日志区间内，所有必需文本达到期望次数，并且没有失败模式。
 - `Failed`：缺少必需文本、日志包含失败模式、marker 无效或日志不存在。
-- `Skipped`：缺少必需文本且日志明确包含 `[SKIP]`。
+- `Skipped`：缺少必需文本，且 `[SKIP]` 行数足以解释所有缺失结果；不完整的 skip 证据按失败处理。
 - `TimedOut`：宿主在时间限制内没有退出。
 - `InfrastructureError`：输入、场景或启动配置无效。
 - `Generated`：只生成，没有启动宿主。
 
 退出码为：`Passed/Generated = 0`、`Skipped = 2`、其他状态为 `1`。CAD 自身退出码会写入报告，但不会单独决定通过或失败。
+
+真实运行生成的脚本会在 CAD 日志中写入带本次 `runId` 的 begin/end token，runner 只分析两者之间的文本，避免旧运行残留的通过或失败文本污染结论。`-LogFile` 分析模式在指定 `-LogRunId` 时采用相同边界；否则默认分析调用方提供的整个文件。复核不带 token 的重复使用日志前应先裁剪到单次运行。
 
 ## 安全和可移植性
 

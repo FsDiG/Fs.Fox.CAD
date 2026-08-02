@@ -83,6 +83,8 @@ try {
         $generatedScript = Get-Content -LiteralPath $generatedResult.generatedScript -Raw
         if ($generatedScript -notmatch 'NETLOAD' -or
             $generatedScript -notmatch 'Test_JigDisposeSafety' -or
+            $generatedScript -notmatch 'FSFOX_HOST_ACCEPTANCE_BEGIN' -or
+            $generatedScript -notmatch 'FSFOX_HOST_ACCEPTANCE_END' -or
             $generatedScript -match 'SECURELOAD') {
             throw "$product generated script did not satisfy the expected safety contract."
         }
@@ -148,6 +150,22 @@ try {
     Assert-Equal -Expected 2 -Actual $exitCode -Message "Skipped log exit code."
     Assert-Equal -Expected "Skipped" -Actual (Get-SingleResult -Directory $skipOutput).status `
         -Message "Skipped log status."
+
+    $partialSkipLog = Join-Path $tempRoot "partial-skip.log"
+    @(
+        "Progress meter completed and the status bar was restored.",
+        "[SKIP] One command was not applicable."
+    ) | Set-Content -LiteralPath $partialSkipLog -Encoding UTF8
+    $partialSkipOutput = Join-Path $tempRoot "analyze-partial-skip"
+    $exitCode = Invoke-RunnerProcess -Arguments @(
+        "-Product", "AutoCAD",
+        "-Scenario", $progressScenario,
+        "-LogFile", $partialSkipLog,
+        "-OutputDirectory", $partialSkipOutput
+    )
+    Assert-Equal -Expected 1 -Actual $exitCode -Message "Partial skip exit code."
+    Assert-Equal -Expected "Failed" -Actual (Get-SingleResult -Directory $partialSkipOutput).status `
+        -Message "A skip line must not hide multiple missing results."
 
     $progressPassedLog = Join-Path $tempRoot "progress-passed.log"
     @(
@@ -233,6 +251,68 @@ try {
         -Message "Exception log status."
     Assert-Equal -Expected 1 -Actual @($exceptionResult.matchedFailurePatterns).Count `
         -Message "Exception failure-pattern count."
+
+    $explicitFailureLog = Join-Path $tempRoot "explicit-failure.log"
+    @(
+        "Jig dispose safety passed.",
+        "XData removal isolation passed.",
+        "Block attribute write scope passed.",
+        "Ordinary block visibility query passed.",
+        "EntGet passed for LINE (1).",
+        "EntMod/EntUpd passed for 2.",
+        "[FAIL] Synthetic host failure."
+    ) | Set-Content -LiteralPath $explicitFailureLog -Encoding UTF8
+    $explicitFailureOutput = Join-Path $tempRoot "analyze-explicit-failure"
+    $exitCode = Invoke-RunnerProcess -Arguments @(
+        "-Product", "ZWCAD",
+        "-Scenario", $sharedScenario,
+        "-LogFile", $explicitFailureLog,
+        "-OutputDirectory", $explicitFailureOutput
+    )
+    Assert-Equal -Expected 1 -Actual $exitCode -Message "Explicit failure exit code."
+    Assert-Equal -Expected "Failed" -Actual (Get-SingleResult -Directory $explicitFailureOutput).status `
+        -Message "Explicit failure status."
+
+    $scopedRunId = "offline-scope-test"
+    $scopedLog = Join-Path $tempRoot "scoped.log"
+    @(
+        "[FAIL] Stale failure before this run.",
+        "FSFOX_HOST_ACCEPTANCE_BEGIN $scopedRunId",
+        "Jig dispose safety passed.",
+        "XData removal isolation passed.",
+        "Block attribute write scope passed.",
+        "Ordinary block visibility query passed.",
+        "EntGet passed for LINE (1).",
+        "EntMod/EntUpd passed for 2.",
+        "FSFOX_HOST_ACCEPTANCE_END $scopedRunId",
+        "[FAIL] Stale failure after this run."
+    ) | Set-Content -LiteralPath $scopedLog -Encoding UTF8
+
+    $wholeLogOutput = Join-Path $tempRoot "analyze-whole-log"
+    $exitCode = Invoke-RunnerProcess -Arguments @(
+        "-Product", "AutoCAD",
+        "-Scenario", $sharedScenario,
+        "-LogFile", $scopedLog,
+        "-OutputDirectory", $wholeLogOutput
+    )
+    Assert-Equal -Expected 1 -Actual $exitCode -Message "Whole-log stale failure exit code."
+    Assert-Equal -Expected "Failed" -Actual (Get-SingleResult -Directory $wholeLogOutput).status `
+        -Message "Whole-log analysis must retain configured failure patterns."
+
+    $scopedLogOutput = Join-Path $tempRoot "analyze-scoped-log"
+    $exitCode = Invoke-RunnerProcess -Arguments @(
+        "-Product", "AutoCAD",
+        "-Scenario", $sharedScenario,
+        "-LogFile", $scopedLog,
+        "-LogRunId", $scopedRunId,
+        "-OutputDirectory", $scopedLogOutput
+    )
+    Assert-Equal -Expected 0 -Actual $exitCode -Message "Scoped log exit code."
+    $scopedResult = Get-SingleResult -Directory $scopedLogOutput
+    Assert-Equal -Expected "Passed" -Actual $scopedResult.status `
+        -Message "Scoped log status."
+    Assert-Equal -Expected "RunSegment" -Actual $scopedResult.logScope.mode `
+        -Message "Scoped log mode."
 
     Write-Host "Host acceptance runner smoke checks passed."
 }
