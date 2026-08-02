@@ -34,6 +34,36 @@ function Invoke-RunnerProcess {
     return $LASTEXITCODE
 }
 
+function Invoke-RunnerJob {
+    param(
+        [Parameter(Mandatory = $true)]
+        [hashtable] $Parameters,
+
+        [int] $WaitSeconds = 30
+    )
+
+    $job = Start-Job -ScriptBlock {
+        param($RunnerPath, $RunnerParameters)
+        & $RunnerPath @RunnerParameters
+    } -ArgumentList $script:RunnerPath, $Parameters
+
+    try {
+        $completedJob = Wait-Job -Job $job -Timeout $WaitSeconds
+        if ($null -eq $completedJob) {
+            Stop-Job -Job $job
+            throw "Runner background job did not complete within $WaitSeconds seconds."
+        }
+
+        Receive-Job -Job $job | ForEach-Object { Write-Host $_ }
+    }
+    finally {
+        if ($job.State -eq "Running") {
+            Stop-Job -Job $job
+        }
+        Remove-Job -Job $job
+    }
+}
+
 function Get-SingleResult {
     param(
         [Parameter(Mandatory = $true)]
@@ -54,7 +84,9 @@ $tempRoot = Join-Path ([System.IO.Path]::GetTempPath()) `
 New-Item -ItemType Directory -Path $tempRoot | Out-Null
 
 try {
-    $fakeAssembly = Join-Path $tempRoot "TestHost.dll"
+    $inputDirectory = Join-Path $tempRoot "inputs with spaces"
+    New-Item -ItemType Directory -Path $inputDirectory | Out-Null
+    $fakeAssembly = Join-Path $inputDirectory "Test Host.dll"
     New-Item -ItemType File -Path $fakeAssembly | Out-Null
     $sharedScenario = Join-Path $scenarioRoot "shared-smoke.json"
     $dynamicScenario = Join-Path $scenarioRoot "dynamic-block-visibility.json"
@@ -313,6 +345,39 @@ try {
         -Message "Scoped log status."
     Assert-Equal -Expected "RunSegment" -Actual $scopedResult.logScope.mode `
         -Message "Scoped log mode."
+
+    $timeoutHostScript = Join-Path $inputDirectory "Fake Slow Host.ps1"
+    @'
+param(
+    [string] $BatchSwitch,
+    [string] $GeneratedScript
+)
+
+Start-Sleep -Seconds 60
+'@ | Set-Content -LiteralPath $timeoutHostScript -Encoding ASCII
+
+    $timeoutOutput = Join-Path $tempRoot "run-timeout"
+    Invoke-RunnerJob -Parameters @{
+        Product             = "AutoCAD"
+        Scenario            = $sharedScenario
+        CadExecutable       = $script:PowerShellExecutable
+        TestAssembly        = $fakeAssembly
+        AdditionalArguments = @(
+            "-NoProfile",
+            "-ExecutionPolicy",
+            "Bypass",
+            "-File",
+            $timeoutHostScript
+        )
+        OutputDirectory     = $timeoutOutput
+        TimeoutSeconds      = 10
+        TerminateOnTimeout  = $true
+    } -WaitSeconds 30
+    $timeoutResult = Get-SingleResult -Directory $timeoutOutput
+    Assert-Equal -Expected "TimedOut" -Actual $timeoutResult.status `
+        -Message "Timeout status."
+    Assert-Equal -Expected $true -Actual $timeoutResult.process.exited `
+        -Message "Timed-out fake host termination status."
 
     Write-Host "Host acceptance runner smoke checks passed."
 }
