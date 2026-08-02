@@ -8,9 +8,9 @@ public enum QuadTreeSelectMode
     /// <summary>
     /// 碰撞到就选中
     /// </summary>
-    IntersectsWith, 
+    IntersectsWith,
     /// <summary>
     /// 全包含才选中
     /// </summary>
-    Contains,     
+    Contains,
 }
