@@ -69,6 +69,7 @@ front matter schema 和自动校验尚未落地。在迁移完成前，本页状
 
 | 状态 | 稳定 ID | 文档 | 使用边界 |
 | --- | --- | --- | --- |
+| `proposal` | `plan.zfgk-cad-migration` | [Fs.Zfgk.CAD 有价值能力迁移计划](zfgk-cad-migration-plan.md) | 从固定来源快照筛选通用能力；授权、多宿主、对象所有权和现有 API 去重门槛未满足前，不直接复制来源实现。 |
 | `proposal` | `contract.dbtrans-lifecycle` | [DBTrans 生命周期与释放契约](dbtrans-lifecycle-contract.md) | 同时记录 Confirmed、Decision 与 Not run；不能把后续决定表述为已实施。 |
 | `proposal` | `proposal.edgeone-site-repository` | [EdgeOne Makers 站点仓库架构评估](edgeone-site-repository-evaluation.md) | Issue #48 的实施提案；展示仓库与精确来源链路已创建，最终框架、GitHub App、EdgeOne 和云资源仍未完成。 |
 
