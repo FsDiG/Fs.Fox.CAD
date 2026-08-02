@@ -4,6 +4,8 @@
 
 当前实现是 Issue #40 的 Phase 1 骨架：脚本生成和日志分析可自动验证，真实 CAD 启动路径仍需要按产品、年度和测试机器逐项校准。
 
+该工具要求 PowerShell 7 或更高版本，统一通过 `pwsh` 调用；Windows PowerShell 5.1 不在支持范围内。
+
 ## 当前状态
 
 | 产品 | runner 建模 | runner 真实宿主验证 |
@@ -32,7 +34,7 @@
 `GenerateOnly` 不启动 CAD，也不要求 `CadExecutable` 已安装。它仍会验证场景和测试程序集，并生成 `.scr`、`result.json` 和 `summary.md`。
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass `
+pwsh -NoProfile -ExecutionPolicy Bypass `
   -File .\tools\HostAcceptance\Invoke-CadHostAcceptance.ps1 `
   -Product AutoCAD `
   -Scenario .\tools\HostAcceptance\scenarios\shared-smoke.json `
@@ -49,7 +51,7 @@ powershell -NoProfile -ExecutionPolicy Bypass `
 去掉 `-GenerateOnly` 后，runner 会使用 `/b <generated-script>` 启动指定可执行文件。含写操作的场景应只使用新建图或可丢弃图纸；传入 `-Drawing` 时，runner 会复制到本次输出目录，并只把副本交给 CAD。
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass `
+pwsh -NoProfile -ExecutionPolicy Bypass `
   -File .\tools\HostAcceptance\Invoke-CadHostAcceptance.ps1 `
   -Product ZWCAD `
   -Scenario .\tools\HostAcceptance\scenarios\shared-smoke.json `
@@ -68,7 +70,7 @@ powershell -NoProfile -ExecutionPolicy Bypass `
 `LogFile` 参数集不需要 CAD 或测试 DLL，可复核历史日志，也用于 runner 自身的脱离宿主测试。
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass `
+pwsh -NoProfile -ExecutionPolicy Bypass `
   -File .\tools\HostAcceptance\Invoke-CadHostAcceptance.ps1 `
   -Product ZWCAD `
   -Scenario .\tools\HostAcceptance\scenarios\shared-smoke.json `
@@ -81,7 +83,7 @@ powershell -NoProfile -ExecutionPolicy Bypass `
 
 - `Passed`：本次运行的唯一日志区间内，所有必需文本达到期望次数，并且没有失败模式。
 - `Failed`：缺少必需文本、日志包含失败模式、marker 无效或日志不存在。
-- `Skipped`：缺少必需文本，且 `[SKIP]` 行数足以解释所有缺失结果；不完整的 skip 证据按失败处理。
+- `Skipped`：仅一个唯一必需文本缺失，且日志存在 `[SKIP]` 行；多个命令或重复期望出现缺失时，在尚未采用结构化 `[SKIP] <command>` 协议前一律按 `Failed` 处理。
 - `TimedOut`：宿主在时间限制内没有退出。
 - `InfrastructureError`：输入、场景或启动配置无效。
 - `Generated`：只生成，没有启动宿主。
@@ -104,11 +106,11 @@ powershell -NoProfile -ExecutionPolicy Bypass `
 以下命令不启动 CAD：
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass `
+pwsh -NoProfile -ExecutionPolicy Bypass `
   -File .\tools\HostAcceptance\Test-Runner.ps1
 ```
 
-它会在系统临时目录创建空的测试 DLL 和合成日志，验证 AutoCAD/ZWCAD 脚本生成、`SECURELOAD` 不被关闭、重复期望计数、产品/fixture 限制以及日志状态分类，完成后清理临时目录。
+它会优先在仓库的被忽略 `artifacts` 目录创建 ASCII 临时根目录，并在该目录不可用时探测公共或系统临时位置；随后创建空的测试 DLL 和合成日志，验证 AutoCAD/ZWCAD 脚本生成、`SECURELOAD` 不被关闭、重复期望计数、产品/fixture 限制以及日志状态分类，完成后清理临时目录。若没有可写的 ASCII 位置，脚本会明确失败，不会将路径编码问题误报为 runner 基础设施错误。
 
 ## 后续阶段
 

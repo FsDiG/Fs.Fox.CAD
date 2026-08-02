@@ -1,3 +1,5 @@
+#requires -Version 7.0
+
 [CmdletBinding()]
 param(
     [switch] $KeepArtifacts
@@ -75,13 +77,59 @@ function Get-SingleResult {
     return Get-Content -LiteralPath $results[0].FullName -Raw | ConvertFrom-Json
 }
 
+function Test-AsciiPath {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string] $Path
+    )
+
+    foreach ($character in $Path.ToCharArray()) {
+        if ([int] $character -gt 127) {
+            return $false
+        }
+    }
+
+    return $true
+}
+
+function New-AsciiTemporaryDirectory {
+    $candidateRoots = New-Object System.Collections.Generic.List[string]
+    $candidateRoots.Add((Join-Path $PSScriptRoot "artifacts"))
+
+    if (-not [string]::IsNullOrWhiteSpace($env:PUBLIC)) {
+        $candidateRoots.Add((Join-Path $env:PUBLIC "Documents\FsFoxCad-HostAcceptance"))
+    }
+
+    if (-not [string]::IsNullOrWhiteSpace($env:SystemDrive)) {
+        $candidateRoots.Add((Join-Path $env:SystemDrive "Temp\FsFoxCad-HostAcceptance"))
+    }
+
+    $candidateRoots.Add((Join-Path ([System.IO.Path]::GetTempPath()) "FsFoxCad-HostAcceptance"))
+
+    foreach ($candidateRoot in $candidateRoots | Select-Object -Unique) {
+        if (-not (Test-AsciiPath -Path $candidateRoot)) {
+            continue
+        }
+
+        $candidateDirectory = Join-Path $candidateRoot `
+            ("smoke-" + [Guid]::NewGuid().ToString("N"))
+        try {
+            New-Item -ItemType Directory -Path $candidateDirectory -ErrorAction Stop | Out-Null
+            return $candidateDirectory
+        }
+        catch {
+            continue
+        }
+    }
+
+    throw "Host acceptance runner smoke checks require a writable ASCII temporary directory. " +
+        "Set up an ASCII checkout path or a writable public temporary location."
+}
+
 $script:RunnerPath = Join-Path $PSScriptRoot "Invoke-CadHostAcceptance.ps1"
 $script:PowerShellExecutable = (Get-Process -Id $PID).Path
 $scenarioRoot = Join-Path $PSScriptRoot "scenarios"
-$tempRoot = Join-Path ([System.IO.Path]::GetTempPath()) `
-    ("FsFoxCad-HostAcceptanceRunner-" + [Guid]::NewGuid().ToString("N"))
-
-New-Item -ItemType Directory -Path $tempRoot | Out-Null
+$tempRoot = New-AsciiTemporaryDirectory
 
 try {
     $inputDirectory = Join-Path $tempRoot "inputs with spaces"
@@ -120,6 +168,23 @@ try {
             $generatedScript -match 'SECURELOAD') {
             throw "$product generated script did not satisfy the expected safety contract."
         }
+    }
+
+    $notRunOutput = Join-Path $tempRoot "run-not-started"
+    $exitCode = Invoke-RunnerProcess -Arguments @(
+        "-Product", "AutoCAD",
+        "-Scenario", $sharedScenario,
+        "-CadExecutable", (Join-Path $tempRoot "not-installed-AutoCAD.exe"),
+        "-TestAssembly", $fakeAssembly,
+        "-OutputDirectory", $notRunOutput
+    )
+    Assert-Equal -Expected 1 -Actual $exitCode -Message "Not-run host exit code."
+    $notRunResult = Get-SingleResult -Directory $notRunOutput
+    Assert-Equal -Expected "InfrastructureError" -Actual $notRunResult.status `
+        -Message "Not-run host status."
+    foreach ($expectation in $notRunResult.expectations) {
+        Assert-Equal -Expected "Not run" -Actual $expectation.status `
+            -Message "Unexecuted expectation status."
     }
 
     $missingDrawingOutput = Join-Path $tempRoot "generate-missing-drawing"
@@ -198,6 +263,26 @@ try {
     Assert-Equal -Expected 1 -Actual $exitCode -Message "Partial skip exit code."
     Assert-Equal -Expected "Failed" -Actual (Get-SingleResult -Directory $partialSkipOutput).status `
         -Message "A skip line must not hide multiple missing results."
+
+    $ambiguousSkipLog = Join-Path $tempRoot "ambiguous-skip.log"
+    @(
+        "Jig dispose safety passed.",
+        "[SKIP] Unstructured output.",
+        "[SKIP] Unstructured output.",
+        "[SKIP] Unstructured output.",
+        "[SKIP] Unstructured output.",
+        "[SKIP] Unstructured output."
+    ) | Set-Content -LiteralPath $ambiguousSkipLog -Encoding UTF8
+    $ambiguousSkipOutput = Join-Path $tempRoot "analyze-ambiguous-skip"
+    $exitCode = Invoke-RunnerProcess -Arguments @(
+        "-Product", "ZWCAD",
+        "-Scenario", $sharedScenario,
+        "-LogFile", $ambiguousSkipLog,
+        "-OutputDirectory", $ambiguousSkipOutput
+    )
+    Assert-Equal -Expected 1 -Actual $exitCode -Message "Ambiguous skip exit code."
+    Assert-Equal -Expected "Failed" -Actual (Get-SingleResult -Directory $ambiguousSkipOutput).status `
+        -Message "Unstructured skip output must not hide multiple expectations."
 
     $progressPassedLog = Join-Path $tempRoot "progress-passed.log"
     @(

@@ -1,3 +1,5 @@
+#requires -Version 7.0
+
 [CmdletBinding(DefaultParameterSetName = "Run")]
 param(
     [Parameter(Mandatory = $true)]
@@ -268,7 +270,7 @@ function New-ExpectationResults {
             text     = $expectedText
             required = 1
             observed = 0
-            status   = "NotRun"
+            status   = "Not run"
         }
         $expectationByText[$expectedText] = $expectation
         $expectations.Add($expectation)
@@ -341,7 +343,13 @@ function Evaluate-LogText {
     elseif ($missingExpectations -eq 0) {
         $status = "Passed"
     }
-    elseif ($skipLines.Count -ge $missingOccurrences) {
+    # Until TestShared emits structured "[SKIP] <command>" messages, free-text
+    # skip output can only unambiguously explain one missing, unique expectation.
+    elseif ($Expectations.Count -eq 1 -and
+            $missingExpectations -eq 1 -and
+            $missingOccurrences -eq 1 -and
+            $Expectations[0].required -eq 1 -and
+            $skipLines.Count -gt 0) {
         $status = "Skipped"
     }
 
