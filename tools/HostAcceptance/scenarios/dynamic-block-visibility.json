@@ -1,0 +1,19 @@
+{
+  "$schema": "../scenario.schema.json",
+  "schemaVersion": 1,
+  "name": "dynamic-block-visibility",
+  "description": "Read-only scan of a caller-provided drawing containing the required dynamic block variants.",
+  "products": [
+    "AutoCAD",
+    "ZWCAD"
+  ],
+  "requiresDrawing": true,
+  "commands": [
+    {
+      "name": "Complete dynamic block visibility scan",
+      "command": "Test_BlockVisibilityInfoAll",
+      "expectedText": "Block visibility scan passed."
+    }
+  ],
+  "failurePatterns": []
+}
