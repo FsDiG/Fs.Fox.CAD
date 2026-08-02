@@ -1004,9 +1004,9 @@
           },
           {
             "path": "lib/net48/Fs.Fox.AutoCad.xml",
-            "length": 490259,
+            "length": 489799,
             "hashKind": "canonical-xml-v1",
-            "contentSha256": "36e5b2e9e09b7e16204a1f14bcfe49d90702e427e16cd6302d6418e86531c518",
+            "contentSha256": "a63e59db6c022f3a34329b7436b95a942a00452222175eeeb64cbb58972804b0",
             "binarySource": null
           },
           {
@@ -2122,9 +2122,9 @@
           },
           {
             "path": "lib/net8.0-windows7.0/Fs.Fox.AutoCad.xml",
-            "length": 452141,
+            "length": 451681,
             "hashKind": "canonical-xml-v1",
-            "contentSha256": "efc874e3dd8f43f14dfaecebcef6e7751f2c60b23e36f008135830d6ce318967",
+            "contentSha256": "ad8310802cbd764e28fed8370f9cb5ad410c358281607a8af636778706da3be4",
             "binarySource": null
           },
           {
@@ -3123,9 +3123,9 @@
           },
           {
             "path": "lib/net48/Fs.Fox.ZwCad.xml",
-            "length": 481181,
+            "length": 480725,
             "hashKind": "canonical-xml-v1",
-            "contentSha256": "227da6292324b41e087ff2ecba86c571afe92480aa755994322874a9c675cfc4",
+            "contentSha256": "786be870d5aedbfccefe5f201f5d583ac77069b2e98c2ad40f5f72cca5fc3ffa",
             "binarySource": null
           },
           {
@@ -4124,9 +4124,9 @@
           },
           {
             "path": "lib/net48/Fs.Fox.ZwCad.xml",
-            "length": 480179,
+            "length": 479723,
             "hashKind": "canonical-xml-v1",
-            "contentSha256": "1de7487ff1c00b65379339c6dcce7146eb2f74944835e4d338327c6f6450af7a",
+            "contentSha256": "a83946aff0497fe8c120ee51fcb1c86ae4c9ab04e918e2073f54161a2c0a53e7",
             "binarySource": null
           },
           {
