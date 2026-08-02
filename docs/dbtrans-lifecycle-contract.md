@@ -242,19 +242,19 @@ PR #45 已在 `DBTrans.Task` 中捕获进入前的 `WorkingDatabase`，并通过
 
 本轮只交付文档，以下全部为 `Not run`。后续代码 PR 可以逐项补证据；无法执行的项目继续保留状态说明，不阻止文档评审。
 
-| 场景 | AutoCAD 2019 | AutoCAD 2025 | ZWCAD 2022 | ZWCAD 2025 |
-| --- | --- | --- | --- | --- |
-| 同 Database 嵌套并按 LIFO 完成 | `Not run` | `Not run` | `Not run` | `Not run` |
-| 跨 Database 嵌套并按 LIFO 完成 | `Not run` | `Not run` | `Not run` | `Not run` |
-| 非 LIFO Commit/Abort/Dispose 在资源变更前失败 | `Not run` | `Not run` | `Not run` | `Not run` |
-| 成功后重复 Dispose 不产生副作用 | `Not run` | `Not run` | `Not run` | `Not run` |
-| 默认 Dispose 提交、显式 Abort 回滚 | `Not run` | `Not run` | `Not run` | `Not run` |
-| DocumentLock 取得与释放 | `Not run` | `Not run` | `Not run` | `Not run` |
-| 后台自建 Database 只释放一次 | `Not run` | `Not run` | `Not run` | `Not run` |
-| 前台/已打开 Document Database 不被误释放 | `Not run` | `Not run` | `Not run` | `Not run` |
-| Commit/Abort/Dispose 抛异常后的资源和栈状态 | `Not run` | `Not run` | `Not run` | `Not run` |
+| 场景 | AutoCAD 2020 (`AC_2019`) | AutoCAD 2026 (`AC_2025`) | ZWCAD 2022 (`ZW_2022`) |
+| --- | --- | --- | --- |
+| 同 Database 嵌套并按 LIFO 完成 | `Not run` | `Not run` | `Not run` |
+| 跨 Database 嵌套并按 LIFO 完成 | `Not run` | `Not run` | `Not run` |
+| 非 LIFO Commit/Abort/Dispose 在资源变更前失败 | `Not run` | `Not run` | `Not run` |
+| 成功后重复 Dispose 不产生副作用 | `Not run` | `Not run` | `Not run` |
+| 默认 Dispose 提交、显式 Abort 回滚 | `Not run` | `Not run` | `Not run` |
+| DocumentLock 取得与释放 | `Not run` | `Not run` | `Not run` |
+| 后台自建 Database 只释放一次 | `Not run` | `Not run` | `Not run` |
+| 前台/已打开 Document Database 不被误释放 | `Not run` | `Not run` | `Not run` |
+| Commit/Abort/Dispose 抛异常后的资源和栈状态 | `Not run` | `Not run` | `Not run` |
 
-建议每条宿主证据记录产品完整版本、测试程序集 SHA-256、Git commit、执行命令、输入 DWG 所有权、CAD 日志和人工观察项。宿主 Runner 仍由 #40 跟踪，不作为本设计 PR 的前置条件。
+建议每条宿主证据记录编译目标、产品完整版本、测试程序集 SHA-256、Git commit、执行命令、输入 DWG 所有权、CAD 日志和人工观察项。`ZW_2025` 当前为 Build only，不进入本矩阵。宿主 Runner 仍由 #40 跟踪，不作为本设计 PR 的前置条件。
 
 ## 11. 非目标
 

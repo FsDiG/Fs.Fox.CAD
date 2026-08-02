@@ -42,7 +42,7 @@ front matter schema 和自动校验尚未落地。在迁移完成前，本页状
 | 修改 `DBTrans` | 实时 [`DBTrans.cs`](../src/CADShared/Cad/Database/Transactions/DBTrans.cs)、[生命周期设计提案](dbtrans-lifecycle-contract.md) | 文档中的 Confirmed 可作证据；Decision 仍需独立实现和验证。 |
 | 修改宿主、SDK 或目标框架 | [ZWCAD 兼容性](ZWCAD-version-compatibility.md)、[AutoCAD 2027 决策](AC_2027-net8-compatibility-decision.md)、[构建说明](../编译说明.md) | 检查公开发布目标与仓库中的实验/预备项目差异。 |
 | 修改 CAD 命令行或 UI 文案 | [CAD/UI 文案风格指南](guides/cad-ui-text-style-guide.md) | 只机械修正低风险格式；流程和业务含义需要单独评审。 |
-| 追溯真实宿主结果 | 对应 Issue/PR；仅当目标提交确实包含 `Build/HostAcceptance` 时再读取其中记录 | 当前 main 尚无该目录；证据只适用于记录的宿主、版本、提交和场景。 |
+| 执行或追溯真实 CAD 宿主验收 | [CAD 真实宿主验收 Runner](../tools/HostAcceptance/README.md)、[Issue #40](https://github.com/FsDiG/Fs.Fox.CAD/issues/40)及对应 Issue/PR | 分别核对编译目标、测试程序集、实际宿主、提交和场景；`Build/HostAcceptance` 中的历史快照只在目标 Git 状态确实包含时读取。 |
 | 新增或调整文档 | [文档治理方案](documentation-architecture.md)、根 [`AGENTS.md`](../AGENTS.md) | 先维护事实源、状态和关联，不提前选择站点框架。 |
 | 规划站点仓库或 EdgeOne 发布 | [文档治理方案](documentation-architecture.md)、[EdgeOne 站点仓库评估](edgeone-site-repository-evaluation.md)、[Issue #48](https://github.com/FsDiG/Fs.Fox.CAD/issues/48) | 产品内容仍只在本仓库维护；展示仓库、来源锁和生成产物是不同边界。 |
 
@@ -55,7 +55,8 @@ front matter schema 和自动校验尚未落地。在迁移完成前，本页状
 | `governance.agent-routing` | `current` | [仓库协作规则](../AGENTS.md) | maintainer | 编码代理与维护者的任务路由、证据和分支边界。 |
 | `architecture.overview` | `current` | [Fs.Fox.CAD 架构说明](关于IFoxCAD的架构说明.md) | user, maintainer | 当前共享源码、宿主边界和核心抽象。 |
 | `guide.building` | `current` | [构建与项目结构](../编译说明.md) | maintainer | 正式项目、工具链、条件编译、输出和验证边界。 |
-| `reference.zwcad-compatibility` | `current` | [ZWCAD 版本兼容性与迁移说明](ZWCAD-version-compatibility.md) | user, maintainer | ZRXSDK 代际、当前发布策略和未完成宿主验收。 |
+| `guide.host-acceptance` | `current` | [CAD 真实宿主验收 Runner](../tools/HostAcceptance/README.md) | maintainer | 真实 CAD 验收的目标矩阵、证据契约、安全边界、当前限制和执行入口。 |
+| `reference.zwcad-compatibility` | `current` | [ZWCAD 版本兼容性与迁移说明](ZWCAD-version-compatibility.md) | user, maintainer | ZRXSDK 代际、当前发布策略、Build-only 边界和未验证状态。 |
 | `decision.autocad-2027-net8` | `current` | [AutoCAD 2027 .NET 8 兼容策略](AC_2027-net8-compatibility-decision.md) | maintainer | 预备项目当前使用 .NET 8 的原因、限制和回迁条件。 |
 | `concept.upstream-relationship` | `current` | [上游 IFoxCAD 与 Fs.Fox.CAD 的关系](<../IFoxCAD 说明.md>) | user, maintainer | 项目来源、独立维护边界和问题归属。 |
 | `guide.repository-maintenance` | `current` | [Fs.Fox.CAD 维护说明](../Fs分支说明.md) | maintainer | 命名、远程仓库和上游贡献边界。 |
