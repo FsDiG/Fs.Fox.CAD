@@ -4,8 +4,7 @@
 > 状态：执行中（Active）<br>
 > 目标分支：`migration/zfgk-cad`<br>
 > 来源快照：`FeiSiDev/Fs.Zfgk.CAD@c38ce320c75284536c907c1046e5458da4ae0468`<br>
-> `main` 集成基线：`FsDiG/Fs.Fox.CAD@6e6f94223be418481663833fc65386d8cf2839a4`<br>
-> 当前分支基线：`migration/zfgk-cad@2e68759f710046416f4e27d2c2f87487e4160619`<br>
+> 最近 `main` 集成：`origin/main@6e6f94223be418481663833fc65386d8cf2839a4` 已由 `2e68759f710046416f4e27d2c2f87487e4160619` 合入<br>
 > 实施跟踪：[Issue #110](https://github.com/FsDiG/Fs.Fox.CAD/issues/110)<br>
 > 最近复核：2026-08-03<br>
 > CAD 宿主验收：Not run
@@ -147,13 +146,13 @@
 | `ObjectARX/Entity/ArcUtil.cs` | 反转圆弧可由厂商曲线 API表达；旧实现直接改 Normal/角度，需额外验证非 XY 平面。 | 不直接迁移。 |
 | `ObjectARX/Entity/BlockUtil.cs` | 块导入、插入和属性大多已有等价实现；“选定实体导出 DWG”仍可能有增量价值。 | 部分候选；仅评估缺失的导出契约和属性度量。 |
 | `ObjectARX/Entity/CircleUtil.cs` | 仅构造并入库，现有实体添加 API 足够。 | 不迁移。 |
-| `ObjectARX/Entity/CurveUtil.cs` | 子曲线、弦高、归一化位置、偏移和交点查询具有通用价值；旧实现对返回对象的释放和异常处理不完整。 | 高优先候选；拆为只读计算、返回新对象、数据库修改三个批次。 |
+| `ObjectARX/Entity/CurveUtil.cs` | 子曲线、弦高、归一化位置、偏移和交点查询具有通用价值；旧实现对返回对象的释放和异常处理不完整。 | 部分已吸收：Phase 1 批次 1 已加入长度比例取点和两种中点弦偏差；返回新对象和数据库修改仍按后续批次处理。 |
 | `ObjectARX/Entity/DimensionUtil.cs` | 旋转标注构造简单，未形成独特抽象。 | 低优先条件候选；有重复消费者时再加入窄扩展。 |
 | `ObjectARX/Entity/EntityUtil.cs` | 擦除、变换、颜色、包围盒和克隆大多已有等价实现。 | 复用现有实现；块属性克隆随 Block 项评估。 |
 | `ObjectARX/Entity/HatchUtil.cs` | 已有 `HatchEx`、`HatchConverter` 和边界创建能力；来源还依赖外部工具。 | 不迁移平行 API。 |
-| `ObjectARX/Entity/LineUtil.cs` | 方位、点线距离和插值有通用价值；相交状态和高程插值旧实现存在语义/结果问题。 | 部分候选；采用明确枚举/结果类型和退化线契约重写。 |
+| `ObjectARX/Entity/LineUtil.cs` | 方位、点线距离和插值有通用价值；相交状态和高程插值旧实现存在语义/结果问题。 | 部分已吸收：Phase 1 批次 1 已在 `PointEx` 加入比例插值和高程唯一点查询；方位/相交与修改操作继续去重。 |
 | `ObjectARX/Entity/PolyfaceMeshUtil.cs` | 仅创建网格并入库，现有实体添加机制可组合完成。 | 不迁移。 |
-| `ObjectARX/Entity/PolylineUtil.cs` | 连接、采样、分段、圆角、去零段和去共线点是本次最有价值的来源之一；旧实现同时操作事务、UI、对象释放和原位修改。 | 高优先候选；按“查询 -> 创建新对象 -> 原位修改 -> 批量数据库操作”四层重写。 |
+| `ObjectARX/Entity/PolylineUtil.cs` | 连接、采样、分段、圆角、去零段和去共线点是本次最有价值的来源之一；旧实现同时操作事务、UI、对象释放和原位修改。 | 部分已吸收：Phase 1 批次 1 已加入完整顶点数据快照和单段长度；采样、创建新对象和修改操作继续分层处理。 |
 | `ObjectARX/Entity/RegionUtil.cs` | `Explode` 后转折线并连接可为 `RegionEx.ToCurves()` 提供替代思路，但旧实现泄漏临时对象且没有内外环/方向契约。 | 高优先设计输入；与 Region 所有权和 ZWCAD BRep 路径统一处理。 |
 | `ObjectARX/Entity/TextUtil.cs` | 添加文字、文字样式和去格式化大多已有实现；文字边界度量可能有宿主差异。 | 复用现有实现；度量需求单独验证。 |
 | `ObjectARX/Entity/XDataUtil.cs` | 已由 `TypedValueList`、`XDataList`、`DBObjectEx` 和选择过滤体系覆盖。 | 复用现有实现。 |
@@ -206,7 +205,7 @@
 - [x] 记录现有等价 API、外部依赖和已知风险。
 - [x] 明确来源核对不作为本迁移实施门槛；Issue #105 与本计划解耦。
 - [x] 创建实施总跟踪 Issue #110。
-- [ ] 为第一批候选写具体 API 草案和测试样例，确认没有与实时 `main` 重复。
+- [x] 为第一批候选写具体 API 草案，确认没有与实时 `main` 重复。
 
 Phase 0 的清单和结构决策已经完成。后续每个代码批次必须回写本文的最终结论，不能只在 PR 对话中记录取舍。
 
@@ -220,6 +219,20 @@ Phase 0 的清单和结构决策已经完成。后续每个代码批次必须回
 - Extents/Rect 的关系和相交簇合并。
 
 约束：不写数据库、不依赖活动文档、不原位修改输入、不弹 UI。先增加测试，再增加公共 API；每个返回的新 CAD 对象都写明释放责任。
+
+批次 1 的 API 决定如下；它们都只返回值或托管快照，不创建需要调用方释放的 CAD 对象：
+
+| 目标类型 | API | 吸收的价值与契约修正 |
+| --- | --- | --- |
+| `CurveEx` | `GetPointAtDistanceFraction` | 按总长闭区间 `[0, 1]` 取点；修正旧实现忽略输入比例、固定取 `0.5` 的问题，并拒绝无限长度域。 |
+| `CurveEx` | `GetMidpointChordDeviation` | 明确按参数中点计算三维弦偏差，不把结果表述为区间最大误差。 |
+| `CurveEx` | `GetMidpointChordDeviationByDistance` | 明确按沿曲线距离中点计算，避免把距离端点转参数后误用参数中点。 |
+| `PolylineEx` | `GetVertexData` | 一次取得顶点、bulge、起宽和终宽的独立托管快照，不暴露 `ref` 集合。 |
+| `PolylineEx` | `GetSegmentLength` | 对开放/闭合折线验证真实子段索引；直线返回线长，圆弧返回弧长。 |
+| `PointEx` | `InterpolateTo` | 使用闭区间 `[0, 1]` 的三维线性插值，非法比例抛出明确异常。 |
+| `PointEx` | `TryInterpolateAtElevation` | 只在非水平线段内存在唯一高程点时成功；修正旧实现把结果 Z 固定为 `0` 的错误，不引入隐式容差。 |
+
+批次 1 提供宿主内确定性验收命令 `Test_GeometryQuery`，覆盖直线、半圆、开放/闭合折线和高程插值边界。AC_2019、AC_2025、ZW_2022、ZW_2025、GC_2022、GC_2023、GC_2026 的 Release 库和测试程序集均已通过直接构建，模块、兼容性和 TypeDef 顺序守卫通过；这只是 Build-only 证据，命令尚未在 CAD 中执行，真实宿主状态为 `Not run`。折线按距离/弦偏差采样、点在线段左右关系和范围聚类尚未计入本批完成范围。
 
 ### Phase 2：点网格索引
 

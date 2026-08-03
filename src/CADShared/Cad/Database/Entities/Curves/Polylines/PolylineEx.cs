@@ -53,6 +53,50 @@ public static class PolylineEx
                 .ToList();
     }
 
+    /// <summary>
+    /// 获取轻量多段线的顶点、凸度和宽度快照
+    /// </summary>
+    /// <param name="pl">轻量多段线</param>
+    /// <returns>按顶点索引排列的独立数据对象；修改返回值不会修改原多段线</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="pl"/> 为 <see langword="null"/></exception>
+    public static IReadOnlyList<BulgeVertexWidth> GetVertexData(this Polyline pl)
+    {
+        if (pl is null)
+            throw new ArgumentNullException(nameof(pl));
+
+        var vertices = new List<BulgeVertexWidth>(pl.NumberOfVertices);
+        for (var index = 0; index < pl.NumberOfVertices; index++)
+            vertices.Add(new BulgeVertexWidth(pl, index));
+
+        return vertices;
+    }
+
+    /// <summary>
+    /// 获取轻量多段线指定子段的实际长度
+    /// </summary>
+    /// <remarks>直线段返回直线长度，圆弧段返回沿弧长度。</remarks>
+    /// <param name="pl">轻量多段线</param>
+    /// <param name="segmentIndex">从零开始的子段索引</param>
+    /// <returns>指定子段的长度</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="pl"/> 为 <see langword="null"/></exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="segmentIndex"/> 不是有效子段索引</exception>
+    public static double GetSegmentLength(this Polyline pl, int segmentIndex)
+    {
+        if (pl is null)
+            throw new ArgumentNullException(nameof(pl));
+
+        var segmentCount = pl.NumberOfVertices < 2
+            ? 0
+            : pl.Closed ? pl.NumberOfVertices : pl.NumberOfVertices - 1;
+        if (segmentIndex < 0 || segmentIndex >= segmentCount)
+        {
+            throw new ArgumentOutOfRangeException(nameof(segmentIndex), segmentIndex,
+                "The polyline does not contain the requested segment.");
+        }
+
+        return pl.GetDistanceAtParameter(segmentIndex + 1) - pl.GetDistanceAtParameter(segmentIndex);
+    }
+
     #endregion
 
     #region 创建多段线
