@@ -28,6 +28,8 @@ public static class ProgressMeterUtils
 #if ZWCAD
         EnsureZwcadSuccess(ZcedSetStatusBarProgressMeter(label, minimum, maximum),
             "create the status-bar progress meter");
+#elif GCAD
+        // GStarCAD: fallback to no-op until native API verified
 #else
         Utils.SetApplicationStatusBarProgressMeter(label, minimum, maximum);
 #endif
@@ -42,6 +44,8 @@ public static class ProgressMeterUtils
 #if ZWCAD
         EnsureZwcadSuccess(ZcedSetStatusBarProgressMeterPos(position),
             "update the status-bar progress meter");
+#elif GCAD
+        // GStarCAD: fallback to no-op until native API verified
 #else
         Utils.SetApplicationStatusBarProgressMeter(position);
 #endif
@@ -54,6 +58,8 @@ public static class ProgressMeterUtils
     {
 #if ZWCAD
         ZcedRestoreStatusBar();
+#elif GCAD
+        // GStarCAD: fallback to no-op until native API verified
 #else
         Utils.RestoreApplicationStatusBar();
 #endif
