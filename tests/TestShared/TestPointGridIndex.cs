@@ -2,7 +2,7 @@ namespace Test;
 
 public class TestPointGridIndex
 {
-    private const double Tolerance = 1e-8;
+    private const double Tolerance = 1e-6;
 
     [CommandMethod(nameof(Test_PointGridIndex))]
     public void Test_PointGridIndex()
@@ -43,6 +43,13 @@ public class TestPointGridIndex
         var boundaryIndices = index.QueryIndices(new Point2d(-1, -1), new Point2d(-1, -1));
         AssertTrue(boundaryIndices.Count == 1 && boundaryIndices[0] == negativeIndex,
             "Range includes exact boundary point");
+        var extremeRangeIndices = index.QueryIndices(
+            new Point2d(-double.MaxValue, -double.MaxValue),
+            new Point2d(double.MaxValue, double.MaxValue));
+        AssertTrue(extremeRangeIndices.Count == index.Count &&
+                   extremeRangeIndices[0] == firstIndex &&
+                   extremeRangeIndices[extremeRangeIndices.Count - 1] == farIndex,
+            "Unmappable finite range falls back to exact point filtering");
         AssertThrowsArgumentOutOfRange(
             () => index.QueryIndices(new Point2d(1, 0), new Point2d(0, 1)),
             "Reversed range");

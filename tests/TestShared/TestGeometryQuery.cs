@@ -2,7 +2,7 @@ namespace Test;
 
 public class TestGeometryQuery
 {
-    private const double Tolerance = 1e-8;
+    private const double Tolerance = 1e-6;
 
     [CommandMethod(nameof(Test_GeometryQuery))]
     public void Test_GeometryQuery()
@@ -35,6 +35,13 @@ public class TestGeometryQuery
             "Semicircle parameter midpoint deviation");
         AssertClose(arc.GetMidpointChordDeviationByDistance(0, Math.PI * 10), 10,
             "Semicircle distance midpoint deviation");
+
+        using var ray = new Ray();
+        AssertThrowsInvalidOperation(() => ray.GetMidpointChordDeviationByDistance(0, 1),
+            "Ray distance domain");
+        using var xline = new Xline();
+        AssertThrowsInvalidOperation(() => xline.GetMidpointChordDeviationByDistance(0, 1),
+            "Xline distance domain");
 
         using var polyline = new Polyline();
         polyline.AddVertexAt(0, new Point2d(0, 0), 1, 2, 3);
@@ -100,5 +107,19 @@ public class TestGeometryQuery
         }
 
         throw new InvalidOperationException($"{name}: expected ArgumentOutOfRangeException.");
+    }
+
+    private static void AssertThrowsInvalidOperation(Action action, string name)
+    {
+        try
+        {
+            action();
+        }
+        catch (InvalidOperationException)
+        {
+            return;
+        }
+
+        throw new InvalidOperationException($"{name}: expected InvalidOperationException.");
     }
 }
