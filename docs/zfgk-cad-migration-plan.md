@@ -1,15 +1,16 @@
 # Fs.Zfgk.CAD 有价值能力迁移计划
 
 > 稳定 ID：`plan.zfgk-cad-migration`<br>
-> 状态：提案与执行准备（Proposal）<br>
+> 状态：执行中（Active）<br>
 > 目标分支：`migration/zfgk-cad`<br>
 > 来源快照：`FeiSiDev/Fs.Zfgk.CAD@c38ce320c75284536c907c1046e5458da4ae0468`<br>
-> 目标基线：`FsDiG/Fs.Fox.CAD@9faca0a4e420220bd3735de26c63f629564b6dc7`<br>
-> 授权与再分发跟踪：[Issue #105](https://github.com/FsDiG/Fs.Fox.CAD/issues/105)<br>
+> `main` 集成基线：`FsDiG/Fs.Fox.CAD@6e6f94223be418481663833fc65386d8cf2839a4`<br>
+> 当前分支基线：`migration/zfgk-cad@2e68759f710046416f4e27d2c2f87487e4160619`<br>
+> 实施跟踪：[Issue #110](https://github.com/FsDiG/Fs.Fox.CAD/issues/110)<br>
 > 最近复核：2026-08-03<br>
 > CAD 宿主验收：Not run
 
-本文记录从 `Fs.Zfgk.CAD` 向 `Fs.Fox.CAD` 吸收通用 CAD 能力的取舍、目标组织、实施顺序和验收边界。它不把来源仓库的文件结构、类名或实现视为迁移规格；每项代码在落地前仍须重新核对实时源码、ObjectARX/ZRX API、目标分支现状和授权范围。
+本文记录从 `Fs.Zfgk.CAD` 向 `Fs.Fox.CAD` 吸收通用 CAD 能力的取舍、目标组织、实施顺序和验收边界。它不把输入仓库的文件结构、类名或实现视为迁移规格；每项能力在落地前仍须重新核对实时源码、ObjectARX/ZRX/GRX API 和目标分支现状。
 
 ## 1. 结论
 
@@ -55,26 +56,24 @@
 
 ### 2.4 多宿主
 
-- 正式共享代码至少通过 AC_2019、AC_2025、ZW_2022、ZW_2025 四目标编译和兼容性守卫。
+- 正式共享代码至少通过 AC_2019、AC_2025、ZW_2022、ZW_2025、GC_2022、GC_2023、GC_2026 七目标编译和兼容性守卫。
 - `Autodesk.AutoCAD.GraphicsSystem`、COM、native export 或仅 AutoCAD 存在的 API 默认不得进入共享实现。
 - 真实宿主验证优先 ZWCAD 2022，其次 AutoCAD 2020/2026；没有 ZWCAD 2025 宿主不是迁移阻塞项，也不能把编译表述为宿主通过。
+- 当前没有 GStarCAD 真实宿主验收约定；三个 GC 目标只记录 Build-only 结果，不能从编译推断宿主行为。
 - 未经明确批准，不启动 CAD，不修改 profile、Trusted Paths、注册表或启动组。
 
-## 3. 授权与溯源门槛
+## 3. 审查决策与可追溯性
 
-来源仓库当前为 Private，GitHub 未识别到许可证；其 README 写明“基于智帆高科 CAD 类库封装，已经过张帆授权”，多份源码头同时标注“北京智帆高科科技有限公司版权所有”。目标仓库公开并采用 MIT License。因此，在复制源码或提交可识别的改写实现前，必须在 [Issue #105](https://github.com/FsDiG/Fs.Fox.CAD/issues/105) 确认现有授权明确覆盖：
+维护者已于 2026-08-03 明确：本迁移不把源代码来源或许可核对作为能力审查和实施门槛。Issue #105 继续独立审计当前 `main` 的既有第三方代码，不阻塞本计划；迁移范围、取舍和验收统一由 [Issue #110](https://github.com/FsDiG/Fs.Fox.CAD/issues/110) 跟踪。
 
-1. 把相关实现并入公开的 `Fs.Fox.CAD`；
-2. 修改、发布和分发这些实现；
-3. 按目标仓库 MIT License 允许下游继续使用和再分发。
+固定输入快照只用于保证“审查了什么”可以复核，不决定目标代码的目录、类型或 API。每个代码批次仍需记录：
 
-授权确认应在关联 Issue 中留下可追溯结论；敏感原件不必提交仓库。若授权只允许内部使用，则公开仓库只能保留功能需求和独立设计，不复制实现。若授权范围不能确定，则停止对应代码迁移，但不影响本清单继续用于去重和需求分析。
+- 对应的输入文件和能力，以便核对 49 文件清单是否遗漏；
+- 目标库中的既有等价实现、实际增量和最终所有权位置；
+- 已修正的旧实现缺陷，以及新增 API 的容差、资源所有权和多宿主边界；
+- 自动验证和真实 CAD 宿主验证分别执行了什么，未执行项明确写为 `Not run`。
 
-每个实际迁移 PR 需在正文中记录来源文件、来源提交和处理方式：
-
-- `adapted`：确认授权后基于来源实现改写，并保留必要版权归属；
-- `clean implementation`：仅采用公开需求/接口事实，由目标契约独立实现；
-- `existing equivalent`：确认目标已有能力，不引入来源代码。
+当前调用情况不作为通用类库价值判断依据。某项能力没有现成调用方时，仍按通用性和契约质量评估；没有增量价值或无法形成可靠契约时，也不为追求迁移数量而加入平行 API。
 
 ## 4. 评估方法
 
@@ -200,16 +199,16 @@
 
 ## 8. 分阶段实施
 
-### Phase 0：基线、授权和去重
+### Phase 0：基线和去重
 
 - [x] 从最新 `main` 建立 `migration/zfgk-cad`。
 - [x] 固定来源/目标 commit，完成 49 个 C# 文件的首轮清单。
 - [x] 记录现有等价 API、外部依赖和已知风险。
-- [x] 将授权与再分发门槛关联到 Issue #105。
-- [ ] 确认授权是否覆盖公开 MIT 再分发，并在关联 Issue 留下结论。
+- [x] 明确来源核对不作为本迁移实施门槛；Issue #105 与本计划解耦。
+- [x] 创建实施总跟踪 Issue #110。
 - [ ] 为第一批候选写具体 API 草案和测试样例，确认没有与实时 `main` 重复。
 
-Phase 0 只允许文档和验证基础设施变更。授权未确认前，不直接复制或改写带来源版权的实现。
+Phase 0 的清单和结构决策已经完成。后续每个代码批次必须回写本文的最终结论，不能只在 PR 对话中记录取舍。
 
 ### Phase 1：只读几何查询
 
@@ -277,7 +276,7 @@ DWG 图像预览、复杂自绘表格、结果定位窗体等不能搭便车进�
 - `pwsh -File Build/Verify-CADSharedModuleMap.ps1`
 - `pwsh -File tools/verification/Test-CADSharedTypeDefSequence.ps1`
 - `pwsh -File Build/Verify-CADSharedCompatibility.ps1`
-- AC_2019、AC_2025、ZW_2022、ZW_2025 Release 构建
+- AC_2019、AC_2025、ZW_2022、ZW_2025、GC_2022、GC_2023、GC_2026 Release 构建
 - 新 Markdown 相对链接和 GitHub Flavored Markdown 渲染检查
 
 新增编译文件时，在 `CADShared.projitems` 中填写正确的 `FsFoxModule`/`FsFoxOrder`，并通过守卫提供的更新流程同步模块基线；不能手工绕过预期计数或把新边界债务静默加入白名单。
@@ -318,11 +317,9 @@ DWG 图像预览、复杂自绘表格、结果定位窗体等不能搭便车进�
 
 ## 12. 下一步
 
-当前最合理的下一批不是搬运 `PolylineUtil.cs`，而是：
+当前最合理的下一批不是整体搬运 `PolylineUtil.cs`，而是：
 
-1. 完成 MIT 再分发授权确认；
-2. 从 `CurveUtil`、`PolylineUtil`、`RegionUtil` 提炼 5 至 8 个只读几何用例；
-3. 对照实时 `CurveEx`、`PolylineEx`、`RegionEx` 去重，形成 Phase 1 API 草案；
-4. 先补算法测试和所有权测试，再提交第一批代码。
-
-若授权确认尚未完成，可以先推进完全独立的需求规格和测试向量，但不提交可识别的来源实现。
+1. 从 `CurveUtil`、`PolylineUtil`、`LineUtil` 提炼 5 至 8 个只读几何用例；
+2. 对照实时 `CurveEx`、`PolylineEx`、`PointEx` 去重，形成 Phase 1 API 草案；
+3. 先补可确定验证的算法测试，再提交第一批代码；
+4. 将每项实际结果回写第 6 节并关联 Issue #110。
