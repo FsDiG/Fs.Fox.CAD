@@ -71,6 +71,44 @@ public static class BlockReferenceEx
     #region 属性
 
     /// <summary>
+    /// Tries to read a dynamic block property value.
+    /// </summary>
+    /// <param name="blockReference">Dynamic block reference to inspect.</param>
+    /// <param name="propertyName">Property name. Matching is ordinal and case-sensitive.</param>
+    /// <param name="value">Receives the property value when found; otherwise <see langword="null"/>.</param>
+    /// <returns>
+    /// <see langword="true"/> when a property with the requested name exists; otherwise
+    /// <see langword="false"/>, including for a non-dynamic block.
+    /// </returns>
+    /// <exception cref="System.ArgumentNullException">
+    /// <paramref name="blockReference"/> or <paramref name="propertyName"/> is <see langword="null"/>.
+    /// </exception>
+    /// <exception cref="ArgumentException"><paramref name="propertyName"/> is empty or whitespace.</exception>
+    public static bool TryGetBlockProperty(this BlockReference blockReference, string propertyName,
+        out object? value)
+    {
+        ArgumentNullException.ThrowIfNull(blockReference);
+        ArgumentNullException.ThrowIfNull(propertyName);
+        if (string.IsNullOrWhiteSpace(propertyName))
+            throw new ArgumentException("Block property name cannot be empty or whitespace.", nameof(propertyName));
+
+        value = null;
+        if (!blockReference.IsDynamicBlock)
+            return false;
+
+        foreach (DynamicBlockReferenceProperty property in blockReference.DynamicBlockReferencePropertyCollection)
+        {
+            if (!string.Equals(property.PropertyName, propertyName, StringComparison.Ordinal))
+                continue;
+
+            value = property.Value;
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
     /// 更新动态块参数值
     /// </summary>
     public static bool ChangeBlockProperty(this BlockReference blockReference,
