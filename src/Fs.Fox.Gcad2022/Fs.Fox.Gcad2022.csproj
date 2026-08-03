@@ -1,0 +1,72 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFrameworks>net48</TargetFrameworks>
+        <GCADVersion>2022</GCADVersion>
+        <AssemblyName>Fs.Fox.Gcad</AssemblyName>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <WarningsNotAsErrors>$(WarningsNotAsErrors);NU1900</WarningsNotAsErrors>
+    </PropertyGroup>
+    
+    <!--nuget package-->
+    <PropertyGroup>
+        <PackageId>IFox.CAD.GCAD2022</PackageId>
+        <Title>Fs.Fox.CAD for GStarCAD 2022</Title>
+        <Product>IFox.CAD.GCAD2022</Product>
+        <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+        <Description>面向 GStarCAD 2022 x64 API 代际和 .NET Framework 4.8 的 CAD 二次开发基础类库，基于 GStarCad.Net 20.22.0。源于 IFoxCAD，由 Fs 团队维护。</Description>
+        <Copyright>FS Team</Copyright>
+        <PackageReleaseNotes>初始发布，新增 GStarCAD 2022 支持</PackageReleaseNotes>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <DebugType>none</DebugType>
+        <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+        <OutputPath>..\..\Build\GC_$(GCADVersion)_$(Configuration)\</OutputPath>
+        <DocumentationFile>..\..\Build\GC_$(GCADVersion)_$(Configuration)\Fs.Fox.Gcad.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+        <DebugType>none</DebugType>
+        <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+        <OutputPath>..\..\Build\GC_$(GCADVersion)_$(Configuration)\</OutputPath>
+        <DocumentationFile>..\..\Build\GC_$(GCADVersion)_$(Configuration)\Fs.Fox.Gcad.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <!-- 条件编译符号 -->
+    <PropertyGroup>
+        <DefineConstants>$(Configuration);GCAD;GC_2022</DefineConstants>
+        <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Compile Include="..\..\src\IFoxCAD.Gcad\GlobalUsings.cs">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </Compile>
+        <None Include="..\..\LICENSE">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+        <None Include="..\..\readme.md">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+        <!-- Include Test DLL in NuGet package -->
+        <None Include="..\..\Build\GC_$(GCADVersion)_$(Configuration)\TestGcad2022.dll" Condition="Exists('..\..\Build\GC_$(GCADVersion)_$(Configuration)\TestGcad2022.dll')">
+            <Pack>True</Pack>
+            <PackagePath>lib\net48\</PackagePath>
+        </None>
+    </ItemGroup>
+
+    <!-- GStarCAD 2022 NuGet 包 + PolySharp -->
+    <ItemGroup>
+        <PackageReference Include="GStarCad.Net" Version="20.22.0" ExcludeAssets="runtime" />
+        <PackageReference Include="PolySharp" Version="1.16.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <Reference Include="Microsoft.CSharp" />
+    </ItemGroup>
+    
+    <Import Project="..\CADShared\CADShared.projitems" Label="Shared" />
+</Project>
