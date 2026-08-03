@@ -100,7 +100,8 @@ public static class BlockReferenceEx
         if (!blockReference.IsDynamicBlock)
             return false;
 
-        foreach (DynamicBlockReferenceProperty property in blockReference.DynamicBlockReferencePropertyCollection)
+        using var properties = blockReference.DynamicBlockReferencePropertyCollection;
+        foreach (DynamicBlockReferenceProperty property in properties)
         {
             if (!string.Equals(property.PropertyName, propertyName, StringComparison.Ordinal))
                 continue;

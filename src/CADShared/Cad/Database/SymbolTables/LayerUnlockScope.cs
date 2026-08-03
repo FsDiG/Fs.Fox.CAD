@@ -79,6 +79,7 @@ public sealed class LayerUnlockScope : IDisposable
         if (!layerTable.Has(layerName))
             throw new KeyNotFoundException($"Layer '{layerName}' does not exist in the specified database.");
 
+        // This transaction only resolves the stable ObjectId; disposing it without Commit is intentional.
         return layerTable[layerName];
     }
 
