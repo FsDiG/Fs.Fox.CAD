@@ -4,7 +4,7 @@ namespace Fs.Fox.Cad;
 /// <summary>
 /// 瞬态容器
 /// </summary>
-public class JigExTransient
+public class JigExTransient : IDisposable
 {
     #region 私有字段
 
