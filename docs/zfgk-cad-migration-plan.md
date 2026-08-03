@@ -1,7 +1,7 @@
 # Fs.Zfgk.CAD 有价值能力迁移计划
 
 > 稳定 ID：`plan.zfgk-cad-migration`<br>
-> 状态：执行中（Active）<br>
+> 状态：最终收口中（Active）<br>
 > 目标分支：`migration/zfgk-cad`<br>
 > 来源快照：`FeiSiDev/Fs.Zfgk.CAD@c38ce320c75284536c907c1046e5458da4ae0468`<br>
 > 最近 `main` 集成：`origin/main@6e6f94223be418481663833fc65386d8cf2839a4` 已由 `2e68759f710046416f4e27d2c2f87487e4160619` 合入<br>
@@ -21,13 +21,13 @@
 - 大量能力已被 `DBTrans`、`SymbolTable`、`PointEx`、`GeometryEx`、`CurveEx`、`EditorEx`、`DBDictionaryEx`、`HatchEx`、`QuadTree` 等现行实现覆盖。
 - 若干未覆盖算法仍有通用价值，但旧实现存在资源所有权、容差、异常、事务和边界条件问题，必须按目标库契约重写并验证。
 
-迁移的合理目标是“吸收能力”，不是“搬运代码”。优先级如下：
+迁移的合理目标是“吸收能力”，不是“搬运代码”。最终只吸收三组可证明的通用增量：
 
-1. 曲线、折线和面域的只读几何算法，以及明确的对象所有权契约。
-2. 面向点去重、邻域和范围查询的稀疏网格索引；它与现有四叉树互补，而不是替换四叉树。
-3. 现有块导入/属性 API 没有覆盖的 DWG 导出工作流。
-4. SHX 搜索与几何文本序列化等有明确跨产品需求的辅助能力。
-5. 图形系统预览、DWG 表格和桌面 UI 只在出现真实通用消费者并能完成宿主验证后评估。
+1. 曲线、点和折线的只读几何查询，包括距离比例取点、弦偏差、顶点数据、子段长度、插值和确定性采样；
+2. 面向点去重、邻域和范围查询的稀疏 `PointGridIndex`，与现有四叉树形成明确分工；
+3. 为以上能力配套的跨宿主编译、公共契约守卫和宿主内确定性测试命令。
+
+其余来源能力最终决定为“复用现有”或“不迁移”，不再保留后续候选。以后出现相似需求时，应从 `Fs.Fox.CAD` 的实时契约重新设计，不继续以 `Fs.Zfgk.CAD` 为迁移输入。
 
 ## 2. 不可突破的边界
 
@@ -114,9 +114,9 @@
 | `Properties/AssemblyInfo.cs` | 旧项目程序集元数据。 | 不迁移；目标项目自行生成/维护。 |
 | `Geometry/AcadPlaneUtil.cs` | 仅返回 XY 平面；厂商 API 和现有 `PlaneEx` 足以表达。 | 不迁移。 |
 | `Geometry/CoordinateUtil.cs` | UCS/WCS 转换已由 `GeometryEx`、`EditorEx` 提供；旧实现隐式取活动文档。 | 复用现有实现。 |
-| `Geometry/GePointUtil.cs` | 极坐标、中点、二维距离和方向已有等价实现；点去重、排序和折线圆角概念仍可复核。 | 部分候选；只迁移经独立测试证明的缺失算法。 |
+| `Geometry/GePointUtil.cs` | 极坐标、中点、二维距离和方向已有等价实现；其点排序和折线圆角没有形成比现有几何 API 更可靠的契约。 | 复用现有 `PointEx`、`GeometryEx` 和 `PointGridIndex`；其余不迁移。 |
 | `Geometry/GeRectangleUtil.cs` | 轴向矩形相交已由 `Rect.IntersectsWith` 覆盖。 | 复用现有实现。 |
-| `Geometry/GeTriangle.cs` | 坡度/坡向和重心有领域价值，但旧实现存在退化三角形、法向方向和重心 Z 值问题。 | 条件候选；作为新的明确几何契约重写，不复制该类型。 |
+| `Geometry/GeTriangle.cs` | 坡度/坡向偏向地形业务，旧实现还存在退化三角形、法向方向和重心 Z 值问题。 | 不迁移。 |
 | `Geometry/MathUtil.cs` | 多数函数已有 `System.Math` 等价项；采样、反函数和容差方法的边界契约不完整。 | 不迁移整类；真实需求单独设计。 |
 
 ### 6.2 ObjectARX 基础能力
@@ -124,10 +124,10 @@
 | 来源文件 | 价值与现状 | 决定 |
 | --- | --- | --- |
 | `ObjectARX/AcadDocumentUtil.cs` | 文档枚举可直接使用 `DocumentManager`；`GetOpenedDocument` 忽略文件名并返回第一个文档。 | 不迁移。 |
-| `ObjectARX/ArxOthers/DwgScaleUtil.cs` | 使用特定字典键保存“标注/信息比例”，更像产品数据协议。 | 默认不迁移；若多个产品依赖同一持久化格式，先建立独立契约。 |
-| `ObjectARX/ArxOthers/ExtentUtil.cs` | 宽高、中心、扩展已被 `Rect`、`BoundingBox9`、`PointEx` 覆盖；范围关系和相交簇合并仍有价值。 | 部分候选；基于现有范围类型重写关系/聚类，不复制事务辅助。 |
+| `ObjectARX/ArxOthers/DwgScaleUtil.cs` | 使用特定字典键保存“标注/信息比例”，属于产品持久化协议。 | 不迁移。 |
+| `ObjectARX/ArxOthers/ExtentUtil.cs` | 宽高、中心、扩展、范围关系和碰撞扫描已被 `Rect`、`BoundingBox9`、`PointEx`、`Rect.XCollision` 覆盖。 | 复用现有实现，不迁移事务辅助。 |
 | `ObjectARX/ArxOthers/GroupUtil.cs` | 已由 `DBDictionaryEx.AddGroup`/`GetGroups` 覆盖。 | 复用现有实现。 |
-| `ObjectARX/ArxOthers/GsPreviewUtil.cs` | DWG 到位图预览有价值，但直接使用 AutoCAD GraphicsSystem、设备和视图生命周期。 | 高风险条件候选；独立平台设计和真实宿主测试前不迁移。 |
+| `ObjectARX/ArxOthers/GsPreviewUtil.cs` | DWG 到位图预览直接使用 AutoCAD GraphicsSystem、设备和视图生命周期，没有可验证的共享宿主契约。 | 不迁移。 |
 | `ObjectARX/ArxOthers/SectionUtil.cs` | 道路/断面面积算法带明显业务语义和 WinForms 提示。 | 不进入通用基础库。 |
 | `ObjectARX/DictionaryUtil.cs` | XDictionary/Xrecord 能力已由 `DBDictionaryEx`、`XRecordDataList` 和对象扩展覆盖。 | 复用现有实现。 |
 | `ObjectARX/DwgDatabaseUtil.cs` | 入库、空间枚举、Handle 转 ObjectId 已由 `DBTrans`、`SymbolTableRecordEx`、`ObjectIdEx`、`EntityEx` 覆盖。 | 复用现有实现。 |
@@ -136,25 +136,25 @@
 
 | 来源文件 | 价值与现状 | 决定 |
 | --- | --- | --- |
-| `ObjectARX/DwgTable/AcadDwgTable.cs` | 自绘表格、合并单元格和布局可能有业务价值，但依赖缺失的 `ZFGK.DwgTableBase`/`ZFGK.Utility`，实现约 1,500 行。 | 暂缓；先确认基础模型源码、真实消费者和与原生 `Table` 的差异。 |
-| `ObjectARX/DwgTable/AcadSubDrawTable.cs` | 只是缺失表格基础模型的 CAD 适配。 | 随上项处理，不单独迁移。 |
+| `ObjectARX/DwgTable/AcadDwgTable.cs` | 自绘表格、合并单元格和布局依赖缺失的 `ZFGK.DwgTableBase`/`ZFGK.Utility`，且与原生 `Table` 的职责边界不清。 | 不迁移。 |
+| `ObjectARX/DwgTable/AcadSubDrawTable.cs` | 只是缺失表格基础模型的 CAD 适配。 | 不迁移。 |
 
 ### 6.4 实体、曲线和面域
 
 | 来源文件 | 价值与现状 | 决定 |
 | --- | --- | --- |
-| `ObjectARX/Entity/ArcUtil.cs` | 反转圆弧可由厂商曲线 API表达；旧实现直接改 Normal/角度，需额外验证非 XY 平面。 | 不直接迁移。 |
-| `ObjectARX/Entity/BlockUtil.cs` | 块导入、插入和属性大多已有等价实现；“选定实体导出 DWG”仍可能有增量价值。 | 部分候选；仅评估缺失的导出契约和属性度量。 |
+| `ObjectARX/Entity/ArcUtil.cs` | 反转圆弧可由厂商曲线 API 表达；旧实现直接改 Normal/角度，不能可靠处理非 XY 平面。 | 复用厂商 API，不迁移。 |
+| `ObjectARX/Entity/BlockUtil.cs` | 块导入、插入和属性已有等价实现；导出 DWG 可由厂商 Wblock API 与现有数据库能力组合，旧实现存在失败后提交和固定版本问题。 | 复用现有实现，不迁移。 |
 | `ObjectARX/Entity/CircleUtil.cs` | 仅构造并入库，现有实体添加 API 足够。 | 不迁移。 |
-| `ObjectARX/Entity/CurveUtil.cs` | 子曲线、弦高、归一化位置、偏移和交点查询具有通用价值；旧实现对返回对象的释放和异常处理不完整。 | 部分已吸收：Phase 1 批次 1 已加入长度比例取点和两种中点弦偏差；返回新对象和数据库修改仍按后续批次处理。 |
-| `ObjectARX/Entity/DimensionUtil.cs` | 旋转标注构造简单，未形成独特抽象。 | 低优先条件候选；有重复消费者时再加入窄扩展。 |
-| `ObjectARX/Entity/EntityUtil.cs` | 擦除、变换、颜色、包围盒和克隆大多已有等价实现。 | 复用现有实现；块属性克隆随 Block 项评估。 |
+| `ObjectARX/Entity/CurveUtil.cs` | 子曲线、归一化位置和弦偏差具有通用价值；目标库已有拆分、偏移和交点相关能力，旧实现对返回对象的释放和异常处理不完整。 | 已吸收长度比例取点和两种中点弦偏差；其余复用现有实现，不再迁移。 |
+| `ObjectARX/Entity/DimensionUtil.cs` | 旋转标注构造简单，未形成独特抽象。 | 不迁移。 |
+| `ObjectARX/Entity/EntityUtil.cs` | 擦除、变换、颜色、包围盒和克隆已有等价实现。 | 复用现有实现。 |
 | `ObjectARX/Entity/HatchUtil.cs` | 已有 `HatchEx`、`HatchConverter` 和边界创建能力；来源还依赖外部工具。 | 不迁移平行 API。 |
-| `ObjectARX/Entity/LineUtil.cs` | 方位、点线距离和插值有通用价值；相交状态和高程插值旧实现存在语义/结果问题。 | 部分已吸收：Phase 1 批次 1 已在 `PointEx` 加入比例插值和高程唯一点查询；方位/相交与修改操作继续去重。 |
+| `ObjectARX/Entity/LineUtil.cs` | 方位、点线距离和插值有通用价值；目标库已有面积/方向和厂商相交能力，旧实现的相交状态与高程插值存在语义问题。 | 已吸收比例插值和高程唯一点查询；其余复用现有实现，不再迁移。 |
 | `ObjectARX/Entity/PolyfaceMeshUtil.cs` | 仅创建网格并入库，现有实体添加机制可组合完成。 | 不迁移。 |
-| `ObjectARX/Entity/PolylineUtil.cs` | 连接、采样、分段、圆角、去零段和去共线点是本次最有价值的来源之一；旧实现同时操作事务、UI、对象释放和原位修改。 | 部分已吸收：Phase 1 批次 1 已加入完整顶点数据快照和单段长度；采样、创建新对象和修改操作继续分层处理。 |
-| `ObjectARX/Entity/RegionUtil.cs` | `Explode` 后转折线并连接可为 `RegionEx.ToCurves()` 提供替代思路，但旧实现泄漏临时对象且没有内外环/方向契约。 | 高优先设计输入；与 Region 所有权和 ZWCAD BRep 路径统一处理。 |
-| `ObjectARX/Entity/TextUtil.cs` | 添加文字、文字样式和去格式化大多已有实现；文字边界度量可能有宿主差异。 | 复用现有实现；度量需求单独验证。 |
+| `ObjectARX/Entity/PolylineUtil.cs` | 顶点数据、子段长度和只读采样具有明确通用价值；连接、圆角、去零段和去共线点的旧实现会混合事务、UI、对象释放和原位修改。 | 已吸收顶点快照、子段长度、按距离采样和按弦偏差采样；修改操作不迁移。 |
+| `ObjectARX/Entity/RegionUtil.cs` | `Explode` 后转折线并连接的旧实现泄漏临时对象，且没有内外环、方向、顺序和部分失败契约；当前也缺少 ZWCAD 2022 真实宿主证据。 | 不迁移；`RegionEx.ToCurves()` 的条件编译历史实现保持禁用。 |
+| `ObjectARX/Entity/TextUtil.cs` | 添加文字、文字样式和去格式化已有实现；文字边界度量存在宿主差异。 | 复用现有实现，不迁移度量包装。 |
 | `ObjectARX/Entity/XDataUtil.cs` | 已由 `TypedValueList`、`XDataList`、`DBObjectEx` 和选择过滤体系覆盖。 | 复用现有实现。 |
 
 ### 6.5 Editor、符号表和辅助能力
@@ -167,14 +167,14 @@
 | `ObjectARX/Interaction/SelectionSetUtil.cs` | implied selection 是原生 Editor API，目标代码已有使用。 | 不新增平行包装。 |
 | `ObjectARX/Interaction/ResultLocateUtil.cs` | 与专用 WinForms 结果定位窗口强耦合。 | 不进入基础库。 |
 | `ObjectARX/LayerUtil.cs` | 已由 `SymbolTable<LayerTable,...>`、`SymbolTableEx` 和 Editor 选择能力覆盖。 | 复用现有实现。 |
-| `ObjectARX/LinetypeUtil.cs` | 线型表访问已有统一符号表入口；系统线型文件加载需要单独的宿主路径契约。 | 默认复用现有实现；加载真实需求另立项。 |
-| `ObjectARX/TextStyleUtil.cs` | 文字样式写入已有实现；支持路径中的 SHX 枚举/存在性检查仍可能有增量价值。 | 条件候选；分离“路径发现”和“样式写入”，禁止弹窗和静默替换。 |
+| `ObjectARX/LinetypeUtil.cs` | 线型表访问已有统一符号表入口；系统线型文件加载属于宿主路径策略。 | 复用现有实现，不迁移。 |
+| `ObjectARX/TextStyleUtil.cs` | 文字样式写入已有实现；SHX 枚举混合宿主路径、程序集目录、外部工具和 UI 回退。 | 复用现有文字样式与 `Env` 能力，不迁移。 |
 | `ObjectARX/Others/ConvertUtil.cs` | 点/向量/集合和 UCS/WCS 转换已由 `PointEx`、`VectorEx`、`GeometryEx`、LINQ 覆盖；外部向量类型不属于目标库。 | 复用现有实现。 |
-| `ObjectARX/Others/FormatUtil.cs` | 点/向量文本序列化可能有价值，但旧实现缺少文化区、版本和失败契约。 | 低优先条件候选；先定义 invariant/显示格式和 `TryParse`。 |
+| `ObjectARX/Others/FormatUtil.cs` | 点/向量文本序列化缺少文化区、版本和失败契约，也不属于 CAD 对象核心能力。 | 不迁移。 |
 | `ObjectARX/Others/ListUtil.cs` | 唯一有效方法为交换元素，其余为大段历史注释。 | 不迁移。 |
 | `ObjectARX/Others/ViewUtil.cs` | 已由 `EditorEx.Zoom*` 覆盖。 | 复用现有实现。 |
 | `ObjectARX/SpacialIndex/DynamicPointSpatialIndex.cs` | 点去重、邻域、最近点和范围查询有明确通用价值。旧实现存在无效状态、密集二维数组、UI 弹窗和边界错误。 | 已吸收为 `PointGridIndex`：保留稳定索引、近似去重、范围和最近点能力；不保留固定 extent、公开网格行列和两阶段初始化。 |
-| `ObjectARX/SpacialIndex/EntitySpatialIndex.cs` | 实体范围查询有价值，但目标已有 `QuadTree`；旧实现把事务和网格构建耦合。 | 不迁移该类型；仅把可证明的批量建索引需求补到现有空间索引体系。 |
+| `ObjectARX/SpacialIndex/EntitySpatialIndex.cs` | 实体范围查询已由 `QuadTree` 承担；旧实现把事务和网格构建耦合。 | 复用现有 `QuadTree`，不迁移。 |
 | `Other/NumberUtil.cs` | 只拆尾部数字；无数字时抛异常但始终声明返回 true。 | 不迁移；真实需求使用明确 `Try*` 契约。 |
 | `Others/ApplicationUtil.cs` | 支持路径读取与现有 `Env` 边界重合。 | 复用现有实现。 |
 | `UI/ResultLocateForm.cs`、`UI/ResultLocateForm.Designer.cs` | 专用结果定位窗口，包含删除/定位业务流程。 | 不进入通用基础库。 |
@@ -211,7 +211,7 @@ Phase 0 的清单和结构决策已经完成。后续每个代码批次必须回
 
 ### Phase 1：只读几何查询
 
-候选范围：
+最终范围：
 
 - 曲线按归一化距离取点、弦高/逼近误差计算；
 - 折线顶点、bulge、段长和确定性采样；
@@ -234,7 +234,18 @@ Phase 0 的清单和结构决策已经完成。后续每个代码批次必须回
 
 ObjectARX、ZRX 和 GRX 的曲线契约均把 `Ray` 定义为起始参数 `0` 且没有终止参数，把 `Xline` 定义为没有起止参数或起止点。因此三种查询不能共用“必须具有有限总长”这一前置条件：长度比例取点明确拒绝两者；参数中点弦偏差接受有限的 `Ray`/`Xline` 参数区间，其中 `Ray` 参数不得小于 `0`；距离中点弦偏差接受从基点开始的有限非负 `Ray` 距离区间，但拒绝没有距离原点的 `Xline`。这一区分以 SDK 曲线契约为准。
 
-批次 1 提供宿主内确定性验收命令 `Test_GeometryQuery`，覆盖直线、半圆、`Ray`/`Xline` 边界、开放/闭合折线和高程插值边界。AC_2019、AC_2025、ZW_2022、ZW_2025、GC_2022、GC_2023、GC_2026 的 Release 库和测试程序集均已通过直接构建，模块、兼容性和 TypeDef 顺序守卫通过；这只是 Build-only 证据，命令尚未在 CAD 中执行，真实宿主状态为 `Not run`。折线按距离/弦偏差采样、点在线段左右关系和范围聚类尚未计入本批完成范围。
+批次 1 提供宿主内确定性验收命令 `Test_GeometryQuery`，覆盖直线、半圆、`Ray`/`Xline` 边界、开放/闭合折线和高程插值边界。AC_2019、AC_2025、ZW_2022、ZW_2025、GC_2022、GC_2023、GC_2026 的 Release 库和测试程序集均已通过直接构建，模块、兼容性和 TypeDef 顺序守卫通过；这只是 Build-only 证据，命令尚未在 CAD 中执行，真实宿主状态为 `Not run`。
+
+最终批次只补充折线确定性采样，不混入折线修改或数据库行为：
+
+| 目标类型 | API | 最终契约 |
+| --- | --- | --- |
+| `PolylineEx` | `GetSamplePointsByDistance` | 每个原始子段按沿折线的最大间距独立等距细分，保留所有原始顶点；闭合折线在结果末尾重复首顶点。 |
+| `PolylineEx` | `GetSamplePointsByChordDeviation` | 直线段只保留端点；圆弧段按弓高公式细分，使每个采样子弧的弦偏差不超过给定有限正数；同样保留原始顶点和闭合点。 |
+
+两个方法均返回独立的 `Point3d` 快照，不修改输入、不访问数据库、不创建需要释放的 CAD 对象。`Test_GeometryQuery` 同步覆盖直线/圆弧混合、开放/闭合、退化折线、非零 `Normal`/`Elevation`、非法阈值和不可表示的细分数量。点在线段左右关系由现有 `GeometryEx.GetArea`/`IsClockWise` 表达，范围关系和碰撞扫描由 `Rect`/`Rect.XCollision` 表达，不再新增平行 API。
+
+最终批次的 AC_2019、AC_2025、ZW_2022、ZW_2025、GC_2022、GC_2023、GC_2026 Release 库和测试程序集均已通过直接构建。模块守卫保持 `142 / 42 / 17`，七目标兼容性基线仅增加 `PolylineEx` 的两个公开方法及对应 XML 文档，四目标 TypeDef 顺序未变化；HostAcceptance runner 自测通过。以上仍是 Build-only 和基础设施证据，`Test_GeometryQuery` 未在 CAD 中执行，真实宿主状态为 `Not run`。
 
 ### Phase 2：点网格索引
 
@@ -265,42 +276,34 @@ Phase 2 的七目标公共契约基线均只新增 `PointGridIndex` 的 16 条�
 
 AC_2019、AC_2025、ZW_2022、ZW_2025、GC_2022、GC_2023、GC_2026 的 Release 库和测试程序集均已通过直接构建，模块期望更新为 `142` 个编译项、`Cad.Geometry = 17`；真实 CAD 宿主状态仍为 `Not run`。
 
-### Phase 3：曲线/折线修改与 Region
+### Phase 3：曲线/折线修改与 Region（已关闭，不迁移）
 
-- 在只读算法稳定后，再实现返回新对象的拆分、连接和简化。
-- 原位修改折线作为独立批次，保留宽度、bulge、闭合状态、Normal、Elevation 和属性。
-- Region 边界提取同时评估 `Explode` 路径、AutoCAD BRep 路径和 ZWCAD 2022 能力；定义外环/内环、方向、顺序、部分失败和对象所有权。
-- Issue #103/#107 中条件编译保留的 `RegionEx.ToCurves()` 只作为历史实现和风险清单，不因本迁移直接启用。
+- 目标库已有曲线拆分等基础能力，不从来源复制连接、圆角、去零段或去共线点实现。
+- 来源的原位修改不能完整保留宽度、bulge、闭合状态、`Normal`、`Elevation` 和实体属性，最终不迁移。
+- Region 边界提取缺少内外环、方向、顺序、部分失败、对象所有权和 ZWCAD 2022 宿主证据，最终不迁移。
+- Issue #103/#107 中条件编译保留的 `RegionEx.ToCurves()` 继续只作为历史实现和风险清单，不启用、不扩展。
 
-### Phase 4：数据库工作流
+### Phase 4：数据库工作流（已关闭，不迁移）
 
-- 先证明现有 `GetBlockFrom`、`InsertBlock`、`ChangeBlockAttribute` 等 API 的缺口。
-- 如仍有增量，再设计“选定实体导出 DWG”：目标版本、基点、重复记录、覆盖、临时文件、原子替换和失败回滚均为必填契约。
-- SHX 搜索仅在调用方确有跨宿主需求时实现；路径枚举、去重、访问异常和文件名比较需可测试。
-- 数据库写入与 UI 提示分离，不把当前 Document/Editor 隐式嵌入底层方法。
+- 块导入、插入、属性和数据库保存复用现有 `GetBlockFrom`、`InsertBlock`、`ChangeBlockAttribute`、`DatabaseEx` 及厂商 Wblock API。
+- 来源的实体导出 DWG 实现固定旧版本、隐式依赖活动文档，并在失败路径提交事务，不作为公共契约迁移。
+- SHX 搜索混合宿主支持路径、程序集目录和 UI 回退；本次不建立新的文件发现 API。
 
-### Phase 5：宿主专属和暂缓能力
+### Phase 5：宿主专属能力（已关闭，不迁移）
 
-DWG 图像预览、复杂自绘表格、结果定位窗体等不能搭便车进入共享程序集。每项需具备：
-
-1. 至少一个真实通用消费者；
-2. 完整依赖源码或可接受的独立替代设计；
-3. AutoCAD/ZWCAD 支持决策；
-4. 可执行的真实宿主验收场景。
-
-不满足时维持“暂缓/不迁移”，不使用大段 `#if false` 保存旧仓库副本。
+DWG 图像预览、复杂自绘表格、结果定位窗体和其他 WinForms/GraphicsSystem 能力均不进入共享程序集。它们缺少可重复依赖、共享宿主契约或通用基础库边界；最终清单不再保留候选状态，也不使用条件编译复制来源实现。
 
 ## 9. 分支和 PR 组织
 
-`migration/zfgk-cad` 是本次迁移的长期集成分支。具体代码使用从该分支建立的短分支，并将 PR base 指向该分支；建议批次名称保持窄小，例如：
+`migration/zfgk-cad` 是本次迁移的长期集成分支。已经完成的代码批次均从该分支建立短分支，并将 PR base 指向该分支：
 
 - `zfgk/geometry-query`
 - `zfgk/point-grid`
-- `zfgk/polyline-edit`
-- `zfgk/region-boundary`
-- `zfgk/block-export`
+- `zfgk/review-fixes`
+- `zfgk/curve-domain`
+- `zfgk/final-sampling`
 
-每个批次只处理一个所有权边界。长期分支阶段性合入最新 `main`，但冲突解决后必须重新执行模块守卫、兼容性检查和受影响构建。最终进入 `main` 前重新审查整个差异，不能把“各子 PR 已通过”替代集成验证。
+最终采样 PR 合入后不再建立新的 `Fs.Zfgk.CAD` 迁移批次。`migration/zfgk-cad` 继续与 `main` 隔离；是否以及何时进入 `main` 属于独立集成决策，必须重新同步最新 `main`、审查完整差异并获得维护者明确批准，不能用各子 PR 已通过替代最终集成验证。
 
 ## 10. 每批验收
 
@@ -336,24 +339,24 @@ DWG 图像预览、复杂自绘表格、结果定位窗体等不能搭便车进�
 | 3 | AutoCAD 2026（AC_2025 二进制基线） | .NET 8/新宿主行为和兼容性。 |
 | Not required | ZWCAD 2025 | 当前无真实宿主，不阻塞，但保持编译目标。 |
 
-当前本文只完成静态盘点，没有运行 CAD，宿主状态统一为 `Not run`。
+当前所有迁移批次均未运行 CAD，宿主状态统一为 `Not run`。七目标构建和静态守卫不代表真实宿主通过。
 
 ## 11. 完成定义
 
 本迁移不是以“来源文件全部处理”或“公共方法数量接近 451”为完成标准。满足以下条件才可收口：
 
-1. 每个来源文件都已有 `复用现有`、`已重写`、`暂缓` 或 `不迁移` 的明确结论；
+1. 每个来源文件都已有 `复用现有`、`已吸收` 或 `不迁移` 的最终结论，不再保留候选；
 2. 所有迁移能力符合当前目录、命名、事务和对象所有权契约；
 3. 没有引入来源二进制、AutoCAD-only using 泄漏或第二套平行 API；
 4. 自动构建/守卫与要求的真实宿主场景分别记录，未执行项不被包装为通过；
-5. 最终有效的公共行为写入 XML 注释和 current 文档，本文随后转为 `historical`；
-6. 长期分支相对最新 `main` 完成最终集成审查后，才建立合入 `main` 的 PR。
+5. 最终有效的公共行为写入 XML 注释，实施结果和未运行的宿主项写入本文；
+6. 最终采样 PR 合入 `migration/zfgk-cad` 后关闭 Issue #110，并将本文转为 `historical`。
 
-## 12. 下一步
+进入 `main` 不属于上述迁移完成定义。长期分支的完整集成审查和维护者批准仍是未来独立门槛。
 
-当前最合理的下一批不是整体搬运 `PolylineUtil.cs`，而是：
+## 12. 收口后状态
 
-1. 从 `CurveUtil`、`PolylineUtil`、`LineUtil` 提炼 5 至 8 个只读几何用例；
-2. 对照实时 `CurveEx`、`PolylineEx`、`PointEx` 去重，形成 Phase 1 API 草案；
-3. 先补可确定验证的算法测试，再提交第一批代码；
-4. 将每项实际结果回写第 6 节并关联 Issue #110。
+- 不再从 `Fs.Zfgk.CAD` 开展后续迁移，也不复用已删除的短期分支。
+- 新的通用 CAD 需求从 `Fs.Fox.CAD` 实时结构、厂商 SDK 和独立 Issue 出发设计，不以来源方法为规格。
+- `migration/zfgk-cad` 保留为尚未进入 `main` 的长期集成结果；在明确批准前不创建以 `main` 为 base 的迁移 PR。
+- 真实 CAD 宿主状态保持 `Not run`；未来若决定集成到 `main`，再按当时差异确定宿主验收范围。
