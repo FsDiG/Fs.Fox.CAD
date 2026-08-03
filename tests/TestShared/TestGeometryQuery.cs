@@ -12,13 +12,6 @@ public class TestGeometryQuery
 
         AssertPoint(startPoint.InterpolateTo(endPoint, 0.25), new Point3d(2.5, 5, 7.5),
             nameof(PointEx.InterpolateTo));
-        AssertTrue(startPoint.TryInterpolateAtElevation(endPoint, 15, out var elevationPoint),
-            nameof(PointEx.TryInterpolateAtElevation));
-        AssertPoint(elevationPoint, new Point3d(5, 10, 15), nameof(PointEx.TryInterpolateAtElevation));
-        AssertFalse(startPoint.TryInterpolateAtElevation(new Point3d(10, 20, 0), 0, out _),
-            "Horizontal segment must not return an arbitrary point.");
-        AssertFalse(startPoint.TryInterpolateAtElevation(endPoint, 31, out _),
-            "Elevation outside the segment must fail.");
 
         using var line = new Line(startPoint, endPoint);
         AssertPoint(line.GetPointAtDistanceFraction(0.25), new Point3d(2.5, 5, 7.5),

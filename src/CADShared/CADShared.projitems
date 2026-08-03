@@ -615,10 +615,6 @@
       <FsFoxModule>Cad.Editor</FsFoxModule>
       <FsFoxOrder>0962</FsFoxOrder>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\SpatialIndex\Grid\PointGridIndex.cs">
-      <FsFoxModule>Cad.Geometry</FsFoxModule>
-      <FsFoxOrder>0970</FsFoxOrder>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)ExtensionMethod\Geometry\ToDo\" />

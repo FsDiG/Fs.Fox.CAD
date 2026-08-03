@@ -110,47 +110,6 @@ public static class PointEx
     }
 
     /// <summary>
-    /// 获取三维线段上指定高程处的唯一插值点
-    /// </summary>
-    /// <remarks>
-    /// 线段水平时没有唯一结果；指定高程超出线段 Z 值闭区间时也返回 <see langword="false"/>。
-    /// 本方法不使用隐式容差。
-    /// </remarks>
-    /// <param name="startPoint">线段起点</param>
-    /// <param name="endPoint">线段终点</param>
-    /// <param name="elevation">目标 Z 值</param>
-    /// <param name="point">成功时为目标高程处的点；失败时为默认值</param>
-    /// <returns>存在唯一插值点时返回 <see langword="true"/>，否则返回 <see langword="false"/></returns>
-    public static bool TryInterpolateAtElevation(this Point3d startPoint, Point3d endPoint,
-        double elevation, out Point3d point)
-    {
-        point = default;
-        if (double.IsNaN(elevation) || double.IsInfinity(elevation) ||
-            double.IsNaN(startPoint.Z) || double.IsInfinity(startPoint.Z) ||
-            double.IsNaN(endPoint.Z) || double.IsInfinity(endPoint.Z))
-        {
-            return false;
-        }
-
-        var elevationDelta = endPoint.Z - startPoint.Z;
-        if (elevationDelta == 0 || double.IsInfinity(elevationDelta))
-            return false;
-
-        var fraction = (elevation - startPoint.Z) / elevationDelta;
-        if (double.IsNaN(fraction) || double.IsInfinity(fraction) || fraction < 0 || fraction > 1)
-            return false;
-
-        var startWeight = 1 - fraction;
-        var x = startPoint.X * startWeight + endPoint.X * fraction;
-        var y = startPoint.Y * startWeight + endPoint.Y * fraction;
-        if (double.IsNaN(x) || double.IsInfinity(x) || double.IsNaN(y) || double.IsInfinity(y))
-            return false;
-
-        point = new Point3d(x, y, elevation);
-        return true;
-    }
-
-    /// <summary>
     /// Z值归零
     /// </summary>
     /// <param name="point">点</param>
