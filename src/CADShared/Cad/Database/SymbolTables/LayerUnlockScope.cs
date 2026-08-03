@@ -11,8 +11,8 @@ namespace Fs.Fox.Cad;
 /// This scope deliberately does not thaw a frozen layer. Freeze state has viewport and current-layer
 /// restrictions that cannot be restored reliably by a generic disposal helper.
 /// <para>
-/// The implementation intentionally uses <see cref="TransactionManager.StartTransaction"/> instead
-/// of AutoCAD's <c>StartOpenCloseTransaction</c>: ZWCAD 2022 does not expose the latter API.
+/// The implementation intentionally uses <c>TransactionManager.StartTransaction()</c> instead of
+/// AutoCAD's <c>StartOpenCloseTransaction()</c>: ZWCAD 2022 does not expose the latter API.
 /// </para>
 /// </remarks>
 public sealed class LayerUnlockScope : IDisposable

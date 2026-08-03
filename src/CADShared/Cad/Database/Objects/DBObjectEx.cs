@@ -5,6 +5,39 @@ namespace Fs.Fox.Cad;
 /// </summary>
 public static class DBObjectEx
 {
+    #region 对象元数据
+
+    /// <summary>
+    /// 获取数据库对象的有效 RX 类名。
+    /// </summary>
+    /// <param name="obj">要查询的数据库对象。</param>
+    /// <returns>
+    /// 普通对象返回 <see cref="RXObject.GetRXClass"/> 的类名；
+    /// <see cref="ProxyObject"/> 或 <see cref="ProxyEntity"/> 返回代理对象记录的原始类名。
+    /// </returns>
+    /// <remarks>
+    /// 该方法只读取对象的类型元数据，不会启动事务、改变对象的打开模式或修改数据库。
+    /// 对无法识别为标准代理类型的代理对象，回退为其当前 RX 类名。
+    /// </remarks>
+    /// <exception cref="System.ArgumentNullException"><paramref name="obj"/> 为 <see langword="null"/>。</exception>
+    public static string GetEffectiveClassName(this DBObject obj)
+    {
+        if (obj is null)
+            throw new ArgumentNullException(nameof(obj));
+
+        if (!obj.IsAProxy)
+            return obj.GetRXClass().Name;
+
+        return obj switch
+        {
+            ProxyObject proxyObject => proxyObject.OriginalClassName,
+            ProxyEntity proxyEntity => proxyEntity.OriginalClassName,
+            _ => obj.GetRXClass().Name
+        };
+    }
+
+    #endregion
+
     #region Linq
 
     /// <summary>

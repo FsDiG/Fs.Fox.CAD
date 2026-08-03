@@ -103,7 +103,7 @@
             "flags": 0
           }
         ],
-        "publicApiRecordCount": 2320,
+        "publicApiRecordCount": 2321,
         "publicApi": [
           {
             "type": "Fs.Fox.Basal.ArgumentNullEx",
@@ -407,8 +407,8 @@
           },
           {
             "type": "Fs.Fox.Cad.DBObjectEx",
-            "recordCount": 8,
-            "contractSha256": "e5797bde159cbb1e636d7c34560caa7c6ccf8c0768b367e7a53b3cea62ae5443"
+            "recordCount": 9,
+            "contractSha256": "bc32a820fba29fa3d43b0b6c784a66742eb6b93f0d12d4503cd99d0363a00a63"
           },
           {
             "type": "Fs.Fox.Cad.DBObjectEx+UpgradeOpenManager",
@@ -1014,9 +1014,9 @@
           },
           {
             "path": "lib/net48/Fs.Fox.AutoCad.xml",
-            "length": 503946,
+            "length": 505242,
             "hashKind": "canonical-xml-v1",
-            "contentSha256": "ec8b99af9f9503e44f53b673907fef6d0b8fe7c3046fa0db992fd057216ba741",
+            "contentSha256": "7a9b9ce6adc0f64303e0034ef5a1b517a666f419d0ce00d304c6274032dd223d",
             "binarySource": null
           },
           {
@@ -1222,7 +1222,7 @@
             "flags": 0
           }
         ],
-        "publicApiRecordCount": 2318,
+        "publicApiRecordCount": 2319,
         "publicApi": [
           {
             "type": "Fs.Fox.Basal.ArrayEx",
@@ -1521,8 +1521,8 @@
           },
           {
             "type": "Fs.Fox.Cad.DBObjectEx",
-            "recordCount": 8,
-            "contractSha256": "8363885a552d38f87cf54a63084b83464bb2b8d24ac9e3185d2dbf09f9ebd6c6"
+            "recordCount": 9,
+            "contractSha256": "559f37189dfa9a0133c7f683f23862d8d75c103a30fb7c6ea3ac66ab787cd616"
           },
           {
             "type": "Fs.Fox.Cad.DBObjectEx+UpgradeOpenManager",
@@ -2142,9 +2142,9 @@
           },
           {
             "path": "lib/net8.0-windows7.0/Fs.Fox.AutoCad.xml",
-            "length": 468222,
+            "length": 469518,
             "hashKind": "canonical-xml-v1",
-            "contentSha256": "d4fa1e9da9d6e23982c50884e46f84320384d55f4e56984170c3976ba9ba83fc",
+            "contentSha256": "fc3743a46f56df64e70405239d9e07d87fe7e062c8e1cca10d891733ad2b5302",
             "binarySource": null
           },
           {
@@ -2266,7 +2266,7 @@
             "flags": 0
           }
         ],
-        "publicApiRecordCount": 2297,
+        "publicApiRecordCount": 2298,
         "publicApi": [
           {
             "type": "Fs.Fox.Basal.ArgumentNullEx",
@@ -2565,8 +2565,8 @@
           },
           {
             "type": "Fs.Fox.Cad.DBObjectEx",
-            "recordCount": 8,
-            "contractSha256": "dbd64789c796784c28d1284f5d6729363077834ab0ee2444e121f047954d78ec"
+            "recordCount": 9,
+            "contractSha256": "c659df185b3e898d95b75300d64c2b872c839b6e6e3f421ae1d444f5acb69e3b"
           },
           {
             "type": "Fs.Fox.Cad.DBObjectEx+UpgradeOpenManager",
@@ -3153,9 +3153,9 @@
           },
           {
             "path": "lib/net48/Fs.Fox.ZwCad.xml",
-            "length": 494792,
+            "length": 496072,
             "hashKind": "canonical-xml-v1",
-            "contentSha256": "228b3133b259437e07189832c63883a07237de9c0b40e36dff36f8eefc7accb7",
+            "contentSha256": "c113a62e4f9f7c9eb2778777ab15dcfbef4d541119905eaafe1f6c9d22359cc7",
             "binarySource": null
           },
           {
@@ -3277,7 +3277,7 @@
             "flags": 0
           }
         ],
-        "publicApiRecordCount": 2300,
+        "publicApiRecordCount": 2301,
         "publicApi": [
           {
             "type": "Fs.Fox.Basal.ArgumentNullEx",
@@ -3576,8 +3576,8 @@
           },
           {
             "type": "Fs.Fox.Cad.DBObjectEx",
-            "recordCount": 8,
-            "contractSha256": "dbd64789c796784c28d1284f5d6729363077834ab0ee2444e121f047954d78ec"
+            "recordCount": 9,
+            "contractSha256": "c659df185b3e898d95b75300d64c2b872c839b6e6e3f421ae1d444f5acb69e3b"
           },
           {
             "type": "Fs.Fox.Cad.DBObjectEx+UpgradeOpenManager",
@@ -4164,9 +4164,9 @@
           },
           {
             "path": "lib/net48/Fs.Fox.ZwCad.xml",
-            "length": 496181,
+            "length": 497461,
             "hashKind": "canonical-xml-v1",
-            "contentSha256": "828a3f128c13223bf2b0a2fc0177c3c83b80e81f0d24e8a231c146282a04a39d",
+            "contentSha256": "55d8a4f72531ccfea681221d084d6bea265cf7702fabeadb5dee74e2cbedf15a",
             "binarySource": null
           },
           {
@@ -4288,7 +4288,7 @@
             "flags": 0
           }
         ],
-        "publicApiRecordCount": 2284,
+        "publicApiRecordCount": 2285,
         "publicApi": [
           {
             "type": "Fs.Fox.Basal.ArgumentNullEx",
@@ -4582,8 +4582,8 @@
           },
           {
             "type": "Fs.Fox.Cad.DBObjectEx",
-            "recordCount": 8,
-            "contractSha256": "cda6bae18b8511d86b77a50ae12996c22ada1aaa67122fbf0c902f4d9b75e34f"
+            "recordCount": 9,
+            "contractSha256": "eb55c2da0b985de0f1cfc5d46979171a886ff5624b49a8e0f47447c9d72647c1"
           },
           {
             "type": "Fs.Fox.Cad.DBObjectEx+UpgradeOpenManager",
@@ -5165,9 +5165,9 @@
           },
           {
             "path": "lib/net48/Fs.Fox.Gcad.xml",
-            "length": 488496,
+            "length": 489752,
             "hashKind": "canonical-xml-v1",
-            "contentSha256": "23339989746bc376b2fbb495fa4c6d2e4108342ba304722ac792fad6b3cf6707",
+            "contentSha256": "32418747c8c195ece1f3392b602d2c5378b11dc53610b6c5e9ff8e6112845558",
             "binarySource": null
           },
           {
@@ -5289,7 +5289,7 @@
             "flags": 0
           }
         ],
-        "publicApiRecordCount": 2284,
+        "publicApiRecordCount": 2285,
         "publicApi": [
           {
             "type": "Fs.Fox.Basal.ArgumentNullEx",
@@ -5583,8 +5583,8 @@
           },
           {
             "type": "Fs.Fox.Cad.DBObjectEx",
-            "recordCount": 8,
-            "contractSha256": "cda6bae18b8511d86b77a50ae12996c22ada1aaa67122fbf0c902f4d9b75e34f"
+            "recordCount": 9,
+            "contractSha256": "eb55c2da0b985de0f1cfc5d46979171a886ff5624b49a8e0f47447c9d72647c1"
           },
           {
             "type": "Fs.Fox.Cad.DBObjectEx+UpgradeOpenManager",
@@ -6166,9 +6166,9 @@
           },
           {
             "path": "lib/net48/Fs.Fox.Gcad.xml",
-            "length": 488496,
+            "length": 489752,
             "hashKind": "canonical-xml-v1",
-            "contentSha256": "23339989746bc376b2fbb495fa4c6d2e4108342ba304722ac792fad6b3cf6707",
+            "contentSha256": "32418747c8c195ece1f3392b602d2c5378b11dc53610b6c5e9ff8e6112845558",
             "binarySource": null
           },
           {
@@ -6374,7 +6374,7 @@
             "flags": 0
           }
         ],
-        "publicApiRecordCount": 2307,
+        "publicApiRecordCount": 2308,
         "publicApi": [
           {
             "type": "Fs.Fox.Basal.ArrayEx",
@@ -6668,8 +6668,8 @@
           },
           {
             "type": "Fs.Fox.Cad.DBObjectEx",
-            "recordCount": 8,
-            "contractSha256": "f5211d0fa77049b283c2bd1b9193910a7f1f2d961f6b0e7c40d066312e6c8997"
+            "recordCount": 9,
+            "contractSha256": "1f68f1516210269006505b5e7870a00f3c9afab911fc53d85716ffbe2a926791"
           },
           {
             "type": "Fs.Fox.Cad.DBObjectEx+UpgradeOpenManager",
@@ -7270,9 +7270,9 @@
           },
           {
             "path": "lib/net8.0-windows7.0/Fs.Fox.Gcad.xml",
-            "length": 461880,
+            "length": 463160,
             "hashKind": "canonical-xml-v1",
-            "contentSha256": "c5ceaaa6dd81e6e08a5ed57e61f7723c651c72bf70fb83ae5c8cbced953845b0",
+            "contentSha256": "cd33a3fdb7ae4fb6ed86425b95f02ecf69d784ef1ea1ab3564cf02468898259f",
             "binarySource": null
           },
           {
