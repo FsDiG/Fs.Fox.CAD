@@ -115,7 +115,7 @@ public static class DatabaseEx
         if (Path.GetExtension(saveAsFile)!.ToLower().Contains("dxf"))
         {
             // dxf用任何版本号都会报错
-#if ACAD || GCAD
+#if ACAD
             db.DxfOut(saveAsFile, 7, true);
 #endif
 
