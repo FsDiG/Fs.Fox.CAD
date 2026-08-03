@@ -35,18 +35,21 @@ public static class CurveEx
         ArgumentNullException.ThrowIfNull(curve);
         if (double.IsNaN(fraction) || double.IsInfinity(fraction) || fraction < 0 || fraction > 1)
             throw new ArgumentOutOfRangeException(nameof(fraction), fraction, "The fraction must be in [0, 1].");
+        if (curve is Ray || curve is Xline)
+            throw new InvalidOperationException("The curve does not have a finite total length.");
 
         var startParameter = curve.StartParam;
         var endParameter = curve.EndParam;
         if (double.IsNaN(startParameter) || double.IsInfinity(startParameter) ||
-            double.IsNaN(endParameter) || double.IsInfinity(endParameter))
+            double.IsNaN(endParameter) || double.IsInfinity(endParameter) ||
+            endParameter < startParameter)
         {
-            throw new InvalidOperationException("The curve does not have a finite parameter range.");
+            throw new InvalidOperationException("The curve does not have a finite, ordered parameter range.");
         }
 
         var startDistance = curve.GetDistanceAtParameter(startParameter);
         var endDistance = curve.GetDistanceAtParameter(endParameter);
-        if (double.IsNaN(startDistance) || double.IsInfinity(startDistance) ||
+        if (double.IsNaN(startDistance) || double.IsInfinity(startDistance) || startDistance < 0 ||
             double.IsNaN(endDistance) || double.IsInfinity(endDistance) ||
             endDistance < startDistance)
         {
@@ -69,6 +72,7 @@ public static class CurveEx
     /// </summary>
     /// <remarks>
     /// 返回曲线参数中点与区间端点弦中点之间的三维距离；该值不是区间内的最大偏差。
+    /// <see cref="Ray"/> 的参数区间必须位于 [0, +∞)，<see cref="Xline"/> 支持任意有限参数区间。
     /// </remarks>
     /// <param name="curve">曲线</param>
     /// <param name="startParameter">区间起始参数</param>
@@ -76,6 +80,7 @@ public static class CurveEx
     /// <returns>参数中点处的弦偏差</returns>
     /// <exception cref="ArgumentNullException"><paramref name="curve"/> 为 <see langword="null"/></exception>
     /// <exception cref="ArgumentOutOfRangeException">参数不是有限数、顺序错误或超出曲线参数域</exception>
+    /// <exception cref="InvalidOperationException">有界曲线没有有限且有序的参数域</exception>
     public static double GetMidpointChordDeviation(this Curve curve, double startParameter, double endParameter)
     {
         ArgumentNullException.ThrowIfNull(curve);
@@ -85,8 +90,30 @@ public static class CurveEx
             throw new ArgumentOutOfRangeException(nameof(endParameter), endParameter, "The parameter must be finite.");
         if (startParameter > endParameter)
             throw new ArgumentOutOfRangeException(nameof(endParameter), endParameter, "The end parameter must not precede the start parameter.");
-        if (startParameter < curve.StartParam || endParameter > curve.EndParam)
-            throw new ArgumentOutOfRangeException(nameof(startParameter), "The parameter interval must be inside the curve domain.");
+        if (curve is Ray)
+        {
+            if (startParameter < 0)
+                throw new ArgumentOutOfRangeException(nameof(startParameter), startParameter,
+                    "The ray parameter interval must start at or after zero.");
+        }
+        else if (!(curve is Xline))
+        {
+            var curveStartParameter = curve.StartParam;
+            var curveEndParameter = curve.EndParam;
+            if (double.IsNaN(curveStartParameter) || double.IsInfinity(curveStartParameter) ||
+                double.IsNaN(curveEndParameter) || double.IsInfinity(curveEndParameter) ||
+                curveEndParameter < curveStartParameter)
+            {
+                throw new InvalidOperationException("The curve does not have a finite, ordered parameter range.");
+            }
+
+            if (startParameter < curveStartParameter)
+                throw new ArgumentOutOfRangeException(nameof(startParameter), startParameter,
+                    "The start parameter must be inside the curve domain.");
+            if (endParameter > curveEndParameter)
+                throw new ArgumentOutOfRangeException(nameof(endParameter), endParameter,
+                    "The end parameter must be inside the curve domain.");
+        }
 
         var startPoint = curve.GetPointAtParameter(startParameter);
         var endPoint = curve.GetPointAtParameter(endParameter);
@@ -101,7 +128,8 @@ public static class CurveEx
     /// </summary>
     /// <remarks>
     /// 距离从曲线起点沿曲线测量。返回距离中点与区间端点弦中点之间的三维距离；
-    /// 该值不是区间内的最大偏差。无有限总长的 <see cref="Ray"/> 和 <see cref="Xline"/> 不受支持。
+    /// 该值不是区间内的最大偏差。<see cref="Ray"/> 以基点为距离起点并支持有限非负区间；
+    /// <see cref="Xline"/> 没有曲线起点，因此不受支持。
     /// </remarks>
     /// <param name="curve">曲线</param>
     /// <param name="startDistance">区间起始距离</param>
@@ -109,7 +137,7 @@ public static class CurveEx
     /// <returns>距离中点处的弦偏差</returns>
     /// <exception cref="ArgumentNullException"><paramref name="curve"/> 为 <see langword="null"/></exception>
     /// <exception cref="ArgumentOutOfRangeException">距离不是有限数、顺序错误或超出曲线长度范围</exception>
-    /// <exception cref="InvalidOperationException">曲线没有有限且有序的参数或距离范围</exception>
+    /// <exception cref="InvalidOperationException">曲线没有距离起点，或没有有限且有序的参数或距离范围</exception>
     public static double GetMidpointChordDeviationByDistance(this Curve curve, double startDistance, double endDistance)
     {
         ArgumentNullException.ThrowIfNull(curve);
@@ -119,28 +147,43 @@ public static class CurveEx
             throw new ArgumentOutOfRangeException(nameof(endDistance), endDistance, "The distance must be finite.");
         if (startDistance > endDistance)
             throw new ArgumentOutOfRangeException(nameof(endDistance), endDistance, "The end distance must not precede the start distance.");
-        if (curve is Ray || curve is Xline)
-            throw new InvalidOperationException("The curve must have a finite parameter and distance range.");
+        if (curve is Xline)
+            throw new InvalidOperationException("An Xline has no curve start from which to measure distance.");
 
-        var curveStartParameter = curve.StartParam;
-        var curveEndParameter = curve.EndParam;
-        if (double.IsNaN(curveStartParameter) || double.IsInfinity(curveStartParameter) ||
-            double.IsNaN(curveEndParameter) || double.IsInfinity(curveEndParameter))
+        if (curve is Ray)
         {
-            throw new InvalidOperationException("The curve does not have a finite parameter range.");
+            if (startDistance < 0)
+                throw new ArgumentOutOfRangeException(nameof(startDistance), startDistance,
+                    "The ray distance interval must start at or after zero.");
         }
-
-        var curveStartDistance = curve.GetDistanceAtParameter(curveStartParameter);
-        var curveEndDistance = curve.GetDistanceAtParameter(curveEndParameter);
-        if (double.IsNaN(curveStartDistance) || double.IsInfinity(curveStartDistance) ||
-            double.IsNaN(curveEndDistance) || double.IsInfinity(curveEndDistance) ||
-            curveEndDistance < curveStartDistance)
+        else
         {
-            throw new InvalidOperationException("The curve does not have a finite, non-negative distance range.");
-        }
+            var curveStartParameter = curve.StartParam;
+            var curveEndParameter = curve.EndParam;
+            if (double.IsNaN(curveStartParameter) || double.IsInfinity(curveStartParameter) ||
+                double.IsNaN(curveEndParameter) || double.IsInfinity(curveEndParameter) ||
+                curveEndParameter < curveStartParameter)
+            {
+                throw new InvalidOperationException("The curve does not have a finite, ordered parameter range.");
+            }
 
-        if (startDistance < curveStartDistance || endDistance > curveEndDistance)
-            throw new ArgumentOutOfRangeException(nameof(startDistance), "The distance interval must be inside the curve range.");
+            var curveStartDistance = curve.GetDistanceAtParameter(curveStartParameter);
+            var curveEndDistance = curve.GetDistanceAtParameter(curveEndParameter);
+            if (double.IsNaN(curveStartDistance) || double.IsInfinity(curveStartDistance) ||
+                curveStartDistance < 0 ||
+                double.IsNaN(curveEndDistance) || double.IsInfinity(curveEndDistance) ||
+                curveEndDistance < curveStartDistance)
+            {
+                throw new InvalidOperationException("The curve does not have a finite, non-negative distance range.");
+            }
+
+            if (startDistance < curveStartDistance)
+                throw new ArgumentOutOfRangeException(nameof(startDistance), startDistance,
+                    "The start distance must be inside the curve range.");
+            if (endDistance > curveEndDistance)
+                throw new ArgumentOutOfRangeException(nameof(endDistance), endDistance,
+                    "The end distance must be inside the curve range.");
+        }
 
         var startPoint = curve.GetPointAtDist(startDistance);
         var endPoint = curve.GetPointAtDist(endDistance);
