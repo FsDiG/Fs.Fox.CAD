@@ -52,6 +52,38 @@ internal static class PInvokeCad
     {
         return ZcdbEntUpd(ref adsName);
     }
+#elif GCAD
+    // GStarCAD native P/Invoke - gcad specific DLL and mangled entry points
+    // Versions 2022/2023/2026 may use same DLL name pattern
+    #if GC_2022
+        const string AcDbModule = "gcad22.dll";
+    #elif GC_2023
+        const string AcDbModule = "gcad23.dll";
+    #elif GC_2026
+        const string AcDbModule = "gcad26.dll";
+    #else
+        #error Unsupported GStarCAD target. Define GC_2022, GC_2023, or GC_2026.
+    #endif
+
+    [System.Security.SuppressUnmanagedCodeSecurity]
+    [DllImport(AcDbModule, CallingConvention = CallingConvention.Cdecl,
+        EntryPoint = "?gcadGetAdsName@@YAHPEB_WPEAUads_name@@@Z")]
+    internal static extern int acdbGetAdsName(string name, out AdsName result);
+
+    [System.Security.SuppressUnmanagedCodeSecurity]
+    [DllImport("gced.dll", CallingConvention = CallingConvention.Cdecl,
+        EntryPoint = "gcedEntGet")]
+    internal static extern int acdbEntGet(AdsName objId);
+
+    [System.Security.SuppressUnmanagedCodeSecurity]
+    [DllImport("gced.dll", CallingConvention = CallingConvention.Cdecl,
+        EntryPoint = "gcedEntMod")]
+    internal static extern int acdbEntMod(AdsName objId, ResultBuffer rb);
+
+    [System.Security.SuppressUnmanagedCodeSecurity]
+    [DllImport("gced.dll", CallingConvention = CallingConvention.Cdecl,
+        EntryPoint = "gcedEntUpd")]
+    internal static extern int acdbEntUpd(AdsName objId);
 #else
 #if AC_2019
     private const string AcDbModule = "acdb23.dll";
