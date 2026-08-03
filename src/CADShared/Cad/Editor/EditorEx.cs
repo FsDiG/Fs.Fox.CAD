@@ -1122,8 +1122,6 @@ public static class EditorEx
 
 #if ZWCAD
         dynamic com = CadApp.ZcadApplication;
-#elif GCAD
-        dynamic com = CadApp.GcadApplication;
 #else
         dynamic com = CadApp.AcadApplication;
 #endif

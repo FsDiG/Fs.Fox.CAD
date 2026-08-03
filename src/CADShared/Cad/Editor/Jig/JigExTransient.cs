@@ -1,9 +1,10 @@
+#if !GC_2022 && !GC_2023
 namespace Fs.Fox.Cad;
 
 /// <summary>
 /// 瞬态容器
 /// </summary>
-public class JigExTransient : IDisposable
+public class JigExTransient
 {
     #region 私有字段
 
@@ -181,3 +182,4 @@ public class JigExTransient : IDisposable
 
     #endregion
 }
+#endif

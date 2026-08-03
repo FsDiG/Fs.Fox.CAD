@@ -1,3 +1,4 @@
+#if !GC_2022 && !GC_2023
 namespace Fs.Fox.Cad.Assoc;
 
 /// <summary>
@@ -61,3 +62,4 @@ public static class AssocPersSubentityIdPEEx
 
 #endif
 }
+#endif

@@ -61,7 +61,7 @@ public static class BlockReferenceEx
             double.NegativeInfinity, true);
         var dict = brf.GetXDictionary().GetSubDictionary(true, [kFilterDictName])!;
         dict.SetData(kSpatialName, sf);
-#if !ACAD
+#if GC_2022 || GC_2023 || ZW_2022 || ZW_2025
         pts.Dispose();
 #endif
     }

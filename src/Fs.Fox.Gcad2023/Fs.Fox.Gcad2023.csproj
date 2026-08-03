@@ -63,6 +63,7 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <Reference Include="Microsoft.CSharp" />
     </ItemGroup>
 
     <Import Project="..\CADShared\CADShared.projitems" Label="Shared" />

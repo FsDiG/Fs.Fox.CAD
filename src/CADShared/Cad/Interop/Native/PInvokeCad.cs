@@ -53,37 +53,30 @@ internal static class PInvokeCad
         return ZcdbEntUpd(ref adsName);
     }
 #elif GCAD
-    // GStarCAD native P/Invoke - gcad specific DLL and mangled entry points
-    // Versions 2022/2023/2026 may use same DLL name pattern
-    #if GC_2022
-        const string AcDbModule = "gcad22.dll";
-    #elif GC_2023
-        const string AcDbModule = "gcad23.dll";
-    #elif GC_2026
-        const string AcDbModule = "gcad26.dll";
-    #else
-        #error Unsupported GStarCAD target. Define GC_2022, GC_2023, or GC_2026.
-    #endif
+    // GStarCAD native P/Invoke
+    // The GetAdsName/EntGet/EntMod/EntUpd interop is not supported on GStarCAD
+    // because the native entry points and ADS name structures differ per version.
+    // These stubs prevent CS0117 on callers; callers must guard with #if !GCAD.
+    internal static int GetAdsName(ObjectId objectId, out CadAdsName adsName)
+    {
+        adsName = default;
+        return 0;
+    }
 
-    [System.Security.SuppressUnmanagedCodeSecurity]
-    [DllImport(AcDbModule, CallingConvention = CallingConvention.Cdecl,
-        EntryPoint = "?gcadGetAdsName@@YAHPEB_WPEAUads_name@@@Z")]
-    internal static extern int acdbGetAdsName(string name, out AdsName result);
+    internal static IntPtr EntGet(ref CadAdsName adsName)
+    {
+        return IntPtr.Zero;
+    }
 
-    [System.Security.SuppressUnmanagedCodeSecurity]
-    [DllImport("gced.dll", CallingConvention = CallingConvention.Cdecl,
-        EntryPoint = "gcedEntGet")]
-    internal static extern int acdbEntGet(AdsName objId);
+    internal static int EntMod(IntPtr buffer)
+    {
+        return 0;
+    }
 
-    [System.Security.SuppressUnmanagedCodeSecurity]
-    [DllImport("gced.dll", CallingConvention = CallingConvention.Cdecl,
-        EntryPoint = "gcedEntMod")]
-    internal static extern int acdbEntMod(AdsName objId, ResultBuffer rb);
-
-    [System.Security.SuppressUnmanagedCodeSecurity]
-    [DllImport("gced.dll", CallingConvention = CallingConvention.Cdecl,
-        EntryPoint = "gcedEntUpd")]
-    internal static extern int acdbEntUpd(AdsName objId);
+    internal static int EntUpd(ref CadAdsName adsName)
+    {
+        return 0;
+    }
 #else
 #if AC_2019
     private const string AcDbModule = "acdb23.dll";

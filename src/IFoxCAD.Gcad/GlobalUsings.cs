@@ -1,8 +1,11 @@
 // ============================================================================
 // IFoxCAD.Gcad GlobalUsings.cs - GStarCAD（浩辰CAD）平台
+// GStarCAD 2022/2023 (net48): GrxCAD.* 命名空间
+// GStarCAD 2026+  (net8.0):   Gssoft.Gscad.* 命名空间
 // ============================================================================
 
-// GStarCAD 命名空间
+#if GC_2026
+// GStarCAD 2026 命名空间 (Gssoft.Gscad.*)
 global using Gssoft.Gscad.ApplicationServices;
 global using Gssoft.Gscad.DatabaseServices;
 global using Gssoft.Gscad.EditorInput;
@@ -15,7 +18,7 @@ global using Gssoft.Gscad.DatabaseServices.Filters;
 global using Gssoft.Gscad.GraphicsSystem;
 
 // ============================================================================
-// Cad 前缀标准别名
+// Cad 前缀标准别名 - GStarCAD 2026
 // ============================================================================
 global using CadApp = Gssoft.Gscad.ApplicationServices.Application;
 global using CadCoreApp = Gssoft.Gscad.ApplicationServices.Core.Application;
@@ -29,10 +32,11 @@ global using CadErrorStatus = Gssoft.Gscad.Runtime.ErrorStatus;
 global using CadDwgFiler = Gssoft.Gscad.DatabaseServices.DwgFiler;
 global using CadDxfFiler = Gssoft.Gscad.DatabaseServices.DxfFiler;
 global using CadOpenFileDialog = Gssoft.Gscad.Windows.OpenFileDialog;
-global using Marshaler = Gssoft.Gscad.Runtime.Marshaler;
+global using Marshaler = Gssoft.Gscad.ApplicationServices.Marshaler;
+global using Utils = Gssoft.Gscad.Internal.Utils;
 
 // ============================================================================
-// 解决命名冲突
+// 解决命名冲突 - GStarCAD 2026
 // ============================================================================
 global using LineWeight = Gssoft.Gscad.DatabaseServices.LineWeight;
 global using Viewport = Gssoft.Gscad.DatabaseServices.Viewport;
@@ -48,6 +52,57 @@ global using Exception = System.Exception;
 global using DrawingColor = System.Drawing.Color;
 global using Registry = Microsoft.Win32.Registry;
 global using RegistryKey = Microsoft.Win32.RegistryKey;
+
+#else
+// GStarCAD 2022/2023 命名空间 (GrxCAD.*)
+global using GrxCAD.ApplicationServices;
+global using GrxCAD.DatabaseServices;
+global using GrxCAD.EditorInput;
+global using GrxCAD.Geometry;
+global using GrxCAD.GraphicsInterface;
+global using GrxCAD.Runtime;
+global using GrxCAD.Windows;
+global using GrxCAD.Colors;
+global using GrxCAD.DatabaseServices.Filters;
+global using GrxCAD.GraphicsSystem;
+
+// ============================================================================
+// Cad 前缀标准别名 - GStarCAD 2022/2023
+// GrxCAD 没有 Core.Application，DocumentManager/GetSystemVariable 直接在 Application 上
+// ============================================================================
+global using CadApp = GrxCAD.ApplicationServices.Application;
+global using CadCoreApp = GrxCAD.ApplicationServices.Application;
+global using CadDbServices = GrxCAD.DatabaseServices;
+global using CadGI = GrxCAD.GraphicsInterface;
+global using CadGS = GrxCAD.GraphicsSystem;
+global using CadRuntime = GrxCAD.Runtime;
+global using CadWindow = GrxCAD.Windows;
+global using CadException = GrxCAD.Runtime.Exception;
+global using CadErrorStatus = GrxCAD.Runtime.ErrorStatus;
+global using CadDwgFiler = GrxCAD.DatabaseServices.DwgFiler;
+global using CadDxfFiler = GrxCAD.DatabaseServices.DxfFiler;
+global using CadOpenFileDialog = GrxCAD.Windows.OpenFileDialog;
+global using Marshaler = GrxCAD.ApplicationServices.Marshaler;
+global using Utils = GrxCAD.Internal.Utils;
+
+// ============================================================================
+// 解决命名冲突 - GStarCAD 2022/2023
+// ============================================================================
+global using LineWeight = GrxCAD.DatabaseServices.LineWeight;
+global using Viewport = GrxCAD.DatabaseServices.Viewport;
+global using Color = GrxCAD.Colors.Color;
+global using Polyline = GrxCAD.DatabaseServices.Polyline;
+global using Group = GrxCAD.DatabaseServices.Group;
+global using CursorType = GrxCAD.EditorInput.CursorType;
+global using ColorDialog = GrxCAD.Windows.ColorDialog;
+global using StatusBar = GrxCAD.Windows.StatusBar;
+global using SystemVariableChangedEventArgs = GrxCAD.ApplicationServices.SystemVariableChangedEventArgs;
+global using Region = GrxCAD.DatabaseServices.Region;
+global using Exception = System.Exception;
+global using DrawingColor = System.Drawing.Color;
+global using Registry = Microsoft.Win32.Registry;
+global using RegistryKey = Microsoft.Win32.RegistryKey;
+#endif
 
 // ============================================================================
 // 系统命名空间
