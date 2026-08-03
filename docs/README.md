@@ -57,6 +57,7 @@ front matter schema 和自动校验尚未落地。在迁移完成前，本页状
 | `guide.building` | `current` | [构建与项目结构](../编译说明.md) | maintainer | 正式项目、工具链、条件编译、输出和验证边界。 |
 | `guide.host-acceptance` | `current` | [CAD 真实宿主验收 Runner](../tools/HostAcceptance/README.md) | maintainer | 真实 CAD 验收的目标矩阵、证据契约、安全边界、当前限制和执行入口。 |
 | `reference.zwcad-compatibility` | `current` | [ZWCAD 版本兼容性与迁移说明](ZWCAD-version-compatibility.md) | user, maintainer | ZRXSDK 代际、当前发布策略、Build-only 边界和未验证状态。 |
+| `reference.gstarcad-support-design` | `current` | [GStarCAD 支持扩展设计](superpowers/specs/2026-08-03-gstarcad-support-design.md) | maintainer | 浩辰 CAD 2022/2023/2026 三版本支持架构。 |
 | `decision.autocad-2027-net8` | `current` | [AutoCAD 2027 .NET 8 兼容策略](AC_2027-net8-compatibility-decision.md) | maintainer | 预备项目当前使用 .NET 8 的原因、限制和回迁条件。 |
 | `concept.upstream-relationship` | `current` | [上游 IFoxCAD 与 Fs.Fox.CAD 的关系](<../IFoxCAD 说明.md>) | user, maintainer | 项目来源、独立维护边界和问题归属。 |
 | `guide.repository-maintenance` | `current` | [Fs.Fox.CAD 维护说明](../Fs分支说明.md) | maintainer | 命名、远程仓库和上游贡献边界。 |
