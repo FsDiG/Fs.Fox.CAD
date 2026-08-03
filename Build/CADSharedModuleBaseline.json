@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
   "normalizedSourceHash": "sha256-utf8-lf",
-  "expectedCompileCount": 141,
+  "expectedCompileCount": 142,
   "moduleCounts": {
     "Foundation": 11,
     "Platform.Windows": 15,
     "Cad.Interop": 3,
-    "Cad.Geometry": 16,
+    "Cad.Geometry": 17,
     "Cad.Database": 43,
     "Cad.Editor": 23,
     "Cad.Application": 8,
@@ -1308,6 +1308,14 @@
       "boundaryDebt": [],
       "boundaryFindings": [],
       "sourceSha256": "bedbc78b4b0b49654969ffc71c245c59a243beb2979ff3cf3c35f2968e785e93"
+    },
+    {
+      "order": "0970",
+      "fileName": "PointGridIndex.cs",
+      "module": "Cad.Geometry",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "57e7c25956d95be9201348287a362910d8fe3d2505a18e089bd56d8be52ff5a0"
     }
   ]
 }
