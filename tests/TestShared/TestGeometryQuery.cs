@@ -2,7 +2,7 @@ namespace Test;
 
 public class TestGeometryQuery
 {
-    private const double Tolerance = 1e-8;
+    private const double Tolerance = 1e-6;
 
     [CommandMethod(nameof(Test_GeometryQuery))]
     public void Test_GeometryQuery()

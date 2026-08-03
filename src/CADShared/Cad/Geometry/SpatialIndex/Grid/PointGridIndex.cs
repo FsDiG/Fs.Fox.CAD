@@ -11,6 +11,7 @@ public sealed class PointGridIndex
 {
     private readonly Dictionary<(long X, long Y), List<int>> _buckets = [];
     private readonly List<Point3d> _points = [];
+    private readonly List<int> _candidateIndices = [];
     private readonly IReadOnlyList<Point3d> _readOnlyPoints;
 
     /// <summary>
@@ -199,6 +200,7 @@ public sealed class PointGridIndex
     {
         _points.Clear();
         _buckets.Clear();
+        _candidateIndices.Clear();
     }
 
     private int AddValidated(Point3d point)
@@ -253,7 +255,8 @@ public sealed class PointGridIndex
 
     private List<int> GetCandidateIndices(double minX, double minY, double maxX, double maxY)
     {
-        var results = new List<int>();
+        var results = _candidateIndices;
+        results.Clear();
         if (_points.Count == 0)
             return results;
 
@@ -263,13 +266,18 @@ public sealed class PointGridIndex
         if (double.IsInfinity(minX) || double.IsInfinity(minY) ||
             double.IsInfinity(maxX) || double.IsInfinity(maxY))
         {
-            for (var index = 0; index < _points.Count; index++)
-                results.Add(index);
+            AddAllPointIndices(results);
             return results;
         }
 
-        var minCell = GetCell(minX, minY);
-        var maxCell = GetCell(maxX, maxY);
+        var hasMinCell = TryGetCell(minX, minY, out var minCell);
+        var hasMaxCell = TryGetCell(maxX, maxY, out var maxCell);
+        if (!hasMinCell || !hasMaxCell)
+        {
+            AddAllPointIndices(results);
+            return results;
+        }
+
         var columnCount = (double)maxCell.X - minCell.X + 1;
         var rowCount = (double)maxCell.Y - minCell.Y + 1;
         var gridCellCount = columnCount * rowCount;
@@ -308,21 +316,53 @@ public sealed class PointGridIndex
         return results;
     }
 
+    private void AddAllPointIndices(List<int> results)
+    {
+        for (var index = 0; index < _points.Count; index++)
+            results.Add(index);
+    }
+
     private (long X, long Y) GetCell(double x, double y)
     {
         return (GetCellCoordinate(x), GetCellCoordinate(y));
     }
 
+    private bool TryGetCell(double x, double y, out (long X, long Y) cell)
+    {
+        var hasX = TryGetCellCoordinate(x, out var cellX);
+        var hasY = TryGetCellCoordinate(y, out var cellY);
+        if (!hasX || !hasY)
+        {
+            cell = default;
+            return false;
+        }
+
+        cell = (cellX, cellY);
+        return true;
+    }
+
     private long GetCellCoordinate(double value)
     {
-        var coordinate = Math.Floor(value / CellSize);
-        if (!IsFinite(coordinate) || coordinate <= long.MinValue || coordinate >= long.MaxValue)
+        if (!TryGetCellCoordinate(value, out var coordinate))
         {
             throw new ArgumentOutOfRangeException(nameof(value), value,
                 "The coordinate cannot be represented by this grid cell size.");
         }
 
-        return (long)coordinate;
+        return coordinate;
+    }
+
+    private bool TryGetCellCoordinate(double value, out long cellCoordinate)
+    {
+        var coordinate = Math.Floor(value / CellSize);
+        if (!IsFinite(coordinate) || coordinate <= long.MinValue || coordinate >= long.MaxValue)
+        {
+            cellCoordinate = default;
+            return false;
+        }
+
+        cellCoordinate = (long)coordinate;
+        return true;
     }
 
     private static void ValidatePoint(Point3d point, string parameterName)

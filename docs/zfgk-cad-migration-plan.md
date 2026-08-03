@@ -226,7 +226,7 @@ Phase 0 的清单和结构决策已经完成。后续每个代码批次必须回
 | --- | --- | --- |
 | `CurveEx` | `GetPointAtDistanceFraction` | 按总长闭区间 `[0, 1]` 取点；修正旧实现忽略输入比例、固定取 `0.5` 的问题，并拒绝无限长度域。 |
 | `CurveEx` | `GetMidpointChordDeviation` | 明确按参数中点计算三维弦偏差，不把结果表述为区间最大误差。 |
-| `CurveEx` | `GetMidpointChordDeviationByDistance` | 明确按沿曲线距离中点计算，避免把距离端点转参数后误用参数中点。 |
+| `CurveEx` | `GetMidpointChordDeviationByDistance` | 明确按沿曲线距离中点计算，避免把距离端点转参数后误用参数中点；曲线本身没有有限且有序的参数或距离范围时明确失败。 |
 | `PolylineEx` | `GetVertexData` | 一次取得顶点、bulge、起宽和终宽的独立托管快照，不暴露 `ref` 集合。 |
 | `PolylineEx` | `GetSegmentLength` | 对开放/闭合折线验证真实子段索引；直线返回线长，圆弧返回弧长。 |
 | `PointEx` | `InterpolateTo` | 使用闭区间 `[0, 1]` 的三维线性插值，非法比例抛出明确异常。 |
@@ -256,6 +256,8 @@ Phase 2 的目标 API 与边界如下：
 | `Clear` | 同时释放点和稀疏桶引用；之后索引重新从零开始。 |
 
 旧实现的 `Create`、`GetBlockOfPoint`、`GetNeighborPoints`、`GetExtent` 和 `IsIn` 不成为公共 API：无界稀疏索引不需要固定范围，网格桶只是实现细节。`Test_PointGridIndex` 覆盖跨桶去重、Z 分层、负坐标、闭区间范围、最近点并列、退化参数和清空重用；当前仅参加测试程序集编译，CAD 宿主状态为 `Not run`。
+
+PR #112 的评审收口规定：有限查询范围因坐标量级与 `CellSize` 组合而不能表示为 `long` 网格坐标时，索引退化为扫描全部已存点并继续执行精确过滤，不把实现范围限制暴露成查询异常；高频查询复用实例内候选缓冲区，仍遵守类型既有的非线程安全契约。查询结果是与索引内部状态分离的独立集合，因此不为阻止调用方修改其副本而增加只读包装分配。
 
 Phase 2 的七目标公共契约基线均只新增 `PointGridIndex` 的 16 条记录。以 `migration/zfgk-cad@587e77f` 为基线重新构建并比较 AC_2019、AC_2025、ZW_2022、ZW_2025 实际程序集后，每个目标都只新增一个 TypeDef，所有既有 TypeDef 的相对顺序保持不变；由于 Roslyn 先发射 `Fs.Fox.Cad` 根类型再发射 `Fs.Fox.Cad.Assoc`，新类型位于现有根类型末尾并使其后的 token 顺延一位，这是新增公共根类型的已审查结果，不是既有类型重排。
 
