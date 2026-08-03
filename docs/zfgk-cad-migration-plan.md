@@ -1,11 +1,12 @@
 # Fs.Zfgk.CAD 有价值能力迁移计划
 
 > 稳定 ID：`plan.zfgk-cad-migration`<br>
-> 状态：最终收口中（Active）<br>
+> 状态：已完成（Historical）<br>
 > 目标分支：`migration/zfgk-cad`<br>
 > 来源快照：`FeiSiDev/Fs.Zfgk.CAD@c38ce320c75284536c907c1046e5458da4ae0468`<br>
 > 最近 `main` 集成：`origin/main@6e6f94223be418481663833fc65386d8cf2839a4` 已由 `2e68759f710046416f4e27d2c2f87487e4160619` 合入<br>
 > 实施跟踪：[Issue #110](https://github.com/FsDiG/Fs.Fox.CAD/issues/110)<br>
+> 最终批次：[PR #116](https://github.com/FsDiG/Fs.Fox.CAD/pull/116)<br>
 > 最近复核：2026-08-03<br>
 > CAD 宿主验收：Not run
 
@@ -303,7 +304,7 @@ DWG 图像预览、复杂自绘表格、结果定位窗体和其他 WinForms/Gra
 - `zfgk/curve-domain`
 - `zfgk/final-sampling`
 
-最终采样 PR 合入后不再建立新的 `Fs.Zfgk.CAD` 迁移批次。`migration/zfgk-cad` 继续与 `main` 隔离；是否以及何时进入 `main` 属于独立集成决策，必须重新同步最新 `main`、审查完整差异并获得维护者明确批准，不能用各子 PR 已通过替代最终集成验证。
+PR #116 合入后不再建立新的 `Fs.Zfgk.CAD` 迁移批次。`migration/zfgk-cad` 继续与 `main` 隔离；是否以及何时进入 `main` 属于独立集成决策，必须重新同步最新 `main`、审查完整差异并获得维护者明确批准，不能用各子 PR 已通过替代最终集成验证。
 
 ## 10. 每批验收
 
