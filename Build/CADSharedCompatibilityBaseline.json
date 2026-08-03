@@ -738,7 +738,7 @@
           {
             "type": "Fs.Fox.Cad.PolylineEx",
             "recordCount": 13,
-            "contractSha256": "e0329848ab3f94781385fc4dec91a343192d588703266f93dccffd2fb21bdc89"
+            "contractSha256": "00cc5345442f1b0866de9f7edab924a818779c172d112fb98eba3c43905e0cd3"
           },
           {
             "type": "Fs.Fox.Cad.PostCmd",
@@ -1009,9 +1009,9 @@
           },
           {
             "path": "lib/net48/Fs.Fox.AutoCad.xml",
-            "length": 505379,
+            "length": 505449,
             "hashKind": "canonical-xml-v1",
-            "contentSha256": "604d1c7a8fcb0bad463f15648cd5aba1daf19d52e9ba1a2209430db0f81fca5c",
+            "contentSha256": "03e529ecc750de7d4994232abba6a65d3ccc1344b8db13f037994188a7e00347",
             "binarySource": null
           },
           {
@@ -1847,7 +1847,7 @@
           {
             "type": "Fs.Fox.Cad.PolylineEx",
             "recordCount": 13,
-            "contractSha256": "1f0c4f5bdbc0fa747133e0361401e63d2b662a63bb111203aa2523a01bc69267"
+            "contractSha256": "bf54a8410636de6e55adf3ca3c8b57f509944c5a5c12e01a89985245f993691e"
           },
           {
             "type": "Fs.Fox.Cad.PostCmd",
@@ -2132,9 +2132,9 @@
           },
           {
             "path": "lib/net8.0-windows7.0/Fs.Fox.AutoCad.xml",
-            "length": 469655,
+            "length": 469725,
             "hashKind": "canonical-xml-v1",
-            "contentSha256": "ba253c6ee787b2c0edb37e58b951f19dc8450b23cc51918d3b284746a7e9beb0",
+            "contentSha256": "2f2e782c159e36bfa06ace8123edff8a3f5f01322d0173a6cbca84417768d6ca",
             "binarySource": null
           },
           {
@@ -2881,7 +2881,7 @@
           {
             "type": "Fs.Fox.Cad.PolylineEx",
             "recordCount": 13,
-            "contractSha256": "c907e675711a9e7c4eec4658a941b09d9ca277176ebe0e9f605a2f7feb52b371"
+            "contractSha256": "6e7d6fd1ee52127f1eefc42174a9aec957f169829fc5dec97e6a11827f721bfe"
           },
           {
             "type": "Fs.Fox.Cad.PostCmd",
@@ -3138,9 +3138,9 @@
           },
           {
             "path": "lib/net48/Fs.Fox.ZwCad.xml",
-            "length": 496205,
+            "length": 496275,
             "hashKind": "canonical-xml-v1",
-            "contentSha256": "b9907b0ca0feb1c1111c171a455684749980893f466d2ed485bc38bd97610e37",
+            "contentSha256": "40a58ae432991e82cad82fa40edc043c17169a5426fe9c639fa364d1b4b32189",
             "binarySource": null
           },
           {
@@ -3887,7 +3887,7 @@
           {
             "type": "Fs.Fox.Cad.PolylineEx",
             "recordCount": 13,
-            "contractSha256": "c907e675711a9e7c4eec4658a941b09d9ca277176ebe0e9f605a2f7feb52b371"
+            "contractSha256": "6e7d6fd1ee52127f1eefc42174a9aec957f169829fc5dec97e6a11827f721bfe"
           },
           {
             "type": "Fs.Fox.Cad.PostCmd",
@@ -4144,9 +4144,9 @@
           },
           {
             "path": "lib/net48/Fs.Fox.ZwCad.xml",
-            "length": 497594,
+            "length": 497664,
             "hashKind": "canonical-xml-v1",
-            "contentSha256": "fa963fdeb5c4578cd7e709cb4e0f7630ecc3cd4c103ef96b306325134ea21d8c",
+            "contentSha256": "27e4ad03c07e32bde7448b7fb2f8343d5336ee437f111651f92e96c7f49339ae",
             "binarySource": null
           },
           {
@@ -4883,7 +4883,7 @@
           {
             "type": "Fs.Fox.Cad.PolylineEx",
             "recordCount": 13,
-            "contractSha256": "55413872ca4ac7a31113aff56a81dc2bf5cd876f586fc36e62c2b58eeebdca9e"
+            "contractSha256": "eeaeb70247b5e87bcc56c0d3d839bdd8771091e4d65242b7d4c9548378404d35"
           },
           {
             "type": "Fs.Fox.Cad.PostCmd",
@@ -5140,9 +5140,9 @@
           },
           {
             "path": "lib/net48/Fs.Fox.Gcad.xml",
-            "length": 489879,
+            "length": 489949,
             "hashKind": "canonical-xml-v1",
-            "contentSha256": "bddfbac30dff5878604e7798f25e52a13f2199cacf17b95b3b054cdbc6e3ef19",
+            "contentSha256": "74840fab8fb8405d0c28eefc64a96f2295531c726b24326d179bcbf6ee040cf2",
             "binarySource": null
           },
           {
@@ -5879,7 +5879,7 @@
           {
             "type": "Fs.Fox.Cad.PolylineEx",
             "recordCount": 13,
-            "contractSha256": "55413872ca4ac7a31113aff56a81dc2bf5cd876f586fc36e62c2b58eeebdca9e"
+            "contractSha256": "eeaeb70247b5e87bcc56c0d3d839bdd8771091e4d65242b7d4c9548378404d35"
           },
           {
             "type": "Fs.Fox.Cad.PostCmd",
@@ -6136,9 +6136,9 @@
           },
           {
             "path": "lib/net48/Fs.Fox.Gcad.xml",
-            "length": 489879,
+            "length": 489949,
             "hashKind": "canonical-xml-v1",
-            "contentSha256": "bddfbac30dff5878604e7798f25e52a13f2199cacf17b95b3b054cdbc6e3ef19",
+            "contentSha256": "74840fab8fb8405d0c28eefc64a96f2295531c726b24326d179bcbf6ee040cf2",
             "binarySource": null
           },
           {
@@ -6964,7 +6964,7 @@
           {
             "type": "Fs.Fox.Cad.PolylineEx",
             "recordCount": 13,
-            "contractSha256": "786279bbdc6fe761d9f7e6e56a18c489a64f6909fceb6e37f3cb0a5c12b07daf"
+            "contractSha256": "3fec2b6a65add9eec32c2c7551b50f8099da710eef0fe1dab1bce22a13374a5e"
           },
           {
             "type": "Fs.Fox.Cad.PostCmd",
@@ -7235,9 +7235,9 @@
           },
           {
             "path": "lib/net8.0-windows7.0/Fs.Fox.Gcad.xml",
-            "length": 463293,
+            "length": 463363,
             "hashKind": "canonical-xml-v1",
-            "contentSha256": "9d7b01b5cbb4524d9a15df8bc694f709a3c08f833d71857d9ecd01abe70303ce",
+            "contentSha256": "677fd4b7326d9c144c7f12cf56e1bd2c5712f60f32b06bdf1c338420fc7c9581",
             "binarySource": null
           },
           {

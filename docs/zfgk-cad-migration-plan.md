@@ -244,7 +244,7 @@ ObjectARX、ZRX 和 GRX 的曲线契约均把 `Ray` 定义为起始参数 `0` �
 | `PolylineEx` | `GetSamplePointsByDistance` | 每个原始子段按沿折线的最大间距独立等距细分，保留所有原始顶点；闭合折线在结果末尾重复首顶点。 |
 | `PolylineEx` | `GetSamplePointsByChordDeviation` | 直线段只保留端点；圆弧段按弓高公式细分，使每个采样子弧的弦偏差不超过给定有限正数；同样保留原始顶点和闭合点。 |
 
-两个方法均返回独立的 `Point3d` 快照，不修改输入、不访问数据库、不创建需要释放的 CAD 对象。`Test_GeometryQuery` 同步覆盖直线/圆弧混合、开放/闭合、退化折线、非零 `Normal`/`Elevation`、非法阈值和不可表示的细分数量。点在线段左右关系由现有 `GeometryEx.GetArea`/`IsClockWise` 表达，范围关系和碰撞扫描由 `Rect`/`Rect.XCollision` 表达，不再新增平行 API。
+两个方法均返回独立的 `Point3d` 快照，不修改输入、不访问数据库、不创建需要释放的 CAD 对象。为避免极小但有限的阈值同步生成海量点并阻塞 CAD，方法先计算全部子段的总点数，超过 1,000,000 时在生成任何采样点前失败。`Test_GeometryQuery` 同步覆盖直线/圆弧混合、开放/闭合、退化折线、非零 `Normal`/`Elevation`、非法阈值、不可表示的细分数量和总点数上限。点在线段左右关系由现有 `GeometryEx.GetArea`/`IsClockWise` 表达，范围关系和碰撞扫描由 `Rect`/`Rect.XCollision` 表达，不再新增平行 API。
 
 最终批次的 AC_2019、AC_2025、ZW_2022、ZW_2025、GC_2022、GC_2023、GC_2026 Release 库和测试程序集均已通过直接构建。模块守卫保持 `142 / 42 / 17`，七目标兼容性基线仅增加 `PolylineEx` 的两个公开方法及对应 XML 文档，四目标 TypeDef 顺序未变化；HostAcceptance runner 自测通过。以上仍是 Build-only 和基础设施证据，`Test_GeometryQuery` 未在 CAD 中执行，真实宿主状态为 `Not run`。
 

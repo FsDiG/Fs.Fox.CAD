@@ -109,6 +109,10 @@ public class TestGeometryQuery
             "Distance sampling representable count");
         AssertThrowsInvalidOperation(() => polyline.GetSamplePointsByChordDeviation(double.Epsilon),
             "Chord sampling representable count");
+        AssertThrowsInvalidOperation(() => polyline.GetSamplePointsByDistance(1e-6),
+            "Distance sampling total point limit");
+        AssertThrowsInvalidOperation(() => polyline.GetSamplePointsByChordDeviation(1e-12),
+            "Chord sampling total point limit");
 
         polyline.Closed = true;
         AssertClose(polyline.GetSegmentLength(2), Math.Sqrt(200), "Closing segment length");

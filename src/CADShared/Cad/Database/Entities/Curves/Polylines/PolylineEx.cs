@@ -5,6 +5,8 @@ namespace Fs.Fox.Cad;
 /// </summary>
 public static class PolylineEx
 {
+    private const int MaximumSamplePointCount = 1_000_000;
+
     #region 获取多段线端点
 
     /// <summary>
@@ -107,7 +109,7 @@ public static class PolylineEx
     /// <returns>按折线行进方向排列的采样点快照</returns>
     /// <exception cref="ArgumentNullException"><paramref name="pl"/> 为 <see langword="null"/></exception>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="maximumSpacing"/> 不是有限正数</exception>
-    /// <exception cref="InvalidOperationException">折线距离域无效，或阈值要求的细分数量无法表示</exception>
+    /// <exception cref="InvalidOperationException">折线距离域无效、阈值要求的细分数量无法表示，或结果将超过 1,000,000 个点</exception>
     public static IReadOnlyList<Point3d> GetSamplePointsByDistance(this Polyline pl, double maximumSpacing)
     {
         if (pl is null)
@@ -130,7 +132,7 @@ public static class PolylineEx
     /// <returns>按折线行进方向排列的采样点快照</returns>
     /// <exception cref="ArgumentNullException"><paramref name="pl"/> 为 <see langword="null"/></exception>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="maximumChordDeviation"/> 不是有限正数</exception>
-    /// <exception cref="InvalidOperationException">圆弧或折线距离域无效，或阈值要求的细分数量无法表示</exception>
+    /// <exception cref="InvalidOperationException">圆弧或折线距离域无效、阈值要求的细分数量无法表示，或结果将超过 1,000,000 个点</exception>
     public static IReadOnlyList<Point3d> GetSamplePointsByChordDeviation(this Polyline pl,
         double maximumChordDeviation)
     {
@@ -170,8 +172,17 @@ public static class PolylineEx
         if (vertexCount == 0)
             return Array.Empty<Point3d>();
 
-        var points = new List<Point3d> { pl.GetPoint3dAt(0) };
         var segmentCount = GetSegmentCount(pl);
+        if (segmentCount > MaximumSamplePointCount - 1)
+        {
+            throw new InvalidOperationException(
+                $"The requested sampling would contain more than {MaximumSamplePointCount} points.");
+        }
+
+        var startDistances = new double[segmentCount];
+        var endDistances = new double[segmentCount];
+        var subdivisionCounts = new int[segmentCount];
+        var totalPointCount = 1;
         for (var segmentIndex = 0; segmentIndex < segmentCount; segmentIndex++)
         {
             var startDistance = pl.GetDistanceAtParameter(segmentIndex);
@@ -187,6 +198,24 @@ public static class PolylineEx
             var subdivisionCount = getSubdivisionCount(segmentIndex, segmentLength);
             if (subdivisionCount < 1)
                 throw new InvalidOperationException("The subdivision count must be positive.");
+            if (subdivisionCount > MaximumSamplePointCount - totalPointCount)
+            {
+                throw new InvalidOperationException(
+                    $"The requested sampling would contain more than {MaximumSamplePointCount} points.");
+            }
+
+            startDistances[segmentIndex] = startDistance;
+            endDistances[segmentIndex] = endDistance;
+            subdivisionCounts[segmentIndex] = subdivisionCount;
+            totalPointCount += subdivisionCount;
+        }
+
+        var points = new List<Point3d>(totalPointCount) { pl.GetPoint3dAt(0) };
+        for (var segmentIndex = 0; segmentIndex < segmentCount; segmentIndex++)
+        {
+            var startDistance = startDistances[segmentIndex];
+            var endDistance = endDistances[segmentIndex];
+            var subdivisionCount = subdivisionCounts[segmentIndex];
 
             for (var sampleIndex = 1; sampleIndex < subdivisionCount; sampleIndex++)
             {
