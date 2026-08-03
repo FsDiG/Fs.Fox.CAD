@@ -90,10 +90,15 @@ src/
   IFoxCAD.ZwCad/             ZWCAD 平台 using 和别名
   Fs.Fox.AutoCad20xx/        AutoCAD 各 API 代际项目
   Fs.Fox.ZwCad20xx/          ZWCAD 各 API 代际项目
+  Fs.Fox.Gcad20xx/           GstarCAD 各 API 代际项目
 tests/
   TestShared/                共享的 CAD 命令与宿主测试代码
   TestAcad20xx/              AutoCAD 测试入口
   TestZcad20xx/              ZWCAD 测试入口
+tools/
+  CadDiagnostics/            独立、多版本 CAD 诊断工具
+third_party/
+  Autodesk.MgdDbg/           原始 MgdDbg 导入快照（不参与构建）
 ```
 
 平台项目导入相同的 `CADShared.projitems`，因此公共功能尽量保持一致；底层对象仍分别来自 Autodesk 和 ZwSoft 程序集。更详细的设计说明见 [Fs.Fox.CAD 架构说明][architecture]。
@@ -113,6 +118,7 @@ tests/
 - [DBTrans 生命周期与释放契约][dbtrans-lifecycle]
 - [ZWCAD 版本兼容性与迁移说明][zwcad-compatibility]
 - [AutoCAD 2027 .NET 8 兼容策略][acad-2027-decision]
+- [AutoCAD 多版本诊断工具][cad-diagnostics]
 - [CAD 界面文字规范][cad-ui-text-style]
 - [上游 IFoxCAD 与本项目的关系][upstream]
 - [NuGet 发布工作流][release-workflow]
@@ -130,6 +136,7 @@ tests/
 [dbtrans-lifecycle]: https://github.com/FsDiG/Fs.Fox.CAD/blob/main/docs/dbtrans-lifecycle-contract.md
 [zwcad-compatibility]: https://github.com/FsDiG/Fs.Fox.CAD/blob/main/docs/ZWCAD-version-compatibility.md
 [acad-2027-decision]: https://github.com/FsDiG/Fs.Fox.CAD/blob/main/docs/AC_2027-net8-compatibility-decision.md
+[cad-diagnostics]: tools/CadDiagnostics/README.md
 [cad-ui-text-style]: https://github.com/FsDiG/Fs.Fox.CAD/blob/main/docs/guides/cad-ui-text-style-guide.md
 [upstream]: https://github.com/FsDiG/Fs.Fox.CAD/blob/main/IFoxCAD%20%E8%AF%B4%E6%98%8E.md
 [release-workflow]: https://github.com/FsDiG/Fs.Fox.CAD/blob/main/.github/workflows/release.md

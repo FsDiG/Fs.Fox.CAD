@@ -56,6 +56,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestGcad2023", "tests\TestG
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestGcad2026", "tests\TestGcad2026\TestGcad2026.csproj", "{F6A7B8C9-D0E1-2345-FABC-456789012345}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{07C2787E-EAC7-C090-1BA3-A61EC2A24D84}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CadDiagnostics", "CadDiagnostics", "{1399412A-6A45-1434-E915-9AD4219CBEC8}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CADDiagnosticsShared", "tools\CadDiagnostics\CADDiagnosticsShared\CADDiagnosticsShared.shproj", "{F13A7B63-A520-46C9-AB5D-919036EE664A}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CADDiagnostics.AutoCadShared", "tools\CadDiagnostics\Platforms\AutoCad\CADDiagnostics.AutoCadShared.shproj", "{8D697525-C88E-4BDE-BE9A-0282E5C90EF3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fs.Fox.CAD.Diagnostics.AutoCad2019", "tools\CadDiagnostics\Fs.Fox.CAD.Diagnostics.AutoCad2019\Fs.Fox.CAD.Diagnostics.AutoCad2019.csproj", "{47721D1E-436C-4C07-B0EA-77B9F4EBB52E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fs.Fox.CAD.Diagnostics.AutoCad2025", "tools\CadDiagnostics\Fs.Fox.CAD.Diagnostics.AutoCad2025\Fs.Fox.CAD.Diagnostics.AutoCad2025.csproj", "{DBA4A590-35D7-43E9-9A8D-C73743F0F2F5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -118,6 +130,14 @@ Global
 		{F6A7B8C9-D0E1-2345-FABC-456789012345}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6A7B8C9-D0E1-2345-FABC-456789012345}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6A7B8C9-D0E1-2345-FABC-456789012345}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47721D1E-436C-4C07-B0EA-77B9F4EBB52E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47721D1E-436C-4C07-B0EA-77B9F4EBB52E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47721D1E-436C-4C07-B0EA-77B9F4EBB52E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47721D1E-436C-4C07-B0EA-77B9F4EBB52E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBA4A590-35D7-43E9-9A8D-C73743F0F2F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBA4A590-35D7-43E9-9A8D-C73743F0F2F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBA4A590-35D7-43E9-9A8D-C73743F0F2F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBA4A590-35D7-43E9-9A8D-C73743F0F2F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -139,6 +159,11 @@ Global
 		{D4E5F6A7-B8C9-0123-DEFA-234567890123} = {46F3EDA8-A6D1-4707-8D03-731CADB41A56}
 		{E5F6A7B8-C9D0-1234-EFAB-345678901234} = {46F3EDA8-A6D1-4707-8D03-731CADB41A56}
 		{F6A7B8C9-D0E1-2345-FABC-456789012345} = {46F3EDA8-A6D1-4707-8D03-731CADB41A56}
+		{1399412A-6A45-1434-E915-9AD4219CBEC8} = {07C2787E-EAC7-C090-1BA3-A61EC2A24D84}
+		{F13A7B63-A520-46C9-AB5D-919036EE664A} = {1399412A-6A45-1434-E915-9AD4219CBEC8}
+		{8D697525-C88E-4BDE-BE9A-0282E5C90EF3} = {1399412A-6A45-1434-E915-9AD4219CBEC8}
+		{47721D1E-436C-4C07-B0EA-77B9F4EBB52E} = {1399412A-6A45-1434-E915-9AD4219CBEC8}
+		{DBA4A590-35D7-43E9-9A8D-C73743F0F2F5} = {1399412A-6A45-1434-E915-9AD4219CBEC8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {57CA0128-08DE-436F-B9F1-82C64F49BF67}
@@ -160,5 +185,11 @@ Global
 		tests\TestShared\TestShared.projitems*{d4e5f6a7-b8c9-0123-defa-234567890123}*SharedItemsImports = 5
 		tests\TestShared\TestShared.projitems*{e5f6a7b8-c9d0-1234-efab-345678901234}*SharedItemsImports = 5
 		tests\TestShared\TestShared.projitems*{f6a7b8c9-d0e1-2345-fabc-456789012345}*SharedItemsImports = 5
+		tools\CadDiagnostics\CADDiagnosticsShared\CADDiagnosticsShared.projitems*{47721d1e-436c-4c07-b0ea-77b9f4ebb52e}*SharedItemsImports = 5
+		tools\CadDiagnostics\CADDiagnosticsShared\CADDiagnosticsShared.projitems*{dba4a590-35d7-43e9-9a8d-c73743f0f2f5}*SharedItemsImports = 5
+		tools\CadDiagnostics\CADDiagnosticsShared\CADDiagnosticsShared.projitems*{f13a7b63-a520-46c9-ab5d-919036ee664a}*SharedItemsImports = 13
+		tools\CadDiagnostics\Platforms\AutoCad\CADDiagnostics.AutoCadShared.projitems*{47721d1e-436c-4c07-b0ea-77b9f4ebb52e}*SharedItemsImports = 5
+		tools\CadDiagnostics\Platforms\AutoCad\CADDiagnostics.AutoCadShared.projitems*{8d697525-c88e-4bde-be9a-0282e5c90ef3}*SharedItemsImports = 13
+		tools\CadDiagnostics\Platforms\AutoCad\CADDiagnostics.AutoCadShared.projitems*{dba4a590-35d7-43e9-9a8d-c73743f0f2f5}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal

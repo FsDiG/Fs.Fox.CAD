@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <ACADVersion>2019</ACADVersion>
+    <AssemblyName>Fs.Fox.CAD.Diagnostics.AutoCad2019</AssemblyName>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>none</DebugType>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <OutputPath>..\..\..\Build\AC_$(ACADVersion)_$(Configuration)\</OutputPath>
+    <DocumentationFile>..\..\..\Build\AC_$(ACADVersion)_$(Configuration)\Fs.Fox.CAD.Diagnostics.AutoCad2019.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <OutputPath>..\..\..\Build\AC_$(ACADVersion)_$(Configuration)\</OutputPath>
+    <DocumentationFile>..\..\..\Build\AC_$(ACADVersion)_$(Configuration)\Fs.Fox.CAD.Diagnostics.AutoCad2019.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <DefineConstants>$(Configuration);ACAD;AC_2019;AC_NET48</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoCAD.NET" Version="23.0.0" ExcludeAssets="runtime" />
+    <PackageReference Include="PolySharp" Version="1.16.0" PrivateAssets="all" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <Import Project="..\CADDiagnosticsShared\CADDiagnosticsShared.projitems" Label="Shared" />
+  <Import Project="..\Platforms\AutoCad\CADDiagnostics.AutoCadShared.projitems" Label="Shared" />
+</Project>
