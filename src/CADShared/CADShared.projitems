@@ -392,6 +392,10 @@
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0580</FsFoxOrder>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\SymbolTables\LayerUnlockScope.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>0581</FsFoxOrder>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\SymbolTables\SymbolTableRecordEx.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>0590</FsFoxOrder>
@@ -578,6 +582,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Cad\Application\SystemVariables\SystemVariableManager.cs">
       <FsFoxModule>Cad.Application</FsFoxModule>
       <FsFoxOrder>0910</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Application\SystemVariables\SystemVariableScope.cs">
+      <FsFoxModule>Cad.Application</FsFoxModule>
+      <FsFoxOrder>0911</FsFoxOrder>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Cad\Editor\Selection\Filters\OpComp.cs">
       <FsFoxModule>Cad.Editor</FsFoxModule>

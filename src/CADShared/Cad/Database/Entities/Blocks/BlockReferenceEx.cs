@@ -71,6 +71,50 @@ public static class BlockReferenceEx
     #region 属性
 
     /// <summary>
+    /// 尝试读取动态块参数值。
+    /// </summary>
+    /// <param name="blockReference">要检查的动态块参照。</param>
+    /// <param name="propertyName">参数名；按序号进行区分大小写的精确匹配。</param>
+    /// <param name="value">找到时接收参数值，否则为 <see langword="null"/>。</param>
+    /// <returns>
+    /// 存在指定名称的参数时返回 <see langword="true"/>；否则返回 <see langword="false"/>，
+    /// 非动态块也返回 <see langword="false"/>。
+    /// </returns>
+    /// <remarks>
+    /// 返回值保留 CAD SDK 的原始运行时类型，不转换为文本，以便检查该值或将其原样传回块参数写入操作，
+    /// 避免丢失类型信息。
+    /// </remarks>
+    /// <exception cref="System.ArgumentNullException">
+    /// <paramref name="blockReference"/> 或 <paramref name="propertyName"/> 为 <see langword="null"/>。
+    /// </exception>
+    /// <exception cref="ArgumentException"><paramref name="propertyName"/> 为空或仅包含空白字符。</exception>
+    public static bool TryGetBlockProperty(this BlockReference blockReference, string propertyName,
+        out object? value)
+    {
+        ArgumentNullException.ThrowIfNull(blockReference);
+        ArgumentNullException.ThrowIfNull(propertyName);
+        if (string.IsNullOrWhiteSpace(propertyName))
+            throw new ArgumentException("块参数名不能为空或仅包含空白字符。", nameof(propertyName));
+
+        value = null;
+        if (!blockReference.IsDynamicBlock)
+            return false;
+
+        using var properties = blockReference.DynamicBlockReferencePropertyCollection;
+        foreach (DynamicBlockReferenceProperty property in properties)
+        {
+            if (!string.Equals(property.PropertyName, propertyName, StringComparison.Ordinal))
+                continue;
+
+            // 动态块参数可能是数值、文本或其他 SDK 值；这里保留其原始类型。
+            value = property.Value;
+            return true;
+        }
+
+        return false;
+    }
+
+    /// <summary>
     /// 更新动态块参数值
     /// </summary>
     public static bool ChangeBlockProperty(this BlockReference blockReference,

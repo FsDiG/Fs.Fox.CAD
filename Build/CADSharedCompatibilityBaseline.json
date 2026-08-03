@@ -103,7 +103,7 @@
             "flags": 0
           }
         ],
-        "publicApiRecordCount": 2307,
+        "publicApiRecordCount": 2321,
         "publicApi": [
           {
             "type": "Fs.Fox.Basal.ArgumentNullEx",
@@ -322,8 +322,8 @@
           },
           {
             "type": "Fs.Fox.Cad.BlockReferenceEx",
-            "recordCount": 16,
-            "contractSha256": "b2d8f333e6ac5d85303501e6743b582e006b6b5bbef1865e8fab6ab9840a1988"
+            "recordCount": 17,
+            "contractSha256": "a9cfcaea1b3b4b71bbc4ffeae91b81361c97c4cdf8029b4a7a9740dae80fa8f9"
           },
           {
             "type": "Fs.Fox.Cad.BlockVisibilityInfo",
@@ -599,6 +599,11 @@
             "type": "Fs.Fox.Cad.KeywordException",
             "recordCount": 4,
             "contractSha256": "437cec6478060a228d3581fd9d650d191b39f4b6f8503ff0165cc937b7d78cde"
+          },
+          {
+            "type": "Fs.Fox.Cad.LayerUnlockScope",
+            "recordCount": 6,
+            "contractSha256": "a6778f6d51311996963c5b19eaed303aef7e2d9a32b50ddd7154a4c13d70b32a"
           },
           {
             "type": "Fs.Fox.Cad.LispList",
@@ -886,6 +891,11 @@
             "contractSha256": "f84219435e90c2130e6cc12636685ce6867809aff6b74b19973f77bf5f5bd71f"
           },
           {
+            "type": "Fs.Fox.Cad.SystemVariableScope",
+            "recordCount": 7,
+            "contractSha256": "804e5a3a38689d9576c115f29042d512147f59d0dc17d4145aec127218f26548"
+          },
+          {
             "type": "Fs.Fox.Cad.TangentEx",
             "recordCount": 2,
             "contractSha256": "d38aa9cda156c7ca0091781e679e97eff4509fbcf20a179c6448925262e1148b"
@@ -1004,9 +1014,9 @@
           },
           {
             "path": "lib/net48/Fs.Fox.AutoCad.xml",
-            "length": 499702,
+            "length": 506056,
             "hashKind": "canonical-xml-v1",
-            "contentSha256": "df8471853eb31378d847ecdd05e6cb17a5db951cdfabf1c3b3384757d7e777fd",
+            "contentSha256": "67dfce0016d41cd65bb1b78703e8c95a5916d0cff09c332abc8dc3e108625dd8",
             "binarySource": null
           },
           {
@@ -1212,7 +1222,7 @@
             "flags": 0
           }
         ],
-        "publicApiRecordCount": 2305,
+        "publicApiRecordCount": 2319,
         "publicApi": [
           {
             "type": "Fs.Fox.Basal.ArrayEx",
@@ -1426,8 +1436,8 @@
           },
           {
             "type": "Fs.Fox.Cad.BlockReferenceEx",
-            "recordCount": 16,
-            "contractSha256": "9472f6308649853978ea4522412acffc1efd8d315982856479548cdc1be134d4"
+            "recordCount": 17,
+            "contractSha256": "8bf386c92b1a9285383fa9dbddf148efba5e5b733e709765aab8f451769a4b71"
           },
           {
             "type": "Fs.Fox.Cad.BlockVisibilityInfo",
@@ -1703,6 +1713,11 @@
             "type": "Fs.Fox.Cad.KeywordException",
             "recordCount": 4,
             "contractSha256": "437cec6478060a228d3581fd9d650d191b39f4b6f8503ff0165cc937b7d78cde"
+          },
+          {
+            "type": "Fs.Fox.Cad.LayerUnlockScope",
+            "recordCount": 6,
+            "contractSha256": "a6778f6d51311996963c5b19eaed303aef7e2d9a32b50ddd7154a4c13d70b32a"
           },
           {
             "type": "Fs.Fox.Cad.LispList",
@@ -1990,6 +2005,11 @@
             "contractSha256": "f84219435e90c2130e6cc12636685ce6867809aff6b74b19973f77bf5f5bd71f"
           },
           {
+            "type": "Fs.Fox.Cad.SystemVariableScope",
+            "recordCount": 7,
+            "contractSha256": "804e5a3a38689d9576c115f29042d512147f59d0dc17d4145aec127218f26548"
+          },
+          {
             "type": "Fs.Fox.Cad.TangentEx",
             "recordCount": 2,
             "contractSha256": "d38aa9cda156c7ca0091781e679e97eff4509fbcf20a179c6448925262e1148b"
@@ -2122,9 +2142,9 @@
           },
           {
             "path": "lib/net8.0-windows7.0/Fs.Fox.AutoCad.xml",
-            "length": 463978,
+            "length": 470332,
             "hashKind": "canonical-xml-v1",
-            "contentSha256": "42c1186746be01e676aa603763c418de676435f2667b17d09ca7c7fdcca68fe8",
+            "contentSha256": "8dfdf72438d509fc34281edb1b99b5e0297d4f0f972176a5d473124f0759c894",
             "binarySource": null
           },
           {
@@ -2246,7 +2266,7 @@
             "flags": 0
           }
         ],
-        "publicApiRecordCount": 2284,
+        "publicApiRecordCount": 2298,
         "publicApi": [
           {
             "type": "Fs.Fox.Basal.ArgumentNullEx",
@@ -2460,8 +2480,8 @@
           },
           {
             "type": "Fs.Fox.Cad.BlockReferenceEx",
-            "recordCount": 16,
-            "contractSha256": "e958a0c8bb8d149762c2fd9d7a30066045373bfe71038e58c6304230694601bf"
+            "recordCount": 17,
+            "contractSha256": "6fabc771e602067ff0f1c7ba2f307fa20c8b1da0aa4132b613a6acea76d2990d"
           },
           {
             "type": "Fs.Fox.Cad.BlockVisibilityInfo",
@@ -2732,6 +2752,11 @@
             "type": "Fs.Fox.Cad.KeywordException",
             "recordCount": 4,
             "contractSha256": "437cec6478060a228d3581fd9d650d191b39f4b6f8503ff0165cc937b7d78cde"
+          },
+          {
+            "type": "Fs.Fox.Cad.LayerUnlockScope",
+            "recordCount": 6,
+            "contractSha256": "509bbc67691079ed3753200c72c3911bf5a31775eee24db0528760d3979ea91c"
           },
           {
             "type": "Fs.Fox.Cad.LispList",
@@ -3019,6 +3044,11 @@
             "contractSha256": "ebbf33a2ea828a9c9a4881379241cbd47dafe39e3472feba3eb6933f50f4a46a"
           },
           {
+            "type": "Fs.Fox.Cad.SystemVariableScope",
+            "recordCount": 7,
+            "contractSha256": "804e5a3a38689d9576c115f29042d512147f59d0dc17d4145aec127218f26548"
+          },
+          {
             "type": "Fs.Fox.Cad.TangentEx",
             "recordCount": 2,
             "contractSha256": "d38aa9cda156c7ca0091781e679e97eff4509fbcf20a179c6448925262e1148b"
@@ -3123,9 +3153,9 @@
           },
           {
             "path": "lib/net48/Fs.Fox.ZwCad.xml",
-            "length": 490548,
+            "length": 496886,
             "hashKind": "canonical-xml-v1",
-            "contentSha256": "ba11af2c2e142d372af7363814b91a00ca907ae8e4ab08135b0f9424a696a792",
+            "contentSha256": "c1e38a62c0a0123f1b0ac2aa96026cf667c28ab6a4704a30a6e3c7f966945c47",
             "binarySource": null
           },
           {
@@ -3247,7 +3277,7 @@
             "flags": 0
           }
         ],
-        "publicApiRecordCount": 2287,
+        "publicApiRecordCount": 2301,
         "publicApi": [
           {
             "type": "Fs.Fox.Basal.ArgumentNullEx",
@@ -3461,8 +3491,8 @@
           },
           {
             "type": "Fs.Fox.Cad.BlockReferenceEx",
-            "recordCount": 16,
-            "contractSha256": "e958a0c8bb8d149762c2fd9d7a30066045373bfe71038e58c6304230694601bf"
+            "recordCount": 17,
+            "contractSha256": "6fabc771e602067ff0f1c7ba2f307fa20c8b1da0aa4132b613a6acea76d2990d"
           },
           {
             "type": "Fs.Fox.Cad.BlockVisibilityInfo",
@@ -3733,6 +3763,11 @@
             "type": "Fs.Fox.Cad.KeywordException",
             "recordCount": 4,
             "contractSha256": "437cec6478060a228d3581fd9d650d191b39f4b6f8503ff0165cc937b7d78cde"
+          },
+          {
+            "type": "Fs.Fox.Cad.LayerUnlockScope",
+            "recordCount": 6,
+            "contractSha256": "509bbc67691079ed3753200c72c3911bf5a31775eee24db0528760d3979ea91c"
           },
           {
             "type": "Fs.Fox.Cad.LispList",
@@ -4020,6 +4055,11 @@
             "contractSha256": "ebbf33a2ea828a9c9a4881379241cbd47dafe39e3472feba3eb6933f50f4a46a"
           },
           {
+            "type": "Fs.Fox.Cad.SystemVariableScope",
+            "recordCount": 7,
+            "contractSha256": "804e5a3a38689d9576c115f29042d512147f59d0dc17d4145aec127218f26548"
+          },
+          {
             "type": "Fs.Fox.Cad.TangentEx",
             "recordCount": 2,
             "contractSha256": "d38aa9cda156c7ca0091781e679e97eff4509fbcf20a179c6448925262e1148b"
@@ -4124,9 +4164,9 @@
           },
           {
             "path": "lib/net48/Fs.Fox.ZwCad.xml",
-            "length": 491937,
+            "length": 498275,
             "hashKind": "canonical-xml-v1",
-            "contentSha256": "5e7d786d00cb0a696b41ded91ce1a0690395e5d7bfb9fa3e4ffa64cae934b406",
+            "contentSha256": "e08f7514d65adc3e8cd6b4a6ad05297578fe3149053d9b336e6b628048212926",
             "binarySource": null
           },
           {
@@ -4248,7 +4288,7 @@
             "flags": 0
           }
         ],
-        "publicApiRecordCount": 2271,
+        "publicApiRecordCount": 2285,
         "publicApi": [
           {
             "type": "Fs.Fox.Basal.ArgumentNullEx",
@@ -4457,8 +4497,8 @@
           },
           {
             "type": "Fs.Fox.Cad.BlockReferenceEx",
-            "recordCount": 16,
-            "contractSha256": "0acd6af9177a891abe23f8acf0d80412edc5514c8875b7c5e9a0022b0e75ba30"
+            "recordCount": 17,
+            "contractSha256": "b7b89cbea15e339f686786e979a0c7dcb0ec8d59c0f469b786252049385cd77c"
           },
           {
             "type": "Fs.Fox.Cad.BlockVisibilityInfo",
@@ -4724,6 +4764,11 @@
             "type": "Fs.Fox.Cad.KeywordException",
             "recordCount": 4,
             "contractSha256": "437cec6478060a228d3581fd9d650d191b39f4b6f8503ff0165cc937b7d78cde"
+          },
+          {
+            "type": "Fs.Fox.Cad.LayerUnlockScope",
+            "recordCount": 6,
+            "contractSha256": "0bb9ab57b3e8fbdc4b523c4607ed727f09009fb0faa41b5c0725c14c8488419e"
           },
           {
             "type": "Fs.Fox.Cad.LispList",
@@ -5011,6 +5056,11 @@
             "contractSha256": "2906d187c8087ba54c454a66afd9f08add9e0d9844feccce48a919c602b5de22"
           },
           {
+            "type": "Fs.Fox.Cad.SystemVariableScope",
+            "recordCount": 7,
+            "contractSha256": "804e5a3a38689d9576c115f29042d512147f59d0dc17d4145aec127218f26548"
+          },
+          {
             "type": "Fs.Fox.Cad.TangentEx",
             "recordCount": 2,
             "contractSha256": "d38aa9cda156c7ca0091781e679e97eff4509fbcf20a179c6448925262e1148b"
@@ -5115,9 +5165,9 @@
           },
           {
             "path": "lib/net48/Fs.Fox.Gcad.xml",
-            "length": 484252,
+            "length": 490566,
             "hashKind": "canonical-xml-v1",
-            "contentSha256": "1b8bfaa0e294da32358e74071aef70313ce36654fa667a2a9d2c21b16532c4c2",
+            "contentSha256": "187d6f4a3564a238b6e1ff5a6f692f6a2144d33bda8d21c9fe075da584dcae9d",
             "binarySource": null
           },
           {
@@ -5239,7 +5289,7 @@
             "flags": 0
           }
         ],
-        "publicApiRecordCount": 2271,
+        "publicApiRecordCount": 2285,
         "publicApi": [
           {
             "type": "Fs.Fox.Basal.ArgumentNullEx",
@@ -5448,8 +5498,8 @@
           },
           {
             "type": "Fs.Fox.Cad.BlockReferenceEx",
-            "recordCount": 16,
-            "contractSha256": "0acd6af9177a891abe23f8acf0d80412edc5514c8875b7c5e9a0022b0e75ba30"
+            "recordCount": 17,
+            "contractSha256": "b7b89cbea15e339f686786e979a0c7dcb0ec8d59c0f469b786252049385cd77c"
           },
           {
             "type": "Fs.Fox.Cad.BlockVisibilityInfo",
@@ -5715,6 +5765,11 @@
             "type": "Fs.Fox.Cad.KeywordException",
             "recordCount": 4,
             "contractSha256": "437cec6478060a228d3581fd9d650d191b39f4b6f8503ff0165cc937b7d78cde"
+          },
+          {
+            "type": "Fs.Fox.Cad.LayerUnlockScope",
+            "recordCount": 6,
+            "contractSha256": "0bb9ab57b3e8fbdc4b523c4607ed727f09009fb0faa41b5c0725c14c8488419e"
           },
           {
             "type": "Fs.Fox.Cad.LispList",
@@ -6002,6 +6057,11 @@
             "contractSha256": "2906d187c8087ba54c454a66afd9f08add9e0d9844feccce48a919c602b5de22"
           },
           {
+            "type": "Fs.Fox.Cad.SystemVariableScope",
+            "recordCount": 7,
+            "contractSha256": "804e5a3a38689d9576c115f29042d512147f59d0dc17d4145aec127218f26548"
+          },
+          {
             "type": "Fs.Fox.Cad.TangentEx",
             "recordCount": 2,
             "contractSha256": "d38aa9cda156c7ca0091781e679e97eff4509fbcf20a179c6448925262e1148b"
@@ -6106,9 +6166,9 @@
           },
           {
             "path": "lib/net48/Fs.Fox.Gcad.xml",
-            "length": 484252,
+            "length": 490566,
             "hashKind": "canonical-xml-v1",
-            "contentSha256": "1b8bfaa0e294da32358e74071aef70313ce36654fa667a2a9d2c21b16532c4c2",
+            "contentSha256": "187d6f4a3564a238b6e1ff5a6f692f6a2144d33bda8d21c9fe075da584dcae9d",
             "binarySource": null
           },
           {
@@ -6314,7 +6374,7 @@
             "flags": 0
           }
         ],
-        "publicApiRecordCount": 2294,
+        "publicApiRecordCount": 2308,
         "publicApi": [
           {
             "type": "Fs.Fox.Basal.ArrayEx",
@@ -6523,8 +6583,8 @@
           },
           {
             "type": "Fs.Fox.Cad.BlockReferenceEx",
-            "recordCount": 16,
-            "contractSha256": "9be5c29356247bfa4211ea909f13c57b8c97cc337a26e259cdb70d0615c4f083"
+            "recordCount": 17,
+            "contractSha256": "b0261a1fc5578c918c282265d09c1f540d17dd03500b62b616c96732f44905a7"
           },
           {
             "type": "Fs.Fox.Cad.BlockVisibilityInfo",
@@ -6795,6 +6855,11 @@
             "type": "Fs.Fox.Cad.KeywordException",
             "recordCount": 4,
             "contractSha256": "437cec6478060a228d3581fd9d650d191b39f4b6f8503ff0165cc937b7d78cde"
+          },
+          {
+            "type": "Fs.Fox.Cad.LayerUnlockScope",
+            "recordCount": 6,
+            "contractSha256": "8729f49a83caa19fb18c52781653fdb84e4b2a9f44f297d3a38101066fb5ec1c"
           },
           {
             "type": "Fs.Fox.Cad.LispList",
@@ -7082,6 +7147,11 @@
             "contractSha256": "e4eaa814af3518c8ee4a38e6d0b8769bae3f8fdd3ee7fa7ad80aeef34c027246"
           },
           {
+            "type": "Fs.Fox.Cad.SystemVariableScope",
+            "recordCount": 7,
+            "contractSha256": "804e5a3a38689d9576c115f29042d512147f59d0dc17d4145aec127218f26548"
+          },
+          {
             "type": "Fs.Fox.Cad.TangentEx",
             "recordCount": 2,
             "contractSha256": "d38aa9cda156c7ca0091781e679e97eff4509fbcf20a179c6448925262e1148b"
@@ -7200,9 +7270,9 @@
           },
           {
             "path": "lib/net8.0-windows7.0/Fs.Fox.Gcad.xml",
-            "length": 457636,
+            "length": 463974,
             "hashKind": "canonical-xml-v1",
-            "contentSha256": "cac0cabcfca377cf79e4cb3478241c6209aceddbab6cce44f3bd6ac457b8ea1f",
+            "contentSha256": "792d13363a560bab50e094834baa0bb0bb7e81bcb176696c91a90842a63045db",
             "binarySource": null
           },
           {
