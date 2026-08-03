@@ -206,6 +206,14 @@ tests/
 
 版本项目是 SDK/API 代际边界，不要求每个产品年度都有一个项目。只有厂商 API、目标框架或二进制兼容性发生变化时才应新增项目；可兼容年度优先复用已有产物，并用兼容性文档记录依据和宿主验收状态。
 
+### GStarCAD（浩辰CAD）
+
+- 条件编译符号：`GCAD;GC_2022` / `GCAD;GC_2023` / `GCAD;GC_2026`
+- 命名空间：`Gssoft.Gscad.*`
+- GlobalUsings：`src/IFoxCAD.Gcad/GlobalUsings.cs`
+- NuGet：`GStarCad.Net`
+- 输出目录：`Build\GC_202x_$(Configuration)\`
+
 ## 6. 测试边界
 
 `TestShared` 同样以共享源码方式导入各宿主测试项目。这能验证同一功能是否可在不同平台编译，并提供 `NETLOAD` 后可执行的测试命令，但它不是脱离 CAD 进程运行的常规单元测试套件。

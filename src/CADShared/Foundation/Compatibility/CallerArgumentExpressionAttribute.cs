@@ -1,5 +1,5 @@
 
-#if AC_NET48 || ZWCAD
+#if AC_NET48 || ZWCAD || GC_2022 || GC_2023
 namespace System.Runtime.CompilerServices;
 /// <summary>
 /// 指示参数将为另一个参数传递的表达式捕获为字符串。

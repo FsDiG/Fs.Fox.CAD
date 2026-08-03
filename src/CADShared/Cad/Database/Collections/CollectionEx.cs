@@ -213,10 +213,8 @@ public static class CollectionEx
         switch (keywordName)
         {
             case KeywordName.GlobalName:
-                for (var i = 0; i < collection.Count; i++)
+                foreach (Keyword item in collection)
                 {
-                    var item = collection[i];
-
                     if (item.GlobalName == name)
                     {
                         contains = true;
@@ -226,10 +224,8 @@ public static class CollectionEx
 
                 break;
             case KeywordName.LocalName:
-                for (var i = 0; i < collection.Count; i++)
+                foreach (Keyword item in collection)
                 {
-                    var item = collection[i];
-
                     if (item.LocalName == name)
                     {
                         contains = true;
@@ -239,10 +235,8 @@ public static class CollectionEx
 
                 break;
             case KeywordName.DisplayName:
-                for (var i = 0; i < collection.Count; i++)
+                foreach (Keyword item in collection)
                 {
-                    var item = collection[i];
-
                     if (item.DisplayName == name)
                     {
                         contains = true;
@@ -266,10 +260,8 @@ public static class CollectionEx
     public static Dictionary<string, string> ToDictionary(this KeywordCollection collection)
     {
         Dictionary<string, string> map = new();
-        for (var i = 0; i < collection.Count; i++)
+        foreach (Keyword item in collection)
         {
-            var item = collection[i];
-
             map.Add(item.GlobalName, item.DisplayName);
         }
 

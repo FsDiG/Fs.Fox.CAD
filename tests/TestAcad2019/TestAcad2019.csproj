@@ -32,12 +32,12 @@
 
 	<ItemGroup>
 		<PackageReference Include="AutoCAD.NET" Version="23.0.0" ExcludeAssets="runtime" />
-		<PackageReference Include="System.Text.Json" Version="9.0.9" />
+		<PackageReference Include="System.Text.Json" Version="10.0.10" />
 		<Reference Include="Microsoft.CSharp" />
 	</ItemGroup>
 	
 	<ItemGroup>
-	  <PackageReference Include="PolySharp" Version="1.15.0">
+	  <PackageReference Include="PolySharp" Version="1.16.0">
 	    <PrivateAssets>all</PrivateAssets>
 	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	  </PackageReference>

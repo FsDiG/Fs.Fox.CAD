@@ -1,4 +1,4 @@
-
+#if !GC_2022 && !GC_2023
 namespace Test;
 
 public partial class Test
@@ -86,3 +86,4 @@ public partial class Test
         tr.CurrentSpace.AddEntity(dimension);
     }
 }
+#endif

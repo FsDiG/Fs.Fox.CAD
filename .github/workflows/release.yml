@@ -109,6 +109,15 @@ jobs:
             "Build\ZW_2025_Release" `
             "ZWCAD 2025"
 
+          # GStarCAD 2022 - Build + Pack (MSBuild, .NET Framework 4.8)
+          BuildPack-MSBuild "src/Fs.Fox.Gcad2022/Fs.Fox.Gcad2022.csproj" "GC_2022"
+
+          # GStarCAD 2023 - Build + Pack (MSBuild, .NET Framework 4.8)
+          BuildPack-MSBuild "src/Fs.Fox.Gcad2023/Fs.Fox.Gcad2023.csproj" "GC_2023"
+
+          # GStarCAD 2026 - Build + Pack (dotnet CLI, .NET 8)
+          BuildPack-DotNet "src/Fs.Fox.Gcad2026/Fs.Fox.Gcad2026.csproj" "GC_2026"
+
       - name: Publish to NuGet
         run: |
           $packages = Get-ChildItem ./artifacts/*.nupkg
@@ -139,6 +148,9 @@ jobs:
             - IFox.CAD.ACAD2025 (AutoCAD 2025, .NET 8.0)
             - IFox.CAD.ZCAD2022 (ZWCAD 2021-2024, .NET Framework 4.8)
             - IFox.CAD.ZCAD2025 (ZWCAD 2025-2026, .NET Framework 4.8)
+            - IFox.CAD.GCAD2022 (GStarCAD 2022, .NET Framework 4.8)
+            - IFox.CAD.GCAD2023 (GStarCAD 2023, .NET Framework 4.8)
+            - IFox.CAD.GCAD2026 (GStarCAD 2026, .NET 8)
           files: ./artifacts/*.nupkg
           draft: false
           prerelease: false

@@ -11,28 +11,28 @@
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-        <OutputPath>..\..\Build\ZW_2025_Debug\</OutputPath>
+        <OutputPath>..\..\Build\GC_2023_Debug\</OutputPath>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-        <OutputPath>..\..\Build\ZW_2025_Release\</OutputPath>
+        <OutputPath>..\..\Build\GC_2023_Release\</OutputPath>
     </PropertyGroup>
 
     <PropertyGroup>
-        <DefineConstants>$(Configuration);ZWCAD;ZW_2025</DefineConstants>
+        <DefineConstants>$(Configuration);GCAD;GC_2023</DefineConstants>
     </PropertyGroup>
-    
+
     <ItemGroup>
         <PackageReference Include="PolySharp" Version="1.16.0">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="System.Text.Json" Version="10.0.10" />
-        <PackageReference Include="ZWCAD.NetApi" Version="20.25.0" ExcludeAssets="runtime" />
+        <PackageReference Include="GStarCad.Net" Version="20.23.0" ExcludeAssets="runtime" />
     </ItemGroup>
-    
+
     <ItemGroup>
-      <ProjectReference Include="..\..\src\Fs.Fox.ZwCad2025\Fs.Fox.ZwCad2025.csproj" />
+      <ProjectReference Include="..\..\src\Fs.Fox.Gcad2023\Fs.Fox.Gcad2023.csproj" />
     </ItemGroup>
     <Import Project="..\TestShared\TestShared.projitems" Label="Shared" />
 </Project>

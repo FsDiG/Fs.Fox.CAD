@@ -51,6 +51,27 @@ $targets = @(
         assembly = 'Build\ZW_2025_Release\Fs.Fox.ZwCad.dll'
         testAssembly = 'Build\ZW_2025_Release\TestZcad2025.dll'
         packageId = 'IFox.CAD.ZCAD2025'
+    },
+    [pscustomobject]@{
+        name = 'GC_2022'
+        project = 'src\Fs.Fox.Gcad2022\Fs.Fox.Gcad2022.csproj'
+        assembly = 'Build\GC_2022_Release\Fs.Fox.Gcad.dll'
+        testAssembly = 'Build\GC_2022_Release\TestGcad2022.dll'
+        packageId = 'IFox.CAD.GCAD2022'
+    },
+    [pscustomobject]@{
+        name = 'GC_2023'
+        project = 'src\Fs.Fox.Gcad2023\Fs.Fox.Gcad2023.csproj'
+        assembly = 'Build\GC_2023_Release\Fs.Fox.Gcad.dll'
+        testAssembly = 'Build\GC_2023_Release\TestGcad2023.dll'
+        packageId = 'IFox.CAD.GCAD2023'
+    },
+    [pscustomobject]@{
+        name = 'GC_2026'
+        project = 'src\Fs.Fox.Gcad2026\Fs.Fox.Gcad2026.csproj'
+        assembly = 'Build\GC_2026_Release\Fs.Fox.Gcad.dll'
+        testAssembly = 'Build\GC_2026_Release\TestGcad2026.dll'
+        packageId = 'IFox.CAD.GCAD2026'
     }
 )
 
@@ -881,7 +902,8 @@ function Assert-ReleaseAssembliesAreFresh {
         $inputPaths = @($commonInputs) + @(
             (Join-Path $repoRoot $target.project),
             (Join-Path $repoRoot 'src\IFoxCAD.AutoCad\GlobalUsings.cs'),
-            (Join-Path $repoRoot 'src\IFoxCAD.ZwCad\GlobalUsings.cs')
+            (Join-Path $repoRoot 'src\IFoxCAD.ZwCad\GlobalUsings.cs'),
+            (Join-Path $repoRoot 'src\IFoxCAD.Gcad\GlobalUsings.cs')
         )
         $latestInput = $inputPaths |
             ForEach-Object { Get-Item -LiteralPath $_ } |
