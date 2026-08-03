@@ -59,13 +59,23 @@
         </None>
     </ItemGroup>
 
-    <!-- ZWCAD 2022 的 NuGet 包内托管 DLL 是 Win32 PE，x64 构建改用 FsLibs 中的 ZRX2022 x64 托管程序集。 -->
+    <!-- ZWCAD 2022 引用策略
+         当 FsLibsDir 可用时使用本地 ZRX2022 x64 托管程序集（自托管构建机），NuGet 包仅版本声明。
+         当 FsLibsDir 不可用时 NuGet 包提供编译时类型（GitHub 托管 runner），运行时由 CAD 宿主提供。 -->
+    <PropertyGroup>
+        <ZwCad2022NuGetExcludeAssets Condition="'$(FsLibsDir)' != ''">compile;runtime</ZwCad2022NuGetExcludeAssets>
+        <ZwCad2022NuGetExcludeAssets Condition="'$(FsLibsDir)' == ''">runtime</ZwCad2022NuGetExcludeAssets>
+    </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="ZWCAD.NetApi" Version="20.22.0" ExcludeAssets="compile;runtime" />
+        <PackageReference Include="ZWCAD.NetApi" Version="20.22.0" ExcludeAssets="$(ZwCad2022NuGetExcludeAssets)" />
         <PackageReference Include="PolySharp" Version="1.16.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <Reference Include="Microsoft.CSharp" />
+    </ItemGroup>
+    <!-- 本地 ZRX2022 x64 SDK 引用：仅在 FsLibsDir 可用时生效 -->
+    <ItemGroup Condition="'$(FsLibsDir)' != ''">
         <Reference Include="ZwDatabaseMgd">
             <HintPath>$(FsLibsDir)SDK\ZRX2022\lib-x64\ZwDatabaseMgd.dll</HintPath>
             <Private>False</Private>
@@ -86,7 +96,6 @@
             <HintPath>$(FsLibsDir)SDK\ZRX2022\lib-x64\ZdWindows.dll</HintPath>
             <Private>False</Private>
         </Reference>
-        <Reference Include="Microsoft.CSharp" />
     </ItemGroup>
     
     <Import Project="..\CADShared\CADShared.projitems" Label="Shared" />

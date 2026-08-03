@@ -44,6 +44,18 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fs.Fox.ZwCad2022", "src\Fs.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fs.Fox.ZwCad2025", "src\Fs.Fox.ZwCad2025\Fs.Fox.ZwCad2025.csproj", "{DA70CC85-EF3A-DCD7-82E8-0F5DD38E3CC3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fs.Fox.Gcad2022", "src\Fs.Fox.Gcad2022\Fs.Fox.Gcad2022.csproj", "{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fs.Fox.Gcad2023", "src\Fs.Fox.Gcad2023\Fs.Fox.Gcad2023.csproj", "{B2C3D4E5-F6A7-8901-BCDE-F12345678901}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fs.Fox.Gcad2026", "src\Fs.Fox.Gcad2026\Fs.Fox.Gcad2026.csproj", "{C3D4E5F6-A7B8-9012-CDEF-123456789012}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestGcad2022", "tests\TestGcad2022\TestGcad2022.csproj", "{D4E5F6A7-B8C9-0123-DEFA-234567890123}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestGcad2023", "tests\TestGcad2023\TestGcad2023.csproj", "{E5F6A7B8-C9D0-1234-EFAB-345678901234}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestGcad2026", "tests\TestGcad2026\TestGcad2026.csproj", "{F6A7B8C9-D0E1-2345-FABC-456789012345}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -82,6 +94,30 @@ Global
 		{DA70CC85-EF3A-DCD7-82E8-0F5DD38E3CC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA70CC85-EF3A-DCD7-82E8-0F5DD38E3CC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA70CC85-EF3A-DCD7-82E8-0F5DD38E3CC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2C3D4E5-F6A7-8901-BCDE-F12345678901}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2C3D4E5-F6A7-8901-BCDE-F12345678901}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2C3D4E5-F6A7-8901-BCDE-F12345678901}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2C3D4E5-F6A7-8901-BCDE-F12345678901}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3D4E5F6-A7B8-9012-CDEF-123456789012}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3D4E5F6-A7B8-9012-CDEF-123456789012}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3D4E5F6-A7B8-9012-CDEF-123456789012}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3D4E5F6-A7B8-9012-CDEF-123456789012}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4E5F6A7-B8C9-0123-DEFA-234567890123}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4E5F6A7-B8C9-0123-DEFA-234567890123}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4E5F6A7-B8C9-0123-DEFA-234567890123}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4E5F6A7-B8C9-0123-DEFA-234567890123}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5F6A7B8-C9D0-1234-EFAB-345678901234}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5F6A7B8-C9D0-1234-EFAB-345678901234}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5F6A7B8-C9D0-1234-EFAB-345678901234}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5F6A7B8-C9D0-1234-EFAB-345678901234}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6A7B8C9-D0E1-2345-FABC-456789012345}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6A7B8C9-D0E1-2345-FABC-456789012345}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6A7B8C9-D0E1-2345-FABC-456789012345}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6A7B8C9-D0E1-2345-FABC-456789012345}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -97,6 +133,12 @@ Global
 		{C7030DC8-24BC-312C-56D2-406D1403D45A} = {AE09C3B7-58AC-4A68-9884-1F93FDA5D785}
 		{5F800223-DBD6-8077-CA61-EC644D6958AA} = {AE09C3B7-58AC-4A68-9884-1F93FDA5D785}
 		{DA70CC85-EF3A-DCD7-82E8-0F5DD38E3CC3} = {AE09C3B7-58AC-4A68-9884-1F93FDA5D785}
+		{A1B2C3D4-E5F6-7890-ABCD-EF1234567890} = {AE09C3B7-58AC-4A68-9884-1F93FDA5D785}
+		{B2C3D4E5-F6A7-8901-BCDE-F12345678901} = {AE09C3B7-58AC-4A68-9884-1F93FDA5D785}
+		{C3D4E5F6-A7B8-9012-CDEF-123456789012} = {AE09C3B7-58AC-4A68-9884-1F93FDA5D785}
+		{D4E5F6A7-B8C9-0123-DEFA-234567890123} = {46F3EDA8-A6D1-4707-8D03-731CADB41A56}
+		{E5F6A7B8-C9D0-1234-EFAB-345678901234} = {46F3EDA8-A6D1-4707-8D03-731CADB41A56}
+		{F6A7B8C9-D0E1-2345-FABC-456789012345} = {46F3EDA8-A6D1-4707-8D03-731CADB41A56}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {57CA0128-08DE-436F-B9F1-82C64F49BF67}
@@ -112,5 +154,11 @@ Global
 		tests\TestShared\TestShared.projitems*{ced63d2d-0af6-4831-806d-5e8e9b0d0a07}*SharedItemsImports = 13
 		src\CADShared\CADShared.projitems*{da70cc85-ef3a-dcd7-82e8-0f5dd38e3cc3}*SharedItemsImports = 5
 		tests\TestShared\TestShared.projitems*{dbec8790-ac05-0884-60ad-84a0a93b4165}*SharedItemsImports = 5
+		src\CADShared\CADShared.projitems*{a1b2c3d4-e5f6-7890-abcd-ef1234567890}*SharedItemsImports = 5
+		src\CADShared\CADShared.projitems*{b2c3d4e5-f6a7-8901-bcde-f12345678901}*SharedItemsImports = 5
+		src\CADShared\CADShared.projitems*{c3d4e5f6-a7b8-9012-cdef-123456789012}*SharedItemsImports = 5
+		tests\TestShared\TestShared.projitems*{d4e5f6a7-b8c9-0123-defa-234567890123}*SharedItemsImports = 5
+		tests\TestShared\TestShared.projitems*{e5f6a7b8-c9d0-1234-efab-345678901234}*SharedItemsImports = 5
+		tests\TestShared\TestShared.projitems*{f6a7b8c9-d0e1-2345-fabc-456789012345}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal

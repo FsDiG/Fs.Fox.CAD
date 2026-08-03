@@ -82,6 +82,7 @@ public class TestExtents
                
                 if (e is Curve spline)
                 {
+#if !GCAD
                     var ge = spline.GetGeCurve();
                     var box = ge.BoundBlock;
                     List<Point3d> lst = 
@@ -96,6 +97,7 @@ public class TestExtents
                         e.ColorIndex = 6;
                         e.Closed = true;
                     }));
+#endif
                 }
                 
             }

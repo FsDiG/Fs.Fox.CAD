@@ -52,6 +52,31 @@ internal static class PInvokeCad
     {
         return ZcdbEntUpd(ref adsName);
     }
+#elif GCAD
+    // GStarCAD native P/Invoke
+    // The GetAdsName/EntGet/EntMod/EntUpd interop is not supported on GStarCAD
+    // because the native entry points and ADS name structures differ per version.
+    // These stubs prevent CS0117 on callers; callers must guard with #if !GCAD.
+    internal static int GetAdsName(ObjectId objectId, out CadAdsName adsName)
+    {
+        adsName = default;
+        return 0;
+    }
+
+    internal static IntPtr EntGet(ref CadAdsName adsName)
+    {
+        return IntPtr.Zero;
+    }
+
+    internal static int EntMod(IntPtr buffer)
+    {
+        return 0;
+    }
+
+    internal static int EntUpd(ref CadAdsName adsName)
+    {
+        return 0;
+    }
 #else
 #if AC_2019
     private const string AcDbModule = "acdb23.dll";

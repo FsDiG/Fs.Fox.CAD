@@ -1,5 +1,5 @@
 namespace Fs.Fox.Cad;
-#if AC_NET48 || ZWCAD
+#if AC_NET48 || ZWCAD || GC_2022 || GC_2023
 using ArgumentNullException = Fs.Fox.Basal.ArgumentNullEx;
 #endif
 using System.Diagnostics;

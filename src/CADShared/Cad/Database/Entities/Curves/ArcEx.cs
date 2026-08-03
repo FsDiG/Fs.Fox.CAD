@@ -40,11 +40,19 @@ public static class ArcEx
         // 创建一个几何类的圆弧对象
         CircularArc3d geArc = new(startPoint, pointOnArc, endPoint);
         // 将几何类圆弧对象的圆心和半径赋值给圆弧
-#if !GCAD
 
+#if !GC_2022 && !GC_2023
         return (Arc)Curve.CreateFromGeCurve(geArc);
 #else
-        return (Arc)geArc.ToCurve();
+        // GStarCAD 2022/2023 不支持 Curve.CreateFromGeCurve，使用圆心半径方式重建
+        Arc arc = new();
+        arc.SetDatabaseDefaults();
+        arc.Center = geArc.Center;
+        arc.Radius = geArc.Radius;
+        arc.Normal = geArc.Normal;
+        arc.StartAngle = geArc.StartAngle;
+        arc.EndAngle = geArc.EndAngle;
+        return arc;
 #endif
     }
 

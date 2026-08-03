@@ -1,5 +1,5 @@
 
-#if AC_NET48 || ZWCAD
+#if AC_NET48 || ZWCAD || GC_2022 || GC_2023
 namespace Fs.Fox.Basal;
 
 /// <summary>
