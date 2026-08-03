@@ -24,12 +24,13 @@ public static class CurveEx
     /// <summary>
     /// 按曲线总长的比例获取点
     /// </summary>
+    /// <remarks>没有有限总长的 <see cref="Ray"/> 和 <see cref="Xline"/> 不受支持。</remarks>
     /// <param name="curve">曲线</param>
     /// <param name="fraction">从起点计算的长度比例，取值范围为闭区间 [0, 1]</param>
     /// <returns>指定长度比例处的点</returns>
     /// <exception cref="ArgumentNullException"><paramref name="curve"/> 为 <see langword="null"/></exception>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="fraction"/> 不是有限数或超出 [0, 1]</exception>
-    /// <exception cref="InvalidOperationException">曲线没有有限且非负的长度范围</exception>
+    /// <exception cref="InvalidOperationException">曲线没有有限总长，参数域不是有限且有序的，或距离范围不是有限、非负且有序的</exception>
     public static Point3d GetPointAtDistanceFraction(this Curve curve, double fraction)
     {
         ArgumentNullException.ThrowIfNull(curve);
