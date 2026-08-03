@@ -226,13 +226,15 @@ Phase 0 的清单和结构决策已经完成。后续每个代码批次必须回
 | --- | --- | --- |
 | `CurveEx` | `GetPointAtDistanceFraction` | 按总长闭区间 `[0, 1]` 取点；修正旧实现忽略输入比例、固定取 `0.5` 的问题，并拒绝无限长度域。 |
 | `CurveEx` | `GetMidpointChordDeviation` | 明确按参数中点计算三维弦偏差，不把结果表述为区间最大误差。 |
-| `CurveEx` | `GetMidpointChordDeviationByDistance` | 明确按沿曲线距离中点计算，避免把距离端点转参数后误用参数中点；`Ray`、`Xline` 及其他没有有限且有序参数或距离范围的曲线明确失败。 |
+| `CurveEx` | `GetMidpointChordDeviationByDistance` | 明确按沿曲线距离中点计算，避免把距离端点转参数后误用参数中点；`Ray` 以基点为距离原点并支持有限非负区间，`Xline` 因没有曲线起点而明确失败。 |
 | `PolylineEx` | `GetVertexData` | 一次取得顶点、bulge、起宽和终宽的独立托管快照，不暴露 `ref` 集合。 |
 | `PolylineEx` | `GetSegmentLength` | 对开放/闭合折线验证真实子段索引；直线返回线长，圆弧返回弧长。 |
 | `PointEx` | `InterpolateTo` | 使用闭区间 `[0, 1]` 的三维线性插值，非法比例抛出明确异常。 |
 | `PointEx` | `TryInterpolateAtElevation` | 只在非水平线段内存在唯一高程点时成功；修正旧实现把结果 Z 固定为 `0` 的错误，不引入隐式容差。 |
 
-批次 1 提供宿主内确定性验收命令 `Test_GeometryQuery`，覆盖直线、半圆、开放/闭合折线和高程插值边界。AC_2019、AC_2025、ZW_2022、ZW_2025、GC_2022、GC_2023、GC_2026 的 Release 库和测试程序集均已通过直接构建，模块、兼容性和 TypeDef 顺序守卫通过；这只是 Build-only 证据，命令尚未在 CAD 中执行，真实宿主状态为 `Not run`。折线按距离/弦偏差采样、点在线段左右关系和范围聚类尚未计入本批完成范围。
+ObjectARX、ZRX 和 GRX 的曲线契约均把 `Ray` 定义为起始参数 `0` 且没有终止参数，把 `Xline` 定义为没有起止参数或起止点。因此三种查询不能共用“必须具有有限总长”这一前置条件：长度比例取点明确拒绝两者；参数中点弦偏差接受有限的 `Ray`/`Xline` 参数区间，其中 `Ray` 参数不得小于 `0`；距离中点弦偏差接受从基点开始的有限非负 `Ray` 距离区间，但拒绝没有距离原点的 `Xline`。这一区分以 SDK 曲线契约为准。
+
+批次 1 提供宿主内确定性验收命令 `Test_GeometryQuery`，覆盖直线、半圆、`Ray`/`Xline` 边界、开放/闭合折线和高程插值边界。AC_2019、AC_2025、ZW_2022、ZW_2025、GC_2022、GC_2023、GC_2026 的 Release 库和测试程序集均已通过直接构建，模块、兼容性和 TypeDef 顺序守卫通过；这只是 Build-only 证据，命令尚未在 CAD 中执行，真实宿主状态为 `Not run`。折线按距离/弦偏差采样、点在线段左右关系和范围聚类尚未计入本批完成范围。
 
 ### Phase 2：点网格索引
 

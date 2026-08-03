@@ -37,11 +37,28 @@ public class TestGeometryQuery
             "Semicircle distance midpoint deviation");
 
         using var ray = new Ray();
-        AssertThrowsInvalidOperation(() => ray.GetMidpointChordDeviationByDistance(0, 1),
-            "Ray distance domain");
+        ray.BasePoint = Point3d.Origin;
+        ray.UnitDir = Vector3d.XAxis;
+        AssertThrowsInvalidOperation(() => ray.GetPointAtDistanceFraction(0.5),
+            "Ray has no finite total length");
+        AssertClose(ray.GetMidpointChordDeviation(0, 1), 0,
+            "Ray parameter midpoint deviation");
+        AssertClose(ray.GetMidpointChordDeviationByDistance(0, 1), 0,
+            "Ray distance midpoint deviation");
+        AssertThrowsArgumentOutOfRange(() => ray.GetMidpointChordDeviation(-1, 1),
+            "Ray parameter range");
+        AssertThrowsArgumentOutOfRange(() => ray.GetMidpointChordDeviationByDistance(-1, 1),
+            "Ray distance range");
+
         using var xline = new Xline();
+        xline.BasePoint = Point3d.Origin;
+        xline.UnitDir = Vector3d.XAxis;
+        AssertThrowsInvalidOperation(() => xline.GetPointAtDistanceFraction(0.5),
+            "Xline has no finite total length");
+        AssertClose(xline.GetMidpointChordDeviation(-1, 1), 0,
+            "Xline parameter midpoint deviation");
         AssertThrowsInvalidOperation(() => xline.GetMidpointChordDeviationByDistance(0, 1),
-            "Xline distance domain");
+            "Xline has no distance origin");
 
         using var polyline = new Polyline();
         polyline.AddVertexAt(0, new Point2d(0, 0), 1, 2, 3);
