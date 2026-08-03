@@ -95,7 +95,7 @@
 | 能力 | 目标位置 | 建议承载类型 | 说明 |
 | --- | --- | --- | --- |
 | 点、向量、坐标和普通几何 | `Cad/Geometry` | 现有 `PointEx`、`VectorEx`、`GeometryEx` | 只补确实缺失且可测试的方法。 |
-| 点邻域/去重网格 | `Cad/Geometry/SpatialIndex/Grid` | `PointGridIndex` 或经评审后的同义名 | 有状态索引用名词类，不叫 `DynamicPointSpatialIndexUtil`。优先稀疏桶，避免旧实现的二维巨型数组。 |
+| 点邻域/去重网格 | `Cad/Geometry/SpatialIndex/Grid` | `PointGridIndex` | 有状态索引用名词类，不叫 `DynamicPointSpatialIndexUtil`。使用无固定 extent 的稀疏桶，避免旧实现的二维巨型数组。 |
 | 曲线查询与拆分 | `Cad/Database/Entities/Curves` | 现有 `CurveEx`，必要时按能力拆文件 | 返回新曲线时必须写明释放责任。 |
 | 折线查询、采样和编辑 | `Cad/Database/Entities/Curves/Polylines` | 现有 `PolylineEx` | 只读查询与原位修改分批，不在一个 PR 混合。 |
 | 面域边界 | `Cad/Database/Entities` | 现有 `RegionEx` | 与 Issue #103/#107 记录的 `ToCurves()` 所有权风险一并设计。 |
@@ -173,7 +173,7 @@
 | `ObjectARX/Others/FormatUtil.cs` | 点/向量文本序列化可能有价值，但旧实现缺少文化区、版本和失败契约。 | 低优先条件候选；先定义 invariant/显示格式和 `TryParse`。 |
 | `ObjectARX/Others/ListUtil.cs` | 唯一有效方法为交换元素，其余为大段历史注释。 | 不迁移。 |
 | `ObjectARX/Others/ViewUtil.cs` | 已由 `EditorEx.Zoom*` 覆盖。 | 复用现有实现。 |
-| `ObjectARX/SpacialIndex/DynamicPointSpatialIndex.cs` | 点去重、邻域、最近点和范围查询有明确通用价值。旧实现存在无效状态、密集二维数组、UI 弹窗和边界错误。 | 高优先候选；重写为稀疏网格索引并补确定性测试。 |
+| `ObjectARX/SpacialIndex/DynamicPointSpatialIndex.cs` | 点去重、邻域、最近点和范围查询有明确通用价值。旧实现存在无效状态、密集二维数组、UI 弹窗和边界错误。 | 已吸收为 `PointGridIndex`：保留稳定索引、近似去重、范围和最近点能力；不保留固定 extent、公开网格行列和两阶段初始化。 |
 | `ObjectARX/SpacialIndex/EntitySpatialIndex.cs` | 实体范围查询有价值，但目标已有 `QuadTree`；旧实现把事务和网格构建耦合。 | 不迁移该类型；仅把可证明的批量建索引需求补到现有空间索引体系。 |
 | `Other/NumberUtil.cs` | 只拆尾部数字；无数字时抛异常但始终声明返回 true。 | 不迁移；真实需求使用明确 `Try*` 契约。 |
 | `Others/ApplicationUtil.cs` | 支持路径读取与现有 `Env` 边界重合。 | 复用现有实现。 |
@@ -243,6 +243,23 @@ Phase 0 的清单和结构决策已经完成。后续每个代码批次必须回
 - XY 容差、Z 容差、格长和边界闭合规则显式；
 - 不依赖 WinForms，不在失败时弹窗；
 - 与 `QuadTree` 做职责对照和基准，不能建立两套等价实体索引。
+
+Phase 2 的目标 API 与边界如下：
+
+| API/成员 | 契约 |
+| --- | --- |
+| 构造函数、`CellSize` | 构造即有效；网格边长必须是有限正数，不设置固定 extent。 |
+| `Add`、索引器、`Points`、`Count` | 无条件添加并返回稳定整数索引；点视图只读，`Clear` 前索引不变化。 |
+| `TryAdd`、`TryFind` | XY 使用欧氏距离闭区间，Z 使用独立闭区间容差；多个候选按三维距离、再按添加顺序决定。 |
+| `QueryIndices` | 查询 XY 矩形闭区间，结果按添加顺序稳定返回，不隐含 Z 过滤。 |
+| `TryGetNearest` | 在有限最大三维距离内查询，并额外应用 Z 差闭区间过滤；失败结果为索引 -1、距离正无穷。 |
+| `Clear` | 同时释放点和稀疏桶引用；之后索引重新从零开始。 |
+
+旧实现的 `Create`、`GetBlockOfPoint`、`GetNeighborPoints`、`GetExtent` 和 `IsIn` 不成为公共 API：无界稀疏索引不需要固定范围，网格桶只是实现细节。`Test_PointGridIndex` 覆盖跨桶去重、Z 分层、负坐标、闭区间范围、最近点并列、退化参数和清空重用；当前仅参加测试程序集编译，CAD 宿主状态为 `Not run`。
+
+Phase 2 的七目标公共契约基线均只新增 `PointGridIndex` 的 16 条记录。以 `migration/zfgk-cad@587e77f` 为基线重新构建并比较 AC_2019、AC_2025、ZW_2022、ZW_2025 实际程序集后，每个目标都只新增一个 TypeDef，所有既有 TypeDef 的相对顺序保持不变；由于 Roslyn 先发射 `Fs.Fox.Cad` 根类型再发射 `Fs.Fox.Cad.Assoc`，新类型位于现有根类型末尾并使其后的 token 顺延一位，这是新增公共根类型的已审查结果，不是既有类型重排。
+
+AC_2019、AC_2025、ZW_2022、ZW_2025、GC_2022、GC_2023、GC_2026 的 Release 库和测试程序集均已通过直接构建，模块期望更新为 `142` 个编译项、`Cad.Geometry = 17`；真实 CAD 宿主状态仍为 `Not run`。
 
 ### Phase 3：曲线/折线修改与 Region
 
