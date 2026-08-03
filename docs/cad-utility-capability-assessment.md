@@ -20,14 +20,14 @@
 
 | 能力 | 最终 API | 归属 | 采用方式 |
 | --- | --- | --- | --- |
-| 临时系统变量 | `SystemVariableScope` | `Cad/Application/SystemVariables` | 捕获原值、设置临时值、`Dispose` 恢复；要求在同一命令和文档上下文内使用。 |
+| 临时系统变量 | `SystemVariableScope` | `Cad/Application/SystemVariables` | 捕获原值、设置临时值、`Dispose` 恢复；捕获创建时的活动文档，并阻止在错误文档中恢复。 |
 | 临时图层解锁 | `LayerUnlockScope` | `Cad/Database/SymbolTables` | 通过明确的 `ObjectId` 或 `Database + layerName` 解锁并恢复锁定状态。 |
 | 动态块参数读取 | `BlockReferenceEx.TryGetBlockProperty` | `Cad/Database/Entities/Blocks` | 与现有 `ChangeBlockProperty` 配对，保留原生 `object` 值，不引入不完整的参数对象体系。 |
 
 ### 2.1 有意缩小的边界
 
 - `LayerUnlockScope` 不处理 `IsFrozen`。冻结状态受当前图层和视口语义约束；通用 `Dispose` 无法保证调用期间图层成为当前图层后仍能无副作用地恢复冻结状态。
-- `SystemVariableScope` 不尝试切换活动文档。系统变量可能是文档级状态，调用方必须让构造与释放发生在同一 CAD 命令和文档上下文中。
+- `SystemVariableScope` 不自动切换活动文档。系统变量可能是文档级状态；释放时若活动文档与创建时不同，将抛出 `InvalidOperationException` 且保持未释放状态，调用方恢复原文档上下文后可以重试。
 - 动态块读取只增加单值 `TryGet`。不迁入字符串化参数模型、读写器接口或只支持非负 `double` 的业务校验。
 
 ## 3. 逐组审查结论
@@ -62,6 +62,15 @@
 兼容性打包仍会报告仓库既有的 `NU5110`、`NU5111` 脚本位置警告，与本轮变更无关。
 
 真实 CAD 宿主为 `Not run`。构建通过只证明托管 API 签名和条件编译在当前 SDK 下成立，不能证明系统变量、图层状态或动态块行为已经通过 AutoCAD/ZWCAD/GstarCAD 真实会话验收。
+
+### 4.1 后续真实宿主人工验收清单
+
+以下步骤记录未来需要执行的行为验收，不作为本次合并门槛。优先在 ZWCAD 2022 执行，再按实际发布需要覆盖 AutoCAD 2020；每次都应记录 CAD 产品、完整版本、编译目标和测试程序集。
+
+1. `SystemVariableScope`：选择可安全恢复的数值型变量，分别验证正常退出、作用域内抛异常和重复 `Dispose` 后均恢复原值，并确认恢复值的运行时类型未改变。
+2. `SystemVariableScope` 多文档保护：在文档 A 创建作用域后切换到文档 B，确认 `Dispose` 抛出 `InvalidOperationException` 且文档 B 的变量未被改写；切回文档 A 后重试并确认恢复成功。
+3. `LayerUnlockScope`：对锁定图层分别通过 `ObjectId` 和 `Database + layerName` 创建作用域，验证正常退出和异常退出均恢复原锁定状态；同时覆盖图层对象已经写打开的嵌套事务场景。
+4. `BlockReferenceEx.TryGetBlockProperty`：使用包含数值和文本参数的动态块，验证精确名称读取、大小写不匹配、非动态块返回值及 SDK 原始值类型。
 
 ## 5. 后续规则
 

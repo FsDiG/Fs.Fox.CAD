@@ -5,14 +5,13 @@ using ArgumentNullException = Fs.Fox.Basal.ArgumentNullEx;
 namespace Fs.Fox.Cad;
 
 /// <summary>
-/// Temporarily unlocks a layer and restores its original lock state when disposed.
+/// 临时解锁图层，并在释放作用域时恢复原锁定状态。
 /// </summary>
 /// <remarks>
-/// This scope deliberately does not thaw a frozen layer. Freeze state has viewport and current-layer
-/// restrictions that cannot be restored reliably by a generic disposal helper.
+/// 本作用域不会解冻被冻结的图层。冻结状态受视口和当前图层约束，通用释放器无法可靠恢复。
 /// <para>
-/// The implementation intentionally uses <c>TransactionManager.StartTransaction()</c> instead of
-/// AutoCAD's <c>StartOpenCloseTransaction()</c>: ZWCAD 2022 does not expose the latter API.
+/// 实现有意使用 <c>TransactionManager.StartTransaction()</c>，而不使用 AutoCAD 的
+/// <c>StartOpenCloseTransaction()</c>：ZWCAD 2022 的 <c>TransactionManager</c> 未暴露后一个 API。
 /// </para>
 /// </remarks>
 public sealed class LayerUnlockScope : IDisposable
@@ -23,16 +22,16 @@ public sealed class LayerUnlockScope : IDisposable
     private bool _disposed;
 
     /// <summary>
-    /// Gets the layer identifier managed by this scope.
+    /// 获取本作用域管理的图层标识。
     /// </summary>
     public ObjectId LayerId => _layerId;
 
     /// <summary>
-    /// Temporarily unlocks the layer identified by <paramref name="layerId"/>.
+    /// 临时解锁 <paramref name="layerId"/> 标识的图层。
     /// </summary>
-    /// <param name="layerId">A valid <see cref="LayerTableRecord"/> identifier.</param>
+    /// <param name="layerId">有效的 <see cref="LayerTableRecord"/> 标识。</param>
     /// <exception cref="ArgumentException">
-    /// <paramref name="layerId"/> is invalid, erased, or does not identify a layer.
+    /// <paramref name="layerId"/> 无效、已删除或不是图层标识。
     /// </exception>
     public LayerUnlockScope(ObjectId layerId)
         : this(GetDatabase(layerId), layerId)
@@ -40,13 +39,13 @@ public sealed class LayerUnlockScope : IDisposable
     }
 
     /// <summary>
-    /// Temporarily unlocks a named layer in the specified database.
+    /// 临时解锁指定数据库中的命名图层。
     /// </summary>
-    /// <param name="database">Database that owns the layer.</param>
-    /// <param name="layerName">Layer name.</param>
-    /// <exception cref="System.ArgumentNullException"><paramref name="database"/> is <see langword="null"/>.</exception>
-    /// <exception cref="ArgumentException"><paramref name="layerName"/> is empty or whitespace.</exception>
-    /// <exception cref="KeyNotFoundException">The database does not contain <paramref name="layerName"/>.</exception>
+    /// <param name="database">图层所属的数据库。</param>
+    /// <param name="layerName">图层名。</param>
+    /// <exception cref="System.ArgumentNullException"><paramref name="database"/> 为 <see langword="null"/>。</exception>
+    /// <exception cref="ArgumentException"><paramref name="layerName"/> 为空或仅包含空白字符。</exception>
+    /// <exception cref="KeyNotFoundException">数据库中不存在 <paramref name="layerName"/>。</exception>
     public LayerUnlockScope(Database database, string layerName)
         : this(database, GetLayerId(database, layerName))
     {
@@ -62,7 +61,7 @@ public sealed class LayerUnlockScope : IDisposable
     private static Database GetDatabase(ObjectId layerId)
     {
         if (layerId.IsNull || !layerId.IsValid || layerId.IsErased || layerId.IsEffectivelyErased)
-            throw new ArgumentException("Layer ObjectId must be valid and non-erased.", nameof(layerId));
+            throw new ArgumentException("图层 ObjectId 必须有效且未被删除。", nameof(layerId));
 
         return layerId.Database;
     }
@@ -72,14 +71,14 @@ public sealed class LayerUnlockScope : IDisposable
         ArgumentNullException.ThrowIfNull(database);
         ArgumentNullException.ThrowIfNull(layerName);
         if (string.IsNullOrWhiteSpace(layerName))
-            throw new ArgumentException("Layer name cannot be empty or whitespace.", nameof(layerName));
+            throw new ArgumentException("图层名不能为空或仅包含空白字符。", nameof(layerName));
 
         using var transaction = StartCompatibleTransaction(database);
         var layerTable = (LayerTable)transaction.GetObject(database.LayerTableId, OpenMode.ForRead);
         if (!layerTable.Has(layerName))
-            throw new KeyNotFoundException($"Layer '{layerName}' does not exist in the specified database.");
+            throw new KeyNotFoundException($"指定数据库中不存在图层“{layerName}”。");
 
-        // This transaction only resolves the stable ObjectId; disposing it without Commit is intentional.
+        // 此事务只用于取得稳定的 ObjectId；有意在不 Commit 的情况下释放。
         return layerTable[layerName];
     }
 
@@ -87,13 +86,14 @@ public sealed class LayerUnlockScope : IDisposable
     {
         using var transaction = StartCompatibleTransaction(_database);
         if (transaction.GetObject(_layerId, OpenMode.ForRead) is not LayerTableRecord layer)
-            throw new ArgumentException("ObjectId does not identify a layer.", nameof(_layerId));
+            throw new ArgumentException("ObjectId 不是图层标识。", "layerId");
 
         var previousState = layer.IsLocked;
         if (previousState != isLocked)
         {
-            layer.UpgradeOpen();
-            layer.IsLocked = isLocked;
+            // 复用仓库的提权作用域，兼容对象已经写打开或处于 Notify 打开状态。
+            using (layer.ForWrite())
+                layer.IsLocked = isLocked;
         }
 
         transaction.Commit();
@@ -102,13 +102,13 @@ public sealed class LayerUnlockScope : IDisposable
 
     private static Transaction StartCompatibleTransaction(Database database)
     {
-        // Keep this as a normal transaction: ZWCAD 2022 has no StartOpenCloseTransaction API.
+        // ZWCAD 2022 的 TransactionManager 未暴露 StartOpenCloseTransaction；这里统一使用普通事务，
+        // 以保持 AutoCAD、ZWCAD 和 GstarCAD 共享源码可编译。
         return database.TransactionManager.StartTransaction();
     }
 
     /// <summary>
-    /// Restores the lock state captured by the constructor. Repeated calls after a successful restore
-    /// have no effect.
+    /// 恢复构造函数捕获的锁定状态；成功恢复后重复调用不会产生影响。
     /// </summary>
     public void Dispose()
     {

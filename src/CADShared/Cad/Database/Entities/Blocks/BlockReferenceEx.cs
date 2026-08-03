@@ -71,30 +71,30 @@ public static class BlockReferenceEx
     #region 属性
 
     /// <summary>
-    /// Tries to read a dynamic block property value.
+    /// 尝试读取动态块参数值。
     /// </summary>
-    /// <param name="blockReference">Dynamic block reference to inspect.</param>
-    /// <param name="propertyName">Property name. Matching is ordinal and case-sensitive.</param>
-    /// <param name="value">Receives the property value when found; otherwise <see langword="null"/>.</param>
+    /// <param name="blockReference">要检查的动态块参照。</param>
+    /// <param name="propertyName">参数名；按序号进行区分大小写的精确匹配。</param>
+    /// <param name="value">找到时接收参数值，否则为 <see langword="null"/>。</param>
     /// <returns>
-    /// <see langword="true"/> when a property with the requested name exists; otherwise
-    /// <see langword="false"/>, including for a non-dynamic block.
+    /// 存在指定名称的参数时返回 <see langword="true"/>；否则返回 <see langword="false"/>，
+    /// 非动态块也返回 <see langword="false"/>。
     /// </returns>
     /// <remarks>
-    /// The value is returned in its SDK runtime type instead of being converted to text so it can be
-    /// inspected or passed back to a block-property write operation without losing type information.
+    /// 返回值保留 CAD SDK 的原始运行时类型，不转换为文本，以便检查该值或将其原样传回块参数写入操作，
+    /// 避免丢失类型信息。
     /// </remarks>
     /// <exception cref="System.ArgumentNullException">
-    /// <paramref name="blockReference"/> or <paramref name="propertyName"/> is <see langword="null"/>.
+    /// <paramref name="blockReference"/> 或 <paramref name="propertyName"/> 为 <see langword="null"/>。
     /// </exception>
-    /// <exception cref="ArgumentException"><paramref name="propertyName"/> is empty or whitespace.</exception>
+    /// <exception cref="ArgumentException"><paramref name="propertyName"/> 为空或仅包含空白字符。</exception>
     public static bool TryGetBlockProperty(this BlockReference blockReference, string propertyName,
         out object? value)
     {
         ArgumentNullException.ThrowIfNull(blockReference);
         ArgumentNullException.ThrowIfNull(propertyName);
         if (string.IsNullOrWhiteSpace(propertyName))
-            throw new ArgumentException("Block property name cannot be empty or whitespace.", nameof(propertyName));
+            throw new ArgumentException("块参数名不能为空或仅包含空白字符。", nameof(propertyName));
 
         value = null;
         if (!blockReference.IsDynamicBlock)
@@ -106,7 +106,7 @@ public static class BlockReferenceEx
             if (!string.Equals(property.PropertyName, propertyName, StringComparison.Ordinal))
                 continue;
 
-            // Dynamic properties can be numeric, textual, or other SDK values; preserve that type.
+            // 动态块参数可能是数值、文本或其他 SDK 值；这里保留其原始类型。
             value = property.Value;
             return true;
         }
