@@ -78,7 +78,6 @@ front matter schema 和自动校验尚未落地。在迁移完成前，本页状
 
 | 状态 | 稳定 ID | 文档 | 当前入口 |
 | --- | --- | --- | --- |
-| `historical` | `plan.zfgk-cad-migration` | [Fs.Zfgk.CAD 有价值能力迁移计划](zfgk-cad-migration-plan.md) | Issue #110 / PR #116 已结束来源迁移；现行行为以 `CurveEx`、`PointEx`、`PolylineEx`、`PointGridIndex` 的源码和 XML 注释为准。长期分支是否进入 `main` 另行评估。 |
 | `historical` | `plan.cad-modules` | [单程序集逻辑模块化执行计划](logical-modularization-plan.md) | 现行入口为[架构说明](关于IFoxCAD的架构说明.md)、根 [`AGENTS.md`](../AGENTS.md)、项目清单和模块基线；本文只追溯 Phase A 快照和实施过程。 |
 | `historical` | `history.upstream-v0.9` | [IFoxCAD v0.9 上游重要变更评估](ifoxcad-v0.9-upstream-merge-analysis.md) | Issue #26 已完成；后续需求重新核对实时上游和当前源码。 |
 
