@@ -90,67 +90,6 @@ public static class PointEx
     }
 
     /// <summary>
-    /// 按比例在两个三维点之间进行线性插值
-    /// </summary>
-    /// <param name="startPoint">起点</param>
-    /// <param name="endPoint">终点</param>
-    /// <param name="fraction">从起点到终点的比例，取值范围为闭区间 [0, 1]</param>
-    /// <returns>插值得到的三维点</returns>
-    /// <exception cref="ArgumentOutOfRangeException"><paramref name="fraction"/> 不是有限数或超出 [0, 1]</exception>
-    public static Point3d InterpolateTo(this Point3d startPoint, Point3d endPoint, double fraction)
-    {
-        if (double.IsNaN(fraction) || double.IsInfinity(fraction) || fraction < 0 || fraction > 1)
-            throw new ArgumentOutOfRangeException(nameof(fraction), fraction, "The fraction must be in [0, 1].");
-
-        var startWeight = 1 - fraction;
-        return new Point3d(
-            startPoint.X * startWeight + endPoint.X * fraction,
-            startPoint.Y * startWeight + endPoint.Y * fraction,
-            startPoint.Z * startWeight + endPoint.Z * fraction);
-    }
-
-    /// <summary>
-    /// 获取三维线段上指定高程处的唯一插值点
-    /// </summary>
-    /// <remarks>
-    /// 线段水平时没有唯一结果；指定高程超出线段 Z 值闭区间时也返回 <see langword="false"/>。
-    /// 本方法不使用隐式容差。
-    /// </remarks>
-    /// <param name="startPoint">线段起点</param>
-    /// <param name="endPoint">线段终点</param>
-    /// <param name="elevation">目标 Z 值</param>
-    /// <param name="point">成功时为目标高程处的点；失败时为默认值</param>
-    /// <returns>存在唯一插值点时返回 <see langword="true"/>，否则返回 <see langword="false"/></returns>
-    public static bool TryInterpolateAtElevation(this Point3d startPoint, Point3d endPoint,
-        double elevation, out Point3d point)
-    {
-        point = default;
-        if (double.IsNaN(elevation) || double.IsInfinity(elevation) ||
-            double.IsNaN(startPoint.Z) || double.IsInfinity(startPoint.Z) ||
-            double.IsNaN(endPoint.Z) || double.IsInfinity(endPoint.Z))
-        {
-            return false;
-        }
-
-        var elevationDelta = endPoint.Z - startPoint.Z;
-        if (elevationDelta == 0 || double.IsInfinity(elevationDelta))
-            return false;
-
-        var fraction = (elevation - startPoint.Z) / elevationDelta;
-        if (double.IsNaN(fraction) || double.IsInfinity(fraction) || fraction < 0 || fraction > 1)
-            return false;
-
-        var startWeight = 1 - fraction;
-        var x = startPoint.X * startWeight + endPoint.X * fraction;
-        var y = startPoint.Y * startWeight + endPoint.Y * fraction;
-        if (double.IsNaN(x) || double.IsInfinity(x) || double.IsNaN(y) || double.IsInfinity(y))
-            return false;
-
-        point = new Point3d(x, y, elevation);
-        return true;
-    }
-
-    /// <summary>
     /// Z值归零
     /// </summary>
     /// <param name="point">点</param>

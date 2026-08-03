@@ -29,7 +29,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)TestEnv.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestExtents.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestFileDatabase.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)TestGeometryQuery.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestHatchinfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestId.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestJig.cs" />
@@ -41,7 +40,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)TestMarshal.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestMirrorFile.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestPoint.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)TestPointGridIndex.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestPointOnRegion.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestProgressMeter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestQuadTree.cs" />
