@@ -90,6 +90,26 @@ public static class PointEx
     }
 
     /// <summary>
+    /// 按比例在两个三维点之间进行线性插值
+    /// </summary>
+    /// <param name="startPoint">起点</param>
+    /// <param name="endPoint">终点</param>
+    /// <param name="fraction">从起点到终点的比例，取值范围为闭区间 [0, 1]</param>
+    /// <returns>插值得到的三维点</returns>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="fraction"/> 不是有限数或超出 [0, 1]</exception>
+    public static Point3d InterpolateTo(this Point3d startPoint, Point3d endPoint, double fraction)
+    {
+        if (double.IsNaN(fraction) || double.IsInfinity(fraction) || fraction < 0 || fraction > 1)
+            throw new ArgumentOutOfRangeException(nameof(fraction), fraction, "The fraction must be in [0, 1].");
+
+        var startWeight = 1 - fraction;
+        return new Point3d(
+            startPoint.X * startWeight + endPoint.X * fraction,
+            startPoint.Y * startWeight + endPoint.Y * fraction,
+            startPoint.Z * startWeight + endPoint.Z * fraction);
+    }
+
+    /// <summary>
     /// Z值归零
     /// </summary>
     /// <param name="point">点</param>

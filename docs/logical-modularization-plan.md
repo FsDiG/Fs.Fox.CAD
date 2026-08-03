@@ -7,7 +7,6 @@
 > 现行入口：[架构说明](关于IFoxCAD的架构说明.md)、[`CADShared.projitems`](../src/CADShared/CADShared.projitems) 和 [`CADSharedModuleBaseline.json`](../Build/CADSharedModuleBaseline.json)。<br>
 > 原始参考：[Issue #18](https://github.com/FsDiG/Fs.Fox.CAD/issues/18)（仅作历史输入，不作为实施规格）<br>
 > 可用性注记：2026-08-01 复核时 GitHub API 已无法解析 Issue #18，因此正文不依赖其内容。<br>
-> 命名参考：[FeiSiDev/Fs.Zfgk.CAD](https://github.com/FeiSiDev/Fs.Zfgk.CAD) @ `c38ce32`（只参考领域词汇，不复制其目录层级）<br>
 > SDK 依据：[AutoCAD 2026 Managed .NET Developer's Guide](https://help.autodesk.com/view/OARX/2026/ENU/?guid=GUID-C3F3C736-40CF-44A0-9210-55F6A939B6F2)（用于校正子系统边界，不采用厂商命名作为公共目录）<br>
 > 跟踪 Issue：[Issue #25](https://github.com/FsDiG/Fs.Fox.CAD/issues/25)（只保存最终决策与实施摘要，不作为现行技术契约）<br>
 > 前序提案：已删除；其过时方案仍可从 Git 历史追溯。<br>
@@ -332,23 +331,6 @@ flowchart LR
 目标中不存在 `Cad.Geometry -> Cad.Database/Application/Editor/UI`、`Cad.Database -> Cad.Application/Editor/Runtime/UI`、`Cad.Editor -> Cad.Application/Runtime/UI` 或 `Platform.Windows -> CAD SDK`。当前 `GeometryEx -> Env`、`DatabaseEx -> DocumentManager/MessageBox`、`EditorEx -> WinForms/native`、Idle 调度对 WinForms Cursor 的依赖等都违反目标方向，只能作为已编号债务保留。
 
 这里的“依赖”指 Fox 模块之间的源码调用，不是仅因方法签名出现一个 SDK 类型就认定依赖另一个 Fox 模块。例如 `Cad.Application` 可以返回 SDK `Editor`，但不应因此调用 `Cad.Editor` 中的高层扩展；守卫最终应以 Roslyn 符号所属的 Fox 源文件判断，而不是简单扫描 Autodesk/ZwSoft namespace。
-
-### 4.6 参考 Fs.Zfgk.CAD 后的命名取舍
-
-`Fs.Zfgk.CAD` 提供了直观领域词汇，但它是 AutoCAD 专属，并存在 `Other/Others/ArxOthers` 等兜底目录。本计划只借鉴可验证的职责表达：
-
-| 参考名称 | 本计划取舍 | 理由 |
-| --- | --- | --- |
-| `Geometry` | 采用 `Cad/Geometry` | 与 AcGe/Managed `Geometry` 数学对象一致，并与 DBObject 生命周期分开。 |
-| `ObjectARX/Entity` | 采用 `Cad/Database/Entities` | 官方层级是 `DBObject -> Entity`；同时支持 ZWCAD，不能采用 `ObjectARX` 厂商根名。 |
-| `ObjectARX/Interaction` | 拆为 `Cad/Editor`、`Cad/Application`、`Cad/UI` | Selection/Jig、Document/Idle、桌面窗口具有不同所有权和依赖方向，不能继续合成一个 Interaction 桶。 |
-| `ObjectARX/SpacialIndex` | 纠正拼写并采用 `Cad/Geometry/SpatialIndex/QuadTree` | 当前 QuadTree 输入是几何矩形，不拥有数据库事务或 ObjectId。 |
-| `ObjectARX/DwgTable` | 不采用；SDK SymbolTable 放入 `Cad/Database/SymbolTables` | 参考仓库的 DwgTable 是绘图表格/单元格渲染，不等于数据库 SymbolTable 类型族。 |
-| `UI` | 采用 `Cad/UI`，但明确排除 EditorInput | Fox 的对话框、Pane、StatusBar、Window 和 Hook 能形成 UI 边界。 |
-| `Other`、`Others`、`ArxOthers` | 不采用 | 无法归属的文件保留在最近的明确所有者根并登记债务，不创建兜底目录。 |
-| `*Util` | 不照搬 | SDK 扩展继续使用 `*Ex`；有状态/生命周期的类使用具体角色名，重命名另走兼容阶段。 |
-
-因此，最终结构既参考 `Fs.Zfgk.CAD` 的领域可发现性，也受 ObjectARX/.NET 的真实层级约束；它不是任一参考仓库或 Autodesk 程序集布局的复制品。
 
 ## 5. Phase A 基线模块清单
 

@@ -24,6 +24,7 @@
 | 状态 | 含义 | 使用规则 |
 | --- | --- | --- |
 | `current` | 当前有效的事实、约定或已接受决策 | 可作为维护依据，仍需核对实时实现。 |
+| `active` | 已批准并正在实施的限时计划 | 只约束声明的分支和范围；完成或取消后转为 `historical`。 |
 | `draft` | 尚未完成或尚未复核 | 不作为覆盖范围或行为清单。 |
 | `proposal` | 已记录但尚未全部批准或实施 | 只能作为讨论输入，不能推断现状。 |
 | `superseded` | 已由另一份文档取代 | 只追溯决策背景，实施时转到取代文档。 |
@@ -57,7 +58,7 @@ front matter schema 和自动校验尚未落地。在迁移完成前，本页状
 | `guide.building` | `current` | [构建与项目结构](../编译说明.md) | maintainer | 正式项目、工具链、条件编译、输出和验证边界。 |
 | `guide.host-acceptance` | `current` | [CAD 真实宿主验收 Runner](../tools/HostAcceptance/README.md) | maintainer | 真实 CAD 验收的目标矩阵、证据契约、安全边界、当前限制和执行入口。 |
 | `reference.zwcad-compatibility` | `current` | [ZWCAD 版本兼容性与迁移说明](ZWCAD-version-compatibility.md) | user, maintainer | ZRXSDK 代际、当前发布策略、Build-only 边界和未验证状态。 |
-| `reference.gstarcad-support-design` | `current` | [GStarCAD 支持扩展设计](superpowers/specs/2026-08-03-gstarcad-support-design.md) | maintainer | 浩辰 CAD 2022/2023/2026 三版本支持架构。 |
+| `reference.gstarcad-support-design` | `current` | [GStarCAD 支持边界](关于IFoxCAD的架构说明.md#gstarcad浩辰cad) | maintainer | 浩辰 CAD 2022/2023/2026 的共享源码和条件编译边界。 |
 | `decision.autocad-2027-net8` | `current` | [AutoCAD 2027 .NET 8 兼容策略](AC_2027-net8-compatibility-decision.md) | maintainer | 预备项目当前使用 .NET 8 的原因、限制和回迁条件。 |
 | `concept.upstream-relationship` | `current` | [上游 IFoxCAD 与 Fs.Fox.CAD 的关系](<../IFoxCAD 说明.md>) | user, maintainer | 项目来源、独立维护边界和问题归属。 |
 | `guide.repository-maintenance` | `current` | [Fs.Fox.CAD 维护说明](../Fs分支说明.md) | maintainer | 命名、远程仓库和上游贡献边界。 |
