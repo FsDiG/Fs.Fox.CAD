@@ -103,7 +103,7 @@
             "flags": 0
           }
         ],
-        "publicApiRecordCount": 2298,
+        "publicApiRecordCount": 2323,
         "publicApi": [
           {
             "type": "Fs.Fox.Basal.ArgumentNullEx",
@@ -382,8 +382,8 @@
           },
           {
             "type": "Fs.Fox.Cad.CurveEx",
-            "recordCount": 31,
-            "contractSha256": "808602652496dd6369b0c200c9d01e262c7d43834bdeffdbb4898ff8b1d20afa"
+            "recordCount": 34,
+            "contractSha256": "a71a48987dc50e58ad55a5da3d91dde0803a539e3bea679e29071ee35f3d40df"
           },
           {
             "type": "Fs.Fox.Cad.DatabaseEx",
@@ -722,8 +722,13 @@
           },
           {
             "type": "Fs.Fox.Cad.PointEx",
-            "recordCount": 22,
-            "contractSha256": "0474742d333a6ba048ac2ac6ee688f00197be90d5e7576ce2eae3ece75de1bfe"
+            "recordCount": 24,
+            "contractSha256": "dcc41ddcb6149ae4a3d4daff0b2007faee124c437633af1c6382862b85c3a4db"
+          },
+          {
+            "type": "Fs.Fox.Cad.PointGridIndex",
+            "recordCount": 16,
+            "contractSha256": "abdb670a86cc02dda5649762e6c49862a536c6d48fb98775f3593fe18274e75b"
           },
           {
             "type": "Fs.Fox.Cad.PointOnRegionType",
@@ -732,8 +737,8 @@
           },
           {
             "type": "Fs.Fox.Cad.PolylineEx",
-            "recordCount": 9,
-            "contractSha256": "e129eeb7832d061e4ea1eda94b82884ca132d52723279d975c9d81a113fbd2d7"
+            "recordCount": 13,
+            "contractSha256": "00cc5345442f1b0866de9f7edab924a818779c172d112fb98eba3c43905e0cd3"
           },
           {
             "type": "Fs.Fox.Cad.PostCmd",
@@ -1004,9 +1009,9 @@
           },
           {
             "path": "lib/net48/Fs.Fox.AutoCad.xml",
-            "length": 490259,
+            "length": 505449,
             "hashKind": "canonical-xml-v1",
-            "contentSha256": "36e5b2e9e09b7e16204a1f14bcfe49d90702e427e16cd6302d6418e86531c518",
+            "contentSha256": "03e529ecc750de7d4994232abba6a65d3ccc1344b8db13f037994188a7e00347",
             "binarySource": null
           },
           {
@@ -1212,7 +1217,7 @@
             "flags": 0
           }
         ],
-        "publicApiRecordCount": 2296,
+        "publicApiRecordCount": 2321,
         "publicApi": [
           {
             "type": "Fs.Fox.Basal.ArrayEx",
@@ -1486,8 +1491,8 @@
           },
           {
             "type": "Fs.Fox.Cad.CurveEx",
-            "recordCount": 31,
-            "contractSha256": "c519ffa156d4728f44a97369e058a68b40e0ba552997df87cd9d446fc9b97c2c"
+            "recordCount": 34,
+            "contractSha256": "0994521d70817ce2572d33ad54c70c54fa0f9426dee34f3c034d0cc1a3e2f198"
           },
           {
             "type": "Fs.Fox.Cad.DatabaseEx",
@@ -1826,8 +1831,13 @@
           },
           {
             "type": "Fs.Fox.Cad.PointEx",
-            "recordCount": 22,
-            "contractSha256": "8a19c2ca319e98a3d074d2e83dbcbc944a6f291744f008fbeb5f306b6294ecaa"
+            "recordCount": 24,
+            "contractSha256": "230d7251a6cd2ce982cf485d63d333e82adc382250d79ef96a72da19ae56f068"
+          },
+          {
+            "type": "Fs.Fox.Cad.PointGridIndex",
+            "recordCount": 16,
+            "contractSha256": "3e85db78ce222e86bf120744e3e1260cec6c9db313fafd6e344768062e41fd1a"
           },
           {
             "type": "Fs.Fox.Cad.PointOnRegionType",
@@ -1836,8 +1846,8 @@
           },
           {
             "type": "Fs.Fox.Cad.PolylineEx",
-            "recordCount": 9,
-            "contractSha256": "4430d7ea55289925fc1b82f97752ae3f864cde94ca85f25068e6b682777d5585"
+            "recordCount": 13,
+            "contractSha256": "bf54a8410636de6e55adf3ca3c8b57f509944c5a5c12e01a89985245f993691e"
           },
           {
             "type": "Fs.Fox.Cad.PostCmd",
@@ -2122,9 +2132,9 @@
           },
           {
             "path": "lib/net8.0-windows7.0/Fs.Fox.AutoCad.xml",
-            "length": 454532,
+            "length": 469725,
             "hashKind": "canonical-xml-v1",
-            "contentSha256": "aa68fd8bb0daf214b90c22a556f2a13cbd863f15975938ae9f7005e1c605520c",
+            "contentSha256": "2f2e782c159e36bfa06ace8123edff8a3f5f01322d0173a6cbca84417768d6ca",
             "binarySource": null
           },
           {
@@ -2246,7 +2256,7 @@
             "flags": 0
           }
         ],
-        "publicApiRecordCount": 2275,
+        "publicApiRecordCount": 2300,
         "publicApi": [
           {
             "type": "Fs.Fox.Basal.ArgumentNullEx",
@@ -2520,8 +2530,8 @@
           },
           {
             "type": "Fs.Fox.Cad.CurveEx",
-            "recordCount": 31,
-            "contractSha256": "fea592d09e7b86c7dea633fbe6a44bfbf71eec0630f82206fb707cb03743e838"
+            "recordCount": 34,
+            "contractSha256": "25c1f8cc9aa458138ad9573f3b35d5e37ebad8478681d741946da05fd0d0c7a0"
           },
           {
             "type": "Fs.Fox.Cad.DatabaseEx",
@@ -2855,8 +2865,13 @@
           },
           {
             "type": "Fs.Fox.Cad.PointEx",
-            "recordCount": 22,
-            "contractSha256": "8f7b20d4748f03a49aec486fde1d33e86c4619de841ea5e8284627f3d6769f93"
+            "recordCount": 24,
+            "contractSha256": "09c2fc5cef4edc22b2c0a8697d360f57f24f5a0609b09d6276fe8ad92e1ad68c"
+          },
+          {
+            "type": "Fs.Fox.Cad.PointGridIndex",
+            "recordCount": 16,
+            "contractSha256": "da8ca6094bd23590682e7997d177f0c353a591c72171c9012d935e2a881f0e72"
           },
           {
             "type": "Fs.Fox.Cad.PointOnRegionType",
@@ -2865,8 +2880,8 @@
           },
           {
             "type": "Fs.Fox.Cad.PolylineEx",
-            "recordCount": 9,
-            "contractSha256": "c1be91bbcb040a8bf88c570793631cf1c2eff04866472a4f89a882715a6a1b82"
+            "recordCount": 13,
+            "contractSha256": "6e7d6fd1ee52127f1eefc42174a9aec957f169829fc5dec97e6a11827f721bfe"
           },
           {
             "type": "Fs.Fox.Cad.PostCmd",
@@ -3123,9 +3138,9 @@
           },
           {
             "path": "lib/net48/Fs.Fox.ZwCad.xml",
-            "length": 481181,
+            "length": 496275,
             "hashKind": "canonical-xml-v1",
-            "contentSha256": "227da6292324b41e087ff2ecba86c571afe92480aa755994322874a9c675cfc4",
+            "contentSha256": "40a58ae432991e82cad82fa40edc043c17169a5426fe9c639fa364d1b4b32189",
             "binarySource": null
           },
           {
@@ -3247,7 +3262,7 @@
             "flags": 0
           }
         ],
-        "publicApiRecordCount": 2278,
+        "publicApiRecordCount": 2303,
         "publicApi": [
           {
             "type": "Fs.Fox.Basal.ArgumentNullEx",
@@ -3521,8 +3536,8 @@
           },
           {
             "type": "Fs.Fox.Cad.CurveEx",
-            "recordCount": 31,
-            "contractSha256": "fea592d09e7b86c7dea633fbe6a44bfbf71eec0630f82206fb707cb03743e838"
+            "recordCount": 34,
+            "contractSha256": "25c1f8cc9aa458138ad9573f3b35d5e37ebad8478681d741946da05fd0d0c7a0"
           },
           {
             "type": "Fs.Fox.Cad.DatabaseEx",
@@ -3856,8 +3871,13 @@
           },
           {
             "type": "Fs.Fox.Cad.PointEx",
-            "recordCount": 22,
-            "contractSha256": "8f7b20d4748f03a49aec486fde1d33e86c4619de841ea5e8284627f3d6769f93"
+            "recordCount": 24,
+            "contractSha256": "09c2fc5cef4edc22b2c0a8697d360f57f24f5a0609b09d6276fe8ad92e1ad68c"
+          },
+          {
+            "type": "Fs.Fox.Cad.PointGridIndex",
+            "recordCount": 16,
+            "contractSha256": "da8ca6094bd23590682e7997d177f0c353a591c72171c9012d935e2a881f0e72"
           },
           {
             "type": "Fs.Fox.Cad.PointOnRegionType",
@@ -3866,8 +3886,8 @@
           },
           {
             "type": "Fs.Fox.Cad.PolylineEx",
-            "recordCount": 9,
-            "contractSha256": "c1be91bbcb040a8bf88c570793631cf1c2eff04866472a4f89a882715a6a1b82"
+            "recordCount": 13,
+            "contractSha256": "6e7d6fd1ee52127f1eefc42174a9aec957f169829fc5dec97e6a11827f721bfe"
           },
           {
             "type": "Fs.Fox.Cad.PostCmd",
@@ -4124,9 +4144,9 @@
           },
           {
             "path": "lib/net48/Fs.Fox.ZwCad.xml",
-            "length": 482570,
+            "length": 497664,
             "hashKind": "canonical-xml-v1",
-            "contentSha256": "526f11c0944505de2c5b5380e27ba7c2b9334303d04cc990d78c86ec60da54f0",
+            "contentSha256": "27e4ad03c07e32bde7448b7fb2f8343d5336ee437f111651f92e96c7f49339ae",
             "binarySource": null
           },
           {
@@ -4248,7 +4268,7 @@
             "flags": 0
           }
         ],
-        "publicApiRecordCount": 2262,
+        "publicApiRecordCount": 2287,
         "publicApi": [
           {
             "type": "Fs.Fox.Basal.ArgumentNullEx",
@@ -4517,8 +4537,8 @@
           },
           {
             "type": "Fs.Fox.Cad.CurveEx",
-            "recordCount": 30,
-            "contractSha256": "6d5c160bf0bfcd354bb13e5e5383a20d0f1b4fb96cff140009762fc0ded14777"
+            "recordCount": 33,
+            "contractSha256": "9d63ec03e1ef6dabc845d8a8342427598c4b8de648cbcf44c68b0685c46e73d8"
           },
           {
             "type": "Fs.Fox.Cad.DatabaseEx",
@@ -4847,8 +4867,13 @@
           },
           {
             "type": "Fs.Fox.Cad.PointEx",
-            "recordCount": 22,
-            "contractSha256": "28ef136750a626537da612c66624190927725e1d6b1d78c2223b5389e9da7fdb"
+            "recordCount": 24,
+            "contractSha256": "75646268c6496a2dd5a4967e254ea0a9da100d2ea297f0fe0a3e7685ed584f3c"
+          },
+          {
+            "type": "Fs.Fox.Cad.PointGridIndex",
+            "recordCount": 16,
+            "contractSha256": "3aee8a41291f7cefe8bc8f4ade30c5f14fe435aaae57beba5f30db11a8d4fabc"
           },
           {
             "type": "Fs.Fox.Cad.PointOnRegionType",
@@ -4857,8 +4882,8 @@
           },
           {
             "type": "Fs.Fox.Cad.PolylineEx",
-            "recordCount": 9,
-            "contractSha256": "c48bfdefb465abe0538f6a47fcb2c38a6d1dabfd08471dae9cf0b586d93790a5"
+            "recordCount": 13,
+            "contractSha256": "eeaeb70247b5e87bcc56c0d3d839bdd8771091e4d65242b7d4c9548378404d35"
           },
           {
             "type": "Fs.Fox.Cad.PostCmd",
@@ -5115,9 +5140,9 @@
           },
           {
             "path": "lib/net48/Fs.Fox.Gcad.xml",
-            "length": 474999,
+            "length": 489949,
             "hashKind": "canonical-xml-v1",
-            "contentSha256": "e09d49eab2c4e72d65785eaa9b0b30f2a01329fd6365949d46614cdde48c8d4d",
+            "contentSha256": "74840fab8fb8405d0c28eefc64a96f2295531c726b24326d179bcbf6ee040cf2",
             "binarySource": null
           },
           {
@@ -5239,7 +5264,7 @@
             "flags": 0
           }
         ],
-        "publicApiRecordCount": 2262,
+        "publicApiRecordCount": 2287,
         "publicApi": [
           {
             "type": "Fs.Fox.Basal.ArgumentNullEx",
@@ -5508,8 +5533,8 @@
           },
           {
             "type": "Fs.Fox.Cad.CurveEx",
-            "recordCount": 30,
-            "contractSha256": "6d5c160bf0bfcd354bb13e5e5383a20d0f1b4fb96cff140009762fc0ded14777"
+            "recordCount": 33,
+            "contractSha256": "9d63ec03e1ef6dabc845d8a8342427598c4b8de648cbcf44c68b0685c46e73d8"
           },
           {
             "type": "Fs.Fox.Cad.DatabaseEx",
@@ -5838,8 +5863,13 @@
           },
           {
             "type": "Fs.Fox.Cad.PointEx",
-            "recordCount": 22,
-            "contractSha256": "28ef136750a626537da612c66624190927725e1d6b1d78c2223b5389e9da7fdb"
+            "recordCount": 24,
+            "contractSha256": "75646268c6496a2dd5a4967e254ea0a9da100d2ea297f0fe0a3e7685ed584f3c"
+          },
+          {
+            "type": "Fs.Fox.Cad.PointGridIndex",
+            "recordCount": 16,
+            "contractSha256": "3aee8a41291f7cefe8bc8f4ade30c5f14fe435aaae57beba5f30db11a8d4fabc"
           },
           {
             "type": "Fs.Fox.Cad.PointOnRegionType",
@@ -5848,8 +5878,8 @@
           },
           {
             "type": "Fs.Fox.Cad.PolylineEx",
-            "recordCount": 9,
-            "contractSha256": "c48bfdefb465abe0538f6a47fcb2c38a6d1dabfd08471dae9cf0b586d93790a5"
+            "recordCount": 13,
+            "contractSha256": "eeaeb70247b5e87bcc56c0d3d839bdd8771091e4d65242b7d4c9548378404d35"
           },
           {
             "type": "Fs.Fox.Cad.PostCmd",
@@ -6106,9 +6136,9 @@
           },
           {
             "path": "lib/net48/Fs.Fox.Gcad.xml",
-            "length": 474999,
+            "length": 489949,
             "hashKind": "canonical-xml-v1",
-            "contentSha256": "e09d49eab2c4e72d65785eaa9b0b30f2a01329fd6365949d46614cdde48c8d4d",
+            "contentSha256": "74840fab8fb8405d0c28eefc64a96f2295531c726b24326d179bcbf6ee040cf2",
             "binarySource": null
           },
           {
@@ -6314,7 +6344,7 @@
             "flags": 0
           }
         ],
-        "publicApiRecordCount": 2285,
+        "publicApiRecordCount": 2310,
         "publicApi": [
           {
             "type": "Fs.Fox.Basal.ArrayEx",
@@ -6583,8 +6613,8 @@
           },
           {
             "type": "Fs.Fox.Cad.CurveEx",
-            "recordCount": 31,
-            "contractSha256": "df1ae8119f6186c84bd33e84bd8e16f25edb0c710479b992ee16fd71c78433fe"
+            "recordCount": 34,
+            "contractSha256": "2f619d24c6db81e053feddb3febad16a5e5410f2cd5c565e5f0933d16f122c6a"
           },
           {
             "type": "Fs.Fox.Cad.DatabaseEx",
@@ -6918,8 +6948,13 @@
           },
           {
             "type": "Fs.Fox.Cad.PointEx",
-            "recordCount": 22,
-            "contractSha256": "9e1b41b7eed67f45012f34c154651b998be06bdf040aade17e826cc1000d0d9a"
+            "recordCount": 24,
+            "contractSha256": "42e375a21d084aa3234fe082a46821b8c0048244cc5a18137545c0da548b0f6c"
+          },
+          {
+            "type": "Fs.Fox.Cad.PointGridIndex",
+            "recordCount": 16,
+            "contractSha256": "93aef070ce5b16001c223c9fe81df881b4f87c84cef424d9bcc3a087ffaae4bf"
           },
           {
             "type": "Fs.Fox.Cad.PointOnRegionType",
@@ -6928,8 +6963,8 @@
           },
           {
             "type": "Fs.Fox.Cad.PolylineEx",
-            "recordCount": 9,
-            "contractSha256": "39e39ba8d4bcecca31a90851b7ad90e40175daa0fe3c73127848691d14c19486"
+            "recordCount": 13,
+            "contractSha256": "3fec2b6a65add9eec32c2c7551b50f8099da710eef0fe1dab1bce22a13374a5e"
           },
           {
             "type": "Fs.Fox.Cad.PostCmd",
@@ -7200,9 +7235,9 @@
           },
           {
             "path": "lib/net8.0-windows7.0/Fs.Fox.Gcad.xml",
-            "length": 448266,
+            "length": 463363,
             "hashKind": "canonical-xml-v1",
-            "contentSha256": "b3e04ac7ed213be3d65db0a92049f27c6df386f6c946a1dd7a303df433204bca",
+            "contentSha256": "677fd4b7326d9c144c7f12cf56e1bd2c5712f60f32b06bdf1c338420fc7c9581",
             "binarySource": null
           },
           {
