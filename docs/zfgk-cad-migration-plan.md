@@ -226,7 +226,7 @@ Phase 0 的清单和结构决策已经完成。后续每个代码批次必须回
 | --- | --- | --- |
 | `CurveEx` | `GetPointAtDistanceFraction` | 按总长闭区间 `[0, 1]` 取点；修正旧实现忽略输入比例、固定取 `0.5` 的问题，并拒绝无限长度域。 |
 | `CurveEx` | `GetMidpointChordDeviation` | 明确按参数中点计算三维弦偏差，不把结果表述为区间最大误差。 |
-| `CurveEx` | `GetMidpointChordDeviationByDistance` | 明确按沿曲线距离中点计算，避免把距离端点转参数后误用参数中点；曲线本身没有有限且有序的参数或距离范围时明确失败。 |
+| `CurveEx` | `GetMidpointChordDeviationByDistance` | 明确按沿曲线距离中点计算，避免把距离端点转参数后误用参数中点；`Ray`、`Xline` 及其他没有有限且有序参数或距离范围的曲线明确失败。 |
 | `PolylineEx` | `GetVertexData` | 一次取得顶点、bulge、起宽和终宽的独立托管快照，不暴露 `ref` 集合。 |
 | `PolylineEx` | `GetSegmentLength` | 对开放/闭合折线验证真实子段索引；直线返回线长，圆弧返回弧长。 |
 | `PointEx` | `InterpolateTo` | 使用闭区间 `[0, 1]` 的三维线性插值，非法比例抛出明确异常。 |
