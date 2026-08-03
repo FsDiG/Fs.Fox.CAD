@@ -98,5 +98,14 @@ jobs:
           # ZWCAD2025 - MSBuild (.NET Framework)
           Build-MSBuild "tests/TestZcad2025/TestZcad2025.csproj" "ZW_2025"
 
+          # GStarCAD 2022 - MSBuild (.NET Framework 4.8)
+          Build-MSBuild "tests/TestGcad2022/TestGcad2022.csproj" "GC_2022"
+
+          # GStarCAD 2023 - MSBuild (.NET Framework 4.8)
+          Build-MSBuild "tests/TestGcad2023/TestGcad2023.csproj" "GC_2023"
+
+          # GStarCAD 2026 - dotnet CLI (.NET 8)
+          Build-DotNet "tests/TestGcad2026/TestGcad2026.csproj" "GC_2026"
+
       - name: Verify CADShared compatibility baseline
         run: pwsh -NoProfile -File Build/Verify-CADSharedCompatibility.ps1
