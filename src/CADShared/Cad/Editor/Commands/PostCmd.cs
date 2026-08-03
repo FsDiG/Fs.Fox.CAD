@@ -115,6 +115,8 @@ public class PostCmd
         object[] commandArray = [args + "\n"];
 #if ZWCAD
         var com = CadApp.ZcadApplication;
+#elif GCAD
+        var com = CadApp.GcadApplication;
 #else
         var com = CadApp.AcadApplication;
 #endif
