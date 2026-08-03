@@ -1,0 +1,68 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFrameworks>net8.0-windows7.0</TargetFrameworks>
+        <GCADVersion>2026</GCADVersion>
+        <AssemblyName>Fs.Fox.Gcad</AssemblyName>
+        <EnableDynamicLoading>true</EnableDynamicLoading>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    </PropertyGroup>
+
+    <!--nuget package-->
+    <PropertyGroup>
+        <PackageId>IFox.CAD.GCAD2026</PackageId>
+        <Title>Fs.Fox.CAD for GStarCAD 2026</Title>
+        <Product>IFox.CAD.GCAD2026</Product>
+        <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+        <Description>面向 GStarCAD 2026 x64 API 代际和 .NET 8 的 CAD 二次开发基础类库。源于 IFoxCAD，由 Fs 团队维护。</Description>
+        <Copyright>FS Team</Copyright>
+        <PackageReleaseNotes>新增浩辰CAD 2026支持</PackageReleaseNotes>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <DebugType>none</DebugType>
+        <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+        <OutputPath>..\..\Build\GC_$(GCADVersion)_$(Configuration)\</OutputPath>
+        <DocumentationFile>..\..\Build\GC_$(GCADVersion)_$(Configuration)\Fs.Fox.Gcad.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+        <DebugType>none</DebugType>
+        <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+        <OutputPath>..\..\Build\GC_$(GCADVersion)_$(Configuration)\</OutputPath>
+        <DocumentationFile>..\..\Build\GC_$(GCADVersion)_$(Configuration)\Fs.Fox.Gcad.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <!-- 条件编译符号 -->
+    <PropertyGroup>
+        <DefineConstants>$(Configuration);GCAD;GC_2026</DefineConstants>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Compile Include="..\..\src\IFoxCAD.Gcad\GlobalUsings.cs">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </Compile>
+        <None Include="..\..\LICENSE">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+        <None Include="..\..\readme.md">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+        <None Include="..\..\Build\GC_$(GCADVersion)_$(Configuration)\TestGcad2026.dll" Condition="Exists('..\..\Build\GC_$(GCADVersion)_$(Configuration)\TestGcad2026.dll')">
+            <Pack>True</Pack>
+            <PackagePath>lib\net8.0-windows7.0\</PackagePath>
+        </None>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="GStarCad.Net" Version="20.26.0" ExcludeAssets="runtime" />
+        <PackageReference Include="PolySharp" Version="1.15.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <Import Project="..\CADShared\CADShared.projitems" Label="Shared" />
+</Project>
