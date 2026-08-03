@@ -15,6 +15,7 @@
 - `main` 承载正常功能、修复、发布和文档治理，相关工作使用从最新 `main` 建立的短期分支和 PR。
 - Issue #25 的 `CADShared` 单程序集逻辑模块化已由 PR #100 合入 `main`；`refactor/cad-modules` 仅作为历史实施分支，不再作为新 PR 的 base。
 - 后续模块边界调整从最新 `main` 建立短期分支，并通过独立 Issue/PR 说明收益、兼容性边界和验收证据。
+- Issue #110 的 `Fs.Zfgk.CAD` 能力迁移已在 `migration/zfgk-cad` 收口；不再从来源仓库建立新迁移批次。该长期分支与 `main` 保持隔离，最终集成必须另行同步、审查并取得明确批准。
 - 不在逻辑模块化的机械移动中夹带行为修改、公共 API 修改、全文件格式化或无关文档重写。
 - 文档治理与发布能力由 Issue #48 跟踪；`Fs.Fox.CAD` 保持唯一产品内容源，已创建的展示/部署仓库及其边界见 [EdgeOne 站点仓库评估](docs/edgeone-site-repository-evaluation.md)和 [Fs.Fox.CAD.Site](https://github.com/FeiSiPub/Fs.Fox.CAD.Site)。站点框架尚未确定，不要在本仓库提前引入框架专用目录或生成产物。
 

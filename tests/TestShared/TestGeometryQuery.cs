@@ -77,13 +77,75 @@ public class TestGeometryQuery
         AssertClose(polyline.GetSegmentLength(1), 10, "Line segment length");
         AssertThrowsArgumentOutOfRange(() => polyline.GetSegmentLength(2), "Open polyline segment range");
 
+        var distanceSamples = polyline.GetSamplePointsByDistance(6);
+        AssertTrue(distanceSamples.Count == 6, "Distance sampling count");
+        AssertPoint(distanceSamples[0], polyline.GetPoint3dAt(0), "Distance sampling start vertex");
+        AssertPoint(distanceSamples[3], polyline.GetPoint3dAt(1), "Distance sampling preserved arc vertex");
+        AssertPoint(distanceSamples[5], polyline.GetPoint3dAt(2), "Distance sampling end vertex");
+        for (var index = 1; index < distanceSamples.Count; index++)
+        {
+            AssertTrue(distanceSamples[index - 1].DistanceTo(distanceSamples[index]) <= 6 + Tolerance,
+                "Distance sampling maximum spacing");
+        }
+
+        var chordSamples = polyline.GetSamplePointsByChordDeviation(1.5);
+        AssertTrue(chordSamples.Count == 4, "Chord deviation sampling count");
+        AssertPoint(chordSamples[0], polyline.GetPoint3dAt(0), "Chord sampling start vertex");
+        AssertPoint(chordSamples[2], polyline.GetPoint3dAt(1), "Chord sampling preserved arc vertex");
+        AssertPoint(chordSamples[3], polyline.GetPoint3dAt(2), "Chord sampling end vertex");
+        AssertClose(chordSamples[1].DistanceTo(new Point3d(5, 0, 0)), 5,
+            "Semicircle chord sampling midpoint deviation");
+        AssertClose(polyline.GetBulgeAt(0), 1, "Sampling leaves bulge unchanged");
+        AssertClose(polyline.GetStartWidthAt(0), 2, "Sampling leaves start width unchanged");
+        AssertClose(polyline.GetEndWidthAt(0), 3, "Sampling leaves end width unchanged");
+
+        AssertThrowsArgumentOutOfRange(() => polyline.GetSamplePointsByDistance(0),
+            "Distance sampling positive threshold");
+        AssertThrowsArgumentOutOfRange(() => polyline.GetSamplePointsByDistance(double.NaN),
+            "Distance sampling finite threshold");
+        AssertThrowsArgumentOutOfRange(() => polyline.GetSamplePointsByChordDeviation(double.PositiveInfinity),
+            "Chord sampling finite threshold");
+        AssertThrowsInvalidOperation(() => polyline.GetSamplePointsByDistance(double.Epsilon),
+            "Distance sampling representable count");
+        AssertThrowsInvalidOperation(() => polyline.GetSamplePointsByChordDeviation(double.Epsilon),
+            "Chord sampling representable count");
+        AssertThrowsInvalidOperation(() => polyline.GetSamplePointsByDistance(1e-6),
+            "Distance sampling total point limit");
+        AssertThrowsInvalidOperation(() => polyline.GetSamplePointsByChordDeviation(1e-12),
+            "Chord sampling total point limit");
+
         polyline.Closed = true;
         AssertClose(polyline.GetSegmentLength(2), Math.Sqrt(200), "Closing segment length");
+        var closedSamples = polyline.GetSamplePointsByDistance(100);
+        AssertTrue(closedSamples.Count == 4, "Closed sampling count");
+        AssertPoint(closedSamples[0], closedSamples[closedSamples.Count - 1],
+            "Closed sampling repeats first vertex");
+
+        using var orientedPolyline = new Polyline
+        {
+            Elevation = 7,
+            Normal = Vector3d.YAxis
+        };
+        orientedPolyline.AddVertexAt(0, Point2d.Origin, 0, 0, 0);
+        orientedPolyline.AddVertexAt(1, new Point2d(10, 0), 0, 0, 0);
+        var orientedSamples = orientedPolyline.GetSamplePointsByDistance(4);
+        AssertPoint(orientedSamples[0], orientedPolyline.GetPoint3dAt(0),
+            "Oriented sampling preserves start point");
+        AssertPoint(orientedSamples[orientedSamples.Count - 1], orientedPolyline.GetPoint3dAt(1),
+            "Oriented sampling preserves end point");
 
         using var degeneratePolyline = new Polyline { Closed = true };
         degeneratePolyline.AddVertexAt(0, Point2d.Origin, 0, 0, 0);
         AssertThrowsArgumentOutOfRange(() => degeneratePolyline.GetSegmentLength(0),
             "Degenerate closed polyline segment range");
+        AssertTrue(degeneratePolyline.GetSamplePointsByDistance(1).Count == 1,
+            "Degenerate distance sampling");
+        AssertTrue(degeneratePolyline.GetSamplePointsByChordDeviation(1).Count == 1,
+            "Degenerate chord sampling");
+
+        using var emptyPolyline = new Polyline();
+        AssertTrue(emptyPolyline.GetSamplePointsByDistance(1).Count == 0, "Empty distance sampling");
+        AssertTrue(emptyPolyline.GetSamplePointsByChordDeviation(1).Count == 0, "Empty chord sampling");
 
         Env.Printl("Test_GeometryQuery passed.");
     }
