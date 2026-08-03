@@ -21,6 +21,117 @@ public static class CurveEx
         return curve.GetDistanceAtParameter(curve.EndParam);
     }
 
+    /// <summary>
+    /// 按曲线总长的比例获取点
+    /// </summary>
+    /// <param name="curve">曲线</param>
+    /// <param name="fraction">从起点计算的长度比例，取值范围为闭区间 [0, 1]</param>
+    /// <returns>指定长度比例处的点</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="curve"/> 为 <see langword="null"/></exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="fraction"/> 不是有限数或超出 [0, 1]</exception>
+    /// <exception cref="InvalidOperationException">曲线没有有限且非负的长度范围</exception>
+    public static Point3d GetPointAtDistanceFraction(this Curve curve, double fraction)
+    {
+        ArgumentNullException.ThrowIfNull(curve);
+        if (double.IsNaN(fraction) || double.IsInfinity(fraction) || fraction < 0 || fraction > 1)
+            throw new ArgumentOutOfRangeException(nameof(fraction), fraction, "The fraction must be in [0, 1].");
+
+        var startParameter = curve.StartParam;
+        var endParameter = curve.EndParam;
+        if (double.IsNaN(startParameter) || double.IsInfinity(startParameter) ||
+            double.IsNaN(endParameter) || double.IsInfinity(endParameter))
+        {
+            throw new InvalidOperationException("The curve does not have a finite parameter range.");
+        }
+
+        var startDistance = curve.GetDistanceAtParameter(startParameter);
+        var endDistance = curve.GetDistanceAtParameter(endParameter);
+        if (double.IsNaN(startDistance) || double.IsInfinity(startDistance) ||
+            double.IsNaN(endDistance) || double.IsInfinity(endDistance) ||
+            endDistance < startDistance)
+        {
+            throw new InvalidOperationException("The curve does not have a finite, non-negative distance range.");
+        }
+
+        if (fraction == 0)
+            return curve.StartPoint;
+        if (fraction == 1)
+            return curve.EndPoint;
+        if (endDistance == startDistance)
+            return curve.StartPoint;
+
+        var distance = startDistance * (1 - fraction) + endDistance * fraction;
+        return curve.GetPointAtDist(distance);
+    }
+
+    /// <summary>
+    /// 计算参数区间中点处的弦偏差
+    /// </summary>
+    /// <remarks>
+    /// 返回曲线参数中点与区间端点弦中点之间的三维距离；该值不是区间内的最大偏差。
+    /// </remarks>
+    /// <param name="curve">曲线</param>
+    /// <param name="startParameter">区间起始参数</param>
+    /// <param name="endParameter">区间结束参数，必须大于或等于起始参数</param>
+    /// <returns>参数中点处的弦偏差</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="curve"/> 为 <see langword="null"/></exception>
+    /// <exception cref="ArgumentOutOfRangeException">参数不是有限数、顺序错误或超出曲线参数域</exception>
+    public static double GetMidpointChordDeviation(this Curve curve, double startParameter, double endParameter)
+    {
+        ArgumentNullException.ThrowIfNull(curve);
+        if (double.IsNaN(startParameter) || double.IsInfinity(startParameter))
+            throw new ArgumentOutOfRangeException(nameof(startParameter), startParameter, "The parameter must be finite.");
+        if (double.IsNaN(endParameter) || double.IsInfinity(endParameter))
+            throw new ArgumentOutOfRangeException(nameof(endParameter), endParameter, "The parameter must be finite.");
+        if (startParameter > endParameter)
+            throw new ArgumentOutOfRangeException(nameof(endParameter), endParameter, "The end parameter must not precede the start parameter.");
+        if (startParameter < curve.StartParam || endParameter > curve.EndParam)
+            throw new ArgumentOutOfRangeException(nameof(startParameter), "The parameter interval must be inside the curve domain.");
+
+        var startPoint = curve.GetPointAtParameter(startParameter);
+        var endPoint = curve.GetPointAtParameter(endParameter);
+        var chordMidpoint = startPoint.GetMidPointTo(endPoint);
+        var midpointParameter = startParameter * 0.5 + endParameter * 0.5;
+        var curveMidpoint = curve.GetPointAtParameter(midpointParameter);
+        return chordMidpoint.DistanceTo(curveMidpoint);
+    }
+
+    /// <summary>
+    /// 计算距离区间中点处的弦偏差
+    /// </summary>
+    /// <remarks>
+    /// 距离从曲线起点沿曲线测量。返回距离中点与区间端点弦中点之间的三维距离；
+    /// 该值不是区间内的最大偏差。
+    /// </remarks>
+    /// <param name="curve">曲线</param>
+    /// <param name="startDistance">区间起始距离</param>
+    /// <param name="endDistance">区间结束距离，必须大于或等于起始距离</param>
+    /// <returns>距离中点处的弦偏差</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="curve"/> 为 <see langword="null"/></exception>
+    /// <exception cref="ArgumentOutOfRangeException">距离不是有限数、顺序错误或超出曲线长度范围</exception>
+    public static double GetMidpointChordDeviationByDistance(this Curve curve, double startDistance, double endDistance)
+    {
+        ArgumentNullException.ThrowIfNull(curve);
+        if (double.IsNaN(startDistance) || double.IsInfinity(startDistance))
+            throw new ArgumentOutOfRangeException(nameof(startDistance), startDistance, "The distance must be finite.");
+        if (double.IsNaN(endDistance) || double.IsInfinity(endDistance))
+            throw new ArgumentOutOfRangeException(nameof(endDistance), endDistance, "The distance must be finite.");
+        if (startDistance > endDistance)
+            throw new ArgumentOutOfRangeException(nameof(endDistance), endDistance, "The end distance must not precede the start distance.");
+
+        var curveStartDistance = curve.GetDistanceAtParameter(curve.StartParam);
+        var curveEndDistance = curve.GetDistanceAtParameter(curve.EndParam);
+        if (startDistance < curveStartDistance || endDistance > curveEndDistance)
+            throw new ArgumentOutOfRangeException(nameof(startDistance), "The distance interval must be inside the curve range.");
+
+        var startPoint = curve.GetPointAtDist(startDistance);
+        var endPoint = curve.GetPointAtDist(endDistance);
+        var chordMidpoint = startPoint.GetMidPointTo(endPoint);
+        var midpointDistance = startDistance * 0.5 + endDistance * 0.5;
+        var curveMidpoint = curve.GetPointAtDist(midpointDistance);
+        return chordMidpoint.DistanceTo(curveMidpoint);
+    }
+
     /*/// <summary>
     /// 获取分割曲线集合
     /// </summary>
