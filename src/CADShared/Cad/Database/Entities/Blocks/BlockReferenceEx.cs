@@ -80,6 +80,10 @@ public static class BlockReferenceEx
     /// <see langword="true"/> when a property with the requested name exists; otherwise
     /// <see langword="false"/>, including for a non-dynamic block.
     /// </returns>
+    /// <remarks>
+    /// The value is returned in its SDK runtime type instead of being converted to text so it can be
+    /// inspected or passed back to a block-property write operation without losing type information.
+    /// </remarks>
     /// <exception cref="System.ArgumentNullException">
     /// <paramref name="blockReference"/> or <paramref name="propertyName"/> is <see langword="null"/>.
     /// </exception>
@@ -101,6 +105,7 @@ public static class BlockReferenceEx
             if (!string.Equals(property.PropertyName, propertyName, StringComparison.Ordinal))
                 continue;
 
+            // Dynamic properties can be numeric, textual, or other SDK values; preserve that type.
             value = property.Value;
             return true;
         }

@@ -11,6 +11,10 @@ namespace Fs.Fox.Cad;
 /// Keep the scope inside the same CAD command and document context. CAD system variables can be
 /// document-scoped, so switching the active document before disposal can restore the value in the
 /// wrong context.
+/// <para>
+/// The captured value is retained without numeric conversion because CAD hosts can require the
+/// original runtime type (for example, <see cref="short"/> instead of <see cref="int"/>) on restore.
+/// </para>
 /// </remarks>
 public sealed class SystemVariableScope : IDisposable
 {
