@@ -20,6 +20,9 @@
 
     <PropertyGroup>
         <DefineConstants>$(Configuration);ZWCAD;ZW_2022</DefineConstants>
+        <!-- ZWCAD 2022 引用策略：FsLibsDir 可用时使用本地 x64 SDK，否则 NuGet 提供编译引用 -->
+        <ZwCad2022NuGetExcludeAssets Condition="'$(FsLibsDir)' != ''">compile;runtime</ZwCad2022NuGetExcludeAssets>
+        <ZwCad2022NuGetExcludeAssets Condition="'$(FsLibsDir)' == ''">runtime</ZwCad2022NuGetExcludeAssets>
     </PropertyGroup>
     
     <ItemGroup>
@@ -28,7 +31,10 @@
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="System.Text.Json" Version="10.0.10" />
-        <PackageReference Include="ZWCAD.NetApi" Version="20.22.0" ExcludeAssets="compile;runtime" />
+        <PackageReference Include="ZWCAD.NetApi" Version="20.22.0" ExcludeAssets="$(ZwCad2022NuGetExcludeAssets)" />
+    </ItemGroup>
+    <!-- 本地 ZRX2022 x64 SDK 引用：仅在 FsLibsDir 可用时生效 -->
+    <ItemGroup Condition="'$(FsLibsDir)' != ''">
         <Reference Include="ZwDatabaseMgd">
             <HintPath>$(FsLibsDir)SDK\ZRX2022\lib-x64\ZwDatabaseMgd.dll</HintPath>
             <Private>False</Private>
