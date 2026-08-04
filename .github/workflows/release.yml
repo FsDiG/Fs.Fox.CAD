@@ -49,7 +49,7 @@ jobs:
             Write-Host "Building test project for $name..."
             msbuild $testProject '/t:Restore;Build' `
               /p:OutputPath="..\..\$outputPath\" `
-              /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
+              /p:Configuration=Release /p:Platform=x64 /verbosity:minimal
             if ($LASTEXITCODE -ne 0) {
               throw "$name test build failed with exit code ${LASTEXITCODE}."
             }
@@ -57,7 +57,7 @@ jobs:
             Write-Host "Packing $name..."
             msbuild $packProject '/t:Restore;Pack' `
               /p:OutputPath="..\..\$outputPath\" `
-              /p:Configuration=Release /p:Platform="Any CPU" `
+              /p:Configuration=Release /p:Platform=x64 `
               /p:PackageOutputPath="$artifactsPath" /verbosity:minimal
             if ($LASTEXITCODE -ne 0) {
               throw "$name pack failed with exit code ${LASTEXITCODE}."
@@ -68,13 +68,13 @@ jobs:
           
           function BuildPack-DotNet([string]$testProject, [string]$packProject, [string]$name) {
             Write-Host "Building test project for $name..."
-            dotnet build $testProject --configuration Release
+            dotnet build $testProject --configuration Release -p:Platform=x64
             if ($LASTEXITCODE -ne 0) {
               throw "$name test build failed with exit code ${LASTEXITCODE}."
             }
             
             Write-Host "Packing $name..."
-            dotnet pack $packProject --configuration Release --output "$artifactsPath"
+            dotnet pack $packProject --configuration Release -p:Platform=x64 --output "$artifactsPath"
             if ($LASTEXITCODE -ne 0) {
               throw "$name pack failed with exit code ${LASTEXITCODE}."
             }

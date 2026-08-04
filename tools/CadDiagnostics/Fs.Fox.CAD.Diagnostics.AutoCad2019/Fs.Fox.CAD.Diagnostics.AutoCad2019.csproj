@@ -7,7 +7,7 @@
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
   </PropertyGroup>
 
-  <!-- Keep the versioned output contract independent of AnyCPU/"Any CPU" spelling. -->
+  <!-- Keep the versioned output contract independent of the solution platform label. -->
   <PropertyGroup Condition="'$(Configuration)'=='Debug'">
     <DebugType>none</DebugType>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
