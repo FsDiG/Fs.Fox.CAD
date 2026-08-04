@@ -7,13 +7,14 @@
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+  <!-- Keep the versioned output contract independent of AnyCPU/"Any CPU" spelling. -->
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
     <DebugType>none</DebugType>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <OutputPath>..\..\..\Build\AC_$(ACADVersion)_$(Configuration)\</OutputPath>
     <DocumentationFile>..\..\..\Build\AC_$(ACADVersion)_$(Configuration)\Fs.Fox.CAD.Diagnostics.AutoCad2019.xml</DocumentationFile>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <DebugType>none</DebugType>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <OutputPath>..\..\..\Build\AC_$(ACADVersion)_$(Configuration)\</OutputPath>
