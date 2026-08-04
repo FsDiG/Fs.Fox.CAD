@@ -86,11 +86,34 @@ jobs:
             Write-Host "$prefix builds completed."
           }
 
+          function Build-MSBuildWithProjectOutput([string]$csproj, [string]$name) {
+            foreach ($configuration in @('Debug', 'Release')) {
+              Write-Host "Building $name - $configuration..."
+              msbuild $csproj '/t:Restore;Build' `
+                /p:Configuration=$configuration /p:Platform="Any CPU" /verbosity:minimal
+              if ($LASTEXITCODE -ne 0) {
+                throw "$name $configuration build failed with exit code ${LASTEXITCODE}."
+              }
+            }
+
+            Write-Host "$name builds completed."
+          }
+
           # AutoCAD2019 - MSBuild (.NET Framework)
           Build-MSBuild "tests/TestAcad2019/TestAcad2019.csproj" "AC_2019"
 
+          # Independent AutoCAD 2019 diagnostics plug-in (.NET Framework)
+          Build-MSBuildWithProjectOutput `
+            "tools/CadDiagnostics/Fs.Fox.CAD.Diagnostics.AutoCad2019/Fs.Fox.CAD.Diagnostics.AutoCad2019.csproj" `
+            "CadDiagnostics AutoCAD 2019"
+
           # AutoCAD2025 - dotnet CLI (.NET8)
           Build-DotNet "tests/TestAcad2025/TestAcad2025.csproj" "AC_2025"
+
+          # Independent AutoCAD 2025 diagnostics plug-in (.NET 8)
+          Build-DotNet `
+            "tools/CadDiagnostics/Fs.Fox.CAD.Diagnostics.AutoCad2025/Fs.Fox.CAD.Diagnostics.AutoCad2025.csproj" `
+            "CadDiagnostics AutoCAD 2025"
 
           # ZWCAD2022 - MSBuild (.NET Framework)
           Build-MSBuild "tests/TestZcad2022/TestZcad2022.csproj" "ZW_2022"
@@ -107,5 +130,7 @@ jobs:
           # GStarCAD 2026 - dotnet CLI (.NET 8)
           Build-DotNet "tests/TestGcad2026/TestGcad2026.csproj" "GC_2026"
 
-      - name: Verify CADShared compatibility baseline
-        run: pwsh -NoProfile -File Build/Verify-CADSharedCompatibility.ps1
+      - name: Verify CadDiagnostics migration and outputs
+        run: |
+          pwsh -NoProfile -File tools/CadDiagnostics/Verify-CadDiagnostics.ps1 -Configuration Debug
+          pwsh -NoProfile -File tools/CadDiagnostics/Verify-CadDiagnostics.ps1 -Configuration Release

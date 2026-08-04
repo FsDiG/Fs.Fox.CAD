@@ -1,0 +1,24 @@
+<Project>
+  <!--
+    Reuse the repository's language, analyzer, version and Windows desktop
+    settings without taking a binary dependency on any Fs.Fox.CAD assembly.
+  -->
+  <Import Project="$(MSBuildThisFileDirectory)..\..\src\Directory.Build.props" />
+
+  <PropertyGroup>
+    <RootNamespace>Fs.Fox.CAD.Diagnostics</RootNamespace>
+    <IsPackable>false</IsPackable>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <EnableDefaultEmbeddedResourceItems>false</EnableDefaultEmbeddedResourceItems>
+    <!-- The imported MgdDbg implementation predates nullable annotations. -->
+    <Nullable>disable</Nullable>
+    <!--
+      The Autodesk MgdDbg snapshot contains incomplete and misplaced XML
+      documentation comments.  Preserve those comments during the behavioural
+      migration without turning hundreds of legacy documentation warnings into
+      Debug build failures.
+    -->
+    <NoWarn>$(NoWarn);1570;1572;1573;1587;1591</NoWarn>
+  </PropertyGroup>
+</Project>

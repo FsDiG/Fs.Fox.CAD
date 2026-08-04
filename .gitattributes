@@ -48,6 +48,12 @@
 *.filters    text eol=crlf
 *.vcxitems   text eol=crlf
 
+###############################################################################
+# Repository metadata packed into Windows-only NuGet artifacts.
+###############################################################################
+README.md    text eol=crlf
+LICENSE      text eol=crlf
+
 
 
 #*.sln       merge=binary

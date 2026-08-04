@@ -37,11 +37,12 @@ front matter schema 和自动校验尚未落地。在迁移完成前，本页状
 | 任务 | 先读 | 注意 |
 | --- | --- | --- |
 | 选择包、安装或编写第一个命令 | [产品 README](../README.md)、[ZWCAD 版本兼容性](ZWCAD-version-compatibility.md) | 按宿主和 API 代际选择包；构建兼容不等于宿主通过。 |
-| 修改项目、构建或发布 | [构建与项目结构](../编译说明.md)、[构建工作流](../.github/workflows/build-and-deploy.md)、[发布工作流](../.github/workflows/release.md) | 以实时 `.csproj` 和 `.yml` 为最终事实。 |
+| 修改项目、构建或发布 | [构建与项目结构](../编译说明.md)、[`build-and-deploy.yml`](../.github/workflows/build-and-deploy.yml)、[`release.yml`](../.github/workflows/release.yml) | 以实时 `.csproj` 和 `.yml` 为最终事实，不维护重复的工作流说明。 |
 | 理解整体架构 | [架构说明](关于IFoxCAD的架构说明.md)、[文档治理方案](documentation-architecture.md) | 前者描述产品，后者描述文档。 |
-| 移动或重组 `CADShared` | [架构说明](关于IFoxCAD的架构说明.md)、根 [`AGENTS.md`](../AGENTS.md)、[`CADShared.projitems`](../src/CADShared/CADShared.projitems)、[`CADSharedModuleBaseline.json`](../Build/CADSharedModuleBaseline.json) | 从最新 `main` 建立短期分支；历史设计与实施详情再查阅模块化计划和 Issue #25。 |
+| 移动或重组 `CADShared` | [架构说明](关于IFoxCAD的架构说明.md)、根 [`AGENTS.md`](../AGENTS.md)、[`CADShared.projitems`](../src/CADShared/CADShared.projitems)、[`CADSharedModuleBaseline.json`](../Build/CADSharedModuleBaseline.json) | 从最新 `main` 建立短期分支；历史设计与实施过程从 Issue #25 和 Git 历史追溯。 |
 | 修改 `DBTrans` | 实时 [`DBTrans.cs`](../src/CADShared/Cad/Database/Transactions/DBTrans.cs)、[生命周期设计提案](dbtrans-lifecycle-contract.md) | 文档中的 Confirmed 可作证据；Decision 仍需独立实现和验证。 |
 | 修改宿主、SDK 或目标框架 | [ZWCAD 兼容性](ZWCAD-version-compatibility.md)、[AutoCAD 2027 决策](AC_2027-net8-compatibility-decision.md)、[构建说明](../编译说明.md) | 检查公开发布目标与仓库中的实验/预备项目差异。 |
+| 构建或验收独立 CAD 诊断工具 | [CadDiagnostics 组件说明](../tools/CadDiagnostics/README.md)、[构建说明](../编译说明.md)、[Issue #124](https://github.com/FsDiG/Fs.Fox.CAD/issues/124) | 诊断 DLL 不依赖主类库；分别记录 SDK 基线和实际宿主，未执行功能保持 `Not run`。 |
 | 修改 CAD 命令行或 UI 文案 | [CAD/UI 文案风格指南](guides/cad-ui-text-style-guide.md) | 只机械修正低风险格式；流程和业务含义需要单独评审。 |
 | 执行或追溯真实 CAD 宿主验收 | [CAD 真实宿主验收 Runner](../tools/HostAcceptance/README.md)、[Issue #40](https://github.com/FsDiG/Fs.Fox.CAD/issues/40)及对应 Issue/PR | 分别核对编译目标、测试程序集、实际宿主、提交和场景；`Build/HostAcceptance` 中的历史快照只在目标 Git 状态确实包含时读取。 |
 | 新增或调整文档 | [文档治理方案](documentation-architecture.md)、根 [`AGENTS.md`](../AGENTS.md) | 先维护事实源、状态和关联，不提前选择站点框架。 |
@@ -57,15 +58,13 @@ front matter schema 和自动校验尚未落地。在迁移完成前，本页状
 | `architecture.overview` | `current` | [Fs.Fox.CAD 架构说明](关于IFoxCAD的架构说明.md) | user, maintainer | 当前共享源码、宿主边界和核心抽象。 |
 | `guide.building` | `current` | [构建与项目结构](../编译说明.md) | maintainer | 正式项目、工具链、条件编译、输出和验证边界。 |
 | `guide.host-acceptance` | `current` | [CAD 真实宿主验收 Runner](../tools/HostAcceptance/README.md) | maintainer | 真实 CAD 验收的目标矩阵、证据契约、安全边界、当前限制和执行入口。 |
+| `guide.cad-diagnostics` | `current` | [CadDiagnostics 多版本诊断工具](../tools/CadDiagnostics/README.md) | maintainer | 独立依赖边界、AutoCAD 构建矩阵、NETLOAD、命令兼容与宿主验证状态。 |
 | `reference.zwcad-compatibility` | `current` | [ZWCAD 版本兼容性与迁移说明](ZWCAD-version-compatibility.md) | user, maintainer | ZRXSDK 代际、当前发布策略、Build-only 边界和未验证状态。 |
 | `reference.gstarcad-support-design` | `current` | [GStarCAD 支持边界](关于IFoxCAD的架构说明.md#gstarcad浩辰cad) | maintainer | 浩辰 CAD 2022/2023/2026 的共享源码和条件编译边界。 |
 | `decision.autocad-2027-net8` | `current` | [AutoCAD 2027 .NET 8 兼容策略](AC_2027-net8-compatibility-decision.md) | maintainer | 预备项目当前使用 .NET 8 的原因、限制和回迁条件。 |
 | `concept.upstream-relationship` | `current` | [上游 IFoxCAD 与 Fs.Fox.CAD 的关系](<../IFoxCAD 说明.md>) | user, maintainer | 项目来源、独立维护边界和问题归属。 |
-| `guide.repository-maintenance` | `current` | [Fs.Fox.CAD 维护说明](../Fs分支说明.md) | maintainer | 命名、远程仓库和上游贡献边界。 |
 | `governance.documentation` | `current` | [文档与代码协同治理方案](documentation-architecture.md) | maintainer | 唯一产品内容源、展示/部署仓库边界、公开范围、版本发布和 Vibe Coding 上下文约定。 |
 | `guide.cad-ui-text` | `current` | [CAD/UI 文案风格指南](guides/cad-ui-text-style-guide.md) | maintainer | CAD 命令行和桌面 UI 的用户可见文字规则。 |
-| `workflow.build` | `current` | [构建检查工作流](../.github/workflows/build-and-deploy.md) | maintainer | `build-and-deploy.yml` 的触发、构建目标和诊断说明。 |
-| `workflow.release` | `current` | [NuGet 发布工作流](../.github/workflows/release.md) | maintainer | `release.yml` 的标签发布、打包和 Release 流程。 |
 
 ## 5. Active Plan 与提案
 
@@ -74,13 +73,9 @@ front matter schema 和自动校验尚未落地。在迁移完成前，本页状
 | `proposal` | `contract.dbtrans-lifecycle` | [DBTrans 生命周期与释放契约](dbtrans-lifecycle-contract.md) | 同时记录 Confirmed、Decision 与 Not run；不能把后续决定表述为已实施。 |
 | `proposal` | `proposal.edgeone-site-repository` | [EdgeOne Makers 站点仓库架构评估](edgeone-site-repository-evaluation.md) | Issue #48 的实施提案；展示仓库与精确来源链路已创建，最终框架、GitHub App、EdgeOne 和云资源仍未完成。 |
 
-## 6. 已取代与历史文档
+## 6. 历史材料
 
-| 状态 | 稳定 ID | 文档 | 当前入口 |
-| --- | --- | --- | --- |
-| `historical` | `plan.cad-modules` | [单程序集逻辑模块化执行计划](logical-modularization-plan.md) | 现行入口为[架构说明](关于IFoxCAD的架构说明.md)、根 [`AGENTS.md`](../AGENTS.md)、项目清单和模块基线；本文只追溯 Phase A 快照和实施过程。 |
-| `historical` | `history.upstream-v0.9` | [IFoxCAD v0.9 上游重要变更评估](ifoxcad-v0.9-upstream-merge-analysis.md) | Issue #26 已完成；后续需求重新核对实时上游和当前源码。 |
-| `historical` | `history.cad-utility-capabilities` | [CAD 通用能力增补评估（2026-08）](cad-utility-capability-assessment.md) | 只追溯一次性候选代码筛选、迁移边界和验证结果；现行 API 以源码与 XML 注释为准。 |
+已完成的一次性计划、迁移分析和能力筛选不再作为工作区 Markdown 保留。需要审计时从 Git 历史及对应 Issue/PR 追溯；仍有效的结论必须进入当前源码、XML 注释或本索引列出的现行文档。
 
 ## 7. 专项 Markdown 与排除规则
 
@@ -90,10 +85,9 @@ front matter schema 和自动校验尚未落地。在迁移完成前，本页状
 | --- | --- | --- |
 | `.github/ISSUE_TEMPLATE.zh-CN.md`、`.github/PULL_REQUEST_TEMPLATE.zh-CN.md` | GitHub 操作模板 | 由 GitHub UI 使用，不作为技术文档。 |
 | 未来可能进入特定 PR/提交的 `Build/HostAcceptance/*.md` | `historical` 宿主证据快照 | 当前 main 尚无该目录；只在目标 Git 状态确实包含它且需追溯匹配 Issue、PR、提交和宿主版本时读取，不发布。 |
-| `tests/TestShared/readme.md` | `draft` 子树说明 | 内容未覆盖实时测试结构，不作为测试清单。 |
-| `MgdDbg/README.md` | 组件范围的 `current` README | 只说明 MgdDbg，不外推到 Fs.Fox.CAD 构建或支持矩阵。 |
+| `third_party/Autodesk.MgdDbg/README.md` | `historical` 上游导入快照 | 只追溯原始 MgdDbg；现行构建和使用入口为 [CadDiagnostics 组件说明](../tools/CadDiagnostics/README.md)。 |
 
-生成站点、API 中间文件、搜索索引、DLL/XML 副本及其他可丢弃的构建输出不属于手写 Markdown，不得进入本仓库或展示仓库的 Git 历史，也不得进入编码代理默认上下文。用于比较前后状态、必须经代码评审更新的确定性契约基线不属于可丢弃输出，可以入库；当前仅包括 `Build/CADSharedModuleBaseline.json` 和 `Build/CADSharedCompatibilityBaseline.json`。
+生成站点、API 中间文件、搜索索引、DLL/XML 副本及其他可丢弃的构建输出不属于手写 Markdown，不得进入本仓库或展示仓库的 Git 历史，也不得进入编码代理默认上下文。仓库只保留用于校验共享源码模块归属和顺序的 `Build/CADSharedModuleBaseline.json`；不维护二进制或 NuGet 包内容快照。
 
 ## 8. 维护本索引
 

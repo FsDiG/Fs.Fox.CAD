@@ -195,7 +195,7 @@ tests/
   TestZcad20xx/              ZWCAD 宿主测试入口
 ```
 
-`CADShared.projitems` 显式列出全部正式共享编译项，并通过 `FsFoxModule` 和 `FsFoxOrder` 记录九个逻辑模块及稳定编译顺序；当前数量、源码哈希和边界债务以 `Build/CADSharedModuleBaseline.json` 及模块守卫结果为准。三个所有权根目录和九个逻辑模块只组织同一程序集内的共享源码，不改变公共命名空间，也不代表九个独立 DLL；首轮设计与实施历史见[单程序集逻辑模块化执行计划](logical-modularization-plan.md)。
+`CADShared.projitems` 显式列出全部正式共享编译项，并通过 `FsFoxModule` 和 `FsFoxOrder` 记录九个逻辑模块及稳定编译顺序；当前数量、源码哈希和边界债务以 `Build/CADSharedModuleBaseline.json` 及模块守卫结果为准。三个所有权根目录和九个逻辑模块只组织同一程序集内的共享源码，不改变公共命名空间，也不代表九个独立 DLL；首轮实施过程可从 Issue #25 和 Git 历史追溯。
 
 后续维护按以下规则确定文件归属和变更边界：
 

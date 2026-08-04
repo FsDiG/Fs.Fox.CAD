@@ -42,7 +42,6 @@
 ## 上下文与生成内容
 
 - 当前 main 尚无 `Build/HostAcceptance`；只有目标 Git 状态确实包含该目录且任务需要追溯对应 Issue、PR、提交或宿主结果时，才读取其中的历史记录。
-- `tests/TestShared/readme.md` 目前只是未完成的子树说明，不作为测试覆盖清单。
-- `MgdDbg/README.md` 只描述该组件，不代表 Fs.Fox.CAD 的整体构建或支持矩阵。
+- `third_party/Autodesk.MgdDbg/README.md` 是上游导入快照，只用于来源追溯，不代表 Fs.Fox.CAD 的构建或支持矩阵。
 - 不提交生成站点、API 中间文件、搜索索引、DLL/XML 副本或其他可重建输出。
 - 不把 Issue 评论、AI 对话转录或临时分析批量保存为长期文档。
