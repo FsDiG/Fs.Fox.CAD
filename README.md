@@ -21,7 +21,7 @@ Fs.Fox.CAD 不是 CAD SDK 的替代品，也不是可同时加载到所有宿主
 
 ## 支持矩阵
 
-当前解决方案和发布工作流构建以下四个 NuGet 包：
+当前解决方案和发布工作流构建以下七个 NuGet 包：
 
 | NuGet 包 | 目标宿主/API 代际 | 目标框架 | 输出程序集 |
 | --- | --- | --- | --- |
@@ -29,6 +29,9 @@ Fs.Fox.CAD 不是 CAD SDK 的替代品，也不是可同时加载到所有宿主
 | [`IFox.CAD.ACAD2025`](https://www.nuget.org/packages/IFox.CAD.ACAD2025/) | AutoCAD 2025 | `net8.0-windows7.0` | `Fs.Fox.AutoCad.dll` |
 | [`IFox.CAD.ZCAD2022`](https://www.nuget.org/packages/IFox.CAD.ZCAD2022/) | ZWCAD 2021-2024 | .NET Framework 4.8 | `Fs.Fox.ZwCad.dll` |
 | [`IFox.CAD.ZCAD2025`](https://www.nuget.org/packages/IFox.CAD.ZCAD2025/) | ZWCAD 2025-2026 | .NET Framework 4.8 | `Fs.Fox.ZwCad.dll` |
+| [`IFox.CAD.GCAD2022`](https://www.nuget.org/packages/IFox.CAD.GCAD2022/) | GstarCAD 2022 | .NET Framework 4.8 | `Fs.Fox.Gcad.dll` |
+| [`IFox.CAD.GCAD2023`](https://www.nuget.org/packages/IFox.CAD.GCAD2023/) | GstarCAD 2023 | .NET Framework 4.8 | `Fs.Fox.Gcad.dll` |
+| [`IFox.CAD.GCAD2026`](https://www.nuget.org/packages/IFox.CAD.GCAD2026/) | GstarCAD 2026 | `net8.0-windows7.0` | `Fs.Fox.Gcad.dll` |
 
 以上目标均按 x64 构建。表中的 ZWCAD 范围表示厂商文档给出的二进制兼容代际；自动构建成功不等同于每个 CAD 宿主版本都已完成运行时验收。ZWCAD 2026 复用 2025 产物，依据、限制和待完成的宿主检查见 [ZWCAD 版本兼容性与迁移说明][zwcad-compatibility]。
 
@@ -139,5 +142,5 @@ third_party/
 [cad-diagnostics]: tools/CadDiagnostics/README.md
 [cad-ui-text-style]: https://github.com/FsDiG/Fs.Fox.CAD/blob/main/docs/guides/cad-ui-text-style-guide.md
 [upstream]: https://github.com/FsDiG/Fs.Fox.CAD/blob/main/IFoxCAD%20%E8%AF%B4%E6%98%8E.md
-[release-workflow]: https://github.com/FsDiG/Fs.Fox.CAD/blob/main/.github/workflows/release.md
+[release-workflow]: https://github.com/FsDiG/Fs.Fox.CAD/blob/main/.github/workflows/release.yml
 [license]: https://github.com/FsDiG/Fs.Fox.CAD/blob/main/LICENSE

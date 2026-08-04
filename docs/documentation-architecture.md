@@ -136,10 +136,7 @@ Fs.Fox.CAD/
 | `docs/ZWCAD-version-compatibility.md` | `docs/reference/compatibility/zwcad.md` | 去除本机绝对路径，保留可复核来源。 |
 | `docs/AC_2027-net8-compatibility-decision.md` | `docs/decisions/0001-autocad-2027-net8.md` | 转为 ADR，记录状态和回迁条件。 |
 | `docs/guides/cad-ui-text-style-guide.md` | `docs/maintainers/contributing/cad-ui-text.md` | 已取消多仓库同名文件人工同步要求；后续移动到维护者规则目录。 |
-| `docs/logical-modularization-plan.md` | `docs/plans/archive/cad-modules.md` | 已标记 `historical`，现行维护规则已提炼到架构说明；路径迁移留给 Issue #48 的整体文档迁移阶段。 |
-| `docs/ifoxcad-v0.9-upstream-merge-analysis.md` | `docs/plans/archive/upstream-v0.9.md` | Issue #26 已完成，已标记 `historical`；后续移动归档。 |
 | `编译说明.md` | `docs/maintainers/contributing/building.md` | 与实际构建矩阵和 CI 命令统一。 |
-| `Fs分支说明.md` | `docs/maintainers/contributing/branches.md` 或归档 | 先验证当前分支策略，删除过时内容。 |
 | `IFoxCAD 说明.md` | `docs/concepts/history-and-positioning.md` | 只保留仍准确的来源与定位。 |
 
 ## 5. 文档状态与元数据契约
@@ -278,7 +275,7 @@ AGENTS.md
 - 未来生成的 `llms.txt` 只聚合 `published: true` 且 `status: current` 的精选页面；不得把整个仓库 Markdown 拼接成单个上下文。
 - 页面顶部和站点构建清单显示来源仓库、提交、产品版本和文档状态，使人和代理都能判断时效。
 
-已完成的逻辑模块化计划标记为 `historical`，仍有效的模块维护规则已提炼到现行架构说明；更早且已被否决的重构提案不再保留工作区副本，只能从 Git 历史追溯。目录迁移已由 PR #100 合入，实时结构以 `main` 的项目清单和模块基线为准，历史决策与实施详情仍可通过计划和 Issue #25 追溯。计划文件暂不移动，后续目录迁移继续由 Issue #48 统一处理。
+已完成的逻辑模块化计划和一次性评估不再保留工作区副本；仍有效的维护规则已提炼到现行架构说明，历史决策与实施过程从 Git 历史及对应 Issue 追溯。目录迁移已由 PR #100 合入，实时结构以 `main` 的项目清单和模块基线为准。
 
 ## 9. 公开站点边界
 

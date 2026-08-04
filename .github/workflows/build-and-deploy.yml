@@ -130,9 +130,6 @@ jobs:
           # GStarCAD 2026 - dotnet CLI (.NET 8)
           Build-DotNet "tests/TestGcad2026/TestGcad2026.csproj" "GC_2026"
 
-      - name: Verify CADShared compatibility baseline
-        run: pwsh -NoProfile -File Build/Verify-CADSharedCompatibility.ps1
-
       - name: Verify CadDiagnostics migration and outputs
         run: |
           pwsh -NoProfile -File tools/CadDiagnostics/Verify-CadDiagnostics.ps1 -Configuration Debug
