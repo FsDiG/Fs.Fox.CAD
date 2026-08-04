@@ -66,6 +66,12 @@ namespace Fs.Fox.CAD.Diagnostics.Snoop.CollectorExts
                 return;
             }
 
+            HatchLoop hatchLoop = e.ObjToSnoop as HatchLoop;
+            if (hatchLoop != null) {
+                Stream(snoopCollector.Data(), hatchLoop);
+                return;
+            }
+
             LoftOptions loftOpt = e.ObjToSnoop as LoftOptions;
             if (loftOpt != null) {
                 Stream(snoopCollector.Data(), loftOpt);
@@ -785,13 +791,6 @@ namespace Fs.Fox.CAD.Diagnostics.Snoop.CollectorExts
 
             data.Add(new Snoop.Data.Point2d("Vertex", bulgeVert.Vertex));
             data.Add(new Snoop.Data.Double("Bulge", bulgeVert.Bulge));
-
-
-            //HatchLoop loop = bulgeVerts as HatchLoop;
-            //if (bulgeVerts != null) {
-            //    Stream(data, bulgeVerts);
-            //    return;
-            //}
         }
 
         private void
@@ -799,7 +798,15 @@ namespace Fs.Fox.CAD.Diagnostics.Snoop.CollectorExts
         {
             data.Add(new Snoop.Data.ClassSeparator(typeof(HatchLoop)));
 
-            data.Add(new Snoop.Data.String("Loop type", loop.LoopType.ToString()));
+            AddSafely(data, "Loop type", () => new Snoop.Data.String("Loop type", loop.LoopType.ToString()));
+            AddSafely(data, "Is polyline", () => new Snoop.Data.Bool("Is polyline", loop.IsPolyline));
+
+            // A HatchLoop contains exactly one boundary representation. Do not ask for
+            // Curves on a polyline loop (or Polyline on an edge loop), because AutoCAD
+            // reports that mismatched accessor as NotApplicable.
+            AddSafely(data, "Boundary", () => loop.IsPolyline
+                ? new Snoop.Data.Enumerable("Polyline", loop.Polyline)
+                : new Snoop.Data.Enumerable("Curves", loop.Curves));
         }
 
         private void
