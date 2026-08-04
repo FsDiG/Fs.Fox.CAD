@@ -2,7 +2,8 @@
   <PropertyGroup>
     <TargetFramework>net48</TargetFramework>
     <ACADVersion>2019</ACADVersion>
-    <AssemblyName>Fs.Fox.CAD.Diagnostics.AutoCad2019</AssemblyName>
+    <!-- The versioned Build directory is the SDK identity; keep the file name stable. -->
+    <AssemblyName>Fs.Fox.AutoCad.Diagnostics</AssemblyName>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
   </PropertyGroup>
@@ -12,13 +13,13 @@
     <DebugType>none</DebugType>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <OutputPath>..\..\..\Build\AC_$(ACADVersion)_$(Configuration)\</OutputPath>
-    <DocumentationFile>..\..\..\Build\AC_$(ACADVersion)_$(Configuration)\Fs.Fox.CAD.Diagnostics.AutoCad2019.xml</DocumentationFile>
+    <DocumentationFile>..\..\..\Build\AC_$(ACADVersion)_$(Configuration)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <DebugType>none</DebugType>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <OutputPath>..\..\..\Build\AC_$(ACADVersion)_$(Configuration)\</OutputPath>
-    <DocumentationFile>..\..\..\Build\AC_$(ACADVersion)_$(Configuration)\Fs.Fox.CAD.Diagnostics.AutoCad2019.xml</DocumentationFile>
+    <DocumentationFile>..\..\..\Build\AC_$(ACADVersion)_$(Configuration)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup>

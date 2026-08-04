@@ -39,12 +39,15 @@ for those products; those targets remain work under Issue #124.
 
 | SDK baseline | Target framework | Constants | Output assembly | Runtime validation |
 | --- | --- | --- | --- | --- |
-| AutoCAD 2019 / `AutoCAD.NET` 23.0.0 | .NET Framework 4.8 | `ACAD;AC_2019;AC_NET48` | `Build/AC_2019_<Configuration>/Fs.Fox.CAD.Diagnostics.AutoCad2019.dll` | `Not run` |
-| AutoCAD 2025 / `AutoCAD.NET` 25.0.1 | .NET 8 | `ACAD;AC_2025` | `Build/AC_2025_<Configuration>/Fs.Fox.CAD.Diagnostics.AutoCad2025.dll` | `Not run` |
+| AutoCAD 2019 / `AutoCAD.NET` 23.0.0 | .NET Framework 4.8 | `ACAD;AC_2019;AC_NET48` | `Build/AC_2019_<Configuration>/Fs.Fox.AutoCad.Diagnostics.dll` | `Not run` |
+| AutoCAD 2025 / `AutoCAD.NET` 25.0.1 | .NET 8 | `ACAD;AC_2025` | `Build/AC_2025_<Configuration>/Fs.Fox.AutoCad.Diagnostics.dll` | `Not run` |
 
-Each output includes the same-named XML documentation file and follows the main
-AutoCAD projects' no-PDB build policy. The SDK year identifies the compile-time
-API baseline, not the actual AutoCAD product in which the DLL is loaded.
+Each output includes `Fs.Fox.AutoCad.Diagnostics.xml` and follows the main
+AutoCAD projects' no-PDB build policy. Generated `.deps.json`,
+`.runtimeconfig.json` and any future PDB use the same `AssemblyName` base name
+automatically. The versioned output directory, not the common file name,
+identifies the compile-time SDK baseline. Do not merge files from different
+`AC_<year>_<Configuration>` directories into one folder.
 
 From a Visual Studio Developer PowerShell:
 
