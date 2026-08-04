@@ -49,6 +49,50 @@ function Get-TopLevelPublicTypeNames {
     }
 }
 
+function Get-AssemblyReferenceNames {
+    param([string]$AssemblyPath)
+
+    $stream = [System.IO.File]::OpenRead($AssemblyPath)
+    $peReader = $null
+    try {
+        $peReader = [System.Reflection.PortableExecutable.PEReader]::new($stream)
+        $metadata = [System.Reflection.Metadata.PEReaderExtensions]::GetMetadataReader($peReader)
+        $names = foreach ($handle in $metadata.AssemblyReferences) {
+            $reference = $metadata.GetAssemblyReference($handle)
+            $metadata.GetString($reference.Name)
+        }
+        return @($names | Sort-Object)
+    }
+    finally {
+        if ($null -ne $peReader) {
+            $peReader.Dispose()
+        }
+        $stream.Dispose()
+    }
+}
+
+function Get-ManifestResourceNames {
+    param([string]$AssemblyPath)
+
+    $stream = [System.IO.File]::OpenRead($AssemblyPath)
+    $peReader = $null
+    try {
+        $peReader = [System.Reflection.PortableExecutable.PEReader]::new($stream)
+        $metadata = [System.Reflection.Metadata.PEReaderExtensions]::GetMetadataReader($peReader)
+        $names = foreach ($handle in $metadata.ManifestResources) {
+            $resource = $metadata.GetManifestResource($handle)
+            $metadata.GetString($resource.Name)
+        }
+        return @($names | Sort-Object)
+    }
+    finally {
+        if ($null -ne $peReader) {
+            $peReader.Dispose()
+        }
+        $stream.Dispose()
+    }
+}
+
 function Test-Binary {
     param(
         [string]$SdkYear,
@@ -73,12 +117,13 @@ function Test-Binary {
             "Autodesk SDK assembly must not be copied to diagnostics output: $fileName"
     }
 
-    $assembly = [System.Reflection.Assembly]::LoadFile((Resolve-Path $assemblyPath).Path)
-    $references = @($assembly.GetReferencedAssemblies() | ForEach-Object Name)
+    # Both SDK targets now share one assembly identity. Read metadata directly
+    # so verification never loads one target in place of the other.
+    $references = Get-AssemblyReferenceNames -AssemblyPath $assemblyPath
     Assert-Condition (-not ($references | Where-Object { $_ -like 'Fs.Fox.AutoCad*' })) `
         "$AssemblyName must not reference Fs.Fox.AutoCad."
 
-    $resourceNames = @($assembly.GetManifestResourceNames())
+    $resourceNames = Get-ManifestResourceNames -AssemblyPath $assemblyPath
     $reportResources = @($resourceNames | Where-Object {
         $_.StartsWith('Fs.Fox.CAD.Diagnostics.ReportBrowser/', [System.StringComparison]::Ordinal)
     })
@@ -142,12 +187,19 @@ $commandDifference = @(Compare-Object $expectedCommandNames $migratedCommandName
 Assert-Condition ($commandDifference.Count -eq 0) `
     "The migrated command-name set differs from the legacy commands plus MgdDbgAbout: $($commandDifference | Out-String)"
 
+$diagnosticAssemblyName = 'Fs.Fox.AutoCad.Diagnostics'
 $projectFiles = @(
     'Fs.Fox.CAD.Diagnostics.AutoCad2019\Fs.Fox.CAD.Diagnostics.AutoCad2019.csproj',
     'Fs.Fox.CAD.Diagnostics.AutoCad2025\Fs.Fox.CAD.Diagnostics.AutoCad2025.csproj'
 )
 foreach ($relativeProjectPath in $projectFiles) {
     [xml]$project = Get-Content -Raw (Join-Path $PSScriptRoot $relativeProjectPath)
+    $assemblyNames = @($project.SelectNodes("//*[local-name()='AssemblyName']") |
+        ForEach-Object { $_.InnerText } |
+        Sort-Object -Unique)
+    Assert-Condition ($assemblyNames.Count -eq 1 -and $assemblyNames[0] -eq $diagnosticAssemblyName) `
+        "$relativeProjectPath must produce $diagnosticAssemblyName."
+
     $projectReferences = @($project.SelectNodes("//*[local-name()='ProjectReference']"))
     Assert-Condition ($projectReferences.Count -eq 0) `
         "$relativeProjectPath must not contain project references."
@@ -163,7 +215,9 @@ $migratedSourceText = (Get-ChildItem -LiteralPath $sharedRoot -Recurse -Filter '
 Assert-Condition ($migratedSourceText -notmatch '\bnamespace\s+MgdDbg\b') `
     'A legacy MgdDbg namespace remains in migrated source.'
 
-Test-Binary -SdkYear '2019' -AssemblyName 'Fs.Fox.CAD.Diagnostics.AutoCad2019'
-Test-Binary -SdkYear '2025' -AssemblyName 'Fs.Fox.CAD.Diagnostics.AutoCad2025'
+# The SDK year belongs to the output directory; both targets intentionally
+# expose the same stable plug-in file name.
+Test-Binary -SdkYear '2019' -AssemblyName $diagnosticAssemblyName
+Test-Binary -SdkYear '2025' -AssemblyName $diagnosticAssemblyName
 
 Write-Host "CadDiagnostics migration verification passed for $Configuration."
