@@ -1393,22 +1393,25 @@ namespace Fs.Fox.CAD.Diagnostics.Snoop.CollectorExts {
                 data.Add(new Snoop.Data.ObjectCollection("Hatch lines data", (System.Collections.ICollection)hatch.GetHatchLinesData()));
             }
 
-            data.Add(new Snoop.Data.Int("Number of loops", hatch.NumberOfLoops));
+            int numberOfLoops = hatch.NumberOfLoops;
+            data.Add(new Snoop.Data.Int("Number of loops", numberOfLoops));
 
-            // TBD: thows exception even though it reports a loop! Only works if
-            // HatchLoopType is Polyline
-            /*try {
-                ArrayList hatchLoops = new ArrayList();
-                for (int i=0; i<hatch.NumberOfLoops; i++)
+            ArrayList hatchLoops = new ArrayList();
+            for (int i = 0; i < numberOfLoops; i++) {
+                try {
+                    // HatchLoop is a managed value object in both supported SDKs and does
+                    // not implement IDisposable. Keep it available for the Snoop dialog;
+                    // never dispose the database-owned Hatch or transaction objects here.
                     hatchLoops.Add(hatch.GetLoopAt(i));
-                data.Add(new Snoop.Data.ObjectCollection("Hatch loops", hatchLoops));
+                }
+                catch (Autodesk.AutoCAD.Runtime.Exception e) {
+                    // Some drawings report a loop count but return NotApplicable (or
+                    // another host error) for an individual loop. Preserve the remaining
+                    // loops and expose the failed index instead of hiding the exception.
+                    data.Add(new Snoop.Data.Exception(string.Format("Hatch loop [{0:d}]", i), e));
+                }
             }
-            catch (Autodesk.AutoCAD.Runtime.Exception e) {
-                if (e.ErrorStatus == (int)Autodesk.AutoCAD.Runtime.ErrorStatus.NotApplicable)
-                    data.Add(new Snoop.Data.String("Hatch loops", Autodesk.AutoCAD.Runtime.ErrorStatus.NotApplicable.ToString()));
-                else
-                    throw;
-            }*/
+            data.Add(new Snoop.Data.ObjectCollection("Hatch loops", hatchLoops));
 
             data.Add(new Snoop.Data.Int("Number of pattern defs", hatch.NumberOfPatternDefinitions));
             ArrayList patternDefs = new ArrayList();

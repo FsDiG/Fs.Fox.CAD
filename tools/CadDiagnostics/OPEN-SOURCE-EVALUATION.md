@@ -1,6 +1,6 @@
 # CadDiagnostics 开源诊断项目评估
 
-> 状态：`proposal`，第一优先级及 P2-A 已实施，P2-B 待独立 PR<br>
+> 状态：`proposal`，第一优先级及 P2 已实施，P2 后候选仍待独立评估<br>
 > 评估日期：2026-08-04<br>
 > Fs.Fox.CAD 基线：`main@18c9cb5e2828655db26e9ed303eef82d1e60491e`<br>
 > 跟踪：[父路线 #124](https://github.com/FsDiG/Fs.Fox.CAD/issues/124)、
@@ -178,19 +178,30 @@ P2-A 只修改维护中的只读 collector：
 | 迁移边界与输出静态检查 | Passed |
 | 动态块与注释比例 CAD 宿主下钻 | `Not run`，按本阶段边界不执行 |
 
-### P2-B：Hatch loop
+### P2-B：Hatch loop（已实施）
 
-建议在 P2-A 审核后使用另一个 PR：
+P2-B 使用独立 PR 恢复原 MgdDbg 中被禁用的集合入口，并补齐原本不可达的
+`HatchLoop` collector：
 
-1. 替换当前 `Entity.cs` 中整段注释掉的旧代码；
-2. 按 loop index 调用 `GetLoopAt()`，polyline 与非 polyline loop 都作为
-   `Snoop.Data.ObjectCollection` 子项；
-3. 每个 loop 独立捕获 AutoCAD 异常并生成可见错误项，不能因一个 loop
-   失败而丢失其他 loop 或整个实体信息；
-4. 不处置数据库或事务拥有的对象，不把临时对象保存到窗口生命周期之外。
+1. 按 loop index 调用 `GetLoopAt()`，不按 `HatchLoopTypes` 过滤；成功的
+   polyline 与非 polyline loop 都进入现有 `Snoop.Data.ObjectCollection`。
+2. 每个 loop 独立捕获 AutoCAD 宿主异常，以带 index 的
+   `Snoop.Data.Exception` 显示；一个失败项不会丢失其他 loop 或整个实体信息。
+3. `HatchLoop` 下钻按 `IsPolyline` 只读取匹配的 `Polyline` 或 `Curves` 集合，
+   避免主动触发另一种边界访问器的 `NotApplicable`。
+4. `HatchLoop` 在两个目标 SDK 中均为不实现 `IDisposable` 的托管值对象；窗口
+   仅在自身生命周期内保留结果，不处置数据库拥有的 Hatch 或事务对象。
+5. 实现基于仓库已有的禁用代码和 collector 修正，仅采用 Gile.Inspector 的
+   集合行为思路，没有复制其 `HatchLoopCollection` wrapper 或 UI 代码。
 
-该阶段的真实宿主行为风险高于 P2-A，因此即使只做编译验证，也必须在源码和
-PR 中明确标记 AutoCAD 2020/2026 的 loop 场景为 `Not run`。
+验证结果：
+
+| 目标 | 结果 |
+| --- | --- |
+| AutoCAD 2019 / .NET Framework 4.8 / Release x64 | Build passed |
+| AutoCAD 2025 / .NET 8 / Release x64 | Build passed |
+| 迁移边界与输出静态检查 | Passed |
+| polyline / curve loop 与逐项异常 CAD 宿主场景 | `Not run`，按本阶段边界不执行 |
 
 ### P2 之后才重新评估
 
