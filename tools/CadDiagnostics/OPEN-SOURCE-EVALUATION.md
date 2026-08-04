@@ -1,6 +1,6 @@
 # CadDiagnostics 开源诊断项目评估
 
-> 状态：`proposal`，第一优先级已实施，第二优先级待独立 PR<br>
+> 状态：`proposal`，第一优先级及 P2-A 已实施，P2-B 待独立 PR<br>
 > 评估日期：2026-08-04<br>
 > Fs.Fox.CAD 基线：`main@18c9cb5e2828655db26e9ed303eef82d1e60491e`<br>
 > 跟踪：[父路线 #124](https://github.com/FsDiG/Fs.Fox.CAD/issues/124)、
@@ -152,22 +152,31 @@ WPF 窗口或完整 ViewModel。与当前实现逐项比对如下：
 ## 5. 第二优先级详细拆分
 
 第二优先级由 [Issue #132](https://github.com/FsDiG/Fs.Fox.CAD/issues/132)
-跟踪。在 #131 合并后从最新 `main` 建立新分支，不能混入当前修复 PR。
+跟踪，并按 P2-A、P2-B 两个独立 PR 依次实施。
 
-### P2-A：动态块属性与注释比例
+### P2-A：动态块属性与注释比例（已实施）
 
-建议一个独立 PR，范围限定为只读 collector：
+P2-A 只修改维护中的只读 collector：
 
-1. 为 `DynamicBlockReferenceProperty` 补充 Value、ReadOnly、Show 和
-   `GetAllowedValues()`；允许值使用现有 `Snoop.Data` 下钻，不新增窗口。
-2. 为 `ObjectContextManager` 提供 `ACDB_ANNOTATIONSCALES` 集合入口；只读取
-   已有 context collection，不创建、删除或设置当前比例。
-3. 单个 getter 或集合读取异常转成 `Snoop.Data.Exception`，不能中止整个
-   对象收集；禁止静默吞错。
-4. 不新增公共类型、命令、WPF 依赖或 Fs.Fox.AutoCad 引用。
+1. `DynamicBlockReferenceProperty` 已补充 Value、ReadOnly、Show 和
+   `GetAllowedValues()`；原有属性与新增属性均逐 getter 隔离异常，允许值复用
+   `Snoop.Data.Enumerable` 下钻。
+2. `ObjectContextManager` 已提供 `ACDB_ANNOTATIONSCALES` 集合入口；仅枚举
+   数据库拥有的 manager 和 context collection，不创建、删除、切换或处置
+   context。
+3. 单个 getter、集合获取或枚举失败会生成 `Snoop.Data.Exception`，其余属性
+   继续收集，不静默吞错。
+4. 未新增公共类型、命令、WPF 依赖或 Fs.Fox.AutoCad 引用。实现仅采用
+   Gile.Inspector 的行为思路，没有复制其 wrapper 或 UI 代码。
 
-验收仅执行 AutoCAD 2019/2025 Release x64 编译和静态检查。实际动态块、
-注释比例下钻保持 `Not run`，直至人工宿主验收另行记录。
+验证结果：
+
+| 目标 | 结果 |
+| --- | --- |
+| AutoCAD 2019 / .NET Framework 4.8 / Release x64 | Build passed |
+| AutoCAD 2025 / .NET 8 / Release x64 | Build passed；保留 2 个既有 `MSB3825` WinForms 资源警告 |
+| 迁移边界与输出静态检查 | Passed |
+| 动态块与注释比例 CAD 宿主下钻 | `Not run`，按本阶段边界不执行 |
 
 ### P2-B：Hatch loop
 

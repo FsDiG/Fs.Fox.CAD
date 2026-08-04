@@ -308,6 +308,12 @@ namespace Fs.Fox.CAD.Diagnostics.Snoop.CollectorExts
                 return;
             }
 
+            ObjectContextManager objContextMgr = e.ObjToSnoop as ObjectContextManager;
+            if (objContextMgr != null) {
+                Stream(snoopCollector.Data(), objContextMgr);
+                return;
+            }
+
             ObjectContext objContext = e.ObjToSnoop as ObjectContext;
             if (objContext != null) {
                 Stream(snoopCollector.Data(), objContext);
@@ -1025,11 +1031,21 @@ namespace Fs.Fox.CAD.Diagnostics.Snoop.CollectorExts
         {
             data.Add(new Snoop.Data.ClassSeparator(typeof(DynamicBlockReferenceProperty)));
 
-            data.Add(new Snoop.Data.ObjectId("Block Id", dynBlkRefProp.BlockId));
-            data.Add(new Snoop.Data.String("Description", dynBlkRefProp.Description));
-            data.Add(new Snoop.Data.String("Property name", dynBlkRefProp.PropertyName));
-            data.Add(new Snoop.Data.Int("Property type code", dynBlkRefProp.PropertyTypeCode));
-            data.Add(new Snoop.Data.String("Units type", dynBlkRefProp.UnitsType.ToString()));
+            // Dynamic property getters can fail independently when a block definition or
+            // visibility state is no longer available. Keep every failure local so the
+            // remaining diagnostic values are still useful.
+            AddSafely(data, "Block Id", () => new Snoop.Data.ObjectId("Block Id", dynBlkRefProp.BlockId));
+            AddSafely(data, "Description", () => new Snoop.Data.String("Description", dynBlkRefProp.Description));
+            AddSafely(data, "Property name", () => new Snoop.Data.String("Property name", dynBlkRefProp.PropertyName));
+            AddSafely(data, "Property type code", () => new Snoop.Data.Int("Property type code", dynBlkRefProp.PropertyTypeCode));
+            AddSafely(data, "Units type", () => new Snoop.Data.String("Units type", dynBlkRefProp.UnitsType.ToString()));
+            AddSafely(data, "Value", () => {
+                object value = dynBlkRefProp.Value;
+                return new Snoop.Data.String("Value", value == null ? "(null)" : value.ToString());
+            });
+            AddSafely(data, "Read only", () => new Snoop.Data.Bool("Read only", dynBlkRefProp.ReadOnly));
+            AddSafely(data, "Show", () => new Snoop.Data.Bool("Show", dynBlkRefProp.Show));
+            AddSafely(data, "Allowed values", () => new Snoop.Data.Enumerable("Allowed values", dynBlkRefProp.GetAllowedValues()));
         }
 
         private void
@@ -1327,12 +1343,36 @@ namespace Fs.Fox.CAD.Diagnostics.Snoop.CollectorExts
         }
 
         private void
+        Stream(ArrayList data, ObjectContextManager objContextMgr)
+        {
+            data.Add(new Snoop.Data.ClassSeparator(typeof(ObjectContextManager)));
+
+            // ObjectContextManager and its collections are owned by the database. This
+            // collector only exposes the registered annotation scales and never creates,
+            // removes, switches or disposes a context.
+            AddSafely(data, "Annotation scales", () => new Snoop.Data.Enumerable(
+                "Annotation scales",
+                objContextMgr.GetContextCollection("ACDB_ANNOTATIONSCALES")));
+        }
+
+        private void
         Stream(ArrayList data, ObjectContext objContext)
         {
             data.Add(new Snoop.Data.ClassSeparator(typeof(ObjectContext)));
 
             data.Add(new Snoop.Data.String("Collection name", objContext.CollectionName));
             data.Add(new Snoop.Data.String("Name", objContext.Name));
+        }
+
+        private static void
+        AddSafely(ArrayList data, string label, Func<Snoop.Data.Data> createData)
+        {
+            try {
+                data.Add(createData());
+            }
+            catch (System.Exception e) {
+                data.Add(new Snoop.Data.Exception(label, e));
+            }
         }
 
         private void
