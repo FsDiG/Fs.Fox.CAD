@@ -12,6 +12,7 @@ against one AutoCAD SDK generation and produces its own DLL.
 - Parent roadmap: [Issue #124](https://github.com/FsDiG/Fs.Fox.CAD/issues/124)
 - AutoCAD migration: [Issue #125](https://github.com/FsDiG/Fs.Fox.CAD/issues/125)
 - Source provenance: [UPSTREAM.md](UPSTREAM.md)
+- Open-source candidate evaluation: [OPEN-SOURCE-EVALUATION.md](OPEN-SOURCE-EVALUATION.md)
 - Autodesk notice: [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md)
 
 ## Structure and dependency boundary

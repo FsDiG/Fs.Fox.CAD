@@ -72,6 +72,7 @@ front matter schema 和自动校验尚未落地。在迁移完成前，本页状
 | --- | --- | --- | --- |
 | `proposal` | `contract.dbtrans-lifecycle` | [DBTrans 生命周期与释放契约](dbtrans-lifecycle-contract.md) | 同时记录 Confirmed、Decision 与 Not run；不能把后续决定表述为已实施。 |
 | `proposal` | `proposal.edgeone-site-repository` | [EdgeOne Makers 站点仓库架构评估](edgeone-site-repository-evaluation.md) | Issue #48 的实施提案；展示仓库与精确来源链路已创建，最终框架、GitHub App、EdgeOne 和云资源仍未完成。 |
+| `proposal` | `proposal.cad-diagnostics-open-source-intake` | [CadDiagnostics 开源诊断项目评估](../tools/CadDiagnostics/OPEN-SOURCE-EVALUATION.md) | Issue #124 下的候选、去重依据和阶段边界；P1 已实施，P2 仍需独立 PR。 |
 
 ## 6. 历史材料
 
