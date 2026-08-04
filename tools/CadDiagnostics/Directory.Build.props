@@ -10,6 +10,8 @@
     <IsPackable>false</IsPackable>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <!-- Diagnostics are host plug-ins and follow the repository's x64-only contract. -->
+    <PlatformTarget>x64</PlatformTarget>
     <EnableDefaultEmbeddedResourceItems>false</EnableDefaultEmbeddedResourceItems>
     <!-- The imported MgdDbg implementation predates nullable annotations. -->
     <Nullable>disable</Nullable>

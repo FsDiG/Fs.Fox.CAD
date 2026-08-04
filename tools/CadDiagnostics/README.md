@@ -51,11 +51,11 @@ From a Visual Studio Developer PowerShell:
 ```powershell
 # AutoCAD 2019 / .NET Framework
 msbuild .\tools\CadDiagnostics\Fs.Fox.CAD.Diagnostics.AutoCad2019\Fs.Fox.CAD.Diagnostics.AutoCad2019.csproj `
-  '/t:Restore;Build' /p:Configuration=Release '/p:Platform=Any CPU'
+  '/t:Restore;Build' /p:Configuration=Release '/p:Platform=x64'
 
 # AutoCAD 2025 / .NET 8
 dotnet build .\tools\CadDiagnostics\Fs.Fox.CAD.Diagnostics.AutoCad2025\Fs.Fox.CAD.Diagnostics.AutoCad2025.csproj `
-  --configuration Release
+  --configuration Release -p:Platform=x64
 ```
 
 The projects are also included under `tools/CadDiagnostics` in `IFoxCAD.sln`

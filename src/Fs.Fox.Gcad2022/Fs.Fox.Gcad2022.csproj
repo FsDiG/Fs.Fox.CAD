@@ -18,14 +18,14 @@
         <PackageReleaseNotes>初始发布，新增 GStarCAD 2022 支持</PackageReleaseNotes>
     </PropertyGroup>
 
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
         <DebugType>none</DebugType>
         <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
         <OutputPath>..\..\Build\GC_$(GCADVersion)_$(Configuration)\</OutputPath>
         <DocumentationFile>..\..\Build\GC_$(GCADVersion)_$(Configuration)\Fs.Fox.Gcad.xml</DocumentationFile>
     </PropertyGroup>
 
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
         <DebugType>none</DebugType>
         <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
         <OutputPath>..\..\Build\GC_$(GCADVersion)_$(Configuration)\</OutputPath>

@@ -19,14 +19,14 @@
         <PackageReleaseNotes>增加CI流程支持，完善NuGet包信息</PackageReleaseNotes>
     </PropertyGroup>
 
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
         <DebugType>none</DebugType>
         <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
         <OutputPath>..\..\Build\ZW_$(ZWCADVersion)_$(Configuration)\</OutputPath>
         <DocumentationFile>..\..\Build\ZW_$(ZWCADVersion)_$(Configuration)\Fs.Fox.ZwCad.xml</DocumentationFile>
     </PropertyGroup>
 
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
         <DebugType>none</DebugType>
         <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
         <OutputPath>..\..\Build\ZW_$(ZWCADVersion)_$(Configuration)\</OutputPath>

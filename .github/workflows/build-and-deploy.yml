@@ -54,7 +54,7 @@ jobs:
             Write-Host "Building $prefix - Debug..."
             msbuild $csproj '/t:Restore;Build' `
               /p:OutputPath="..\..\Build\${prefix}_Debug\" `
-              /p:Configuration=Debug /p:Platform="Any CPU" /verbosity:minimal
+              /p:Configuration=Debug /p:Platform=x64 /verbosity:minimal
             if ($LASTEXITCODE -ne 0) {
               throw "$prefix Debug build failed with exit code ${LASTEXITCODE}."
             }
@@ -62,7 +62,7 @@ jobs:
             Write-Host "Building $prefix - Release..."
             msbuild $csproj '/t:Restore;Build' `
               /p:OutputPath="..\..\Build\${prefix}_Release\" `
-              /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
+              /p:Configuration=Release /p:Platform=x64 /verbosity:minimal
             if ($LASTEXITCODE -ne 0) {
               throw "$prefix Release build failed with exit code ${LASTEXITCODE}."
             }
@@ -72,13 +72,13 @@ jobs:
 
           function Build-DotNet([string]$csproj, [string]$prefix) {
             Write-Host "Building $prefix - Debug..."
-            dotnet build $csproj --configuration Debug
+            dotnet build $csproj --configuration Debug -p:Platform=x64
             if ($LASTEXITCODE -ne 0) {
               throw "$prefix Debug build failed with exit code ${LASTEXITCODE}."
             }
             
             Write-Host "Building $prefix - Release..."
-            dotnet build $csproj --configuration Release
+            dotnet build $csproj --configuration Release -p:Platform=x64
             if ($LASTEXITCODE -ne 0) {
               throw "$prefix Release build failed with exit code ${LASTEXITCODE}."
             }
@@ -90,7 +90,7 @@ jobs:
             foreach ($configuration in @('Debug', 'Release')) {
               Write-Host "Building $name - $configuration..."
               msbuild $csproj '/t:Restore;Build' `
-                /p:Configuration=$configuration /p:Platform="Any CPU" /verbosity:minimal
+                /p:Configuration=$configuration /p:Platform=x64 /verbosity:minimal
               if ($LASTEXITCODE -ne 0) {
                 throw "$name $configuration build failed with exit code ${LASTEXITCODE}."
               }
