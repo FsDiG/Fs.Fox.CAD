@@ -887,7 +887,9 @@ namespace Dreambuild.AutoCAD
             {
                 Description = description,
                 RootFolder = Environment.SpecialFolder.Desktop,
-                ShowNewFolderButton = true
+                ShowNewFolderButton = true,
+                // 启用 AutoUpgradeEnabled 使 Windows Vista/7/10/11 优先展示带地址栏的新式文件夹选择器
+                AutoUpgradeEnabled = true,
             };
 
             if (fbd.ShowDialog() == DialogResult.OK)
