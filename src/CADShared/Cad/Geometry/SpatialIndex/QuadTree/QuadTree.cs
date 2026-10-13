@@ -82,7 +82,7 @@ public class QuadTree<TEntity> where TEntity : QuadEntity
              * 替换之后可能仍然不包含图元边界,再循环计算.
              */
             var sq_Left = _rootNode._X;
-            var sq_Botton = _rootNode._Y;
+            var sq_Bottom = _rootNode._Y;
             var sq_Right = _rootNode._Right;
             var sq_Top = _rootNode._Top;
             if (ent._Y >= _rootNode._Y)// 上↑增殖
@@ -106,17 +106,17 @@ public class QuadTree<TEntity> where TEntity : QuadEntity
                 {
                     // 右下↘增殖
                     sq_Right += _rootNode.Width;
-                    sq_Botton -= _rootNode.Height;
+                    sq_Bottom -= _rootNode.Height;
                 }
                 else
                 {
                     // 左下↙增殖
                     sq_Left -= _rootNode.Width;
-                    sq_Botton -= _rootNode.Height;
+                    sq_Bottom -= _rootNode.Height;
                 }
             }
             // 扩大2次方
-            var rectSquare = new Rect(sq_Left, sq_Botton, sq_Right, sq_Top);
+            var rectSquare = new Rect(sq_Left, sq_Bottom, sq_Right, sq_Top);
 
             // 四叉树的旧根要作为四分之一插入
             // 新根中计算原根
