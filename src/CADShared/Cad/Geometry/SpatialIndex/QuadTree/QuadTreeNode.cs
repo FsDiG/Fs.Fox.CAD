@@ -55,7 +55,7 @@ public class QuadTreeNode<TEntity>
     /// </summary>
     public int Depth;
 
-    // 注意,内容没有限制:这不是 impement 四叉树的标准方法
+    // 注意,内容没有限制:这不是 implement 四叉树的标准方法
     /// (节点图元是交叉线压着的,并不是矩形范围内全部,因为这是四叉树的特性决定)
     /// <summary>
     /// 本节点:内容
@@ -579,17 +579,17 @@ public class QuadTreeNode<TEntity>
             // 通过 所在节点 找 邻居节点,
             // 拿到 邻居节点 下面的所有内容(图元)
             // 内容可能是空的,再从邻居那往北找...如果找到了四叉树最外层,仍然没有内容,退出循环
-            var neiborNode = FindNeiborNode(queryNode, findMode);
-            if (neiborNode is null)
+            var neighborNode = FindNeiborNode(queryNode, findMode);
+            if (neighborNode is null)
                 continue;
-            if (neiborNode.CountSubTree > 0)
+            if (neighborNode.CountSubTree > 0)
             {
-                resultEntity = GetNearestNeighbor(neiborNode, findMode, queryArea);
+                resultEntity = GetNearestNeighbor(neighborNode, findMode, queryArea);
                 break;
             }
-            if (neiborNode.Parent is null)// 如果找到了四叉树最外层,仍然没有内容,退出循环
+            if (neighborNode.Parent is null)// 如果找到了四叉树最外层,仍然没有内容,退出循环
                 break;
-            queryNode = neiborNode;
+            queryNode = neighborNode;
         }
 
         return resultEntity;
@@ -710,17 +710,17 @@ public class QuadTreeNode<TEntity>
                 // 否则就是上格
                 // 找父节点的北方邻居..也就是在爷节点上面找
                 // 递归,此时必然是 下格,就必然返回 上格,然后退出递归
-                var parentNeibor = FindNeiborNode(parent, QuadTreeFindMode.Top);
+                var parentNeighbor = FindNeiborNode(parent, QuadTreeFindMode.Top);
                 // 父节点的北方邻居 无 子节点
-                if (parentNeibor is null || parentNeibor.RightTopTree is null)
-                    return parentNeibor;// 返回父节点的北方邻居,比较大
+                if (parentNeighbor is null || parentNeighbor.RightTopTree is null)
+                    return parentNeighbor;// 返回父节点的北方邻居,比较大
                                         // 父节点的北方邻居 有 子节点,剩下条件就只有这两
 
                 // 如果直接返回,那么是(相同或更大),
                 // 而找邻近图元需要的是这个(相同或更大)下面的图元,在外面对这个格子内图元用坐标分析就好了
                 if (tar == parent.LeftTopTree)
-                    return parentNeibor.LeftBottomTree;
-                return parentNeibor.RightBottomTree;
+                    return parentNeighbor.LeftBottomTree;
+                return parentNeighbor.RightBottomTree;
             }
             case QuadTreeFindMode.Bottom:
             {
@@ -728,12 +728,12 @@ public class QuadTreeNode<TEntity>
                     return parent.LeftBottomTree;
                 if (tar == parent.RightTopTree)
                     return parent.RightBottomTree;
-                var parentNeibor = FindNeiborNode(parent, QuadTreeFindMode.Bottom);
-                if (parentNeibor is null || parentNeibor.RightTopTree is null)
-                    return parentNeibor;
+                var parentNeighbor = FindNeiborNode(parent, QuadTreeFindMode.Bottom);
+                if (parentNeighbor is null || parentNeighbor.RightTopTree is null)
+                    return parentNeighbor;
                 if (tar == parent.LeftBottomTree)
-                    return parentNeibor.LeftTopTree;
-                return parentNeibor.RightTopTree;
+                    return parentNeighbor.LeftTopTree;
+                return parentNeighbor.RightTopTree;
             }
             case QuadTreeFindMode.Right:
             {
@@ -741,10 +741,10 @@ public class QuadTreeNode<TEntity>
                     return parent.RightTopTree;
                 if (tar == parent.LeftBottomTree)
                     return parent.RightBottomTree;
-                var parentNeibor = FindNeiborNode(parent, QuadTreeFindMode.Right);
+                var parentNeighbor = FindNeiborNode(parent, QuadTreeFindMode.Right);
                 if (tar == parent.RightTopTree)
-                    return parentNeibor?.LeftTopTree;
-                return parentNeibor?.LeftBottomTree;
+                    return parentNeighbor?.LeftTopTree;
+                return parentNeighbor?.LeftBottomTree;
             }
             case QuadTreeFindMode.Left:
             {
@@ -752,10 +752,10 @@ public class QuadTreeNode<TEntity>
                     return parent.LeftTopTree;
                 if (tar == parent.RightBottomTree)
                     return parent.LeftBottomTree;
-                var parentNeibor = FindNeiborNode(parent, QuadTreeFindMode.Left);
+                var parentNeighbor = FindNeiborNode(parent, QuadTreeFindMode.Left);
                 if (tar == parent.LeftTopTree)
-                    return parentNeibor?.RightTopTree;
-                return parentNeibor?.RightBottomTree;
+                    return parentNeighbor?.RightTopTree;
+                return parentNeighbor?.RightBottomTree;
             }
         }
         return null;

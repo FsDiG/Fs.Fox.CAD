@@ -22,7 +22,7 @@ public sealed class SingleKeyWordHook : IDisposable
     /// </summary>
     private readonly HashSet<Keys> _keyWords;
 
-    private bool _isResponsed;
+    private bool _hasResponded;
     private bool _working;
     private Keys _key;
     private readonly SingleKeyWordWorkType _workType;
@@ -44,7 +44,7 @@ public sealed class SingleKeyWordHook : IDisposable
     /// <summary>
     /// 是否响应了
     /// </summary>
-    public bool IsResponsed => _isResponsed && _working;
+    public bool IsResponsed => _hasResponded && _working;
 
     #endregion
 
@@ -57,7 +57,7 @@ public sealed class SingleKeyWordHook : IDisposable
     public SingleKeyWordHook(SingleKeyWordWorkType workType = SingleKeyWordWorkType.ESCAPE)
     {
         IsDisposed = false;
-        _isResponsed = false;
+        _hasResponded = false;
         _keyWords = [];
         _key = Keys.None;
         _working = true;
@@ -107,7 +107,7 @@ public sealed class SingleKeyWordHook : IDisposable
     public void Reset()
     {
         _key = Keys.None;
-        _isResponsed = false;
+        _hasResponded = false;
     }
 
     /// <summary>
@@ -146,7 +146,7 @@ public sealed class SingleKeyWordHook : IDisposable
         if (IsResponsed) return; //放 e.Handled 后是避免在非 ENTER 模式时长按造成动态输入框偶发性闪现关键字以至轻微卡顿问题
 
         _key = tempKey;
-        _isResponsed = true; // 此bool是防止按键被长按时出错
+        _hasResponded = true; // 此bool是防止按键被长按时出错
         
         switch (_workType)
         {
