@@ -28,9 +28,11 @@ public static class PolylineRegionExBeta
         if (source is null) throw new ArgumentNullException(nameof(source));
         PolylineContainmentCoreBeta.ValidateTolerance(tolerance);
         if (!source.Closed) throw new ArgumentException("The source polyline must be closed.", nameof(source));
-        if (!Finite(point) || !PolylineContainmentCoreBeta.Finite(source.Elevation) ||
-            !PolylineContainmentCoreBeta.Finite(source.Normal.X) || !PolylineContainmentCoreBeta.Finite(source.Normal.Y) ||
-            !PolylineContainmentCoreBeta.Finite(source.Normal.Z) || source.Normal == Vector3d.Zero)
+        var normal = source.Normal;
+        var elevation = source.Elevation;
+        if (!Finite(point) || !PolylineContainmentCoreBeta.Finite(elevation) ||
+            !PolylineContainmentCoreBeta.Finite(normal.X) || !PolylineContainmentCoreBeta.Finite(normal.Y) ||
+            !PolylineContainmentCoreBeta.Finite(normal.Z) || (normal.X == 0 && normal.Y == 0 && normal.Z == 0))
             throw new ArgumentException("The point and polyline plane must be finite and valid.");
         var vertices = new PolylineVertexDataBeta[source.NumberOfVertices];
         for (var i = 0; i < vertices.Length; i++)
@@ -39,9 +41,9 @@ public static class PolylineRegionExBeta
             vertices[i] = new PolylineVertexDataBeta(vertex.X, vertex.Y, source.GetBulgeAt(i));
         }
         var loop = PolylineContainmentCoreBeta.Prepare(vertices);
-        var ocs = point.TransformBy(Matrix3d.WorldToPlane(source.Normal));
+        var ocs = point.TransformBy(Matrix3d.WorldToPlane(normal));
         if (!Finite(ocs)) throw new InvalidOperationException("The query cannot be represented in OCS.");
-        if (Math.Abs(ocs.Z - source.Elevation) > tolerance)
+        if (Math.Abs(ocs.Z - elevation) > tolerance)
             return PolylinePointRelationBeta.OffPlane;
         return loop.Classify(ocs.X, ocs.Y, tolerance);
     }

@@ -48,7 +48,7 @@
 
 ## 含弧闭合线的点关系
 
-`source.GetPointRelationBeta(wcsPoint, tolerance)`返回 `PolylinePointRelationBeta`：`Inside`、`Outside`、`Boundary` 或 `OffPlane`。输入必须 `Closed = true`，至少两个顶点；支持两顶点双半圆构成的完整圆。宽度和 Thickness 不参与区域，按多段线基准平面的直线/圆弧中心线边界查询。
+[`PolylineRegionExBeta`](../../src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineRegionExBeta.cs) 的 `source.GetPointRelationBeta(wcsPoint, tolerance)` 返回 `PolylinePointRelationBeta`：`Inside`、`Outside`、`Boundary` 或 `OffPlane`。输入必须 `Closed = true`，至少两个顶点；支持两顶点双半圆构成的完整圆。宽度和 Thickness 不参与区域，按多段线基准平面的直线/圆弧中心线边界查询。
 
 - 查询点使用 **WCS**。先完整读取并验证源的全部坐标、bulge 和几何段，再按源 Normal/Elevation 转换到 OCS。因此即使点明显在平面外，非法源仍抛异常，不能绕过验证。
 - 到基准平面的距离大于容差时返回 `OffPlane`；其余点投影到 OCS 查询。平面距离与平面内边界距离分别使用同一有限非负容差，默认 `1e-6`，允许零；它们不是合并的三维欧氏距离。
@@ -69,7 +69,7 @@
 - [直接链接生产核心的测试](../../tests/PolylineBeta.CoreTests/PolylineBeta.CoreTests.csproj)：`dotnet run --project tests/PolylineBeta.CoreTests/PolylineBeta.CoreTests.csproj --configuration Release`。覆盖手算圆弧/宽度、反向两次恢复、闭合起点、清理误差界限、四种连接端点、桥接宽度、歧义和失败输出；圆角覆盖顺逆绕序、凹角、首末角、共享段预算、恒定宽度、指定半径与切向、共线/折返及数值限制。
 - [宿主验收命令](../../tests/TestShared/TestPolylineBeta.cs)：`Test_PolylineBeta`。仅使用临时实体和临时数据库，检查非默认 OCS、实际弧长/圆角半径、只读输入和对象归属，不写入当前图纸。新增圆角场景的编译与真实宿主执行单独记录，未执行保持 `Not run`。
 - [点关系生产核心测试](../../tests/PolylineRegionBeta.CoreTests/PolylineRegionBeta.CoreTests.csproj)：`dotnet run --project tests/PolylineRegionBeta.CoreTests/PolylineRegionBeta.CoreTests.csproj --configuration Release`。直接链接生产实现，覆盖圆/主弧解析样例、同圆异弧、切线、凸度范围阈值、浅弧、旋转/平移/缩放/反向、偶奇填充及独立圆盘切割判据。
-- 同一宿主测试文件的 `Test_PolylineRegionBeta` 仅使用临时实体和临时数据库，检查非默认 OCS、平面外关系、平面/边界容差、完整源验证与只读归属；当前编译及真实 CAD 执行均为 `Not run`。
-- 本次圆角增量仅运行对应的生产核心测试；没有重复全部发布目标构建，也没有运行 CAD。全部发布目标的集成构建和最终证据由[迁移清单](../zfgk-migration-inventory.md)统一记录。
+- 同一宿主测试文件的 `Test_PolylineRegionBeta` 仅使用临时实体和临时数据库，检查非默认 OCS、平面外关系、平面/边界容差、完整源验证与只读归属；已在四个代表目标编译，真实 CAD 执行仍为 `Not run`。
+- 圆角及点关系增量分别运行对应生产核心测试，集成后集中编译受影响的四个代表目标；没有逐次重跑全部发布组合，也没有运行 CAD。首轮完整构建和本轮增量证据由[迁移清单](../zfgk-migration-inventory.md)统一记录。
 
 段长、顶点数据快照和采样继续使用 Fox 的 [`PolylineEx`](../../src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineEx.cs)；现有单角编辑继续使用 [`CurveEx`](../../src/CADShared/Cad/Database/Entities/Curves/CurveEx.cs)。

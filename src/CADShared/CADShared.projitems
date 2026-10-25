@@ -633,6 +633,14 @@
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>1010</FsFoxOrder>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Curves\Polylines\PolylineContainmentCoreBeta.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>1020</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Curves\Polylines\PolylineRegionExBeta.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>1030</FsFoxOrder>
+    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\Ordering\OrderingBetaCore.cs">
       <FsFoxModule>Cad.Geometry</FsFoxModule>
       <FsFoxOrder>1100</FsFoxOrder>
@@ -668,6 +676,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Meshes\PolyFaceMeshBuilderBeta.cs">
       <FsFoxModule>Cad.Database</FsFoxModule>
       <FsFoxOrder>1311</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Blocks\BlockIntersectionExBeta.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>1320</FsFoxOrder>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Cad\Application\Graphics\DwgPreviewCoreBeta.cs">
       <FsFoxModule>Cad.Application</FsFoxModule>

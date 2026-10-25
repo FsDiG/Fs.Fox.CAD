@@ -41,7 +41,7 @@ ZWCAD 2022 的限制由本机 ZRX 2022 SDK 元数据及编译结果确认；GSta
 
 | 命令 | 场景 |
 | --- | --- |
-| `Test_TextMetricsBeta` | 独立背景数据库、Arial 样式，字高/宽度缩放、空格、转义、花括号文本、空串及样式只读。 |
+| `Test_TextMetricsBeta` | 独立背景数据库、Arial 样式，字高/宽度缩放、空格、转义、花括号文本、空串及样式只读；外层写事务中测量成功/类型校验失败后，事务身份、临时样式值及工作数据库保持。 |
 | `Test_TextMetricsBetaInvalidInput` | 非有限数、控制字符、无效/错误类型/跨数据库样式，工作数据库恢复。 |
 | `Test_TextMetricsBetaMissingFont` | 随机缺失 SHX，拒绝失败或替代的字体结果，保持原样式及工作数据库。 |
 

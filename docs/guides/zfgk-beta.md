@@ -8,7 +8,9 @@
 
 | 能力 | 入口 | 使用说明 |
 | --- | --- | --- |
-| 多段线整理、方向与连接 | `PolylineExBeta.CreateReversedBeta`、`CreateCleanedBeta`、`TryCreateJoinedBeta` | [多段线 Beta](polyline-beta.md)；返回调用方拥有的新内存实体，输入不被修改或消费。 |
+| 多段线整理、方向、连接与批量圆角 | `PolylineExBeta.CreateReversedBeta`、`CreateCleanedBeta`、`TryCreateJoinedBeta`、`CreateFilletedBeta` | [多段线 Beta](polyline-beta.md)；返回调用方拥有的新内存实体，输入不被修改或消费；圆角支持闭合首末角并检查共享边预算。 |
+| 含弧闭合多段线点关系 | `PolylineRegionExBeta.GetPointRelationBeta` | [多段线 Beta](polyline-beta.md)；解析处理圆弧，区分内、外、边界和平面外；不按顶点直连替代。 |
+| 嵌套块内曲线求交 | `BlockIntersectionExBeta.GetCurveIntersectionsBeta` | [块求交 Beta](block-intersections-beta.md)；显式只读事务，累计变换后使用真实三维曲线求交，返回独立只读点快照。 |
 | 行列与曲线排序、邻近范围组合 | `PointOrderingBeta`、`CurveOrderingExBeta`、`ExtentGroupingBeta` | [排序与范围 Beta](ordering-beta.md)；返回索引或独立结果，保留重复输入，排序与分组规则明确。 |
 | 按文字样式测量单行字符串 | `TextMetricsBeta.MeasureSingleLine` | [文字测量 Beta](text-metrics-beta.md)；显式数据库与样式，处理字体失败及替代，不是 MText 排版。 |
 | 三角形坡度、坡向、重心；多面网格构造 | `Triangle3dBeta`、`PolyFaceMeshBuilderBeta.Append` | [几何与构造 Beta](geometry-construction-beta.md)；三维重心保留 Z，网格索引先完整验证。 |
@@ -20,6 +22,7 @@
 
 - 多段线工厂只复制文档明确列出的几何字段，不等价于完整数据库对象克隆；输出的释放或落库由调用方负责。
 - 排序和三角形计算不提交数据库；网格构造使用显式目标数据库和调用方事务，调用方负责提交、异常时中止。
+- 含弧点关系忽略宽度/厚度，按声明的平面和数值范围查询；块求交查询存储曲线，动态块、外参、阵列及旧式多段线明确拒绝，不等同于屏幕可见几何求交。
 - 文字测量与图片预览依赖真实 CAD 宿主上下文；不支持在普通后台线程中并发调用。支持范围以各能力指南为准。
 - 文字测量在 `ZW_2022`、`GC_2022`、`GC_2023` 目标中明确抛出 `NotSupportedException`。DWG 预览仅在 AutoCAD 编译目标开放，不为其他 SDK 提供伪实现。
 

@@ -8,6 +8,8 @@
 
 `TryGetSlopeAndAspect` 返回坡度角（度），坡向按 +Y 为北、+X 为东、从北顺时针计量下坡方向。顶点绕序不影响结果。水平面成功返回坡度 0、坡向 NaN；共线、重复、近垂直或数值精度不足时返回 false，两个输出均为 NaN。容差必须为 (0,1) 中的有限数值：退化判断使用两倍面积与最长边平方的比值，近水平/垂直判断使用正弦阈值，均与首顶点选择无关。
 
+坡度的成功范围严格为 [0,90)，坡向为 [0,360)。近北坡向加一周后若舍入为 360，归一为 0；非垂直法线若因精度不足使坡度舍入为 90，则返回 false 并保留两个 NaN。
+
 该类不操作数据库。数值核心通过缩放后计算避免普通大、小尺度输入的溢出和下溢；不能从浮点数已经丢失的坐标差恢复精度。
 
 ## 多面网格
@@ -23,5 +25,5 @@
 ## 验证
 
 - [生产数值核心测试](../../tests/GeometryBeta.CoreTests/GeometryBeta.CoreTests.csproj)直接链接生产源码，覆盖坡度单位、坡向、绕序、退化、极端尺度、网格索引转换和完整预校验。
-- [宿主命令](../../tests/TestShared/TestGeometryConstructionBeta.cs)：`Test_GeometryConstructionBeta`，使用临时数据库并中止事务，验证对象归属和失败不写入。
+- [宿主命令](../../tests/TestShared/TestGeometryConstructionBeta.cs)：`Test_GeometryConstructionBeta`，使用临时数据库并中止事务，验证对象归属；异库事务/空间、非最上层事务和惰性 faces 中途抛错均应保持原事务且不写入，枚举异常原样传播。
 - 实际 CAD 宿主执行：`Not run`。构建矩阵与最终检查记录见[迁移清单](../zfgk-migration-inventory.md)。

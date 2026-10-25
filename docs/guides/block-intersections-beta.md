@@ -39,7 +39,7 @@
 
 | 证据 | 状态 |
 | --- | --- |
-| 新增生产与命令程序集编译 | 待集成人统一执行代表目标检查 |
+| 新增生产与命令程序集编译 | AutoCAD 2025 Debug、ZWCAD 2022 Release、GStarCAD 2022 Release / 2026 Debug 通过；见[增量记录](../zfgk-migration-inventory.md#本轮增量验证) |
 | AutoCAD / ZWCAD / GStarCAD 命令实际运行 | `Not run` |
 | 动态块、外参、阵列及旧式多段线 | 首版明确拒绝 |
 | 循环定义、很深的有效定义链、非均匀变换异常清理 | 需在允许对应输入的实际宿主补充验收 |

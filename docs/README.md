@@ -77,7 +77,8 @@ front matter schema 和自动校验尚未落地。在迁移完成前，本页状
 | `governance.documentation` | `current` | [文档与代码协同治理方案](documentation-architecture.md) | maintainer | 唯一产品内容源、展示/部署仓库边界、公开范围、版本发布和 Vibe Coding 上下文约定。 |
 | `guide.cad-ui-text` | `current` | [CAD/UI 文案风格指南](guides/cad-ui-text-style-guide.md) | maintainer | CAD 命令行和桌面 UI 的用户可见文字规则。 |
 | `guide.zfgk-beta` | `current` | [Zfgk Beta 能力总览](guides/zfgk-beta.md) | user, maintainer | 新增能力入口、对象归属、宿主范围及验证证据。 |
-| `guide.polyline-beta` | `current` | [多段线 Beta](guides/polyline-beta.md) | user, maintainer | 非破坏性的整理、反向和唯一端点连接。 |
+| `guide.polyline-beta` | `current` | [多段线 Beta](guides/polyline-beta.md) | user, maintainer | 非破坏性的整理、反向、唯一端点连接、批量/闭合圆角及含弧点关系。 |
+| `guide.block-intersections-beta` | `current` | [块内曲线求交 Beta](guides/block-intersections-beta.md) | user, maintainer | 显式只读事务、嵌套变换、真实三维交点与支持类型边界。 |
 | `guide.ordering-beta` | `current` | [排序与范围 Beta](guides/ordering-beta.md) | user, maintainer | 稳定索引排序、固定锚点行列分组与原始范围连通分量。 |
 | `guide.text-metrics-beta` | `current` | [文字测量 Beta](guides/text-metrics-beta.md) | user, maintainer | 显式样式、字体失败、单行语义和旧 SDK 限制。 |
 | `guide.geometry-construction-beta` | `current` | [几何与构造 Beta](guides/geometry-construction-beta.md) | user, maintainer | 三角形单位/退化和显式事务内的网格构造。 |

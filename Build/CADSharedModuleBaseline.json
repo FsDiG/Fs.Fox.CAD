@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
   "normalizedSourceHash": "sha256-utf8-lf",
-  "expectedCompileCount": 156,
+  "expectedCompileCount": 159,
   "moduleCounts": {
     "Foundation": 11,
     "Platform.Windows": 15,
     "Cad.Interop": 3,
     "Cad.Geometry": 20,
-    "Cad.Database": 51,
+    "Cad.Database": 54,
     "Cad.Editor": 23,
     "Cad.Application": 11,
     "Cad.Runtime": 14,
@@ -1342,6 +1342,22 @@
       "sourceSha256": "453f9fb53cb2561aece784c8e1e0c26bafc90dacacdc5cfd0d3d9067da793f3a"
     },
     {
+      "order": "1020",
+      "fileName": "PolylineContainmentCoreBeta.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "cbeddc388865a1039e5beb3fb927fb39d9d2c7e8580daa8bcf55cc6265eea1ea"
+    },
+    {
+      "order": "1030",
+      "fileName": "PolylineRegionExBeta.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "9779f6b26ab9ed43bf370deb93115393aeedf0db333caa1bdb60687fde6c5057"
+    },
+    {
       "order": "1100",
       "fileName": "OrderingBetaCore.cs",
       "module": "Cad.Geometry",
@@ -1412,6 +1428,14 @@
       "boundaryDebt": [],
       "boundaryFindings": [],
       "sourceSha256": "56f7bafe19f51a22dd713637b44432bae22fc5f66ca732759499fca877faac3f"
+    },
+    {
+      "order": "1320",
+      "fileName": "BlockIntersectionExBeta.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "2b3baa0d89d165de6710defd660085b009adcd013c2c9207cae299cf9d459083"
     },
     {
       "order": "1400",
