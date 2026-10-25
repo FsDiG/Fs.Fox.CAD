@@ -1,9 +1,11 @@
 # 应用上下文、输入与 Editor 定位
 
 > 状态：current；受众：maintainer；稳定 ID：`reference.source-application-editor`<br>
-> 基线：[源码检索总入口](README.md)；覆盖 `Cad/Application` 9 个和 `Cad/Editor` 23 个共享编译文件。
+> 基线：[源码检索总入口](README.md)；覆盖 `Cad/Application` 11 个和 `Cad/Editor` 23 个共享编译文件。
 
 按需要跳转：[应用上下文](#application)、[系统变量](#system-variables)、[Idle](#idle)、[Editor](#editor)、[选择过滤](#selection)、[输入](#input)、[Jig](#jig)、[显示与命令](#display-command)。
+
+Beta 外部 DWG 预览另见 [DwgPreviewBeta.cs](../../src/CADShared/Cad/Application/Graphics/DwgPreviewBeta.cs)及[使用说明](../guides/dwg-preview-beta.md)；其路径、尺寸和相机拟合核心为 [DwgPreviewCoreBeta.cs](../../src/CADShared/Cad/Application/Graphics/DwgPreviewCoreBeta.cs)。公开预览入口只在 AutoCAD 编译目标提供，不修改当前文档视图；生产核心回归与真实渲染分别记录。
 
 <a id="application"></a>
 

@@ -44,13 +44,13 @@ public sealed class Triangle3dBeta
     /// <summary>计算相对 XY 平面的坡度角和下坡方向；顶点顺序不影响结果。</summary>
     /// <param name="slopeDegrees">成功时为 [0,90) 度的坡度角；失败时为 NaN。</param>
     /// <param name="aspectDegrees">下坡方向从 +Y 起顺时针计角，范围 [0,360)；水平面或失败时为 NaN。</param>
-    /// <param name="sineTolerance">用于共线、近垂直及近水平判断的无量纲正弦容差，必须在 0 与 1 之间。</param>
+    /// <param name="relativeTolerance">无量纲相对容差，必须在 0 与 1 之间；退化判断使用两倍面积除以最长边平方，近水平/垂直使用正弦阈值。</param>
     /// <returns>非退化且非垂直的地形平面返回 true；水平面也返回 true，但没有坡向。</returns>
     /// <remarks>+X 视为东、+Y 视为北、+Z 向上。坐标范围极端且精度不足时也可能返回 false。</remarks>
     /// <exception cref="ArgumentOutOfRangeException">容差非法或不是有限数值。</exception>
     public bool TryGetSlopeAndAspect(out double slopeDegrees, out double aspectDegrees,
-        double sineTolerance = 1e-12) => TriangleMathBeta.TrySlopeAndAspect(
-        Data(First), Data(Second), Data(Third), sineTolerance, out slopeDegrees, out aspectDegrees);
+        double relativeTolerance = 1e-12) => TriangleMathBeta.TrySlopeAndAspect(
+        Data(First), Data(Second), Data(Third), relativeTolerance, out slopeDegrees, out aspectDegrees);
 
     private static TrianglePointDataBeta Data(Point3d point) => new(point.X, point.Y, point.Z);
 }

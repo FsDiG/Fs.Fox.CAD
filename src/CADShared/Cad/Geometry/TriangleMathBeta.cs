@@ -30,30 +30,44 @@ internal static class TriangleMathBeta
         Mean(a.X, b.X, c.X), Mean(a.Y, b.Y, c.Y), Mean(a.Z, b.Z, c.Z));
 
     internal static bool TrySlopeAndAspect(TrianglePointDataBeta a, TrianglePointDataBeta b,
-        TrianglePointDataBeta c, double sineTolerance, out double slopeDegrees, out double aspectDegrees)
+        TrianglePointDataBeta c, double relativeTolerance, out double slopeDegrees, out double aspectDegrees)
     {
-        if (!Finite(sineTolerance) || sineTolerance <= 0 || sineTolerance >= 1)
-            throw new ArgumentOutOfRangeException(nameof(sineTolerance), "容差必须在 0 与 1 之间。");
+        if (!Finite(relativeTolerance) || relativeTolerance <= 0 || relativeTolerance >= 1)
+            throw new ArgumentOutOfRangeException(nameof(relativeTolerance), "容差必须在 0 与 1 之间。");
 
         slopeDegrees = double.NaN;
         aspectDegrees = double.NaN;
         // Subtract before scaling so a large shared offset does not erase small coordinates on other axes.
-        var u = Difference(a, b);
-        var v = Difference(a, c);
-        var ux = u.X;
-        var uy = u.Y;
-        var uz = u.Z;
-        var vx = v.X;
-        var vy = v.Y;
-        var vz = v.Z;
-        // Normalize each edge separately so a short edge does not make the cross product underflow.
-        if (!Normalize(ref ux, ref uy, ref uz) || !Normalize(ref vx, ref vy, ref vz))
+        var u = Difference(a, b, false);
+        var v = Difference(a, c, false);
+        var w = Difference(b, c, false);
+        if (!FinitePoint(u) || !FinitePoint(v) || !FinitePoint(w))
+        {
+            // Use the same factor for every edge, retaining their relative lengths.
+            u = Difference(a, b, true);
+            v = Difference(a, c, true);
+            w = Difference(b, c, true);
+        }
+        var scale = Math.Max(MaxAbs(u), Math.Max(MaxAbs(v), MaxAbs(w)));
+        if (scale == 0)
             return false;
+        var ux = u.X / scale;
+        var uy = u.Y / scale;
+        var uz = u.Z / scale;
+        var vx = v.X / scale;
+        var vy = v.Y / scale;
+        var vz = v.Z / scale;
+        var wx = w.X / scale;
+        var wy = w.Y / scale;
+        var wz = w.Z / scale;
+        var longestSquared = Math.Max(ux * ux + uy * uy + uz * uz,
+            Math.Max(vx * vx + vy * vy + vz * vz, wx * wx + wy * wy + wz * wz));
         var nx = uy * vz - uz * vy;
         var ny = uz * vx - ux * vz;
         var nz = ux * vy - uy * vx;
         var normalLength = Math.Sqrt(nx * nx + ny * ny + nz * nz);
-        if (normalLength <= sineTolerance || Math.Abs(nz) <= normalLength * sineTolerance)
+        // Twice-area / longest-edge-squared is invariant under every permutation of the vertices.
+        if (normalLength <= longestSquared * relativeTolerance || Math.Abs(nz) <= normalLength * relativeTolerance)
             return false; // Collinear or vertical: not a single-valued terrain plane z(x,y).
         if (nz < 0)
         {
@@ -62,7 +76,7 @@ internal static class TriangleMathBeta
             nz = -nz;
         }
         var horizontal = Math.Sqrt(nx * nx + ny * ny);
-        if (horizontal <= normalLength * sineTolerance)
+        if (horizontal <= normalLength * relativeTolerance)
         {
             slopeDegrees = 0;
             return true; // A horizontal plane has no downhill azimuth.
@@ -76,41 +90,38 @@ internal static class TriangleMathBeta
         return true;
     }
 
-    private static bool Normalize(ref double x, ref double y, ref double z)
+    private static TrianglePointDataBeta Difference(TrianglePointDataBeta a, TrianglePointDataBeta b, bool half)
     {
-        var scale = Math.Max(Math.Abs(x), Math.Max(Math.Abs(y), Math.Abs(z)));
-        if (scale == 0)
-            return false;
-        x /= scale;
-        y /= scale;
-        z /= scale;
-        var length = Math.Sqrt(x * x + y * y + z * z);
-        x /= length;
-        y /= length;
-        z /= length;
-        return true;
-    }
-
-    private static TrianglePointDataBeta Difference(TrianglePointDataBeta a, TrianglePointDataBeta b)
-    {
-        var x = b.X - a.X;
-        var y = b.Y - a.Y;
-        var z = b.Z - a.Z;
-        if (Finite(x) && Finite(y) && Finite(z))
-            return new TrianglePointDataBeta(x, y, z);
-        // Halving both endpoints yields a parallel finite edge when direct subtraction overflows.
-        return new TrianglePointDataBeta(b.X / 2 - a.X / 2, b.Y / 2 - a.Y / 2, b.Z / 2 - a.Z / 2);
+        return half
+            ? new TrianglePointDataBeta(b.X / 2 - a.X / 2, b.Y / 2 - a.Y / 2, b.Z / 2 - a.Z / 2)
+            : new TrianglePointDataBeta(b.X - a.X, b.Y - a.Y, b.Z - a.Z);
     }
 
     private static double Mean(double a, double b, double c)
     {
-        var mean = a / 3 + b / 3 + c / 3;
-        if (Finite(mean) && (mean != 0 || (a == 0 && b == 0 && c == 0)))
-            return mean;
-        // At the extreme ends, rounding of three thirds can overflow or underflow.
+        var sum = CompensatedSum(a, b, c);
+        if (Finite(sum))
+            return sum / 3;
+        // Normalize only if summing the finite inputs overflows; normal cancellation keeps its precision.
         var scale = Math.Max(Math.Abs(a), Math.Max(Math.Abs(b), Math.Abs(c)));
-        return ((a / scale + b / scale + c / scale) / 3) * scale;
+        return (CompensatedSum(a / scale, b / scale, c / scale) / 3) * scale;
     }
+
+    private static double CompensatedSum(double a, double b, double c)
+    {
+        var sum = a;
+        var next = sum + b;
+        var error = Math.Abs(sum) >= Math.Abs(b) ? (sum - next) + b : (b - next) + sum;
+        sum = next;
+        next = sum + c;
+        error += Math.Abs(sum) >= Math.Abs(c) ? (sum - next) + c : (c - next) + sum;
+        return next + error;
+    }
+
+    private static double MaxAbs(TrianglePointDataBeta point) =>
+        Math.Max(Math.Abs(point.X), Math.Max(Math.Abs(point.Y), Math.Abs(point.Z)));
+
+    private static bool FinitePoint(TrianglePointDataBeta point) => Finite(point.X) && Finite(point.Y) && Finite(point.Z);
 
     private static bool Finite(double value) => !double.IsNaN(value) && !double.IsInfinity(value);
 }

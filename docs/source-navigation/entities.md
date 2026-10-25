@@ -2,7 +2,7 @@
 
 > 状态：current；受众：maintainer；稳定 ID：`reference.source-entities`<br>
 > 基线与范围：[源码检索总入口](README.md)<br>
-> 覆盖 `Cad/Database/Entities` 的 17 个共享编译文件；容器与事务另见[数据库分册](database.md)。
+> 覆盖 `Cad/Database/Entities` 的 24 个共享编译文件；容器与事务另见[数据库分册](database.md)。
 
 阅读入口：[对象归属](#ownership)、[块](#blocks)、[包围框](#bounds)、[曲线](#curves)、[多段线](#polylines)、[文字](#text)、[填充](#hatch)、[面域](#region)。
 
@@ -127,5 +127,21 @@
 [RegionEx.cs](../../src/CADShared/Cad/Database/Entities/RegionEx.cs) 列入共享编译，但 `ToCurves` 被 `FSFOX_ENABLE_REGION_TO_CURVES` 保护，当前正式项目均未定义该符号。源码明确记录边界几何对象所有权、异常清理及 ZWCAD 2022 API 适配尚需处理。
 
 因此搜索到 `RegionEx.ToCurves` 只能定位保留实现，不能将其写成正式可用的公共能力。`ToDo/RegionExtensions.Centroid` 也不在当前共享编译清单。现行点与区域判断应看 [GeometryEx.PointOnRegion](geometry.md#points)，两者不是同一功能。
+
+## Zfgk 迁入的 Beta 实体能力
+
+下列源码参与共享编译，支持范围及对象归属见 [Beta 总览](../guides/zfgk-beta.md)。构建测试命令不等于真实宿主已运行。
+
+| 文件 | 主要入口与边界 |
+| --- | --- |
+| [PolylineExBeta.cs](../../src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineExBeta.cs) | `CreateReversedBeta`、`CreateCleanedBeta`、`TryCreateJoinedBeta`；借用输入，返回只含指定几何字段的新对象。 |
+| [PolylineCoreBeta.cs](../../src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineCoreBeta.cs) | 内部无 SDK 数值核心，处理凸度、段宽、保守整理与唯一端点连接；生产链接回归工程直接测试此文件。 |
+| [CurveOrderingExBeta.cs](../../src/CADShared/Cad/Database/Entities/Curves/CurveOrderingExBeta.cs) | `GetOrderAlongCurveBeta`；有限曲线上的最近位置，稳定返回输入索引，不延长路径。 |
+| [ExtentGroupingBeta.cs](../../src/CADShared/Cad/Database/Entities/Bounds/ExtentGroupingBeta.cs) | `GroupByProximity`、`ExtentGroupBeta`；原始 XY 框邻近连通分量，保留成员索引及完整 Z 范围。 |
+| [TextMetricsBeta.cs](../../src/CADShared/Cad/Database/Entities/Text/TextMetricsBeta.cs) | `MeasureSingleLine`；显式数据库和样式；旧 ZWCAD/GStarCAD 绑定明确报告不支持。 |
+| [PolyFaceMeshBuilderBeta.cs](../../src/CADShared/Cad/Database/Entities/Meshes/PolyFaceMeshBuilderBeta.cs) | `Append`；显式目标库、空间和调用方事务，所有输入先验证，宿主写入失败需中止事务。 |
+| [PolyFaceMeshDataBeta.cs](../../src/CADShared/Cad/Database/Entities/Meshes/PolyFaceMeshDataBeta.cs) | 内部面索引预验证和独立快照；只接受三角面、四边面，不静默截断多边形。 |
+
+验收入口：[TestPolylineBeta.cs](../../tests/TestShared/TestPolylineBeta.cs)、[TestOrderingBeta.cs](../../tests/TestShared/TestOrderingBeta.cs)、[TestTextMetricsBeta.cs](../../tests/TestShared/TestTextMetricsBeta.cs)、[TestGeometryConstructionBeta.cs](../../tests/TestShared/TestGeometryConstructionBeta.cs)。实际 CAD 执行均保持各能力指南记录的状态。
 
 返回[源码检索总入口](README.md)或[数据库分册](database.md)。

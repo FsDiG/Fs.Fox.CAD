@@ -53,6 +53,22 @@ var hugeCenter = TriangleMathBeta.Centroid(new(1e308, 0, 0), new(1e308, 0, 0), n
 Check(double.IsFinite(hugeCenter.X) && Math.Abs(hugeCenter.X / 1e308 - 1) < 1e-14, "centroid overflow prevention");
 var maxCenter = TriangleMathBeta.Centroid(new(double.MaxValue, 0, 0), new(double.MaxValue, 0, 0), new(double.MaxValue, 0, 0));
 Check(double.IsFinite(maxCenter.X), "centroid maximum finite inputs");
+var permutations = new[] { new[] { 0, 1, 2 }, new[] { 0, 2, 1 }, new[] { 1, 0, 2 }, new[] { 1, 2, 0 }, new[] { 2, 0, 1 }, new[] { 2, 1, 0 } };
+var skinny = new[] { origin, new TrianglePointDataBeta(1, 0, 1), new TrianglePointDataBeta(1, 1e-4, 1) };
+var cancellation = new[] { new TrianglePointDataBeta(1e16, 0, 0), new TrianglePointDataBeta(1, 0, 0), new TrianglePointDataBeta(-1e16, 0, 0) };
+foreach (var order in permutations)
+{
+    Check(!TriangleMathBeta.TrySlopeAndAspect(skinny[order[0]], skinny[order[1]], skinny[order[2]], 1e-3, out _, out _),
+        "degeneracy must not depend on the first vertex");
+    Check(TriangleMathBeta.TrySlopeAndAspect(skinny[order[0]], skinny[order[1]], skinny[order[2]], 1e-12, out slope, out aspect),
+        "skinny supported with sufficiently small tolerance");
+    Close(slope, 45, "skinny winding slope");
+    Close(aspect, 270, "skinny winding aspect");
+    Close(TriangleMathBeta.Centroid(cancellation[order[0]], cancellation[order[1]], cancellation[order[2]]).X, 1d / 3,
+        "centroid compensation retains cancellation residual");
+}
+var tinyCenter = TriangleMathBeta.Centroid(new(double.Epsilon, 0, 0), new(double.Epsilon, 0, 0), new(double.Epsilon, 0, 0));
+Check(tinyCenter.X == double.Epsilon, "subnormal centroid");
 
 var triangle = new[] { 0, 1, 2 };
 var copied = PolyFaceMeshDataBeta.ValidateAndCopyFaces(4, new[] { triangle, new[] { 0, 1, 2, 3 } });

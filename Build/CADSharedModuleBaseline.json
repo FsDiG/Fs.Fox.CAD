@@ -1,15 +1,15 @@
 {
   "schemaVersion": 1,
   "normalizedSourceHash": "sha256-utf8-lf",
-  "expectedCompileCount": 147,
+  "expectedCompileCount": 156,
   "moduleCounts": {
     "Foundation": 11,
     "Platform.Windows": 15,
     "Cad.Interop": 3,
-    "Cad.Geometry": 18,
-    "Cad.Database": 46,
+    "Cad.Geometry": 20,
+    "Cad.Database": 51,
     "Cad.Editor": 23,
-    "Cad.Application": 9,
+    "Cad.Application": 11,
     "Cad.Runtime": 14,
     "Cad.UI": 8
   },
@@ -1326,12 +1326,68 @@
       "sourceSha256": "bedbc78b4b0b49654969ffc71c245c59a243beb2979ff3cf3c35f2968e785e93"
     },
     {
+      "order": "1000",
+      "fileName": "PolylineCoreBeta.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "ed67963ec89ae63c560f9c3f9f86bd0b44af6a0745c9c5e1686052bf7e9fe463"
+    },
+    {
+      "order": "1010",
+      "fileName": "PolylineExBeta.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "188ff34b2dd50540463b92ab7e1db72987047eca3ac9a9ef35d0bf8704f82ad4"
+    },
+    {
+      "order": "1100",
+      "fileName": "OrderingBetaCore.cs",
+      "module": "Cad.Geometry",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "e60f180c6e44393a3958e5f7576d85b70998dead4d31b691559d5690070f50c7"
+    },
+    {
+      "order": "1110",
+      "fileName": "PointOrderingBeta.cs",
+      "module": "Cad.Geometry",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "fea12fb681638978a9b4f8f61be4cbd43fd423c7860c360c07188b89cac2a80d"
+    },
+    {
+      "order": "1120",
+      "fileName": "CurveOrderingExBeta.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "2650a7616147f977a300495e5c79860b167c92004acc108b77b455981c209019"
+    },
+    {
+      "order": "1130",
+      "fileName": "ExtentGroupingBeta.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "017dbad67e77c2a260a9ee02f37eaf2554471a2e1e1acc675b191c1739d619f8"
+    },
+    {
+      "order": "1200",
+      "fileName": "TextMetricsBeta.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "b4bdc0f05f174de24c3d191a731b978612a46c43a006bd6b643794bedcee09ad"
+    },
+    {
       "order": "1300",
       "fileName": "TriangleMathBeta.cs",
       "module": "Cad.Geometry",
       "boundaryDebt": [],
       "boundaryFindings": [],
-      "sourceSha256": "c6d07ee09e3be0c6a071e8f055afa6c2874a255d624b9a59af9349687fd8f2f6"
+      "sourceSha256": "3a601e182d554a674d263ac09ba4f7b36fb249a86076575cfdf450e719bcf2b7"
     },
     {
       "order": "1301",
@@ -1339,7 +1395,7 @@
       "module": "Cad.Geometry",
       "boundaryDebt": [],
       "boundaryFindings": [],
-      "sourceSha256": "28375b11ba80d08ca7dc6716ead10082bf5ff5f11489dff4dc65cd8cd9ecc874"
+      "sourceSha256": "1529097e895cf683df5a8cdf9502e6f3e513efceff834d66ad638eda3d38e546"
     },
     {
       "order": "1310",
@@ -1356,6 +1412,22 @@
       "boundaryDebt": [],
       "boundaryFindings": [],
       "sourceSha256": "73e0c8026b5deba68fe078b7b826feaeedf2b9e09b9f61e70880699f8061e38a"
+    },
+    {
+      "order": "1400",
+      "fileName": "DwgPreviewCoreBeta.cs",
+      "module": "Cad.Application",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "f2c0f597807930ec07df61483fda2c5b96c44097f2eb013fce46fa60441665bb"
+    },
+    {
+      "order": "1410",
+      "fileName": "DwgPreviewBeta.cs",
+      "module": "Cad.Application",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "320371853571bef51797e4721361ce222a497a14ee283695b83062844c9be1cf"
     }
   ]
 }

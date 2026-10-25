@@ -2,7 +2,7 @@
 
 > 状态：current；受众：maintainer<br>
 > 稳定 ID：`reference.source-navigation`<br>
-> 范围：仓库 `src/`；源码核对基线：`main` @ `ea400b3409e154357c97a3013ff0f9b11f6515ac`，2026-10-25<br>
+> 范围：仓库 `src/`；既有 API 核对起点：`main` @ `ea400b3409e154357c97a3013ff0f9b11f6515ac`；已同步本次 Zfgk Beta 扩展<br>
 > 上级入口：[文档索引](../README.md)；整体设计：[架构说明](../关于IFoxCAD的架构说明.md)
 
 本组文档回答“功能放在哪个文件、从哪个类型和方法进入、下一步追到哪里”。它不是第二份完整 API 参考，也不把设计提案或未编译代码当作已实现功能。所有源码链接指向仓库内文件，便于在 GitHub、编辑器和本地检索中使用。
@@ -14,13 +14,13 @@
 3. 找不到方法：先核对[宿主和编译边界](#projects)，尤其是 `#if`、`GlobalUsings.cs` 和 `ToDo`。
 4. 修改前沿调用链核对事务、数据库、对象所有权、坐标系和宿主分支；本组文档不替代实现及 XML 注释。
 
-本轮只进行了静态源码、项目与文档检查，未尝试构建，未启动 CAD；真实宿主验收为 `Not run`。文中测试文件仅作为已有调用入口，不表示它们本轮执行通过。
+既有 API 的导航来自静态源码、项目与文档核对。新增 Beta 的构建、生产核心回归及复核结果见[迁移验证记录](../zfgk-migration-inventory.md#验证记录)。真实 CAD 宿主验收为 `Not run`；命令测试文件存在或编译通过不代表已运行。
 
 <a id="modules"></a>
 
 ## 源码范围与模块地图
 
-上述基线的 `src` 有 181 个受版本控制的文件，其中 167 个是 C# 文件：143 个由共享项目显式列入编译、3 个是版本项目选用的宿主全局 using、21 个属于未编译的 `ToDo`。本次新增的源码阅读入口 `src/README.md` 不计入这个基线统计。忽略本地 `obj`、`bin` 和其他可重建输出。
+当前 `src` 有 195 个纳入源码管理的文件，其中 180 个是 C# 文件：156 个由共享项目显式列入编译、3 个是版本项目选用的宿主全局 using、21 个属于未编译的 `ToDo`。相对最初导航基线，增加了 `src/README.md` 和 13 个 Beta 源码文件。忽略本地 `obj`、`bin` 和其他可重建输出。
 
 模块数量以 [`CADShared.projitems`](../../src/CADShared/CADShared.projitems) 的 `FsFoxModule` 元数据为准：
 
@@ -28,10 +28,10 @@
 | --- | ---: | --- | --- |
 | `Foundation` | 11 | 集合、循环链表、状态和框架兼容辅助 | [基础与 Windows](foundation-platform.md#foundation) |
 | `Platform/Windows` | 15 | Win32 声明、消息与键码、PE 解析 | [基础与 Windows](foundation-platform.md#windows) |
-| `Cad/Application` | 9 | 活动文档、环境、锁、系统变量、Idle | [应用上下文](application-editor.md#application) |
-| `Cad/Database` | 44 | 事务、符号表、对象、实体、数据、参照 | [数据库](database.md)、[实体](entities.md) |
+| `Cad/Application` | 11 | 活动文档、环境、锁、系统变量、Idle、Beta 离屏预览 | [应用上下文](application-editor.md#application) |
+| `Cad/Database` | 51 | 事务、符号表、对象、实体、数据、参照及 Beta 实体能力 | [数据库](database.md)、[实体](entities.md) |
 | `Cad/Editor` | 23 | 输入、选择过滤、Jig、显示和命令 | [Editor](application-editor.md#editor) |
-| `Cad/Geometry` | 16 | 坐标、点/曲线几何及四叉树 | [几何与空间索引](geometry.md) |
+| `Cad/Geometry` | 20 | 坐标、点/曲线几何、四叉树、Beta 排序与三角形 | [几何与空间索引](geometry.md) |
 | `Cad/Runtime` | 14 | 初始化发现、注册、Lisp 列表 | [运行时](runtime-ui.md#runtime) |
 | `Cad/UI` | 8 | 窗口、对话框、状态栏和首选项 | [UI](runtime-ui.md#ui) |
 | `Cad/Interop` | 3 | CAD native 导出解析、实体 DXF 访问、天正接口 | [宿主互操作](runtime-ui.md#interop) |

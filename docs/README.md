@@ -40,6 +40,7 @@ front matter schema 和自动校验尚未落地。在迁移完成前，本页状
 | 修改项目、构建或发布 | [构建与项目结构](../编译说明.md)、[`build-and-deploy.yml`](../.github/workflows/build-and-deploy.yml)、[`release.yml`](../.github/workflows/release.yml) | 以实时 `.csproj` 和 `.yml` 为最终事实，不维护重复的工作流说明。 |
 | 理解整体架构 | [架构说明](关于IFoxCAD的架构说明.md)、[文档治理方案](documentation-architecture.md) | 前者描述产品，后者描述文档。 |
 | 快速检索 `src` 的功能、类型和方法 | [源码检索总入口](source-navigation/README.md)、[`src` 阅读入口](../src/README.md) | 按问题定位到数据库、实体、Editor、几何、运行时或 Windows 分册；区分共享编译、宿主别名和未编译 ToDo。 |
+| 使用 Zfgk 迁入的 Beta 能力 | [Beta 能力总览](guides/zfgk-beta.md) | 多段线、排序、文字、三角形/网格及 AutoCAD 预览的使用和宿主边界；Beta 不表示宿主验收通过。 |
 | 移动或重组 `CADShared` | [架构说明](关于IFoxCAD的架构说明.md)、根 [`AGENTS.md`](../AGENTS.md)、[`CADShared.projitems`](../src/CADShared/CADShared.projitems)、[`CADSharedModuleBaseline.json`](../Build/CADSharedModuleBaseline.json) | 从最新 `main` 建立短期分支；历史设计与实施过程从 Issue #25 和 Git 历史追溯。 |
 | 实施 Zfgk 能力迁入 Fox | [能力迁移路线图](zfgk-migration-roadmap.md)、[来源能力清单](zfgk-migration-inventory.md) | 已批准的实施计划；Zfgk 只读，Fox 正常验证，表格业务排除；完成情况以代码和验证记录为准。 |
 | 修改 `DBTrans` | 实时 [`DBTrans.cs`](../src/CADShared/Cad/Database/Transactions/DBTrans.cs)、[生命周期设计提案](dbtrans-lifecycle-contract.md) | 文档中的 Confirmed 可作证据；Decision 仍需独立实现和验证。 |
@@ -75,13 +76,19 @@ front matter schema 和自动校验尚未落地。在迁移完成前，本页状
 | `concept.upstream-relationship` | `current` | [上游 IFoxCAD 与 Fs.Fox.CAD 的关系](<../IFoxCAD 说明.md>) | user, maintainer | 项目来源、独立维护边界和问题归属。 |
 | `governance.documentation` | `current` | [文档与代码协同治理方案](documentation-architecture.md) | maintainer | 唯一产品内容源、展示/部署仓库边界、公开范围、版本发布和 Vibe Coding 上下文约定。 |
 | `guide.cad-ui-text` | `current` | [CAD/UI 文案风格指南](guides/cad-ui-text-style-guide.md) | maintainer | CAD 命令行和桌面 UI 的用户可见文字规则。 |
+| `guide.zfgk-beta` | `current` | [Zfgk Beta 能力总览](guides/zfgk-beta.md) | user, maintainer | 新增能力入口、对象归属、宿主范围及验证证据。 |
+| `guide.polyline-beta` | `current` | [多段线 Beta](guides/polyline-beta.md) | user, maintainer | 非破坏性的整理、反向和唯一端点连接。 |
+| `guide.ordering-beta` | `current` | [排序与范围 Beta](guides/ordering-beta.md) | user, maintainer | 稳定索引排序、固定锚点行列分组与原始范围连通分量。 |
+| `guide.text-metrics-beta` | `current` | [文字测量 Beta](guides/text-metrics-beta.md) | user, maintainer | 显式样式、字体失败、单行语义和旧 SDK 限制。 |
+| `guide.geometry-construction-beta` | `current` | [几何与构造 Beta](guides/geometry-construction-beta.md) | user, maintainer | 三角形单位/退化和显式事务内的网格构造。 |
+| `guide.dwg-preview-beta` | `current` | [AutoCAD DWG 预览 Beta](guides/dwg-preview-beta.md) | user, maintainer | 外部数据库、固定视图、输出及图形资源生命周期。 |
 
 ## 5. Active Plan 与提案
 
 | 状态 | 稳定 ID | 文档 | 使用边界 |
 | --- | --- | --- | --- |
 | `proposal` | `contract.dbtrans-lifecycle` | [DBTrans 生命周期与释放契约](dbtrans-lifecycle-contract.md) | 同时记录 Confirmed、Decision 与 Not run；不能把后续决定表述为已实施。 |
-| `active` | `proposal.zfgk-migration-roadmap` | [Fs.Zfgk.CAD 能力迁移路线图](zfgk-migration-roadmap.md) | 已批准的全局范围、并行分工及 Beta/宿主边界。 |
+| `active` | `proposal.zfgk-migration-roadmap` | [Fs.Zfgk.CAD 能力迁移路线图](zfgk-migration-roadmap.md) | Beta 代码已集成并通过自动检查；保留后续真实宿主验收和转正边界。 |
 | `active` | `plan.zfgk-migration-inventory` | [Zfgk 来源能力处置清单](zfgk-migration-inventory.md) | 49 个来源文件的迁入、复用或排除结论，以及五条工作线的依赖和实际验证记录。 |
 | `proposal` | `proposal.edgeone-site-repository` | [EdgeOne Makers 站点仓库架构评估](edgeone-site-repository-evaluation.md) | Issue #48 的实施提案；展示仓库与精确来源链路已创建，最终框架、GitHub App、EdgeOne 和云资源仍未完成。 |
 | `proposal` | `proposal.cad-diagnostics-open-source-intake` | [CadDiagnostics 开源诊断项目评估](../tools/CadDiagnostics/OPEN-SOURCE-EVALUATION.md) | Issue #124 下的候选、去重依据和阶段边界；P1、P2 已实施，后续候选仍需独立评估。 |

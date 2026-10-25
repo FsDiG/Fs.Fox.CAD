@@ -54,6 +54,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)TestXrefEx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Timer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Tools.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TestPolylineBeta.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TestOrderingBeta.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TestTextMetricsBeta.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TestDwgPreviewBeta.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)readme.md" />
