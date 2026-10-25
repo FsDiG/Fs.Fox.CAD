@@ -39,6 +39,7 @@ front matter schema 和自动校验尚未落地。在迁移完成前，本页状
 | 选择包、安装或编写第一个命令 | [产品 README](../README.md)、[ZWCAD 版本兼容性](ZWCAD-version-compatibility.md) | 按宿主和 API 代际选择包；构建兼容不等于宿主通过。 |
 | 修改项目、构建或发布 | [构建与项目结构](../编译说明.md)、[`build-and-deploy.yml`](../.github/workflows/build-and-deploy.yml)、[`release.yml`](../.github/workflows/release.yml) | 以实时 `.csproj` 和 `.yml` 为最终事实，不维护重复的工作流说明。 |
 | 理解整体架构 | [架构说明](关于IFoxCAD的架构说明.md)、[文档治理方案](documentation-architecture.md) | 前者描述产品，后者描述文档。 |
+| 快速检索 `src` 的功能、类型和方法 | [源码检索总入口](source-navigation/README.md)、[`src` 阅读入口](../src/README.md) | 按问题定位到数据库、实体、Editor、几何、运行时或 Windows 分册；区分共享编译、宿主别名和未编译 ToDo。 |
 | 移动或重组 `CADShared` | [架构说明](关于IFoxCAD的架构说明.md)、根 [`AGENTS.md`](../AGENTS.md)、[`CADShared.projitems`](../src/CADShared/CADShared.projitems)、[`CADSharedModuleBaseline.json`](../Build/CADSharedModuleBaseline.json) | 从最新 `main` 建立短期分支；历史设计与实施过程从 Issue #25 和 Git 历史追溯。 |
 | 修改 `DBTrans` | 实时 [`DBTrans.cs`](../src/CADShared/Cad/Database/Transactions/DBTrans.cs)、[生命周期设计提案](dbtrans-lifecycle-contract.md) | 文档中的 Confirmed 可作证据；Decision 仍需独立实现和验证。 |
 | 修改宿主、SDK 或目标框架 | [ZWCAD 兼容性](ZWCAD-version-compatibility.md)、[AutoCAD 2027 决策](AC_2027-net8-compatibility-decision.md)、[构建说明](../编译说明.md) | 检查公开发布目标与仓库中的实验/预备项目差异。 |
@@ -56,6 +57,14 @@ front matter schema 和自动校验尚未落地。在迁移完成前，本页状
 | `entry.documentation` | `current` | [文档索引](README.md) | maintainer | 文档状态、受众、任务阅读顺序和排除规则。 |
 | `governance.agent-routing` | `current` | [仓库协作规则](../AGENTS.md) | maintainer | 编码代理与维护者的任务路由、证据和分支边界。 |
 | `architecture.overview` | `current` | [Fs.Fox.CAD 架构说明](关于IFoxCAD的架构说明.md) | user, maintainer | 当前共享源码、宿主边界和核心抽象。 |
+| `entry.source` | `current` | [src 阅读入口](../src/README.md) | maintainer | 从源码目录进入各检索分册的路由。 |
+| `reference.source-navigation` | `current` | [源码检索总入口](source-navigation/README.md) | maintainer | `src` 编译范围、项目/宿主别名、模块地图、按问题定位和静态检索。 |
+| `reference.source-database` | `current` | [数据库与对象生命周期定位](source-navigation/database.md) | maintainer | 事务、对象打开、符号表、字典、数据、文件和外参的源码入口。 |
+| `reference.source-entities` | `current` | [实体与曲线定位](source-navigation/entities.md) | maintainer | 块、包围框、曲线、多段线、文字、填充及条件关闭的面域成员。 |
+| `reference.source-application-editor` | `current` | [应用上下文与 Editor 定位](source-navigation/application-editor.md) | maintainer | 文档锁、变量、Idle、选择、输入、Jig、显示和命令派发。 |
+| `reference.source-geometry` | `current` | [几何与空间索引定位](source-navigation/geometry.md) | maintainer | 坐标、区域、几何曲线、四叉树及 21 个未编译 ToDo 文件。 |
+| `reference.source-runtime-ui` | `current` | [运行时、UI 与宿主互操作定位](source-navigation/runtime-ui.md) | maintainer | 初始化/终止实际路径、注册、Lisp、窗口、状态栏和 native 边界。 |
+| `reference.source-foundation-platform` | `current` | [Foundation 与 Windows 定位](source-navigation/foundation-platform.md) | maintainer | 基础集合、状态、兼容辅助、Win32 消息和 PE 解析。 |
 | `guide.building` | `current` | [构建与项目结构](../编译说明.md) | maintainer | 正式项目、工具链、条件编译、输出和验证边界。 |
 | `guide.host-acceptance` | `current` | [CAD 真实宿主验收 Runner](../tools/HostAcceptance/README.md) | maintainer | 真实 CAD 验收的目标矩阵、证据契约、安全边界、当前限制和执行入口。 |
 | `guide.cad-diagnostics` | `current` | [CadDiagnostics 多版本诊断工具](../tools/CadDiagnostics/README.md) | maintainer | 独立依赖边界、AutoCAD 构建矩阵、NETLOAD、命令兼容与宿主验证状态。 |
