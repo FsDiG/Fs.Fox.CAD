@@ -625,6 +625,24 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\TriangleMathBeta.cs">
+      <FsFoxModule>Cad.Geometry</FsFoxModule>
+      <FsFoxOrder>1300</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\Triangle3dBeta.cs">
+      <FsFoxModule>Cad.Geometry</FsFoxModule>
+      <FsFoxOrder>1301</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Meshes\PolyFaceMeshDataBeta.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>1310</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Meshes\PolyFaceMeshBuilderBeta.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>1311</FsFoxOrder>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)ExtensionMethod\Geometry\ToDo\" />
   </ItemGroup>
 </Project>

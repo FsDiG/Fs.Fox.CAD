@@ -30,6 +30,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)TestExtents.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestFileDatabase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestGeometryQuery.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TestGeometryConstructionBeta.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestHatchinfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestId.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestJig.cs" />

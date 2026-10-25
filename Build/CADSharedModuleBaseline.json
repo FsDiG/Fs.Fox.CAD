@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
   "normalizedSourceHash": "sha256-utf8-lf",
-  "expectedCompileCount": 143,
+  "expectedCompileCount": 147,
   "moduleCounts": {
     "Foundation": 11,
     "Platform.Windows": 15,
     "Cad.Interop": 3,
-    "Cad.Geometry": 16,
-    "Cad.Database": 44,
+    "Cad.Geometry": 18,
+    "Cad.Database": 46,
     "Cad.Editor": 23,
     "Cad.Application": 9,
     "Cad.Runtime": 14,
@@ -1324,6 +1324,38 @@
       "boundaryDebt": [],
       "boundaryFindings": [],
       "sourceSha256": "bedbc78b4b0b49654969ffc71c245c59a243beb2979ff3cf3c35f2968e785e93"
+    },
+    {
+      "order": "1300",
+      "fileName": "TriangleMathBeta.cs",
+      "module": "Cad.Geometry",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "c6d07ee09e3be0c6a071e8f055afa6c2874a255d624b9a59af9349687fd8f2f6"
+    },
+    {
+      "order": "1301",
+      "fileName": "Triangle3dBeta.cs",
+      "module": "Cad.Geometry",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "28375b11ba80d08ca7dc6716ead10082bf5ff5f11489dff4dc65cd8cd9ecc874"
+    },
+    {
+      "order": "1310",
+      "fileName": "PolyFaceMeshDataBeta.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "2c34db0ada716ef7cad80366c79b57da5aef79d4c4fd46150d22beb3e6a135d2"
+    },
+    {
+      "order": "1311",
+      "fileName": "PolyFaceMeshBuilderBeta.cs",
+      "module": "Cad.Database",
+      "boundaryDebt": [],
+      "boundaryFindings": [],
+      "sourceSha256": "73e0c8026b5deba68fe078b7b826feaeedf2b9e09b9f61e70880699f8061e38a"
     }
   ]
 }
