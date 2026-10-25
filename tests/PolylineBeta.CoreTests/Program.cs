@@ -18,6 +18,15 @@ internal static class Program
             ("joining: four hand-calculated endpoint pairings", JoinFourPairings),
             ("joining: gap preserves arcs and uses endpoint widths", JoinBridge),
             ("joining: ambiguity and nonmatches leave null and inputs unchanged", JoinFailures),
+            ("filleting: hand-calculated open left and right corners", FilletOpenCorners),
+            ("filleting: acute and obtuse turns preserve radius and tangency", FilletObliqueCorners),
+            ("filleting: closed first/last corners and both winding directions", FilletClosedCorners),
+            ("filleting: concave corner radius and tangency", FilletConcaveCorner),
+            ("filleting: shared-edge budget, touching cuts and distance tolerance", FilletSharedBudget),
+            ("filleting: constant width and unused terminal data", FilletWidths),
+            ("filleting: exact collinearity is independent of distance tolerance", FilletCollinear),
+            ("filleting: small/large scales and unrepresentable cuts", FilletNumericalLimits),
+            ("filleting: unsupported, reversing and degenerate inputs", FilletValidation),
             ("validation: degenerate, nonfinite and invalid tolerance inputs", Validation)
         };
         try
@@ -189,6 +198,195 @@ internal static class Program
         True(!PolylineCoreBeta.TryJoin(new[] { V(-double.MaxValue), V(-1) },
             new[] { V(1), V(double.MaxValue) }, 0, out _), "Extreme finite coordinate difference does not overflow into a match.");
     }
+
+    private static void FilletOpenCorners()
+    {
+        var bulge = Math.Sqrt(2) - 1;
+        foreach (var sign in new[] { 1, -1 })
+        {
+            var source = new[] { V(0, 0, 0, 2, 2), V(10, 0, 0, 2, 2), V(10, 10 * sign, .125, 9, 8) };
+            var snapshot = source.ToArray();
+            var filleted = PolylineCoreBeta.Fillet(source, false, 2, 0);
+            NearVertices(filleted, new[] { V(0, 0, 0, 2, 2), V(8, 0, bulge * sign, 2, 2),
+                V(10, 2 * sign, 0, 2, 2), V(10, 10 * sign, .125, 9, 8) });
+            CheckArc(filleted[1], filleted[2], 2, 1, 0, 0, sign);
+            Equal(source, snapshot);
+            True(!ReferenceEquals(filleted, source), "Filleting returns independent data.");
+        }
+    }
+
+    private static void FilletObliqueCorners()
+    {
+        var cases = new[]
+        {
+            (EndX: 16d, EndY: 8d, EntryX: 9d, ExitX: 10.6, ExitY: .8, Bulge: Math.Sqrt(5) - 2, TangentX: .6),
+            (EndX: 4d, EndY: 8d, EntryX: 6d, ExitX: 7.6, ExitY: 3.2, Bulge: (Math.Sqrt(5) - 1) * .5, TangentX: -.6)
+        };
+        foreach (var test in cases)
+        foreach (var sign in new[] { 1, -1 })
+        {
+            var source = new[] { V(0, 0), V(10, 0), V(test.EndX, test.EndY * sign) };
+            var result = PolylineCoreBeta.Fillet(source, false, 2, 0);
+            NearVertices(result, new[] { V(0, 0), V(test.EntryX, 0, test.Bulge * sign),
+                V(test.ExitX, test.ExitY * sign), V(test.EndX, test.EndY * sign) });
+            CheckArc(result[1], result[2], 2, 1, 0, test.TangentX, .8 * sign);
+        }
+    }
+
+    private static void FilletClosedCorners()
+    {
+        var bulge = Math.Sqrt(2) - 1;
+        var counterclockwise = new[] { V(0, 0), V(10, 0), V(10, 10), V(0, 10) };
+        var snapshot = counterclockwise.ToArray();
+        var result = PolylineCoreBeta.Fillet(counterclockwise, true, 2, 0);
+        NearVertices(result, new[] { V(0, 2, bulge), V(2, 0), V(8, 0, bulge), V(10, 2),
+            V(10, 8, bulge), V(8, 10), V(2, 10, bulge), V(0, 8) });
+        CheckArc(result[0], result[1], 2, 0, -1, 1, 0);
+        CheckArc(result[6], result[7], 2, -1, 0, 0, -1);
+        Equal(counterclockwise, snapshot);
+        var clockwise = new[] { V(0, 0), V(0, 10), V(10, 10), V(10, 0) };
+        var reversed = PolylineCoreBeta.Fillet(clockwise, true, 2, 0);
+        NearVertices(reversed, new[] { V(2, 0, -bulge), V(0, 2), V(0, 8, -bulge), V(2, 10),
+            V(8, 10, -bulge), V(10, 8), V(10, 2, -bulge), V(8, 0) });
+        CheckArc(reversed[0], reversed[1], 2, -1, 0, 0, 1);
+        CheckArc(reversed[6], reversed[7], 2, 0, -1, -1, 0);
+    }
+
+    private static void FilletConcaveCorner()
+    {
+        var source = new[] { V(0, 0), V(10, 0), V(10, 10), V(6, 10), V(6, 4), V(0, 4) };
+        var snapshot = source.ToArray();
+        var result = PolylineCoreBeta.Fillet(source, true, 1, 0);
+        True(result.Length == 12, "All six corners, including the concave one, are filleted.");
+        NearVertices(new[] { result[8], result[9] }, new[] { V(6, 5, 1 - Math.Sqrt(2)), V(5, 4) });
+        CheckArc(result[8], result[9], 1, 0, -1, -1, 0);
+        Equal(source, snapshot);
+        var reversedSource = PolylineCoreBeta.Reverse(source, true);
+        var reversed = PolylineCoreBeta.Fillet(reversedSource, true, 1, 0);
+        True(reversed.Count(v => v.Bulge > 0) == 1 && reversed.Count(v => v.Bulge < 0) == 5,
+            "Reversing a concave outline reverses every corner sign.");
+        // A rotated corner exercises non-axis-aligned tangent coordinates.
+        var diagonal = PolylineCoreBeta.Fillet(new[] { V(0, 0), V(10, 10), V(0, 20) }, false, 2, 1e-10);
+        var unit = 1 / Math.Sqrt(2);
+        CheckArc(diagonal[1], diagonal[2], 2, unit, unit, -unit, unit);
+    }
+
+    private static void FilletSharedBudget()
+    {
+        var source = new[] { V(0, 0), V(1, 0), V(1, 1), V(2, 1) };
+        var snapshot = source.ToArray();
+        // Each retreat is below edge length 1; together .75 + .75 is impossible.
+        Throws<InvalidOperationException>(() => PolylineCoreBeta.Fillet(source, false, .75, 0));
+        Throws<InvalidOperationException>(() => PolylineCoreBeta.Fillet(source, false, .5, 0));
+        Throws<InvalidOperationException>(() => PolylineCoreBeta.Fillet(source, false, .49999975, 1e-6));
+        var tight = PolylineCoreBeta.Fillet(source, false, .49999975, 0);
+        True(tight.Length == 6, "A positive remaining gap is usable at zero tolerance.");
+        True(tight[2].Y < tight[3].Y, "The shared straight segment remains forward and nonzero.");
+        var result = PolylineCoreBeta.Fillet(source, false, .4, .1);
+        CheckArc(result[1], result[2], .4, 1, 0, 0, 1);
+        CheckArc(result[3], result[4], .4, 0, 1, 1, 0);
+        Equal(source, snapshot);
+        Throws<InvalidOperationException>(() => PolylineCoreBeta.Fillet(new[] { V(0, 0), V(1, 0), V(1, 1), V(0, 1) }, true, .75, 0));
+    }
+
+    private static void FilletWidths()
+    {
+        var source = new[] { V(0, 0, 0, 3, 3), V(10, 0, 0, 3, 3), V(10, 10, .5, 17, 19) };
+        var result = PolylineCoreBeta.Fillet(source, false, 2, 0);
+        for (var i = 0; i < result.Length - 1; i++)
+            True(result[i].StartWidth == 3 && result[i].EndWidth == 3, "Every line/arc junction retains the same constant width.");
+        Equal(new[] { result[result.Length - 1] }, new[] { source[source.Length - 1] });
+        Throws<NotSupportedException>(() => PolylineCoreBeta.Fillet(new[] { V(0, 0, 0, 2, 3), V(10), V(10, 10) }, false, 1, 0));
+        Throws<NotSupportedException>(() => PolylineCoreBeta.Fillet(new[] { V(0, 0, 0, 2, 2), V(10, 0, 0, 3, 3), V(10, 10) }, false, 1, 0));
+        Throws<NotSupportedException>(() => PolylineCoreBeta.Fillet(new[] { V(0, 0, 0, 2, 2), V(10, 0, 0, 2, 2), V(10, 10) }, true, 1, 0));
+    }
+
+    private static void FilletCollinear()
+    {
+        var straight = new[] { V(0), V(1), V(2), V(3, 0, .25, 7, 9) };
+        var result = PolylineCoreBeta.Fillet(straight, false, 100, 0);
+        Equal(result, straight);
+        True(!ReferenceEquals(result, straight), "No-op filleting still returns independent data.");
+        var diagonalStraight = new[] { V(0, 0), V(1, 3), V(6, 18) };
+        Equal(PolylineCoreBeta.Fillet(diagonalStraight, false, .1, 0), diagonalStraight);
+        Equal(PolylineCoreBeta.Fillet(new[] { V(0), V(10) }, false, 100, 0), new[] { V(0), V(10) });
+        var closed = PolylineCoreBeta.Fillet(new[] { V(0, 5), V(0, 0), V(10, 0), V(10, 10), V(0, 10) }, true, 1, 0);
+        True(closed.Length == 9 && closed[0].X == 0 && closed[0].Y == 5,
+            "A forward-collinear closed first vertex is retained.");
+        var shallow = PolylineCoreBeta.Fillet(new[] { V(0), V(1), V(2, .001) }, false, 1000, .01);
+        True(shallow.Length == 4 && shallow[1].Bulge > 0,
+            "Distance tolerance .01 is not misused as an angle threshold for a .001-radian turn.");
+    }
+
+    private static void FilletNumericalLimits()
+    {
+        foreach (var scale in new[] { 1e-300, 1e-100, 1d, 1e100, 1e308 })
+        {
+            var result = PolylineCoreBeta.Fillet(new[] { V(0, 0), V(scale, 0), V(scale, scale) }, false, scale * .1, 0);
+            True(result.Length == 4 && result.All(v => double.IsFinite(v.X) && double.IsFinite(v.Y)), "Scale-safe geometry stays finite.");
+            Near(result[1].X / scale, .9, 2e-14, "Scaled entry X");
+            Near(result[2].Y / scale, .1, 2e-14, "Scaled exit Y");
+            Near(result[1].Bulge, Math.Sqrt(2) - 1, 1e-14, "Scale-independent bulge");
+        }
+        var erasedCut = new[] { V(1e16, 0), V(1e16 + 10, 0), V(1e16 + 10, 10) };
+        var snapshot = erasedCut.ToArray();
+        Throws<InvalidOperationException>(() => PolylineCoreBeta.Fillet(erasedCut, false, .1, 0));
+        Equal(erasedCut, snapshot);
+        Throws<InvalidOperationException>(() => PolylineCoreBeta.Fillet(new[] { V(-1e308), V(1e308), V(1e308, 1) }, false, 1, 0));
+        Throws<InvalidOperationException>(() => PolylineCoreBeta.Fillet(new[] { V(0), V(10), V(0, 1) }, false, double.MaxValue, 0));
+    }
+
+    private static void FilletValidation()
+    {
+        var valid = new[] { V(0), V(10), V(10, 10) };
+        Throws<ArgumentNullException>(() => PolylineCoreBeta.Fillet(null!, false, 1, 0));
+        Throws<ArgumentException>(() => PolylineCoreBeta.Fillet(new[] { V(0) }, false, 1, 0));
+        Throws<ArgumentException>(() => PolylineCoreBeta.Fillet(new[] { V(0), V(10) }, true, 1, 0));
+        Throws<NotSupportedException>(() => PolylineCoreBeta.Fillet(new[] { V(0, 0, .5), V(10), V(10, 10) }, false, 1, 0));
+        Throws<InvalidOperationException>(() => PolylineCoreBeta.Fillet(new[] { V(0), V(0), V(10) }, false, 1, 0));
+        Throws<InvalidOperationException>(() => PolylineCoreBeta.Fillet(new[] { V(0), V(.01), V(.01, 1) }, false, 1, .01));
+        Throws<InvalidOperationException>(() => PolylineCoreBeta.Fillet(new[] { V(0), V(10), V(5) }, false, 1, 0));
+        Throws<InvalidOperationException>(() => PolylineCoreBeta.Fillet(valid, false, 1e-7, 1e-6));
+        foreach (var radius in new[] { 0d, -1d, double.NaN, double.PositiveInfinity, double.NegativeInfinity })
+            Throws<ArgumentOutOfRangeException>(() => PolylineCoreBeta.Fillet(valid, false, radius, 0));
+        foreach (var tolerance in new[] { -1d, double.NaN, double.PositiveInfinity, double.NegativeInfinity })
+            Throws<ArgumentOutOfRangeException>(() => PolylineCoreBeta.Fillet(valid, false, 1, tolerance));
+    }
+
+    // Independent circle construction from endpoints and bulge verifies requested
+    // radius and the actual start/end tangent directions, not the corner algorithm.
+    private static void CheckArc(PolylineVertexDataBeta start, PolylineVertexDataBeta end,
+        double radius, double incomingX, double incomingY, double outgoingX, double outgoingY)
+    {
+        var dx = end.X - start.X;
+        var dy = end.Y - start.Y;
+        var centerFactor = (1 - start.Bulge * start.Bulge) / (4 * start.Bulge);
+        var centerX = (start.X + end.X) * .5 - dy * centerFactor;
+        var centerY = (start.Y + end.Y) * .5 + dx * centerFactor;
+        var actualRadius = Math.Sqrt(Math.Pow(start.X - centerX, 2) + Math.Pow(start.Y - centerY, 2));
+        Near(actualRadius, radius, 1e-10, "Requested arc radius");
+        var sign = Math.Sign(start.Bulge);
+        Near(-(start.Y - centerY) * sign / actualRadius, incomingX, 1e-10, "Start tangent X");
+        Near((start.X - centerX) * sign / actualRadius, incomingY, 1e-10, "Start tangent Y");
+        Near(-(end.Y - centerY) * sign / actualRadius, outgoingX, 1e-10, "End tangent X");
+        Near((end.X - centerX) * sign / actualRadius, outgoingY, 1e-10, "End tangent Y");
+    }
+
+    private static void NearVertices(IReadOnlyList<PolylineVertexDataBeta> actual,
+        IReadOnlyList<PolylineVertexDataBeta> expected)
+    {
+        True(actual.Count == expected.Count, "Fillet vertex count");
+        for (var i = 0; i < actual.Count; i++)
+        {
+            Near(actual[i].X, expected[i].X, 1e-12, "Fillet X");
+            Near(actual[i].Y, expected[i].Y, 1e-12, "Fillet Y");
+            Near(actual[i].Bulge, expected[i].Bulge, 1e-14, "Fillet bulge");
+            True(actual[i].StartWidth == expected[i].StartWidth && actual[i].EndWidth == expected[i].EndWidth, "Fillet widths");
+        }
+    }
+
+    private static void Near(double actual, double expected, double tolerance, string message) =>
+        True(double.IsFinite(actual) && Math.Abs(actual - expected) <= tolerance, $"{message}: expected {expected:R}, got {actual:R}.");
 
     private static void Validation()
     {

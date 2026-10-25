@@ -8,6 +8,8 @@ namespace Fs.Fox.Cad;
 // complete segment data and a CAD-independent numerical core.
 internal readonly struct PolylineVertexDataBeta
 {
+    // Bulge and widths belong to the segment leaving this vertex. The last open
+    // vertex has no outgoing segment, but its unused fields still round-trip.
     internal PolylineVertexDataBeta(double x, double y, double bulge = 0,
         double startWidth = 0, double endWidth = 0)
     {
@@ -83,6 +85,8 @@ internal static class PolylineCoreBeta
                 continue;
             }
 
+            // Reversed outgoing data comes from the original incoming segment,
+            // not from the data stored on this point itself.
             var segment = vertices[(pointIndex + vertices.Count - 1) % vertices.Count];
             result[i] = new PolylineVertexDataBeta(point.X, point.Y, -segment.Bulge,
                 segment.EndWidth, segment.StartWidth);
@@ -152,7 +156,11 @@ internal static class PolylineCoreBeta
                     var projection = px * ux + py * uy;
                     var deviation = Math.Abs(px * uy - py * ux);
                     // A fixed reference and half-tolerance band bound the distance of
-                    // every original vertex to the final chord by tolerance, in O(n).
+                    // every original vertex to the final chord by tolerance, in O(n):
+                    // both the vertex and final endpoint are within half a tolerance
+                    // of the reference. Increasing reference projection places the
+                    // comparison point interpolated between the final segment endpoints.
+                    // The local dot product separately protects folds inside that band.
                     if (!IsFinite(projection) || !IsFinite(deviation) ||
                         projection <= previousProjection || forwardTurn <= 0 || deviation > tolerance * 0.5)
                         break;
@@ -201,6 +209,8 @@ internal static class PolylineCoreBeta
         if (count != 1)
             return false;
 
+        // Match codes: start/start, start/end, end/start, end/end. Move or reverse
+        // only the second input's placement; the first keeps its original direction.
         IReadOnlyList<PolylineVertexDataBeta> head;
         IReadOnlyList<PolylineVertexDataBeta> tail;
         if (match < 2)
@@ -230,6 +240,151 @@ internal static class PolylineCoreBeta
         result = joined.ToArray();
         return true;
     }
+
+    internal static PolylineVertexDataBeta[] Fillet(IReadOnlyList<PolylineVertexDataBeta> vertices,
+        bool closed, double radius, double tolerance)
+    {
+        ValidateTolerance(tolerance);
+        if (!IsFinite(radius) || radius <= 0)
+            throw new ArgumentOutOfRangeException(nameof(radius), "Radius must be finite and positive.");
+        Validate(vertices, closed);
+        if (closed && vertices.Count < 3)
+            throw new ArgumentException("A closed straight polyline needs at least three vertices.", nameof(vertices));
+
+        var segmentCount = closed ? vertices.Count : vertices.Count - 1;
+        var lengths = new double[segmentCount];
+        var directionsX = new double[segmentCount];
+        var directionsY = new double[segmentCount];
+        var width = vertices[0].StartWidth;
+        for (var i = 0; i < segmentCount; i++)
+        {
+            var start = vertices[i];
+            if (start.Bulge != 0)
+                throw new NotSupportedException("Filleting only supports straight segments.");
+            // A single constant width makes every new line/arc junction continuous.
+            // Reject tapered or discontinuous widths instead of silently discarding them.
+            if (start.StartWidth != width || start.EndWidth != width)
+                throw new NotSupportedException("Filleting requires one constant width on all actual segments.");
+            var end = vertices[(i + 1) % vertices.Count];
+            var dx = end.X - start.X;
+            var dy = end.Y - start.Y;
+            var length = Hypot(dx, dy);
+            if (!IsFinite(length) || length <= tolerance)
+                throw new InvalidOperationException("Every segment must have a finite length greater than tolerance.");
+            lengths[i] = length;
+            // Scale by the largest component before classifying collinearity.
+            // Unit-normalizing proportional edges first can introduce a false turn.
+            var scale = Math.Max(Math.Abs(dx), Math.Abs(dy));
+            directionsX[i] = dx / scale;
+            directionsY[i] = dy / scale;
+        }
+
+        var retreats = new double[vertices.Count];
+        var bulges = new double[vertices.Count];
+        var firstCorner = closed ? 0 : 1;
+        var endCorner = closed ? vertices.Count : vertices.Count - 1;
+        for (var i = firstCorner; i < endCorner; i++)
+        {
+            var previous = (i + segmentCount - 1) % segmentCount;
+            var cross = directionsX[previous] * directionsY[i] - directionsY[previous] * directionsX[i];
+            var dot = directionsX[previous] * directionsX[i] + directionsY[previous] * directionsY[i];
+            // Direction is independent of the caller's distance tolerance. Preserve
+            // exactly forward-collinear corners and reject exact 180-degree folds.
+            if (cross == 0)
+            {
+                if (dot <= 0)
+                    throw new InvalidOperationException("A reversing collinear corner cannot be filleted.");
+                continue;
+            }
+            // d = r*tan(|turn|/2). Choose the half-angle identity whose denominator
+            // does not cancel near a reversing corner; radius is never reduced.
+            var absoluteCross = Math.Abs(cross);
+            var angularScale = Hypot(cross, dot);
+            var tangentHalf = dot >= 0 ? absoluteCross / (angularScale + dot) : (angularScale - dot) / absoluteCross;
+            var retreat = radius * tangentHalf;
+            var bulge = Math.Tan(Math.Atan2(cross, dot) * 0.25);
+            if (!IsFinite(retreat) || retreat <= tolerance || bulge == 0 || !IsFinite(bulge))
+                throw new InvalidOperationException("The corner's tangent points cannot be represented at this tolerance.");
+            retreats[i] = retreat;
+            bulges[i] = bulge;
+        }
+
+        // Plan every corner before emitting geometry: two individually valid cuts
+        // can overlap on a shared edge. Even exactly touching cuts are rejected;
+        // every remaining straight segment must be strictly longer than tolerance.
+        for (var i = 0; i < segmentCount; i++)
+        {
+            var remaining = lengths[i] - retreats[i] - retreats[(i + 1) % vertices.Count];
+            if (!IsFinite(remaining) || remaining <= tolerance)
+                throw new InvalidOperationException("The requested radius exhausts a shared segment.");
+        }
+
+        var entries = new PolylineVertexDataBeta[vertices.Count];
+        var exits = new PolylineVertexDataBeta[vertices.Count];
+        for (var i = 0; i < vertices.Count; i++)
+        {
+            if (bulges[i] == 0)
+            {
+                entries[i] = exits[i] = vertices[i];
+                continue;
+            }
+            var previous = (i + segmentCount - 1) % segmentCount;
+            var entry = FilletTangent(vertices[i], -directionsX[previous], -directionsY[previous],
+                retreats[i], bulges[i], width, tolerance);
+            var exit = FilletTangent(vertices[i], directionsX[i], directionsY[i],
+                retreats[i], 0, width, tolerance);
+            var chord = Hypot(exit.X - entry.X, exit.Y - entry.Y);
+            var absoluteBulge = Math.Abs(bulges[i]);
+            var actualRadius = (chord * 0.25 / absoluteBulge) * (1 + absoluteBulge * absoluteBulge);
+            // Large shared offsets can erase a cut even when d is representable.
+            // Do not return a different radius caused by rounded tangent coordinates.
+            if (!IsFinite(chord) || chord <= tolerance || !IsFinite(actualRadius) ||
+                Math.Abs(actualRadius - radius) > FilletPrecision(radius, tolerance))
+                throw new InvalidOperationException("The requested fillet radius cannot be represented at these coordinates.");
+            entries[i] = entry;
+            exits[i] = exit;
+        }
+        // Recheck represented cuts, not only their theoretical budgets: rounding at
+        // a large offset must not collapse a remaining edge or reverse its direction.
+        for (var i = 0; i < segmentCount; i++)
+        {
+            var next = (i + 1) % vertices.Count;
+            var dx = entries[next].X - exits[i].X;
+            var dy = entries[next].Y - exits[i].Y;
+            var length = Hypot(dx, dy);
+            if (!IsFinite(length) || length <= tolerance ||
+                dx / length * directionsX[i] + dy / length * directionsY[i] <= 0)
+                throw new InvalidOperationException("A remaining straight segment cannot be represented at these coordinates.");
+        }
+        var result = new List<PolylineVertexDataBeta>(checked(vertices.Count * 2));
+        for (var i = 0; i < vertices.Count; i++)
+        {
+            result.Add(entries[i]);
+            if (bulges[i] != 0)
+                result.Add(exits[i]);
+        }
+        Validate(result, closed);
+        return result.ToArray();
+    }
+
+    private static PolylineVertexDataBeta FilletTangent(PolylineVertexDataBeta corner,
+        double directionX, double directionY, double retreat, double bulge, double width, double tolerance)
+    {
+        var directionLength = Hypot(directionX, directionY);
+        var dx = directionX / directionLength * retreat;
+        var dy = directionY / directionLength * retreat;
+        var point = new PolylineVertexDataBeta(corner.X + dx, corner.Y + dy, bulge, width, width);
+        var error = Hypot(point.X - corner.X - dx, point.Y - corner.Y - dy);
+        if (!IsFinite(point.X) || !IsFinite(point.Y) || SamePoint(point, corner) ||
+            !IsFinite(error) || error > FilletPrecision(retreat, tolerance))
+            throw new InvalidOperationException("A tangent point cannot be represented at these coordinates.");
+        return point;
+    }
+
+    // Keep zero distance tolerance usable for small geometry without demanding
+    // exact real arithmetic from double. This is a round-off floor, not a cut budget.
+    private static double FilletPrecision(double length, double tolerance) =>
+        Math.Max(tolerance, length * (64 * 2.2204460492503131e-16));
 
     private static bool SamePoint(PolylineVertexDataBeta first, PolylineVertexDataBeta second) =>
         first.X == second.X && first.Y == second.Y;

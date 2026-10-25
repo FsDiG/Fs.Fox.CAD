@@ -3,7 +3,7 @@
 > 状态：current；说明 Beta API 的行为约定，不代表真实 CAD 宿主已经验收。<br>
 > 来源：Zfgk `PolylineUtil`，原作者张帆；依据源码快照 `a882003436fb4cc31b24c90f6779177c13a60abe` 重写。
 
-[`PolylineExBeta`](../../src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineExBeta.cs)提供反向、整理和双线连接三个入口。它们借用输入，不修改、释放或擦除输入，不启动事务，也不自动落库。输入可为只读打开的数据库对象；调用者仍需保证其读取生命周期有效。
+[`PolylineExBeta`](../../src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineExBeta.cs)提供反向、整理、双线连接和整线圆角四个入口。它们借用输入，不修改、释放或擦除输入，不启动事务，也不自动落库。输入可为只读打开的数据库对象；调用者仍需保证其读取生命周期有效。
 
 返回值是调用方拥有的内存多段线，复制顶点、凸度、段宽、Normal、Elevation、Thickness 和 Closed。它不复制图层、颜色、线型、XData、扩展字典及其他非几何数据，不能作为完整 `DBObject.Clone` 使用。调用者负责释放结果，或用 Fox 现有落库入口将其登记到目标数据库的事务。
 
@@ -30,6 +30,20 @@
 
 端点精确重合时合并公共顶点。存在非零小间隙时保留两侧原始端点，并添加一条直线桥接段，其宽度从前段终宽线性变化到后段起宽。这样不会为连接而移动圆弧端点，也不会自动把结果闭合。成功结果仍为独立内存对象；失败或释放结果都不会消费输入。
 
+## 整线圆角
+
+`source.CreateFilletedBeta(radius, tolerance)`创建全部角的圆角副本，半径必须为有限正数。容差为 OCS 平面的有限非负距离，默认 `1e-6`，小尺度图形可传入零。容差用于检查长度及计算精度，不作为角度阈值。
+
+- 实际段必须全部为直线；所有实际段的起止宽度必须完全相同，包括跨段宽度。零宽支持；含弧、变宽或宽度不连续时抛出 `NotSupportedException`，不会把宽度丢弃或猜测弧上宽度。新直段和圆弧都使用原恒定宽度。
+- 开放线保留首末点，末点未使用的 bulge 和宽度元数据也保留。闭合线至少三个顶点，包括索引零和最后一个顶点的角都会处理；首角需要圆角时，以其入切点作为结果首点。
+- 同向精确共线顶点原样保留，不用距离容差把小转角误判为共线；180 度折返拒绝。原始段、圆角回退距离和圆弧弦长均须大于容差；零段或过短段应先由调用者另行处理。
+- 先计算所有角的回退量，再检查每条原边的两端预算。原边长度减去两端回退量必须严格大于容差；两个圆角切点恰好相接也拒绝。例如长度为 1 的共享边两端各回退 0.75，虽然单个回退小于边长，整次操作仍失败。
+- 半径不会静默缩小。过大半径、不可表示的切点、剩余直段塌缩或无法保留指定半径时抛出 `InvalidOperationException`，整个操作失败，输入不变，不返回部分结果。零容差允许以计算尺度为基准的双精度舍入误差，不代表任意坐标都能精确构造。
+
+该入口只检查局部圆角和共享原边的长度预算，不判断非相邻边、圆角之间的全局自交，也不检查等宽条带的偏移边界。Normal、Elevation、Thickness 和 Closed 沿用输入，全部计算使用原 OCS 平面。
+
+现行 `CurveEx.ChamferAt` 只支持内部索引的单角编辑，不能覆盖闭合首末角和整线预算检查；此 Beta 入口补齐该能力，不改变稳定入口的行为。来源 `PolylineUtil.Fillet` 的隐式减小半径、丢失段宽和逐角重叠问题没有沿用。
+
 ## 输入与失败边界
 
 反向、整理和参与实际连接的输入至少含两个顶点、一条非零长度段。坐标和 bulge 必须为有限数，段宽必须为有限非负数。全部零长度或圆弧端点精确重合时拒绝处理。非法容差、非法数据和宿主对象访问错误会抛出异常；`TryCreateJoinedBeta` 的 false 表示无法按其连接约定连接，不吞掉异常。
@@ -38,8 +52,8 @@
 
 ## 验证入口
 
-- [直接链接生产核心的测试](../../tests/PolylineBeta.CoreTests/PolylineBeta.CoreTests.csproj)：`dotnet run --project tests/PolylineBeta.CoreTests/PolylineBeta.CoreTests.csproj --configuration Release`。覆盖手算圆弧/宽度、反向两次恢复、闭合起点、清理误差界限、四种连接端点、桥接宽度、歧义和失败输出。
-- [宿主验收命令](../../tests/TestShared/TestPolylineBeta.cs)：`Test_PolylineBeta`。仅使用临时实体和临时数据库，检查 OCS、实际弧长、只读输入和对象归属，不写入当前图纸。
-- 本工作线验证：纯核心测试与 AutoCAD 2025 API 目标构建结果随本次提交记录；真实 CAD 宿主执行为 `Not run`。全部发布目标的集成构建和最终证据由[迁移清单](../zfgk-migration-inventory.md)统一记录。
+- [直接链接生产核心的测试](../../tests/PolylineBeta.CoreTests/PolylineBeta.CoreTests.csproj)：`dotnet run --project tests/PolylineBeta.CoreTests/PolylineBeta.CoreTests.csproj --configuration Release`。覆盖手算圆弧/宽度、反向两次恢复、闭合起点、清理误差界限、四种连接端点、桥接宽度、歧义和失败输出；圆角覆盖顺逆绕序、凹角、首末角、共享段预算、恒定宽度、指定半径与切向、共线/折返及数值限制。
+- [宿主验收命令](../../tests/TestShared/TestPolylineBeta.cs)：`Test_PolylineBeta`。仅使用临时实体和临时数据库，检查非默认 OCS、实际弧长/圆角半径、只读输入和对象归属，不写入当前图纸。新增圆角场景的编译与真实宿主执行单独记录，未执行保持 `Not run`。
+- 本次圆角增量仅运行对应的生产核心测试；没有重复全部发布目标构建，也没有运行 CAD。全部发布目标的集成构建和最终证据由[迁移清单](../zfgk-migration-inventory.md)统一记录。
 
-段长、顶点数据快照、采样及现有圆角入口继续使用 Fox 的 [`PolylineEx`](../../src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineEx.cs) 与 [`CurveEx`](../../src/CADShared/Cad/Database/Entities/Curves/CurveEx.cs)。
+段长、顶点数据快照和采样继续使用 Fox 的 [`PolylineEx`](../../src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineEx.cs)；现有单角编辑继续使用 [`CurveEx`](../../src/CADShared/Cad/Database/Entities/Curves/CurveEx.cs)。

@@ -43,6 +43,31 @@ public static class PolylineExBeta
         return CreateGeometry(source, PolylineCoreBeta.Clean(vertices, source.Closed, tolerance), source.Closed);
     }
 
+    /// <summary>按指定半径圆角化全部非共线角，创建独立的等宽多段线副本。</summary>
+    /// <remarks>
+    /// 仅支持实际段全部为直线、全线同一恒定宽度的输入；变宽、跨段宽度不连续或含弧输入均拒绝。
+    /// 开放线保留首末点；闭合线处理包括首末角的全部角，首角需要圆角时以其入切点为结果首点。
+    /// 同向精确共线顶点原样保留；180 度折返、容差内短段及不可表示的切点拒绝。
+    /// 先检查全部角的回退预算；每条原边扣除两端回退后必须余下严格大于 tolerance 的直段，
+    /// 因此相邻圆角切点恰好相接也拒绝。半径不自动缩小，失败不返回部分结果。
+    /// 距离容差不用于角度分类；零容差仍允许计算中的双精度舍入误差。
+    /// 不检查不同原边或圆角之间的全局自交，也不检查等宽条带的偏移边界。
+    /// </remarks>
+    /// <param name="source">借用的轻量多段线；闭合线至少三个顶点，开放线至少两个顶点。</param>
+    /// <param name="radius">OCS 平面中的圆角半径，必须为有限正数。</param>
+    /// <param name="tolerance">有限非负的 OCS 距离容差，允许零；默认 1e-6。</param>
+    /// <returns>调用方拥有的几何副本；保留 Normal、Elevation、Thickness、Closed 和恒定段宽。</returns>
+    /// <exception cref="ArgumentNullException">输入为 null。</exception>
+    /// <exception cref="ArgumentOutOfRangeException">半径或容差非法。</exception>
+    /// <exception cref="ArgumentException">顶点不足，或包含非有限坐标/凸度、非法宽度。</exception>
+    /// <exception cref="NotSupportedException">实际段含圆弧，或没有全线一致的恒定宽度。</exception>
+    /// <exception cref="InvalidOperationException">输入退化、存在折返，或半径/切点/保留直段无法满足约定。</exception>
+    public static Polyline CreateFilletedBeta(this Polyline source, double radius, double tolerance = 1e-6)
+    {
+        var vertices = ReadVertices(source);
+        return CreateGeometry(source, PolylineCoreBeta.Fillet(vertices, source.Closed, radius, tolerance), source.Closed);
+    }
+
     /// <summary>尝试将两条开多段线连接为新的开多段线，保留第一条线的行进方向。</summary>
     /// <remarks>
     /// 两个输入必须具有完全相同的 Normal 分量、Elevation 和 Thickness，且恰有一组端点在容差内。
@@ -99,6 +124,7 @@ public static class PolylineExBeta
         return result;
     }
 
+    // Exact equality is intentional: joining does not transform between OCS planes.
     private static bool SamePlaneAndThickness(Polyline first, Polyline second) =>
         first.Normal.X == second.Normal.X && first.Normal.Y == second.Normal.Y &&
         first.Normal.Z == second.Normal.Z && first.Elevation == second.Elevation &&

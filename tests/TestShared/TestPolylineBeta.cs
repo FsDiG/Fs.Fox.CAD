@@ -9,6 +9,7 @@ public class TestPolylineBeta
         CheckReversalAndOwnership();
         CheckCleanup();
         CheckJoining();
+        CheckFilleting();
         CheckReadOnlyDatabaseInput();
         Env.Printl("Test_PolylineBeta passed (geometry, ownership, OCS, widths and read-only input).");
     }
@@ -120,11 +121,55 @@ public class TestPolylineBeta
         SameSnapshot(second, secondBefore);
     }
 
+    private static void CheckFilleting()
+    {
+        using var source = Make((0, 0, 0, 2, 2), (10, 0, 0, 2, 2), (10, 10, 0, 2, 2), (0, 10, 0, 2, 2));
+        source.Closed = true;
+        source.Normal = Vector3d.YAxis;
+        source.Elevation = 7;
+        source.Thickness = 2.5;
+        var before = Snapshot(source);
+        using (var rounded = source.CreateFilletedBeta(2))
+        {
+            SamePlane(source, rounded);
+            True(rounded.Closed && rounded.NumberOfVertices == 8, "Every closed corner, including the first and last, is filleted.");
+            True(rounded.ObjectId.IsNull, "Fillet result is not inserted into a database.");
+            Close(rounded.Length, 24 + 4 * Math.PI, "Fillet length in a non-default OCS");
+            Point(rounded.GetPoint3dAt(0), source.GetPointAtDist(source.Length - 2), "First corner incoming tangent is on the original closing edge.");
+            for (var i = 0; i < rounded.NumberOfVertices; i++)
+            {
+                Close(rounded.GetStartWidthAt(i), 2, "Fillet start width");
+                Close(rounded.GetEndWidthAt(i), 2, "Fillet end width");
+                if (i % 2 == 0)
+                {
+                    using var arc = rounded.GetArcSegmentAt(i);
+                    Close(arc.Radius, 2, "Fillet requested radius");
+                }
+            }
+        }
+        SameSnapshot(source, before);
+
+        using var open = Make((0, 0, 0, 0, 0), (10, 0, 0, 0, 0), (10, -10, 0, 0, 0));
+        using var openResult = open.CreateFilletedBeta(2);
+        True(!openResult.Closed && openResult.GetBulgeAt(1) < 0, "Open right turn remains open and clockwise.");
+        Point(openResult.StartPoint, open.StartPoint, "Open start stays unchanged.");
+        Point(openResult.EndPoint, open.EndPoint, "Open end stays unchanged.");
+        using var conflict = Make((0, 0, 0, 0, 0), (1, 0, 0, 0, 0), (1, 1, 0, 0, 0), (2, 1, 0, 0, 0));
+        var conflictBefore = Snapshot(conflict);
+        Throws<InvalidOperationException>(() => { using var unused = conflict.CreateFilletedBeta(.75); });
+        SameSnapshot(conflict, conflictBefore);
+        open.SetStartWidthAt(0, 1);
+        var unsupportedBefore = Snapshot(open);
+        Throws<NotSupportedException>(() => { using var unused = open.CreateFilletedBeta(2); });
+        SameSnapshot(open, unsupportedBefore);
+    }
+
     private static void CheckReadOnlyDatabaseInput()
     {
         // A private temporary database proves read-only DB-resident inputs work; the active document is unused.
         using var database = new Database(true, true);
         ObjectId id;
+        ObjectId filletId;
         using (var write = database.TransactionManager.StartTransaction())
         {
             var table = (BlockTable)write.GetObject(database.BlockTableId, OpenMode.ForRead);
@@ -132,6 +177,9 @@ public class TestPolylineBeta
             using var source = Make((0, 0, .5, 1, 2), (10, 0, 0, 0, 0));
             id = model.AppendEntity(source);
             write.AddNewlyCreatedDBObject(source, true);
+            using var straight = Make((0, 0, 0, 1, 1), (10, 0, 0, 1, 1), (10, 10, 0, 0, 0));
+            filletId = model.AppendEntity(straight);
+            write.AddNewlyCreatedDBObject(straight, true);
             write.Commit();
         }
         using var read = database.TransactionManager.StartTransaction();
@@ -141,6 +189,12 @@ public class TestPolylineBeta
         True(!borrowed.IsWriteEnabled, "Borrowed input stays read-only.");
         True(reversed.ObjectId.IsNull, "Database-resident input does not imply result insertion.");
         SameSnapshot(borrowed, before);
+        var borrowedStraight = (Polyline)read.GetObject(filletId, OpenMode.ForRead);
+        var straightBefore = Snapshot(borrowedStraight);
+        using var filleted = borrowedStraight.CreateFilletedBeta(2);
+        True(!borrowedStraight.IsWriteEnabled, "Fillet input stays read-only.");
+        True(filleted.ObjectId.IsNull && filleted.NumberOfVertices == 4, "A read-only database polyline can create an independent fillet result.");
+        SameSnapshot(borrowedStraight, straightBefore);
     }
 
     private static Polyline Make(params (double X, double Y, double Bulge, double Start, double End)[] vertices)
