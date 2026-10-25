@@ -58,6 +58,28 @@ public static class TestTextMetricsBeta
             AssertClose(style.XScale, 0.7, "测量不能改变样式默认宽度。");
         }
 
+        using (var outer = database.TransactionManager.StartTransaction())
+        {
+            var style = (TextStyleTableRecord)outer.GetObject(styleId, OpenMode.ForWrite);
+            style.TextSize = 3;
+            void AssertOuterPreserved()
+            {
+                Assert(!outer.IsDisposed && ReferenceEquals(outer, database.TransactionManager.TopTransaction),
+                    "测量不能结束调用方外层事务或改变其最上层身份。");
+                AssertClose(style.TextSize, 3, "测量不能撤销或覆盖外层事务中的临时样式修改。");
+                Assert(HostApplicationServices.WorkingDatabase == originalDatabase, "嵌套测量应恢复工作数据库。");
+            }
+
+            var nested = TextMetricsBeta.MeasureSingleLine(database, styleId, "Ag123", 5);
+            AssertClose(Width(nested), Width(standard), "显式字高应覆盖外层事务临时设置的样式字高。");
+            AssertClose(Height(nested), Height(standard), "外层事务中测量的实际高度应保持一致。");
+            AssertOuterPreserved();
+            // 同库图层 ID 会进入测量器内部读取事务，再因对象类型不符失败。
+            AssertThrows<System.ArgumentException>(() => TextMetricsBeta.MeasureSingleLine(database, database.Clayer, "x", 5));
+            AssertOuterPreserved();
+            outer.Abort();
+        }
+
         Assert(HostApplicationServices.WorkingDatabase == originalDatabase, "成功路径应恢复工作数据库。");
         Env.Printl("TextMetricsBeta: 字体度量、转义、空格及样式只读检查通过。");
     }
