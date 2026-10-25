@@ -3,6 +3,59 @@ namespace Test;
 /// <summary>多段线 Beta 的宿主验收入口；仅使用临时实体和临时数据库，不写入当前图纸。</summary>
 public class TestPolylineBeta
 {
+    [CommandMethod(nameof(Test_PolylineRegionBeta))]
+    public void Test_PolylineRegionBeta()
+    {
+        using var source = Make((-1, 0, 1, 20, 30), (1, 0, 1, 40, 50));
+        source.Closed = true;
+        source.Normal = Vector3d.YAxis;
+        source.Elevation = 7;
+        source.Thickness = 4;
+        var before = Snapshot(source);
+        var ocsToWorld = Matrix3d.WorldToPlane(source.Normal).Inverse();
+        Point3d World(double x, double y, double z = 7) => new Point3d(x, y, z).TransformBy(ocsToWorld);
+        True(source.GetPointRelationBeta(source.GetPoint3dAt(0)) == PolylinePointRelationBeta.Boundary,
+            "Native WCS vertex anchors non-default OCS boundary independently of the test transform.");
+        True(source.GetPointRelationBeta(new Point3d(0, 7, 0)) == PolylinePointRelationBeta.Inside,
+            "Literal WCS center independently anchors the Y-normal plane.");
+        True(source.GetPointRelationBeta(new Point3d(0, 7.01, 0)) == PolylinePointRelationBeta.OffPlane,
+            "Literal WCS offset independently anchors plane-distance rejection.");
+        True(source.GetPointRelationBeta(World(0, 0)) == PolylinePointRelationBeta.Inside, "Non-default OCS circle interior.");
+        True(source.GetPointRelationBeta(World(0, -1)) == PolylinePointRelationBeta.Boundary, "OCS arc boundary.");
+        True(source.GetPointRelationBeta(World(2, 0)) == PolylinePointRelationBeta.Outside, "Widths do not enlarge the region.");
+        True(source.GetPointRelationBeta(World(0, 0, 7.01)) == PolylinePointRelationBeta.OffPlane, "WCS point beyond the base-plane tolerance.");
+        True(source.GetPointRelationBeta(World(0, 0, 7.0000005)) == PolylinePointRelationBeta.Inside, "Point within plane tolerance is queried in OCS.");
+        True(source.GetPointRelationBeta(World(1.0009, 0, 7.0009), .001) == PolylinePointRelationBeta.Boundary,
+            "Plane and in-plane boundary tolerance are checked separately.");
+        SameSnapshot(source, before);
+        source.SetBulgeAt(0, 1e-10);
+        var unsupported = Snapshot(source);
+        Throws<NotSupportedException>(() => source.GetPointRelationBeta(World(0, 0, 100)));
+        SameSnapshot(source, unsupported); // Complete source validation precedes OffPlane.
+        source.Closed = false;
+        Throws<ArgumentException>(() => source.GetPointRelationBeta(World(0, 0, 100)));
+
+        using var database = new Database(true, true);
+        ObjectId id;
+        using (var write = database.TransactionManager.StartTransaction())
+        {
+            var table = (BlockTable)write.GetObject(database.BlockTableId, OpenMode.ForRead);
+            var model = (BlockTableRecord)write.GetObject(table[BlockTableRecord.ModelSpace], OpenMode.ForWrite);
+            using var circle = Make((-1, 0, 1, 0, 0), (1, 0, 1, 0, 0));
+            circle.Closed = true;
+            id = model.AppendEntity(circle);
+            write.AddNewlyCreatedDBObject(circle, true);
+            write.Commit();
+        }
+        using var read = database.TransactionManager.StartTransaction();
+        var borrowed = (Polyline)read.GetObject(id, OpenMode.ForRead);
+        var borrowedBefore = Snapshot(borrowed);
+        True(borrowed.GetPointRelationBeta(Point3d.Origin) == PolylinePointRelationBeta.Inside, "Read-only database input.");
+        True(!borrowed.IsWriteEnabled, "Point relation does not upgrade input to write mode.");
+        SameSnapshot(borrowed, borrowedBefore);
+        Env.Printl("Test_PolylineRegionBeta passed (OCS, plane tolerance, arc region, source validation and read-only input).");
+    }
+
     [CommandMethod(nameof(Test_PolylineBeta))]
     public void Test_PolylineBeta()
     {
