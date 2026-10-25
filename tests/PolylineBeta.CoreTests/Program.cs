@@ -332,6 +332,18 @@ internal static class Program
         var snapshot = erasedCut.ToArray();
         Throws<InvalidOperationException>(() => PolylineCoreBeta.Fillet(erasedCut, false, .1, 0));
         Equal(erasedCut, snapshot);
+        foreach (var directionUnderflow in new[]
+        {
+            new[] { V(-1e308, 0), V(0, 0), V(1e308, 1e-308) },
+            new[] { V(0, -1e308), V(0, 0), V(1e-308, 1e308) }
+        })
+        {
+            // The lengths are finite, but scaling loses a real direction component.
+            // Reject the entire operation rather than returning a false collinear no-op.
+            var before = directionUnderflow.ToArray();
+            Throws<InvalidOperationException>(() => PolylineCoreBeta.Fillet(directionUnderflow, false, 1, 0));
+            Equal(directionUnderflow, before);
+        }
         Throws<InvalidOperationException>(() => PolylineCoreBeta.Fillet(new[] { V(-1e308), V(1e308), V(1e308, 1) }, false, 1, 0));
         Throws<InvalidOperationException>(() => PolylineCoreBeta.Fillet(new[] { V(0), V(10), V(0, 1) }, false, double.MaxValue, 0));
     }

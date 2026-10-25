@@ -277,6 +277,10 @@ internal static class PolylineCoreBeta
             var scale = Math.Max(Math.Abs(dx), Math.Abs(dy));
             directionsX[i] = dx / scale;
             directionsY[i] = dy / scale;
+            // Underflow of a nonzero component can erase a real corner. A finite
+            // length alone does not make its direction or tangent cuts representable.
+            if ((dx != 0 && directionsX[i] == 0) || (dy != 0 && directionsY[i] == 0))
+                throw new InvalidOperationException("A nonzero segment direction component cannot be represented at this scale.");
         }
 
         var retreats = new double[vertices.Count];
