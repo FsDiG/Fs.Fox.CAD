@@ -57,7 +57,7 @@ flowchart LR
 - `Document`、`Database` 和 `Editor`
 - 当前空间、模型空间和常用符号表
 - 命名对象字典及常见子字典
-- 当前线程/调用链中的 `DBTrans` 栈
+- 进程级静态 `DBTrans` 栈
 
 它支持三类入口：
 
@@ -80,7 +80,7 @@ ObjectId lineId = tr.CurrentSpace.AddEntity(line);
 
 默认 `commit: true`，释放 `DBTrans` 时提交事务。需要显式成功后再提交的流程可使用 `commit: false`，完成全部操作后调用 `Commit()`；需要放弃时调用 `Abort()`。`Commit()` 和 `Abort()` 都会释放当前事务，不应在调用后继续使用该 `DBTrans` 实例。
 
-`DBTrans.Top` 用于获取当前栈顶事务，使扩展方法能够复用已有事务。调用方仍应清晰控制最外层事务的生命周期，避免把隐式栈状态扩散到无关流程。
+公开的 `DBTrans.GetTop(database)` 按数据库顶层原生事务查找对应包装；内部 `DBTrans.Top` 返回静态栈顶实例。这个栈没有按线程或文档隔离。调用方仍应清晰控制最外层事务的生命周期，避免把隐式栈状态扩散到无关流程。方法和释放路径的源码入口见[数据库与对象生命周期定位](source-navigation/database.md#transactions)，未实施的生命周期决定仍以提案身份保留。
 
 ### 4.2 SymbolTable
 
