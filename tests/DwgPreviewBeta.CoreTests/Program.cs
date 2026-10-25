@@ -73,6 +73,53 @@ try
     Throws<ArgumentException>(() => DwgPreviewCoreBeta.ValidateRequest(" ", destination, 100, 100), "empty source");
     Throws<ArgumentException>(() => DwgPreviewCoreBeta.ValidateRequest(source, " ", 100, 100), "empty output");
     Check(File.ReadAllBytes(source).SequenceEqual(new byte[] { 1, 2, 3 }), "source bytes unchanged");
+
+    // Invoke the production publication helper with real files; no PNG codec or CAD rendering is simulated.
+    var temporary = Path.Combine(folder, "owned.tmp");
+    var published = Path.Combine(folder, "published.png");
+    var content = new byte[] { 4, 5, 6 };
+    DwgPreviewCoreBeta.WriteNewOutput(temporary, published, stream => stream.Write(content, 0, content.Length));
+    Check(File.ReadAllBytes(published).SequenceEqual(content), "successful publication retains encoded bytes");
+    Check(!File.Exists(temporary), "successful publication consumes the temporary file");
+
+    File.WriteAllText(temporary, "foreign temporary file");
+    var uncreated = Path.Combine(folder, "uncreated.png");
+    var writerCalled = false;
+    Throws<IOException>(() => DwgPreviewCoreBeta.WriteNewOutput(temporary, uncreated, _ => writerCalled = true),
+        "CreateNew rejects a temporary path owned by another writer");
+    Check(!writerCalled, "a temporary name collision does not invoke the encoder");
+    Check(File.ReadAllText(temporary) == "foreign temporary file", "a temporary name collision preserves existing bytes");
+    Check(!File.Exists(uncreated), "a temporary name collision cannot publish output");
+
+    var failedTemporary = Path.Combine(folder, "encoding-failed.tmp");
+    var failedOutput = Path.Combine(folder, "encoding-failed.png");
+    var encodingFailure = new InvalidDataException("Expected encoder failure after a partial write.");
+    try
+    {
+        DwgPreviewCoreBeta.WriteNewOutput(failedTemporary, failedOutput, stream =>
+        {
+            stream.WriteByte(7);
+            throw encodingFailure;
+        });
+        throw new InvalidOperationException("An encoder failure must propagate.");
+    }
+    catch (InvalidDataException exception)
+    {
+        Check(ReferenceEquals(exception, encodingFailure), "cleanup preserves the original encoder exception");
+    }
+    Check(!File.Exists(failedTemporary), "an encoder failure cleans its partial temporary file");
+    Check(!File.Exists(failedOutput), "an encoder failure does not publish partial output");
+
+    var racingTemporary = Path.Combine(folder, "racing.tmp");
+    var racingOutput = Path.Combine(folder, "racing.png");
+    Throws<IOException>(() => DwgPreviewCoreBeta.WriteNewOutput(racingTemporary, racingOutput, stream =>
+    {
+        stream.WriteByte(8);
+        // Deterministically create a competing output after encoding begins, before publication.
+        File.WriteAllText(racingOutput, "competing output");
+    }), "publication rejects an output created after request validation");
+    Check(File.ReadAllText(racingOutput) == "competing output", "publication never overwrites a competing output");
+    Check(!File.Exists(racingTemporary), "an output collision cleans only the owned temporary file");
 }
 finally
 {

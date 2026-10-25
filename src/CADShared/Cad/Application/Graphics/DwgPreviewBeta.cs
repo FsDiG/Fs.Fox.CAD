@@ -43,6 +43,8 @@ public static class DwgPreviewBeta
         if (!ReferenceEquals(graphicsDocument, CadApp.DocumentManager.MdiActiveDocument))
             throw new ArgumentException("必须使用当前活动文档的图形管理器。", nameof(graphicsDocument));
         var request = DwgPreviewCoreBeta.ValidateRequest(drawingPath, outputPngPath, width, height);
+        // GS views retain source DBObjects: their cleanup/disposal must finish before this read
+        // transaction and its database leave scope, including when rendering or PNG encoding fails.
         using var drawing = new Database(false, true);
         drawing.ReadDwgFile(request.DrawingPath, FileOpenMode.OpenForReadAndAllShare, false, null);
         using var transaction = drawing.TransactionManager.StartTransaction();
@@ -113,6 +115,8 @@ public static class DwgPreviewBeta
             }
             finally
             {
+                // Clear drawable references before detaching the view. Even if clearing fails, attempt
+                // detachment before the using scopes dispose View, Model, then Device.
                 try { view.EraseAll(); }
                 finally { if (attached) device.Erase(view); }
             }
@@ -127,19 +131,7 @@ public static class DwgPreviewBeta
     private static void SaveNewPng(Bitmap bitmap, string outputPath)
     {
         var temporary = Path.Combine(Path.GetDirectoryName(outputPath)!, ".fox-preview-" + Guid.NewGuid().ToString("N") + ".tmp");
-        try
-        {
-            using (var stream = new FileStream(temporary, FileMode.CreateNew, FileAccess.Write, FileShare.None))
-                bitmap.Save(stream, ImageFormat.Png);
-            File.Move(temporary, outputPath);
-        }
-        finally
-        {
-            // Preserve rendering/IO exceptions; a cleanup failure may leave this clearly named owned temporary file.
-            try { if (File.Exists(temporary)) File.Delete(temporary); }
-            catch (IOException) { }
-            catch (UnauthorizedAccessException) { }
-        }
+        DwgPreviewCoreBeta.WriteNewOutput(temporary, outputPath, stream => bitmap.Save(stream, ImageFormat.Png));
     }
 }
 #endif

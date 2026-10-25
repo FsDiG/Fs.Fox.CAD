@@ -77,9 +77,41 @@ internal static class DwgPreviewCoreBeta
 
     private static void ValidateOrdinaryFilePath(string path, string parameterName)
     {
+        // A drive-root colon is valid; a colon in the remaining file path can name an NTFS data stream.
         var root = Path.GetPathRoot(path) ?? string.Empty;
         if (path.Substring(root.Length).IndexOf(':') >= 0)
             throw new ArgumentException("必须使用独立文件路径，不能使用文件数据流路径。", parameterName);
+    }
+
+    // The adapter supplies distinct same-directory paths after validating the request.
+    // Keep file publication independent of the PNG encoder so the actual IO ownership is testable.
+    internal static void WriteNewOutput(string temporaryPath, string outputPath, Action<Stream> writeContent)
+    {
+        var ownsTemporary = false;
+        try
+        {
+            using (var stream = new FileStream(temporaryPath, FileMode.CreateNew, FileAccess.Write, FileShare.None))
+            {
+                // CreateNew may fail because this path already belongs to somebody else.
+                // Acquire deletion rights only after construction succeeds, before encoding can throw.
+                ownsTemporary = true;
+                writeContent(stream);
+            }
+            // Request validation cannot prevent another writer from creating the output in the meantime.
+            File.Move(temporaryPath, outputPath);
+            // Moving ends ownership of the old name; a later file at that name is not ours to delete.
+            ownsTemporary = false;
+        }
+        finally
+        {
+            if (ownsTemporary)
+            {
+                // Preserve the encoding/IO exception; only this attempt's file is eligible for cleanup.
+                try { File.Delete(temporaryPath); }
+                catch (IOException) { }
+                catch (UnauthorizedAccessException) { }
+            }
+        }
     }
 
     internal static DwgPreviewFitBeta Fit(double minX, double minY, double minZ,
@@ -100,11 +132,14 @@ internal static class DwgPreviewCoreBeta
             spanY = 1;
         }
         var aspect = (double)width / height;
+        // Fit both projected axes before adding 10% total padding; matching the pixel ratio prevents cropping.
         var fieldHeight = Math.Max(spanY, spanX / aspect) * 1.1;
         var fieldWidth = fieldHeight * aspect;
+        // Halve first so finite same-sign endpoints need not overflow while computing the midpoint.
         var centerX = minX / 2 + maxX / 2;
         var centerY = minY / 2 + maxY / 2;
         var centerZ = minZ / 2 + maxZ / 2;
+        // Above the highest geometry; the relative offset stays representable at large shared elevations.
         var eyeZ = maxZ + Math.Max(1, Math.Abs(maxZ) * 1e-12);
         if (!Finite(fieldWidth) || !Finite(fieldHeight) || fieldWidth <= 0 || fieldHeight <= 0 ||
             !Finite(eyeZ) || eyeZ <= centerZ)

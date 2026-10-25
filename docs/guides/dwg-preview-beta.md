@@ -13,7 +13,7 @@
 
 宽高各为 1 至 8192 像素，总像素不超过 16777216。无法建立有限相机范围时拒绝输入。空图或没有可绘制实体时抛出 `InvalidOperationException`，不会把空白图片作为成功结果。
 
-PNG 父目录必须存在，目标文件不能存在。源和目标均须为独立文件路径，拒绝 `file.dwg:preview.png` 等 NTFS 数据流路径。先在同目录创建自有临时文件，完整编码后以不覆盖的 `File.Move` 移动为目标；已有文件及竞争创建的目标都受保护。失败时尽力删除 `.fox-preview-*.tmp`；若文件系统拒绝清理，保留原失败异常且可能留下该临时文件。
+PNG 父目录必须存在，目标文件不能存在。源和目标均须为独立文件路径，拒绝 `file.dwg:preview.png` 等 NTFS 数据流路径。先在同目录创建自有临时文件，完整编码后以不覆盖的 `File.Move` 移动为目标；已有文件及竞争创建的目标都受保护。只有 `CreateNew` 成功后才取得临时文件的删除权；若临时路径已存在，创建失败不会删除该文件。移动成功后释放临时路径的删除权，失败时只尽力清理本次创建的 `.fox-preview-*.tmp`；若文件系统拒绝清理，保留原失败异常且可能留下该临时文件。
 
 ## 所有权和宿主边界
 
@@ -25,6 +25,6 @@ PNG 父目录必须存在，目标文件不能存在。源和目标均须为独�
 
 ## 验证入口
 
-- [核心测试](../../tests/DwgPreviewBeta.CoreTests/DwgPreviewBeta.CoreTests.csproj)直接链接生产路径/尺寸/相机拟合代码，验证纵横比、退化范围、极端数值、路径规范和不覆盖策略；它没有模拟 DWG 或 CAD 渲染。
+- [核心测试](../../tests/DwgPreviewBeta.CoreTests/DwgPreviewBeta.CoreTests.csproj)直接链接生产路径/尺寸/相机拟合与文件输出代码，验证纵横比、退化范围、极端数值、路径规范；通过真实文件 IO 检查临时路径冲突、编码委托异常和竞争创建输出时的所有权及不覆盖策略。它不执行 PNG 编码、DWG 读取或 CAD 渲染。
 - [宿主命令](../../tests/TestShared/TestDwgPreviewBeta.cs)：`Test_DwgPreviewBeta` 生成自有临时 DWG 并连续输出三幅 PNG，检查尺寸、图像非单色、源文件哈希及当前文档/视图保持；`Test_DwgPreviewBetaFailures` 检查空图、损坏文件、尺寸、文件不存在和已有输出。
 - 两个命令只能在明确安排的隔离 AutoCAD 环境运行，遵守[宿主验收说明](../../tools/HostAcceptance/README.md)。当前均为 `Not run`。
