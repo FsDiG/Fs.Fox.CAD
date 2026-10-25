@@ -56,6 +56,7 @@ public static class TextMetricsBeta
         if (textStyleId.IsNull || !textStyleId.IsValid || textStyleId.IsErased || textStyleId.Database != database)
             throw new ArgumentException("文字样式必须属于指定数据库且有效。", nameof(textStyleId));
 
+        // Dispose in reverse order: finish the native read transaction before restoring WorkingDatabase.
         using var databaseScope = new SwitchDatabase(database);
         using var transaction = database.TransactionManager.StartTransaction();
         if (transaction.GetObject(textStyleId, OpenMode.ForRead) is not TextStyleTableRecord)

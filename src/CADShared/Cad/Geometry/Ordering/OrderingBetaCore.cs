@@ -77,6 +77,7 @@ internal static class OrderingBetaCore
 
         // Canonical anchors are independent of requested reading direction.
         // Rows: highest remaining Y. Columns: lowest remaining X.
+        // Array.Sort is not stable; every comparator falls back to the original index to provide stable ties.
         Array.Sort(indices, (a, b) =>
         {
             var primary = byRows

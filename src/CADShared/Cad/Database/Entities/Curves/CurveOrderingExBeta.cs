@@ -39,6 +39,7 @@ public static class CurveOrderingExBeta
             !OrderingBetaCore.IsFinite(length) || length <= 0)
             throw new InvalidOperationException("The curve must have a finite, positive length.");
 
+        // Validate the complete snapshot before the first native closest-point query.
         var snapshot = new Point3d[points.Count];
         for (var i = 0; i < points.Count; i++)
         {
@@ -49,6 +50,7 @@ public static class CurveOrderingExBeta
             snapshot[i] = point;
         }
 
+        // Keep true station values; the original index resolves ties without perturbing geometry.
         var distances = new double[snapshot.Length];
         for (var i = 0; i < snapshot.Length; i++)
         {

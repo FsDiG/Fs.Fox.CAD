@@ -34,6 +34,7 @@ public static class PolyFaceMeshBuilderBeta
         if (targetSpaceId.IsNull || !targetSpaceId.IsValid || targetSpaceId.IsErased ||
             targetSpaceId.Database != database)
             throw new ArgumentException("目标空间必须属于指定数据库。", nameof(targetSpaceId));
+        // A child transaction would change native object registration and the caller's rollback boundary.
         if (!ReferenceEquals(database.TransactionManager.TopTransaction, transaction))
             throw new ArgumentException("必须使用目标数据库当前最上层事务。", nameof(transaction));
 
@@ -45,6 +46,7 @@ public static class PolyFaceMeshBuilderBeta
                 throw new ArgumentException("网格顶点坐标必须为有限数值。", nameof(vertices));
             points[index] = point;
         }
+        // Exhaust lazy enumerables before opening the target for write, including exceptions raised mid-enumeration.
         var faceData = PolyFaceMeshDataBeta.ValidateAndCopyFaces(points.Length, faces);
         var target = transaction.GetObject(targetSpaceId, OpenMode.ForRead) as BlockTableRecord;
         if (target is null)
@@ -55,6 +57,7 @@ public static class PolyFaceMeshBuilderBeta
         {
             mesh.SetDatabaseDefaults(database);
             var id = target.AppendEntity(mesh);
+            // All native children join this same caller-owned transaction; later write failure requires its Abort.
             transaction.AddNewlyCreatedDBObject(mesh, true);
             foreach (var point in points)
             {

@@ -42,6 +42,7 @@ public static class ExtentGroupingBeta
     {
         if (extents is null)
             throw new ArgumentNullException(nameof(extents));
+        // Snapshot original boxes only; pre-union would invent adjacency and lose member provenance.
         var boxes = new OrderingBetaCore.Box[extents.Count];
         for (var i = 0; i < extents.Count; i++)
         {

@@ -81,12 +81,17 @@ internal static class TriangleMathBeta
             slopeDegrees = 0;
             return true; // A horizontal plane has no downhill azimuth.
         }
-        slopeDegrees = Math.Atan2(horizontal, nz) * 180 / Math.PI;
+        var slope = Math.Atan2(horizontal, nz) * 180 / Math.PI;
+        // A nonvertical normal can still round to 90 degrees; do not return a value outside the public range.
+        if (slope >= 90)
+            return false;
+        slopeDegrees = slope;
+        // With an upward normal, (nx, ny) is the downhill projection of z(x,y), independent of winding.
         aspectDegrees = Math.Atan2(nx, ny) * 180 / Math.PI;
         if (aspectDegrees < 0)
             aspectDegrees += 360;
-        if (aspectDegrees == 0)
-            aspectDegrees = 0; // Normalize negative zero.
+        if (aspectDegrees >= 360 || aspectDegrees == 0)
+            aspectDegrees = 0; // Adding 360 to a tiny negative angle may round to 360; also normalize negative zero.
         return true;
     }
 
@@ -109,6 +114,7 @@ internal static class TriangleMathBeta
 
     private static double CompensatedSum(double a, double b, double c)
     {
+        // Neumaier compensation retains the low-order term when large coordinates cancel.
         var sum = a;
         var next = sum + b;
         var error = Math.Abs(sum) >= Math.Abs(b) ? (sum - next) + b : (b - next) + sum;

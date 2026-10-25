@@ -46,6 +46,14 @@ Check(TriangleMathBeta.TrySlopeAndAspect(new(0, 0, 1e308), new(1e-100, 0, 1e308)
     out slope, out aspect), "large shared offset must not erase other axes");
 Close(slope, 0, "offset horizontal slope");
 Check(double.IsNaN(aspect), "offset horizontal aspect");
+Check(TriangleMathBeta.TrySlopeAndAspect(origin, new(1, 0, 1e-17), new(0, 1, -1), 1e-12,
+    out slope, out aspect), "north aspect survives a tiny negative angle");
+Close(slope, 45, "near-north slope");
+Check(aspect >= 0 && aspect < 360, "near-north aspect remains in the half-open range");
+Close(aspect, 0, "rounded full turn normalizes to north");
+Check(!TriangleMathBeta.TrySlopeAndAspect(origin, new(1, 0, 1e20), new(0, 1, 0), 1e-30,
+    out slope, out aspect), "unrepresentable nonvertical slope is rejected");
+Check(double.IsNaN(slope) && double.IsNaN(aspect), "rounded vertical failure clears both outputs");
 foreach (var invalid in new[] { 0d, -1, 1, double.NaN, double.PositiveInfinity })
     Throws<ArgumentOutOfRangeException>(() => TriangleMathBeta.TrySlopeAndAspect(origin, eastUp, north, invalid, out _, out _), "invalid tolerance");
 Throws<ArgumentException>(() => TriangleMathBeta.Validate(new(double.NaN, 0, 0), "point"), "nonfinite point");
