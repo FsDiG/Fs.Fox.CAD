@@ -1,7 +1,6 @@
 # AutoCAD DWG 预览 Beta
 
-> 状态：current，Beta API；真实 AutoCAD 宿主渲染验收 `Not run`。<br>
-> 来源：Zfgk 的 `GsPreviewUtil` 能力；重新定义视图、路径、空图和资源所有权。
+> 状态：current，Beta API；真实 AutoCAD 宿主渲染验收 `Not run`。
 
 [`DwgPreviewBeta.SavePng`](../../src/CADShared/Cad/Application/Graphics/DwgPreviewBeta.cs)在当前 AutoCAD 文档的图形管理器中创建自己的离屏设备、模型和视图，将外部 DWG 的模型空间输出为新 PNG。显式传入当前活动文档、源 `.dwg`、新 `.png`、像素宽高。它需要 AutoCAD 主线程命令上下文，不能用作脱离 CAD 的转换程序，不支持并发调用。
 

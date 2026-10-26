@@ -2,6 +2,7 @@
 
 > 状态：historical；针对 `4064025` 的专项静态评审快照，2026-10-26 更正。<br>
 > 仅供追溯，不是现行技术契约；接口与支持范围以[当前指南](../../guides/block-intersections-beta.md)为准。宿主验收 `Not run`。
+> 后续完整审查与修正见[实现记录](../../beta-implementation-notes.md#完整核心审查与修正)。
 
 **评审模块**：嵌套块内实际曲线求交 Beta（`GetCurveIntersectionsBeta`）
 **生产源文件**：

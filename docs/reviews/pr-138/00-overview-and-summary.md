@@ -1,15 +1,15 @@
 # Fs.Fox.CAD PR #138 独立代码评审总览与分模块索引
 
 > 状态：historical；针对 `4064025` 的专项静态评审快照，2026-10-26 更正。<br>
-> 仅供追溯，不是现行技术契约，也不进入产品站点或默认实现依据。使用接口请转到[当前 Beta 指南](../../guides/zfgk-beta.md)。
+> 仅供追溯，不是现行技术契约，也不进入产品站点或默认实现依据。使用接口请转到[当前 Beta 指南](../../guides/beta-capabilities.md)。
 
-后续从 `979b799` 开始的全部 16 个核心文件重新审查，发现并修复了新的数值缺陷；详见[完整核心审查与修正](../../zfgk-migration-inventory.md#完整核心审查与修正)。本分册保留原评审的范围与处置，不代表当前完整审查结论。
+后续从 `979b799` 开始的全部 16 个核心文件重新审查，发现并修复了新的数值缺陷；详见[完整核心审查与修正](../../beta-implementation-notes.md#完整核心审查与修正)。本分册保留原评审的范围与处置，不代表当前完整审查结论。
 
 **评审日期**：2026-10-26
-**评审对象**：[PR #138 — feat: migrate selected ZFGK CAD helpers as Beta APIs](https://github.com/FsDiG/Fs.Fox.CAD/pull/138)
+**评审对象**：[PR #138 — Beta CAD 能力](https://github.com/FsDiG/Fs.Fox.CAD/pull/138)
 **待审工作目录**：`D:\MakeX\Fs.Fox.CAD`
 **基线（Base）**：`5729ef6e97a4f0e0f4132da86fd75495b2003079` (`main`)
-**待审（HEAD）**：`40640258974d30eb3f72078828b204b0521e852c` (`codex/zfgk-beta-migration`)
+**待审（HEAD）**：`40640258974d30eb3f72078828b204b0521e852c`
 **改动规模**：11 个提交，53 个变更文件，新增 5352 行、删除 19 行（16 个生产源文件）
 **记录边界**：保留原评审范围与历史验证记录；以下结论已按静态证据更正，不能代替真实宿主验收。
 

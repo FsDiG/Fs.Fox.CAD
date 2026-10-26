@@ -32,9 +32,7 @@
 
 所有变换副本以及 [Point3dCollection](https://help.autodesk.com/cloudhelp/2026/ENU/OARX-ManagedRefGuide/files/OARX-ManagedRefGuide-Autodesk_AutoCAD_Geometry_Point3dCollection.html) 使用确定的释放范围，正常与异常路径均清理。原生返回非有限坐标时拒绝整个结果；没有交点或没有曲线叶节点时返回空快照。返回值经 `Array.AsReadOnly` 包装，后续查询不会改变之前的结果。
 
-## 来源与验证
-
-能力来源是 `Fs.Zfgk.CAD` 基线 `a882003436fb4cc31b24c90f6779177c13a60abe` 中 `ObjectARX/Entity/BlockUtil.cs` 的 `IntersectWith`。原文件头记录作者 `TianTeng`，版权为 `Copyright © 北京智帆高科科技有限公司 2015`。本实现重新定义只读事务、WCS 身份、嵌套支持、支持类型及失败语义，不是原方法的无差别替换；来源仓库只作静态参考，不构建。
+## 验证
 
 [Test_BlockIntersectionsBeta](../../tests/TestShared/TestBlockIntersectionsBeta.cs) 使用临时数据库创建直线、不可见圆弧、含弧轻量多段线和两级嵌套块。固定预期覆盖父子旋转/缩放顺序、同一定义重复实例、重复点、正/零去重距离、三维高度差、目标延伸、轻量多段线源顶点/凸度/平面守恒、非曲线叶节点、不可变结果、只读打开、异库/异空间/非最上层事务及非法参数。测试不读取或修改用户图纸。
 
@@ -44,7 +42,7 @@
 
 | 证据 | 状态 |
 | --- | --- |
-| 生产与原有命令入口编译（`4064025`） | AutoCAD 2025 Debug、ZWCAD 2022 Release、GStarCAD 2022 Release / 2026 Debug 通过；见[增量记录](../zfgk-migration-inventory.md#本轮增量验证) |
+| 生产与原有命令入口编译（`4064025`） | AutoCAD 2025 Debug、ZWCAD 2022 Release、GStarCAD 2022 Release / 2026 Debug 通过；见[历史构建记录](../beta-implementation-notes.md#历史构建记录) |
 | 最新删除／恢复及距离阈值命令入口编译 | `TestAcad2025` Debug、`TestAcad2019` Release x64 通过；其他目标未做本轮本地增量编译 |
 | AutoCAD / ZWCAD / GStarCAD 命令实际运行 | `Not run` |
 | 已提交删除、同事务删除、恢复及旧快照独立 | 新增回归入口；AutoCAD / ZWCAD / GStarCAD 均 `Not run` |

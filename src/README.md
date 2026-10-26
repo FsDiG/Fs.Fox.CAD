@@ -9,7 +9,7 @@
 | 要找什么 | 阅读入口 |
 | --- | --- |
 | 项目与共享源码关系、宿主别名、按问题查文件 | [源码检索总入口](../docs/source-navigation/README.md) |
-| Zfgk 迁入的 Beta 多段线、排序、文字、几何与预览 | [Beta 能力总览](../docs/guides/zfgk-beta.md) |
+| Beta 多段线、排序、文字、几何与预览 | [Beta 能力总览](../docs/guides/beta-capabilities.md) |
 | 事务、数据库、符号表、对象、字典、XData、外部参照 | [数据库与对象生命周期](../docs/source-navigation/database.md) |
 | 块、曲线、多段线、文字、包围框、填充 | [实体与曲线操作](../docs/source-navigation/entities.md) |
 | 当前文档、系统变量、Idle、输入、选择、Jig、命令 | [应用上下文与 Editor](../docs/source-navigation/application-editor.md) |

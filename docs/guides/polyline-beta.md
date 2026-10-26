@@ -1,7 +1,6 @@
 # 多段线几何操作 Beta
 
-> 状态：current；说明 Beta API 的行为约定，不代表真实 CAD 宿主已经验收。<br>
-> 来源：Zfgk `PolylineUtil`，原作者张帆；依据源码快照 `a882003436fb4cc31b24c90f6779177c13a60abe` 重写。
+> 状态：current；说明 Beta API 的行为约定，不代表真实 CAD 宿主已经验收。
 
 [`PolylineExBeta`](../../src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineExBeta.cs)提供反向、整理、双线连接和整线圆角四个入口。它们借用输入，不修改、释放或擦除输入，不启动事务，也不自动落库。输入可为只读打开的数据库对象；调用者仍需保证其读取生命周期有效。
 
@@ -45,7 +44,7 @@
 
 该入口只检查局部圆角和共享原边的长度预算，不判断非相邻边、圆角之间的全局自交，也不检查等宽条带的偏移边界。Normal、Elevation、Thickness 和 Closed 沿用输入，全部计算使用原 OCS 平面。
 
-现行 `CurveEx.ChamferAt` 只支持内部索引的单角编辑，不能覆盖闭合首末角和整线预算检查；此 Beta 入口补齐该能力，不改变稳定入口的行为。来源 `PolylineUtil.Fillet` 的隐式减小半径、丢失段宽和逐角重叠问题没有沿用。
+现行 `CurveEx.ChamferAt` 只支持内部索引的单角编辑，不能覆盖闭合首末角和整线预算检查；此 Beta 入口补齐该能力，不改变稳定入口的行为。
 
 ## 含弧闭合线的点关系
 
@@ -68,12 +67,12 @@
 
 ## 验证入口
 
-2026-10-26 完整复核后，生产核心实测为多段线 **21 场景／2979 断言**、点关系 **12 场景／80911 断言**，均通过。新增反例与验证边界见[完整核心审查记录](../zfgk-migration-inventory.md#完整核心审查与修正)。
+2026-10-26 完整复核后，生产核心实测为多段线 **21 场景／2979 断言**、点关系 **12 场景／80911 断言**，均通过。新增反例与验证边界见[完整核心审查记录](../beta-implementation-notes.md#完整核心审查与修正)。
 
 - [直接链接生产核心的测试](../../tests/PolylineBeta.CoreTests/PolylineBeta.CoreTests.csproj)：`dotnet run --project tests/PolylineBeta.CoreTests/PolylineBeta.CoreTests.csproj --configuration Release`。覆盖手算圆弧/宽度、反向两次恢复、闭合起点、清理误差界限及精确直角保护、次正规段保守保留、四种连接端点、桥接宽度、次正规距离与普通勾股边界、歧义和失败输出；圆角覆盖顺逆绕序、凹角、首末角、共享段预算、恒定宽度、指定半径与切向、共线/折返及数值限制。
 - [宿主验收命令](../../tests/TestShared/TestPolylineBeta.cs)：`Test_PolylineBeta`。仅使用临时实体和临时数据库，检查非默认 OCS、实际弧长/圆角半径、只读输入和对象归属，不写入当前图纸。新增圆角场景的编译与真实宿主执行单独记录，未执行保持 `Not run`。
 - [点关系生产核心测试](../../tests/PolylineRegionBeta.CoreTests/PolylineRegionBeta.CoreTests.csproj)：`dotnet run --project tests/PolylineRegionBeta.CoreTests/PolylineRegionBeta.CoreTests.csproj --configuration Release`。直接链接生产实现，覆盖圆/主弧解析样例、同圆异弧、切线、凸度范围阈值、浅弧、旋转/平移/缩放/反向、偶奇填充及独立圆盘切割判据；分数坐标顶点回归另检查直段范围预筛与半开计数在原向/反向下保持一致，并检查次正规端点容差及普通勾股距离边界。
 - 同一宿主测试文件的 `Test_PolylineRegionBeta` 仅使用临时实体和临时数据库，检查非默认 OCS、平面外关系、平面/边界容差、完整源验证与只读归属。新增分数坐标场景调用实际公共入口；本轮在 AutoCAD 2025 Debug、AutoCAD 2019 Release x64 编译，实际 CAD 执行仍为 `Not run`。
-- 首次补迁的四个代表目标是历史记录；2026-10-26 的修正选择上述两个框架代表目标，未重复本地全矩阵。首轮完整构建及后续增量证据由[迁移清单](../zfgk-migration-inventory.md)统一记录。
+- 历史构建覆盖四个代表目标；2026-10-26 的修正选择上述两个框架代表目标，未重复本地全矩阵。完整构建及后续增量证据见[实现与验证记录](../beta-implementation-notes.md)。
 
 段长、顶点数据快照和采样继续使用 Fox 的 [`PolylineEx`](../../src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineEx.cs)；现有单角编辑继续使用 [`CurveEx`](../../src/CADShared/Cad/Database/Entities/Curves/CurveEx.cs)。

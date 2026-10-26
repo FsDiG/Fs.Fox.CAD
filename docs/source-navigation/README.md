@@ -2,7 +2,7 @@
 
 > 状态：current；受众：maintainer<br>
 > 稳定 ID：`reference.source-navigation`<br>
-> 范围：仓库 `src/`；既有 API 核对起点：`main` @ `ea400b3409e154357c97a3013ff0f9b11f6515ac`；已同步本次 Zfgk Beta 扩展<br>
+> 范围：仓库 `src/`；既有 API 核对起点：`main` @ `ea400b3409e154357c97a3013ff0f9b11f6515ac`；包含 Beta 扩展能力<br>
 > 上级入口：[文档索引](../README.md)；整体设计：[架构说明](../关于IFoxCAD的架构说明.md)
 
 本组文档回答“功能放在哪个文件、从哪个类型和方法进入、下一步追到哪里”。它不是第二份完整 API 参考，也不把设计提案或未编译代码当作已实现功能。所有源码链接指向仓库内文件，便于在 GitHub、编辑器和本地检索中使用。
@@ -14,7 +14,7 @@
 3. 找不到方法：先核对[宿主和编译边界](#projects)，尤其是 `#if`、`GlobalUsings.cs` 和 `ToDo`。
 4. 修改前沿调用链核对事务、数据库、对象所有权、坐标系和宿主分支；本组文档不替代实现及 XML 注释。
 
-既有 API 的导航来自静态源码、项目与文档核对。新增 Beta 的构建、生产核心回归及复核结果见[迁移验证记录](../zfgk-migration-inventory.md#验证记录)。真实 CAD 宿主验收为 `Not run`；命令测试文件存在或编译通过不代表已运行。
+既有 API 的导航来自静态源码、项目与文档核对。新增 Beta 的构建、生产核心回归及复核结果见[Beta 验证记录](../beta-implementation-notes.md#验证记录)。真实 CAD 宿主验收为 `Not run`；命令测试文件存在或编译通过不代表已运行。
 
 <a id="modules"></a>
 

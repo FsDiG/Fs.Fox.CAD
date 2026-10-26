@@ -20,7 +20,7 @@
 
 调用方负责提交或中止事务。输入验证错误尚未写入；宿主在追加过程中报错时，调用方必须中止事务。构造器不提供事务级的局部回滚，不持有或释放调用方数据库/事务，不改变 WorkingDatabase。网格外观使用目标数据库默认值，全部边可见；不验证面的几何退化、自交或四边面共面性，不自动三角化。
 
-旋转标注复用 SDK 和现有落库接口，本次不增加薄封装，也不迁入原库默认用固定 F2 文本覆盖实际测量值的行为。
+旋转标注继续使用宿主 SDK 和现有落库接口。
 
 ## 验证
 
@@ -28,4 +28,4 @@
 
 - [生产数值核心测试](../../tests/GeometryBeta.CoreTests/GeometryBeta.CoreTests.csproj)直接链接生产源码，覆盖坡度单位、坡向、绕序、退化、极端尺度、法向量／水平分量平方下溢、网格索引转换和完整预校验。
 - [宿主命令](../../tests/TestShared/TestGeometryConstructionBeta.cs)：`Test_GeometryConstructionBeta`，使用临时数据库并中止事务，验证对象归属；异库事务/空间、非最上层事务和惰性 faces 中途抛错均应保持原事务且不写入，枚举异常原样传播。
-- 实际 CAD 宿主执行：`Not run`。构建矩阵与最终检查记录见[迁移清单](../zfgk-migration-inventory.md)。
+- 实际 CAD 宿主执行：`Not run`。构建矩阵与最终检查记录见[实现与验证记录](../beta-implementation-notes.md)。

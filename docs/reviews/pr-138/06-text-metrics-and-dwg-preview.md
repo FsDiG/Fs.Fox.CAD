@@ -1,7 +1,8 @@
 # PR #138 模块专项评审报告：文字度量与 DWG 预览
 
 > 状态：historical；针对 `4064025` 的专项静态评审快照。<br>
-> 仅供追溯，不是现行技术契约；测试数字沿用原评审者记录，非本轮重跑。使用限制以[当前 Beta 指南](../../guides/zfgk-beta.md)为准，宿主验收 `Not run`。
+> 仅供追溯，不是现行技术契约；测试数字沿用原评审者记录，非本轮重跑。使用限制以[当前 Beta 指南](../../guides/beta-capabilities.md)为准，宿主验收 `Not run`。
+> 后续完整审查与修正见[实现记录](../../beta-implementation-notes.md#完整核心审查与修正)。
 
 **评审模块**：单行文字样式度量（`TextMetricsBeta`）与外部 DWG 离屏预览（`DwgPreviewBeta`）
 **生产源文件**：

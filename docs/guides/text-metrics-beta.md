@@ -1,8 +1,7 @@
 # 单行文字测量 Beta
 
 > 状态：Beta 使用说明；真实 CAD 宿主验收 `Not run`。<br>
-> 实现：[TextMetricsBeta](../../src/CADShared/Cad/Database/Entities/Text/TextMetricsBeta.cs)。<br>
-> 来源：ZFGK.AutoCAD 的 `TextUtil.GetTextHeightAndWidth`（张帆）；重新定义样式身份、文本语义和资源归属。
+> 实现：[TextMetricsBeta](../../src/CADShared/Cad/Database/Entities/Text/TextMetricsBeta.cs)。
 
 `TextMetricsBeta.MeasureSingleLine` 接收显式数据库、属于该数据库的文字样式 ID、单行内容、字高及宽度因子，返回文字局部坐标的 `Extents2d`。宽高由范围最大点减最小点得到。调用方负责 CAD 主线程执行上下文和文档访问条件。
 
@@ -31,9 +30,9 @@
 
 ZWCAD 2022 的限制由本机 ZRX 2022 SDK 元数据及编译结果确认；GStarCAD 2022/2023 则由对应 NuGet SDK 元数据及编译结果确认。后续适配需要验证完整的样式转换和等价的文本/空格/转义语义，不用 DBText 实体包围框代替。字体加载状态位依据上述 Autodesk 契约；ZWCAD 2025 和 GStarCAD 2026 的真实字体加载、替代和范围行为仍需要各自宿主验收。
 
-## 属性能力的处置
+## 块属性读写
 
-块属性读写继续复用 `BlockReferenceEx.GetAttributes`、`ChangeBlockAttribute` 和现有对象写入辅助。Zfgk 对字体高度、宽度因子和位置的简单属性包装不再增加同义 API。
+块属性读写继续复用 `BlockReferenceEx.GetAttributes`、`ChangeBlockAttribute` 和现有对象写入辅助。
 
 ## 验证入口
 

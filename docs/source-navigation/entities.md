@@ -128,9 +128,9 @@
 
 因此搜索到 `RegionEx.ToCurves` 只能定位保留实现，不能将其写成正式可用的公共能力。`ToDo/RegionExtensions.Centroid` 也不在当前共享编译清单。现行点与区域判断应看 [GeometryEx.PointOnRegion](geometry.md#points)，两者不是同一功能。
 
-## Zfgk 迁入的 Beta 实体能力
+## Beta 实体扩展能力
 
-下列源码参与共享编译，支持范围及对象归属见 [Beta 总览](../guides/zfgk-beta.md)。构建测试命令不等于真实宿主已运行。
+下列源码参与共享编译，支持范围及对象归属见 [Beta 总览](../guides/beta-capabilities.md)。构建测试命令不等于真实宿主已运行。
 
 | 文件 | 主要入口与边界 |
 | --- | --- |

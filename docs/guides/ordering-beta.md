@@ -17,7 +17,7 @@
 | 组合邻近 XY 包围框并追溯成员 | `ExtentGroupingBeta.GroupByProximity` → `ExtentGroupBeta` | [ExtentGroupingBeta.cs](../../src/CADShared/Cad/Database/Entities/Bounds/ExtentGroupingBeta.cs) |
 | 维护排序和分组算法 | 内部纯计算核心 | [OrderingBetaCore.cs](../../src/CADShared/Cad/Geometry/Ordering/OrderingBetaCore.cs) |
 
-普通类型使用 `Beta` 后缀，扩展方法在调用位置也保留 `Beta`。新入口不会替换已有稳定 API，也不自动选择实体的代表点。实体包围框仍由现有 `BoundingBox9`、`GeometricExtents` 等读取能力提供；没有引入 Zfgk 数据库包装或另一套空间索引。
+普通类型使用 `Beta` 后缀，扩展方法在调用位置也保留 `Beta`。新入口不会替换已有稳定 API，也不自动选择实体的代表点。实体包围框仍由现有 `BoundingBox9`、`GeometricExtents` 等读取能力提供。
 
 ## 行列的确定规则
 
@@ -47,12 +47,6 @@
 
 距离比较先做轴向筛选，再以最大轴差归一化求斜距，避免平方溢出。次正规数阈值下先对轴差和阈值共乘精确的 `2^52`，避免最终斜距舍入成轴向间距；正常尺度的边界比较保留原规则。坐标与阈值仍受双精度表示限制，该处理不构成任意尺度的精确几何保证。
 
-## 来源与迁移差异
-
-能力来源基线为 `Fs.Zfgk.CAD` 提交 `a882003436fb4cc31b24c90f6779177c13a60abe`：`ObjectARX/Entity/BlockUtil.cs` 的排序以及 `ObjectARX/ArxOthers/ExtentUtil.cs` 的局部范围组合。原文件头记录作者 `TianTeng`，版权为 `Copyright © 北京智帆高科科技有限公司 2015`。本次按这些能力重新实现确定的输入输出契约，保留来源记录，不复制原库的事务或实体包装。
-
-原沿曲线排序为避免字典键冲突而减小重复距离；迁入后以“实际里程、原始索引”排序。原行列比较器直接使用模糊相等；迁入后先固定锚点分组，再做传递的精确比较。原范围合并会根据扩大后的包围框继续合并；迁入后只根据原始邻近关系建立连通分量。上述差异是公开行为边界，不能作为原方法的无差别替换。
-
 ## 检查与宿主验收
 
 [OrderingBeta.CoreTests](../../tests/OrderingBeta.CoreTests/OrderingBeta.CoreTests.csproj) 直接链接生产 `OrderingBetaCore.cs`，不依赖 CAD SDK 或第三方测试包。运行命令：
@@ -72,4 +66,4 @@ dotnet run --project tests/OrderingBeta.CoreTests/OrderingBeta.CoreTests.csproj 
 | CADShared 模块校验 | 通过，本线新增 Geometry 2 项、Database 2 项，无新增边界债务 |
 | AutoCAD / ZWCAD / GStarCAD 实际宿主 | `Not run` |
 
-整体构建矩阵与独立复核结果由[迁移路线图](../zfgk-migration-roadmap.md)统一记录。实际宿主执行遵守 [HostAcceptance](../../tools/HostAcceptance/README.md) 的矩阵和隔离要求，另行记录产品、完整版本、测试程序集、提交和场景结果；未经运行的项目继续保持 `Not run`。
+整体计划见[Beta 发展计划](../beta-development-plan.md)，构建矩阵与独立复核结果见[实现与验证记录](../beta-implementation-notes.md#验证记录)。实际宿主执行遵守 [HostAcceptance](../../tools/HostAcceptance/README.md) 的矩阵和隔离要求，另行记录产品、完整版本、测试程序集、提交和场景结果；未经运行的项目继续保持 `Not run`。
