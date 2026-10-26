@@ -1,5 +1,8 @@
 # PR #138 模块专项评审报告：嵌套块内曲线求交
 
+> 状态：historical；针对 `4064025` 的专项静态评审快照，2026-10-26 更正。<br>
+> 仅供追溯，不是现行技术契约；接口与支持范围以[当前指南](../../guides/block-intersections-beta.md)为准。宿主验收 `Not run`。
+
 **评审模块**：嵌套块内实际曲线求交 Beta（`GetCurveIntersectionsBeta`）
 **生产源文件**：
 - [`D:\MakeX\Fs.Fox.CAD\src\CADShared\Cad\Database\Entities\Blocks\BlockIntersectionExBeta.cs`](file:///D:/MakeX/Fs.Fox.CAD/src/CADShared/Cad/Database/Entities/Blocks/BlockIntersectionExBeta.cs)
@@ -85,65 +88,28 @@
 
 ---
 
-## 3. 审查发现的问题与修复建议
+## 3. 原 Finding 1 复核：撤销 P2，不增加预过滤
 
----
+原判断将“块定义包含未 Purge 的删除实体”直接等同于“默认枚举会返回该实体”，这个触发前提不成立。
 
-### Finding 1 [P2 鲁棒性改进 / 建议合入前修复]: 块定义遍历未跳过已删除（Erased）图元，存在触发 `eWasErased` 原生崩溃风险
+- **本机静态证据**：AutoCAD 2019／2026 运行库中，`BlockTableRecord` 的普通构造与指针包装构造均令 `m_bSkipDeleted=true`；`GetEnumerator` 将其传给原生迭代器，枚举器的 `start` 和 `step` 继续使用同一值。
+- **包含删除对象的独立入口**：`IncludingErased` 返回 `Copy()` 的包装副本，并将该副本的跳过标志设为 false。生产查询使用普通的 `transaction.GetObject` 与 `definition.Cast<ObjectId>()`，没有调用该入口。
+- **官方依据**：[原生 newIterator](https://help.autodesk.com/cloudhelp/2018/ENU/OARX-RefGuide/files/OREF-AcDbBlockTableRecord__newIterator_AcDbBlockTableRecordIterator___bool_bool_const.html)默认 `skipDeleted=true`，与本机运行库静态检查一致。
+- **处理决定**：撤销原 P2 及弹栈／入栈两份 `ValidId` 过滤建议。没有证据表明现行普通枚举因删除成员必然抛出 `eWasErased`；托管异常本身也不能定性为原生进程崩溃。
 
-- **定位**：[`BlockIntersectionExBeta.cs#L80-L84, L121-L123`](file:///D:/MakeX/Fs.Fox.CAD/src/CADShared/Cad/Database/Entities/Blocks/BlockIntersectionExBeta.cs#L80-L84)
-- **触发条件**：
-  当被查询的块定义在当前图形会话/事务中发生过实体删除（例如脚本调用过 `ent.Erase()` 或交互式删除了块内图元），且尚未执行数据库 Purge 或重新保存打开时；`definition.Cast<ObjectId>()` 会抓取到已被标记为 `IsErased` 的图元 ID。
-- **实际行为**：
-  遍历执行到 `var child = transaction.GetObject(frame.Children[frame.NextIndex++], OpenMode.ForRead);` 时，AutoCAD 原生抛出 `Autodesk.AutoCAD.Runtime.Exception: eWasErased`，导致求交查询失败。
-- **预期行为**：
-  跳过已被标记为删除的图元，继续正常求交剩余有效曲线。
-- **一致性发现**：
-  在 `BlockIntersectionExBeta.cs` 的 L135-L136 中，作者已封装了完善的有效性断言函数：
-  ```csharp
-  private static bool ValidId(ObjectId id, Database database) =>
-      !id.IsNull && id.IsValid && !id.IsErased && id.Database == database;
-  ```
-  该函数在根块、目标曲线、空间、块定义校验中被严格使用，建议在遍历子图元时复用该方法。
-- **推荐修复 Diff（方案 A：弹栈校验，O(1) 零分配，最推荐）**：
-  ```diff
-  --- a/src/CADShared/Cad/Database/Entities/Blocks/BlockIntersectionExBeta.cs
-  +++ b/src/CADShared/Cad/Database/Entities/Blocks/BlockIntersectionExBeta.cs
-  @@ -80,7 +80,9 @@ public static class BlockIntersectionExBeta
-                   continue;
-               }
-
-  -            var child = transaction.GetObject(frame.Children[frame.NextIndex++], OpenMode.ForRead);
-  +            var childId = frame.Children[frame.NextIndex++];
-  +            if (!ValidId(childId, database)) continue;
-  +            var child = transaction.GetObject(childId, OpenMode.ForRead);
-               if (child is BlockReference nested)
-               {
-                   PushDefinition(nested, frame.ToWorld);
-  ```
-- **备选修复 Diff（方案 B：入栈预过滤，快照阶段统一过滤）**：
-  ```diff
-  --- a/src/CADShared/Cad/Database/Entities/Blocks/BlockIntersectionExBeta.cs
-  +++ b/src/CADShared/Cad/Database/Entities/Blocks/BlockIntersectionExBeta.cs
-  @@ -121,3 +121,3 @@ public static class BlockIntersectionExBeta
-               stack.Push(new TraversalFrame(definitionId, parentToWorld * reference.BlockTransform,
-  -                definition.Cast<ObjectId>().ToArray()));
-  +                definition.Cast<ObjectId>().Where(id => ValidId(id, database)).ToArray()));
-  ```
-- **验证办法**：
-  在 `TestBlockIntersectionsBeta.cs` 中增加测试用例：向测试块定义中添加两条直线，将其中一条调用 `line.Erase()`，对引用执行 `GetCurveIntersectionsBeta`，断言能够正常返回另一条直线的交点而不抛出 `eWasErased`。
+这不代表所有宿主已通过验证。保留删除场景回归的建议：在独立临时数据库中使用不同交点的曲线，分别检查已提交删除、当前事务内删除、恢复后的交点及旧结果快照，比较查询前后的调用方对象和事务状态。新增场景实际宿主执行均为 `Not run`。
 
 ---
 
 ## 4. 验证证据与测试覆盖
 
 - **宿主命令测试 (`TestBlockIntersectionsBeta.cs`)**：
-  - 测试用例完整覆盖：两级嵌套块复合变换（旋转/缩放/位移）、同一定义在不同位置实例化求交、不可见圆弧/直线、轻量多段线 WCS 变换保持、非曲线子图元跳过、`ExtendArgument` 仅延伸目标曲线、三维高度差不投影、去重半径为 0 与正值比对、未入库目标曲线借用、异库事务/空间与非最上层事务拒绝、只读属性保持。
-  - 状态：编译通过，真实 CAD 宿主执行状态依规保持为 `Not run`。
+  - 原有入口覆盖：两级嵌套块复合变换（旋转/缩放/位移）、同一定义重复实例、不可见圆弧/直线、轻量多段线 WCS 变换保持、非曲线叶节点、目标延伸、三维高度差、去重、借用语义、事务及空间身份校验。
+  - 新增入口覆盖：已提交删除、当前事务内删除、恢复成员后交点恢复及旧快照独立，使用独立临时数据库隔离原有只读断言。
+  - 原评审针对 `4064025` 记录了原有入口编译通过；本轮新增入口通过 `TestAcad2025` Debug x64 编译（0 警告、0 错误）。两者均不代表场景已运行，全部真实宿主场景均为 `Not run`。
 
 ---
 
 ## 5. 评审结论
 
-- **结论**：**建议在修复 Finding 1 后合入（Mergeable after addressing Finding 1）**。
-- **评价**：除未防御 `childId.IsErased` 这一细微缺陷外，该模块在矩阵变换、DFS 环检测、事务顶层一致性和非托管资源释放方面均达到了极高的工业级标准。
+- **结论**：原 P2 撤销，保留生产实现并补充删除／恢复回归。静态复核没有确认必须修改生产代码的缺陷；跨宿主行为仍须通过实际宿主验收确认。

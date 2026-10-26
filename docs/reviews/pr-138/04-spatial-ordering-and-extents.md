@@ -1,5 +1,8 @@
 # PR #138 模块专项评审报告：空间排序与邻近范围组合
 
+> 状态：historical；针对 `4064025` 的专项静态评审快照。<br>
+> 仅供追溯，不是现行技术契约；测试数字沿用原评审者记录，非本轮重跑。使用限制以[当前指南](../../guides/ordering-beta.md)为准，宿主验收 `Not run`。
+
 **评审模块**：空间行列/曲线排序与邻近范围分量组合 Beta
 **生产源文件**：
 - [`D:\MakeX\Fs.Fox.CAD\src\CADShared\Cad\Geometry\Ordering\OrderingBetaCore.cs`](file:///D:/MakeX/Fs.Fox.CAD/src/CADShared/Cad/Geometry/Ordering/OrderingBetaCore.cs)
@@ -94,4 +97,4 @@
 ## 5. 评审结论
 
 - **结论**：**通过（Approved）**。
-- **评价**：空间排序与范围组合模块精准纠正了历史代码中违背严格弱序、人为扰动真实里程、外包框虚假膨胀等经典“反模式”，算法确定性与数学严谨性极高。
+- **边界**：原评审在静态范围内未报告新增缺陷，核心回归覆盖固定分组、稳定排序与原始范围连通分量；沿曲线宿主场景为 `Not run`。

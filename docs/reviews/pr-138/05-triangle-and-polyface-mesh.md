@@ -1,5 +1,8 @@
 # PR #138 模块专项评审报告：三维几何与多面网格构造
 
+> 状态：historical；针对 `4064025` 的专项静态评审快照，2026-10-26 更正。<br>
+> 仅供追溯，不是现行技术契约；测试数字沿用原评审者记录，非本轮重跑。使用限制以[当前指南](../../guides/geometry-construction-beta.md)为准，宿主验收 `Not run`。
+
 **评审模块**：三角形数学（坡度/坡向/重心）与多面网格构造 Beta
 **生产源文件**：
 - [`D:\MakeX\Fs.Fox.CAD\src\CADShared\Cad\Geometry\TriangleMathBeta.cs`](file:///D:/MakeX/Fs.Fox.CAD/src/CADShared/Cad/Geometry/TriangleMathBeta.cs)
@@ -45,7 +48,7 @@
 ### 1.3 多面网格（PolyFaceMesh）构造：完整预验证
 - **惰性集合完整先期求值（Exhaust Lazy Inputs First）**：
   在向块表记录写入任何网格图元之前，代码先调用 `PolyFaceMeshDataBeta.ValidateAndCopyFaces` 将传入的 `IEnumerable<IEnumerable<int>> faces` 完整枚举并快照为内存数组。
-  - **关键防范**：如果调用方传入的惰性序列在枚举到第 100 个面时抛出异常，此时数据库写事务**尚未打开，没有任何半成品图元写入**，事务保持纯净，绝不留下悬空网格。
+  - **关键防范**：如果惰性面序列在枚举中途抛出异常，构造器尚未打开目标空间写入或追加网格。调用方事务已经存在，但本次调用尚未向它登记半成品图元。
 - **AutoCAD 1-based 索引转换与三角面规则**：
   AutoCAD 原生 `FaceRecord` 采用 1-based 索引（顶点编号从 1 开始）；三角面的第四个索引在底层必须置 0。代码在写入前统一完成校验并置 0。
 - **数量硬上限防护**：
@@ -57,11 +60,11 @@
 
 ### 2.1 顶层事务校验与所有权边界
 - **事务归属**：
-  `PolyFaceMeshBuilderBeta.Append` 严格校验 `database.TransactionManager.TopTransaction == transaction` 以及目标空间的数据库归属，拒绝子事务与跨库写入；
+  `PolyFaceMeshBuilderBeta.Append` 校验 `database.TransactionManager.TopTransaction == transaction` 以及目标空间的数据库归属，拒绝非当前顶层事务及跨库写入；当前顶层本身可以是调用方启动的子事务；
 - **回滚权归属调用方**：
   代码不自行调用 `Commit()` 或 `Abort()`。网格实体及其所有的 `PolyFaceMeshVertex`、`FaceRecord` 子实体均通过 `AddNewlyCreatedDBObject(..., true)` 注册进调用方的同一事务中。若后续操作失败，由外层事务统一整体中止回滚。
 
-### 2.2 生产网格构造器子实体生命周期审查复核：`using var` 确认为官方推荐最佳实践（非缺陷）
+### 2.2 生产网格构造器子实体生命周期复核：保留现有 `using`
 
 - **关注代码段**：[`PolyFaceMeshBuilderBeta.cs#L56-L75`](file:///D:/MakeX/Fs.Fox.CAD/src/CADShared/Cad/Database/Entities/Meshes/PolyFaceMeshBuilderBeta.cs#L56-L75)
 - **实现模式**：
@@ -87,13 +90,9 @@
       return id;
   }
   ```
-- **底层机制与深度复核**：
-  1. **所有权转移机制**：在 AutoCAD .NET 架构中，`PolyFaceMeshVertex` 与 `FaceRecord` 均为 `DisposableWrapper`。当调用 `transaction.AddNewlyCreatedDBObject(item, true)` 后，内部的非托管所有权标志 `_autoDelete` 即被置为 `false`，非托管 C++ `AcDbObject` 已完全由 Database/Transaction 接管；
-  2. **托管包装释放语义**：此时作用域退出触发的 `Dispose()` **仅释放托管包装器本身并调用 `GC.SuppressFinalize(this)`**，绝不会调用 C++ 的 `delete` 销毁数据库驻留对象；
-  3. **至关重要的 GC 压力防护**：在大型多面网格构造中，顶点和面数量可达 32,767 项。若不使用 `using var` 显式及时释放托管包装，多达 6.5 万个包装对象会被推入 .NET GC 终结器队列（Finalizer Queue），在后续 GC 时引发严重的阻塞停顿；
-  4. **Autodesk 官方 SDK 规范**：Autodesk 官方《AutoCAD .NET Developer's Guide》中的 `CreatePolyfaceMeshExample` 官方示例亦明确采用了 `using (PolyFaceMeshVertex pfmVertex = ...)` 模式。
-- **复核结论**：
-  初审中由于经验法则推测的“跨宿主悬空或重复释放风险”不成立。该模式不仅安全，而且是官方推荐的大批量图元落库高性能范式。本模块审查结论为完全通过，无需修改代码。
+- **证据与边界**：[Autodesk 官方网格示例](https://help.autodesk.com/cloudhelp/2026/ENU/OARX-DevGuide-Managed/files/GUID-6B49EE98-D513-46EB-9D7A-282F70A45B24.htm)在登记事务后仍对网格和 `FaceRecord` 使用 `using`；顶点循环并没有报告原先声称的 `using (PolyFaceMeshVertex ...)`。该示例支持保留显式释放模式，不能据此推导所有宿主的内部所有权实现完全相同。
+- **撤销的推断**：没有证据支持原报告关于 `_autoDelete` 赋值及“Dispose 只释放包装器”的通用机制断言，也没有基准证明不使用 `using` 必然形成数万终结器并导致严重停顿，因此删除这些结论。
+- **复核结论**：没有确认需要修改现有生产释放代码的缺陷。子对象登记、异常回滚和跨宿主生命周期仍以实际宿主回归为验收依据，当前 `Not run`。
 
 ---
 
@@ -112,4 +111,4 @@
 ## 4. 评审结论
 
 - **结论**：**通过（Approved）**。
-- **评价**：数值算法在地形学与 GIS 坡度/坡向标准上极其严密，解决了历史遗留的 Z 轴丢失与浮点溢出；网格构造的前置校验机制有效杜绝了数据库半写污染。
+- **边界**：核心回归覆盖已列出的几何和面索引输入；实际网格写入、回滚及跨宿主子对象生命周期仍为 `Not run`。

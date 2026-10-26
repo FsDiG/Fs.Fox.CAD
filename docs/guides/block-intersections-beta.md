@@ -18,6 +18,7 @@
 - `mode` 默认是 `Intersect.OnBothOperands`，双方均不延伸；也接受 `Intersect.ExtendArgument`，只延伸 `target`。延伸能力和重合曲线返回哪些离散点仍由实际宿主 SDK 决定。
 - 曲线白名单为原生 `Line`、`Arc`、`Circle`、`Ellipse`、轻量 `Polyline`、`Spline`、`Ray` 和 `Xline`。自定义派生类型及其他 `Curve` 明确抛出 `NotSupportedException`。
 - 文字、属性、填充、网格及其他非 `Curve` 叶节点不属于本接口查询范围，不参与求交。查询使用存储几何，包含不可见曲线，不考虑图层关闭/冻结、视口可见性或裁剪；结果不能作为屏幕可见几何的交点列表。
+- 已删除成员不属于当前查询几何。本机 AutoCAD 2019／2026 运行库的静态检查显示，普通块定义枚举默认跳过删除成员；本实现未使用 `IncludingErased`。该静态证据不替代其他厂商的实际宿主验证。
 - 动态块、外部参照、`MInsertBlock` 阵列及其他块派生类型明确拒绝。遍历到这些节点会使整个查询失败，不返回已经算出的部分交点。
 - 旧式 `Polyline2d` / `Polyline3d` 明确拒绝。Autodesk 对 [GetTransformedCopy](https://help.autodesk.com/cloudhelp/2020/ENU/OARX-ManagedRefGuide/files/OARX-ManagedRefGuide-Autodesk_AutoCAD_DatabaseServices_Entity_GetTransformedCopy_Matrix3d.html) 的说明警告，拥有顶点子对象的复杂实体可能浅克隆并变换原始子对象；首版采用保守白名单保持只读边界。
 
@@ -37,10 +38,14 @@
 
 [Test_BlockIntersectionsBeta](../../tests/TestShared/TestBlockIntersectionsBeta.cs) 使用临时数据库创建直线、不可见圆弧、含弧轻量多段线和两级嵌套块。固定预期覆盖父子旋转/缩放顺序、同一定义重复实例、重复点、正/零去重距离、三维高度差、目标延伸、轻量多段线源顶点/凸度/平面守恒、非曲线叶节点、不可变结果、只读打开、异库/异空间/非最上层事务及非法参数。测试不读取或修改用户图纸。
 
+删除／恢复回归另用独立临时数据库，采用不同交点的成员，检查已提交删除、当前事务内删除，以及恢复成员后的交点与旧快照独立性。查询前后比较调用方对象及事务状态；删除操作本身所需的写打开不计为查询升级。这三类新增场景的实际宿主执行均为 `Not run`。
+
 | 证据 | 状态 |
 | --- | --- |
-| 新增生产与命令程序集编译 | AutoCAD 2025 Debug、ZWCAD 2022 Release、GStarCAD 2022 Release / 2026 Debug 通过；见[增量记录](../zfgk-migration-inventory.md#本轮增量验证) |
+| 生产与原有命令入口编译（`4064025`） | AutoCAD 2025 Debug、ZWCAD 2022 Release、GStarCAD 2022 Release / 2026 Debug 通过；见[增量记录](../zfgk-migration-inventory.md#本轮增量验证) |
+| 新增删除／恢复入口编译 | `TestAcad2025` Debug x64 通过，0 警告、0 错误；其他目标未做本轮本地增量编译 |
 | AutoCAD / ZWCAD / GStarCAD 命令实际运行 | `Not run` |
+| 已提交删除、同事务删除、恢复及旧快照独立 | 新增回归入口；AutoCAD / ZWCAD / GStarCAD 均 `Not run` |
 | 动态块、外参、阵列及旧式多段线 | 首版明确拒绝 |
 | 循环定义、很深的有效定义链、非均匀变换异常清理 | 需在允许对应输入的实际宿主补充验收 |
 

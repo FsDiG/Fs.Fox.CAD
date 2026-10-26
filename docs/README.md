@@ -105,6 +105,7 @@ front matter schema 和自动校验尚未落地。在迁移完成前，本页状
 | 路径 | 状态/用途 | 默认处理 |
 | --- | --- | --- |
 | `.github/ISSUE_TEMPLATE.zh-CN.md`、`.github/PULL_REQUEST_TEMPLATE.zh-CN.md` | GitHub 操作模板 | 由 GitHub UI 使用，不作为技术文档。 |
+| `docs/reviews/pr-138/*.md` | `historical`，PR #138 针对 `4064025` 的专项静态评审快照及后续更正 | 仅需追溯该 PR 的意见时读取；[卷宗索引](reviews/pr-138/00-overview-and-summary.md)保留原范围、错误结论更正和验证边界，不作为现行技术契约，不进入产品站点或默认上下文。 |
 | 未来可能进入特定 PR/提交的 `Build/HostAcceptance/*.md` | `historical` 宿主证据快照 | 当前 main 尚无该目录；只在目标 Git 状态确实包含它且需追溯匹配 Issue、PR、提交和宿主版本时读取，不发布。 |
 | `third_party/Autodesk.MgdDbg/README.md` | `historical` 上游导入快照 | 只追溯原始 MgdDbg；现行构建和使用入口为 [CadDiagnostics 组件说明](../tools/CadDiagnostics/README.md)。 |
 

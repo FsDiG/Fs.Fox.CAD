@@ -1,5 +1,8 @@
 # PR #138 模块专项评审报告：含弧闭合多段线点关系
 
+> 状态：historical；针对 `4064025` 的专项静态评审快照，2026-10-26 更正。<br>
+> 仅供追溯，不是现行技术契约；测试数字沿用原评审者记录，非本轮重跑。使用限制以[当前指南](../../guides/polyline-beta.md)为准，宿主验收 `Not run`。
+
 **评审模块**：含弧闭合多段线点关系查询（`GetPointRelationBeta`）
 **生产源文件**：
 - [`D:\MakeX\Fs.Fox.CAD\src\CADShared\Cad\Database\Entities\Curves\Polylines\PolylineContainmentCoreBeta.cs`](file:///D:/MakeX/Fs.Fox.CAD/src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineContainmentCoreBeta.cs)
@@ -32,7 +35,7 @@ $$f(t, n) = t(t - 1) + n\left(n + \frac{b}{2}\right) - n \cdot \frac{1}{2b} = 0$
 - **分离式优势**：将 $b$ 与 $1/b$ 分离保留，避免了先求圆心 $(c_x, c_y)$ 与半径 $R$ 时造成的巨额消去误差（Catastrophic Cancellation）。
 - **极值矢高有理化**：针对浅弧（$b \to 0$），矢高 $s \approx b L / 2$ 极小，若直接计算 $c_y - R$ 会使双精度尾数全部归零。算法对圆上下边界极值采用分子有理化公式：
   $$\text{Upper sagitta} = \frac{c_x^2}{R - c_y}, \quad \text{Lower sagitta} = \frac{-c_x^2}{R + c_y}$$
-  在浅弧下始终保持机器精度的完全解析表示。
+  该公式避开浅弧极值计算中的近值相减，结果仍受输入精度和浮点舍入影响。
 
 #### (2) Y 单调划分与二次方程求根
 - **单调弧划分**：横向射线与圆弧求交的关键是单值性。算法以圆极值点（切线水平处，即导数 $dY/dt = 0$ 的角度 $\pi/2$ 与 $3\pi/2$）为分界节点，将圆弧精确划分为最多 3 段 **Y 单调子弧**（`ArcPart`）。
@@ -43,7 +46,7 @@ $$f(t, n) = t(t - 1) + n\left(n + \frac{b}{2}\right) - n \cdot \frac{1}{2b} = 0$
   $$qx^2 - 2c_x qx + C = 0, \quad \text{其中 } C = qy(qy - u_y + \frac{b}{2}u_x) - qy \frac{1}{2b} u_x$$
   为防止根在原点附近时发生减法抵消，采用稳定根乘积公式：
   $$x_{far} = c_x \ge 0 ? (c_x + \sqrt{D}) : (c_x - \sqrt{D}), \quad x_{near} = \frac{C}{x_{far}}$$
-  确保两个交点坐标达到双精度极限精度。
+  该形式降低近根的消去误差，不代表所有输入都能获得相同的绝对精度。
 
 #### (3) 边界优先与偶奇填充（Even-Odd Rule）
 - 边界判定优先于内外判定：先计算查询点到圆弧/线段的最短投影距离是否 $\le tolerance$；若在容差带内直接判定为 `Boundary`。
@@ -72,11 +75,11 @@ $$f(t, n) = t(t - 1) + n\left(n + \frac{b}{2}\right) - n \cdot \frac{1}{2b} = 0$
 
 - **非零绝对凸度范围**：
   显式限定为 **`[1e-8, 1e8]`**。
-  - $|b| < 1e-8$：包角极小，在常规工程坐标下弧矢高已小于纳米级，按直线退化可能掩盖设计意图，代码保守抛出 `NotSupportedException`；
-  - $|b| > 1e8$：圆弧几乎闭合成整圆，端点极其接近但曲率极大，超出双精度稳定表征范围，明确拒绝；
+  - $|b| < 1e-8$：超出当前解析实现的支持范围，明确抛出 `NotSupportedException`，不以弦静默替代。bulge 无量纲，实际矢高还取决于弦长，不能单凭该阈值断言纳米级误差；
+  - $|b| > 1e8$：接近整圆的包角超出当前实现的支持范围，明确拒绝；不能仅凭 bulge 推断实际半径或曲率大小；
   - 契约明确，不猜测、不静默改写。
 - **大坐标系下的浮点溢出守卫**：
-  在 `Segment.Query` 中设有轴差边界快速排查（Bounding Box Check）与局部坐标有限性断言（`Finite(qx)`、`Finite(qy)`）。当在超大坐标系下（如国家高斯坐标）且圆弧跨度极大导致局部坐标无法可靠分辨时，抛出 `InvalidOperationException` 而非产生假判定。
+  `Segment.Query` 具有局部坐标有限性检查及其他数值守卫。它们能拒绝非有限值和显式不支持的数值状态，不能检测所有结果仍为有限值的精度损失，也不能保证在某一地理坐标量级必然抛出 `InvalidOperationException`。已有尺度／旋转回归只证明其覆盖的输入，不能替代任意尺度的误差界。
 
 ---
 
@@ -97,4 +100,4 @@ $$f(t, n) = t(t - 1) + n\left(n + \frac{b}{2}\right) - n \cdot \frac{1}{2b} = 0$
 ## 5. 评审结论与建议
 
 - **结论**：**通过（Approved）**。
-- **评价**：含弧多段线点关系算法是本 PR 中技术难度最高、数学推导最深的核心组件。以 80,000+ 断言的解析真值检验为支撑，彻底解决了 CAD 二次开发领域长期存在的“含弧多段线内外判定难、切点抖动、随机射线不可靠”的行业痛点。
+- **边界**：原评审记录了独立解析真值回归；其覆盖输入之外仍须考虑数值支持范围和误差，实际 OCS／数据库场景为 `Not run`。

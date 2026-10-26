@@ -1,5 +1,8 @@
 # PR #138 模块专项评审报告：架构治理、多目标编译与 CI 验证
 
+> 状态：historical；针对 `4064025` 的专项静态评审快照，2026-10-26 更正。<br>
+> 仅供追溯，不是现行技术契约；以下测试／构建记录沿用原评审者记录，非本轮重跑。目标框架以实时项目为准，宿主验收 `Not run`。
+
 **评审模块**：工程架构、模块基线、多目标条件编译与 CI 流水线
 **涉及基础设施文件**：
 - [`D:\MakeX\Fs.Fox.CAD\src\CADShared\CADShared.projitems`](file:///D:/MakeX/Fs.Fox.CAD/src/CADShared/CADShared.projitems)
@@ -81,7 +84,7 @@ PR 支持仓库现行的 7 个正式发布目标（涵盖 .NET Framework 4.8 与
 1. `AutoCAD 2019`（.NET 4.8）
 2. `AutoCAD 2025`（.NET 8）
 3. `ZWCAD 2022`（.NET 4.8）
-4. `ZWCAD 2025`（.NET 8）
+4. `ZWCAD 2025`（.NET Framework 4.8；生产与测试项目均为 `net48`）
 5. `GStarCAD 2022`（.NET 4.8）
 6. `GStarCAD 2023`（.NET 4.8）
 7. `GStarCAD 2026`（.NET 8）
@@ -103,11 +106,11 @@ PR 支持仓库现行的 7 个正式发布目标（涵盖 .NET Framework 4.8 与
 3. **未运行的宿主场景必须诚实标注为 `Not run`**。
 
 **审查核验结论**：
-- PR #138 的 5 篇配套指南、`zfgk-migration-inventory.md`、`zfgk-migration-roadmap.md` 以及本系列评审报告，对所有真实 AutoCAD / ZWCAD / GStarCAD 交互式运行证据，**均严谨标注为 `Not run`**，完全符合仓库证据诚信准则。
+- PR #138 配套指南、`zfgk-migration-inventory.md`、`zfgk-migration-roadmap.md` 及本系列记录均应将未执行的实际宿主场景标为 `Not run`；该标记不表示功能已经验收。
 
 ---
 
 ## 4. 评审结论
 
 - **结论**：**通过（Approved）**。
-- **评价**：架构治理完全符合 `Fs.Fox.CAD` 的长期演进要求。模块归属清晰、依赖关系干净、CI 测试拦截前置、基线零债务膨胀，展现了成熟开源基础设施的严谨治理水平。
+- **边界**：原评审记录模块基线未扩大债务；现行目标以项目文件及工作流为准，CI 编译不替代 CAD 宿主验收。

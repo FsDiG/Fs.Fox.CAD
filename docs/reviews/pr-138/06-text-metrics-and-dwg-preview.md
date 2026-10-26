@@ -1,5 +1,8 @@
 # PR #138 模块专项评审报告：文字度量与 DWG 预览
 
+> 状态：historical；针对 `4064025` 的专项静态评审快照。<br>
+> 仅供追溯，不是现行技术契约；测试数字沿用原评审者记录，非本轮重跑。使用限制以[当前 Beta 指南](../../guides/zfgk-beta.md)为准，宿主验收 `Not run`。
+
 **评审模块**：单行文字样式度量（`TextMetricsBeta`）与外部 DWG 离屏预览（`DwgPreviewBeta`）
 **生产源文件**：
 - [`D:\MakeX\Fs.Fox.CAD\src\CADShared\Cad\Database\Entities\Text\TextMetricsBeta.cs`](file:///D:/MakeX/Fs.Fox.CAD/src/CADShared/Cad/Database/Entities/Text/TextMetricsBeta.cs)
@@ -108,4 +111,4 @@
 ## 4. 评审结论
 
 - **结论**：**通过（Approved）**。
-- **评价**：文字度量在多目标编译隔离与逆序事务恢复上处理得无懈可击；DWG 预览模块展现了顶级的 AutoCAD 图形管理器（AcGs）资源管理素养，文件发布原子性设计堪称范例。
+- **边界**：静态审查与预览核心回归可支持已列出的范围／文件行为；字体、WorkingDatabase 及 GS 原生资源生命周期尚无实际宿主验收证据。

@@ -1,5 +1,8 @@
 # PR #138 模块专项评审报告：多段线核心操作
 
+> 状态：historical；针对 `4064025` 的专项静态评审快照。<br>
+> 仅供追溯，不是现行技术契约；测试数字沿用原评审者记录，非本轮重跑。使用限制以[当前指南](../../guides/polyline-beta.md)为准，宿主验收 `Not run`。
+
 **评审模块**：多段线几何操作 Beta（反向、清理、两两连接、整线圆角）
 **生产源文件**：
 - [`D:\MakeX\Fs.Fox.CAD\src\CADShared\Cad\Database\Entities\Curves\Polylines\PolylineCoreBeta.cs`](file:///D:/MakeX/Fs.Fox.CAD/src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineCoreBeta.cs)
@@ -118,4 +121,4 @@
 ## 5. 评审结论与建议
 
 - **结论**：**通过（Approved）**。
-- **评价**：多段线核心是本 PR 中数学建模最严密、算法自洽度最高的部分。彻底摆脱了原 Zfgk 源码中破坏输入、无视首末角、静默缩小半径的历史缺陷，完全符合工业级 CAD 几何算法要求。
+- **边界**：原评审在静态范围内未报告新增缺陷，核心回归记录覆盖反向、清理、连接和圆角约束；实际 CAD 对象行为仍为 `Not run`。
