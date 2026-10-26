@@ -89,16 +89,23 @@
 
 ---
 
-### Finding 1 [P2 缺陷 / 建议合入前修复]: 块定义遍历未跳过已删除（Erased）图元，存在触发 `eWasErased` 原生崩溃风险
+### Finding 1 [P2 鲁棒性改进 / 建议合入前修复]: 块定义遍历未跳过已删除（Erased）图元，存在触发 `eWasErased` 原生崩溃风险
 
-- **定位**：[`BlockIntersectionExBeta.cs#L82, L122`](file:///D:/MakeX/Fs.Fox.CAD/src/CADShared/Cad/Database/Entities/Blocks/BlockIntersectionExBeta.cs#L82)
+- **定位**：[`BlockIntersectionExBeta.cs#L80-L84, L121-L123`](file:///D:/MakeX/Fs.Fox.CAD/src/CADShared/Cad/Database/Entities/Blocks/BlockIntersectionExBeta.cs#L80-L84)
 - **触发条件**：
-  当被查询的块定义在当前图形会话/事务中发生过实体删除（例如脚本调用过 `ent.Erase()` 或交互式删除了块内图元），且尚未执行数据库 Purge 或重新保存打开时；`definition.Cast<ObjectId>().ToArray()` 会抓取到已被标记为 Erased 的图元 ID。
+  当被查询的块定义在当前图形会话/事务中发生过实体删除（例如脚本调用过 `ent.Erase()` 或交互式删除了块内图元），且尚未执行数据库 Purge 或重新保存打开时；`definition.Cast<ObjectId>()` 会抓取到已被标记为 `IsErased` 的图元 ID。
 - **实际行为**：
   遍历执行到 `var child = transaction.GetObject(frame.Children[frame.NextIndex++], OpenMode.ForRead);` 时，AutoCAD 原生抛出 `Autodesk.AutoCAD.Runtime.Exception: eWasErased`，导致求交查询失败。
 - **预期行为**：
   跳过已被标记为删除的图元，继续正常求交剩余有效曲线。
-- **推荐修复 Diff**：
+- **一致性发现**：
+  在 `BlockIntersectionExBeta.cs` 的 L135-L136 中，作者已封装了完善的有效性断言函数：
+  ```csharp
+  private static bool ValidId(ObjectId id, Database database) =>
+      !id.IsNull && id.IsValid && !id.IsErased && id.Database == database;
+  ```
+  该函数在根块、目标曲线、空间、块定义校验中被严格使用，建议在遍历子图元时复用该方法。
+- **推荐修复 Diff（方案 A：弹栈校验，O(1) 零分配，最推荐）**：
   ```diff
   --- a/src/CADShared/Cad/Database/Entities/Blocks/BlockIntersectionExBeta.cs
   +++ b/src/CADShared/Cad/Database/Entities/Blocks/BlockIntersectionExBeta.cs
@@ -108,11 +115,20 @@
 
   -            var child = transaction.GetObject(frame.Children[frame.NextIndex++], OpenMode.ForRead);
   +            var childId = frame.Children[frame.NextIndex++];
-  +            if (childId.IsErased) continue;
+  +            if (!ValidId(childId, database)) continue;
   +            var child = transaction.GetObject(childId, OpenMode.ForRead);
                if (child is BlockReference nested)
                {
                    PushDefinition(nested, frame.ToWorld);
+  ```
+- **备选修复 Diff（方案 B：入栈预过滤，快照阶段统一过滤）**：
+  ```diff
+  --- a/src/CADShared/Cad/Database/Entities/Blocks/BlockIntersectionExBeta.cs
+  +++ b/src/CADShared/Cad/Database/Entities/Blocks/BlockIntersectionExBeta.cs
+  @@ -121,3 +121,3 @@ public static class BlockIntersectionExBeta
+               stack.Push(new TraversalFrame(definitionId, parentToWorld * reference.BlockTransform,
+  -                definition.Cast<ObjectId>().ToArray()));
+  +                definition.Cast<ObjectId>().Where(id => ValidId(id, database)).ToArray()));
   ```
 - **验证办法**：
   在 `TestBlockIntersectionsBeta.cs` 中增加测试用例：向测试块定义中添加两条直线，将其中一条调用 `line.Erase()`，对引用执行 `GetCurveIntersectionsBeta`，断言能够正常返回另一条直线的交点而不抛出 `eWasErased`。
