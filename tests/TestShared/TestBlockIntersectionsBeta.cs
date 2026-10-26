@@ -3,7 +3,7 @@ namespace Test;
 /// <summary>块内曲线求交 Beta 的宿主命令回归；仅使用临时数据库，构建不代表已运行。</summary>
 public static class TestBlockIntersectionsBeta
 {
-    /// <summary>验证嵌套变换、重复实例、三维交点、去重、只读事务和输入身份。</summary>
+    /// <summary>验证嵌套变换、重复实例、三维交点、去重、删除/恢复成员、只读事务和输入身份。</summary>
     [CommandMethod(nameof(Test_BlockIntersectionsBeta))]
     public static void Test_BlockIntersectionsBeta()
     {
@@ -97,7 +97,115 @@ public static class TestBlockIntersectionsBeta
         Require(ReferenceEquals(transaction, database.TransactionManager.TopTransaction), "Caller transaction remains top");
         Require(HostApplicationServices.WorkingDatabase == working, "Working database preserved");
         transaction.Abort();
+        VerifyErasedMembers();
         Env.Printl("Block intersections Beta: temporary-database regression passed; current drawing was not changed.");
+    }
+
+    private static void VerifyErasedMembers()
+    {
+        var working = HostApplicationServices.WorkingDatabase;
+        using var database = new Database(true, true);
+        ObjectId definitionId, rootId, retainedId, committedErasedId, currentErasedId;
+        using (var setup = database.TransactionManager.StartTransaction())
+        {
+            var table = (BlockTable)setup.GetObject(database.BlockTableId, OpenMode.ForWrite);
+            using var definition = new BlockTableRecord { Name = "FoxIntersectionsBetaErasedMembers" };
+            definitionId = table.Add(definition);
+            setup.AddNewlyCreatedDBObject(definition, true);
+            var model = (BlockTableRecord)setup.GetObject(table[BlockTableRecord.ModelSpace], OpenMode.ForWrite);
+
+            ObjectId Append(BlockTableRecord owner, Entity entity)
+            {
+                using (entity)
+                {
+                    entity.SetDatabaseDefaults(database);
+                    var id = owner.AppendEntity(entity);
+                    setup.AddNewlyCreatedDBObject(entity, true);
+                    return id;
+                }
+            }
+
+            retainedId = Append(definition, new Line(new Point3d(1, -1, 0), new Point3d(1, 1, 0)));
+            committedErasedId = Append(definition, new Line(new Point3d(2, -1, 0), new Point3d(2, 1, 0)));
+            currentErasedId = Append(definition, new Line(new Point3d(3, -1, 0), new Point3d(3, 1, 0)));
+            rootId = Append(model, new BlockReference(Point3d.Origin, definitionId));
+            setup.Commit();
+        }
+        // Delete an already committed member in a separate transaction, rather than discarding a newly created entity.
+        using (var deletion = database.TransactionManager.StartTransaction())
+        {
+            var member = (Line)deletion.GetObject(committedErasedId, OpenMode.ForWrite);
+            member.Erase();
+            deletion.Commit();
+        }
+
+        using var transaction = database.TransactionManager.StartTransaction();
+        var block = (BlockReference)transaction.GetObject(rootId, OpenMode.ForRead);
+        var owner = (BlockTableRecord)transaction.GetObject(definitionId, OpenMode.ForRead);
+        var retained = (Line)transaction.GetObject(retainedId, OpenMode.ForRead);
+        var committed = (Line)transaction.GetObject(committedErasedId, OpenMode.ForRead, true);
+        var current = (Line)transaction.GetObject(currentErasedId, OpenMode.ForRead);
+        using var target = new Line(Point3d.Origin, new Point3d(4, 0, 0));
+        var retainedStart = retained.StartPoint;
+        var retainedEnd = retained.EndPoint;
+        var currentStart = current.StartPoint;
+        var currentEnd = current.EndPoint;
+        var targetStart = target.StartPoint;
+        var targetEnd = target.EndPoint;
+        var withCommittedDeletion = new[] { new Point3d(1, 0, 0), new Point3d(3, 0, 0) };
+        var withBothDeletions = new[] { new Point3d(1, 0, 0) };
+
+        bool[] WriteStates() => new[]
+        {
+            block.IsWriteEnabled, owner.IsWriteEnabled, retained.IsWriteEnabled,
+            committed.IsWriteEnabled, current.IsWriteEnabled
+        };
+        bool[] ErasedStates() => new[] { retainedId.IsErased, committedErasedId.IsErased, currentErasedId.IsErased };
+
+        IReadOnlyList<Point3d> QueryPreservingState(string message)
+        {
+            var writeStates = WriteStates();
+            var erasedStates = ErasedStates();
+            var result = block.GetCurveIntersectionsBeta(transaction, target);
+            Require(writeStates.SequenceEqual(WriteStates()), message + ": existing read/write states preserved");
+            Require(erasedStates.SequenceEqual(ErasedStates()), message + ": existing erased states preserved");
+            Require(!block.IsDisposed && !owner.IsDisposed && !retained.IsDisposed && !committed.IsDisposed && !current.IsDisposed &&
+                    !target.IsDisposed && !transaction.IsDisposed, message + ": borrowed lifetimes preserved");
+            Require(ReferenceEquals(transaction, database.TransactionManager.TopTransaction), message + ": caller transaction remains top");
+            Require(retained.StartPoint.Equals(retainedStart) && retained.EndPoint.Equals(retainedEnd) &&
+                    target.StartPoint.Equals(targetStart) && target.EndPoint.Equals(targetEnd), message + ": source and target geometry preserved");
+            Require(HostApplicationServices.WorkingDatabase == working, message + ": working database preserved");
+            return result;
+        }
+
+        Require(committedErasedId.IsErased, "Fixture deletion must survive commit");
+        var committedSnapshot = QueryPreservingState("Committed erased member");
+        RequirePoints(committedSnapshot, withCommittedDeletion, "Committed erased member must not contribute its distinct intersection");
+
+        current.UpgradeOpen();
+        current.Erase();
+        Require(currentErasedId.IsErased, "Fixture deletion must be visible in the current transaction");
+        var erasedSnapshot = QueryPreservingState("Current-transaction erased member");
+        RequirePoints(erasedSnapshot, withBothDeletions, "Current-transaction erased member must not contribute its distinct intersection");
+
+        var restored = (Line)transaction.GetObject(currentErasedId, OpenMode.ForWrite, true);
+        restored.Erase(false);
+        Require(!currentErasedId.IsErased && committedErasedId.IsErased, "Restore only the current-transaction erased member");
+        RequirePoints(QueryPreservingState("Restored current-transaction member"), withCommittedDeletion,
+            "Restoring a member restores its distinct intersection");
+        Require(current.StartPoint.Equals(currentStart) && current.EndPoint.Equals(currentEnd), "Restored member geometry preserved");
+
+        var previouslyCommitted = (Line)transaction.GetObject(committedErasedId, OpenMode.ForWrite, true);
+        previouslyCommitted.Erase(false);
+        Require(!committedErasedId.IsErased, "Previously committed deletion can be restored explicitly");
+        RequirePoints(QueryPreservingState("Restored committed member"),
+            new[] { new Point3d(1, 0, 0), new Point3d(2, 0, 0), new Point3d(3, 0, 0) },
+            "Restoring the committed member restores all three distinct intersections");
+        Require(previouslyCommitted.StartPoint.Equals(new Point3d(2, -1, 0)) &&
+                previouslyCommitted.EndPoint.Equals(new Point3d(2, 1, 0)), "Restored committed member geometry preserved");
+        RequirePoints(committedSnapshot, withCommittedDeletion, "Earlier committed-deletion snapshot stays independent");
+        RequirePoints(erasedSnapshot, withBothDeletions, "Earlier current-deletion snapshot stays independent");
+        transaction.Abort();
     }
 
     private static Fixture CreateFixture(Database database)
