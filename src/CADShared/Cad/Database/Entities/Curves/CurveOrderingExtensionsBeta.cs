@@ -1,12 +1,12 @@
 namespace Fs.Fox.Cad;
 
 /// <summary>沿有限曲线计算点的顺序。Beta：实际 CAD 宿主行为尚待验收。</summary>
-public static class CurveOrderingExBeta
+public static class CurveOrderingExtensionsBeta
 {
     /// <summary>将 WCS 点投影到曲线上的最近位置，按从起点计算的距离返回原始索引。</summary>
     /// <param name="curve">参数域和长度有限、长度大于零的曲线。调用方负责对象的有效生命周期。</param>
     /// <param name="points">WCS 坐标点，三个坐标分量必须是有限数。</param>
-    /// <param name="reverse">是否按曲线距离从大到小排列；距离相同时仍保留输入顺序。</param>
+    /// <param name="descending">是否按曲线距离从大到小排列；距离相同时仍保留输入顺序。</param>
     /// <returns>包含每个输入索引一次的只读快照；重复点和重复距离不丢失。</returns>
     /// <remarks>
     /// 最近点查询不延长曲线，使用宿主 SDK 的三维最近点语义。闭合曲线以其现有起点为里程零点，
@@ -17,8 +17,8 @@ public static class CurveOrderingExBeta
     /// <exception cref="ArgumentException">输入点包含非有限坐标。</exception>
     /// <exception cref="NotSupportedException">曲线为 Ray 或 Xline。</exception>
     /// <exception cref="InvalidOperationException">曲线没有有限的有序参数域或正长度，或宿主返回非有限距离。</exception>
-    public static IReadOnlyList<int> GetOrderAlongCurveBeta(this Curve curve,
-        IReadOnlyList<Point3d> points, bool reverse = false)
+    public static IReadOnlyList<int> GetPointOrderIndicesBeta(this Curve curve,
+        IReadOnlyList<Point3d> points, bool descending = false)
     {
         if (curve is null)
             throw new ArgumentNullException(nameof(curve));
@@ -31,14 +31,14 @@ public static class CurveOrderingExBeta
         // 不通过起终点的直线距离判定长度，闭合曲线的起终点可以重合。
         var startParameter = curve.StartParam;
         var endParameter = curve.EndParam;
-        if (!OrderingBetaCore.IsFinite(startParameter) || !OrderingBetaCore.IsFinite(endParameter) ||
+        if (!OrderingAndGroupingCoreBeta.IsFinite(startParameter) || !OrderingAndGroupingCoreBeta.IsFinite(endParameter) ||
             endParameter <= startParameter)
             throw new InvalidOperationException("The curve must have a finite, ordered parameter domain.");
         var startDistance = curve.GetDistanceAtParameter(startParameter);
         var endDistance = curve.GetDistanceAtParameter(endParameter);
         var length = endDistance - startDistance;
-        if (!OrderingBetaCore.IsFinite(startDistance) || !OrderingBetaCore.IsFinite(endDistance) ||
-            !OrderingBetaCore.IsFinite(length) || length <= 0)
+        if (!OrderingAndGroupingCoreBeta.IsFinite(startDistance) || !OrderingAndGroupingCoreBeta.IsFinite(endDistance) ||
+            !OrderingAndGroupingCoreBeta.IsFinite(length) || length <= 0)
             throw new InvalidOperationException("The curve must have a finite, positive length.");
 
         // 完整验证点快照后才开始最近点查询，避免处理到一半才发现非法点。
@@ -46,8 +46,8 @@ public static class CurveOrderingExBeta
         for (var i = 0; i < snapshot.Length; i++)
         {
             var point = points[i];
-            if (!OrderingBetaCore.IsFinite(point.X) || !OrderingBetaCore.IsFinite(point.Y) ||
-                !OrderingBetaCore.IsFinite(point.Z))
+            if (!OrderingAndGroupingCoreBeta.IsFinite(point.X) || !OrderingAndGroupingCoreBeta.IsFinite(point.Y) ||
+                !OrderingAndGroupingCoreBeta.IsFinite(point.Z))
                 throw new ArgumentException("Point coordinates must be finite.", nameof(points));
             snapshot[i] = point;
         }
@@ -59,9 +59,9 @@ public static class CurveOrderingExBeta
         {
             var closest = curve.GetClosestPointTo(snapshot[i], false);
             distances[i] = curve.GetDistAtPoint(closest) - startDistance;
-            if (!OrderingBetaCore.IsFinite(distances[i]))
+            if (!OrderingAndGroupingCoreBeta.IsFinite(distances[i]))
                 throw new InvalidOperationException("The host returned a non-finite curve distance.");
         }
-        return Array.AsReadOnly(OrderingBetaCore.GetScalarOrder(distances, reverse));
+        return Array.AsReadOnly(OrderingAndGroupingCoreBeta.GetScalarOrderIndices(distances, descending));
     }
 }

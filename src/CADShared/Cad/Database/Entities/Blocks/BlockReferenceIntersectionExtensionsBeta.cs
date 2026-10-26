@@ -9,14 +9,14 @@ namespace Fs.Fox.Cad;
 /// 使用调用方事务读取块定义，为每个实例累计变换，并通过自有曲线副本求交。
 /// 查询存储几何，不按实体、图层或视口可见性筛选；文字、属性和其他非 Curve 叶节点不参与。
 /// </remarks>
-public static class BlockIntersectionExBeta
+public static class BlockReferenceIntersectionExtensionsBeta
 {
     /// <summary>按深度优先的块定义实体顺序，返回去重后的真实三维 WCS 交点快照。</summary>
     /// <param name="block">直接位于模型空间或图纸空间的普通块参照，由调用方拥有。</param>
     /// <param name="transaction">根块数据库当前最上层的有效事务，由调用方拥有。</param>
-    /// <param name="target">同一空间中的曲线，或调用方持有且已使用 WCS 坐标的未入库曲线。</param>
-    /// <param name="mode">只接受 OnBothOperands，或仅延伸 target 的 ExtendArgument；默认不延伸。</param>
-    /// <param name="tolerance">有限且非负的 WCS 交点去重距离；零表示各坐标分量精确相等。</param>
+    /// <param name="targetCurve">同一空间中的曲线，或调用方持有且已使用 WCS 坐标的未入库曲线。</param>
+    /// <param name="intersectionMode">只接受 OnBothOperands，或仅延伸 targetCurve 的 ExtendArgument；默认不延伸。</param>
+    /// <param name="duplicatePointTolerance">有限且非负的 WCS 交点去重距离；零表示各坐标分量精确相等。</param>
     /// <returns>独立的只读点快照；无交点或无曲线叶节点时为空。</returns>
     /// <remarks>
     /// 仅支持原生 Line、Arc、Circle、Ellipse、轻量 Polyline、Spline、Ray、Xline 曲线类型。
@@ -30,24 +30,24 @@ public static class BlockIntersectionExBeta
     /// 调用方负责 CAD 线程、文档上下文及必要的访问条件；不可用作无宿主的离线求交器。
     /// </remarks>
     /// <exception cref="ArgumentNullException">根块、事务或目标曲线为 null。</exception>
-    /// <exception cref="ArgumentOutOfRangeException">mode 不受支持，或 tolerance 不是有限非负数。</exception>
+    /// <exception cref="ArgumentOutOfRangeException">intersectionMode 不受支持，或 duplicatePointTolerance 不是有限非负数。</exception>
     /// <exception cref="ArgumentException">根块未入库、空间/数据库身份不一致，或事务不是当前最上层事务。</exception>
     /// <exception cref="System.NotSupportedException">遇到不支持的块或曲线类型、外参，或变换副本不是曲线。</exception>
     /// <exception cref="System.InvalidOperationException">块定义路径循环，或宿主返回非有限交点。</exception>
     /// <exception cref="System.ObjectDisposedException">输入根块或目标曲线已释放。</exception>
-    public static IReadOnlyList<Point3d> GetCurveIntersectionsBeta(this BlockReference block,
-        Transaction transaction, Curve target, Intersect mode = Intersect.OnBothOperands,
-        double tolerance = 1e-6)
+    public static IReadOnlyList<Point3d> GetCurveIntersectionPointsBeta(this BlockReference block,
+        Transaction transaction, Curve targetCurve, Intersect intersectionMode = Intersect.OnBothOperands,
+        double duplicatePointTolerance = 1e-6)
     {
         if (block is null) throw new ArgumentNullException(nameof(block));
         if (transaction is null) throw new ArgumentNullException(nameof(transaction));
-        if (target is null) throw new ArgumentNullException(nameof(target));
+        if (targetCurve is null) throw new ArgumentNullException(nameof(targetCurve));
         if (block.IsDisposed) throw new ObjectDisposedException(nameof(block));
-        if (target.IsDisposed) throw new ObjectDisposedException(nameof(target));
-        if (!Finite(tolerance) || tolerance < 0)
-            throw new ArgumentOutOfRangeException(nameof(tolerance), "去重距离必须为有限非负数。");
-        if (mode != Intersect.OnBothOperands && mode != Intersect.ExtendArgument)
-            throw new ArgumentOutOfRangeException(nameof(mode), "只支持不延伸或仅延伸目标曲线。");
+        if (targetCurve.IsDisposed) throw new ObjectDisposedException(nameof(targetCurve));
+        if (!IsFinite(duplicatePointTolerance) || duplicatePointTolerance < 0)
+            throw new ArgumentOutOfRangeException(nameof(duplicatePointTolerance), "去重距离必须为有限非负数。");
+        if (intersectionMode != Intersect.OnBothOperands && intersectionMode != Intersect.ExtendArgument)
+            throw new ArgumentOutOfRangeException(nameof(intersectionMode), "只支持不延伸或仅延伸目标曲线。");
 
         var database = block.Database;
         if (database is null || !ValidId(block.ObjectId, database))
@@ -58,10 +58,10 @@ public static class BlockIntersectionExBeta
         if (!ValidId(block.OwnerId, database) ||
             transaction.GetObject(block.OwnerId, OpenMode.ForRead) is not BlockTableRecord { IsLayout: true })
             throw new ArgumentException("根块必须直接位于模型空间或图纸空间。", nameof(block));
-        if (target.Database is not null &&
-            (target.Database != database || !ValidId(target.ObjectId, database) || target.OwnerId != block.OwnerId))
-            throw new ArgumentException("已入库的目标曲线必须与根块位于同一数据库和同一空间。", nameof(target));
-        RequireSupportedCurve(target);
+        if (targetCurve.Database is not null &&
+            (targetCurve.Database != database || !ValidId(targetCurve.ObjectId, database) || targetCurve.OwnerId != block.OwnerId))
+            throw new ArgumentException("已入库的目标曲线必须与根块位于同一数据库和同一空间。", nameof(targetCurve));
+        RequireSupportedCurve(targetCurve);
 
         var result = new List<Point3d>();
         var path = new HashSet<ObjectId>();
@@ -92,13 +92,13 @@ public static class BlockIntersectionExBeta
             if (transformed is not Curve transformedCurve)
                 throw new NotSupportedException("宿主未返回曲线变换副本，不能省略该叶节点的交点。");
             using var points = new Point3dCollection();
-            transformedCurve.IntersectWith(target, mode, points, IntPtr.Zero, IntPtr.Zero);
+            transformedCurve.IntersectWith(targetCurve, intersectionMode, points, IntPtr.Zero, IntPtr.Zero);
             foreach (Point3d point in points)
             {
-                if (!Finite(point.X) || !Finite(point.Y) || !Finite(point.Z))
+                if (!IsFinite(point.X) || !IsFinite(point.Y) || !IsFinite(point.Z))
                     throw new InvalidOperationException("宿主返回了非有限交点。");
                 // 只与保留点比较，不把已合并点作为新的代表，防止一串近邻把相隔很远的端点合并。
-                if (!result.Any(kept => WithinDistance(kept, point, tolerance)))
+                if (!result.Any(kept => WithinDistance(kept, point, duplicatePointTolerance)))
                     result.Add(point);
             }
         }
@@ -138,22 +138,22 @@ public static class BlockIntersectionExBeta
     private static bool ValidId(ObjectId id, Database database) =>
         !id.IsNull && id.IsValid && !id.IsErased && id.Database == database;
 
-    private static bool WithinDistance(Point3d first, Point3d second, double tolerance)
+    private static bool WithinDistance(Point3d first, Point3d second, double duplicatePointTolerance)
     {
-        if (tolerance == 0)
+        if (duplicatePointTolerance == 0)
             return first.X == second.X && first.Y == second.Y && first.Z == second.Z;
         var x = Math.Abs(first.X - second.X);
         var y = Math.Abs(first.Y - second.Y);
         var z = Math.Abs(first.Z - second.Z);
-        if (x > tolerance || y > tolerance || z > tolerance) return false;
+        if (x > duplicatePointTolerance || y > duplicatePointTolerance || z > duplicatePointTolerance) return false;
         // 次正规阈值先同乘精确的 2^52；否则 sqrt(2)*Epsilon 会舍入回 Epsilon，误合并对角点。
-        if (tolerance < 2.2250738585072014e-308)
+        if (duplicatePointTolerance < 2.2250738585072014e-308)
         {
             const double scale = 4503599627370496;
             x *= scale;
             y *= scale;
             z *= scale;
-            tolerance *= scale;
+            duplicatePointTolerance *= scale;
         }
         var largest = Math.Max(x, Math.Max(y, z));
         if (largest == 0) return true;
@@ -162,10 +162,10 @@ public static class BlockIntersectionExBeta
         x /= largest;
         y /= largest;
         z /= largest;
-        return largest * Math.Sqrt(x * x + y * y + z * z) <= tolerance;
+        return largest * Math.Sqrt(x * x + y * y + z * z) <= duplicatePointTolerance;
     }
 
-    private static bool Finite(double value) => !double.IsNaN(value) && !double.IsInfinity(value);
+    private static bool IsFinite(double value) => !double.IsNaN(value) && !double.IsInfinity(value);
 
     private sealed class TraversalFrame
     {

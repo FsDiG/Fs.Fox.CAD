@@ -7,7 +7,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="../../src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineCoreBeta.cs" Link="Production/PolylineCoreBeta.cs" />
+    <Compile Include="../../src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylinePointRelationBeta.cs" Link="Production/PolylinePointRelationBeta.cs" />
+    <Compile Include="../../src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineGeometryCoreBeta.cs" Link="Production/PolylineGeometryCoreBeta.cs" />
     <Compile Include="../../src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineContainmentCoreBeta.cs" Link="Production/PolylineContainmentCoreBeta.cs" />
   </ItemGroup>
 </Project>

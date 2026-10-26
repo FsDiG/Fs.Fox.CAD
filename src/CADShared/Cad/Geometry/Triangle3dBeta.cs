@@ -8,27 +8,27 @@ namespace Fs.Fox.Cad;
 public sealed class Triangle3dBeta
 {
     /// <summary>第一个顶点。</summary>
-    public Point3d First { get; }
+    public Point3d VertexA { get; }
 
     /// <summary>第二个顶点。</summary>
-    public Point3d Second { get; }
+    public Point3d VertexB { get; }
 
     /// <summary>第三个顶点。</summary>
-    public Point3d Third { get; }
+    public Point3d VertexC { get; }
 
     /// <summary>建立三角形数据；允许共线或重复顶点，以便查询其重心。</summary>
-    /// <param name="first">第一个有限坐标顶点。</param>
-    /// <param name="second">第二个有限坐标顶点。</param>
-    /// <param name="third">第三个有限坐标顶点。</param>
+    /// <param name="vertexA">第一个有限坐标顶点。</param>
+    /// <param name="vertexB">第二个有限坐标顶点。</param>
+    /// <param name="vertexC">第三个有限坐标顶点。</param>
     /// <exception cref="ArgumentException">任一坐标为 NaN 或无穷大。</exception>
-    public Triangle3dBeta(Point3d first, Point3d second, Point3d third)
+    public Triangle3dBeta(Point3d vertexA, Point3d vertexB, Point3d vertexC)
     {
-        TriangleMathBeta.Validate(Data(first), nameof(first));
-        TriangleMathBeta.Validate(Data(second), nameof(second));
-        TriangleMathBeta.Validate(Data(third), nameof(third));
-        First = first;
-        Second = second;
-        Third = third;
+        TriangleMathCoreBeta.Validate(Data(vertexA), nameof(vertexA));
+        TriangleMathCoreBeta.Validate(Data(vertexB), nameof(vertexB));
+        TriangleMathCoreBeta.Validate(Data(vertexC), nameof(vertexC));
+        VertexA = vertexA;
+        VertexB = vertexB;
+        VertexC = vertexC;
     }
 
     /// <summary>三个顶点的三维算术平均；不会把 Z 投影为零。</summary>
@@ -36,7 +36,7 @@ public sealed class Triangle3dBeta
     {
         get
         {
-            var value = TriangleMathBeta.Centroid(Data(First), Data(Second), Data(Third));
+            var value = TriangleMathCoreBeta.GetCentroid(Data(VertexA), Data(VertexB), Data(VertexC));
             return new Point3d(value.X, value.Y, value.Z);
         }
     }
@@ -51,9 +51,9 @@ public sealed class Triangle3dBeta
     /// 该处理不能恢复输入坐标中已经丢失的差值；坐标范围极端且精度不足时也可能返回 false。
     /// </remarks>
     /// <exception cref="ArgumentOutOfRangeException">容差非法或不是有限数值。</exception>
-    public bool TryGetSlopeAndAspect(out double slopeDegrees, out double aspectDegrees,
-        double relativeTolerance = 1e-12) => TriangleMathBeta.TrySlopeAndAspect(
-        Data(First), Data(Second), Data(Third), relativeTolerance, out slopeDegrees, out aspectDegrees);
+    public bool TryGetSlopeAndAspectDegrees(out double slopeDegrees, out double aspectDegrees,
+        double relativeTolerance = 1e-12) => TriangleMathCoreBeta.TryGetSlopeAndAspectDegrees(
+        Data(VertexA), Data(VertexB), Data(VertexC), relativeTolerance, out slopeDegrees, out aspectDegrees);
 
     private static TrianglePointDataBeta Data(Point3d point) => new(point.X, point.Y, point.Z);
 }

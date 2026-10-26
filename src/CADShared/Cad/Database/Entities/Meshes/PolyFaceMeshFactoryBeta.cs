@@ -2,12 +2,12 @@ namespace Fs.Fox.Cad;
 
 /// <summary>在显式目标空间及调用方事务中创建多面网格。Beta：真实宿主验收尚待执行。</summary>
 /// <remarks>全部数值、面数和索引验证先于数据库写入；网格及子对象登记到同一调用方事务。</remarks>
-public static class PolyFaceMeshBuilderBeta
+public static class PolyFaceMeshFactoryBeta
 {
     /// <summary>将三角面和四边面网格写入指定块表记录，不提交或中止调用方事务。</summary>
     /// <param name="database">目标数据库。</param>
     /// <param name="transaction">该数据库当前最上层的有效事务。</param>
-    /// <param name="targetSpaceId">目标数据库中可写的块表记录 ID，可为模型空间、图纸空间或普通块定义。</param>
+    /// <param name="targetBlockTableRecordId">目标数据库中可写的块表记录 ID，可为模型空间、图纸空间或普通块定义。</param>
     /// <param name="vertices">目标块表记录存储坐标系中的有限顶点，数量为 3 至 32767；内部建立独立快照。</param>
     /// <param name="faces">最多 32767 个三角面或四边面，索引从零开始；内部先完整枚举并复制。</param>
     /// <returns>已登记到调用方事务中的新网格 ID。</returns>
@@ -21,7 +21,7 @@ public static class PolyFaceMeshBuilderBeta
     /// <exception cref="ArgumentNullException">数据库、事务、顶点或面集合为 null。</exception>
     /// <exception cref="ArgumentException">坐标、索引、面定义、目标空间或事务归属非法。</exception>
     /// <exception cref="ArgumentOutOfRangeException">顶点数超出支持范围。</exception>
-    public static ObjectId Append(Database database, Transaction transaction, ObjectId targetSpaceId,
+    public static ObjectId CreateAndAppend(Database database, Transaction transaction, ObjectId targetBlockTableRecordId,
         IReadOnlyList<Point3d> vertices, IEnumerable<IEnumerable<int>> faces)
     {
         if (database is null)
@@ -32,9 +32,9 @@ public static class PolyFaceMeshBuilderBeta
             throw new ArgumentNullException(nameof(vertices));
         if (vertices.Count < 3 || vertices.Count > short.MaxValue)
             throw new ArgumentOutOfRangeException(nameof(vertices), "顶点数必须为 3 至 32767。");
-        if (targetSpaceId.IsNull || !targetSpaceId.IsValid || targetSpaceId.IsErased ||
-            targetSpaceId.Database != database)
-            throw new ArgumentException("目标空间必须属于指定数据库。", nameof(targetSpaceId));
+        if (targetBlockTableRecordId.IsNull || !targetBlockTableRecordId.IsValid || targetBlockTableRecordId.IsErased ||
+            targetBlockTableRecordId.Database != database)
+            throw new ArgumentException("目标空间必须属于指定数据库。", nameof(targetBlockTableRecordId));
         // 要求当前顶层事务，避免登记到已被子事务挂起的父事务；当前顶层本身可以是调用方的子事务。
         if (!ReferenceEquals(database.TransactionManager.TopTransaction, transaction))
             throw new ArgumentException("必须使用目标数据库当前最上层事务。", nameof(transaction));
@@ -43,15 +43,15 @@ public static class PolyFaceMeshBuilderBeta
         for (var index = 0; index < points.Length; index++)
         {
             var point = vertices[index];
-            if (!Finite(point.X) || !Finite(point.Y) || !Finite(point.Z))
+            if (!IsFinite(point.X) || !IsFinite(point.Y) || !IsFinite(point.Z))
                 throw new ArgumentException("网格顶点坐标必须为有限数值。", nameof(vertices));
             points[index] = point;
         }
         // 先完整求值惰性面序列；枚举中途抛错时，本次调用尚未打开目标写状态或追加半成品。
-        var faceData = PolyFaceMeshDataBeta.ValidateAndCopyFaces(points.Length, faces);
-        var target = transaction.GetObject(targetSpaceId, OpenMode.ForRead) as BlockTableRecord;
+        var faceData = PolyFaceMeshValidationCoreBeta.ValidateAndConvertFaceIndices(points.Length, faces);
+        var target = transaction.GetObject(targetBlockTableRecordId, OpenMode.ForRead) as BlockTableRecord;
         if (target is null)
-            throw new ArgumentException("目标对象必须为块表记录。", nameof(targetSpaceId));
+            throw new ArgumentException("目标对象必须为块表记录。", nameof(targetBlockTableRecordId));
 
         using (target.ForWrite())
         using (var mesh = new PolyFaceMesh())
@@ -77,5 +77,5 @@ public static class PolyFaceMeshBuilderBeta
         }
     }
 
-    private static bool Finite(double value) => !double.IsNaN(value) && !double.IsInfinity(value);
+    private static bool IsFinite(double value) => !double.IsNaN(value) && !double.IsInfinity(value);
 }

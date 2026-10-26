@@ -11,11 +11,11 @@
 
 | 需要 | API | 生产源码 |
 | --- | --- | --- |
-| 按行读取二维点 | `PointOrderingBeta.GetRowOrder` | [PointOrderingBeta.cs](../../src/CADShared/Cad/Geometry/Ordering/PointOrderingBeta.cs) |
-| 按列读取二维点 | `PointOrderingBeta.GetColumnOrder` | [PointOrderingBeta.cs](../../src/CADShared/Cad/Geometry/Ordering/PointOrderingBeta.cs) |
-| 沿有限曲线排列 WCS 点 | `curve.GetOrderAlongCurveBeta` | [CurveOrderingExBeta.cs](../../src/CADShared/Cad/Database/Entities/Curves/CurveOrderingExBeta.cs) |
-| 组合邻近 XY 包围框并追溯成员 | `ExtentGroupingBeta.GroupByProximity` → `ExtentGroupBeta` | [ExtentGroupingBeta.cs](../../src/CADShared/Cad/Database/Entities/Bounds/ExtentGroupingBeta.cs) |
-| 维护排序和分组算法 | 内部纯计算核心 | [OrderingBetaCore.cs](../../src/CADShared/Cad/Geometry/Ordering/OrderingBetaCore.cs) |
+| 按行读取二维点 | `PointOrderingBeta.GetRowOrderIndices` | [PointOrderingBeta.cs](../../src/CADShared/Cad/Geometry/Ordering/PointOrderingBeta.cs) |
+| 按列读取二维点 | `PointOrderingBeta.GetColumnOrderIndices` | [PointOrderingBeta.cs](../../src/CADShared/Cad/Geometry/Ordering/PointOrderingBeta.cs) |
+| 沿有限曲线排列 WCS 点 | `curve.GetPointOrderIndicesBeta` | [CurveOrderingExtensionsBeta.cs](../../src/CADShared/Cad/Database/Entities/Curves/CurveOrderingExtensionsBeta.cs) |
+| 组合邻近 XY 包围框并追溯成员 | `ExtentsGroupingBeta.GroupByXYProximity` → `ExtentsGroupBeta` | [ExtentsGroupingBeta.cs](../../src/CADShared/Cad/Database/Entities/Bounds/ExtentsGroupingBeta.cs) |
+| 维护排序和分组算法 | 内部纯计算核心 | [OrderingAndGroupingCoreBeta.cs](../../src/CADShared/Cad/Geometry/Ordering/OrderingAndGroupingCoreBeta.cs) |
 
 普通类型使用 `Beta` 后缀，扩展方法在调用位置也保留 `Beta`。新入口不会替换已有稳定 API，也不自动选择实体的代表点。实体包围框仍由现有 `BoundingBox9`、`GeometricExtents` 等读取能力提供。
 
@@ -29,7 +29,7 @@
 
 ## 沿曲线的距离与所有权
 
-`GetOrderAlongCurveBeta` 使用宿主 SDK 的三维最近点查询，参数 `extend` 固定为 `false`，再以曲线起点为零点计算实际里程。超过开曲线端点的投影采用有限曲线上的最近点。`reverse` 只反转里程排序方向，相等里程仍按原始索引排列，不能人为扰动距离。
+`GetPointOrderIndicesBeta` 使用宿主 SDK 的三维最近点查询，参数 `extend` 固定为 `false`，再以曲线起点为零点计算实际里程。超过开曲线端点的投影采用有限曲线上的最近点。`descending` 只反转里程排序方向，相等里程仍按原始索引排列，不能人为扰动距离。
 
 曲线必须具有有限、有序的参数域和正长度；`Ray`、`Xline` 明确不支持。闭合曲线保留原来的起点及接缝；自交曲线或多个等距最近点沿用 SDK 的选择结果，不承诺跨宿主选择同一个解。输入点采用 WCS，三个坐标必须有限。空点集合仍会校验曲线；有效曲线返回空结果。
 
@@ -49,7 +49,7 @@
 
 ## 检查与宿主验收
 
-[OrderingBeta.CoreTests](../../tests/OrderingBeta.CoreTests/OrderingBeta.CoreTests.csproj) 直接链接生产 `OrderingBetaCore.cs`，不依赖 CAD SDK 或第三方测试包。运行命令：
+[OrderingBeta.CoreTests](../../tests/OrderingBeta.CoreTests/OrderingBeta.CoreTests.csproj) 直接链接生产 `OrderingAndGroupingCoreBeta.cs`，不依赖 CAD SDK 或第三方测试包。运行命令：
 
 ```powershell
 dotnet run --project tests/OrderingBeta.CoreTests/OrderingBeta.CoreTests.csproj -c Release

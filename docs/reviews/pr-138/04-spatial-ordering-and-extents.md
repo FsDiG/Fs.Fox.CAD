@@ -6,14 +6,14 @@
 
 **评审模块**：空间行列/曲线排序与邻近范围分量组合 Beta
 **生产源文件**：
-- [`D:\MakeX\Fs.Fox.CAD\src\CADShared\Cad\Geometry\Ordering\OrderingBetaCore.cs`](file:///D:/MakeX/Fs.Fox.CAD/src/CADShared/Cad/Geometry/Ordering/OrderingBetaCore.cs)
-- [`D:\MakeX\Fs.Fox.CAD\src\CADShared\Cad\Geometry\Ordering\PointOrderingBeta.cs`](file:///D:/MakeX/Fs.Fox.CAD/src/CADShared/Cad/Geometry/Ordering/PointOrderingBeta.cs)
-- [`D:\MakeX\Fs.Fox.CAD\src\CADShared\Cad\Database\Entities\Curves\CurveOrderingExBeta.cs`](file:///D:/MakeX/Fs.Fox.CAD/src/CADShared/Cad/Database/Entities/Curves/CurveOrderingExBeta.cs)
-- [`D:\MakeX\Fs.Fox.CAD\src\CADShared\Cad\Database\Entities\Bounds\ExtentGroupingBeta.cs`](file:///D:/MakeX/Fs.Fox.CAD/src/CADShared/Cad/Database/Entities/Bounds/ExtentGroupingBeta.cs)
+- [`D:\MakeX\Fs.Fox.CAD\src\CADShared\Cad\Geometry\Ordering\OrderingBetaCore.cs`](../../../src/CADShared/Cad/Geometry/Ordering/OrderingAndGroupingCoreBeta.cs)
+- [`D:\MakeX\Fs.Fox.CAD\src\CADShared\Cad\Geometry\Ordering\PointOrderingBeta.cs`](../../../src/CADShared/Cad/Geometry/Ordering/PointOrderingBeta.cs)
+- [`D:\MakeX\Fs.Fox.CAD\src\CADShared\Cad\Database\Entities\Curves\CurveOrderingExBeta.cs`](../../../src/CADShared/Cad/Database/Entities/Curves/CurveOrderingExtensionsBeta.cs)
+- [`D:\MakeX\Fs.Fox.CAD\src\CADShared\Cad\Database\Entities\Bounds\ExtentGroupingBeta.cs`](../../../src/CADShared/Cad/Database/Entities/Bounds/ExtentsGroupingBeta.cs)
 **配套测试**：
-- [`D:\MakeX\Fs.Fox.CAD\tests\OrderingBeta.CoreTests\Program.cs`](file:///D:/MakeX/Fs.Fox.CAD/tests/OrderingBeta.CoreTests/Program.cs)
-- [`D:\MakeX\Fs.Fox.CAD\tests\TestShared\TestOrderingBeta.cs`](file:///D:/MakeX/Fs.Fox.CAD/tests/TestShared/TestOrderingBeta.cs)
-**对应文档**：[`docs/guides/ordering-beta.md`](file:///D:/MakeX/Fs.Fox.CAD/docs/guides/ordering-beta.md)
+- [`D:\MakeX\Fs.Fox.CAD\tests\OrderingBeta.CoreTests\Program.cs`](../../../tests/OrderingBeta.CoreTests/Program.cs)
+- [`D:\MakeX\Fs.Fox.CAD\tests\TestShared\TestOrderingBeta.cs`](../../../tests/TestShared/TestOrderingBeta.cs)
+**对应文档**：[`docs/guides/ordering-beta.md`](../../../docs/guides/ordering-beta.md)
 
 ---
 

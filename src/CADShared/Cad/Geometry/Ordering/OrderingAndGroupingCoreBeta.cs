@@ -5,7 +5,7 @@ namespace Fs.Fox.Cad;
 
 // 行列排序、标量排序与范围连通分量共用的纯计算核心。
 // 不依赖 CAD SDK，使数值规则可以直接由生产源码链接测试，而不是另写一份算法验证自身。
-internal static class OrderingBetaCore
+internal static class OrderingAndGroupingCoreBeta
 {
     // 使用不可变值快照隔离调用方集合；后续比较器不再读取外部索引器。
     internal readonly struct Point
@@ -56,7 +56,7 @@ internal static class OrderingBetaCore
         }
     }
 
-    internal static int[] GetGridOrder(IReadOnlyList<Point> points, double tolerance,
+    internal static int[] GetGridOrderIndices(IReadOnlyList<Point> points, double tolerance,
         bool byRows, bool topToBottom, bool leftToRight)
     {
         if (points is null)
@@ -135,7 +135,7 @@ internal static class OrderingBetaCore
         return result;
     }
 
-    internal static int[] GetScalarOrder(IReadOnlyList<double> values, bool descending)
+    internal static int[] GetScalarOrderIndices(IReadOnlyList<double> values, bool descending)
     {
         if (values is null)
             throw new ArgumentNullException(nameof(values));
@@ -159,7 +159,7 @@ internal static class OrderingBetaCore
         return indices;
     }
 
-    internal static Group[] GroupExtents(IReadOnlyList<Box> extents, double maximumGap)
+    internal static Group[] GroupExtentsByXYProximity(IReadOnlyList<Box> extents, double maximumGap)
     {
         if (extents is null)
             throw new ArgumentNullException(nameof(extents));

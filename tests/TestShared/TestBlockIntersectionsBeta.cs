@@ -22,32 +22,32 @@ public static class TestBlockIntersectionsBeta
             new Point3d(10, 44, 5), new Point3d(10, 41, 5)
         };
 
-        var points = block.GetCurveIntersectionsBeta(transaction, target);
+        var points = block.GetCurveIntersectionPointsBeta(transaction, target);
         RequirePoints(points, expected, "Parent times child transform, arc and repeated definition instances");
-        RequirePoints(block.GetCurveIntersectionsBeta(transaction, target, tolerance: 0), expected,
+        RequirePoints(block.GetCurveIntersectionPointsBeta(transaction, target, duplicatePointTolerance: 0), expected,
             "Exact duplicates merge at zero tolerance");
         Throws<NotSupportedException>(() => ((IList<Point3d>)points)[0] = Point3d.Origin);
 
         using (var shortTarget = new Line(new Point3d(10, 24, 5), new Point3d(10, 27, 5)))
         {
-            Require(block.GetCurveIntersectionsBeta(transaction, shortTarget).Count == 0, "Finite target must not extend");
-            RequirePoints(block.GetCurveIntersectionsBeta(transaction, shortTarget, Intersect.ExtendArgument), expected,
+            Require(block.GetCurveIntersectionPointsBeta(transaction, shortTarget).Count == 0, "Finite target must not extend");
+            RequirePoints(block.GetCurveIntersectionPointsBeta(transaction, shortTarget, Intersect.ExtendArgument), expected,
                 "ExtendArgument extends only the WCS target");
             Require(!shortTarget.IsDisposed, "Borrowed transient target must remain alive");
         }
         using (var raisedTarget = new Line(new Point3d(10, 20, 6), new Point3d(10, 50, 6)))
-            Require(block.GetCurveIntersectionsBeta(transaction, raisedTarget).Count == 0, "True 3D must not project to XY");
+            Require(block.GetCurveIntersectionPointsBeta(transaction, raisedTarget).Count == 0, "True 3D must not project to XY");
 
         var nearBlock = (BlockReference)transaction.GetObject(fixture.NearRoot, OpenMode.ForRead);
         using (var diagonal = new Line(new Point3d(-1, -1, 0), new Point3d(2, 2, 0)))
         {
-            RequirePoints(nearBlock.GetCurveIntersectionsBeta(transaction, diagonal, tolerance: 1),
+            RequirePoints(nearBlock.GetCurveIntersectionPointsBeta(transaction, diagonal, duplicatePointTolerance: 1),
                 new[] { Point3d.Origin, new Point3d(0.8, 0.8, 0) }, "Deduplication uses Euclidean distance and retained representatives");
-            Require(nearBlock.GetCurveIntersectionsBeta(transaction, diagonal, tolerance: 0).Count == 3,
+            Require(nearBlock.GetCurveIntersectionPointsBeta(transaction, diagonal, duplicatePointTolerance: 0).Count == 3,
                 "Zero tolerance retains distinct nearby points");
         }
         var emptyBlock = (BlockReference)transaction.GetObject(fixture.EmptyRoot, OpenMode.ForRead);
-        Require(emptyBlock.GetCurveIntersectionsBeta(transaction, target).Count == 0, "Non-Curve leaves do not participate");
+        Require(emptyBlock.GetCurveIntersectionPointsBeta(transaction, target).Count == 0, "Non-Curve leaves do not participate");
         foreach (var distanceCase in new[]
         {
             (fixture.DistanceRoot, new Point3d(5, 12, 0)),
@@ -56,15 +56,15 @@ public static class TestBlockIntersectionsBeta
         {
             var distanceBlock = (BlockReference)transaction.GetObject(distanceCase.Item1, OpenMode.ForRead);
             using var distanceTarget = new Line(Point3d.Origin, distanceCase.Item2);
-            RequirePoints(distanceBlock.GetCurveIntersectionsBeta(transaction, distanceTarget, tolerance: 13),
+            RequirePoints(distanceBlock.GetCurveIntersectionPointsBeta(transaction, distanceTarget, duplicatePointTolerance: 13),
                 new[] { Point3d.Origin }, "Pythagorean distance exactly at the tolerance must merge");
-            RequirePoints(distanceBlock.GetCurveIntersectionsBeta(transaction, distanceTarget, tolerance: 13 - 1e-10),
+            RequirePoints(distanceBlock.GetCurveIntersectionPointsBeta(transaction, distanceTarget, duplicatePointTolerance: 13 - 1e-10),
                 new[] { Point3d.Origin, distanceCase.Item2 }, "A tolerance below the distance must keep both points");
         }
         var polylineBlock = (BlockReference)transaction.GetObject(fixture.PolylineRoot, OpenMode.ForRead);
         var polyline = (Polyline)transaction.GetObject(fixture.Polyline, OpenMode.ForRead);
         using (var polylineTarget = new Line(new Point3d(-1, 5, 2), new Point3d(5, 5, 2)))
-            RequirePoints(polylineBlock.GetCurveIntersectionsBeta(transaction, polylineTarget),
+            RequirePoints(polylineBlock.GetCurveIntersectionPointsBeta(transaction, polylineTarget),
                 new[] { new Point3d(1, 5, 2) }, "Lightweight polyline arc transforms to WCS");
         Require(polyline.NumberOfVertices == 2 && polyline.GetPoint2dAt(0).Equals(new Point2d(1, 0)) &&
                 polyline.GetPoint2dAt(1).Equals(new Point2d(-1, 0)) && polyline.GetBulgeAt(0) == 1 &&
@@ -72,18 +72,18 @@ public static class TestBlockIntersectionsBeta
             "Transforming a lightweight polyline copy must preserve the source vertices, bulges and plane");
 
         foreach (var tolerance in new[] { -1.0, double.NaN, double.PositiveInfinity, double.NegativeInfinity })
-            Throws<System.ArgumentOutOfRangeException>(() => block.GetCurveIntersectionsBeta(transaction, target, tolerance: tolerance));
-        Throws<System.ArgumentOutOfRangeException>(() => block.GetCurveIntersectionsBeta(transaction, target, Intersect.ExtendBoth));
-        Throws<System.ArgumentNullException>(() => BlockIntersectionExBeta.GetCurveIntersectionsBeta(null!, transaction, target));
-        Throws<System.ArgumentNullException>(() => block.GetCurveIntersectionsBeta(null!, target));
-        Throws<System.ArgumentNullException>(() => block.GetCurveIntersectionsBeta(transaction, null!));
+            Throws<System.ArgumentOutOfRangeException>(() => block.GetCurveIntersectionPointsBeta(transaction, target, duplicatePointTolerance: tolerance));
+        Throws<System.ArgumentOutOfRangeException>(() => block.GetCurveIntersectionPointsBeta(transaction, target, Intersect.ExtendBoth));
+        Throws<System.ArgumentNullException>(() => BlockReferenceIntersectionExtensionsBeta.GetCurveIntersectionPointsBeta(null!, transaction, target));
+        Throws<System.ArgumentNullException>(() => block.GetCurveIntersectionPointsBeta(null!, target));
+        Throws<System.ArgumentNullException>(() => block.GetCurveIntersectionPointsBeta(transaction, null!));
         using (var oldPolyline = new Polyline2d())
-            Throws<NotSupportedException>(() => block.GetCurveIntersectionsBeta(transaction, oldPolyline));
+            Throws<NotSupportedException>(() => block.GetCurveIntersectionPointsBeta(transaction, oldPolyline));
         using (var transientBlock = new BlockReference(Point3d.Origin, fixture.RootDefinition))
-            Throws<System.ArgumentException>(() => transientBlock.GetCurveIntersectionsBeta(transaction, target));
+            Throws<System.ArgumentException>(() => transientBlock.GetCurveIntersectionPointsBeta(transaction, target));
         var nestedReference = (BlockReference)transaction.GetObject(fixture.NestedReference, OpenMode.ForRead);
-        Throws<System.ArgumentException>(() => nestedReference.GetCurveIntersectionsBeta(transaction, target));
-        Throws<System.ArgumentException>(() => block.GetCurveIntersectionsBeta(transaction, source));
+        Throws<System.ArgumentException>(() => nestedReference.GetCurveIntersectionPointsBeta(transaction, target));
+        Throws<System.ArgumentException>(() => block.GetCurveIntersectionPointsBeta(transaction, source));
 
         using (var otherDatabase = new Database(true, true))
         using (var otherTransaction = otherDatabase.TransactionManager.StartTransaction())
@@ -92,13 +92,13 @@ public static class TestBlockIntersectionsBeta
             using var otherTarget = new Line(Point3d.Origin, new Point3d(1, 1, 0));
             otherModel.AppendEntity(otherTarget);
             otherTransaction.AddNewlyCreatedDBObject(otherTarget, true);
-            Throws<System.ArgumentException>(() => block.GetCurveIntersectionsBeta(otherTransaction, target));
-            Throws<System.ArgumentException>(() => block.GetCurveIntersectionsBeta(transaction, otherTarget));
+            Throws<System.ArgumentException>(() => block.GetCurveIntersectionPointsBeta(otherTransaction, target));
+            Throws<System.ArgumentException>(() => block.GetCurveIntersectionPointsBeta(transaction, otherTarget));
             Require(ReferenceEquals(otherTransaction, otherDatabase.TransactionManager.TopTransaction), "Foreign transaction preserved");
         }
         using (var nested = database.TransactionManager.StartTransaction())
         {
-            Throws<System.ArgumentException>(() => block.GetCurveIntersectionsBeta(transaction, target));
+            Throws<System.ArgumentException>(() => block.GetCurveIntersectionPointsBeta(transaction, target));
             Require(ReferenceEquals(nested, database.TransactionManager.TopTransaction), "Rejected parent transaction leaves child active");
         }
 
@@ -179,7 +179,7 @@ public static class TestBlockIntersectionsBeta
         {
             var writeStates = WriteStates();
             var erasedStates = ErasedStates();
-            var result = block.GetCurveIntersectionsBeta(transaction, target);
+            var result = block.GetCurveIntersectionPointsBeta(transaction, target);
             Require(writeStates.SequenceEqual(WriteStates()), message + ": existing read/write states preserved");
             Require(erasedStates.SequenceEqual(ErasedStates()), message + ": existing erased states preserved");
             Require(!block.IsDisposed && !owner.IsDisposed && !retained.IsDisposed && !committed.IsDisposed && !current.IsDisposed &&

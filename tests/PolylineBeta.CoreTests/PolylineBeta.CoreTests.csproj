@@ -7,6 +7,6 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="../../src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineCoreBeta.cs" Link="Production/PolylineCoreBeta.cs" />
+    <Compile Include="../../src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineGeometryCoreBeta.cs" Link="Production/PolylineGeometryCoreBeta.cs" />
   </ItemGroup>
 </Project>

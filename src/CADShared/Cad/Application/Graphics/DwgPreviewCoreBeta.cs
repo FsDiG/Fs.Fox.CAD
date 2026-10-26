@@ -119,13 +119,13 @@ internal static class DwgPreviewCoreBeta
         double maxX, double maxY, double maxZ, int width, int height)
     {
         ValidateDimensions(width, height);
-        if (!Finite(minX) || !Finite(minY) || !Finite(minZ) ||
-            !Finite(maxX) || !Finite(maxY) || !Finite(maxZ) ||
+        if (!IsFinite(minX) || !IsFinite(minY) || !IsFinite(minZ) ||
+            !IsFinite(maxX) || !IsFinite(maxY) || !IsFinite(maxZ) ||
             minX > maxX || minY > maxY || minZ > maxZ)
             throw new ArgumentException("图形范围必须有限且有序。", "bounds");
         var spanX = maxX - minX;
         var spanY = maxY - minY;
-        if (!Finite(spanX) || !Finite(spanY))
+        if (!IsFinite(spanX) || !IsFinite(spanY))
             throw new ArgumentException("图形范围过大，无法建立有限视图。", "bounds");
         if (spanX == 0 && spanY == 0)
         {
@@ -144,11 +144,11 @@ internal static class DwgPreviewCoreBeta
         var eyeZ = maxZ + Math.Max(1, Math.Abs(maxZ) * 1e-12);
         // 有限眼点与目标仍可能在相减时溢出；GS 使用这条方向向量，不能只验证两个端点。
         var viewDistance = eyeZ - centerZ;
-        if (!Finite(fieldWidth) || !Finite(fieldHeight) || fieldWidth <= 0 || fieldHeight <= 0 ||
-            !Finite(eyeZ) || !Finite(viewDistance) || viewDistance <= 0)
+        if (!IsFinite(fieldWidth) || !IsFinite(fieldHeight) || fieldWidth <= 0 || fieldHeight <= 0 ||
+            !IsFinite(eyeZ) || !IsFinite(viewDistance) || viewDistance <= 0)
             throw new ArgumentException("图形范围无法形成有效的 WCS 俯视相机。", "bounds");
         return new DwgPreviewFitBeta(centerX, centerY, centerZ, eyeZ, fieldWidth, fieldHeight);
     }
 
-    private static bool Finite(double value) => !double.IsNaN(value) && !double.IsInfinity(value);
+    private static bool IsFinite(double value) => !double.IsNaN(value) && !double.IsInfinity(value);
 }

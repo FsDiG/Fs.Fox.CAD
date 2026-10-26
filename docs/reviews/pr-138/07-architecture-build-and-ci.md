@@ -6,12 +6,12 @@
 
 **评审模块**：工程架构、模块基线、多目标条件编译与 CI 流水线
 **涉及基础设施文件**：
-- [`D:\MakeX\Fs.Fox.CAD\src\CADShared\CADShared.projitems`](file:///D:/MakeX/Fs.Fox.CAD/src/CADShared/CADShared.projitems)
-- [`D:\MakeX\Fs.Fox.CAD\Build\Verify-CADSharedModuleMap.ps1`](file:///D:/MakeX/Fs.Fox.CAD/Build/Verify-CADSharedModuleMap.ps1)
-- [`D:\MakeX\Fs.Fox.CAD\Build\CADSharedModuleBaseline.json`](file:///D:/MakeX/Fs.Fox.CAD/Build/CADSharedModuleBaseline.json)
-- [`D:\MakeX\Fs.Fox.CAD\.github\workflows\build-and-deploy.yml`](file:///D:/MakeX/Fs.Fox.CAD/.github/workflows/build-and-deploy.yml)
-- [`D:\MakeX\Fs.Fox.CAD\tests\TestShared\TestShared.projitems`](file:///D:/MakeX/Fs.Fox.CAD/tests/TestShared/TestShared.projitems)
-**对应规范**：[`AGENTS.md`](file:///D:/MakeX/Fs.Fox.CAD/AGENTS.md)、[`docs/README.md`](file:///D:/MakeX/Fs.Fox.CAD/docs/README.md)
+- [`D:\MakeX\Fs.Fox.CAD\src\CADShared\CADShared.projitems`](../../../src/CADShared/CADShared.projitems)
+- [`D:\MakeX\Fs.Fox.CAD\Build\Verify-CADSharedModuleMap.ps1`](../../../Build/Verify-CADSharedModuleMap.ps1)
+- [`D:\MakeX\Fs.Fox.CAD\Build\CADSharedModuleBaseline.json`](../../../Build/CADSharedModuleBaseline.json)
+- [`D:\MakeX\Fs.Fox.CAD\.github\workflows\build-and-deploy.yml`](../../../.github/workflows/build-and-deploy.yml)
+- [`D:\MakeX\Fs.Fox.CAD\tests\TestShared\TestShared.projitems`](../../../tests/TestShared/TestShared.projitems)
+**对应规范**：[`AGENTS.md`](../../../AGENTS.md)、[`docs/README.md`](../../../docs/README.md)
 
 ---
 
@@ -57,7 +57,7 @@ pwsh -NoProfile -File 'D:\MakeX\Fs.Fox.CAD\Build\Verify-CADSharedModuleMap.ps1'
 ## 2. CI 工作流与自动化测试矩阵审查
 
 ### 2.1 GitHub Actions 工作流编排
-审查 [`.github/workflows/build-and-deploy.yml`](file:///D:/MakeX/Fs.Fox.CAD/.github/workflows/build-and-deploy.yml) 的改动：
+审查 [`.github/workflows/build-and-deploy.yml`](../../../.github/workflows/build-and-deploy.yml) 的改动：
 - PR 在构建矩阵启动前，新增了独立的自动化测试阶段：
   ```yaml
   - name: Test Beta production numeric cores
@@ -101,7 +101,7 @@ PR 支持仓库现行的 7 个正式发布目标（涵盖 .NET Framework 4.8 与
 
 ## 3. 证据准则与真实 CAD 宿主边界审查
 
-依据仓库根协作文件 [`AGENTS.md`](file:///D:/MakeX/Fs.Fox.CAD/AGENTS.md) 的铁律：
+依据仓库根协作文件 [`AGENTS.md`](../../../AGENTS.md) 的铁律：
 1. **构建或 CI 通过只能证明编译与自动检查通过，绝不代表 CAD 宿主验收通过**；
 2. 在 Issue #40 的安全隔离 profile、宿主身份握手与协议完成前，不使用日常 CAD 运行未受控验收，不自动修改注册表或全局 CAD 配置；
 3. **未运行的宿主场景必须诚实标注为 `Not run`**。

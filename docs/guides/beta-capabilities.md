@@ -8,13 +8,13 @@
 
 | 能力 | 入口 | 使用说明 |
 | --- | --- | --- |
-| 多段线整理、方向、连接与批量圆角 | `PolylineExBeta.CreateReversedBeta`、`CreateCleanedBeta`、`TryCreateJoinedBeta`、`CreateFilletedBeta` | [多段线 Beta](polyline-beta.md)；返回调用方拥有的新内存实体，输入不被修改或消费；圆角支持闭合首末角并检查共享边预算。 |
-| 含弧闭合多段线点关系 | `PolylineRegionExBeta.GetPointRelationBeta` | [多段线 Beta](polyline-beta.md)；解析处理圆弧，区分内、外、边界和平面外；不按顶点直连替代。 |
-| 嵌套块内曲线求交 | `BlockIntersectionExBeta.GetCurveIntersectionsBeta` | [块求交 Beta](block-intersections-beta.md)；显式只读事务，累计变换后使用真实三维曲线求交，返回独立只读点快照。 |
-| 行列与曲线排序、邻近范围组合 | `PointOrderingBeta`、`CurveOrderingExBeta`、`ExtentGroupingBeta` | [排序与范围 Beta](ordering-beta.md)；返回索引或独立结果，保留重复输入，排序与分组规则明确。 |
-| 按文字样式测量单行字符串 | `TextMetricsBeta.MeasureSingleLine` | [文字测量 Beta](text-metrics-beta.md)；显式数据库与样式，处理字体失败及替代，不是 MText 排版。 |
-| 三角形坡度、坡向、重心；多面网格构造 | `Triangle3dBeta`、`PolyFaceMeshBuilderBeta.Append` | [几何与构造 Beta](geometry-construction-beta.md)；三维重心保留 Z，网格索引先完整验证。 |
-| AutoCAD 外部 DWG 图片预览 | `DwgPreviewBeta.SavePng` | [DWG 预览 Beta](dwg-preview-beta.md)；使用明确的宿主图形上下文，读取外部数据库，不修改当前视图。 |
+| 多段线整理、方向、连接与批量圆角 | `PolylineGeometryExtensionsBeta.CreateReversedBeta`、`CreateSimplifiedBeta`、`TryCreateJoinedBeta`、`CreateFilletedBeta` | [多段线 Beta](polyline-beta.md)；返回调用方拥有的新内存实体，输入不被修改或消费；圆角支持闭合首末角并检查共享边预算。 |
+| 含弧闭合多段线点关系 | `PolylineContainmentExtensionsBeta.ClassifyPointBeta` | [多段线 Beta](polyline-beta.md)；解析处理圆弧，区分内、外、边界和平面外；不按顶点直连替代。 |
+| 嵌套块内曲线求交 | `BlockReferenceIntersectionExtensionsBeta.GetCurveIntersectionPointsBeta` | [块求交 Beta](block-intersections-beta.md)；显式只读事务，累计变换后使用真实三维曲线求交，返回独立只读点快照。 |
+| 行列与曲线排序、邻近范围组合 | `PointOrderingBeta`、`CurveOrderingExtensionsBeta`、`ExtentsGroupingBeta` | [排序与范围 Beta](ordering-beta.md)；返回索引或独立结果，保留重复输入，排序与分组规则明确。 |
+| 按文字样式测量单行字符串 | `TextMeasurementBeta.MeasureSingleLineBounds` | [文字测量 Beta](text-metrics-beta.md)；显式数据库与样式，处理字体失败及替代，不是 MText 排版。 |
+| 三角形坡度、坡向、重心；多面网格构造 | `Triangle3dBeta`、`PolyFaceMeshFactoryBeta.CreateAndAppend` | [几何与构造 Beta](geometry-construction-beta.md)；三维重心保留 Z，网格索引先完整验证。 |
+| AutoCAD 外部 DWG 图片预览 | `DwgPreviewRendererBeta.RenderModelSpaceToPng` | [DWG 预览 Beta](dwg-preview-beta.md)；使用明确的宿主图形上下文，读取外部数据库，不修改当前视图。 |
 
 类型名中的 Beta 可用于检索试验接口；扩展方法同时在方法名体现 Beta。未通过宿主验收的能力不因构建成功而转为正式接口，原有稳定入口不自动依赖这些新增能力。
 

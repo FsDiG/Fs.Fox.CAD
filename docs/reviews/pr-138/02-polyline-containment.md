@@ -6,12 +6,12 @@
 
 **评审模块**：含弧闭合多段线点关系查询（`GetPointRelationBeta`）
 **生产源文件**：
-- [`D:\MakeX\Fs.Fox.CAD\src\CADShared\Cad\Database\Entities\Curves\Polylines\PolylineContainmentCoreBeta.cs`](file:///D:/MakeX/Fs.Fox.CAD/src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineContainmentCoreBeta.cs)
-- [`D:\MakeX\Fs.Fox.CAD\src\CADShared\Cad\Database\Entities\Curves\Polylines\PolylineRegionExBeta.cs`](file:///D:/MakeX/Fs.Fox.CAD/src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineRegionExBeta.cs)
+- [`D:\MakeX\Fs.Fox.CAD\src\CADShared\Cad\Database\Entities\Curves\Polylines\PolylineContainmentCoreBeta.cs`](../../../src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineContainmentCoreBeta.cs)
+- [`D:\MakeX\Fs.Fox.CAD\src\CADShared\Cad\Database\Entities\Curves\Polylines\PolylineRegionExBeta.cs`](../../../src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineContainmentExtensionsBeta.cs)
 **配套测试**：
-- [`D:\MakeX\Fs.Fox.CAD\tests\PolylineRegionBeta.CoreTests\Program.cs`](file:///D:/MakeX/Fs.Fox.CAD/tests/PolylineRegionBeta.CoreTests/Program.cs)
-- [`D:\MakeX\Fs.Fox.CAD\tests\TestShared\TestPolylineBeta.cs`](file:///D:/MakeX/Fs.Fox.CAD/tests/TestShared/TestPolylineBeta.cs)
-**对应文档**：[`docs/guides/polyline-beta.md`](file:///D:/MakeX/Fs.Fox.CAD/docs/guides/polyline-beta.md)
+- [`D:\MakeX\Fs.Fox.CAD\tests\PolylineRegionBeta.CoreTests\Program.cs`](../../../tests/PolylineContainmentBeta.CoreTests/Program.cs)
+- [`D:\MakeX\Fs.Fox.CAD\tests\TestShared\TestPolylineBeta.cs`](../../../tests/TestShared/TestPolylineBeta.cs)
+**对应文档**：[`docs/guides/polyline-beta.md`](../../../docs/guides/polyline-beta.md)
 
 ---
 

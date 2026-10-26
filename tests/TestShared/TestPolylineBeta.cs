@@ -14,26 +14,26 @@ public class TestPolylineBeta
         var before = Snapshot(source);
         var ocsToWorld = Matrix3d.WorldToPlane(source.Normal).Inverse();
         Point3d World(double x, double y, double z = 7) => new Point3d(x, y, z).TransformBy(ocsToWorld);
-        True(source.GetPointRelationBeta(source.GetPoint3dAt(0)) == PolylinePointRelationBeta.Boundary,
+        True(source.ClassifyPointBeta(source.GetPoint3dAt(0)) == PolylinePointRelationBeta.Boundary,
             "Native WCS vertex anchors non-default OCS boundary independently of the test transform.");
-        True(source.GetPointRelationBeta(new Point3d(0, 7, 0)) == PolylinePointRelationBeta.Inside,
+        True(source.ClassifyPointBeta(new Point3d(0, 7, 0)) == PolylinePointRelationBeta.Inside,
             "Literal WCS center independently anchors the Y-normal plane.");
-        True(source.GetPointRelationBeta(new Point3d(0, 7.01, 0)) == PolylinePointRelationBeta.OffPlane,
+        True(source.ClassifyPointBeta(new Point3d(0, 7.01, 0)) == PolylinePointRelationBeta.OffPlane,
             "Literal WCS offset independently anchors plane-distance rejection.");
-        True(source.GetPointRelationBeta(World(0, 0)) == PolylinePointRelationBeta.Inside, "Non-default OCS circle interior.");
-        True(source.GetPointRelationBeta(World(0, -1)) == PolylinePointRelationBeta.Boundary, "OCS arc boundary.");
-        True(source.GetPointRelationBeta(World(2, 0)) == PolylinePointRelationBeta.Outside, "Widths do not enlarge the region.");
-        True(source.GetPointRelationBeta(World(0, 0, 7.01)) == PolylinePointRelationBeta.OffPlane, "WCS point beyond the base-plane tolerance.");
-        True(source.GetPointRelationBeta(World(0, 0, 7.0000005)) == PolylinePointRelationBeta.Inside, "Point within plane tolerance is queried in OCS.");
-        True(source.GetPointRelationBeta(World(1.0009, 0, 7.0009), .001) == PolylinePointRelationBeta.Boundary,
+        True(source.ClassifyPointBeta(World(0, 0)) == PolylinePointRelationBeta.Inside, "Non-default OCS circle interior.");
+        True(source.ClassifyPointBeta(World(0, -1)) == PolylinePointRelationBeta.Boundary, "OCS arc boundary.");
+        True(source.ClassifyPointBeta(World(2, 0)) == PolylinePointRelationBeta.Outside, "Widths do not enlarge the region.");
+        True(source.ClassifyPointBeta(World(0, 0, 7.01)) == PolylinePointRelationBeta.OffPlane, "WCS point beyond the base-plane tolerance.");
+        True(source.ClassifyPointBeta(World(0, 0, 7.0000005)) == PolylinePointRelationBeta.Inside, "Point within plane tolerance is queried in OCS.");
+        True(source.ClassifyPointBeta(World(1.0009, 0, 7.0009), .001) == PolylinePointRelationBeta.Boundary,
             "Plane and in-plane boundary tolerance are checked separately.");
         SameSnapshot(source, before);
         source.SetBulgeAt(0, 1e-10);
         var unsupported = Snapshot(source);
-        Throws<NotSupportedException>(() => source.GetPointRelationBeta(World(0, 0, 100)));
+        Throws<NotSupportedException>(() => source.ClassifyPointBeta(World(0, 0, 100)));
         SameSnapshot(source, unsupported); // Complete source validation precedes OffPlane.
         source.Closed = false;
-        Throws<ArgumentException>(() => source.GetPointRelationBeta(World(0, 0, 100)));
+        Throws<ArgumentException>(() => source.ClassifyPointBeta(World(0, 0, 100)));
 
         // 在真实入口检查分数下端点的半开计数，避免直段范围的往返舍入排除下降边。
         using var fractional = Make((0, 1, 0, 0, 0), (1, .3, 0, 0, 0), (2, 1, 0, 0, 0));
@@ -41,11 +41,11 @@ public class TestPolylineBeta
         using var fractionalReverse = fractional.CreateReversedBeta();
         foreach (var contour in new[] { fractional, fractionalReverse })
         {
-            True(contour.GetPointRelationBeta(new Point3d(-1, .3, 0), 0) == PolylinePointRelationBeta.Outside,
+            True(contour.ClassifyPointBeta(new Point3d(-1, .3, 0), 0) == PolylinePointRelationBeta.Outside,
                 "A left-side point at the minimum vertex Y remains outside in either direction.");
-            True(contour.GetPointRelationBeta(new Point3d(3, .3, 0), 0) == PolylinePointRelationBeta.Outside,
+            True(contour.ClassifyPointBeta(new Point3d(3, .3, 0), 0) == PolylinePointRelationBeta.Outside,
                 "A right-side point at the minimum vertex Y remains outside in either direction.");
-            True(contour.GetPointRelationBeta(new Point3d(1, .3, 0), 0) == PolylinePointRelationBeta.Boundary,
+            True(contour.ClassifyPointBeta(new Point3d(1, .3, 0), 0) == PolylinePointRelationBeta.Boundary,
                 "The fractional minimum vertex is still boundary.");
         }
 
@@ -64,7 +64,7 @@ public class TestPolylineBeta
         using var read = database.TransactionManager.StartTransaction();
         var borrowed = (Polyline)read.GetObject(id, OpenMode.ForRead);
         var borrowedBefore = Snapshot(borrowed);
-        True(borrowed.GetPointRelationBeta(Point3d.Origin) == PolylinePointRelationBeta.Inside, "Read-only database input.");
+        True(borrowed.ClassifyPointBeta(Point3d.Origin) == PolylinePointRelationBeta.Inside, "Read-only database input.");
         True(!borrowed.IsWriteEnabled, "Point relation does not upgrade input to write mode.");
         SameSnapshot(borrowed, borrowedBefore);
         Env.Printl("Test_PolylineRegionBeta passed (OCS, plane tolerance, arc region, source validation and read-only input).");
@@ -120,7 +120,7 @@ public class TestPolylineBeta
         using var source = Make((0, 0, 0, 0, 0), (0, 0, 1, 2, 3),
             (10, 0, 0, 4, 4), (15, 0, 0, 4, 4), (20, 0, 0, 0, 0));
         var before = Snapshot(source);
-        using var clean = source.CreateCleanedBeta(0);
+        using var clean = source.CreateSimplifiedBeta(0);
         True(clean.NumberOfVertices == 3, "Exact duplicate and straight middle vertex are removed.");
         Close(clean.GetBulgeAt(0), 1, "Cleanup retains arc");
         Close(clean.GetStartWidthAt(0), 2, "Cleanup retains arc start width");
@@ -131,13 +131,13 @@ public class TestPolylineBeta
 
         using var uniform = Make((0, 0, 0, 0, 0), (5, 0, 0, 0, 0), (10, 0, 0, 0, 0));
         uniform.ConstantWidth = 6;
-        using var uniformClean = uniform.CreateCleanedBeta(0);
+        using var uniformClean = uniform.CreateSimplifiedBeta(0);
         True(uniformClean.NumberOfVertices == 2, "Constant-width straight run merges.");
         Close(uniformClean.GetStartWidthAt(0), 6, "Constant width is read as segment start width");
         Close(uniformClean.GetEndWidthAt(0), 6, "Constant width is read as segment end width");
 
         using var single = Make((0, 0, 0, 0, 0));
-        Throws<ArgumentException>(() => { using var unused = single.CreateCleanedBeta(); });
+        Throws<ArgumentException>(() => { using var unused = single.CreateSimplifiedBeta(); });
         True(single.NumberOfVertices == 1, "Failure does not consume the singleton.");
         using var allZero = Make((0, 0, 0, 0, 0), (0, 0, 0, 0, 0));
         Throws<InvalidOperationException>(() => { using var unused = allZero.CreateReversedBeta(); });

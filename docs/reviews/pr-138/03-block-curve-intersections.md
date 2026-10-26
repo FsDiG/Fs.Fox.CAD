@@ -6,10 +6,10 @@
 
 **评审模块**：嵌套块内实际曲线求交 Beta（`GetCurveIntersectionsBeta`）
 **生产源文件**：
-- [`D:\MakeX\Fs.Fox.CAD\src\CADShared\Cad\Database\Entities\Blocks\BlockIntersectionExBeta.cs`](file:///D:/MakeX/Fs.Fox.CAD/src/CADShared/Cad/Database/Entities/Blocks/BlockIntersectionExBeta.cs)
+- [`D:\MakeX\Fs.Fox.CAD\src\CADShared\Cad\Database\Entities\Blocks\BlockIntersectionExBeta.cs`](../../../src/CADShared/Cad/Database/Entities/Blocks/BlockReferenceIntersectionExtensionsBeta.cs)
 **配套测试**：
-- [`D:\MakeX\Fs.Fox.CAD\tests\TestShared\TestBlockIntersectionsBeta.cs`](file:///D:/MakeX/Fs.Fox.CAD/tests/TestShared/TestBlockIntersectionsBeta.cs)
-**对应文档**：[`docs/guides/block-intersections-beta.md`](file:///D:/MakeX/Fs.Fox.CAD/docs/guides/block-intersections-beta.md)
+- [`D:\MakeX\Fs.Fox.CAD\tests\TestShared\TestBlockIntersectionsBeta.cs`](../../../tests/TestShared/TestBlockIntersectionsBeta.cs)
+**对应文档**：[`docs/guides/block-intersections-beta.md`](../../../docs/guides/block-intersections-beta.md)
 
 ---
 

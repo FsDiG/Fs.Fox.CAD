@@ -1,7 +1,7 @@
 namespace Fs.Fox.Cad;
 
 /// <summary>含直线及凸度圆弧的闭合轻量多段线区域查询；Beta：真实宿主验收单独记录。</summary>
-public static class PolylineRegionExBeta
+public static class PolylineContainmentExtensionsBeta
 {
     /// <summary>查询 WCS 点位于闭合多段线区域的内部、外部、边界或基准平面外。</summary>
     /// <remarks>
@@ -23,7 +23,7 @@ public static class PolylineRegionExBeta
     /// <exception cref="ArgumentException">源未闭合、顶点不足或坐标/凸度/平面/查询点非法。</exception>
     /// <exception cref="NotSupportedException">非零绝对 bulge 超出 [1e-8,1e8]。</exception>
     /// <exception cref="InvalidOperationException">全部零段、零弦圆弧，或源/查询的数值尺度无法可靠表示。</exception>
-    public static PolylinePointRelationBeta GetPointRelationBeta(this Polyline source, Point3d point,
+    public static PolylinePointRelationBeta ClassifyPointBeta(this Polyline source, Point3d point,
         double tolerance = 1e-6)
     {
         if (source is null) throw new ArgumentNullException(nameof(source));
@@ -31,9 +31,9 @@ public static class PolylineRegionExBeta
         if (!source.Closed) throw new ArgumentException("The source polyline must be closed.", nameof(source));
         var normal = source.Normal;
         var elevation = source.Elevation;
-        if (!Finite(point) || !PolylineContainmentCoreBeta.Finite(elevation) ||
-            !PolylineContainmentCoreBeta.Finite(normal.X) || !PolylineContainmentCoreBeta.Finite(normal.Y) ||
-            !PolylineContainmentCoreBeta.Finite(normal.Z) || (normal.X == 0 && normal.Y == 0 && normal.Z == 0))
+        if (!IsFinite(point) || !PolylineContainmentCoreBeta.IsFinite(elevation) ||
+            !PolylineContainmentCoreBeta.IsFinite(normal.X) || !PolylineContainmentCoreBeta.IsFinite(normal.Y) ||
+            !PolylineContainmentCoreBeta.IsFinite(normal.Z) || (normal.X == 0 && normal.Y == 0 && normal.Z == 0))
             throw new ArgumentException("The point and polyline plane must be finite and valid.");
         var vertices = new PolylineVertexDataBeta[source.NumberOfVertices];
         for (var i = 0; i < vertices.Length; i++)
@@ -44,13 +44,13 @@ public static class PolylineRegionExBeta
         // 轮廓准备在平面外快速返回之前完成，避免查询点的位置掩盖非法源几何。
         var loop = PolylineContainmentCoreBeta.Prepare(vertices);
         var ocs = point.TransformBy(Matrix3d.WorldToPlane(normal));
-        if (!Finite(ocs)) throw new InvalidOperationException("The query cannot be represented in OCS.");
+        if (!IsFinite(ocs)) throw new InvalidOperationException("The query cannot be represented in OCS.");
         // 先按法向距离判平面，再在 OCS 内按同一距离容差查询中心线区域；不合成三维边界带。
         if (Math.Abs(ocs.Z - elevation) > tolerance)
             return PolylinePointRelationBeta.OffPlane;
         return loop.Classify(ocs.X, ocs.Y, tolerance);
     }
 
-    private static bool Finite(Point3d point) => PolylineContainmentCoreBeta.Finite(point.X) &&
-        PolylineContainmentCoreBeta.Finite(point.Y) && PolylineContainmentCoreBeta.Finite(point.Z);
+    private static bool IsFinite(Point3d point) => PolylineContainmentCoreBeta.IsFinite(point.X) &&
+        PolylineContainmentCoreBeta.IsFinite(point.Y) && PolylineContainmentCoreBeta.IsFinite(point.Z);
 }

@@ -20,9 +20,9 @@ Beta 能力覆盖多段线、排序与范围、文字测量、三角形／网格
 
 按能独立评审的能力滚动集成，无需等待其他领域全部结束。普通类型在名称中保留 Beta，扩展方法在调用入口体现 Beta；查询、计算、创建对象和修改数据库分别表达清楚。
 
-## Beta 命名定稿：已决策，待实施
+## Beta 命名定稿：已实施
 
-2026-10-26 根据当前源码完成命名定稿。本节是后续更名规格，当前 API 仍以源码和[能力总览](guides/beta-capabilities.md)为准。范围仅包括这批新增 Beta 能力及其测试、XML 注释、导航和编译清单；Fox 原有稳定类型和方法的命名优化另行处理。更名保持算法、默认值、异常、所有权和宿主支持范围不变。
+2026-10-26 已按本节定稿完成源码、测试及文档更名。下表保留更名前到现行名称的映射，当前 API 以源码和[能力总览](guides/beta-capabilities.md)为准。范围仅包括这批新增 Beta 能力及其测试、XML 注释、导航和编译清单；Fox 原有稳定类型和方法的命名优化另行处理。更名保持算法、默认值、异常、所有权和宿主支持范围不变，验证见[命名重构记录](beta-implementation-notes.md#命名重构与本地验证)。
 
 类型使用职责明确的名词或名词短语，方法使用动作短语，参考 [.NET 类型命名](https://learn.microsoft.com/en-us/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces)和[成员命名](https://learn.microsoft.com/en-us/dotnet/standard/design-guidelines/names-of-type-members)。本批扩展类采用完整的 `ExtensionsBeta` 后缀；这是本次项目决策。Beta 始终置于类型名末尾，扩展方法同时保留方法级 Beta；普通静态方法和实例方法通过所属 Beta 类型表明状态。
 
@@ -32,7 +32,7 @@ Beta 能力覆盖多段线、排序与范围、文字测量、三角形／网格
 
 每个公开类型独立成文件，文件名与类型名一致。下表覆盖当前全部 12 个公开 Beta 类型。
 
-| 当前类型 | 最终类型 | 决策依据 |
+| 更名前类型 | 现行类型 | 决策依据 |
 | --- | --- | --- |
 | `PolylineExBeta` | `PolylineGeometryExtensionsBeta` | 以几何新对象为输出，明确区别于完整数据库对象克隆。 |
 | `PolylineRegionExBeta` | `PolylineContainmentExtensionsBeta` | 表达闭合多段线的点包含关系，避免与 CAD Region 实体混淆。 |
@@ -53,7 +53,7 @@ Beta 能力覆盖多段线、排序与范围、文字测量、三角形／网格
 
 下表覆盖当前 14 个公开操作方法，不含构造器和属性访问器。
 
-| 当前方法 | 最终方法 | 调用语义 |
+| 更名前方法 | 现行方法 | 调用语义 |
 | --- | --- | --- |
 | `CreateReversedBeta` | 保留 | 返回新的反向几何对象。 |
 | `CreateCleanedBeta` | `CreateSimplifiedBeta` | 删除冗余顶点并保守合并直段，不暗示完整图形修复。 |
@@ -84,7 +84,7 @@ Beta 能力覆盖多段线、排序与范围、文字测量、三角形／网格
 
 内部主类型与文件一并收敛；其余内部快照及局部辅助类型保留现有名称。
 
-| 当前内部主类型 | 最终类型 |
+| 更名前内部主类型 | 现行类型 |
 | --- | --- |
 | `PolylineCoreBeta` | `PolylineGeometryCoreBeta` |
 | `PolylineContainmentCoreBeta` | 保留 |
@@ -97,7 +97,7 @@ Beta 能力覆盖多段线、排序与范围、文字测量、三角形／网格
 
 测试工程 `PolylineRegionBeta.CoreTests` 同步更名为 `PolylineContainmentBeta.CoreTests`，连同目录、项目文件及 CI 引用一起更新。当前接口指南、源码导航、XML 引用和共享编译清单同步新名称；历史评审继续保留其提交范围与旧名称，转向当前源码的链接必须有效。
 
-按用户已确认的尚无上层引用前提，一次性替换，不新增旧名兼容别名或转发包装。实施前再次核对工作区实际调用；若发现该前提变化，先记录调用范围，再确定迁移安排。原有稳定 C# 文件保持不变，编译项和基线只反映 Beta 更名、公开类型分文件及其实际哈希变化。
+按用户已确认的尚无上层引用前提，已核对工作区实际调用并一次性替换，未新增旧名兼容别名或转发包装。原有 143 个共享编译 C# 文件及 21 个未编译 ToDo 文件保持字节一致；编译项和基线只反映 Beta 更名、公开类型分文件及其实际哈希变化。共享编译项现为 161 个，其中 Beta 源码 18 个。
 
 ## 按影响范围选择验证
 

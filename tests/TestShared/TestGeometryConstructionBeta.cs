@@ -9,7 +9,7 @@ public class TestGeometryConstructionBeta
     {
         var triangle = new Triangle3dBeta(Point3d.Origin, new Point3d(3, 0, 3), new Point3d(0, 3, 0));
         Require(triangle.Centroid.IsEqualTo(new Point3d(1, 1, 1)), "Triangle centroid");
-        Require(triangle.TryGetSlopeAndAspect(out var slope, out var aspect) &&
+        Require(triangle.TryGetSlopeAndAspectDegrees(out var slope, out var aspect) &&
                 Math.Abs(slope - 45) < 1e-10 && Math.Abs(aspect - 270) < 1e-10, "Triangle slope/aspect");
         var working = HostApplicationServices.WorkingDatabase;
         using var database = new Database(true, true);
@@ -31,7 +31,7 @@ public class TestGeometryConstructionBeta
         }
 
         RequireRejectedWithoutWrite(
-            () => PolyFaceMeshBuilderBeta.Append(database, transaction, modelId, points, new[] { new[] { 0, 1, 3 } }),
+            () => PolyFaceMeshFactoryBeta.CreateAndAppend(database, transaction, modelId, points, new[] { new[] { 0, 1, 3 } }),
             "Invalid index must not append");
         using (var otherDatabase = new Database(true, true))
         using (var otherTransaction = otherDatabase.TransactionManager.StartTransaction())
@@ -43,18 +43,18 @@ public class TestGeometryConstructionBeta
                 otherModel.Cast<ObjectId>().Count() == otherBefore, "Foreign database and transaction preserved");
 
             RequireRejectedWithoutWrite(
-                () => PolyFaceMeshBuilderBeta.Append(database, otherTransaction, modelId, points, faces),
+                () => PolyFaceMeshFactoryBeta.CreateAndAppend(database, otherTransaction, modelId, points, faces),
                 "Foreign transaction must not append");
             RequireOtherUnchanged();
             RequireRejectedWithoutWrite(
-                () => PolyFaceMeshBuilderBeta.Append(database, transaction, otherModel.ObjectId, points, faces),
+                () => PolyFaceMeshFactoryBeta.CreateAndAppend(database, transaction, otherModel.ObjectId, points, faces),
                 "Foreign space must not append");
             RequireOtherUnchanged();
         }
         using (var nested = database.TransactionManager.StartTransaction())
         {
             RequireRejectedWithoutWrite(
-                () => PolyFaceMeshBuilderBeta.Append(database, transaction, modelId, points, faces),
+                () => PolyFaceMeshFactoryBeta.CreateAndAppend(database, transaction, modelId, points, faces),
                 "Parent transaction must be rejected while a child is active");
             Require(!nested.IsDisposed, "Rejected append must not end the child transaction");
         }
@@ -67,12 +67,12 @@ public class TestGeometryConstructionBeta
             throw enumerationFailure;
         }
         var originalFailurePropagated = false;
-        try { PolyFaceMeshBuilderBeta.Append(database, transaction, modelId, points, FailingFaces()); }
+        try { PolyFaceMeshFactoryBeta.CreateAndAppend(database, transaction, modelId, points, FailingFaces()); }
         catch (InvalidOperationException exception) { originalFailurePropagated = ReferenceEquals(exception, enumerationFailure); }
         Require(originalFailurePropagated && model.Cast<ObjectId>().Count() == before, "Face enumeration failure must propagate unchanged without appending");
         Require(ReferenceEquals(transaction, database.TransactionManager.TopTransaction), "Face enumeration failure must preserve the caller transaction");
 
-        var id = PolyFaceMeshBuilderBeta.Append(database, transaction, modelId, points, faces);
+        var id = PolyFaceMeshFactoryBeta.CreateAndAppend(database, transaction, modelId, points, faces);
         Require(id.Database == database && model.Cast<ObjectId>().Count() == before + 1, "Explicit target database");
         var mesh = (PolyFaceMesh)transaction.GetObject(id, OpenMode.ForRead);
         var faceCount = 0;

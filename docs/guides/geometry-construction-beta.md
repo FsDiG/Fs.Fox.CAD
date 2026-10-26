@@ -6,7 +6,7 @@
 
 [`Triangle3dBeta`](../../src/CADShared/Cad/Geometry/Triangle3dBeta.cs)保存三个有限坐标的只读顶点。`Centroid` 是包含 Z 的算术平均；重复或共线顶点仍可求重心。
 
-`TryGetSlopeAndAspect` 返回坡度角（度），坡向按 +Y 为北、+X 为东、从北顺时针计量下坡方向。顶点绕序不影响结果。水平面成功返回坡度 0、坡向 NaN；共线、重复、近垂直或数值精度不足时返回 false，两个输出均为 NaN。容差必须为 (0,1) 中的有限数值：退化判断使用两倍面积与最长边平方的比值，近水平/垂直判断使用正弦阈值，均与首顶点选择无关。
+`TryGetSlopeAndAspectDegrees` 返回坡度角（度），坡向按 +Y 为北、+X 为东、从北顺时针计量下坡方向。顶点绕序不影响结果。水平面成功返回坡度 0、坡向 NaN；共线、重复、近垂直或数值精度不足时返回 false，两个输出均为 NaN。容差必须为 (0,1) 中的有限数值：退化判断使用两倍面积与最长边平方的比值，近水平/垂直判断使用正弦阈值，均与首顶点选择无关。
 
 坡度的成功范围严格为 [0,90)，坡向为 [0,360)。近北坡向加一周后若舍入为 360，归一为 0；非垂直法线若因精度不足使坡度舍入为 90，则返回 false 并保留两个 NaN。
 
@@ -14,7 +14,7 @@
 
 ## 多面网格
 
-[`PolyFaceMeshBuilderBeta.Append`](../../src/CADShared/Cad/Database/Entities/Meshes/PolyFaceMeshBuilderBeta.cs)接收显式数据库、该库当前最上层事务、目标块表记录 ID、顶点及从零开始的面索引。顶点按目标块表记录的存储坐标直接写入；普通块定义中的点是定义局部坐标，方法不执行 WCS 到定义坐标的转换。顶点和面各最多 32767 项；只接受三角面与四边面，各面索引必须有效且不重复。输入被完整验证和快照后才写入。
+[`PolyFaceMeshFactoryBeta.CreateAndAppend`](../../src/CADShared/Cad/Database/Entities/Meshes/PolyFaceMeshFactoryBeta.cs)接收显式数据库、该库当前最上层事务、目标块表记录 ID、顶点及从零开始的面索引。顶点按目标块表记录的存储坐标直接写入；普通块定义中的点是定义局部坐标，方法不执行 WCS 到定义坐标的转换。顶点和面各最多 32767 项；只接受三角面与四边面，各面索引必须有效且不重复。输入被完整验证和快照后才写入。
 
 三角面的原生第四索引为零；全部顶点先于面记录追加。这遵循 Autodesk 的 [FaceRecord 构造规则](https://help.autodesk.com/cloudhelp/2026/ENU/OARX-ManagedRefGuide/files/OARX-ManagedRefGuide-Autodesk_AutoCAD_DatabaseServices_FaceRecord_FaceRecord_short_short_short_short.html)和 [AppendFaceRecord 生命周期](https://help.autodesk.com/cloudhelp/2026/ENU/OARX-ManagedRefGuide/files/OARX-ManagedRefGuide-Autodesk_AutoCAD_DatabaseServices_PolyFaceMesh_AppendFaceRecord_FaceRecord.html)。
 

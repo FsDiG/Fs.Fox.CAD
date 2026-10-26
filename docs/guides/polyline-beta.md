@@ -2,11 +2,11 @@
 
 > 状态：current；说明 Beta API 的行为约定，不代表真实 CAD 宿主已经验收。
 
-[`PolylineExBeta`](../../src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineExBeta.cs)提供反向、整理、双线连接和整线圆角四个入口。它们借用输入，不修改、释放或擦除输入，不启动事务，也不自动落库。输入可为只读打开的数据库对象；调用者仍需保证其读取生命周期有效。
+[`PolylineGeometryExtensionsBeta`](../../src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineGeometryExtensionsBeta.cs)提供反向、整理、双线连接和整线圆角四个入口。它们借用输入，不修改、释放或擦除输入，不启动事务，也不自动落库。输入可为只读打开的数据库对象；调用者仍需保证其读取生命周期有效。
 
 返回值是调用方拥有的内存多段线，复制顶点、凸度、段宽、Normal、Elevation、Thickness 和 Closed。它不复制图层、颜色、线型、XData、扩展字典及其他非几何数据，不能作为完整 `DBObject.Clone` 使用。调用者负责释放结果，或用 Fox 现有落库入口将其登记到目标数据库的事务。
 
-[`PolylineRegionExBeta`](../../src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineRegionExBeta.cs)另提供含弧闭合多段线的点关系查询，返回枚举，不创建实体；同样只借用输入。
+[`PolylineContainmentExtensionsBeta`](../../src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineContainmentExtensionsBeta.cs)另提供含弧闭合多段线的点关系查询，返回枚举，不创建实体；同样只借用输入。
 
 ## 反向
 
@@ -14,7 +14,7 @@
 
 ## 整理
 
-`source.CreateCleanedBeta(tolerance)`先移除精确零长度直线段，再保守合并连续直线。容差是 OCS 平面中的有限非负距离，默认 `1e-6`。
+`source.CreateSimplifiedBeta(tolerance)`先移除精确零长度直线段，再保守合并连续直线。容差是 OCS 平面中的有限非负距离，默认 `1e-6`。
 
 - 只把精确重合顶点之间的直线段当作零长度段；不会仅因短段长度小于容差而删除它。
 - 合并的每段必须为直线，且起止宽度与整个被合并直线段的宽度相同。圆弧及其端点、变宽段、回折点保留。
@@ -48,7 +48,7 @@
 
 ## 含弧闭合线的点关系
 
-[`PolylineRegionExBeta`](../../src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineRegionExBeta.cs) 的 `source.GetPointRelationBeta(wcsPoint, tolerance)` 返回 `PolylinePointRelationBeta`：`Inside`、`Outside`、`Boundary` 或 `OffPlane`。输入必须 `Closed = true`，至少两个顶点；支持两顶点双半圆构成的完整圆。宽度和 Thickness 不参与区域，按多段线基准平面的直线/圆弧中心线边界查询。
+[`PolylineContainmentExtensionsBeta`](../../src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineContainmentExtensionsBeta.cs) 的 `source.ClassifyPointBeta(wcsPoint, tolerance)` 返回 `PolylinePointRelationBeta`：`Inside`、`Outside`、`Boundary` 或 `OffPlane`。输入必须 `Closed = true`，至少两个顶点；支持两顶点双半圆构成的完整圆。宽度和 Thickness 不参与区域，按多段线基准平面的直线/圆弧中心线边界查询。
 
 - 查询点使用 **WCS**。先完整读取并验证源的全部坐标、bulge 和几何段，再按源 Normal/Elevation 转换到 OCS。因此即使点明显在平面外，非法源仍抛异常，不能绕过验证。
 - 到基准平面的距离大于容差时返回 `OffPlane`；其余点投影到 OCS 查询。平面距离与平面内边界距离分别使用同一有限非负容差，默认 `1e-6`，允许零；它们不是合并的三维欧氏距离。
@@ -71,7 +71,7 @@
 
 - [直接链接生产核心的测试](../../tests/PolylineBeta.CoreTests/PolylineBeta.CoreTests.csproj)：`dotnet run --project tests/PolylineBeta.CoreTests/PolylineBeta.CoreTests.csproj --configuration Release`。覆盖手算圆弧/宽度、反向两次恢复、闭合起点、清理误差界限及精确直角保护、次正规段保守保留、四种连接端点、桥接宽度、次正规距离与普通勾股边界、歧义和失败输出；圆角覆盖顺逆绕序、凹角、首末角、共享段预算、恒定宽度、指定半径与切向、共线/折返及数值限制。
 - [宿主验收命令](../../tests/TestShared/TestPolylineBeta.cs)：`Test_PolylineBeta`。仅使用临时实体和临时数据库，检查非默认 OCS、实际弧长/圆角半径、只读输入和对象归属，不写入当前图纸。新增圆角场景的编译与真实宿主执行单独记录，未执行保持 `Not run`。
-- [点关系生产核心测试](../../tests/PolylineRegionBeta.CoreTests/PolylineRegionBeta.CoreTests.csproj)：`dotnet run --project tests/PolylineRegionBeta.CoreTests/PolylineRegionBeta.CoreTests.csproj --configuration Release`。直接链接生产实现，覆盖圆/主弧解析样例、同圆异弧、切线、凸度范围阈值、浅弧、旋转/平移/缩放/反向、偶奇填充及独立圆盘切割判据；分数坐标顶点回归另检查直段范围预筛与半开计数在原向/反向下保持一致，并检查次正规端点容差及普通勾股距离边界。
+- [点关系生产核心测试](../../tests/PolylineContainmentBeta.CoreTests/PolylineContainmentBeta.CoreTests.csproj)：`dotnet run --project tests/PolylineContainmentBeta.CoreTests/PolylineContainmentBeta.CoreTests.csproj --configuration Release`。直接链接生产实现，覆盖圆/主弧解析样例、同圆异弧、切线、凸度范围阈值、浅弧、旋转/平移/缩放/反向、偶奇填充及独立圆盘切割判据；分数坐标顶点回归另检查直段范围预筛与半开计数在原向/反向下保持一致，并检查次正规端点容差及普通勾股距离边界。
 - 同一宿主测试文件的 `Test_PolylineRegionBeta` 仅使用临时实体和临时数据库，检查非默认 OCS、平面外关系、平面/边界容差、完整源验证与只读归属。新增分数坐标场景调用实际公共入口；本轮在 AutoCAD 2025 Debug、AutoCAD 2019 Release x64 编译，实际 CAD 执行仍为 `Not run`。
 - 历史构建覆盖四个代表目标；2026-10-26 的修正选择上述两个框架代表目标，未重复本地全矩阵。完整构建及后续增量证据见[实现与验证记录](../beta-implementation-notes.md)。
 

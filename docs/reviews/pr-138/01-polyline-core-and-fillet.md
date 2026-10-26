@@ -6,12 +6,12 @@
 
 **评审模块**：多段线几何操作 Beta（反向、清理、两两连接、整线圆角）
 **生产源文件**：
-- [`D:\MakeX\Fs.Fox.CAD\src\CADShared\Cad\Database\Entities\Curves\Polylines\PolylineCoreBeta.cs`](file:///D:/MakeX/Fs.Fox.CAD/src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineCoreBeta.cs)
-- [`D:\MakeX\Fs.Fox.CAD\src\CADShared\Cad\Database\Entities\Curves\Polylines\PolylineExBeta.cs`](file:///D:/MakeX/Fs.Fox.CAD/src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineExBeta.cs)
+- [`D:\MakeX\Fs.Fox.CAD\src\CADShared\Cad\Database\Entities\Curves\Polylines\PolylineCoreBeta.cs`](../../../src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineGeometryCoreBeta.cs)
+- [`D:\MakeX\Fs.Fox.CAD\src\CADShared\Cad\Database\Entities\Curves\Polylines\PolylineExBeta.cs`](../../../src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineGeometryExtensionsBeta.cs)
 **配套测试**：
-- [`D:\MakeX\Fs.Fox.CAD\tests\PolylineBeta.CoreTests\Program.cs`](file:///D:/MakeX/Fs.Fox.CAD/tests/PolylineBeta.CoreTests/Program.cs)
-- [`D:\MakeX\Fs.Fox.CAD\tests\TestShared\TestPolylineBeta.cs`](file:///D:/MakeX/Fs.Fox.CAD/tests/TestShared/TestPolylineBeta.cs)
-**对应文档**：[`docs/guides/polyline-beta.md`](file:///D:/MakeX/Fs.Fox.CAD/docs/guides/polyline-beta.md)
+- [`D:\MakeX\Fs.Fox.CAD\tests\PolylineBeta.CoreTests\Program.cs`](../../../tests/PolylineBeta.CoreTests/Program.cs)
+- [`D:\MakeX\Fs.Fox.CAD\tests\TestShared\TestPolylineBeta.cs`](../../../tests/TestShared/TestPolylineBeta.cs)
+**对应文档**：[`docs/guides/polyline-beta.md`](../../../docs/guides/polyline-beta.md)
 
 ---
 

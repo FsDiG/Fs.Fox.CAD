@@ -13,14 +13,14 @@ namespace Fs.Fox.Cad;
 /// 使用调用方显式提供的当前文档的图形管理器，不能作为无 CAD 进程的转换器。
 /// 必须在 AutoCAD 允许的主线程命令上下文执行；调用方负责文档生命周期和必要的锁，不支持并发渲染。
 /// </remarks>
-public static class DwgPreviewBeta
+public static class DwgPreviewRendererBeta
 {
     /// <summary>以固定 WCS 俯视方向、保留宽高比，将外部 DWG 模型空间输出为新 PNG 文件。</summary>
     /// <param name="graphicsDocument">当前活动 AutoCAD 文档，只借用其 GraphicsManager，不改变文档或当前视图。</param>
-    /// <param name="drawingPath">可读取的 .dwg 路径；读取磁盘内容，不包含未保存的文档修改。</param>
+    /// <param name="sourceDwgPath">可读取的 .dwg 路径；读取磁盘内容，不包含未保存的文档修改。</param>
     /// <param name="outputPngPath">尚不存在的独立 .png 文件路径；父目录必须存在，不接受数据流路径，不覆盖任何现有文件。</param>
-    /// <param name="width">1 至 8192 像素；总像素不能超过 16777216。</param>
-    /// <param name="height">1 至 8192 像素；总像素不能超过 16777216。</param>
+    /// <param name="pixelWidth">1 至 8192 像素；总像素不能超过 16777216。</param>
+    /// <param name="pixelHeight">1 至 8192 像素；总像素不能超过 16777216。</param>
     /// <remarks>
     /// 仅支持 AutoCAD 编译目标。源 DWG 使用只读共享打开；本方法不修改 WorkingDatabase、UCS、当前视图或全局配置。
     /// 范围筛选检查模型空间顶层实体的可见性及其图层关闭/冻结状态；复合实体使用宿主返回的整体范围。
@@ -36,14 +36,14 @@ public static class DwgPreviewBeta
     /// <exception cref="DirectoryNotFoundException">输出父目录不存在。</exception>
     /// <exception cref="IOException">输出已存在或文件访问失败。</exception>
     /// <exception cref="InvalidOperationException">图形为空、图形系统创建失败或视图关联失败。</exception>
-    public static void SavePng(Document graphicsDocument, string drawingPath, string outputPngPath,
-        int width, int height)
+    public static void RenderModelSpaceToPng(Document graphicsDocument, string sourceDwgPath, string outputPngPath,
+        int pixelWidth, int pixelHeight)
     {
         if (graphicsDocument is null)
             throw new ArgumentNullException(nameof(graphicsDocument));
         if (!ReferenceEquals(graphicsDocument, CadApp.DocumentManager.MdiActiveDocument))
             throw new ArgumentException("必须使用当前活动文档的图形管理器。", nameof(graphicsDocument));
-        var request = DwgPreviewCoreBeta.ValidateRequest(drawingPath, outputPngPath, width, height);
+        var request = DwgPreviewCoreBeta.ValidateRequest(sourceDwgPath, outputPngPath, pixelWidth, pixelHeight);
         // GS 视图保留源 DBObject 引用。外部数据库和读取事务必须包住整个 GS 生命周期，
         // 不能在视图解绑前关闭，即使异常发生在截图或 PNG 编码阶段也必须遵守此顺序。
         using var drawing = new Database(false, true);
@@ -77,7 +77,7 @@ public static class DwgPreviewBeta
             throw new InvalidOperationException("源 DWG 模型空间中没有可绘制实体。");
         var bounds = combined.Value;
         var fit = DwgPreviewCoreBeta.Fit(bounds.MinPoint.X, bounds.MinPoint.Y, bounds.MinPoint.Z,
-            bounds.MaxPoint.X, bounds.MaxPoint.Y, bounds.MaxPoint.Z, width, height);
+            bounds.MaxPoint.X, bounds.MaxPoint.Y, bounds.MaxPoint.Z, pixelWidth, pixelHeight);
 
         // manager 归文档所有；下面的设备、模型和视图才由本次调用持有并释放。
         var manager = graphicsDocument.GraphicsManager;
@@ -91,7 +91,7 @@ public static class DwgPreviewBeta
             using var device = manager.CreateAutoCADOffScreenDevice(kernel);
             if (device is null)
                 throw new InvalidOperationException("无法创建离屏图形设备。");
-            device.OnSize(new Size(width, height));
+            device.OnSize(new Size(pixelWidth, pixelHeight));
             using var model = manager.CreateAutoCADModel(kernel);
             if (model is null)
                 throw new InvalidOperationException("无法创建图形模型。");
@@ -110,8 +110,8 @@ public static class DwgPreviewBeta
                     fit.FieldWidth, fit.FieldHeight);
                 view.Invalidate();
                 device.Update();
-                using var bitmap = device.GetSnapshot(new Rectangle(0, 0, width, height));
-                if (bitmap is null || bitmap.Width != width || bitmap.Height != height)
+                using var bitmap = device.GetSnapshot(new Rectangle(0, 0, pixelWidth, pixelHeight));
+                if (bitmap is null || bitmap.Width != pixelWidth || bitmap.Height != pixelHeight)
                     throw new InvalidOperationException("图形系统返回了无效尺寸的截图。");
                 SaveNewPng(bitmap, request.OutputPath);
             }
