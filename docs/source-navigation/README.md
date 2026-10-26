@@ -20,7 +20,7 @@
 
 ## 源码范围与模块地图
 
-当前 `src` 有 198 个纳入源码管理的文件，其中 183 个是 C# 文件：159 个由共享项目显式列入编译、3 个是版本项目选用的宿主全局 using、21 个属于未编译的 `ToDo`。相对最初导航基线，增加了 `src/README.md` 和 16 个 Beta 源码文件。忽略本地 `obj`、`bin` 和其他可重建输出。
+当前 `src` 有 200 个纳入源码管理的文件，其中 185 个是 C# 文件：161 个由共享项目显式列入编译、3 个是版本项目选用的宿主全局 using、21 个属于未编译的 `ToDo`。相对最初导航基线，增加了 `src/README.md` 和 18 个 Beta 源码文件，其中两个公开结果类型从原文件分离。忽略本地 `obj`、`bin` 和其他可重建输出。
 
 模块数量以 [`CADShared.projitems`](../../src/CADShared/CADShared.projitems) 的 `FsFoxModule` 元数据为准：
 
@@ -29,7 +29,7 @@
 | `Foundation` | 11 | 集合、循环链表、状态和框架兼容辅助 | [基础与 Windows](foundation-platform.md#foundation) |
 | `Platform/Windows` | 15 | Win32 声明、消息与键码、PE 解析 | [基础与 Windows](foundation-platform.md#windows) |
 | `Cad/Application` | 11 | 活动文档、环境、锁、系统变量、Idle、Beta 离屏预览 | [应用上下文](application-editor.md#application) |
-| `Cad/Database` | 54 | 事务、符号表、对象、实体、数据、参照及 Beta 实体能力 | [数据库](database.md)、[实体](entities.md) |
+| `Cad/Database` | 56 | 事务、符号表、对象、实体、数据、参照及 Beta 实体能力 | [数据库](database.md)、[实体](entities.md) |
 | `Cad/Editor` | 23 | 输入、选择过滤、Jig、显示和命令 | [Editor](application-editor.md#editor) |
 | `Cad/Geometry` | 20 | 坐标、点/曲线几何、四叉树、Beta 排序与三角形 | [几何与空间索引](geometry.md) |
 | `Cad/Runtime` | 14 | 初始化发现、注册、Lisp 列表 | [运行时](runtime-ui.md#runtime) |

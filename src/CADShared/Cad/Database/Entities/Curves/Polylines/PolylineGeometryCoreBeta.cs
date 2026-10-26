@@ -25,7 +25,7 @@ internal readonly struct PolylineVertexDataBeta
 }
 
 /// <summary>只变换数值快照的多段线核心；所有返回数组与输入独立，不负责 OCS 转换或数据库写入。</summary>
-internal static class PolylineCoreBeta
+internal static class PolylineGeometryCoreBeta
 {
     private const double MinimumNormal = 2.2250738585072014e-308;
 
@@ -118,7 +118,7 @@ internal static class PolylineCoreBeta
         return result;
     }
 
-    internal static PolylineVertexDataBeta[] Clean(IReadOnlyList<PolylineVertexDataBeta> vertices,
+    internal static PolylineVertexDataBeta[] Simplify(IReadOnlyList<PolylineVertexDataBeta> vertices,
         bool closed, double tolerance)
     {
         ValidateTolerance(tolerance);

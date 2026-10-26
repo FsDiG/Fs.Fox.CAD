@@ -95,10 +95,10 @@
 
 | 文件 | 入口与边界 |
 | --- | --- |
-| [PointOrderingBeta.cs](../../src/CADShared/Cad/Geometry/Ordering/PointOrderingBeta.cs) | `GetRowOrder`、`GetColumnOrder` 返回原始索引；固定锚点分组，读取方向不改变组成员。 |
-| [OrderingBetaCore.cs](../../src/CADShared/Cad/Geometry/Ordering/OrderingBetaCore.cs) | 无 SDK 内部核心；稳定排序及原始范围连通分量，由生产链接测试直接覆盖。 |
-| [Triangle3dBeta.cs](../../src/CADShared/Cad/Geometry/Triangle3dBeta.cs) | 三维 `Centroid`、`TryGetSlopeAndAspect`；坡度为度，坡向从北顺时针计量，退化及水平面的输出有明确约定。 |
-| [TriangleMathBeta.cs](../../src/CADShared/Cad/Geometry/TriangleMathBeta.cs) | 无 SDK 内部核心；补偿均值、最长边相对退化判断与有限数处理。 |
+| [PointOrderingBeta.cs](../../src/CADShared/Cad/Geometry/Ordering/PointOrderingBeta.cs) | `GetRowOrderIndices`、`GetColumnOrderIndices` 返回原始索引；固定锚点分组，读取方向不改变组成员。 |
+| [OrderingAndGroupingCoreBeta.cs](../../src/CADShared/Cad/Geometry/Ordering/OrderingAndGroupingCoreBeta.cs) | 无 SDK 内部核心；稳定排序及原始范围连通分量，由生产链接测试直接覆盖。 |
+| [Triangle3dBeta.cs](../../src/CADShared/Cad/Geometry/Triangle3dBeta.cs) | 三维 `Centroid`、`TryGetSlopeAndAspectDegrees`；坡度为度，坡向从北顺时针计量，退化及水平面的输出有明确约定。 |
+| [TriangleMathCoreBeta.cs](../../src/CADShared/Cad/Geometry/TriangleMathCoreBeta.cs) | 无 SDK 内部核心；补偿均值、最长边相对退化判断与有限数处理。 |
 
 这些类型参与当前编译，和下方未编译 ToDo 不是同一组公共类型。具体约定见[排序指南](../guides/ordering-beta.md)、[三角形与构造指南](../guides/geometry-construction-beta.md)。
 

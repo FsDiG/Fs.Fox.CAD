@@ -8,8 +8,8 @@ public class TestOrderingBeta
     public void Test_OrderingBeta()
     {
         var points = new[] { new Point2d(0, 0), new Point2d(10, 0.75), new Point2d(0, 1.5) };
-        AssertOrder(PointOrderingBeta.GetRowOrder(points, 1), 2, 1, 0);
-        AssertOrder(PointOrderingBeta.GetRowOrder(points, 1, topToBottom: false), 0, 2, 1);
+        AssertOrder(PointOrderingBeta.GetRowOrderIndices(points, 1), 2, 1, 0);
+        AssertOrder(PointOrderingBeta.GetRowOrderIndices(points, 1, topToBottom: false), 0, 2, 1);
         if (points[0] != new Point2d(0, 0))
             throw new InvalidOperationException("Point input changed.");
 
@@ -19,9 +19,9 @@ public class TestOrderingBeta
             new Point3d(5, 4, 0), new Point3d(-2, 1, 0),
             new Point3d(5, -3, 2), new Point3d(12, 0, 0)
         };
-        AssertOrder(line.GetOrderAlongCurveBeta(locations), 1, 0, 2, 3);
-        AssertOrder(line.GetOrderAlongCurveBeta(locations, reverse: true), 3, 0, 2, 1);
-        AssertOrder(line.GetOrderAlongCurveBeta(Array.Empty<Point3d>()));
+        AssertOrder(line.GetPointOrderIndicesBeta(locations), 1, 0, 2, 3);
+        AssertOrder(line.GetPointOrderIndicesBeta(locations, descending: true), 3, 0, 2, 1);
+        AssertOrder(line.GetPointOrderIndicesBeta(Array.Empty<Point3d>()));
         if (line.StartPoint != Point3d.Origin || line.EndPoint != new Point3d(10, 0, 0))
             throw new InvalidOperationException("Curve input changed.");
 
@@ -31,7 +31,7 @@ public class TestOrderingBeta
         polyline.AddVertexAt(2, new Point2d(10, 10), 0, 0, 0);
         polyline.AddVertexAt(3, new Point2d(0, 10), 0, 0, 0);
         polyline.Closed = true;
-        AssertOrder(polyline.GetOrderAlongCurveBeta(new[]
+        AssertOrder(polyline.GetPointOrderIndicesBeta(new[]
         {
             new Point3d(5, 10, 0), new Point3d(5, 0, 0), new Point3d(0, 5, 0), new Point3d(10, 5, 0)
         }), 1, 3, 0, 2);
@@ -39,12 +39,12 @@ public class TestOrderingBeta
         using var ray = new Ray();
         try
         {
-            ray.GetOrderAlongCurveBeta(Array.Empty<Point3d>());
+            ray.GetPointOrderIndicesBeta(Array.Empty<Point3d>());
             throw new InvalidOperationException("Ray was accepted.");
         }
         catch (NotSupportedException) { }
 
-        var groups = ExtentGroupingBeta.GroupByProximity(new[]
+        var groups = ExtentsGroupingBeta.GroupByXYProximity(new[]
         {
             new Extents3d(new Point3d(0, 0, -2), new Point3d(1, 4, 0)),
             new Extents3d(new Point3d(1, 3, 1), new Point3d(4, 4, 3)),

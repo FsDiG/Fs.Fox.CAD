@@ -3,19 +3,6 @@ using System.Collections.Generic;
 
 namespace Fs.Fox.Cad;
 
-/// <summary>点与闭合轻量多段线区域的关系；Beta 数值及宿主边界见查询入口。</summary>
-public enum PolylinePointRelationBeta
-{
-    /// <summary>位于偶奇填充区域外。</summary>
-    Outside,
-    /// <summary>位于偶奇填充区域内。</summary>
-    Inside,
-    /// <summary>在输入直线/圆弧边界的距离容差内；边界优先于填充规则。</summary>
-    Boundary,
-    /// <summary>到多段线基准平面的距离大于平面容差。</summary>
-    OffPlane
-}
-
 /// <summary>闭合中心线区域的解析查询核心；只读取数值快照，不依赖宿主求交或随机射线重试。</summary>
 internal static class PolylineContainmentCoreBeta
 {
@@ -32,7 +19,7 @@ internal static class PolylineContainmentCoreBeta
             throw new ArgumentException("A closed contour needs at least two vertices.", nameof(vertices));
         // 在任何关系判断（包括平面外判断）之前完整验证源数据；宽度不是中心线区域的输入。
         for (var i = 0; i < vertices.Count; i++)
-            if (!Finite(vertices[i].X) || !Finite(vertices[i].Y) || !Finite(vertices[i].Bulge))
+            if (!IsFinite(vertices[i].X) || !IsFinite(vertices[i].Y) || !IsFinite(vertices[i].Bulge))
                 throw new ArgumentException("Coordinates and bulges must be finite.", nameof(vertices));
         var segments = new List<Segment>(vertices.Count);
         for (var i = 0; i < vertices.Count; i++)
@@ -52,7 +39,7 @@ internal static class PolylineContainmentCoreBeta
         return new Loop(segments.ToArray());
     }
 
-    internal static PolylinePointRelationBeta GetPointRelation(IReadOnlyList<PolylineVertexDataBeta> vertices,
+    internal static PolylinePointRelationBeta ClassifyPoint(IReadOnlyList<PolylineVertexDataBeta> vertices,
         double x, double y, double tolerance) => Prepare(vertices).Classify(x, y, tolerance);
 
     /// <summary>独立的已准备轮廓；各段持有值拷贝，调用方以后修改顶点数组不影响查询。</summary>
@@ -64,7 +51,7 @@ internal static class PolylineContainmentCoreBeta
         internal PolylinePointRelationBeta Classify(double x, double y, double tolerance)
         {
             ValidateTolerance(tolerance);
-            if (!Finite(x) || !Finite(y))
+            if (!IsFinite(x) || !IsFinite(y))
                 throw new ArgumentException("Query coordinates must be finite.");
             // 每条段可能穿越零次、一次或两次；只累计奇偶性。任何输入段的边界优先于填充结果。
             var inside = false;
@@ -94,7 +81,7 @@ internal static class PolylineContainmentCoreBeta
             var dx = b.X - a.X;
             var dy = b.Y - a.Y;
             _length = Hypot(dx, dy);
-            if (!Finite(_length) || _length == 0)
+            if (!IsFinite(_length) || _length == 0)
                 throw new InvalidOperationException("The chord length cannot be represented.");
             _ux = dx / _length; _uy = dy / _length;
             if ((dx != 0 && _ux == 0) || (dy != 0 && _uy == 0))
@@ -124,15 +111,15 @@ internal static class PolylineContainmentCoreBeta
                 _minX = Math.Min(_ax, _bx); _maxX = Math.Max(_ax, _bx);
                 _minY = Math.Min(_ay, _by); _maxY = Math.Max(_ay, _by);
             }
-            if (!Finite(_minX) || !Finite(_maxX) || !Finite(_minY) || !Finite(_maxY))
+            if (!IsFinite(_minX) || !IsFinite(_maxX) || !IsFinite(_minY) || !IsFinite(_maxY))
                 throw new InvalidOperationException("The contour's coordinate range cannot be represented.");
         }
 
         internal bool Query(double x, double y, double tolerance, out int crossings)
         {
             crossings = 0;
-            if (PolylineCoreBeta.WithinDistance(x - _ax, y - _ay, tolerance) ||
-                PolylineCoreBeta.WithinDistance(x - _bx, y - _by, tolerance))
+            if (PolylineGeometryCoreBeta.WithinDistance(x - _ax, y - _ay, tolerance) ||
+                PolylineGeometryCoreBeta.WithinDistance(x - _bx, y - _by, tolerance))
                 return true;
             var canCheckBoundary = !((x < _minX && _minX - x > tolerance) || (x > _maxX && x - _maxX > tolerance) ||
                 (y < _minY && _minY - y > tolerance) || (y > _maxY && y - _maxY > tolerance));
@@ -144,8 +131,8 @@ internal static class PolylineContainmentCoreBeta
             var qx = canCheckBoundary ? dx / _length : double.NegativeInfinity;
             var qy = dy / _length;
             var localTolerance = tolerance / _length;
-            if (!Finite(qy) || (dy != 0 && qy == 0) || (canCheckBoundary &&
-                (!Finite(qx) || !Finite(localTolerance) || (dx != 0 && qx == 0))))
+            if (!IsFinite(qy) || (dy != 0 && qy == 0) || (canCheckBoundary &&
+                (!IsFinite(qx) || !IsFinite(localTolerance) || (dx != 0 && qx == 0))))
                 throw new InvalidOperationException("The query cannot be resolved in the chord's coordinate scale.");
             if (_bulge == 0)
             {
@@ -178,7 +165,7 @@ internal static class PolylineContainmentCoreBeta
                 errorF += errorAlong * (2 * Math.Abs(along) + 1) +
                     errorNormal * (2 * Math.Abs(normal) + Math.Abs(_bulge) * .5 + .5 / Math.Abs(_bulge));
                 var radialDenominator = Hypot(qx - _cx, qy - _cy) + _radius;
-                if (!Finite(f) || !Finite(errorF) || !Finite(radialDenominator))
+                if (!IsFinite(f) || !IsFinite(errorF) || !IsFinite(radialDenominator))
                     throw new InvalidOperationException("The boundary distance cannot be resolved numerically.");
                 // |距离²-半径²|/(距离+半径) 给出径向边界距离；两端有向叉积限定所选弧，
                 // 小弧取两个半平面的交，主弧取并，不能把同一支撑圆的补弧也算作边界。
@@ -200,7 +187,7 @@ internal static class PolylineContainmentCoreBeta
                 var constant = qy * (qy - _uy + _bulge * .5 * _ux) - qy * (.5 / _bulge) * _ux;
                 var discriminant = _cx * _cx - constant;
                 var errorD = 64 * Epsilon * (_cx * _cx + Math.Abs(constant));
-                if (!Finite(discriminant) || discriminant < -errorD)
+                if (!IsFinite(discriminant) || discriminant < -errorD)
                     throw new InvalidOperationException("An arc crossing cannot be resolved numerically.");
                 var root = Math.Sqrt(Math.Max(0, discriminant));
                 // 先求无相消的远根，再用根积反求近根；直接 cx-sqrt(D) 会丢失靠近弦原点的交点。
@@ -262,11 +249,11 @@ internal static class PolylineContainmentCoreBeta
 
     internal static void ValidateTolerance(double tolerance)
     {
-        if (!Finite(tolerance) || tolerance < 0)
+        if (!IsFinite(tolerance) || tolerance < 0)
             throw new ArgumentOutOfRangeException(nameof(tolerance), "Tolerance must be finite and nonnegative.");
     }
 
-    internal static bool Finite(double value) => !double.IsNaN(value) && !double.IsInfinity(value);
+    internal static bool IsFinite(double value) => !double.IsNaN(value) && !double.IsInfinity(value);
 
     private static double Hypot(double x, double y)
     {

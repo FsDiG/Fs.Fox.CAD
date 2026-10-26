@@ -24,7 +24,7 @@ public static class TestDwgPreviewBeta
             for (var index = 0; index < 3; index++)
             {
                 var output = Path.Combine(folder, "preview-" + index + ".png");
-                DwgPreviewBeta.SavePng(document, source, output, 640, 320);
+                DwgPreviewRendererBeta.RenderModelSpaceToPng(document, source, output, 640, 320);
                 using var bitmap = new Bitmap(output);
                 Require(bitmap.Width == 640 && bitmap.Height == 320, "PNG dimensions");
                 Require(HasContrast(bitmap), "PNG must contain rendered geometry rather than one uniform background");
@@ -38,7 +38,7 @@ public static class TestDwgPreviewBeta
                     currentView.CenterPoint.IsEqualTo(originalView.CenterPoint) &&
                     currentView.Width == originalView.Width && currentView.Height == originalView.Height &&
                     currentView.ViewTwist == originalView.ViewTwist, "Current view preserved");
-            Env.Printl("DwgPreviewBeta: three images verified; active document, view and source preserved.");
+            Env.Printl("DwgPreviewRendererBeta: three images verified; active document, view and source preserved.");
         }
         finally { Cleanup(folder); }
     }
@@ -56,23 +56,23 @@ public static class TestDwgPreviewBeta
             var output = Path.Combine(folder, "empty.png");
             CreateDrawing(source, withGeometry: false);
             var sourceHash = Hash(source);
-            Throws<InvalidOperationException>(() => DwgPreviewBeta.SavePng(document, source, output, 100, 100));
+            Throws<InvalidOperationException>(() => DwgPreviewRendererBeta.RenderModelSpaceToPng(document, source, output, 100, 100));
             Require(!File.Exists(output), "Empty drawing must not produce success output");
             File.WriteAllText(output, "preserve");
-            Throws<IOException>(() => DwgPreviewBeta.SavePng(document, source, output, 100, 100));
+            Throws<IOException>(() => DwgPreviewRendererBeta.RenderModelSpaceToPng(document, source, output, 100, 100));
             Require(File.ReadAllText(output) == "preserve", "Existing output preserved");
-            Throws<System.ArgumentException>(() => DwgPreviewBeta.SavePng(document, source, source, 100, 100));
-            Throws<System.ArgumentOutOfRangeException>(() => DwgPreviewBeta.SavePng(document, source, Path.Combine(folder, "size.png"), 8193, 100));
-            Throws<FileNotFoundException>(() => DwgPreviewBeta.SavePng(document, Path.Combine(folder, "missing.dwg"), Path.Combine(folder, "missing.png"), 100, 100));
+            Throws<System.ArgumentException>(() => DwgPreviewRendererBeta.RenderModelSpaceToPng(document, source, source, 100, 100));
+            Throws<System.ArgumentOutOfRangeException>(() => DwgPreviewRendererBeta.RenderModelSpaceToPng(document, source, Path.Combine(folder, "size.png"), 8193, 100));
+            Throws<FileNotFoundException>(() => DwgPreviewRendererBeta.RenderModelSpaceToPng(document, Path.Combine(folder, "missing.dwg"), Path.Combine(folder, "missing.png"), 100, 100));
             var corrupt = Path.Combine(folder, "corrupt.dwg");
             var corruptOutput = Path.Combine(folder, "corrupt.png");
             File.WriteAllText(corrupt, "This is deliberately not a DWG file.");
-            Throws<Autodesk.AutoCAD.Runtime.Exception>(() => DwgPreviewBeta.SavePng(document, corrupt, corruptOutput, 100, 100));
+            Throws<Autodesk.AutoCAD.Runtime.Exception>(() => DwgPreviewRendererBeta.RenderModelSpaceToPng(document, corrupt, corruptOutput, 100, 100));
             Require(!File.Exists(corruptOutput), "Unreadable drawing must not produce output");
             Require(Hash(source) == sourceHash, "Failure paths preserve source");
             Require(ReferenceEquals(working, HostApplicationServices.WorkingDatabase), "Failure paths preserve WorkingDatabase");
             Require(!Directory.EnumerateFiles(folder, ".fox-preview-*.tmp").Any(), "No rendering temporary files expected");
-            Env.Printl("DwgPreviewBeta: empty/source/output/size failure checks passed.");
+            Env.Printl("DwgPreviewRendererBeta: empty/source/output/size failure checks passed.");
         }
         finally { Cleanup(folder); }
     }

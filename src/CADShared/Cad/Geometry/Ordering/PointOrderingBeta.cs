@@ -18,10 +18,10 @@ public static class PointOrderingBeta
     /// <exception cref="ArgumentNullException"><paramref name="points"/> 为 null。</exception>
     /// <exception cref="ArgumentOutOfRangeException">容差非法。</exception>
     /// <exception cref="ArgumentException">存在非有限坐标。</exception>
-    public static IReadOnlyList<int> GetRowOrder(IReadOnlyList<Point2d> points, double rowTolerance,
+    public static IReadOnlyList<int> GetRowOrderIndices(IReadOnlyList<Point2d> points, double rowTolerance,
         bool topToBottom = true, bool leftToRight = true)
     {
-        return Array.AsReadOnly(OrderingBetaCore.GetGridOrder(Snapshot(points), rowTolerance,
+        return Array.AsReadOnly(OrderingAndGroupingCoreBeta.GetGridOrderIndices(Snapshot(points), rowTolerance,
             true, topToBottom, leftToRight));
     }
 
@@ -38,23 +38,23 @@ public static class PointOrderingBeta
     /// <exception cref="ArgumentNullException"><paramref name="points"/> 为 null。</exception>
     /// <exception cref="ArgumentOutOfRangeException">容差非法。</exception>
     /// <exception cref="ArgumentException">存在非有限坐标。</exception>
-    public static IReadOnlyList<int> GetColumnOrder(IReadOnlyList<Point2d> points, double columnTolerance,
+    public static IReadOnlyList<int> GetColumnOrderIndices(IReadOnlyList<Point2d> points, double columnTolerance,
         bool leftToRight = true, bool topToBottom = true)
     {
-        return Array.AsReadOnly(OrderingBetaCore.GetGridOrder(Snapshot(points), columnTolerance,
+        return Array.AsReadOnly(OrderingAndGroupingCoreBeta.GetGridOrderIndices(Snapshot(points), columnTolerance,
             false, topToBottom, leftToRight));
     }
 
-    private static OrderingBetaCore.Point[] Snapshot(IReadOnlyList<Point2d> points)
+    private static OrderingAndGroupingCoreBeta.Point[] Snapshot(IReadOnlyList<Point2d> points)
     {
         if (points is null)
             throw new ArgumentNullException(nameof(points));
-        var result = new OrderingBetaCore.Point[points.Count];
+        var result = new OrderingAndGroupingCoreBeta.Point[points.Count];
         for (var i = 0; i < result.Length; i++)
         {
             // 每个 SDK 值只读取一次，不能从外部索引器的两次求值拼出一个点。
             var point = points[i];
-            result[i] = new OrderingBetaCore.Point(point.X, point.Y);
+            result[i] = new OrderingAndGroupingCoreBeta.Point(point.X, point.Y);
         }
         return result;
     }

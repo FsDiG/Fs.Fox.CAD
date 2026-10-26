@@ -17,22 +17,22 @@ internal readonly struct TrianglePointDataBeta
     }
 }
 
-internal static class TriangleMathBeta
+internal static class TriangleMathCoreBeta
 {
     internal static void Validate(TrianglePointDataBeta point, string parameterName)
     {
-        if (!Finite(point.X) || !Finite(point.Y) || !Finite(point.Z))
+        if (!IsFinite(point.X) || !IsFinite(point.Y) || !IsFinite(point.Z))
             throw new ArgumentException("三角形顶点坐标必须为有限数值。", parameterName);
     }
 
-    internal static TrianglePointDataBeta Centroid(TrianglePointDataBeta a,
+    internal static TrianglePointDataBeta GetCentroid(TrianglePointDataBeta a,
         TrianglePointDataBeta b, TrianglePointDataBeta c) => new(
         Mean(a.X, b.X, c.X), Mean(a.Y, b.Y, c.Y), Mean(a.Z, b.Z, c.Z));
 
-    internal static bool TrySlopeAndAspect(TrianglePointDataBeta a, TrianglePointDataBeta b,
+    internal static bool TryGetSlopeAndAspectDegrees(TrianglePointDataBeta a, TrianglePointDataBeta b,
         TrianglePointDataBeta c, double relativeTolerance, out double slopeDegrees, out double aspectDegrees)
     {
-        if (!Finite(relativeTolerance) || relativeTolerance <= 0 || relativeTolerance >= 1)
+        if (!IsFinite(relativeTolerance) || relativeTolerance <= 0 || relativeTolerance >= 1)
             throw new ArgumentOutOfRangeException(nameof(relativeTolerance), "容差必须在 0 与 1 之间。");
 
         slopeDegrees = double.NaN;
@@ -41,7 +41,7 @@ internal static class TriangleMathBeta
         var u = Difference(a, b, false);
         var v = Difference(a, c, false);
         var w = Difference(b, c, false);
-        if (!FinitePoint(u) || !FinitePoint(v) || !FinitePoint(w))
+        if (!IsFinitePoint(u) || !IsFinitePoint(v) || !IsFinitePoint(w))
         {
             // 仅在有限端点相减溢出时先将所有坐标减半；三条边必须使用同一比例，保持面积/最长边平方的比值。
             u = Difference(a, b, true);
@@ -118,7 +118,7 @@ internal static class TriangleMathBeta
     private static double Mean(double a, double b, double c)
     {
         var sum = CompensatedSum(a, b, c);
-        if (Finite(sum))
+        if (IsFinite(sum))
             return sum / 3;
         // 普通正负抵消沿用未缩放的补偿结果；只有求和溢出才归一化，避免先缩放丢失较小残差。
         var scale = Math.Max(Math.Abs(a), Math.Max(Math.Abs(b), Math.Abs(c)));
@@ -140,7 +140,7 @@ internal static class TriangleMathBeta
     private static double MaxAbs(TrianglePointDataBeta point) =>
         Math.Max(Math.Abs(point.X), Math.Max(Math.Abs(point.Y), Math.Abs(point.Z)));
 
-    private static bool FinitePoint(TrianglePointDataBeta point) => Finite(point.X) && Finite(point.Y) && Finite(point.Z);
+    private static bool IsFinitePoint(TrianglePointDataBeta point) => IsFinite(point.X) && IsFinite(point.Y) && IsFinite(point.Z);
 
-    private static bool Finite(double value) => !double.IsNaN(value) && !double.IsInfinity(value);
+    private static bool IsFinite(double value) => !double.IsNaN(value) && !double.IsInfinity(value);
 }

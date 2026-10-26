@@ -7,6 +7,6 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="../../src/CADShared/Cad/Geometry/Ordering/OrderingBetaCore.cs" Link="Production/OrderingBetaCore.cs" />
+    <Compile Include="../../src/CADShared/Cad/Geometry/Ordering/OrderingAndGroupingCoreBeta.cs" Link="Production/OrderingAndGroupingCoreBeta.cs" />
   </ItemGroup>
 </Project>

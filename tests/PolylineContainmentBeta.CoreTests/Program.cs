@@ -36,7 +36,7 @@ internal static class Program
     private static PolylineVertexDataBeta[] Circle(double bulge = 1) => new[] { V(-1, 0, bulge), V(1, 0, bulge) };
     private static void Is(IReadOnlyList<PolylineVertexDataBeta> vertices, double x, double y, Relation expected, double tolerance = 0)
     {
-        var actual = PolylineContainmentCoreBeta.GetPointRelation(vertices, x, y, tolerance);
+        var actual = PolylineContainmentCoreBeta.ClassifyPoint(vertices, x, y, tolerance);
         True(actual == expected, $"({x:R},{y:R}), b={vertices[0].Bulge:R}: expected {expected}, got {actual}.");
     }
 
@@ -87,7 +87,7 @@ internal static class Program
         // Reconstructing its Y as 1 + length * ((0.3 - 1) / length) yields 0.30000000000000004:
         // filtering only the descending edge then leaves one spurious crossing for left-side queries.
         var triangle = new[] { V(0, 1), V(1, .3), V(2, 1) };
-        foreach (var contour in new[] { triangle, PolylineCoreBeta.Reverse(triangle, true) })
+        foreach (var contour in new[] { triangle, PolylineGeometryCoreBeta.Reverse(triangle, true) })
         {
             Is(contour, -1, .3, Relation.Outside);
             Is(contour, 0, .3, Relation.Outside);
@@ -119,7 +119,7 @@ internal static class Program
         var unit = double.Epsilon;
         var tiny = new[] { V(0, 0), V(50 * unit, 0), V(50 * unit, 50 * unit), V(0, 50 * unit) };
         var ordinary = new[] { V(0, 0), V(100, 0), V(100, 100), V(0, 100) };
-        foreach (var contour in new[] { tiny, PolylineCoreBeta.Reverse(tiny, true) })
+        foreach (var contour in new[] { tiny, PolylineGeometryCoreBeta.Reverse(tiny, true) })
         {
             Is(contour, -unit, -unit, Relation.Outside, unit);
             Is(contour, -unit, -unit, Relation.Boundary, 2 * unit);
@@ -127,7 +127,7 @@ internal static class Program
             Is(contour, -5 * unit, -12 * unit, Relation.Boundary, 13 * unit);
             Is(contour, -5 * unit, -12 * unit, Relation.Outside, 12 * unit);
         }
-        foreach (var contour in new[] { ordinary, PolylineCoreBeta.Reverse(ordinary, true) })
+        foreach (var contour in new[] { ordinary, PolylineGeometryCoreBeta.Reverse(ordinary, true) })
         {
             Is(contour, -5, -12, Relation.Boundary, 13);
             Is(contour, -5, -12, Relation.Outside, 12);
@@ -182,7 +182,7 @@ internal static class Program
         {
             var cosine = Math.Cos(angle); var sine = Math.Sin(angle);
             var rotated = Cap(bulge).Select(v => V(v.X * cosine, v.X * sine, v.Bulge)).ToArray();
-            var reversed = PolylineCoreBeta.Reverse(rotated, true);
+            var reversed = PolylineGeometryCoreBeta.Reverse(rotated, true);
             foreach (var contour in new[] { rotated, reversed })
             {
                 Is(contour, bulge * sine, -bulge * cosine, Relation.Boundary);
@@ -226,10 +226,10 @@ internal static class Program
         {
             var original = Cap(b);
             var scaled = original.Select(v => V(v.X * scale + 3 * scale, v.Y * scale - 5 * scale, v.Bulge)).ToArray();
-            var reversed = PolylineCoreBeta.Reverse(scaled, true);
+            var reversed = PolylineGeometryCoreBeta.Reverse(scaled, true);
             foreach (var point in new[] { (X: 0d, Y: -.25), (X: .25, Y: -.1), (X: 1.1, Y: -.75), (X: 0d, Y: 1d), (X: -2d, Y: 0d) })
             {
-                var expected = PolylineContainmentCoreBeta.GetPointRelation(original, point.X, point.Y, 1e-12);
+                var expected = PolylineContainmentCoreBeta.ClassifyPoint(original, point.X, point.Y, 1e-12);
                 Is(scaled, point.X * scale + 3 * scale, point.Y * scale - 5 * scale, expected, scale * 1e-12);
                 Is(reversed, point.X * scale + 3 * scale, point.Y * scale - 5 * scale, expected, scale * 1e-12);
             }
@@ -277,12 +277,12 @@ internal static class Program
         Throws<ArgumentException>(() => PolylineContainmentCoreBeta.Prepare(new[] { V(0, 0, double.PositiveInfinity), V(1, 0) }));
         Throws<InvalidOperationException>(() => PolylineContainmentCoreBeta.Prepare(new[] { V(0, 0), V(0, 0) }));
         Throws<InvalidOperationException>(() => PolylineContainmentCoreBeta.Prepare(new[] { V(0, 0, 1), V(0, 0), V(1, 0) }));
-        Throws<NotSupportedException>(() => PolylineContainmentCoreBeta.GetPointRelation(new[] { V(0, 0), V(1, 0, 1e-10) }, 0, 0, 0));
+        Throws<NotSupportedException>(() => PolylineContainmentCoreBeta.ClassifyPoint(new[] { V(0, 0), V(1, 0, 1e-10) }, 0, 0, 0));
         Throws<InvalidOperationException>(() => PolylineContainmentCoreBeta.Prepare(new[] { V(-1e308, 0), V(1e308, 0) }));
         Throws<InvalidOperationException>(() => PolylineContainmentCoreBeta.Prepare(new[] { V(0, 0), V(1e308, 1e-308) }));
         foreach (var tolerance in new[] { -1d, double.NaN, double.PositiveInfinity })
-            Throws<ArgumentOutOfRangeException>(() => PolylineContainmentCoreBeta.GetPointRelation(Circle(), 0, 0, tolerance));
-        Throws<ArgumentException>(() => PolylineContainmentCoreBeta.GetPointRelation(Circle(), double.NaN, 0, 0));
+            Throws<ArgumentOutOfRangeException>(() => PolylineContainmentCoreBeta.ClassifyPoint(Circle(), 0, 0, tolerance));
+        Throws<ArgumentException>(() => PolylineContainmentCoreBeta.ClassifyPoint(Circle(), double.NaN, 0, 0));
     }
 
     private static void True(bool condition, string message)

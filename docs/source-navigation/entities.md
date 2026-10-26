@@ -134,16 +134,18 @@
 
 | 文件 | 主要入口与边界 |
 | --- | --- |
-| [PolylineExBeta.cs](../../src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineExBeta.cs) | `CreateReversedBeta`、`CreateCleanedBeta`、`TryCreateJoinedBeta`、`CreateFilletedBeta`；借用输入，返回只含指定几何字段的新对象。 |
-| [PolylineCoreBeta.cs](../../src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineCoreBeta.cs) | 内部无 SDK 数值核心，处理凸度、段宽、保守整理、唯一端点连接及批量/闭合圆角的共享边预算；生产链接回归工程直接测试此文件。 |
-| [PolylineContainmentCoreBeta.cs](../../src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineContainmentCoreBeta.cs) | 内部解析点关系核心与 PolylinePointRelationBeta；直线/圆弧半开穿越、偶奇填充及边界距离，不把主弧裁成顶点范围。 |
-| [PolylineRegionExBeta.cs](../../src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineRegionExBeta.cs) | `GetPointRelationBeta`；闭合线 WCS 查询点转 OCS，分别判断平面距离与区域关系，输入借用。 |
-| [BlockIntersectionExBeta.cs](../../src/CADShared/Cad/Database/Entities/Blocks/BlockIntersectionExBeta.cs) | `GetCurveIntersectionsBeta`；显式事务 ForRead 遍历，当前路径防循环，父×子矩阵及自有临时曲线求交，返回只读快照。 |
-| [CurveOrderingExBeta.cs](../../src/CADShared/Cad/Database/Entities/Curves/CurveOrderingExBeta.cs) | `GetOrderAlongCurveBeta`；有限曲线上的最近位置，稳定返回输入索引，不延长路径。 |
-| [ExtentGroupingBeta.cs](../../src/CADShared/Cad/Database/Entities/Bounds/ExtentGroupingBeta.cs) | `GroupByProximity`、`ExtentGroupBeta`；原始 XY 框邻近连通分量，保留成员索引及完整 Z 范围。 |
-| [TextMetricsBeta.cs](../../src/CADShared/Cad/Database/Entities/Text/TextMetricsBeta.cs) | `MeasureSingleLine`；显式数据库和样式；旧 ZWCAD/GStarCAD 绑定明确报告不支持。 |
-| [PolyFaceMeshBuilderBeta.cs](../../src/CADShared/Cad/Database/Entities/Meshes/PolyFaceMeshBuilderBeta.cs) | `Append`；显式目标库、空间和调用方事务，所有输入先验证，宿主写入失败需中止事务。 |
-| [PolyFaceMeshDataBeta.cs](../../src/CADShared/Cad/Database/Entities/Meshes/PolyFaceMeshDataBeta.cs) | 内部面索引预验证和独立快照；只接受三角面、四边面，不静默截断多边形。 |
+| [PolylineGeometryExtensionsBeta.cs](../../src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineGeometryExtensionsBeta.cs) | `CreateReversedBeta`、`CreateSimplifiedBeta`、`TryCreateJoinedBeta`、`CreateFilletedBeta`；借用输入，返回只含指定几何字段的新对象。 |
+| [PolylineGeometryCoreBeta.cs](../../src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineGeometryCoreBeta.cs) | 内部无 SDK 数值核心，处理凸度、段宽、保守整理、唯一端点连接及批量/闭合圆角的共享边预算；生产链接回归工程直接测试此文件。 |
+| [PolylineContainmentCoreBeta.cs](../../src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineContainmentCoreBeta.cs) | 内部解析点关系核心；直线/圆弧半开穿越、偶奇填充及边界距离，不把主弧裁成顶点范围。 |
+| [PolylinePointRelationBeta.cs](../../src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylinePointRelationBeta.cs) | 独立的公开关系枚举：`Outside`、`Inside`、`Boundary`、`OffPlane`。 |
+| [PolylineContainmentExtensionsBeta.cs](../../src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineContainmentExtensionsBeta.cs) | `ClassifyPointBeta`；闭合线 WCS 查询点转 OCS，分别判断平面距离与区域关系，输入借用。 |
+| [BlockReferenceIntersectionExtensionsBeta.cs](../../src/CADShared/Cad/Database/Entities/Blocks/BlockReferenceIntersectionExtensionsBeta.cs) | `GetCurveIntersectionPointsBeta`；显式事务 ForRead 遍历，当前路径防循环，父×子矩阵及自有临时曲线求交，返回只读快照。 |
+| [CurveOrderingExtensionsBeta.cs](../../src/CADShared/Cad/Database/Entities/Curves/CurveOrderingExtensionsBeta.cs) | `GetPointOrderIndicesBeta`；有限曲线上的最近位置，稳定返回输入索引，不延长路径。 |
+| [ExtentsGroupingBeta.cs](../../src/CADShared/Cad/Database/Entities/Bounds/ExtentsGroupingBeta.cs) | `GroupByXYProximity`、`ExtentsGroupBeta`；原始 XY 框邻近连通分量，保留成员索引及完整 Z 范围。 |
+| [ExtentsGroupBeta.cs](../../src/CADShared/Cad/Database/Entities/Bounds/ExtentsGroupBeta.cs) | 独立的公开结果类型，提供合并后的 `Bounds` 和只读 `SourceIndices`。 |
+| [TextMeasurementBeta.cs](../../src/CADShared/Cad/Database/Entities/Text/TextMeasurementBeta.cs) | `MeasureSingleLineBounds`；显式数据库和样式；旧 ZWCAD/GStarCAD 绑定明确报告不支持。 |
+| [PolyFaceMeshFactoryBeta.cs](../../src/CADShared/Cad/Database/Entities/Meshes/PolyFaceMeshFactoryBeta.cs) | `CreateAndAppend`；显式目标库、空间和调用方事务，所有输入先验证，宿主写入失败需中止事务。 |
+| [PolyFaceMeshValidationCoreBeta.cs](../../src/CADShared/Cad/Database/Entities/Meshes/PolyFaceMeshValidationCoreBeta.cs) | 内部面索引预验证和独立快照；只接受三角面、四边面，不静默截断多边形。 |
 
 验收入口：[TestPolylineBeta.cs](../../tests/TestShared/TestPolylineBeta.cs)、[TestBlockIntersectionsBeta.cs](../../tests/TestShared/TestBlockIntersectionsBeta.cs)、[TestOrderingBeta.cs](../../tests/TestShared/TestOrderingBeta.cs)、[TestTextMetricsBeta.cs](../../tests/TestShared/TestTextMetricsBeta.cs)、[TestGeometryConstructionBeta.cs](../../tests/TestShared/TestGeometryConstructionBeta.cs)。实际 CAD 执行均保持各能力指南记录的状态。
 

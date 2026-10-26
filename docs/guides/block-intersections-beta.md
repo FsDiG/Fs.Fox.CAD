@@ -1,10 +1,10 @@
 # 块内曲线求交 Beta
 
 > 状态：current；Beta API 契约，真实 CAD 宿主验收 `Not run`。<br>
-> 实现：[BlockIntersectionExBeta](../../src/CADShared/Cad/Database/Entities/Blocks/BlockIntersectionExBeta.cs)。<br>
+> 实现：[BlockReferenceIntersectionExtensionsBeta](../../src/CADShared/Cad/Database/Entities/Blocks/BlockReferenceIntersectionExtensionsBeta.cs)。<br>
 > 受众：调用方、维护者、宿主验收人员。
 
-`block.GetCurveIntersectionsBeta(transaction, target, mode, tolerance)` 查询普通块及其嵌套普通块中的实际曲线，返回独立的 `IReadOnlyList<Point3d>` 只读快照。它不会使用块包围框近似交点，也不改变输入或当前工作数据库。调用方负责 CAD 主线程、文档读取上下文及必要的访问条件。
+`block.GetCurveIntersectionPointsBeta(transaction, targetCurve, intersectionMode, duplicatePointTolerance)` 查询普通块及其嵌套普通块中的实际曲线，返回独立的 `IReadOnlyList<Point3d>` 只读快照。它不会使用块包围框近似交点，也不改变输入或当前工作数据库。调用方负责 CAD 主线程、文档读取上下文及必要的访问条件。
 
 ## 输入身份与坐标
 
@@ -15,7 +15,7 @@
 ## 查询与支持范围
 
 - 仅支持真实 WCS 三维求交；不提供 XY 投影。高度不同但 XY 交叉的曲线不应产生投影交点。
-- `mode` 默认是 `Intersect.OnBothOperands`，双方均不延伸；也接受 `Intersect.ExtendArgument`，只延伸 `target`。延伸能力和重合曲线返回哪些离散点仍由实际宿主 SDK 决定。
+- `intersectionMode` 默认是 `Intersect.OnBothOperands`，双方均不延伸；也接受 `Intersect.ExtendArgument`，只延伸 `targetCurve`。延伸能力和重合曲线返回哪些离散点仍由实际宿主 SDK 决定。
 - 曲线白名单为原生 `Line`、`Arc`、`Circle`、`Ellipse`、轻量 `Polyline`、`Spline`、`Ray` 和 `Xline`。自定义派生类型及其他 `Curve` 明确抛出 `NotSupportedException`。
 - 文字、属性、填充、网格及其他非 `Curve` 叶节点不属于本接口查询范围，不参与求交。查询使用存储几何，包含不可见曲线，不考虑图层关闭/冻结、视口可见性或裁剪；结果不能作为屏幕可见几何的交点列表。
 - 已删除成员不属于当前查询几何。本机 AutoCAD 2019／2026 运行库的静态检查显示，普通块定义枚举默认跳过删除成员；本实现未使用 `IncludingErased`。该静态证据不替代其他厂商的实际宿主验证。
@@ -26,7 +26,7 @@
 
 ## 去重、顺序与资源
 
-`tolerance` 是 WCS 单位下的有限非负去重距离，默认 `1e-6`。它只控制返回点去重，不改变原生几何求交容差。零表示三个坐标分量精确相等；正值使用三维欧氏距离，距离不大于该值时保留首次命中的点。每个后续点只与已保留的代表点比较，不通过被合并点做链式聚合；对角方向也按球形距离判断。
+`duplicatePointTolerance` 是 WCS 单位下的有限非负去重距离，默认 `1e-6`。它只控制返回点去重，不改变原生几何求交容差。零表示三个坐标分量精确相等；正值使用三维欧氏距离，距离不大于该值时保留首次命中的点。每个后续点只与已保留的代表点比较，不通过被合并点做链式聚合；对角方向也按球形距离判断。
 
 遍历按照块定义实体顺序深度优先进行。每条曲线内部的交点顺序沿用宿主返回顺序，因此不承诺不同宿主之间顺序或末位数值一致。计算复杂度取决于宿主求交，去重最坏为 O(k²)，其中 k 为原生返回点数；它不包含空间索引或批量加速。
 

@@ -7,7 +7,7 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="../../src/CADShared/Cad/Geometry/TriangleMathBeta.cs" Link="Production/TriangleMathBeta.cs" />
-    <Compile Include="../../src/CADShared/Cad/Database/Entities/Meshes/PolyFaceMeshDataBeta.cs" Link="Production/PolyFaceMeshDataBeta.cs" />
+    <Compile Include="../../src/CADShared/Cad/Geometry/TriangleMathCoreBeta.cs" Link="Production/TriangleMathCoreBeta.cs" />
+    <Compile Include="../../src/CADShared/Cad/Database/Entities/Meshes/PolyFaceMeshValidationCoreBeta.cs" Link="Production/PolyFaceMeshValidationCoreBeta.cs" />
   </ItemGroup>
 </Project>

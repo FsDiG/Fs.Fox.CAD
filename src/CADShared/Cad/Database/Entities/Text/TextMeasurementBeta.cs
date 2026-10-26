@@ -12,7 +12,7 @@ namespace Fs.Fox.Cad;
 /// 只能在 CAD 宿主允许的主线程执行上下文调用，调用方负责文档上下文和必要的锁。
 /// 测量期间会临时切换 WorkingDatabase，并在正常及异常退出时恢复；不是并发安全的离线字体测量器。
 /// </remarks>
-public static class TextMetricsBeta
+public static class TextMeasurementBeta
 {
     /// <summary>
     /// 返回单行文字在文字自身局部坐标中的二维范围，不创建或修改数据库实体。
@@ -20,10 +20,10 @@ public static class TextMetricsBeta
     /// <param name="database">提供字体及样式上下文的目标数据库，由调用方拥有。</param>
     /// <param name="textStyleId">目标数据库中有效的文字样式 ID；不使用当前默认样式代替无效 ID。</param>
     /// <param name="text">单行内容；不解析或删除 MText 花括号、上下标格式。空串返回原点零范围。</param>
-    /// <param name="height">有限且大于零的字高，替代样式默认字高。</param>
+    /// <param name="textHeight">有限且大于零的字高，替代样式默认字高。</param>
     /// <param name="widthFactor">有限且大于零的宽度因子，替代样式默认宽度因子。</param>
     /// <param name="includeSpaces">是否将首尾空格的进笔距离计入范围。</param>
-    /// <param name="raw">为 true 时按字面测量；为 false 时由宿主解释 DBText 的 %% 转义。</param>
+    /// <param name="useRawText">为 true 时按字面测量；为 false 时由宿主解释 DBText 的 %% 转义。</param>
     /// <returns>文字局部范围；宽和高分别为 MaxPoint 与 MinPoint 的 X、Y 差。</returns>
     /// <exception cref="ArgumentNullException">数据库或文本为 null。</exception>
     /// <exception cref="ArgumentOutOfRangeException">字高或宽度因子不是有限正数。</exception>
@@ -35,8 +35,8 @@ public static class TextMetricsBeta
     /// 其他宿主 SDK 异常保留原样传播。样式记录只读，字高和宽度修改仅作用于临时 GraphicsInterface.TextStyle。
     /// 空串仍验证数据库和样式，但不加载字体。此方法不计算 MText 布局、实体旋转、对齐或 WCS 包围框。
     /// </remarks>
-    public static Extents2d MeasureSingleLine(Database database, ObjectId textStyleId, string text,
-        double height, double widthFactor = 1, bool includeSpaces = true, bool raw = false)
+    public static Extents2d MeasureSingleLineBounds(Database database, ObjectId textStyleId, string text,
+        double textHeight, double widthFactor = 1, bool includeSpaces = true, bool useRawText = false)
     {
 #if ZW_2022 || GC_2022 || GC_2023
         // 不完整的 SDK 不能用替代算法伪装成功；在任何数据库切换或参数访问之前报告能力边界。
@@ -46,7 +46,7 @@ public static class TextMetricsBeta
             throw new ArgumentNullException(nameof(database));
         if (text is null)
             throw new ArgumentNullException(nameof(text));
-        ValidatePositiveFinite(height, nameof(height));
+        ValidatePositiveFinite(textHeight, nameof(textHeight));
         ValidatePositiveFinite(widthFactor, nameof(widthFactor));
         foreach (var character in text)
         {
@@ -71,7 +71,7 @@ public static class TextMetricsBeta
         using var graphicsStyle = new CadGI.TextStyle();
         graphicsStyle.FromTextStyleTableRecord(textStyleId);
         // 保留字体、倾斜和书写方向，仅覆盖本次测量的尺寸，不写回数据库中的样式记录。
-        graphicsStyle.TextSize = height;
+        graphicsStyle.TextSize = textHeight;
         graphicsStyle.XScale = widthFactor;
 
         // AcGiTextStyle::loadStyleRec: 0x02/0x04 = 字体/大字体加载失败，0x08/0x10 = 使用了替代字体。
@@ -80,7 +80,7 @@ public static class TextMetricsBeta
         if ((loadStatus & 0x1e) != 0 || (loadStatus & 0x01) == 0)
             throw new InvalidOperationException($"文字样式字体未确认成功加载或发生替代，状态码 0x{loadStatus:X2}。");
 
-        var bounds = graphicsStyle.ExtentsBox(text, includeSpaces, raw, null);
+        var bounds = graphicsStyle.ExtentsBox(text, includeSpaces, useRawText, null);
         // 端点各自有限仍可能在相减时溢出；同时验证范围方向和实际尺寸，避免返回无效测量值。
         var width = bounds.MaxPoint.X - bounds.MinPoint.X;
         var measuredHeight = bounds.MaxPoint.Y - bounds.MinPoint.Y;

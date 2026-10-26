@@ -7,7 +7,7 @@ namespace Fs.Fox.Cad;
 /// 不复制图层、颜色、线型、XData、扩展字典或其他非几何数据，不等同于 DBObject.Clone。
 /// 结果由调用方负责 Dispose 或交给目标数据库的事务管理。CAD 宿主行为仍需按版本验收。
 /// </remarks>
-public static class PolylineExBeta
+public static class PolylineGeometryExtensionsBeta
 {
     /// <summary>创建行进方向相反的独立多段线，反转圆弧凸度并交换每段的起止宽度。</summary>
     /// <param name="source">借用的轻量多段线，至少含两个顶点及一条非零长度段。</param>
@@ -18,7 +18,7 @@ public static class PolylineExBeta
     public static Polyline CreateReversedBeta(this Polyline source)
     {
         var vertices = ReadVertices(source);
-        return CreateGeometry(source, PolylineCoreBeta.Reverse(vertices, source.Closed), source.Closed);
+        return CreateGeometry(source, PolylineGeometryCoreBeta.Reverse(vertices, source.Closed), source.Closed);
     }
 
     /// <summary>创建删除精确零长度直线段并保守合并等宽连续直线段的独立多段线。</summary>
@@ -36,11 +36,11 @@ public static class PolylineExBeta
     /// <exception cref="ArgumentOutOfRangeException">容差不是有限非负数。</exception>
     /// <exception cref="ArgumentException">顶点不足，或包含非有限坐标/凸度、非法宽度。</exception>
     /// <exception cref="InvalidOperationException">全部段为零长度，或圆弧的两端重合。</exception>
-    public static Polyline CreateCleanedBeta(this Polyline source, double tolerance = 1e-6)
+    public static Polyline CreateSimplifiedBeta(this Polyline source, double tolerance = 1e-6)
     {
-        PolylineCoreBeta.ValidateTolerance(tolerance);
+        PolylineGeometryCoreBeta.ValidateTolerance(tolerance);
         var vertices = ReadVertices(source);
-        return CreateGeometry(source, PolylineCoreBeta.Clean(vertices, source.Closed, tolerance), source.Closed);
+        return CreateGeometry(source, PolylineGeometryCoreBeta.Simplify(vertices, source.Closed, tolerance), source.Closed);
     }
 
     /// <summary>按指定半径圆角化全部非共线角，创建独立的等宽多段线副本。</summary>
@@ -65,7 +65,7 @@ public static class PolylineExBeta
     public static Polyline CreateFilletedBeta(this Polyline source, double radius, double tolerance = 1e-6)
     {
         var vertices = ReadVertices(source);
-        return CreateGeometry(source, PolylineCoreBeta.Fillet(vertices, source.Closed, radius, tolerance), source.Closed);
+        return CreateGeometry(source, PolylineGeometryCoreBeta.Fillet(vertices, source.Closed, radius, tolerance), source.Closed);
     }
 
     /// <summary>尝试将两条开多段线连接为新的开多段线，保留第一条线的行进方向。</summary>
@@ -92,13 +92,13 @@ public static class PolylineExBeta
             throw new ArgumentNullException(nameof(first));
         if (second is null)
             throw new ArgumentNullException(nameof(second));
-        PolylineCoreBeta.ValidateTolerance(tolerance);
+        PolylineGeometryCoreBeta.ValidateTolerance(tolerance);
         if (ReferenceEquals(first, second) || first.Closed || second.Closed || !SamePlaneAndThickness(first, second))
             return false;
 
         var firstVertices = ReadVertices(first);
         var secondVertices = ReadVertices(second);
-        if (!PolylineCoreBeta.TryJoin(firstVertices, secondVertices, tolerance, out var joined))
+        if (!PolylineGeometryCoreBeta.TryJoin(firstVertices, secondVertices, tolerance, out var joined))
             return false;
         result = CreateGeometry(first, joined!, false);
         return true;
@@ -108,9 +108,9 @@ public static class PolylineExBeta
     {
         if (source is null)
             throw new ArgumentNullException(nameof(source));
-        if (!PolylineCoreBeta.IsFinite(source.Elevation) || !PolylineCoreBeta.IsFinite(source.Thickness) ||
-            !PolylineCoreBeta.IsFinite(source.Normal.X) || !PolylineCoreBeta.IsFinite(source.Normal.Y) ||
-            !PolylineCoreBeta.IsFinite(source.Normal.Z))
+        if (!PolylineGeometryCoreBeta.IsFinite(source.Elevation) || !PolylineGeometryCoreBeta.IsFinite(source.Thickness) ||
+            !PolylineGeometryCoreBeta.IsFinite(source.Normal.X) || !PolylineGeometryCoreBeta.IsFinite(source.Normal.Y) ||
+            !PolylineGeometryCoreBeta.IsFinite(source.Normal.Z))
             throw new ArgumentException("The polyline plane and thickness must be finite.", nameof(source));
 
         // 先读取独立数值快照，计算核心无需延长借用对象的生命周期，也不能接触数据库。

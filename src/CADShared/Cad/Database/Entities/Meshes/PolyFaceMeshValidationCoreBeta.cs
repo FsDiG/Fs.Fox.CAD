@@ -4,9 +4,9 @@ using System.Collections.Generic;
 namespace Fs.Fox.Cad;
 
 // 在任何原生写入之前完成面序列求值；构造器与无宿主回归共用此验证路径。
-internal static class PolyFaceMeshDataBeta
+internal static class PolyFaceMeshValidationCoreBeta
 {
-    internal static List<short[]> ValidateAndCopyFaces(int vertexCount, IEnumerable<IEnumerable<int>> faces)
+    internal static List<short[]> ValidateAndConvertFaceIndices(int vertexCount, IEnumerable<IEnumerable<int>> faces)
     {
         if (vertexCount < 3 || vertexCount > short.MaxValue)
             throw new ArgumentOutOfRangeException(nameof(vertexCount), "顶点数必须为 3 至 32767。");

@@ -6,16 +6,16 @@
 
 **评审模块**：单行文字样式度量（`TextMetricsBeta`）与外部 DWG 离屏预览（`DwgPreviewBeta`）
 **生产源文件**：
-- [`D:\MakeX\Fs.Fox.CAD\src\CADShared\Cad\Database\Entities\Text\TextMetricsBeta.cs`](file:///D:/MakeX/Fs.Fox.CAD/src/CADShared/Cad/Database/Entities/Text/TextMetricsBeta.cs)
-- [`D:\MakeX\Fs.Fox.CAD\src\CADShared\Cad\Application\Graphics\DwgPreviewCoreBeta.cs`](file:///D:/MakeX/Fs.Fox.CAD/src/CADShared/Cad/Application/Graphics/DwgPreviewCoreBeta.cs)
-- [`D:\MakeX\Fs.Fox.CAD\src\CADShared\Cad\Application\Graphics\DwgPreviewBeta.cs`](file:///D:/MakeX/Fs.Fox.CAD/src/CADShared/Cad/Application/Graphics/DwgPreviewBeta.cs)
+- [`D:\MakeX\Fs.Fox.CAD\src\CADShared\Cad\Database\Entities\Text\TextMetricsBeta.cs`](../../../src/CADShared/Cad/Database/Entities/Text/TextMeasurementBeta.cs)
+- [`D:\MakeX\Fs.Fox.CAD\src\CADShared\Cad\Application\Graphics\DwgPreviewCoreBeta.cs`](../../../src/CADShared/Cad/Application/Graphics/DwgPreviewCoreBeta.cs)
+- [`D:\MakeX\Fs.Fox.CAD\src\CADShared\Cad\Application\Graphics\DwgPreviewBeta.cs`](../../../src/CADShared/Cad/Application/Graphics/DwgPreviewRendererBeta.cs)
 **配套测试**：
-- [`D:\MakeX\Fs.Fox.CAD\tests\DwgPreviewBeta.CoreTests\Program.cs`](file:///D:/MakeX/Fs.Fox.CAD/tests/DwgPreviewBeta.CoreTests/Program.cs)
-- [`D:\MakeX\Fs.Fox.CAD\tests\TestShared\TestTextMetricsBeta.cs`](file:///D:/MakeX/Fs.Fox.CAD/tests/TestShared/TestTextMetricsBeta.cs)
-- [`D:\MakeX\Fs.Fox.CAD\tests\TestShared\TestDwgPreviewBeta.cs`](file:///D:/MakeX/Fs.Fox.CAD/tests/TestShared/TestDwgPreviewBeta.cs)
+- [`D:\MakeX\Fs.Fox.CAD\tests\DwgPreviewBeta.CoreTests\Program.cs`](../../../tests/DwgPreviewBeta.CoreTests/Program.cs)
+- [`D:\MakeX\Fs.Fox.CAD\tests\TestShared\TestTextMetricsBeta.cs`](../../../tests/TestShared/TestTextMetricsBeta.cs)
+- [`D:\MakeX\Fs.Fox.CAD\tests\TestShared\TestDwgPreviewBeta.cs`](../../../tests/TestShared/TestDwgPreviewBeta.cs)
 **对应文档**：
-- [`docs/guides/text-metrics-beta.md`](file:///D:/MakeX/Fs.Fox.CAD/docs/guides/text-metrics-beta.md)
-- [`docs/guides/dwg-preview-beta.md`](file:///D:/MakeX/Fs.Fox.CAD/docs/guides/dwg-preview-beta.md)
+- [`docs/guides/text-metrics-beta.md`](../../../docs/guides/text-metrics-beta.md)
+- [`docs/guides/dwg-preview-beta.md`](../../../docs/guides/dwg-preview-beta.md)
 
 ---
 

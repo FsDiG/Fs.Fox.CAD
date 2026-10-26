@@ -18,9 +18,9 @@ public static class TestTextMetricsBeta
     public static void Test_TextMetricsBetaUnsupported()
     {
         var originalDatabase = HostApplicationServices.WorkingDatabase;
-        AssertThrows<NotSupportedException>(() => TextMetricsBeta.MeasureSingleLine(null!, ObjectId.Null, "x", 1));
+        AssertThrows<NotSupportedException>(() => TextMeasurementBeta.MeasureSingleLineBounds(null!, ObjectId.Null, "x", 1));
         Assert(HostApplicationServices.WorkingDatabase == originalDatabase, "不支持的目标不能改变工作数据库。");
-        Env.Printl("TextMetricsBeta: 当前编译目标明确报告不支持且未改变工作数据库。");
+        Env.Printl("TextMeasurementBeta: 当前编译目标明确报告不支持且未改变工作数据库。");
     }
 #else
     [CommandMethod(nameof(Test_TextMetricsBeta))]
@@ -30,26 +30,26 @@ public static class TestTextMetricsBeta
         using var database = new Database(true, true);
         var styleId = AddStyle(database, "FoxTextMetricsBetaArial", "arial.ttf");
 
-        var standard = TextMetricsBeta.MeasureSingleLine(database, styleId, "Ag123", 5);
-        var tall = TextMetricsBeta.MeasureSingleLine(database, styleId, "Ag123", 10);
-        var wide = TextMetricsBeta.MeasureSingleLine(database, styleId, "Ag123", 5, 2);
+        var standard = TextMeasurementBeta.MeasureSingleLineBounds(database, styleId, "Ag123", 5);
+        var tall = TextMeasurementBeta.MeasureSingleLineBounds(database, styleId, "Ag123", 10);
+        var wide = TextMeasurementBeta.MeasureSingleLineBounds(database, styleId, "Ag123", 5, 2);
         Assert(Width(standard) > 0 && Height(standard) > 0, "正常文字范围应为正数。");
         AssertClose(Width(tall), Width(standard) * 2, "字高翻倍时宽度应同步翻倍。");
         AssertClose(Height(tall), Height(standard) * 2, "字高翻倍时实际高度应翻倍。");
         AssertClose(Width(wide), Width(standard) * 2, "宽度因子翻倍时宽度应翻倍。");
         AssertClose(Height(wide), Height(standard), "宽度因子不应改变高度。");
 
-        var literal = TextMetricsBeta.MeasureSingleLine(database, styleId, "{a^b}", 5, raw: true);
-        var shortened = TextMetricsBeta.MeasureSingleLine(database, styleId, "a", 5, raw: true);
+        var literal = TextMeasurementBeta.MeasureSingleLineBounds(database, styleId, "{a^b}", 5, useRawText: true);
+        var shortened = TextMeasurementBeta.MeasureSingleLineBounds(database, styleId, "a", 5, useRawText: true);
         Assert(Width(literal) > Width(shortened), "花括号和上标记号中的文本不能被删减为 a。");
-        var withSpaces = TextMetricsBeta.MeasureSingleLine(database, styleId, "  Ag123  ", 5, includeSpaces: true);
-        var withoutSpaces = TextMetricsBeta.MeasureSingleLine(database, styleId, "  Ag123  ", 5, includeSpaces: false);
+        var withSpaces = TextMeasurementBeta.MeasureSingleLineBounds(database, styleId, "  Ag123  ", 5, includeSpaces: true);
+        var withoutSpaces = TextMeasurementBeta.MeasureSingleLineBounds(database, styleId, "  Ag123  ", 5, includeSpaces: false);
         Assert(Width(withSpaces) > Width(withoutSpaces), "首尾空格选项应影响宽度。");
-        var escaped = TextMetricsBeta.MeasureSingleLine(database, styleId, "%%d", 5, raw: false);
-        var raw = TextMetricsBeta.MeasureSingleLine(database, styleId, "%%d", 5, raw: true);
+        var escaped = TextMeasurementBeta.MeasureSingleLineBounds(database, styleId, "%%d", 5, useRawText: false);
+        var raw = TextMeasurementBeta.MeasureSingleLineBounds(database, styleId, "%%d", 5, useRawText: true);
         Assert(Width(raw) > Width(escaped), "按字面测量的 %%d 应宽于解释后的度数符号。");
 
-        var empty = TextMetricsBeta.MeasureSingleLine(database, styleId, "", 5);
+        var empty = TextMeasurementBeta.MeasureSingleLineBounds(database, styleId, "", 5);
         Assert(Width(empty) == 0 && Height(empty) == 0, "空串应返回零范围。");
         using (var transaction = database.TransactionManager.StartTransaction())
         {
@@ -70,18 +70,18 @@ public static class TestTextMetricsBeta
                 Assert(HostApplicationServices.WorkingDatabase == originalDatabase, "嵌套测量应恢复工作数据库。");
             }
 
-            var nested = TextMetricsBeta.MeasureSingleLine(database, styleId, "Ag123", 5);
+            var nested = TextMeasurementBeta.MeasureSingleLineBounds(database, styleId, "Ag123", 5);
             AssertClose(Width(nested), Width(standard), "显式字高应覆盖外层事务临时设置的样式字高。");
             AssertClose(Height(nested), Height(standard), "外层事务中测量的实际高度应保持一致。");
             AssertOuterPreserved();
             // 同库图层 ID 会进入测量器内部读取事务，再因对象类型不符失败。
-            AssertThrows<System.ArgumentException>(() => TextMetricsBeta.MeasureSingleLine(database, database.Clayer, "x", 5));
+            AssertThrows<System.ArgumentException>(() => TextMeasurementBeta.MeasureSingleLineBounds(database, database.Clayer, "x", 5));
             AssertOuterPreserved();
             outer.Abort();
         }
 
         Assert(HostApplicationServices.WorkingDatabase == originalDatabase, "成功路径应恢复工作数据库。");
-        Env.Printl("TextMetricsBeta: 字体度量、转义、空格及样式只读检查通过。");
+        Env.Printl("TextMeasurementBeta: 字体度量、转义、空格及样式只读检查通过。");
     }
 
     [CommandMethod(nameof(Test_TextMetricsBetaInvalidInput))]
@@ -92,21 +92,21 @@ public static class TestTextMetricsBeta
         using var otherDatabase = new Database(true, true);
         var styleId = database.Textstyle;
 
-        AssertThrows<System.ArgumentNullException>(() => TextMetricsBeta.MeasureSingleLine(null!, styleId, "x", 1));
-        AssertThrows<System.ArgumentNullException>(() => TextMetricsBeta.MeasureSingleLine(database, styleId, null!, 1));
+        AssertThrows<System.ArgumentNullException>(() => TextMeasurementBeta.MeasureSingleLineBounds(null!, styleId, "x", 1));
+        AssertThrows<System.ArgumentNullException>(() => TextMeasurementBeta.MeasureSingleLineBounds(database, styleId, null!, 1));
         foreach (var value in new[] { 0.0, -1.0, double.NaN, double.PositiveInfinity, double.NegativeInfinity })
         {
-            AssertThrows<System.ArgumentOutOfRangeException>(() => TextMetricsBeta.MeasureSingleLine(database, styleId, "x", value));
-            AssertThrows<System.ArgumentOutOfRangeException>(() => TextMetricsBeta.MeasureSingleLine(database, styleId, "x", 1, value));
+            AssertThrows<System.ArgumentOutOfRangeException>(() => TextMeasurementBeta.MeasureSingleLineBounds(database, styleId, "x", value));
+            AssertThrows<System.ArgumentOutOfRangeException>(() => TextMeasurementBeta.MeasureSingleLineBounds(database, styleId, "x", 1, value));
         }
         foreach (var text in new[] { "a\nb", "a\rb", "a\tb", "a\0b", "a\u2028b", "a\u2029b" })
-            AssertThrows<System.ArgumentException>(() => TextMetricsBeta.MeasureSingleLine(database, styleId, text, 1));
+            AssertThrows<System.ArgumentException>(() => TextMeasurementBeta.MeasureSingleLineBounds(database, styleId, text, 1));
 
-        AssertThrows<System.ArgumentException>(() => TextMetricsBeta.MeasureSingleLine(database, ObjectId.Null, "", 1));
-        AssertThrows<System.ArgumentException>(() => TextMetricsBeta.MeasureSingleLine(database, otherDatabase.Textstyle, "", 1));
-        AssertThrows<System.ArgumentException>(() => TextMetricsBeta.MeasureSingleLine(database, database.Clayer, "", 1));
+        AssertThrows<System.ArgumentException>(() => TextMeasurementBeta.MeasureSingleLineBounds(database, ObjectId.Null, "", 1));
+        AssertThrows<System.ArgumentException>(() => TextMeasurementBeta.MeasureSingleLineBounds(database, otherDatabase.Textstyle, "", 1));
+        AssertThrows<System.ArgumentException>(() => TextMeasurementBeta.MeasureSingleLineBounds(database, database.Clayer, "", 1));
         Assert(HostApplicationServices.WorkingDatabase == originalDatabase, "参数和样式失败路径应恢复工作数据库。");
-        Env.Printl("TextMetricsBeta: 非法参数、样式身份及工作数据库恢复检查通过。");
+        Env.Printl("TextMeasurementBeta: 非法参数、样式身份及工作数据库恢复检查通过。");
     }
 
     [CommandMethod(nameof(Test_TextMetricsBetaMissingFont))]
@@ -119,7 +119,7 @@ public static class TestTextMetricsBeta
         var rejected = false;
         try
         {
-            TextMetricsBeta.MeasureSingleLine(database, styleId, "ABC", 5);
+            TextMeasurementBeta.MeasureSingleLineBounds(database, styleId, "ABC", 5);
         }
         catch (InvalidOperationException exception)
         {
@@ -138,7 +138,7 @@ public static class TestTextMetricsBeta
         using var transaction = database.TransactionManager.StartTransaction();
         var style = (TextStyleTableRecord)transaction.GetObject(styleId, OpenMode.ForRead);
         Assert(style.FileName == missingFile, "字体加载不能修改原样式记录。");
-        Env.Printl("TextMetricsBeta: 缺失字体失败及状态恢复检查通过。");
+        Env.Printl("TextMeasurementBeta: 缺失字体失败及状态恢复检查通过。");
     }
 
     private static ObjectId AddStyle(Database database, string name, string fileName)

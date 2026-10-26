@@ -6,28 +6,30 @@
 
 ## 核心覆盖与接口边界
 
-Beta 扩展沿用现有模块、平台程序集和基础设施。本批新增 16 个生产文件；原有 143 个共享 C# 源文件保持不变。新工厂、查询和计算通过独立入口提供，不自动替换稳定 API。编译清单、模块数量及哈希基线增加新文件，CI 登记对应回归。
+Beta 扩展沿用现有模块、平台程序集和基础设施。首次集成的 16 个生产文件在命名重构中将两个公开结果类型分离，当前共有 18 个 Beta 源码文件；原有 143 个共享编译 C# 文件保持不变。新工厂、查询和计算通过独立入口提供，不自动替换稳定 API。编译清单、模块数量及哈希基线反映实际文件，CI 登记对应回归。
 
 完整审查逐行检查了下表全部文件及对应核心／宿主测试，并交叉复核。注释解释算法推导、不变量、数值边界和对象生命周期，不以注释数量代替实现正确性。
 
 | 生产文件 | 审查覆盖 |
 | --- | --- |
-| PolylineCoreBeta.cs | 顶点的出段元数据、反向弧宽、固定半容差带、直角保护、四种连接端点配对、桥接及圆角共享边预算。 |
-| PolylineExBeta.cs | 几何字段快照、借用输入、失败时释放新对象、精确 OCS 身份及数据库写入边界。 |
+| PolylineGeometryCoreBeta.cs | 顶点的出段元数据、反向弧宽、固定半容差带、直角保护、四种连接端点配对、桥接及圆角共享边预算。 |
+| PolylineGeometryExtensionsBeta.cs | 几何字段快照、借用输入、失败时释放新对象、精确 OCS 身份及数据库写入边界。 |
 | PolylineContainmentCoreBeta.cs | 半开 Y 穿越、主弧、稳定二次根、极值、端点范围、边界距离及独立圆盘对照。 |
-| PolylineRegionExBeta.cs | 完整源验证先于 OffPlane，Normal/Elevation、WCS→OCS 和分别使用的平面／边界容差。 |
-| BlockIntersectionExBeta.cs | 只读显式栈、当前定义路径、重复实例变换、原生曲线白名单、三维距离去重及副本释放。 |
-| OrderingBetaCore.cs | 固定锚点、严格全序、稳定原始索引、原始范围邻近图及连通分量。 |
+| PolylinePointRelationBeta.cs | 从原计算文件分离的公开分类枚举，四种成员及其数值顺序不变。 |
+| PolylineContainmentExtensionsBeta.cs | 完整源验证先于 OffPlane，Normal/Elevation、WCS→OCS 和分别使用的平面／边界容差。 |
+| BlockReferenceIntersectionExtensionsBeta.cs | 只读显式栈、当前定义路径、重复实例变换、原生曲线白名单、三维距离去重及副本释放。 |
+| OrderingAndGroupingCoreBeta.cs | 固定锚点、严格全序、稳定原始索引、原始范围邻近图及连通分量。 |
 | PointOrderingBeta.cs | 有限点、单次值读取、输入快照、方向及只读索引结果。 |
-| CurveOrderingExBeta.cs | 全量验证后调用 native 最近点，有限曲线域、实际里程、接缝及多解语义。 |
-| ExtentGroupingBeta.cs | 原框快照、独立只读成员索引、XY 邻近与 Z 范围保留。 |
-| TextMetricsBeta.cs | 样式身份、字体状态位、旧 SDK 分支、GI／事务释放与 WorkingDatabase 恢复。 |
-| TriangleMathBeta.cs | 三维重心补偿、三边共同缩放、退化量纲、法向／水平求模及角度范围。 |
+| CurveOrderingExtensionsBeta.cs | 全量验证后调用 native 最近点，有限曲线域、实际里程、接缝及多解语义。 |
+| ExtentsGroupingBeta.cs | 原框快照、独立只读成员索引、XY 邻近与 Z 范围保留。 |
+| ExtentsGroupBeta.cs | 从原分组文件分离的公开结果类型，合并范围及只读索引快照不变。 |
+| TextMeasurementBeta.cs | 样式身份、字体状态位、旧 SDK 分支、GI／事务释放与 WorkingDatabase 恢复。 |
+| TriangleMathCoreBeta.cs | 三维重心补偿、三边共同缩放、退化量纲、法向／水平求模及角度范围。 |
 | Triangle3dBeta.cs | 不可变有限顶点、退化三角形重心、角度单位和失败输出。 |
-| PolyFaceMeshDataBeta.cs | 惰性集合完整快照、数量和索引校验、三角面的原生第四索引为零。 |
-| PolyFaceMeshBuilderBeta.cs | 当前顶层事务、目标存储坐标、写前验证、全部子对象登记和调用方回滚。 |
+| PolyFaceMeshValidationCoreBeta.cs | 惰性集合完整快照、数量和索引校验、三角面的原生第四索引为零。 |
+| PolyFaceMeshFactoryBeta.cs | 当前顶层事务、目标存储坐标、写前验证、全部子对象登记和调用方回滚。 |
 | DwgPreviewCoreBeta.cs | 像素限制、路径及 ADS、相机拟合、有限方向、临时文件归属及原子发布。 |
-| DwgPreviewBeta.cs | 外部数据库包住 GS 生命周期，借用管理器、自有设备／模型／视图／位图及内核释放。 |
+| DwgPreviewRendererBeta.cs | 外部数据库包住 GS 生命周期，借用管理器、自有设备／模型／视图／位图及内核释放。 |
 
 ## 完整核心审查与修正
 
@@ -54,14 +56,30 @@ Beta 扩展沿用现有模块、平台程序集和基础设施。本批新增 16
 | 生产核心 | 实测结果 |
 | --- | --- |
 | `PolylineBeta.CoreTests` | 21 场景／2979 断言通过 |
-| `PolylineRegionBeta.CoreTests` | 12 场景／80911 断言通过 |
+| `PolylineRegionBeta.CoreTests`（现为 `PolylineContainmentBeta.CoreTests`） | 12 场景／80911 断言通过 |
 | `OrderingBeta.CoreTests` | 30 项通过 |
 | `GeometryBeta.CoreTests` | 121 断言通过 |
 | `DwgPreviewBeta.CoreTests` | 56 项通过 |
 
-本地仅串行构建 AutoCAD 2025 Debug x64（net8，0 警告／0 错误）和 AutoCAD 2019 Release x64（net48，通过），覆盖生产库及命令入口，没有重复本地七目标全矩阵。[正式 CI](https://github.com/FsDiG/Fs.Fox.CAD/actions/runs/40277264646)对 `71bfa1d` 的五组核心、模块／工具检查及现行七目标 Debug／Release 构建通过。后续仅文档清理不重跑本地编译，最终提交继续接受正常 CI。
+`71bfa1d` 的本地验证仅串行构建 AutoCAD 2025 Debug x64（net8，0 警告／0 错误）和 AutoCAD 2019 Release x64（net48，通过），覆盖生产库及命令入口，没有重复本地七目标全矩阵。[正式 CI](https://github.com/FsDiG/Fs.Fox.CAD/actions/runs/40277264646)对该提交的五组核心、模块／工具检查及现行七目标 Debug／Release 构建通过。该历史证据与下列命名重构后的本地复验分别记录。
 
 同提交的模块基线为 159 个共享编译文件，原有 143 项保持不变；仅更新新增 16 个文件的源码哈希。模块数量和归属未改，仍为 42 个带债务标记的文件及 17 项边界发现。TypeDef 比较工具的匹配、乱序、缺失和身份错误自测通过；该自测不等于实际宿主验收。
+
+## 命名重构与本地验证
+
+2026-10-26 按[命名定稿](beta-development-plan.md#beta-命名定稿已实施)实施重构，覆盖全部 12 个公开类型、14 个公开操作方法及 6 个内部计算主类型，同时调整属性、参数和测试工程。未保留旧名转发或兼容别名。
+
+将更名映射还原并重组两个分离声明后，原 16 个生产文件的非注释、非空白代码与更名前一致；原有 143 个共享编译文件和 21 个未编译 ToDo 文件逐字节哈希一致。新文件按原类型顺序加入共享编译，模块校验通过：161 项，42 个债务文件、17 项边界发现；TypeDef 比较工具自测通过。
+
+五组直接链接生产实现的核心回归全部复验通过：多段线 21 场景／2979 断言、点关系 12 场景／80911 断言、排序 30 项、几何 121 断言、预览 56 项。点关系项目现为 `PolylineContainmentBeta.CoreTests`。
+
+| 本地目标 | 配置／平台 | 结果 |
+| --- | --- | --- |
+| `TestAcad2025` 及生产类库 | Debug x64，net8 | 通过，0 警告／0 错误 |
+| `TestAcad2019` 及生产类库 | Release x64，net48 | 通过；保留既有 `MSB3277` 引用冲突告警 |
+| `TestZcad2022` 及生产类库 | Release x64，net48 | 通过；使用本机 ZRX2022 x64 SDK，保留既有 `MSB3277` 告警 |
+
+本轮只选择上述三个代表目标，没有重复本地全矩阵，也未修改依赖或告警策略。真实 CAD 命令、加载、事务及渲染均未运行，继续为 `Not run`；ZWCAD 2022 的文字测量仍明确不支持。其余目标由现行正式 CI 检查，不将 CI 等同于宿主验收。
 
 ## 历史构建记录
 

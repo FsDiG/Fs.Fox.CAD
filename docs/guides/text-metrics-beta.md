@@ -1,15 +1,15 @@
 # 单行文字测量 Beta
 
 > 状态：Beta 使用说明；真实 CAD 宿主验收 `Not run`。<br>
-> 实现：[TextMetricsBeta](../../src/CADShared/Cad/Database/Entities/Text/TextMetricsBeta.cs)。
+> 实现：[TextMeasurementBeta](../../src/CADShared/Cad/Database/Entities/Text/TextMeasurementBeta.cs)。
 
-`TextMetricsBeta.MeasureSingleLine` 接收显式数据库、属于该数据库的文字样式 ID、单行内容、字高及宽度因子，返回文字局部坐标的 `Extents2d`。宽高由范围最大点减最小点得到。调用方负责 CAD 主线程执行上下文和文档访问条件。
+`TextMeasurementBeta.MeasureSingleLineBounds` 接收显式数据库、属于该数据库的文字样式 ID、单行内容、字高及宽度因子，返回文字局部坐标的 `Extents2d`。宽高由范围最大点减最小点得到。调用方负责 CAD 主线程执行上下文和文档访问条件。
 
 ## 内容与字体
 
 - 字高和宽度因子必须是有限正数，并覆盖临时测量样式的对应设置；不修改数据库样式记录。
 - `includeSpaces` 默认开启，计入首尾空格的进笔距离。
-- `raw` 默认为 `false`，由宿主解释 DBText 的 `%%` 转义；设为 `true` 时按字面测量。
+- `useRawText` 默认为 `false`，由宿主解释 DBText 的 `%%` 转义；设为 `true` 时按字面测量。
 - 不解析 MText 格式，不删除 `{a^b}` 等内容，不处理换行、制表符或其他控制字符。不能把本接口当作 MText 排版或实际实体的 WCS 包围框计算。
 - 空串在参数和样式校验通过后返回原点零范围，不加载字体。
 - 宿主报告字体/大字体加载失败、字体替代，或未设置加载成功位 `0x01` 时抛出 `InvalidOperationException`。官方未把 `0x00` 定义为成功，本接口保守拒绝该状态；其他 SDK 异常原样传播。

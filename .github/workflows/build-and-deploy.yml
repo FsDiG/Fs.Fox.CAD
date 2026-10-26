@@ -53,7 +53,7 @@ jobs:
             'tests/OrderingBeta.CoreTests/OrderingBeta.CoreTests.csproj',
             'tests/GeometryBeta.CoreTests/GeometryBeta.CoreTests.csproj',
             'tests/DwgPreviewBeta.CoreTests/DwgPreviewBeta.CoreTests.csproj',
-            'tests/PolylineRegionBeta.CoreTests/PolylineRegionBeta.CoreTests.csproj'
+            'tests/PolylineContainmentBeta.CoreTests/PolylineContainmentBeta.CoreTests.csproj'
           )
           foreach ($project in $projects) {
             dotnet run --project $project --configuration Release

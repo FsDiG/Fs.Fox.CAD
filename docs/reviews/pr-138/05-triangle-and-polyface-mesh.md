@@ -6,14 +6,14 @@
 
 **评审模块**：三角形数学（坡度/坡向/重心）与多面网格构造 Beta
 **生产源文件**：
-- [`D:\MakeX\Fs.Fox.CAD\src\CADShared\Cad\Geometry\TriangleMathBeta.cs`](file:///D:/MakeX/Fs.Fox.CAD/src/CADShared/Cad/Geometry/TriangleMathBeta.cs)
-- [`D:\MakeX\Fs.Fox.CAD\src\CADShared\Cad\Geometry\Triangle3dBeta.cs`](file:///D:/MakeX/Fs.Fox.CAD/src/CADShared/Cad/Geometry/Triangle3dBeta.cs)
-- [`D:\MakeX\Fs.Fox.CAD\src\CADShared\Cad\Database\Entities\Meshes\PolyFaceMeshDataBeta.cs`](file:///D:/MakeX/Fs.Fox.CAD/src/CADShared/Cad/Database/Entities/Meshes/PolyFaceMeshDataBeta.cs)
-- [`D:\MakeX\Fs.Fox.CAD\src\CADShared\Cad\Database\Entities\Meshes\PolyFaceMeshBuilderBeta.cs`](file:///D:/MakeX/Fs.Fox.CAD/src/CADShared/Cad/Database/Entities/Meshes/PolyFaceMeshBuilderBeta.cs)
+- [`D:\MakeX\Fs.Fox.CAD\src\CADShared\Cad\Geometry\TriangleMathBeta.cs`](../../../src/CADShared/Cad/Geometry/TriangleMathCoreBeta.cs)
+- [`D:\MakeX\Fs.Fox.CAD\src\CADShared\Cad\Geometry\Triangle3dBeta.cs`](../../../src/CADShared/Cad/Geometry/Triangle3dBeta.cs)
+- [`D:\MakeX\Fs.Fox.CAD\src\CADShared\Cad\Database\Entities\Meshes\PolyFaceMeshDataBeta.cs`](../../../src/CADShared/Cad/Database/Entities/Meshes/PolyFaceMeshValidationCoreBeta.cs)
+- [`D:\MakeX\Fs.Fox.CAD\src\CADShared\Cad\Database\Entities\Meshes\PolyFaceMeshBuilderBeta.cs`](../../../src/CADShared/Cad/Database/Entities/Meshes/PolyFaceMeshFactoryBeta.cs)
 **配套测试**：
-- [`D:\MakeX\Fs.Fox.CAD\tests\GeometryBeta.CoreTests\Program.cs`](file:///D:/MakeX/Fs.Fox.CAD/tests/GeometryBeta.CoreTests/Program.cs)
-- [`D:\MakeX\Fs.Fox.CAD\tests\TestShared\TestGeometryConstructionBeta.cs`](file:///D:/MakeX/Fs.Fox.CAD/tests/TestShared/TestGeometryConstructionBeta.cs)
-**对应文档**：[`docs/guides/geometry-construction-beta.md`](file:///D:/MakeX/Fs.Fox.CAD/docs/guides/geometry-construction-beta.md)
+- [`D:\MakeX\Fs.Fox.CAD\tests\GeometryBeta.CoreTests\Program.cs`](../../../tests/GeometryBeta.CoreTests/Program.cs)
+- [`D:\MakeX\Fs.Fox.CAD\tests\TestShared\TestGeometryConstructionBeta.cs`](../../../tests/TestShared/TestGeometryConstructionBeta.cs)
+**对应文档**：[`docs/guides/geometry-construction-beta.md`](../../../docs/guides/geometry-construction-beta.md)
 
 ---
 
@@ -67,7 +67,7 @@
 
 ### 2.2 生产网格构造器子实体生命周期复核：保留现有 `using`
 
-- **关注代码段**：[`PolyFaceMeshBuilderBeta.cs#L56-L75`](file:///D:/MakeX/Fs.Fox.CAD/src/CADShared/Cad/Database/Entities/Meshes/PolyFaceMeshBuilderBeta.cs#L56-L75)
+- **关注代码段**：[`PolyFaceMeshBuilderBeta.cs#L56-L75`](../../../src/CADShared/Cad/Database/Entities/Meshes/PolyFaceMeshFactoryBeta.cs#L56-L75)
 - **实现模式**：
   代码对网格父实体和每个生成的顶点、面记录均使用了 `using var`：
   ```csharp
