@@ -78,6 +78,22 @@ foreach (var order in permutations)
 var tinyCenter = TriangleMathBeta.Centroid(new(double.Epsilon, 0, 0), new(double.Epsilon, 0, 0), new(double.Epsilon, 0, 0));
 Check(tinyCenter.X == double.Epsilon, "subnormal centroid");
 
+// 法向量仍大于退化阈值，但分量平方小于 double 的最小正数；不能把求模下溢当作几何退化。
+var underflowSkinny = new[] { origin, new TrianglePointDataBeta(1, 0, 1), new TrianglePointDataBeta(1, 1e-200, 1) };
+var underflowTilt = new[] { origin, new TrianglePointDataBeta(1, 0, 1e-200), new TrianglePointDataBeta(0, 1, 0) };
+var expectedTinySlope = Math.Atan(1e-200) * 180 / Math.PI;
+foreach (var order in permutations)
+{
+    Check(TriangleMathBeta.TrySlopeAndAspect(underflowSkinny[order[0]], underflowSkinny[order[1]], underflowSkinny[order[2]],
+        1e-250, out slope, out aspect), "normal-length square underflow must not reject a supported skinny triangle");
+    Close(slope, 45, "underflow skinny slope");
+    Close(aspect, 270, "underflow skinny aspect");
+    Check(TriangleMathBeta.TrySlopeAndAspect(underflowTilt[order[0]], underflowTilt[order[1]], underflowTilt[order[2]],
+        1e-250, out slope, out aspect), "horizontal-length square underflow must not hide a supported tiny tilt");
+    Check(slope > 0 && Math.Abs(slope / expectedTinySlope - 1) < 1e-12, "tiny nonzero slope retains relative accuracy");
+    Close(aspect, 270, "tiny tilt retains its downhill aspect");
+}
+
 var triangle = new[] { 0, 1, 2 };
 var copied = PolyFaceMeshDataBeta.ValidateAndCopyFaces(4, new[] { triangle, new[] { 0, 1, 2, 3 } });
 Check(copied[0].SequenceEqual(new short[] { 1, 2, 3, 0 }), "native triangle fourth index is zero");

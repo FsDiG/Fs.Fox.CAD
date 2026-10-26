@@ -16,8 +16,7 @@ public enum PolylinePointRelationBeta
     OffPlane
 }
 
-// Reworked capability: Zfgk PolylineUtil.PtRelationToPoly. This production core
-// uses finite analytic crossings, without SDK intersections or retrying rays.
+/// <summary>闭合中心线区域的解析查询核心；只读取数值快照，不依赖宿主求交或随机射线重试。</summary>
 internal static class PolylineContainmentCoreBeta
 {
     private const double Epsilon = 2.2204460492503131e-16;
@@ -31,8 +30,7 @@ internal static class PolylineContainmentCoreBeta
             throw new ArgumentNullException(nameof(vertices));
         if (vertices.Count < 2)
             throw new ArgumentException("A closed contour needs at least two vertices.", nameof(vertices));
-        // Validate every field used by the region before any classification, including OffPlane.
-        // Widths intentionally do not participate in centerline-region geometry.
+        // 在任何关系判断（包括平面外判断）之前完整验证源数据；宽度不是中心线区域的输入。
         for (var i = 0; i < vertices.Count; i++)
             if (!Finite(vertices[i].X) || !Finite(vertices[i].Y) || !Finite(vertices[i].Bulge))
                 throw new ArgumentException("Coordinates and bulges must be finite.", nameof(vertices));
@@ -45,7 +43,7 @@ internal static class PolylineContainmentCoreBeta
             {
                 if (a.Bulge != 0)
                     throw new InvalidOperationException("An arc cannot have coincident endpoints.");
-                continue; // Repeated straight vertices contribute no area or crossings.
+                continue; // 重合直段不增加面积或射线穿越；零弦圆弧已单独拒绝。
             }
             segments.Add(new Segment(a, b));
         }
@@ -57,6 +55,7 @@ internal static class PolylineContainmentCoreBeta
     internal static PolylinePointRelationBeta GetPointRelation(IReadOnlyList<PolylineVertexDataBeta> vertices,
         double x, double y, double tolerance) => Prepare(vertices).Classify(x, y, tolerance);
 
+    /// <summary>独立的已准备轮廓；各段持有值拷贝，调用方以后修改顶点数组不影响查询。</summary>
     internal sealed class Loop
     {
         private readonly Segment[] _segments;
@@ -67,6 +66,7 @@ internal static class PolylineContainmentCoreBeta
             ValidateTolerance(tolerance);
             if (!Finite(x) || !Finite(y))
                 throw new ArgumentException("Query coordinates must be finite.");
+            // 每条段可能穿越零次、一次或两次；只累计奇偶性。任何输入段的边界优先于填充结果。
             var inside = false;
             foreach (var segment in _segments)
             {
@@ -81,7 +81,9 @@ internal static class PolylineContainmentCoreBeta
 
     internal sealed class Segment
     {
+        // 原始端点和包围框使用 OCS 坐标；查询中先以 A 为原点，再除以弦长，避免全局偏移影响方程。
         private readonly double _ax, _ay, _bx, _by, _length, _ux, _uy, _bulge;
+        // 圆心/半径同样以弦长归一化，轴向仍与 OCS 一致；k 是圆心沿弦左法向的归一化偏移。
         private readonly double _cx, _cy, _radius, _k;
         private readonly double _minX, _maxX, _minY, _maxY;
         private readonly ArcPart[] _parts;
@@ -98,8 +100,6 @@ internal static class PolylineContainmentCoreBeta
             if ((dx != 0 && _ux == 0) || (dy != 0 && _uy == 0))
                 throw new InvalidOperationException("A chord direction component underflows.");
             _parts = Array.Empty<ArcPart>();
-            double lowX = Math.Min(0, _ux), highX = Math.Max(0, _ux);
-            double lowY = Math.Min(0, _uy), highY = Math.Max(0, _uy);
             if (_bulge != 0)
             {
                 var absolute = Math.Abs(_bulge);
@@ -110,14 +110,20 @@ internal static class PolylineContainmentCoreBeta
                 _cy = .5 * _uy + _k * _ux;
                 _radius = Hypot(_cx, _cy);
                 _parts = CreateParts();
-                // Loose full-circle bounds only skip certainly distant queries. They are
-                // padded locally, so cancellation in a shallow circle cannot remove its arc.
+                // 全圆范围只是保守预筛，不代表所选圆弧。按局部圆尺度留出舍入量，避免浅弧因相消被排除。
                 var padding = 64 * Epsilon * (_radius + Math.Abs(_cx) + Math.Abs(_cy) + 1);
-                lowX = _cx - _radius - padding; highX = _cx + _radius + padding;
-                lowY = _cy - _radius - padding; highY = _cy + _radius + padding;
+                _minX = _ax + _length * (_cx - _radius - padding);
+                _maxX = _ax + _length * (_cx + _radius + padding);
+                _minY = _ay + _length * (_cy - _radius - padding);
+                _maxY = _ay + _length * (_cy + _radius + padding);
             }
-            _minX = _ax + _length * lowX; _maxX = _ax + _length * highX;
-            _minY = _ay + _length * lowY; _maxY = _ay + _length * highY;
+            else
+            {
+                // 直段必须直接使用输入端点。a + length*(delta/length) 的往返舍入可能把
+                // 真实下端点排除在 minY 外，破坏顶点处的半开计数，令区域外点被误判为内部。
+                _minX = Math.Min(_ax, _bx); _maxX = Math.Max(_ax, _bx);
+                _minY = Math.Min(_ay, _by); _maxY = Math.Max(_ay, _by);
+            }
             if (!Finite(_minX) || !Finite(_maxX) || !Finite(_minY) || !Finite(_maxY))
                 throw new InvalidOperationException("The contour's coordinate range cannot be represented.");
         }
@@ -125,12 +131,13 @@ internal static class PolylineContainmentCoreBeta
         internal bool Query(double x, double y, double tolerance, out int crossings)
         {
             crossings = 0;
-            if (Hypot(x - _ax, y - _ay) <= tolerance || Hypot(x - _bx, y - _by) <= tolerance)
+            if (PolylineCoreBeta.WithinDistance(x - _ax, y - _ay, tolerance) ||
+                PolylineCoreBeta.WithinDistance(x - _bx, y - _by, tolerance))
                 return true;
             var canCheckBoundary = !((x < _minX && _minX - x > tolerance) || (x > _maxX && x - _maxX > tolerance) ||
                 (y < _minY && _minY - y > tolerance) || (y > _maxY && y - _maxY > tolerance));
-            // A far-left point still sees crossings, but needs no local X conversion
-            // or boundary arithmetic. This avoids overflowing a perfectly ordinary outside query.
+            // 足够靠左的点仍需累计穿越，但不必换算局部 X 或计算边界距离；
+            // 用负无穷作为比较哨兵，避免一个普通区域外查询仅因全局轴差溢出而失败。
             var canCross = y >= _minY && y <= _maxY && x <= _maxX;
             if (!canCheckBoundary && !canCross) return false;
             var dx = x - _ax; var dy = y - _ay;
@@ -154,9 +161,9 @@ internal static class PolylineContainmentCoreBeta
                     crossings = 1;
                 return false;
             }
-            // In chord coordinates the circle equation is
-            // t(t-1) + n(n+b/2) - n/(2b) = 0. Keep the b and 1/b terms separate:
-            // forming center/radius first loses shallow sagittas and near-full-circle detail.
+            // 将归一化查询点投影到弦切向 t 和左法向 n，圆方程为
+            // t(t-1) + n(n+b/2) - n/(2b) = 0。b 与 1/b 分项保留，
+            // 避免先求大圆心/半径再相减，丢失浅弧矢高或近整圆的端点信息。
             if (canCheckBoundary)
             {
                 var along = qx * _ux + qy * _uy;
@@ -164,9 +171,8 @@ internal static class PolylineContainmentCoreBeta
                 var f = along * (along - 1) + normal * (normal + _bulge * .5) - normal * (.5 / _bulge);
                 var errorF = 32 * Epsilon * (Math.Abs(along) * (Math.Abs(along) + 1) +
                     Math.Abs(normal) * (Math.Abs(normal) + Math.Abs(_bulge) * .5 + .5 / Math.Abs(_bulge)));
-                // A rotated shallow arc amplifies error in its normal coordinate by 1/(2b).
-                // Propagate local projection round-off as well as equation arithmetic;
-                // otherwise its midpoint can miss Boundary even when the same axis-aligned arc succeeds.
+                // 浅弧将法向坐标误差放大约 1/(2b)；同时传播局部投影和方程运算的舍入量，
+                // 避免同一条弧仅因旋转后投影相消而漏判边界。这不等于所有输入都有统一误差保证。
                 var errorAlong = 32 * Epsilon * (Math.Abs(qx * _ux) + Math.Abs(qy * _uy));
                 var errorNormal = 32 * Epsilon * (Math.Abs(qy * _ux) + Math.Abs(qx * _uy));
                 errorF += errorAlong * (2 * Math.Abs(along) + 1) +
@@ -174,6 +180,8 @@ internal static class PolylineContainmentCoreBeta
                 var radialDenominator = Hypot(qx - _cx, qy - _cy) + _radius;
                 if (!Finite(f) || !Finite(errorF) || !Finite(radialDenominator))
                     throw new InvalidOperationException("The boundary distance cannot be resolved numerically.");
+                // |距离²-半径²|/(距离+半径) 给出径向边界距离；两端有向叉积限定所选弧，
+                // 小弧取两个半平面的交，主弧取并，不能把同一支撑圆的补弧也算作边界。
                 var firstCross = Math.Sign(_bulge) * (_k * along - .5 * normal);
                 var secondCross = Math.Sign(_bulge) * (_k * (1 - along) - .5 * normal);
                 var onSelectedArc = Math.Abs(_bulge) <= 1
@@ -185,8 +193,8 @@ internal static class PolylineContainmentCoreBeta
             if (!canCross) return false;
             foreach (var part in _parts)
             {
-                // Half-open Y intervals apply equally to original vertices and extrema.
-                // A tangent minimum is counted twice, a maximum zero times: neither flips parity.
+                // 原始顶点和圆极值统一采用半开 Y 区间。切线最低点计两次、最高点计零次，
+                // 都不翻转填充奇偶性；两条相邻普通边只贡献应有的一次穿越。
                 if ((part.StartY > qy) == (part.EndY > qy))
                     continue;
                 var constant = qy * (qy - _uy + _bulge * .5 * _ux) - qy * (.5 / _bulge) * _ux;
@@ -195,8 +203,7 @@ internal static class PolylineContainmentCoreBeta
                 if (!Finite(discriminant) || discriminant < -errorD)
                     throw new InvalidOperationException("An arc crossing cannot be resolved numerically.");
                 var root = Math.Sqrt(Math.Max(0, discriminant));
-                // Stable quadratic pair: use the product of roots instead of subtracting
-                // nearly equal numbers when one intersection is close to the chord origin.
+                // 先求无相消的远根，再用根积反求近根；直接 cx-sqrt(D) 会丢失靠近弦原点的交点。
                 var far = _cx >= 0 ? _cx + root : _cx - root;
                 var near = far == 0 ? 0 : constant / far;
                 var left = Math.Min(far, near); var right = Math.Max(far, near);
@@ -208,6 +215,7 @@ internal static class PolylineContainmentCoreBeta
 
         private ArcPart[] CreateParts()
         {
+            // 只在所选弧内的上下极值处分段；圆弧至多经过两个极值，因此最多得到三段 Y 单调弧。
             var startAngle = Math.Atan2(-_cy, -_cx);
             var sign = Math.Sign(_bulge);
             var sweep = Math.Abs(4 * Math.Atan(_bulge));
@@ -231,8 +239,7 @@ internal static class PolylineContainmentCoreBeta
 
         private double CircleYBound(bool upper)
         {
-            // The circle passes through the chord origin, so (cy-r)(cy+r)=-cx².
-            // Rationalize the cancelling bound; direct cy-r erases a shallow arc's sagitta.
+            // 支撑圆经过局部原点，故 (cy-r)(cy+r)=-cx²；对近值相减的一侧有理化，保留浅弧矢高。
             if (upper && _cy < 0) return _cx * _cx / (_radius - _cy);
             if (!upper && _cy > 0) return -_cx * _cx / (_radius + _cy);
             return upper ? _cy + _radius : _cy - _radius;

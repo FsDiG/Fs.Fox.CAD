@@ -10,11 +10,11 @@
 
 坡度的成功范围严格为 [0,90)，坡向为 [0,360)。近北坡向加一周后若舍入为 360，归一为 0；非垂直法线若因精度不足使坡度舍入为 90，则返回 false 并保留两个 NaN。
 
-该类不操作数据库。数值核心通过缩放后计算避免普通大、小尺度输入的溢出和下溢；不能从浮点数已经丢失的坐标差恢复精度。
+该类不操作数据库。数值核心先对三条边使用共同缩放，再对法向量及其水平分量按最大分量缩放求模，避免小分量平方下溢使有效瘦三角形被误判退化、微小倾斜被误判水平。该处理不能从浮点数已经丢失的坐标差恢复精度。
 
 ## 多面网格
 
-[`PolyFaceMeshBuilderBeta.Append`](../../src/CADShared/Cad/Database/Entities/Meshes/PolyFaceMeshBuilderBeta.cs)接收显式数据库、该库当前最上层事务、目标块表记录 ID、WCS 顶点及从零开始的面索引。顶点和面各最多 32767 项；只接受三角面与四边面，各面索引必须有效且不重复。输入被完整验证和快照后才写入。
+[`PolyFaceMeshBuilderBeta.Append`](../../src/CADShared/Cad/Database/Entities/Meshes/PolyFaceMeshBuilderBeta.cs)接收显式数据库、该库当前最上层事务、目标块表记录 ID、顶点及从零开始的面索引。顶点按目标块表记录的存储坐标直接写入；普通块定义中的点是定义局部坐标，方法不执行 WCS 到定义坐标的转换。顶点和面各最多 32767 项；只接受三角面与四边面，各面索引必须有效且不重复。输入被完整验证和快照后才写入。
 
 三角面的原生第四索引为零；全部顶点先于面记录追加。这遵循 Autodesk 的 [FaceRecord 构造规则](https://help.autodesk.com/cloudhelp/2026/ENU/OARX-ManagedRefGuide/files/OARX-ManagedRefGuide-Autodesk_AutoCAD_DatabaseServices_FaceRecord_FaceRecord_short_short_short_short.html)和 [AppendFaceRecord 生命周期](https://help.autodesk.com/cloudhelp/2026/ENU/OARX-ManagedRefGuide/files/OARX-ManagedRefGuide-Autodesk_AutoCAD_DatabaseServices_PolyFaceMesh_AppendFaceRecord_FaceRecord.html)。
 
@@ -24,6 +24,8 @@
 
 ## 验证
 
-- [生产数值核心测试](../../tests/GeometryBeta.CoreTests/GeometryBeta.CoreTests.csproj)直接链接生产源码，覆盖坡度单位、坡向、绕序、退化、极端尺度、网格索引转换和完整预校验。
+2026-10-26 生产数值核心实测 **121 项断言通过**；新增两类平方下溢反例均覆盖六种顶点排列。实际数据库写入与子对象生命周期仍须分别验收。
+
+- [生产数值核心测试](../../tests/GeometryBeta.CoreTests/GeometryBeta.CoreTests.csproj)直接链接生产源码，覆盖坡度单位、坡向、绕序、退化、极端尺度、法向量／水平分量平方下溢、网格索引转换和完整预校验。
 - [宿主命令](../../tests/TestShared/TestGeometryConstructionBeta.cs)：`Test_GeometryConstructionBeta`，使用临时数据库并中止事务，验证对象归属；异库事务/空间、非最上层事务和惰性 faces 中途抛错均应保持原事务且不写入，枚举异常原样传播。
 - 实际 CAD 宿主执行：`Not run`。构建矩阵与最终检查记录见[迁移清单](../zfgk-migration-inventory.md)。

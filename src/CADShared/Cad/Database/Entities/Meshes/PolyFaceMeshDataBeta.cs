@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Fs.Fox.Cad;
 
-// SDK-free validation shared by the production builder and executable tests.
+// 在任何原生写入之前完成面序列求值；构造器与无宿主回归共用此验证路径。
 internal static class PolyFaceMeshDataBeta
 {
     internal static List<short[]> ValidateAndCopyFaces(int vertexCount, IEnumerable<IEnumerable<int>> faces)
@@ -19,6 +19,7 @@ internal static class PolyFaceMeshDataBeta
                 throw new ArgumentException("面数最多为 32767。", nameof(faces));
             if (face is null)
                 throw new ArgumentException("面不能为 null。", nameof(faces));
+            // 每面固定四槽：前三槽必须填写，三角面保留第四槽的零；不持有调用者的可变索引集合。
             var indices = new short[4];
             var count = 0;
             foreach (var index in face)
@@ -35,7 +36,7 @@ internal static class PolyFaceMeshDataBeta
             }
             if (count < 3)
                 throw new ArgumentException("每个面至少需要三个顶点索引。", nameof(faces));
-            // Native FaceRecord uses 1-based indices; a triangle's fourth index must be zero.
+            // 原生 FaceRecord 使用一基索引，零仅用于三角面的第四槽；正数索引使所有边可见。
             result.Add(indices);
         }
         if (result.Count == 0)

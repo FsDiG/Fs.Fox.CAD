@@ -10,7 +10,7 @@ namespace Fs.Fox.Cad;
 
 /// <summary>在 AutoCAD 宿主中将外部 DWG 模型空间导出为新的 PNG。Beta：真实宿主验收尚待执行。</summary>
 /// <remarks>
-/// 能力来源：Zfgk GsPreviewUtil。使用调用方显式提供的当前文档的图形管理器，不能作为无 CAD 进程的转换器。
+/// 使用调用方显式提供的当前文档的图形管理器，不能作为无 CAD 进程的转换器。
 /// 必须在 AutoCAD 允许的主线程命令上下文执行；调用方负责文档生命周期和必要的锁，不支持并发渲染。
 /// </remarks>
 public static class DwgPreviewBeta
@@ -23,7 +23,8 @@ public static class DwgPreviewBeta
     /// <param name="height">1 至 8192 像素；总像素不能超过 16777216。</param>
     /// <remarks>
     /// 仅支持 AutoCAD 编译目标。源 DWG 使用只读共享打开；本方法不修改 WorkingDatabase、UCS、当前视图或全局配置。
-    /// 不可见实体及关闭/冻结图层不参与范围计算和绘制。没有可绘制实体或有效范围时抛出异常，不输出空白成功结果。
+    /// 范围筛选检查模型空间顶层实体的可见性及其图层关闭/冻结状态；复合实体使用宿主返回的整体范围。
+    /// 没有通过筛选的顶层实体或无法取得有效范围时失败；不检查输出像素是否空白，也不消除块内隐藏几何造成的留白。
     /// 先在输出目录写临时 PNG，再移动为目标文件；竞争创建目标文件也不会导致覆盖。
     /// 创建的外部数据库、只读事务、图形设备/模型/视图和 Bitmap 全部由本方法释放；借用的文档与 GraphicsManager 不释放。
     /// 图形内核由 AcquireGraphicsKernel/ReleaseGraphicsKernel 配对管理。渲染或 IO 失败时异常传播；临时文件尽力清理。
@@ -43,8 +44,8 @@ public static class DwgPreviewBeta
         if (!ReferenceEquals(graphicsDocument, CadApp.DocumentManager.MdiActiveDocument))
             throw new ArgumentException("必须使用当前活动文档的图形管理器。", nameof(graphicsDocument));
         var request = DwgPreviewCoreBeta.ValidateRequest(drawingPath, outputPngPath, width, height);
-        // GS views retain source DBObjects: their cleanup/disposal must finish before this read
-        // transaction and its database leave scope, including when rendering or PNG encoding fails.
+        // GS 视图保留源 DBObject 引用。外部数据库和读取事务必须包住整个 GS 生命周期，
+        // 不能在视图解绑前关闭，即使异常发生在截图或 PNG 编码阶段也必须遵守此顺序。
         using var drawing = new Database(false, true);
         drawing.ReadDwgFile(request.DrawingPath, FileOpenMode.OpenForReadAndAllShare, false, null);
         using var transaction = drawing.TransactionManager.StartTransaction();
@@ -59,7 +60,8 @@ public static class DwgPreviewBeta
             var layer = (LayerTableRecord)transaction.GetObject(entity.LayerId, OpenMode.ForRead);
             if (layer.IsOff || layer.IsFrozen)
                 continue;
-            // An unsupported/invalid entity extent is a failure, not a reason to silently crop its geometry.
+            // 对复合实体不另做展开；它的整体范围不等于所有可见叶节点的紧致范围。
+            // 范围读取失败必须传播，否则跳过该实体后成功输出会悄悄裁掉图形。
             var extent = entity.GeometricExtents;
             if (combined.HasValue)
             {
@@ -77,7 +79,7 @@ public static class DwgPreviewBeta
         var fit = DwgPreviewCoreBeta.Fit(bounds.MinPoint.X, bounds.MinPoint.Y, bounds.MinPoint.Z,
             bounds.MaxPoint.X, bounds.MaxPoint.Y, bounds.MaxPoint.Z, width, height);
 
-        // The manager belongs to the document. Only objects created for this render are owned here.
+        // manager 归文档所有；下面的设备、模型和视图才由本次调用持有并释放。
         var manager = graphicsDocument.GraphicsManager;
         using var descriptor = new CadGS.KernelDescriptor();
         descriptor.addRequirement(CadUniqueString.Intern("3D Drawing"));
@@ -115,15 +117,15 @@ public static class DwgPreviewBeta
             }
             finally
             {
-                // Clear drawable references before detaching the view. Even if clearing fails, attempt
-                // detachment before the using scopes dispose View, Model, then Device.
+                // 先解除 drawable 引用，再从设备解绑视图；清空失败也要尝试解绑。
+                // 随后 using 逆序释放 View、Model、Device，最外层才归还内核并关闭源数据库。
                 try { view.EraseAll(); }
                 finally { if (attached) device.Erase(view); }
             }
         }
         finally
         {
-            // Acquired kernels are reference-counted; use the manager's release operation, not a second native delete.
+            // Acquire 增加图形内核引用计数，应与 Release 配对，不能把借到的内核再次 native delete。
             CadGS.Manager.ReleaseGraphicsKernel(kernel);
         }
     }

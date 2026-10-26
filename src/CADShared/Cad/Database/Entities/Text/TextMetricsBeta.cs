@@ -8,7 +8,7 @@ namespace Fs.Fox.Cad;
 /// 使用指定数据库的文字样式测量单行文字。Beta：尚待真实 CAD 宿主验收。
 /// </summary>
 /// <remarks>
-/// 能力来源：张帆的 ZFGK.AutoCAD TextUtil.GetTextHeightAndWidth；本实现重新定义输入、字体失败和资源归属。
+/// 字体及样式上下文由显式数据库提供，测量只操作自有的临时 GI 文字样式。
 /// 只能在 CAD 宿主允许的主线程执行上下文调用，调用方负责文档上下文和必要的锁。
 /// 测量期间会临时切换 WorkingDatabase，并在正常及异常退出时恢复；不是并发安全的离线字体测量器。
 /// </remarks>
@@ -39,6 +39,7 @@ public static class TextMetricsBeta
         double height, double widthFactor = 1, bool includeSpaces = true, bool raw = false)
     {
 #if ZW_2022 || GC_2022 || GC_2023
+        // 不完整的 SDK 不能用替代算法伪装成功；在任何数据库切换或参数访问之前报告能力边界。
         throw new NotSupportedException("当前编译目标的 SDK 不提供完整的 GI 文字样式转换与范围测量 API，暂不支持此测量接口。");
 #else
         if (database is null)
@@ -56,17 +57,20 @@ public static class TextMetricsBeta
         if (textStyleId.IsNull || !textStyleId.IsValid || textStyleId.IsErased || textStyleId.Database != database)
             throw new ArgumentException("文字样式必须属于指定数据库且有效。", nameof(textStyleId));
 
-        // Dispose in reverse order: finish the native read transaction before restoring WorkingDatabase.
+        // GI 字体解析仍可能访问宿主的隐式工作库；显式样式 ID 不能替代这个上下文。
+        // 声明顺序保证退出时依次释放 GI 样式、读取事务，再恢复原工作库，异常路径也相同。
         using var databaseScope = new SwitchDatabase(database);
         using var transaction = database.TransactionManager.StartTransaction();
         if (transaction.GetObject(textStyleId, OpenMode.ForRead) is not TextStyleTableRecord)
             throw new ArgumentException("指定的对象不是文字样式。", nameof(textStyleId));
 
+        // 空串仍检查样式身份，但不要求加载一个实际上没有使用的字体。
         if (text.Length == 0)
             return new Extents2d(Point2d.Origin, Point2d.Origin);
 
         using var graphicsStyle = new CadGI.TextStyle();
         graphicsStyle.FromTextStyleTableRecord(textStyleId);
+        // 保留字体、倾斜和书写方向，仅覆盖本次测量的尺寸，不写回数据库中的样式记录。
         graphicsStyle.TextSize = height;
         graphicsStyle.XScale = widthFactor;
 
@@ -77,6 +81,7 @@ public static class TextMetricsBeta
             throw new InvalidOperationException($"文字样式字体未确认成功加载或发生替代，状态码 0x{loadStatus:X2}。");
 
         var bounds = graphicsStyle.ExtentsBox(text, includeSpaces, raw, null);
+        // 端点各自有限仍可能在相减时溢出；同时验证范围方向和实际尺寸，避免返回无效测量值。
         var width = bounds.MaxPoint.X - bounds.MinPoint.X;
         var measuredHeight = bounds.MaxPoint.Y - bounds.MinPoint.Y;
         if (!IsFinite(bounds.MinPoint.X) || !IsFinite(bounds.MinPoint.Y)

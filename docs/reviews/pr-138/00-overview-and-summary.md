@@ -3,6 +3,8 @@
 > 状态：historical；针对 `4064025` 的专项静态评审快照，2026-10-26 更正。<br>
 > 仅供追溯，不是现行技术契约，也不进入产品站点或默认实现依据。使用接口请转到[当前 Beta 指南](../../guides/zfgk-beta.md)。
 
+后续从 `979b799` 开始的全部 16 个核心文件重新审查，发现并修复了新的数值缺陷；详见[完整核心审查与修正](../../zfgk-migration-inventory.md#完整核心审查与修正)。本分册保留原评审的范围与处置，不代表当前完整审查结论。
+
 **评审日期**：2026-10-26
 **评审对象**：[PR #138 — feat: migrate selected ZFGK CAD helpers as Beta APIs](https://github.com/FsDiG/Fs.Fox.CAD/pull/138)
 **待审工作目录**：`D:\MakeX\Fs.Fox.CAD`

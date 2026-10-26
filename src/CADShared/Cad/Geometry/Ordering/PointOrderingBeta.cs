@@ -6,7 +6,7 @@ public static class PointOrderingBeta
 {
     /// <summary>先按行分组，再返回各行中点的原始索引。</summary>
     /// <param name="points">需要排序的二维点。坐标必须为有限数。</param>
-    /// <param name="rowTolerance">行内 Y 坐标距离首个锚点的最大距离，允许零，必须为有限非负数。</param>
+    /// <param name="rowTolerance">行内 Y 坐标距离该行最高 Y 锚点的最大距离，允许零，必须为有限非负数。</param>
     /// <param name="topToBottom">是否从最高行向最低行排列。</param>
     /// <param name="leftToRight">是否在各行中从左向右排列。</param>
     /// <returns>包含每个输入索引一次的只读快照；空输入返回空结果。</returns>
@@ -27,7 +27,7 @@ public static class PointOrderingBeta
 
     /// <summary>先按列分组，再返回各列中点的原始索引。</summary>
     /// <param name="points">需要排序的二维点。坐标必须为有限数。</param>
-    /// <param name="columnTolerance">列内 X 坐标距离首个锚点的最大距离，允许零，必须为有限非负数。</param>
+    /// <param name="columnTolerance">列内 X 坐标距离该列最低 X 锚点的最大距离，允许零，必须为有限非负数。</param>
     /// <param name="leftToRight">是否从最左列向最右列排列。</param>
     /// <param name="topToBottom">是否在各列中从上向下排列。</param>
     /// <returns>包含每个输入索引一次的只读快照；空输入返回空结果。</returns>
@@ -50,8 +50,12 @@ public static class PointOrderingBeta
         if (points is null)
             throw new ArgumentNullException(nameof(points));
         var result = new OrderingBetaCore.Point[points.Count];
-        for (var i = 0; i < points.Count; i++)
-            result[i] = new OrderingBetaCore.Point(points[i].X, points[i].Y);
+        for (var i = 0; i < result.Length; i++)
+        {
+            // 每个 SDK 值只读取一次，不能从外部索引器的两次求值拼出一个点。
+            var point = points[i];
+            result[i] = new OrderingBetaCore.Point(point.X, point.Y);
+        }
         return result;
     }
 }

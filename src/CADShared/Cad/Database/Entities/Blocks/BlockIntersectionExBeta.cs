@@ -2,14 +2,11 @@ using ArgumentException = System.ArgumentException;
 using ArgumentNullException = System.ArgumentNullException;
 using ArgumentOutOfRangeException = System.ArgumentOutOfRangeException;
 
-// 来源参考：Fs.Zfgk.CAD a882003436fb4cc31b24c90f6779177c13a60abe，ObjectARX/Entity/BlockUtil.cs。
-// 原文件头：Author TianTeng；Copyright © 北京智帆高科科技有限公司 2015。本文件按新 Beta 契约重新实现。
-
 namespace Fs.Fox.Cad;
 
 /// <summary>查询普通块内实际曲线与 WCS 曲线的交点。Beta：真实 CAD 宿主验收尚未运行。</summary>
 /// <remarks>
-/// 能力来源：Zfgk BlockUtil.IntersectWith；本实现增加显式事务、嵌套定义路径检查和临时对象释放。
+/// 使用调用方事务读取块定义，为每个实例累计变换，并通过自有曲线副本求交。
 /// 查询存储几何，不按实体、图层或视口可见性筛选；文字、属性和其他非 Curve 叶节点不参与。
 /// </remarks>
 public static class BlockIntersectionExBeta
@@ -57,6 +54,7 @@ public static class BlockIntersectionExBeta
             throw new ArgumentException("根块必须为已入库的有效块参照。", nameof(block));
         if (!ReferenceEquals(database.TransactionManager.TopTransaction, transaction))
             throw new ArgumentException("必须使用根块数据库当前最上层事务。", nameof(transaction));
+        // 根参照的变换才以 WCS 为目标；定义内的参照只能作为遍历节点，不能直接冒充根对象。
         if (!ValidId(block.OwnerId, database) ||
             transaction.GetObject(block.OwnerId, OpenMode.ForRead) is not BlockTableRecord { IsLayout: true })
             throw new ArgumentException("根块必须直接位于模型空间或图纸空间。", nameof(block));
@@ -79,6 +77,7 @@ public static class BlockIntersectionExBeta
                 continue;
             }
 
+            // 下探前推进父帧的游标；子帧退栈后从下一成员继续，保持定义顺序的深度优先遍历。
             var child = transaction.GetObject(frame.Children[frame.NextIndex++], OpenMode.ForRead);
             if (child is BlockReference nested)
             {
@@ -98,10 +97,12 @@ public static class BlockIntersectionExBeta
             {
                 if (!Finite(point.X) || !Finite(point.Y) || !Finite(point.Z))
                     throw new InvalidOperationException("宿主返回了非有限交点。");
+                // 只与保留点比较，不把已合并点作为新的代表，防止一串近邻把相隔很远的端点合并。
                 if (!result.Any(kept => WithinDistance(kept, point, tolerance)))
                     result.Add(point);
             }
         }
+        // IReadOnlyList 本身不能阻止调用方把数组强转回去写入；只读包装还保证历史查询快照独立。
         return Array.AsReadOnly(result.ToArray());
 
         void PushDefinition(BlockReference reference, Matrix3d parentToWorld)
@@ -117,7 +118,8 @@ public static class BlockIntersectionExBeta
             var definition = (BlockTableRecord)transaction.GetObject(definitionId, OpenMode.ForRead);
             if (definition.IsFromExternalReference || definition.IsFromOverlayReference)
                 throw new NotSupportedException("不支持外部参照，不能以未展开的外参返回部分交点。");
-            // 显式栈避免有效但很深的嵌套耗尽 CLR 调用栈；子实体 ID 快照不持有原生枚举器。
+            // 显式栈避免深层有效嵌套耗尽 CLR 调用栈；ID 快照让原生枚举器在本次下探前就能释放。
+            // 普通定义枚举由 SDK 过滤删除成员；读取/变换失败仍整体传播，不吞异常返回部分交点。
             stack.Push(new TraversalFrame(definitionId, parentToWorld * reference.BlockTransform,
                 definition.Cast<ObjectId>().ToArray()));
         }
@@ -125,6 +127,7 @@ public static class BlockIntersectionExBeta
 
     private static void RequireSupportedCurve(Curve curve)
     {
+        // 精确匹配原生类型；自定义派生对象的变换、克隆和求交行为不在只读保证之内。
         var type = curve.GetType();
         if (type != typeof(Line) && type != typeof(Arc) && type != typeof(Circle) &&
             type != typeof(Ellipse) && type != typeof(Polyline) && type != typeof(Spline) &&
@@ -143,11 +146,23 @@ public static class BlockIntersectionExBeta
         var y = Math.Abs(first.Y - second.Y);
         var z = Math.Abs(first.Z - second.Z);
         if (x > tolerance || y > tolerance || z > tolerance) return false;
-        // 先筛轴差再归一化，避免大坐标平方溢出；三个归一化轴差均不大于 1。
-        x /= tolerance;
-        y /= tolerance;
-        z /= tolerance;
-        return x * x + y * y + z * z <= 1;
+        // 次正规阈值先同乘精确的 2^52；否则 sqrt(2)*Epsilon 会舍入回 Epsilon，误合并对角点。
+        if (tolerance < 2.2250738585072014e-308)
+        {
+            const double scale = 4503599627370496;
+            x *= scale;
+            y *= scale;
+            z *= scale;
+            tolerance *= scale;
+        }
+        var largest = Math.Max(x, Math.Max(y, z));
+        if (largest == 0) return true;
+        // 以轴差而非阈值缩放求斜距：5/13 与 12/13 的平方和会大于 1，误排除距离恰为 13 的点。
+        // 每项至多为 1；乘回最大轴差即使溢出，也只会拒绝超过有限阈值的距离。
+        x /= largest;
+        y /= largest;
+        z /= largest;
+        return largest * Math.Sqrt(x * x + y * y + z * z) <= tolerance;
     }
 
     private static bool Finite(double value) => !double.IsNaN(value) && !double.IsInfinity(value);

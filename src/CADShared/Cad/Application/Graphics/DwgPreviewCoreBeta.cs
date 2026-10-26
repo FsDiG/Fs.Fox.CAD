@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Fs.Fox.Cad;
 
-// SDK-free policy and camera fitting used by the actual off-screen rendering adapter.
+// 将路径、发布与相机数值规则和 GS 调用隔离，核心回归可直接调用这些生产实现。
 internal readonly struct DwgPreviewRequestBeta
 {
     internal readonly string DrawingPath;
@@ -37,6 +37,7 @@ internal readonly struct DwgPreviewFitBeta
 
 internal static class DwgPreviewCoreBeta
 {
+    // 同时限制单边和总像素数，控制离屏截图的内存开销；乘积使用 long，避免限制调整后发生整数溢出。
     internal static void ValidateDimensions(int width, int height)
     {
         if (width < 1 || width > 8192)
@@ -55,6 +56,7 @@ internal static class DwgPreviewCoreBeta
             throw new ArgumentException("必须指定源 DWG 文件。", nameof(drawingPath));
         if (string.IsNullOrWhiteSpace(outputPath))
             throw new ArgumentException("必须指定新的 PNG 文件。", nameof(outputPath));
+        // 先固定绝对路径，后续读取、编码与发布使用同一名称；输出竞争仍由 CreateNew/Move 处理。
         var drawing = Path.GetFullPath(drawingPath);
         var output = Path.GetFullPath(outputPath);
         ValidateOrdinaryFilePath(drawing, nameof(drawingPath));
@@ -77,14 +79,14 @@ internal static class DwgPreviewCoreBeta
 
     private static void ValidateOrdinaryFilePath(string path, string parameterName)
     {
-        // A drive-root colon is valid; a colon in the remaining file path can name an NTFS data stream.
+        // 盘符根中的冒号合法，剩余路径中的冒号却可能指向 NTFS 数据流，绕过独立文件的归属约定。
         var root = Path.GetPathRoot(path) ?? string.Empty;
         if (path.Substring(root.Length).IndexOf(':') >= 0)
             throw new ArgumentException("必须使用独立文件路径，不能使用文件数据流路径。", parameterName);
     }
 
-    // The adapter supplies distinct same-directory paths after validating the request.
-    // Keep file publication independent of the PNG encoder so the actual IO ownership is testable.
+    // 适配层验证请求后提供同目录且不同名的临时/目标路径。
+    // 编码写入成功不等于发布成功；将 IO 归属独立出来，才能用真实文件覆盖两阶段的失败路径。
     internal static void WriteNewOutput(string temporaryPath, string outputPath, Action<Stream> writeContent)
     {
         var ownsTemporary = false;
@@ -92,21 +94,20 @@ internal static class DwgPreviewCoreBeta
         {
             using (var stream = new FileStream(temporaryPath, FileMode.CreateNew, FileAccess.Write, FileShare.None))
             {
-                // CreateNew may fail because this path already belongs to somebody else.
-                // Acquire deletion rights only after construction succeeds, before encoding can throw.
+                // CreateNew 失败时路径可能属于其他调用方；只有成功取得流后才有清理该文件的权利。
                 ownsTemporary = true;
                 writeContent(stream);
             }
-            // Request validation cannot prevent another writer from creating the output in the meantime.
+            // 路径预检不能阻止随后创建目标的竞争者；不覆盖的 Move 是最终发布保护。
             File.Move(temporaryPath, outputPath);
-            // Moving ends ownership of the old name; a later file at that name is not ours to delete.
+            // 移动成功后不再拥有旧名称，之后同名出现的文件不能由本次 finally 删除。
             ownsTemporary = false;
         }
         finally
         {
             if (ownsTemporary)
             {
-                // Preserve the encoding/IO exception; only this attempt's file is eligible for cleanup.
+                // 清理失败不能掩盖原始编码/IO 异常；只有本次成功创建的临时文件才可尝试删除。
                 try { File.Delete(temporaryPath); }
                 catch (IOException) { }
                 catch (UnauthorizedAccessException) { }
@@ -132,17 +133,19 @@ internal static class DwgPreviewCoreBeta
             spanY = 1;
         }
         var aspect = (double)width / height;
-        // Fit both projected axes before adding 10% total padding; matching the pixel ratio prevents cropping.
+        // 先容纳两个投影轴，再增加总计 10% 的余量；相机宽高比必须与像素宽高比相同。
         var fieldHeight = Math.Max(spanY, spanX / aspect) * 1.1;
         var fieldWidth = fieldHeight * aspect;
-        // Halve first so finite same-sign endpoints need not overflow while computing the midpoint.
+        // 分别折半再求和，避免同号大坐标的中点计算先发生加法溢出。
         var centerX = minX / 2 + maxX / 2;
         var centerY = minY / 2 + maxY / 2;
         var centerZ = minZ / 2 + maxZ / 2;
-        // Above the highest geometry; the relative offset stays representable at large shared elevations.
+        // 眼点高于全部几何；相对偏移避免大标高下加 1 被浮点舍入吞掉、视线退化为零。
         var eyeZ = maxZ + Math.Max(1, Math.Abs(maxZ) * 1e-12);
+        // 有限眼点与目标仍可能在相减时溢出；GS 使用这条方向向量，不能只验证两个端点。
+        var viewDistance = eyeZ - centerZ;
         if (!Finite(fieldWidth) || !Finite(fieldHeight) || fieldWidth <= 0 || fieldHeight <= 0 ||
-            !Finite(eyeZ) || eyeZ <= centerZ)
+            !Finite(eyeZ) || !Finite(viewDistance) || viewDistance <= 0)
             throw new ArgumentException("图形范围无法形成有效的 WCS 俯视相机。", "bounds");
         return new DwgPreviewFitBeta(centerX, centerY, centerZ, eyeZ, fieldWidth, fieldHeight);
     }

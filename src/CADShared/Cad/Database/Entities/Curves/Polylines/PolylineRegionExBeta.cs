@@ -10,7 +10,8 @@ public static class PolylineRegionExBeta
     /// 宽度及 Thickness 不参与区域；自交和重合轮廓采用偶奇填充，源直线/圆弧边界优先返回 Boundary。
     /// 重复顶点之间的零直段忽略；全部零段和零弦圆弧拒绝。共线/折返轮廓可能没有内部，按偶奇规则查询。
     /// 非零绝对 bulge 仅支持闭区间 [1e-8,1e8]；超界明确拒绝，不按端点直连替代。支持正负、主弧和双半圆。
-    /// 无法可靠表示的极端坐标拒绝；零容差仍允许以局部几何运算为基准的双精度舍入误差。
+    /// 检测到非有限结果或显式不可表示的运算尺度时拒绝；有限性检查不能识别所有输入精度损失。
+    /// 零容差仍允许以局部几何运算为基准的双精度舍入误差。
     /// 此方法仅借用源，不修改、释放或擦除输入，不启动事务或创建数据库实体。
     /// </remarks>
     /// <param name="source">读取生命周期有效且 Closed 为 true 的轻量多段线，至少两个顶点。</param>
@@ -40,9 +41,11 @@ public static class PolylineRegionExBeta
             var vertex = source.GetPoint2dAt(i);
             vertices[i] = new PolylineVertexDataBeta(vertex.X, vertex.Y, source.GetBulgeAt(i));
         }
+        // 轮廓准备在平面外快速返回之前完成，避免查询点的位置掩盖非法源几何。
         var loop = PolylineContainmentCoreBeta.Prepare(vertices);
         var ocs = point.TransformBy(Matrix3d.WorldToPlane(normal));
         if (!Finite(ocs)) throw new InvalidOperationException("The query cannot be represented in OCS.");
+        // 先按法向距离判平面，再在 OCS 内按同一距离容差查询中心线区域；不合成三维边界带。
         if (Math.Abs(ocs.Z - elevation) > tolerance)
             return PolylinePointRelationBeta.OffPlane;
         return loop.Classify(ocs.X, ocs.Y, tolerance);

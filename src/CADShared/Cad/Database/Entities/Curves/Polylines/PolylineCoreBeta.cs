@@ -3,13 +3,10 @@ using System.Collections.Generic;
 
 namespace Fs.Fox.Cad;
 
-// Capability source: ZFGK.AutoCAD PolylineUtil (author Zhang Fan), source snapshot
-// a882003436fb4cc31b24c90f6779177c13a60abe. Reimplemented with explicit ownership,
-// complete segment data and a CAD-independent numerical core.
+/// <summary>OCS 平面中的顶点快照；仅含数值，不持有 CAD 对象或数据库资源。</summary>
 internal readonly struct PolylineVertexDataBeta
 {
-    // Bulge and widths belong to the segment leaving this vertex. The last open
-    // vertex has no outgoing segment, but its unused fields still round-trip.
+    // 凸度及段宽属于从此顶点出发的段；开放线末点虽没有出段，仍保留其未使用字段供往返操作。
     internal PolylineVertexDataBeta(double x, double y, double bulge = 0,
         double startWidth = 0, double endWidth = 0)
     {
@@ -27,8 +24,11 @@ internal readonly struct PolylineVertexDataBeta
     internal double EndWidth { get; }
 }
 
+/// <summary>只变换数值快照的多段线核心；所有返回数组与输入独立，不负责 OCS 转换或数据库写入。</summary>
 internal static class PolylineCoreBeta
 {
+    private const double MinimumNormal = 2.2250738585072014e-308;
+
     internal static void ValidateTolerance(double tolerance)
     {
         if (!IsFinite(tolerance) || tolerance < 0)
@@ -36,6 +36,29 @@ internal static class PolylineCoreBeta
     }
 
     internal static bool IsFinite(double value) => !double.IsNaN(value) && !double.IsInfinity(value);
+
+    // 判断二维轴差是否落入距离阈值；次正规量先共同缩放，避免直接长度返回值的粗量化误判。
+    // 调用方先验证容差有限且非负；轴差可以因两个有限坐标相减而溢出，此时直接拒绝匹配。
+    internal static bool WithinDistance(double dx, double dy, double tolerance)
+    {
+        var x = Math.Abs(dx);
+        var y = Math.Abs(dy);
+        if (!(x <= tolerance && y <= tolerance))
+            return false;
+        if (tolerance == 0)
+            return true;
+
+        // 共乘 2^52 精确提升次正规量，避免 Hypot(Epsilon,Epsilon) 舍入为 Epsilon 而误接受。
+        // 不改通用 Hypot 的长度返回值；正常尺度仍沿用原比较，保留 5-12-13 等合法边界。
+        if (tolerance < MinimumNormal)
+        {
+            const double scale = 4503599627370496;
+            x *= scale;
+            y *= scale;
+            tolerance *= scale;
+        }
+        return Hypot(x, y) <= tolerance;
+    }
 
     internal static void Validate(IReadOnlyList<PolylineVertexDataBeta> vertices, bool closed)
     {
@@ -52,6 +75,7 @@ internal static class PolylineCoreBeta
                 !IsFinite(vertex.StartWidth) || !IsFinite(vertex.EndWidth) ||
                 vertex.StartWidth < 0 || vertex.EndWidth < 0)
                 throw new ArgumentException("Vertices must contain finite coordinates, bulges and nonnegative widths.", nameof(vertices));
+            // 末点字段仍须有限，但开放线的末点不形成实际段，不能拿它的 bulge 解释闭合段。
             if (!closed && i == vertices.Count - 1)
                 continue;
             var next = vertices[(i + 1) % vertices.Count];
@@ -78,15 +102,14 @@ internal static class PolylineCoreBeta
             var point = vertices[pointIndex];
             if (!closed && i == result.Length - 1)
             {
-                // Preserve the unused terminal metadata so reversing twice is lossless.
+                // 将未使用的末点数据继续留在末点，保证连续反向两次还原全部数值字段。
                 var terminal = vertices[vertices.Count - 1];
                 result[i] = new PolylineVertexDataBeta(point.X, point.Y,
                     terminal.Bulge, terminal.StartWidth, terminal.EndWidth);
                 continue;
             }
 
-            // Reversed outgoing data comes from the original incoming segment,
-            // not from the data stored on this point itself.
+            // 反向后的出段来自原来的入段；闭合线固定首点，段凸度取反，起止宽度对换。
             var segment = vertices[(pointIndex + vertices.Count - 1) % vertices.Count];
             result[i] = new PolylineVertexDataBeta(point.X, point.Y, -segment.Bulge,
                 segment.EndWidth, segment.StartWidth);
@@ -105,8 +128,7 @@ internal static class PolylineCoreBeta
         {
             if (compact.Count != 0 && SamePoint(compact[compact.Count - 1], vertex))
             {
-                // Validation has rejected a zero-chord arc. Replace only the outgoing
-                // data of the zero-length straight segment, keeping incoming geometry.
+                // 验证阶段已拒绝零弦圆弧。重合直段只覆盖出段数据，原入段及其段宽保持不变。
                 compact[compact.Count - 1] = vertex;
             }
             else
@@ -118,7 +140,7 @@ internal static class PolylineCoreBeta
         if (compact.Count < 2)
             throw new InvalidOperationException("Cleaning would leave no nonzero segment.");
 
-        // The first closed vertex is an intentional anchor; do not simplify across it.
+        // 闭合首点是固定锚点；临时附加首点来处理末段，但不跨首点合并。
         if (closed)
             compact.Add(compact[0]);
         var result = new List<PolylineVertexDataBeta> { compact[0] };
@@ -131,12 +153,16 @@ internal static class PolylineCoreBeta
             var dx = compact[last].X - first.X;
             var dy = compact[last].Y - first.Y;
             var length = Hypot(dx, dy);
-            if (first.Bulge == 0 && first.EndWidth == width && IsFinite(length) && length > 0)
+            // 次正规段的已舍入长度不能提供可靠单位方向，保留非零段而不尝试合并；
+            // 上面的重合顶点压缩仍然有效，不额外拒绝这些输入或扩大距离容差。
+            if (first.Bulge == 0 && first.EndWidth == width && IsFinite(length) && length >= MinimumNormal)
             {
                 var ux = dx / length;
                 var uy = dy / length;
-                var previousDirectionX = ux;
-                var previousDirectionY = uy;
+                // 局部转向只需方向符号，按最大分量缩放，避免两次独立单位化给精确直角引入正点积。
+                var directionScale = Math.Max(Math.Abs(dx), Math.Abs(dy));
+                var previousDirectionX = dx / directionScale;
+                var previousDirectionY = dy / directionScale;
                 var previousProjection = length;
                 for (var end = anchor + 2; end < compact.Count; end++)
                 {
@@ -148,19 +174,17 @@ internal static class PolylineCoreBeta
                     var stepX = compact[end].X - segment.X;
                     var stepY = compact[end].Y - segment.Y;
                     var stepLength = Hypot(stepX, stepY);
-                    if (!IsFinite(stepLength) || stepLength == 0)
+                    if (!IsFinite(stepLength) || stepLength < MinimumNormal)
                         break;
-                    var directionX = stepX / stepLength;
-                    var directionY = stepY / stepLength;
+                    var stepScale = Math.Max(Math.Abs(stepX), Math.Abs(stepY));
+                    var directionX = stepX / stepScale;
+                    var directionY = stepY / stepScale;
                     var forwardTurn = previousDirectionX * directionX + previousDirectionY * directionY;
                     var projection = px * ux + py * uy;
                     var deviation = Math.Abs(px * uy - py * ux);
-                    // A fixed reference and half-tolerance band bound the distance of
-                    // every original vertex to the final chord by tolerance, in O(n):
-                    // both the vertex and final endpoint are within half a tolerance
-                    // of the reference. Increasing reference projection places the
-                    // comparison point interpolated between the final segment endpoints.
-                    // The local dot product separately protects folds inside that band.
+                    // 参考线始终固定。原顶点和最终端点均在半容差带内，因此原顶点到最终弦的
+                    // 距离至多为整个容差；参考投影严格递增，保证比较点位于有限弦段而非延长线。
+                    // 另用相邻原段的点积保护局部折返，避免窄带内的 90 度或更大转向被消掉。
                     if (!IsFinite(projection) || !IsFinite(deviation) ||
                         projection <= previousProjection || forwardTurn <= 0 || deviation > tolerance * 0.5)
                         break;
@@ -198,7 +222,7 @@ internal static class PolylineCoreBeta
             for (var secondEnd = 0; secondEnd < 2; secondEnd++)
             {
                 var b = second[secondEnd == 0 ? 0 : second.Count - 1];
-                if (Hypot(a.X - b.X, a.Y - b.Y) <= tolerance)
+                if (WithinDistance(a.X - b.X, a.Y - b.Y, tolerance))
                 {
                     match = firstEnd * 2 + secondEnd;
                     count++;
@@ -209,8 +233,8 @@ internal static class PolylineCoreBeta
         if (count != 1)
             return false;
 
-        // Match codes: start/start, start/end, end/start, end/end. Move or reverse
-        // only the second input's placement; the first keeps its original direction.
+        // 四种唯一配对依次为首/首、首/末、末/首、末/末。只调整第二条线的排列和方向，
+        // 第一条线始终按原行进方向保留；容差过大导致多组配对时，前面已保守拒绝。
         IReadOnlyList<PolylineVertexDataBeta> head;
         IReadOnlyList<PolylineVertexDataBeta> tail;
         if (match < 2)
@@ -231,7 +255,7 @@ internal static class PolylineCoreBeta
             joined.Add(head[i]);
         if (!SamePoint(commonHead, commonTail))
         {
-            // Never snap an arc endpoint: retain original geometry and bridge the gap.
+            // 不吸附或移动原圆弧端点；间隙另建直段，段宽从前段终宽过渡到后段起宽。
             joined.Add(new PolylineVertexDataBeta(commonHead.X, commonHead.Y, 0,
                 head[head.Count - 2].EndWidth, commonTail.StartWidth));
         }
@@ -261,8 +285,7 @@ internal static class PolylineCoreBeta
             var start = vertices[i];
             if (start.Bulge != 0)
                 throw new NotSupportedException("Filleting only supports straight segments.");
-            // A single constant width makes every new line/arc junction continuous.
-            // Reject tapered or discontinuous widths instead of silently discarding them.
+            // 全线恒宽使新增直段/圆弧的接头连续；变宽或跨段不连续时拒绝，不能丢弃原宽度。
             if (start.StartWidth != width || start.EndWidth != width)
                 throw new NotSupportedException("Filleting requires one constant width on all actual segments.");
             var end = vertices[(i + 1) % vertices.Count];
@@ -272,13 +295,11 @@ internal static class PolylineCoreBeta
             if (!IsFinite(length) || length <= tolerance)
                 throw new InvalidOperationException("Every segment must have a finite length greater than tolerance.");
             lengths[i] = length;
-            // Scale by the largest component before classifying collinearity.
-            // Unit-normalizing proportional edges first can introduce a false turn.
+            // 按最大分量缩放后判断转向；先单位化会给成比例的直段引入伪小转角。
             var scale = Math.Max(Math.Abs(dx), Math.Abs(dy));
             directionsX[i] = dx / scale;
             directionsY[i] = dy / scale;
-            // Underflow of a nonzero component can erase a real corner. A finite
-            // length alone does not make its direction or tangent cuts representable.
+            // 非零方向分量下溢会吞掉真实转角；弦长有限并不保证方向和切点仍可表示。
             if ((dx != 0 && directionsX[i] == 0) || (dy != 0 && directionsY[i] == 0))
                 throw new InvalidOperationException("A nonzero segment direction component cannot be represented at this scale.");
         }
@@ -292,16 +313,15 @@ internal static class PolylineCoreBeta
             var previous = (i + segmentCount - 1) % segmentCount;
             var cross = directionsX[previous] * directionsY[i] - directionsY[previous] * directionsX[i];
             var dot = directionsX[previous] * directionsX[i] + directionsY[previous] * directionsY[i];
-            // Direction is independent of the caller's distance tolerance. Preserve
-            // exactly forward-collinear corners and reject exact 180-degree folds.
+            // 距离容差不参与角度分类：精确同向共线角保留，精确 180 度折返无法构造圆角。
             if (cross == 0)
             {
                 if (dot <= 0)
                     throw new InvalidOperationException("A reversing collinear corner cannot be filleted.");
                 continue;
             }
-            // d = r*tan(|turn|/2). Choose the half-angle identity whose denominator
-            // does not cancel near a reversing corner; radius is never reduced.
+            // 回退量 d = r*tan(|转角|/2)。按点积符号选择半角恒等式，避免近折返时分母相消；
+            // 每个角均使用调用者指定半径，不能为适应短边而静默缩小。
             var absoluteCross = Math.Abs(cross);
             var angularScale = Hypot(cross, dot);
             var tangentHalf = dot >= 0 ? absoluteCross / (angularScale + dot) : (angularScale - dot) / absoluteCross;
@@ -313,9 +333,8 @@ internal static class PolylineCoreBeta
             bulges[i] = bulge;
         }
 
-        // Plan every corner before emitting geometry: two individually valid cuts
-        // can overlap on a shared edge. Even exactly touching cuts are rejected;
-        // every remaining straight segment must be strictly longer than tolerance.
+        // 先规划全部角再输出。相邻角各自可行并不意味着共享边能容纳两端回退；
+        // 切点恰好相接也拒绝，每条剩余直段都必须严格长于距离容差。
         for (var i = 0; i < segmentCount; i++)
         {
             var remaining = lengths[i] - retreats[i] - retreats[(i + 1) % vertices.Count];
@@ -340,16 +359,14 @@ internal static class PolylineCoreBeta
             var chord = Hypot(exit.X - entry.X, exit.Y - entry.Y);
             var absoluteBulge = Math.Abs(bulges[i]);
             var actualRadius = (chord * 0.25 / absoluteBulge) * (1 + absoluteBulge * absoluteBulge);
-            // Large shared offsets can erase a cut even when d is representable.
-            // Do not return a different radius caused by rounded tangent coordinates.
+            // 大坐标偏移可能吞掉可表示的回退量；以实际输出弦长复核半径，避免返回舍入后变形的圆角。
             if (!IsFinite(chord) || chord <= tolerance || !IsFinite(actualRadius) ||
                 Math.Abs(actualRadius - radius) > FilletPrecision(radius, tolerance))
                 throw new InvalidOperationException("The requested fillet radius cannot be represented at these coordinates.");
             entries[i] = entry;
             exits[i] = exit;
         }
-        // Recheck represented cuts, not only their theoretical budgets: rounding at
-        // a large offset must not collapse a remaining edge or reverse its direction.
+        // 再检查已表示的切点，防止理论预算通过，但大偏移舍入使剩余边塌缩或方向反转。
         for (var i = 0; i < segmentCount; i++)
         {
             var next = (i + 1) % vertices.Count;
@@ -385,8 +402,7 @@ internal static class PolylineCoreBeta
         return point;
     }
 
-    // Keep zero distance tolerance usable for small geometry without demanding
-    // exact real arithmetic from double. This is a round-off floor, not a cut budget.
+    // 零距离容差仍须允许局部 double 运算的舍入；此下限只用于精度复核，不放宽共享边预算。
     private static double FilletPrecision(double length, double tolerance) =>
         Math.Max(tolerance, length * (64 * 2.2204460492503131e-16));
 

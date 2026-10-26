@@ -3,13 +3,11 @@ using System.Collections.Generic;
 
 namespace Fs.Fox.Cad;
 
-// Capability source: ZFGK ObjectARX/Entity/BlockUtil.cs (Sort) and
-// ObjectARX/ArxOthers/ExtentUtil.cs (GetLocalCombinedExtent), source header:
-// Author: TianTeng; Copyright © 北京智帆高科科技有限公司 2015.
-// The algorithms below are reimplemented with explicit, deterministic contracts.
-// This file deliberately has no CAD SDK dependency; tests link this production file.
+// 行列排序、标量排序与范围连通分量共用的纯计算核心。
+// 不依赖 CAD SDK，使数值规则可以直接由生产源码链接测试，而不是另写一份算法验证自身。
 internal static class OrderingBetaCore
 {
+    // 使用不可变值快照隔离调用方集合；后续比较器不再读取外部索引器。
     internal readonly struct Point
     {
         internal readonly double X;
@@ -66,8 +64,8 @@ internal static class OrderingBetaCore
         ValidateTolerance(tolerance, nameof(tolerance));
 
         var snapshot = new Point[points.Count];
-        var indices = new int[points.Count];
-        for (var i = 0; i < points.Count; i++)
+        var indices = new int[snapshot.Length];
+        for (var i = 0; i < snapshot.Length; i++)
         {
             snapshot[i] = points[i];
             if (!IsFinite(snapshot[i].X) || !IsFinite(snapshot[i].Y))
@@ -75,9 +73,9 @@ internal static class OrderingBetaCore
             indices[i] = i;
         }
 
-        // Canonical anchors are independent of requested reading direction.
-        // Rows: highest remaining Y. Columns: lowest remaining X.
-        // Array.Sort is not stable; every comparator falls back to the original index to provide stable ties.
+        // 先按精确坐标建立唯一的扫描次序：行从最高 Y、列从最低 X 建立锚点。
+        // 这里不能把“相差在容差内”视作相等，否则比较关系不满足传递性。
+        // Array.Sort 本身不稳定，最终以原始索引区分相同坐标，保留重复输入及其稳定次序。
         Array.Sort(indices, (a, b) =>
         {
             var primary = byRows
@@ -95,6 +93,7 @@ internal static class OrderingBetaCore
         var start = 0;
         while (start < indices.Length)
         {
+            // 整组只与固定锚点比较，不沿相邻点累计容差；改变读取方向不能改变组的成员。
             var anchor = byRows ? snapshot[indices[start]].Y : snapshot[indices[start]].X;
             var end = start + 1;
             while (end < indices.Length)
@@ -123,6 +122,7 @@ internal static class OrderingBetaCore
             start = end;
         }
 
+        // 方向只重排已经确定的分组，不能反过来影响锚点选取。
         if (byRows ? !topToBottom : !leftToRight)
             groups.Reverse();
         var result = new int[indices.Length];
@@ -140,14 +140,15 @@ internal static class OrderingBetaCore
         if (values is null)
             throw new ArgumentNullException(nameof(values));
         var snapshot = new double[values.Count];
-        var indices = new int[values.Count];
-        for (var i = 0; i < values.Count; i++)
+        var indices = new int[snapshot.Length];
+        for (var i = 0; i < snapshot.Length; i++)
         {
             snapshot[i] = values[i];
             if (!IsFinite(snapshot[i]))
                 throw new ArgumentException("Sort keys must be finite.", nameof(values));
             indices[i] = i;
         }
+        // 相同里程仍以输入索引排序；不能扰动里程值来制造唯一键，也不能倒置相等键的次序。
         Array.Sort(indices, (a, b) =>
         {
             var comparison = descending
@@ -165,9 +166,9 @@ internal static class OrderingBetaCore
         ValidateTolerance(maximumGap, nameof(maximumGap));
 
         var boxes = new Box[extents.Count];
-        var parents = new int[extents.Count];
-        var ranks = new byte[extents.Count];
-        for (var i = 0; i < extents.Count; i++)
+        var parents = new int[boxes.Length];
+        var ranks = new byte[boxes.Length];
+        for (var i = 0; i < boxes.Length; i++)
         {
             var box = extents[i];
             if (!IsFinite(box.MinX) || !IsFinite(box.MinY) || !IsFinite(box.MinZ) ||
@@ -180,8 +181,8 @@ internal static class OrderingBetaCore
             parents[i] = i;
         }
 
-        // Edges are based only on original boxes. A union envelope never creates
-        // new edges across empty space. Connected components supply transitivity.
+        // 原始矩形是图的顶点，间距满足条件时连边。并查集只求连通分量，不改变连边依据。
+        // 若拿合并后的外包框继续连边，L 形空隙里的独立对象会被错误吸收。
         for (var i = 0; i < boxes.Length; i++)
         {
             for (var j = i + 1; j < boxes.Length; j++)
@@ -215,6 +216,8 @@ internal static class OrderingBetaCore
             group.Add(i);
         }
 
+        // 成员按输入索引顺序收集，合并框仅在分组完成后用于输出及确定组的次序。
+        // 不依赖字典枚举顺序，也不以合并框反向影响邻近关系。
         var result = new List<Group>(members.Count);
         foreach (var member in members.Values)
         {
@@ -247,8 +250,19 @@ internal static class OrderingBetaCore
             return false;
         if (gap == 0)
             return true;
-        // A scaled hypotenuse avoids overflow in x*x + y*y. If the final
-        // multiplication overflows, the distance also exceeds every finite gap.
+        // 次正规数先共乘 2^52，把所有非零分量精确升到正常数范围。
+        // 否则 x=y=gap=double.Epsilon 的斜距会舍入回 gap，错误合并本来分离的范围。
+        const double minimumNormal = 2.2250738585072014e-308;
+        const double subnormalScale = 4503599627370496; // 2^52，仅移动二进制指数，不扩大容差。
+        if (gap < minimumNormal)
+        {
+            x *= subnormalScale;
+            y *= subnormalScale;
+            gap *= subnormalScale;
+        }
+
+        // 以最大轴差归一化后求斜距，避免平方溢出。
+        // 不改成 (x/gap)^2+(y/gap)^2<=1：5-12-13 的平方和可能舍入到 1 以上，排除合法边界。
         var largest = Math.Max(x, y);
         if (largest == 0)
             return true;
@@ -258,6 +272,7 @@ internal static class OrderingBetaCore
 
     private static int FindRoot(int[] parents, int index)
     {
+        // 路径减半避免深链反复查找；根编号只用于分组，不决定最终输出次序。
         while (parents[index] != index)
         {
             parents[index] = parents[parents[index]];

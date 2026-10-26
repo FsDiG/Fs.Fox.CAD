@@ -1,8 +1,7 @@
 namespace Fs.Fox.Cad;
 
-/// <summary>处于迁移验证阶段的轻量多段线几何操作。</summary>
+/// <summary>创建轻量多段线几何副本的 Beta 操作；真实 CAD 宿主验收单独记录。</summary>
 /// <remarks>
-/// 来源能力为 ZFGK.AutoCAD 的 PolylineUtil，原作者张帆；按 Fox 的对象归属和段数据契约重新实现。
 /// 本类始终借用输入，不修改、释放或擦除输入，也不启动事务或自动落库。
 /// 返回对象只包含顶点、凸度、段宽、Normal、Elevation、Thickness 和 Closed；
 /// 不复制图层、颜色、线型、XData、扩展字典或其他非几何数据，不等同于 DBObject.Clone。
@@ -27,6 +26,7 @@ public static class PolylineExBeta
     /// 圆弧及其端点、宽度变化和局部转向达到 90 度的折点均保留。直线合并采用固定参考线半容差带，
     /// 保证被替换的每个原顶点到最终直线段的距离不超过 tolerance；不累计逐点简化误差。
     /// 仅精确重合顶点之间的直线段可作为零长度段删除，近距离短段不会单独作为零段删除。
+    /// 非零直段长度处于 double 次正规范围时保留原段，只执行安全的重合顶点清理。
     /// 闭合线保留首顶点，不跨该首点合并。没有可整理内容时仍返回独立对象。
     /// </remarks>
     /// <param name="source">借用的轻量多段线。</param>
@@ -113,6 +113,7 @@ public static class PolylineExBeta
             !PolylineCoreBeta.IsFinite(source.Normal.Z))
             throw new ArgumentException("The polyline plane and thickness must be finite.", nameof(source));
 
+        // 先读取独立数值快照，计算核心无需延长借用对象的生命周期，也不能接触数据库。
         var result = new PolylineVertexDataBeta[source.NumberOfVertices];
         for (var i = 0; i < result.Length; i++)
         {
@@ -124,7 +125,7 @@ public static class PolylineExBeta
         return result;
     }
 
-    // Exact equality is intentional: joining does not transform between OCS planes.
+    // 必须精确相等：此入口不会在两个 OCS 平面之间转换顶点，也不会调整厚度。
     private static bool SamePlaneAndThickness(Polyline first, Polyline second) =>
         first.Normal.X == second.Normal.X && first.Normal.Y == second.Normal.Y &&
         first.Normal.Z == second.Normal.Z && first.Elevation == second.Elevation &&
@@ -132,6 +133,8 @@ public static class PolylineExBeta
 
     private static Polyline CreateGeometry(Polyline source, IReadOnlyList<PolylineVertexDataBeta> vertices, bool closed)
     {
+        // 只有全部数值计算完成后才创建宿主实体；创建途中失败时由本方法释放半成品。
+        // 成功返回即转交调用方，本方法不追加到任何数据库。
         var result = new Polyline(vertices.Count);
         try
         {

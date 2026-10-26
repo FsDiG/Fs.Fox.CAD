@@ -48,6 +48,19 @@ public static class TestBlockIntersectionsBeta
         }
         var emptyBlock = (BlockReference)transaction.GetObject(fixture.EmptyRoot, OpenMode.ForRead);
         Require(emptyBlock.GetCurveIntersectionsBeta(transaction, target).Count == 0, "Non-Curve leaves do not participate");
+        foreach (var distanceCase in new[]
+        {
+            (fixture.DistanceRoot, new Point3d(5, 12, 0)),
+            (fixture.SpatialDistanceRoot, new Point3d(3, 4, 12))
+        })
+        {
+            var distanceBlock = (BlockReference)transaction.GetObject(distanceCase.Item1, OpenMode.ForRead);
+            using var distanceTarget = new Line(Point3d.Origin, distanceCase.Item2);
+            RequirePoints(distanceBlock.GetCurveIntersectionsBeta(transaction, distanceTarget, tolerance: 13),
+                new[] { Point3d.Origin }, "Pythagorean distance exactly at the tolerance must merge");
+            RequirePoints(distanceBlock.GetCurveIntersectionsBeta(transaction, distanceTarget, tolerance: 13 - 1e-10),
+                new[] { Point3d.Origin, distanceCase.Item2 }, "A tolerance below the distance must keep both points");
+        }
         var polylineBlock = (BlockReference)transaction.GetObject(fixture.PolylineRoot, OpenMode.ForRead);
         var polyline = (Polyline)transaction.GetObject(fixture.Polyline, OpenMode.ForRead);
         using (var polylineTarget = new Line(new Point3d(-1, 5, 2), new Point3d(5, 5, 2)))
@@ -265,6 +278,16 @@ public static class TestBlockIntersectionsBeta
         var empty = Define("FoxIntersectionsBetaNonCurve");
         Append(empty, new DBPoint(Point3d.Origin));
         fixture.EmptyRoot = Append(modelId, new BlockReference(Point3d.Origin, empty));
+        ObjectId DefineDistance(string name, Point3d endpoint)
+        {
+            var definition = Define(name);
+            // Shared endpoint intersections have distinct coordinates; neither point can be hidden by exact deduplication.
+            Append(definition, new Line(Point3d.Origin, new Point3d(-1, 0, 0)));
+            Append(definition, new Line(endpoint, endpoint + Vector3d.XAxis));
+            return Append(modelId, new BlockReference(Point3d.Origin, definition));
+        }
+        fixture.DistanceRoot = DefineDistance("FoxIntersectionsBetaDistanceXY", new Point3d(5, 12, 0));
+        fixture.SpatialDistanceRoot = DefineDistance("FoxIntersectionsBetaDistanceXYZ", new Point3d(3, 4, 12));
         var polylineDefinition = Define("FoxIntersectionsBetaPolyline");
         var polyline = new Polyline();
         polyline.AddVertexAt(0, new Point2d(1, 0), 1, 0, 0);
@@ -307,6 +330,8 @@ public static class TestBlockIntersectionsBeta
         internal ObjectId LeafLine;
         internal ObjectId NearRoot;
         internal ObjectId EmptyRoot;
+        internal ObjectId DistanceRoot;
+        internal ObjectId SpatialDistanceRoot;
         internal ObjectId PolylineRoot;
         internal ObjectId Polyline;
         internal readonly List<ObjectId> ReadIds = new();

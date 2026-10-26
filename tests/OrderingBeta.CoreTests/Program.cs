@@ -105,9 +105,20 @@ var cases = new (string Name, Action Body)[]
         Check(OrderingBetaCore.GroupExtents(boxes, 1.4).Length == 2);
         Check(OrderingBetaCore.GroupExtents(boxes, 1.5).Length == 1);
     }),
-    ("exact three-four-five gap included", () =>
+    ("exact Pythagorean gaps included", () =>
     {
         Check(OrderingBetaCore.GroupExtents(new[] { B(0, 0, 0, 0), B(3, 4, 3, 4) }, 5).Length == 1);
+        Check(OrderingBetaCore.GroupExtents(new[] { B(0, 0, 0, 0), B(5, 12, 5, 12) }, 13).Length == 1);
+    }),
+    ("subnormal diagonal gap does not round into an axis gap", () =>
+    {
+        var gap = double.Epsilon;
+        var boxes = new[] { B(0, 0, 0, 0), B(gap, gap, gap, gap) };
+        Check(OrderingBetaCore.GroupExtents(boxes, gap).Length == 2);
+        Check(OrderingBetaCore.GroupExtents(boxes, 2 * gap).Length == 1);
+        var boundaryBoxes = new[] { B(0, 0, 0, 0), B(5 * gap, 12 * gap, 5 * gap, 12 * gap) };
+        Check(OrderingBetaCore.GroupExtents(boundaryBoxes, 13 * gap).Length == 1);
+        Check(OrderingBetaCore.GroupExtents(boundaryBoxes, 12 * gap).Length == 2);
     }),
     ("original adjacency is transitive", () =>
     {

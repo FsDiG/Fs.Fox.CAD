@@ -35,6 +35,20 @@ public class TestPolylineBeta
         source.Closed = false;
         Throws<ArgumentException>(() => source.GetPointRelationBeta(World(0, 0, 100)));
 
+        // 在真实入口检查分数下端点的半开计数，避免直段范围的往返舍入排除下降边。
+        using var fractional = Make((0, 1, 0, 0, 0), (1, .3, 0, 0, 0), (2, 1, 0, 0, 0));
+        fractional.Closed = true;
+        using var fractionalReverse = fractional.CreateReversedBeta();
+        foreach (var contour in new[] { fractional, fractionalReverse })
+        {
+            True(contour.GetPointRelationBeta(new Point3d(-1, .3, 0), 0) == PolylinePointRelationBeta.Outside,
+                "A left-side point at the minimum vertex Y remains outside in either direction.");
+            True(contour.GetPointRelationBeta(new Point3d(3, .3, 0), 0) == PolylinePointRelationBeta.Outside,
+                "A right-side point at the minimum vertex Y remains outside in either direction.");
+            True(contour.GetPointRelationBeta(new Point3d(1, .3, 0), 0) == PolylinePointRelationBeta.Boundary,
+                "The fractional minimum vertex is still boundary.");
+        }
+
         using var database = new Database(true, true);
         ObjectId id;
         using (var write = database.TransactionManager.StartTransaction())

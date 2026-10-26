@@ -10,6 +10,8 @@ internal static class Program
         var tests = new (string Name, Action Run)[]
         {
             ("straight concave contours and boundary tolerance", StraightContours),
+            ("fractional endpoint bounds preserve half-open vertex crossings", FractionalEndpointBounds),
+            ("endpoint tolerance preserves subnormal and Pythagorean distance boundaries", EndpointDistanceThresholds),
             ("two semicircles, both directions and horizontal tangencies", FullCircles),
             ("minor/major positive and negative arcs and selected-arc boundary", ArcCaps),
             ("major-arc side extent and complement circle points", MajorArcSides),
@@ -79,6 +81,23 @@ internal static class Program
         Is(rotated, 0, Math.Sqrt(2), Relation.Boundary, 1e-12);
     }
 
+    private static void FractionalEndpointBounds()
+    {
+        // Only the lower vertex lies on Y=0.3, so every other point on that horizontal line is outside.
+        // Reconstructing its Y as 1 + length * ((0.3 - 1) / length) yields 0.30000000000000004:
+        // filtering only the descending edge then leaves one spurious crossing for left-side queries.
+        var triangle = new[] { V(0, 1), V(1, .3), V(2, 1) };
+        foreach (var contour in new[] { triangle, PolylineCoreBeta.Reverse(triangle, true) })
+        {
+            Is(contour, -1, .3, Relation.Outside);
+            Is(contour, 0, .3, Relation.Outside);
+            Is(contour, 2, .3, Relation.Outside);
+            Is(contour, 3, .3, Relation.Outside);
+            Is(contour, 1, .3, Relation.Boundary);
+            Is(contour, 1, .5, Relation.Inside);
+        }
+    }
+
     private static void ArcCaps()
     {
         foreach (var sign in new[] { 1, -1 })
@@ -92,6 +111,26 @@ internal static class Program
             Is(Cap(2 * sign), 0, -2 * sign, Relation.Boundary);
             Is(Cap(sign), -1e200, -.5 * sign, Relation.Outside);
             Is(Cap(sign), -1e308, -.5 * sign, Relation.Outside);
+        }
+    }
+
+    private static void EndpointDistanceThresholds()
+    {
+        var unit = double.Epsilon;
+        var tiny = new[] { V(0, 0), V(50 * unit, 0), V(50 * unit, 50 * unit), V(0, 50 * unit) };
+        var ordinary = new[] { V(0, 0), V(100, 0), V(100, 100), V(0, 100) };
+        foreach (var contour in new[] { tiny, PolylineCoreBeta.Reverse(tiny, true) })
+        {
+            Is(contour, -unit, -unit, Relation.Outside, unit);
+            Is(contour, -unit, -unit, Relation.Boundary, 2 * unit);
+            Is(contour, -unit, 0, Relation.Boundary, unit);
+            Is(contour, -5 * unit, -12 * unit, Relation.Boundary, 13 * unit);
+            Is(contour, -5 * unit, -12 * unit, Relation.Outside, 12 * unit);
+        }
+        foreach (var contour in new[] { ordinary, PolylineCoreBeta.Reverse(ordinary, true) })
+        {
+            Is(contour, -5, -12, Relation.Boundary, 13);
+            Is(contour, -5, -12, Relation.Outside, 12);
         }
     }
 

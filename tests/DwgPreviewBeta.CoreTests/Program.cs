@@ -40,6 +40,8 @@ foreach (var bad in new[] { double.NaN, double.PositiveInfinity, double.Negative
 Throws<ArgumentException>(() => DwgPreviewCoreBeta.Fit(10, 0, 0, 0, 10, 0, 100, 100), "inverted bounds");
 Throws<ArgumentException>(() => DwgPreviewCoreBeta.Fit(-double.MaxValue, 0, 0, double.MaxValue, 10, 0, 100, 100), "overflow span");
 Throws<ArgumentException>(() => DwgPreviewCoreBeta.Fit(0, 0, double.MaxValue, 1, 1, double.MaxValue, 100, 100), "unrepresentable top camera");
+Throws<ArgumentException>(() => DwgPreviewCoreBeta.Fit(0, 0, -double.MaxValue,
+    1, 1, double.MaxValue * (1 - 1.5e-12), 100, 100), "finite camera endpoints must not produce an infinite viewing direction");
 foreach (var size in new[] { 0, -1, 8193, int.MaxValue })
 {
     Throws<ArgumentOutOfRangeException>(() => DwgPreviewCoreBeta.ValidateDimensions(size, 100), "invalid width");

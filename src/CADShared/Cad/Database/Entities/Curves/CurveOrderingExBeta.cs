@@ -27,6 +27,8 @@ public static class CurveOrderingExBeta
         if (curve is Ray || curve is Xline)
             throw new NotSupportedException("An unbounded curve cannot define a finite ordering path.");
 
+        // 参数值是曲线自身的坐标，不一定是长度；用原生距离函数验证有限路径并确定里程零点。
+        // 不通过起终点的直线距离判定长度，闭合曲线的起终点可以重合。
         var startParameter = curve.StartParam;
         var endParameter = curve.EndParam;
         if (!OrderingBetaCore.IsFinite(startParameter) || !OrderingBetaCore.IsFinite(endParameter) ||
@@ -39,9 +41,9 @@ public static class CurveOrderingExBeta
             !OrderingBetaCore.IsFinite(length) || length <= 0)
             throw new InvalidOperationException("The curve must have a finite, positive length.");
 
-        // Validate the complete snapshot before the first native closest-point query.
+        // 完整验证点快照后才开始最近点查询，避免处理到一半才发现非法点。
         var snapshot = new Point3d[points.Count];
-        for (var i = 0; i < points.Count; i++)
+        for (var i = 0; i < snapshot.Length; i++)
         {
             var point = points[i];
             if (!OrderingBetaCore.IsFinite(point.X) || !OrderingBetaCore.IsFinite(point.Y) ||
@@ -50,7 +52,8 @@ public static class CurveOrderingExBeta
             snapshot[i] = point;
         }
 
-        // Keep true station values; the original index resolves ties without perturbing geometry.
+        // false 限制最近点落在有限曲线上，端点外的输入不能沿延长线取得负里程或超长里程。
+        // 保留宿主给出的实际里程；相等值由原始索引稳定决胜，不对几何量添加人为偏移。
         var distances = new double[snapshot.Length];
         for (var i = 0; i < snapshot.Length; i++)
         {

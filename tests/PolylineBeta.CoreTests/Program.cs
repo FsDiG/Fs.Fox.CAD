@@ -14,9 +14,11 @@ internal static class Program
             ("reversal: randomized involution and independent result", ReverseRoundTrips),
             ("cleanup: exact duplicates transfer outgoing data", CleanDuplicates),
             ("cleanup: arcs, width transitions and backtracking remain", CleanProtectedSegments),
+            ("cleanup: subnormal nonzero segments remain", CleanSubnormalSegments),
             ("cleanup: fixed-reference error bound and closed anchor", CleanToleranceAndClosed),
             ("joining: four hand-calculated endpoint pairings", JoinFourPairings),
             ("joining: gap preserves arcs and uses endpoint widths", JoinBridge),
+            ("joining: subnormal diagonal threshold and exact distance boundaries", JoinDistanceThresholds),
             ("joining: ambiguity and nonmatches leave null and inputs unchanged", JoinFailures),
             ("filleting: hand-calculated open left and right corners", FilletOpenCorners),
             ("filleting: acute and obtuse turns preserve radius and tangency", FilletObliqueCorners),
@@ -116,6 +118,11 @@ internal static class Program
             new[] { V(0), V(10.01, .04), V(10.02, -.04), V(20) });
         var smallCorner = new[] { V(0), V(1e-9), V(1e-9, 1) };
         Equal(PolylineCoreBeta.Clean(smallCorner, false, 0), smallCorner);
+        // (1,12)·(-60,5)=0，点积的整数真值与距离容差无关。
+        // 分别按 Hypot 单位化会把它舍入成正数，且误差足以越过参考投影的相等判断。
+        var exactRightTurn = new[] { V(0, 0), V(1, 12), V(-59, 17) };
+        foreach (var contour in new[] { exactRightTurn, PolylineCoreBeta.Reverse(exactRightTurn, false) })
+            Equal(PolylineCoreBeta.Clean(contour, false, 130), contour);
     }
 
     private static void CleanToleranceAndClosed()
@@ -140,6 +147,19 @@ internal static class Program
             new[] { V(0, 5), V(0, 0), V(10, 0), V(10, 10), V(0, 10) });
         var alreadyClean = new[] { V(0), V(0, 1), V(1, 1) };
         True(!ReferenceEquals(PolylineCoreBeta.Clean(alreadyClean, false, 0), alreadyClean), "No-op cleanup still returns independent data.");
+    }
+
+    private static void CleanSubnormalSegments()
+    {
+        var unit = double.Epsilon;
+        // 以 Epsilon 为单位的整数叉积为 2*4-3*3=-1；不能因归一化和乘法舍入删去非共线中点。
+        var noncollinear = new[] { V(0, 0), V(2 * unit, 3 * unit), V(3 * unit, 4 * unit) };
+        var collinear = new[] { V(0, 0), V(unit, unit), V(2 * unit, 2 * unit) };
+        foreach (var shape in new[] { noncollinear, collinear })
+        foreach (var closed in new[] { false, true })
+        foreach (var contour in new[] { shape, PolylineCoreBeta.Reverse(shape, closed) })
+            Equal(PolylineCoreBeta.Clean(contour, closed, 0), contour);
+        Equal(PolylineCoreBeta.Clean(new[] { V(0, 0), V(0, 0), noncollinear[1], noncollinear[2] }, false, 0), noncollinear);
     }
 
     private static void JoinFourPairings()
@@ -197,6 +217,25 @@ internal static class Program
         Equal(first, snapshot);
         True(!PolylineCoreBeta.TryJoin(new[] { V(-double.MaxValue), V(-1) },
             new[] { V(1), V(double.MaxValue) }, 0, out _), "Extreme finite coordinate difference does not overflow into a match.");
+    }
+
+    private static void JoinDistanceThresholds()
+    {
+        var unit = double.Epsilon;
+        var first = new[] { V(-1), V(0) };
+        var diagonal = new[] { V(unit, unit), V(1, 1) };
+        True(!PolylineCoreBeta.TryJoin(first, diagonal, unit, out var rejected) && rejected is null,
+            "A diagonal of (Epsilon,Epsilon) exceeds the Epsilon connection distance.");
+        True(PolylineCoreBeta.TryJoin(first, diagonal, 2 * unit, out _), "A larger representable distance permits that diagonal.");
+        True(PolylineCoreBeta.TryJoin(first, new[] { V(unit), V(1, 1) }, unit, out _),
+            "An axis gap equal to Epsilon remains on the accepted boundary.");
+        True(PolylineCoreBeta.TryJoin(new[] { V(-100), V(0) }, new[] { V(5, 12), V(100, 12) }, 13, out _),
+            "The ordinary 5-12-13 diagonal remains on the accepted boundary.");
+        var subnormalBoundary = new[] { V(5 * unit, 12 * unit), V(1, 1) };
+        True(PolylineCoreBeta.TryJoin(first, subnormalBoundary, 13 * unit, out _),
+            "Common scaling preserves an exact subnormal 5-12-13 boundary.");
+        True(!PolylineCoreBeta.TryJoin(first, subnormalBoundary, 12 * unit, out rejected) && rejected is null,
+            "The same subnormal diagonal is rejected below its distance.");
     }
 
     private static void FilletOpenCorners()

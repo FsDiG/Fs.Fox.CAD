@@ -14,6 +14,7 @@ public sealed class ExtentGroupBeta
         var box = group.Bounds;
         Bounds = new Extents3d(new Point3d(box.MinX, box.MinY, box.MinZ),
             new Point3d(box.MaxX, box.MaxY, box.MaxZ));
+        // 包装只读接口还不够，先复制内部数组，结果不能与计算核心共享可变成员存储。
         SourceIndices = Array.AsReadOnly((int[])group.Indices.Clone());
     }
 }
@@ -42,12 +43,14 @@ public static class ExtentGroupingBeta
     {
         if (extents is null)
             throw new ArgumentNullException(nameof(extents));
-        // Snapshot original boxes only; pre-union would invent adjacency and lose member provenance.
+        // 只快照原始范围，不预合并；否则会创造不存在的邻近关系并丢失原始成员身份。
         var boxes = new OrderingBetaCore.Box[extents.Count];
-        for (var i = 0; i < extents.Count; i++)
+        for (var i = 0; i < boxes.Length; i++)
         {
-            var min = extents[i].MinPoint;
-            var max = extents[i].MaxPoint;
+            // 范围是值对象，先读一次再取两端，保持同一个输入值的坐标一致性。
+            var extent = extents[i];
+            var min = extent.MinPoint;
+            var max = extent.MaxPoint;
             boxes[i] = new OrderingBetaCore.Box(min.X, min.Y, min.Z, max.X, max.Y, max.Z);
         }
         var groups = OrderingBetaCore.GroupExtents(boxes, maximumGap);
