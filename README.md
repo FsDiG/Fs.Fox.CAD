@@ -119,6 +119,7 @@ third_party/
 - [构建与项目结构][building]
 - [架构与核心抽象][architecture]
 - [src 源码检索与模块定位][source-navigation]
+- [Beta 能力与宿主边界](docs/guides/beta-capabilities.md)
 - [DBTrans 生命周期与释放契约][dbtrans-lifecycle]
 - [ZWCAD 版本兼容性与迁移说明][zwcad-compatibility]
 - [AutoCAD 2027 .NET 8 兼容策略][acad-2027-decision]

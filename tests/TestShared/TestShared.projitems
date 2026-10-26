@@ -13,6 +13,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Copyclip.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestAddEntity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestBlock.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TestBlockIntersectionsBeta.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestBlockVisibility.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestCadFilePath.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestConvexHull.cs" />
@@ -30,6 +31,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)TestExtents.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestFileDatabase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestGeometryQuery.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TestGeometryConstructionBeta.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestHatchinfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestId.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TestJig.cs" />
@@ -53,6 +55,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)TestXrefEx.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Timer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Tools.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TestPolylineBeta.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TestOrderingBeta.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TestTextMetricsBeta.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TestDwgPreviewBeta.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)readme.md" />

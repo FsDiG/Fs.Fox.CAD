@@ -40,7 +40,9 @@ front matter schema 和自动校验尚未落地。在迁移完成前，本页状
 | 修改项目、构建或发布 | [构建与项目结构](../编译说明.md)、[`build-and-deploy.yml`](../.github/workflows/build-and-deploy.yml)、[`release.yml`](../.github/workflows/release.yml) | 以实时 `.csproj` 和 `.yml` 为最终事实，不维护重复的工作流说明。 |
 | 理解整体架构 | [架构说明](关于IFoxCAD的架构说明.md)、[文档治理方案](documentation-architecture.md) | 前者描述产品，后者描述文档。 |
 | 快速检索 `src` 的功能、类型和方法 | [源码检索总入口](source-navigation/README.md)、[`src` 阅读入口](../src/README.md) | 按问题定位到数据库、实体、Editor、几何、运行时或 Windows 分册；区分共享编译、宿主别名和未编译 ToDo。 |
+| 使用 Beta 扩展能力 | [Beta 能力总览](guides/beta-capabilities.md) | 多段线、排序、文字、三角形/网格及 AutoCAD 预览的使用和宿主边界；Beta 不表示宿主验收通过。 |
 | 移动或重组 `CADShared` | [架构说明](关于IFoxCAD的架构说明.md)、根 [`AGENTS.md`](../AGENTS.md)、[`CADShared.projitems`](../src/CADShared/CADShared.projitems)、[`CADSharedModuleBaseline.json`](../Build/CADSharedModuleBaseline.json) | 从最新 `main` 建立短期分支；历史设计与实施过程从 Issue #25 和 Git 历史追溯。 |
+| 维护和验收 Beta 能力 | [维护与验收计划](beta-development-plan.md)、[实现与验证记录](beta-implementation-notes.md) | 新增能力独立维护，稳定代码保持原有行为；按影响验证，宿主场景与自动检查分开记录。 |
 | 修改 `DBTrans` | 实时 [`DBTrans.cs`](../src/CADShared/Cad/Database/Transactions/DBTrans.cs)、[生命周期设计提案](dbtrans-lifecycle-contract.md) | 文档中的 Confirmed 可作证据；Decision 仍需独立实现和验证。 |
 | 修改宿主、SDK 或目标框架 | [ZWCAD 兼容性](ZWCAD-version-compatibility.md)、[AutoCAD 2027 决策](AC_2027-net8-compatibility-decision.md)、[构建说明](../编译说明.md) | 检查公开发布目标与仓库中的实验/预备项目差异。 |
 | 构建或验收独立 CAD 诊断工具 | [CadDiagnostics 组件说明](../tools/CadDiagnostics/README.md)、[构建说明](../编译说明.md)、[Issue #124](https://github.com/FsDiG/Fs.Fox.CAD/issues/124) | 诊断 DLL 不依赖主类库；分别记录 SDK 基线和实际宿主，未执行功能保持 `Not run`。 |
@@ -74,12 +76,21 @@ front matter schema 和自动校验尚未落地。在迁移完成前，本页状
 | `concept.upstream-relationship` | `current` | [上游 IFoxCAD 与 Fs.Fox.CAD 的关系](<../IFoxCAD 说明.md>) | user, maintainer | 项目来源、独立维护边界和问题归属。 |
 | `governance.documentation` | `current` | [文档与代码协同治理方案](documentation-architecture.md) | maintainer | 唯一产品内容源、展示/部署仓库边界、公开范围、版本发布和 Vibe Coding 上下文约定。 |
 | `guide.cad-ui-text` | `current` | [CAD/UI 文案风格指南](guides/cad-ui-text-style-guide.md) | maintainer | CAD 命令行和桌面 UI 的用户可见文字规则。 |
+| `guide.beta-capabilities` | `current` | [Beta 能力总览](guides/beta-capabilities.md) | user, maintainer | 新增能力入口、对象归属、宿主范围及验证证据。 |
+| `reference.beta-implementation` | `current` | [Beta 实现与验证记录](beta-implementation-notes.md) | maintainer | 核心文件覆盖、已修数值问题、自动检查与真实宿主验收边界。 |
+| `guide.polyline-beta` | `current` | [多段线 Beta](guides/polyline-beta.md) | user, maintainer | 非破坏性的整理、反向、唯一端点连接、批量/闭合圆角及含弧点关系。 |
+| `guide.block-intersections-beta` | `current` | [块内曲线求交 Beta](guides/block-intersections-beta.md) | user, maintainer | 显式只读事务、嵌套变换、真实三维交点与支持类型边界。 |
+| `guide.ordering-beta` | `current` | [排序与范围 Beta](guides/ordering-beta.md) | user, maintainer | 稳定索引排序、固定锚点行列分组与原始范围连通分量。 |
+| `guide.text-metrics-beta` | `current` | [文字测量 Beta](guides/text-metrics-beta.md) | user, maintainer | 显式样式、字体失败、单行语义和旧 SDK 限制。 |
+| `guide.geometry-construction-beta` | `current` | [几何与构造 Beta](guides/geometry-construction-beta.md) | user, maintainer | 三角形单位/退化和显式事务内的网格构造。 |
+| `guide.dwg-preview-beta` | `current` | [AutoCAD DWG 预览 Beta](guides/dwg-preview-beta.md) | user, maintainer | 外部数据库、固定视图、输出及图形资源生命周期。 |
 
 ## 5. Active Plan 与提案
 
 | 状态 | 稳定 ID | 文档 | 使用边界 |
 | --- | --- | --- | --- |
 | `proposal` | `contract.dbtrans-lifecycle` | [DBTrans 生命周期与释放契约](dbtrans-lifecycle-contract.md) | 同时记录 Confirmed、Decision 与 Not run；不能把后续决定表述为已实施。 |
+| `active` | `plan.beta-maintenance` | [Beta 维护与验收计划](beta-development-plan.md) | Beta 实现已集成并通过自动检查；后续真实宿主验收、转正及兼容过渡分别推进。 |
 | `proposal` | `proposal.edgeone-site-repository` | [EdgeOne Makers 站点仓库架构评估](edgeone-site-repository-evaluation.md) | Issue #48 的实施提案；展示仓库与精确来源链路已创建，最终框架、GitHub App、EdgeOne 和云资源仍未完成。 |
 | `proposal` | `proposal.cad-diagnostics-open-source-intake` | [CadDiagnostics 开源诊断项目评估](../tools/CadDiagnostics/OPEN-SOURCE-EVALUATION.md) | Issue #124 下的候选、去重依据和阶段边界；P1、P2 已实施，后续候选仍需独立评估。 |
 
@@ -94,6 +105,8 @@ front matter schema 和自动校验尚未落地。在迁移完成前，本页状
 | 路径 | 状态/用途 | 默认处理 |
 | --- | --- | --- |
 | `.github/ISSUE_TEMPLATE.zh-CN.md`、`.github/PULL_REQUEST_TEMPLATE.zh-CN.md` | GitHub 操作模板 | 由 GitHub UI 使用，不作为技术文档。 |
+| 根 `LICENSE`、`NOTICE` | 许可证与版权署名 | 保留声明，不作为产品功能、支持范围或验证结果。 |
+| `docs/reviews/pr-138/*.md` | `historical`，PR #138 针对 `4064025` 的专项静态评审快照及后续更正 | 仅需追溯该 PR 的意见时读取；[卷宗索引](reviews/pr-138/00-overview-and-summary.md)保留原范围、错误结论更正和验证边界，不作为现行技术契约，不进入产品站点或默认上下文。 |
 | 未来可能进入特定 PR/提交的 `Build/HostAcceptance/*.md` | `historical` 宿主证据快照 | 当前 main 尚无该目录；只在目标 Git 状态确实包含它且需追溯匹配 Issue、PR、提交和宿主版本时读取，不发布。 |
 | `third_party/Autodesk.MgdDbg/README.md` | `historical` 上游导入快照 | 只追溯原始 MgdDbg；现行构建和使用入口为 [CadDiagnostics 组件说明](../tools/CadDiagnostics/README.md)。 |
 

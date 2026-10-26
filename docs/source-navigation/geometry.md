@@ -2,7 +2,7 @@
 
 > 状态：current；受众：maintainer；稳定 ID：`reference.source-geometry`<br>
 > 基线：[源码检索总入口](README.md)<br>
-> 覆盖 `Cad/Geometry` 的 16 个共享编译文件，并单独标识 21 个未编译的 ToDo 文件。
+> 覆盖 `Cad/Geometry` 的 20 个共享编译文件，并单独标识 21 个未编译的 ToDo 文件。
 
 按问题进入：[坐标](#coordinates)、[点与区域](#points)、[几何曲线](#curves)、[四叉树](#quadtree)、[未编译源码](#todo)。数据库实体曲线的采样和打断见[实体分册](entities.md#curves)。
 
@@ -90,6 +90,17 @@
 - 查询模式写在静态 `QuadTreeEvn.SelectMode` 中，不能将多个实例理解为完全隔离的并发索引。
 
 已有入口：[TestQuadTree.cs](../../tests/TestShared/TestQuadTree.cs)。
+
+## Beta 排序与三角形
+
+| 文件 | 入口与边界 |
+| --- | --- |
+| [PointOrderingBeta.cs](../../src/CADShared/Cad/Geometry/Ordering/PointOrderingBeta.cs) | `GetRowOrder`、`GetColumnOrder` 返回原始索引；固定锚点分组，读取方向不改变组成员。 |
+| [OrderingBetaCore.cs](../../src/CADShared/Cad/Geometry/Ordering/OrderingBetaCore.cs) | 无 SDK 内部核心；稳定排序及原始范围连通分量，由生产链接测试直接覆盖。 |
+| [Triangle3dBeta.cs](../../src/CADShared/Cad/Geometry/Triangle3dBeta.cs) | 三维 `Centroid`、`TryGetSlopeAndAspect`；坡度为度，坡向从北顺时针计量，退化及水平面的输出有明确约定。 |
+| [TriangleMathBeta.cs](../../src/CADShared/Cad/Geometry/TriangleMathBeta.cs) | 无 SDK 内部核心；补偿均值、最长边相对退化判断与有限数处理。 |
+
+这些类型参与当前编译，和下方未编译 ToDo 不是同一组公共类型。具体约定见[排序指南](../guides/ordering-beta.md)、[三角形与构造指南](../guides/geometry-construction-beta.md)。
 
 <a id="todo"></a>
 

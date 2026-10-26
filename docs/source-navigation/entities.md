@@ -2,7 +2,7 @@
 
 > 状态：current；受众：maintainer；稳定 ID：`reference.source-entities`<br>
 > 基线与范围：[源码检索总入口](README.md)<br>
-> 覆盖 `Cad/Database/Entities` 的 17 个共享编译文件；容器与事务另见[数据库分册](database.md)。
+> 覆盖 `Cad/Database/Entities` 的 24 个共享编译文件；容器与事务另见[数据库分册](database.md)。
 
 阅读入口：[对象归属](#ownership)、[块](#blocks)、[包围框](#bounds)、[曲线](#curves)、[多段线](#polylines)、[文字](#text)、[填充](#hatch)、[面域](#region)。
 
@@ -29,7 +29,7 @@
 | 同上 | `TryGetBlockProperty`、`ChangeBlockProperty` | 读取/修改动态块属性；属性名、允许值和写入条件以宿主动态属性集合为准。 |
 | 同上 | `ChangeBlockAttribute`、`GetAttributes` | 处理参照的属性文字，和动态属性不是一回事。 |
 | 同上 | `GetBlockTableRecord`、`GetBlockName`、`GetNestedBlockPosition` | 块定义/名称及嵌套块插入位置。普通定义、动态原始定义和匿名定义需要按实际分支追踪。 |
-| 同上 | `ForEach`、`NestedForEach` | 遍历块定义内容；嵌套版本使用队列并累计 `BlockTransform`，回调收到实体及变换矩阵，不会自动把每个实体改为世界坐标。 |
+| 同上 | `ForEach`、`NestedForEach` | 遍历块定义内容；嵌套版本累计 `BlockTransform`，回调收到实体和矩阵。它经 SymbolTable.Change 打开定义，可能升级写状态；严格只读求交使用下方 Beta。 |
 | 同上 | `GetVisibilityInfo` | 支持块参照和块表记录，读取动态块扩展字典及可见性参数 DXF 数据。继续追踪 `Env.EntGet`，属于 native 相关路径。 |
 | [BlockVisibilityInfo.cs](../../src/CADShared/Cad/Database/Entities/Blocks/BlockVisibilityInfo.cs) | `Has`、`PropertyName`、`AllowedValues` | 可见性参数的元数据结果。没有可见性参数时返回空信息，不是设置可见性的命令对象。 |
 
@@ -65,7 +65,7 @@
 | 同上 | `GetSplitCurves`、`BreakCurve`、`BreakCurveOnZPlane` | 按参数/点切分及一组曲线互相打断。参数集合版本当前是 `CurveEx.GetSplitCurves(curve, ...)` 静态辅助，点集合版本为扩展方法，注意旧扩展实现已被注释。 |
 | 同上 | `BreakCurve2dByQuadTree` | 利用几何转换与四叉树筛选候选后处理二维交点；在早期 GStarCAD 分支未启用。辅助 `BreakCurveInfo` 也定义在此文件。 |
 | 同上 | `GetScaleCurve`、`ToCurve3d`、`ToCompositeCurve3d`、`ToNurbCurve3d` | 实体与 `Curve3d`、组合曲线、NURBS 的类型分派，支持多种实体重载；未知或不支持类型有 null 路径。 |
-| 同上 | `ChamferAt` | 按多段线顶点进行倒角/圆角处理。 |
+| 同上 | `ChamferAt` | 原地处理直线相邻的内部单个顶点（索引 1 至 N-2），不覆盖闭合首末角；批量圆角见下方 Beta。 |
 | [ArcEx.cs](../../src/CADShared/Cad/Database/Entities/Curves/ArcEx.cs) | `CreateArcSCE`、`CreateArc`、`ToPolyline` | 起点/中心/终点、三点或角度构造圆弧，转换为含 bulge 的多段线。 |
 | [CircleEx.cs](../../src/CADShared/Cad/Database/Entities/Curves/CircleEx.cs) | `CreateCircle` | 两点、三点或中心/半径/法向量构造圆。三点路径可能返回 null。 |
 
@@ -127,5 +127,24 @@
 [RegionEx.cs](../../src/CADShared/Cad/Database/Entities/RegionEx.cs) 列入共享编译，但 `ToCurves` 被 `FSFOX_ENABLE_REGION_TO_CURVES` 保护，当前正式项目均未定义该符号。源码明确记录边界几何对象所有权、异常清理及 ZWCAD 2022 API 适配尚需处理。
 
 因此搜索到 `RegionEx.ToCurves` 只能定位保留实现，不能将其写成正式可用的公共能力。`ToDo/RegionExtensions.Centroid` 也不在当前共享编译清单。现行点与区域判断应看 [GeometryEx.PointOnRegion](geometry.md#points)，两者不是同一功能。
+
+## Beta 实体扩展能力
+
+下列源码参与共享编译，支持范围及对象归属见 [Beta 总览](../guides/beta-capabilities.md)。构建测试命令不等于真实宿主已运行。
+
+| 文件 | 主要入口与边界 |
+| --- | --- |
+| [PolylineExBeta.cs](../../src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineExBeta.cs) | `CreateReversedBeta`、`CreateCleanedBeta`、`TryCreateJoinedBeta`、`CreateFilletedBeta`；借用输入，返回只含指定几何字段的新对象。 |
+| [PolylineCoreBeta.cs](../../src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineCoreBeta.cs) | 内部无 SDK 数值核心，处理凸度、段宽、保守整理、唯一端点连接及批量/闭合圆角的共享边预算；生产链接回归工程直接测试此文件。 |
+| [PolylineContainmentCoreBeta.cs](../../src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineContainmentCoreBeta.cs) | 内部解析点关系核心与 PolylinePointRelationBeta；直线/圆弧半开穿越、偶奇填充及边界距离，不把主弧裁成顶点范围。 |
+| [PolylineRegionExBeta.cs](../../src/CADShared/Cad/Database/Entities/Curves/Polylines/PolylineRegionExBeta.cs) | `GetPointRelationBeta`；闭合线 WCS 查询点转 OCS，分别判断平面距离与区域关系，输入借用。 |
+| [BlockIntersectionExBeta.cs](../../src/CADShared/Cad/Database/Entities/Blocks/BlockIntersectionExBeta.cs) | `GetCurveIntersectionsBeta`；显式事务 ForRead 遍历，当前路径防循环，父×子矩阵及自有临时曲线求交，返回只读快照。 |
+| [CurveOrderingExBeta.cs](../../src/CADShared/Cad/Database/Entities/Curves/CurveOrderingExBeta.cs) | `GetOrderAlongCurveBeta`；有限曲线上的最近位置，稳定返回输入索引，不延长路径。 |
+| [ExtentGroupingBeta.cs](../../src/CADShared/Cad/Database/Entities/Bounds/ExtentGroupingBeta.cs) | `GroupByProximity`、`ExtentGroupBeta`；原始 XY 框邻近连通分量，保留成员索引及完整 Z 范围。 |
+| [TextMetricsBeta.cs](../../src/CADShared/Cad/Database/Entities/Text/TextMetricsBeta.cs) | `MeasureSingleLine`；显式数据库和样式；旧 ZWCAD/GStarCAD 绑定明确报告不支持。 |
+| [PolyFaceMeshBuilderBeta.cs](../../src/CADShared/Cad/Database/Entities/Meshes/PolyFaceMeshBuilderBeta.cs) | `Append`；显式目标库、空间和调用方事务，所有输入先验证，宿主写入失败需中止事务。 |
+| [PolyFaceMeshDataBeta.cs](../../src/CADShared/Cad/Database/Entities/Meshes/PolyFaceMeshDataBeta.cs) | 内部面索引预验证和独立快照；只接受三角面、四边面，不静默截断多边形。 |
+
+验收入口：[TestPolylineBeta.cs](../../tests/TestShared/TestPolylineBeta.cs)、[TestBlockIntersectionsBeta.cs](../../tests/TestShared/TestBlockIntersectionsBeta.cs)、[TestOrderingBeta.cs](../../tests/TestShared/TestOrderingBeta.cs)、[TestTextMetricsBeta.cs](../../tests/TestShared/TestTextMetricsBeta.cs)、[TestGeometryConstructionBeta.cs](../../tests/TestShared/TestGeometryConstructionBeta.cs)。实际 CAD 执行均保持各能力指南记录的状态。
 
 返回[源码检索总入口](README.md)或[数据库分册](database.md)。

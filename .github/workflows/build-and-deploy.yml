@@ -45,6 +45,23 @@ jobs:
       - name: Verify CADShared module map
         run: pwsh -NoProfile -File Build/Verify-CADSharedModuleMap.ps1
 
+      - name: Test Beta production numeric cores
+        shell: pwsh
+        run: |
+          $projects = @(
+            'tests/PolylineBeta.CoreTests/PolylineBeta.CoreTests.csproj',
+            'tests/OrderingBeta.CoreTests/OrderingBeta.CoreTests.csproj',
+            'tests/GeometryBeta.CoreTests/GeometryBeta.CoreTests.csproj',
+            'tests/DwgPreviewBeta.CoreTests/DwgPreviewBeta.CoreTests.csproj',
+            'tests/PolylineRegionBeta.CoreTests/PolylineRegionBeta.CoreTests.csproj'
+          )
+          foreach ($project in $projects) {
+            dotnet run --project $project --configuration Release
+            if ($LASTEXITCODE -ne 0) {
+              throw "Production-core tests failed: $project"
+            }
+          }
+
       - name: Build all (Debug & Release)
         run: |
           $buildRoot = "${{ github.workspace }}\Build"

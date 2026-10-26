@@ -625,6 +625,72 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Curves\Polylines\PolylineCoreBeta.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>1000</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Curves\Polylines\PolylineExBeta.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>1010</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Curves\Polylines\PolylineContainmentCoreBeta.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>1020</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Curves\Polylines\PolylineRegionExBeta.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>1030</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\Ordering\OrderingBetaCore.cs">
+      <FsFoxModule>Cad.Geometry</FsFoxModule>
+      <FsFoxOrder>1100</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\Ordering\PointOrderingBeta.cs">
+      <FsFoxModule>Cad.Geometry</FsFoxModule>
+      <FsFoxOrder>1110</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Curves\CurveOrderingExBeta.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>1120</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Bounds\ExtentGroupingBeta.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>1130</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Text\TextMetricsBeta.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>1200</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\TriangleMathBeta.cs">
+      <FsFoxModule>Cad.Geometry</FsFoxModule>
+      <FsFoxOrder>1300</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Geometry\Triangle3dBeta.cs">
+      <FsFoxModule>Cad.Geometry</FsFoxModule>
+      <FsFoxOrder>1301</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Meshes\PolyFaceMeshDataBeta.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>1310</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Meshes\PolyFaceMeshBuilderBeta.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>1311</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Database\Entities\Blocks\BlockIntersectionExBeta.cs">
+      <FsFoxModule>Cad.Database</FsFoxModule>
+      <FsFoxOrder>1320</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Application\Graphics\DwgPreviewCoreBeta.cs">
+      <FsFoxModule>Cad.Application</FsFoxModule>
+      <FsFoxOrder>1400</FsFoxOrder>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Cad\Application\Graphics\DwgPreviewBeta.cs">
+      <FsFoxModule>Cad.Application</FsFoxModule>
+      <FsFoxOrder>1410</FsFoxOrder>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)ExtensionMethod\Geometry\ToDo\" />
   </ItemGroup>
 </Project>
