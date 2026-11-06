@@ -83,7 +83,7 @@ front matter schema 和自动校验尚未落地。在迁移完成前，本页状
 | `guide.ordering-beta` | `current` | [排序与范围 Beta](guides/ordering-beta.md) | user, maintainer | 稳定索引排序、固定锚点行列分组与原始范围连通分量。 |
 | `guide.text-metrics-beta` | `current` | [文字测量 Beta](guides/text-metrics-beta.md) | user, maintainer | 显式样式、字体失败、单行语义和旧 SDK 限制。 |
 | `guide.geometry-construction-beta` | `current` | [几何与构造 Beta](guides/geometry-construction-beta.md) | user, maintainer | 三角形单位/退化和显式事务内的网格构造。 |
-| `guide.dwg-preview-beta` | `current` | [AutoCAD DWG 预览 Beta](guides/dwg-preview-beta.md) | user, maintainer | 外部数据库、固定视图、输出及图形资源生命周期。 |
+| `guide.dwg-preview-beta` | `current` | [AutoCAD DWG 与实体预览 Beta](guides/dwg-preview-beta.md) | user, maintainer | 文件到 PNG、实体到独立 Bitmap、来源借用期、输出发布及图形资源生命周期。 |
 
 ## 5. Active Plan 与提案
 
