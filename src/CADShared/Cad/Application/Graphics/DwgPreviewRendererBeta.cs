@@ -116,7 +116,7 @@ public static class DwgPreviewRendererBeta
         var drawables = new List<Entity>(entityIds.Count);
         foreach (var id in entityIds)
         {
-            if (id.IsNull || !id.IsValid || id.IsErased || !ReferenceEquals(id.Database, sourceDatabase))
+            if (id.IsNull || !id.IsValid || id.IsErased || id.Database.UnmanagedObject != sourceDatabase.UnmanagedObject)
                 throw new ArgumentException("实体 ID 必须属于有效的来源数据库。", nameof(entityIds));
             if (transaction.GetObject(id, OpenMode.ForRead) is not Entity entity)
                 throw new ArgumentException("输入 ID 必须指向实体。", nameof(entityIds));
