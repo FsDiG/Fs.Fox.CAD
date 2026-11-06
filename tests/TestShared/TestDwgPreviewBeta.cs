@@ -1,13 +1,67 @@
-#if ACAD
+﻿#if ACAD
 using System.Drawing;
 using System.IO;
 using System.Security.Cryptography;
+using DrawingColor = System.Drawing.Color;
 
 namespace Test;
 
 /// <summary>仅供显式安排的隔离 AutoCAD 验收，不自动执行或操作用户图纸。</summary>
 public static class TestDwgPreviewBeta
 {
+    /// <summary>验证实体集合渲染、借用期和返回 Bitmap 在来源关闭后仍可使用。</summary>
+    [CommandMethod(nameof(Test_DwgEntitiesBitmapBeta))]
+    public static void Test_DwgEntitiesBitmapBeta()
+    {
+        var document = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
+        var working = HostApplicationServices.WorkingDatabase;
+        var folder = CreateFolder();
+        Bitmap? detached = null;
+        try
+        {
+            var source = Path.Combine(folder, "entities.dwg");
+            CreateDrawing(source, withGeometry: true);
+            var originalHash = Hash(source);
+            using (var drawing = new Database(false, true))
+            {
+                drawing.ReadDwgFile(source, FileOpenMode.OpenForReadAndAllShare, false, null);
+                drawing.CloseInput(true);
+                using var transaction = drawing.TransactionManager.StartTransaction();
+                var table = (BlockTable)transaction.GetObject(drawing.BlockTableId, OpenMode.ForRead);
+                var model = (BlockTableRecord)transaction.GetObject(table[BlockTableRecord.ModelSpace], OpenMode.ForRead);
+                var ids = model.Cast<ObjectId>().ToArray();
+                var bounds = new Extents3d(new Point3d(-10, -5, 0), new Point3d(10, 5, 0));
+                var palette = Enumerable.Repeat(DrawingColor.Black, 256).ToArray();
+                for (var index = 0; index < 3; index++)
+                {
+                    using var image = DwgPreviewRendererBeta.RenderEntitiesToBitmap(document, drawing, transaction,
+                        ids, bounds, 640, 320, DrawingColor.White, palette);
+                    Require(image.Width == 640 && image.Height == 320 && HasContrast(image), "Entity bitmap pixels");
+                    Require(!transaction.IsDisposed && !drawing.IsDisposed, "Borrowed source remains alive");
+                }
+                Throws<InvalidOperationException>(() => DwgPreviewRendererBeta.RenderEntitiesToBitmap(document,
+                    drawing, transaction, Array.Empty<ObjectId>(), bounds, 100, 100, DrawingColor.White));
+                Throws<System.ArgumentException>(() => DwgPreviewRendererBeta.RenderEntitiesToBitmap(document,
+                    drawing, transaction, new[] { document.Database.CurrentSpaceId }, bounds, 100, 100, DrawingColor.White));
+                Throws<System.ArgumentOutOfRangeException>(() => DwgPreviewRendererBeta.RenderEntitiesToBitmap(document,
+                    drawing, transaction, ids, bounds, 0, 100, DrawingColor.White));
+                detached = DwgPreviewRendererBeta.RenderEntitiesToBitmap(document, drawing, transaction,
+                    ids, bounds, 320, 160, DrawingColor.White, palette);
+                Require(transaction.GetObject(ids[0], OpenMode.ForRead) is Entity, "Caller transaction remains usable");
+            }
+            Require(detached != null && HasContrast(detached), "Returned bitmap survives source disposal");
+            detached!.Save(Path.Combine(folder, "detached.png"), System.Drawing.Imaging.ImageFormat.Png);
+            Require(Hash(source) == originalHash, "Entity rendering preserves source file");
+            Require(ReferenceEquals(working, HostApplicationServices.WorkingDatabase), "Entity rendering preserves WorkingDatabase");
+            Env.Printl("DwgPreviewRendererBeta: entities/borrowing/detached bitmap checks passed.");
+        }
+        finally
+        {
+            detached?.Dispose();
+            Cleanup(folder);
+        }
+    }
+
     /// <summary>生成临时源 DWG，连续渲染三次，核对 PNG 和当前文档状态。</summary>
     [CommandMethod(nameof(Test_DwgPreviewBeta))]
     public static void Test_DwgPreviewBeta()

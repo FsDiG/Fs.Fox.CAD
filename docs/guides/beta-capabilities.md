@@ -14,7 +14,7 @@
 | 行列与曲线排序、邻近范围组合 | `PointOrderingBeta`、`CurveOrderingExtensionsBeta`、`ExtentsGroupingBeta` | [排序与范围 Beta](ordering-beta.md)；返回索引或独立结果，保留重复输入，排序与分组规则明确。 |
 | 按文字样式测量单行字符串 | `TextMeasurementBeta.MeasureSingleLineBounds` | [文字测量 Beta](text-metrics-beta.md)；显式数据库与样式，处理字体失败及替代，不是 MText 排版。 |
 | 三角形坡度、坡向、重心；多面网格构造 | `Triangle3dBeta`、`PolyFaceMeshFactoryBeta.CreateAndAppend` | [几何与构造 Beta](geometry-construction-beta.md)；三维重心保留 Z，网格索引先完整验证。 |
-| AutoCAD 外部 DWG 图片预览 | `DwgPreviewRendererBeta.RenderModelSpaceToPng` | [DWG 预览 Beta](dwg-preview-beta.md)；使用明确的宿主图形上下文，读取外部数据库，不修改当前视图。 |
+| AutoCAD 离屏图片预览 | `DwgPreviewRendererBeta.RenderModelSpaceToPng`、`RenderEntitiesToBitmap` | [DWG 与实体预览 Beta](dwg-preview-beta.md)，分别读取自有侧数据库或同步借用调用方实体，返回新 PNG 文件或独立 Bitmap。 |
 
 类型名中的 Beta 可用于检索试验接口；扩展方法同时在方法名体现 Beta。未通过宿主验收的能力不因构建成功而转为正式接口，原有稳定入口不自动依赖这些新增能力。
 

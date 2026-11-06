@@ -1,4 +1,4 @@
-using Fs.Fox.Cad;
+﻿using Fs.Fox.Cad;
 
 var checks = 0;
 void Check(bool condition, string message)
@@ -111,6 +111,16 @@ try
     }
     Check(!File.Exists(failedTemporary), "an encoder failure cleans its partial temporary file");
     Check(!File.Exists(failedOutput), "an encoder failure does not publish partial output");
+
+    var cleanupTemporary = Path.Combine(folder, "cleanup-failed.tmp");
+    var cleanupOutput = Path.Combine(folder, "cleanup-failed.png");
+    Throws<AggregateException>(() => DwgPreviewCoreBeta.WriteNewOutput(cleanupTemporary, cleanupOutput, stream =>
+    {
+        try { stream.Write(content, 0, content.Length); }
+        finally { throw new AggregateException("Expected resource cleanup failure after a complete write."); }
+    }), "resource cleanup failure after writing completes must propagate");
+    Check(!File.Exists(cleanupTemporary), "resource cleanup failure removes the complete temporary file");
+    Check(!File.Exists(cleanupOutput), "resource cleanup failure cannot publish completed bytes");
 
     var racingTemporary = Path.Combine(folder, "racing.tmp");
     var racingOutput = Path.Combine(folder, "racing.png");
