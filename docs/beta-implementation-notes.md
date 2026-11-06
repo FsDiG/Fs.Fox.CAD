@@ -29,7 +29,7 @@ Beta 扩展沿用现有模块、平台程序集和基础设施。首次集成的
 | PolyFaceMeshValidationCoreBeta.cs | 惰性集合完整快照、数量和索引校验、三角面的原生第四索引为零。 |
 | PolyFaceMeshFactoryBeta.cs | 当前顶层事务、目标存储坐标、写前验证、全部子对象登记和调用方回滚。 |
 | DwgPreviewCoreBeta.cs | 像素限制、路径及 ADS、相机拟合、有限方向、临时文件归属及原子发布。 |
-| DwgPreviewRendererBeta.cs | 外部数据库包住 GS 生命周期，借用管理器、自有设备／模型／视图／位图及内核释放。 |
+| DwgPreviewRendererBeta.cs | 文件入口拥有侧数据库，实体入口同步借用调用方事务与来源。两者共用 GS 会话，文件在自有 CAD 资源收尾后发布，返回 Bitmap 由调用方释放。 |
 
 ## 完整核心审查与修正
 

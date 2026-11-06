@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 
 namespace Fs.Fox.Cad;
@@ -96,6 +96,7 @@ internal static class DwgPreviewCoreBeta
             {
                 // CreateNew 失败时路径可能属于其他调用方；只有成功取得流后才有清理该文件的权利。
                 ownsTemporary = true;
+                // 委托覆盖内容生产及其资源收尾，正常返回后才发布目标文件。
                 writeContent(stream);
             }
             // 路径预检不能阻止随后创建目标的竞争者；不覆盖的 Move 是最终发布保护。

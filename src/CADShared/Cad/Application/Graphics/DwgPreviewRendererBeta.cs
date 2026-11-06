@@ -8,7 +8,7 @@ using CadUniqueString = Autodesk.AutoCAD.UniqueString;
 
 namespace Fs.Fox.Cad;
 
-/// <summary>在 AutoCAD 宿主中将外部 DWG 模型空间导出为新的 PNG。Beta：真实宿主验收尚待执行。</summary>
+/// <summary>在 AutoCAD 宿主中将外部 DWG 或选定实体离屏绘制为图片。Beta：真实宿主验收尚待执行。</summary>
 /// <remarks>
 /// 使用调用方显式提供的当前文档的图形管理器，不能作为无 CAD 进程的转换器。
 /// 必须在 AutoCAD 允许的主线程命令上下文执行；调用方负责文档生命周期和必要的锁，不支持并发渲染。
@@ -25,7 +25,7 @@ public static class DwgPreviewRendererBeta
     /// 仅支持 AutoCAD 编译目标。源 DWG 使用只读共享打开；本方法不修改 WorkingDatabase、UCS、当前视图或全局配置。
     /// 范围筛选检查模型空间顶层实体的可见性及其图层关闭/冻结状态；复合实体使用宿主返回的整体范围。
     /// 没有通过筛选的顶层实体或无法取得有效范围时失败；不检查输出像素是否空白，也不消除块内隐藏几何造成的留白。
-    /// 先在输出目录写临时 PNG，再移动为目标文件；竞争创建目标文件也不会导致覆盖。
+    /// 先在输出目录写临时 PNG，结束自有 CAD 资源后再移动为目标文件；竞争创建目标文件也不会导致覆盖。
     /// 创建的外部数据库、只读事务、图形设备/模型/视图和 Bitmap 全部由本方法释放；借用的文档与 GraphicsManager 不释放。
     /// 图形内核由 AcquireGraphicsKernel/ReleaseGraphicsKernel 配对管理。渲染或 IO 失败时异常传播；临时文件尽力清理。
     /// </remarks>
@@ -36,52 +36,56 @@ public static class DwgPreviewRendererBeta
     /// <exception cref="DirectoryNotFoundException">输出父目录不存在。</exception>
     /// <exception cref="IOException">输出已存在或文件访问失败。</exception>
     /// <exception cref="InvalidOperationException">图形为空、图形系统创建失败或视图关联失败。</exception>
+    /// <exception cref="AggregateException">绘制完成后，自有 GS 资源清理失败，目标文件尚未发布。</exception>
     public static void RenderModelSpaceToPng(Document graphicsDocument, string sourceDwgPath, string outputPngPath,
         int pixelWidth, int pixelHeight)
     {
         ValidateGraphicsDocument(graphicsDocument);
         var request = DwgPreviewCoreBeta.ValidateRequest(sourceDwgPath, outputPngPath, pixelWidth, pixelHeight);
-        // GS 视图保留源 DBObject 引用。外部数据库和读取事务必须包住整个 GS 生命周期，
-        // 不能在视图解绑前关闭，即使异常发生在截图或 PNG 编码阶段也必须遵守此顺序。
-        using var drawing = new Database(false, true);
-        drawing.ReadDwgFile(request.DrawingPath, FileOpenMode.OpenForReadAndAllShare, false, null);
-        using var transaction = drawing.TransactionManager.StartTransaction();
-        var table = (BlockTable)transaction.GetObject(drawing.BlockTableId, OpenMode.ForRead);
-        var modelSpace = (BlockTableRecord)transaction.GetObject(table[BlockTableRecord.ModelSpace], OpenMode.ForRead);
-        var drawables = new List<Entity>();
-        Extents3d? combined = null;
-        foreach (ObjectId id in modelSpace)
+        var temporary = Path.Combine(Path.GetDirectoryName(request.OutputPath)!, ".fox-preview-" + Guid.NewGuid().ToString("N") + ".tmp");
+        // 编码、GS 收尾和来源释放全部完成后才发布目标，任一阶段失败由输出核心清理自有临时文件。
+        DwgPreviewCoreBeta.WriteNewOutput(temporary, request.OutputPath, stream =>
         {
-            if (transaction.GetObject(id, OpenMode.ForRead) is not Entity entity || !entity.Visible)
-                continue;
-            var layer = (LayerTableRecord)transaction.GetObject(entity.LayerId, OpenMode.ForRead);
-            if (layer.IsOff || layer.IsFrozen)
-                continue;
-            // 对复合实体不另做展开；它的整体范围不等于所有可见叶节点的紧致范围。
-            // 范围读取失败必须传播，否则跳过该实体后成功输出会悄悄裁掉图形。
-            var extent = entity.GeometricExtents;
-            if (combined.HasValue)
+            // GS 保留源 DBObject 引用，来源数据库和读取事务的寿命覆盖全部 drawable 注册期。
+            using var drawing = new Database(false, true);
+            drawing.ReadDwgFile(request.DrawingPath, FileOpenMode.OpenForReadAndAllShare, false, null);
+            using var transaction = drawing.TransactionManager.StartTransaction();
+            var table = (BlockTable)transaction.GetObject(drawing.BlockTableId, OpenMode.ForRead);
+            var modelSpace = (BlockTableRecord)transaction.GetObject(table[BlockTableRecord.ModelSpace], OpenMode.ForRead);
+            var drawables = new List<Entity>();
+            Extents3d? combined = null;
+            foreach (ObjectId id in modelSpace)
             {
-                var current = combined.Value;
-                current.AddExtents(extent);
-                combined = current;
+                if (transaction.GetObject(id, OpenMode.ForRead) is not Entity entity || !entity.Visible)
+                    continue;
+                var layer = (LayerTableRecord)transaction.GetObject(entity.LayerId, OpenMode.ForRead);
+                if (layer.IsOff || layer.IsFrozen)
+                    continue;
+                // 范围读取失败直接传播，避免跳过实体后输出被裁剪的成功图片。
+                var extent = entity.GeometricExtents;
+                if (combined.HasValue)
+                {
+                    var current = combined.Value;
+                    current.AddExtents(extent);
+                    combined = current;
+                }
+                else
+                    combined = extent;
+                drawables.Add(entity);
             }
-            else
-                combined = extent;
-            drawables.Add(entity);
-        }
-        if (!combined.HasValue || drawables.Count == 0)
-            throw new InvalidOperationException("源 DWG 模型空间中没有可绘制实体。");
-        var bounds = combined.Value;
-        var fit = DwgPreviewCoreBeta.Fit(bounds.MinPoint.X, bounds.MinPoint.Y, bounds.MinPoint.Z,
-            bounds.MaxPoint.X, bounds.MaxPoint.Y, bounds.MaxPoint.Z, pixelWidth, pixelHeight);
+            if (!combined.HasValue || drawables.Count == 0)
+                throw new InvalidOperationException("源 DWG 模型空间中没有可绘制实体。");
+            var bounds = combined.Value;
+            var fit = DwgPreviewCoreBeta.Fit(bounds.MinPoint.X, bounds.MinPoint.Y, bounds.MinPoint.Z,
+                bounds.MaxPoint.X, bounds.MaxPoint.Y, bounds.MaxPoint.Z, pixelWidth, pixelHeight);
 
-        RenderBitmap(graphicsDocument, drawables, pixelWidth, pixelHeight, view =>
-        {
-            view.SetView(new Point3d(fit.CenterX, fit.CenterY, fit.EyeZ),
-                new Point3d(fit.CenterX, fit.CenterY, fit.CenterZ), Vector3d.YAxis,
-                fit.FieldWidth, fit.FieldHeight);
-        }, bitmap => SaveNewPng(bitmap, request.OutputPath));
+            RenderBitmap(graphicsDocument, drawables, pixelWidth, pixelHeight, view =>
+            {
+                view.SetView(new Point3d(fit.CenterX, fit.CenterY, fit.EyeZ),
+                    new Point3d(fit.CenterX, fit.CenterY, fit.CenterZ), Vector3d.YAxis,
+                    fit.FieldWidth, fit.FieldHeight);
+            }, bitmap => bitmap.Save(stream, ImageFormat.Png));
+        });
     }
 
     /// <summary>在调用方的有效读取事务内，将明确选择的实体同步绘制为独立 Bitmap。</summary>
@@ -99,6 +103,7 @@ public static class DwgPreviewRendererBeta
     /// 仅 AutoCAD 主线程命令上下文，同步且不支持并发。方法结束前解除所有 drawable 引用并释放自有 GS 资源。
     /// 不提交或释放调用方事务，不释放来源数据库、文档或 GraphicsManager。参数、读取和绘制失败传播给调用方。
     /// </remarks>
+    /// <exception cref="AggregateException">绘制完成后，自有 GS 资源清理失败。</exception>
     public static Bitmap RenderEntitiesToBitmap(Document graphicsDocument, Database sourceDatabase,
         Transaction transaction, IReadOnlyCollection<ObjectId> entityIds, Extents3d bounds,
         int pixelWidth, int pixelHeight, DrawingColor backgroundColor, DrawingColor[]? logicalPalette = null)
@@ -138,6 +143,7 @@ public static class DwgPreviewRendererBeta
         }
         catch
         {
+            // 复制成功后若 GS 清理失败，返回值尚未交给调用方，仍由本层回收。
             result?.Dispose();
             throw;
         }
@@ -193,6 +199,7 @@ public static class DwgPreviewRendererBeta
         catch (Exception error) { failure = error; throw; }
         finally
         {
+            // 部分初始化与失败路径也逐项收尾，原始绘制异常保留并附加清理诊断。
             List<Exception>? cleanupErrors = null;
             void Cleanup(Action release)
             {
@@ -213,12 +220,6 @@ public static class DwgPreviewRendererBeta
                 Debug.WriteLine(cleanupFailure);
             }
         }
-    }
-
-    private static void SaveNewPng(Bitmap bitmap, string outputPath)
-    {
-        var temporary = Path.Combine(Path.GetDirectoryName(outputPath)!, ".fox-preview-" + Guid.NewGuid().ToString("N") + ".tmp");
-        DwgPreviewCoreBeta.WriteNewOutput(temporary, outputPath, stream => bitmap.Save(stream, ImageFormat.Png));
     }
 }
 #endif

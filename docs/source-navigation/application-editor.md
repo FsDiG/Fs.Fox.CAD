@@ -5,7 +5,7 @@
 
 按需要跳转：[应用上下文](#application)、[系统变量](#system-variables)、[Idle](#idle)、[Editor](#editor)、[选择过滤](#selection)、[输入](#input)、[Jig](#jig)、[显示与命令](#display-command)。
 
-Beta 外部 DWG 预览另见 [DwgPreviewRendererBeta.cs](../../src/CADShared/Cad/Application/Graphics/DwgPreviewRendererBeta.cs)及[使用说明](../guides/dwg-preview-beta.md)；其路径、尺寸和相机拟合核心为 [DwgPreviewCoreBeta.cs](../../src/CADShared/Cad/Application/Graphics/DwgPreviewCoreBeta.cs)。公开预览入口只在 AutoCAD 编译目标提供，不修改当前文档视图；生产核心回归与真实渲染分别记录。
+Beta 离屏预览提供外部 DWG 到新 PNG、实体集合到独立 Bitmap 两条入口，均使用显式的 AutoCAD 宿主图形上下文。API 与所有权见[预览说明](../guides/dwg-preview-beta.md)，实现见 [DwgPreviewRendererBeta.cs](../../src/CADShared/Cad/Application/Graphics/DwgPreviewRendererBeta.cs)。路径、尺寸、相机拟合及文件发布核心位于 [DwgPreviewCoreBeta.cs](../../src/CADShared/Cad/Application/Graphics/DwgPreviewCoreBeta.cs)。生产核心回归与真实渲染分别记录。
 
 <a id="application"></a>
 
