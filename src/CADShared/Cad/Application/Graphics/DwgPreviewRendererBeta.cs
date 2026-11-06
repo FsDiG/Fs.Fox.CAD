@@ -1,4 +1,4 @@
-#if ACAD
+﻿#if ACAD
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -39,10 +39,7 @@ public static class DwgPreviewRendererBeta
     public static void RenderModelSpaceToPng(Document graphicsDocument, string sourceDwgPath, string outputPngPath,
         int pixelWidth, int pixelHeight)
     {
-        if (graphicsDocument is null)
-            throw new ArgumentNullException(nameof(graphicsDocument));
-        if (!ReferenceEquals(graphicsDocument, CadApp.DocumentManager.MdiActiveDocument))
-            throw new ArgumentException("必须使用当前活动文档的图形管理器。", nameof(graphicsDocument));
+        ValidateGraphicsDocument(graphicsDocument);
         var request = DwgPreviewCoreBeta.ValidateRequest(sourceDwgPath, outputPngPath, pixelWidth, pixelHeight);
         // GS 视图保留源 DBObject 引用。外部数据库和读取事务必须包住整个 GS 生命周期，
         // 不能在视图解绑前关闭，即使异常发生在截图或 PNG 编码阶段也必须遵守此顺序。
@@ -79,54 +76,142 @@ public static class DwgPreviewRendererBeta
         var fit = DwgPreviewCoreBeta.Fit(bounds.MinPoint.X, bounds.MinPoint.Y, bounds.MinPoint.Z,
             bounds.MaxPoint.X, bounds.MaxPoint.Y, bounds.MaxPoint.Z, pixelWidth, pixelHeight);
 
-        // manager 归文档所有；下面的设备、模型和视图才由本次调用持有并释放。
-        var manager = graphicsDocument.GraphicsManager;
-        using var descriptor = new CadGS.KernelDescriptor();
-        descriptor.addRequirement(CadUniqueString.Intern("3D Drawing"));
-        var kernel = CadGS.Manager.AcquireGraphicsKernel(descriptor);
-        if (kernel is null)
-            throw new InvalidOperationException("AutoCAD 未提供所需的图形内核。");
+        RenderBitmap(graphicsDocument, drawables, pixelWidth, pixelHeight, view =>
+        {
+            view.SetView(new Point3d(fit.CenterX, fit.CenterY, fit.EyeZ),
+                new Point3d(fit.CenterX, fit.CenterY, fit.CenterZ), Vector3d.YAxis,
+                fit.FieldWidth, fit.FieldHeight);
+        }, bitmap => SaveNewPng(bitmap, request.OutputPath));
+    }
+
+    /// <summary>在调用方的有效读取事务内，将明确选择的实体同步绘制为独立 Bitmap。</summary>
+    /// <param name="graphicsDocument">当前活动文档，只借用其图形管理器。</param>
+    /// <param name="sourceDatabase">实体所属数据库，由调用方保持有效。</param>
+    /// <param name="transaction">覆盖本次调用的来源读取事务，由调用方结束。</param>
+    /// <param name="entityIds">同一来源数据库中的实体 ID，选择与业务过滤由调用方负责。</param>
+    /// <param name="bounds">业务取景范围，固定 WCS 俯视，ZoomExtents 后 Zoom(0.9)。</param>
+    /// <param name="pixelWidth">像素宽度，限制与文件入口一致。</param>
+    /// <param name="pixelHeight">像素高度，限制与文件入口一致。</param>
+    /// <param name="backgroundColor">离屏设备背景。</param>
+    /// <param name="logicalPalette">可选的 256 色 ACI 调色板，TrueColor 仍由实体属性决定。</param>
+    /// <returns>已经脱离 GS 设备的独立 Bitmap，由调用方 Dispose。</returns>
+    /// <remarks>
+    /// 仅 AutoCAD 主线程命令上下文，同步且不支持并发。方法结束前解除所有 drawable 引用并释放自有 GS 资源。
+    /// 不提交或释放调用方事务，不释放来源数据库、文档或 GraphicsManager。参数、读取和绘制失败传播给调用方。
+    /// </remarks>
+    public static Bitmap RenderEntitiesToBitmap(Document graphicsDocument, Database sourceDatabase,
+        Transaction transaction, IReadOnlyCollection<ObjectId> entityIds, Extents3d bounds,
+        int pixelWidth, int pixelHeight, DrawingColor backgroundColor, DrawingColor[]? logicalPalette = null)
+    {
+        ValidateGraphicsDocument(graphicsDocument);
+        if (sourceDatabase is null) throw new ArgumentNullException(nameof(sourceDatabase));
+        if (transaction is null) throw new ArgumentNullException(nameof(transaction));
+        if (entityIds is null) throw new ArgumentNullException(nameof(entityIds));
+        if (sourceDatabase.IsDisposed || transaction.IsDisposed)
+            throw new ArgumentException("来源数据库和读取事务必须保持有效。");
+        if (logicalPalette != null && logicalPalette.Length != 256)
+            throw new ArgumentException("逻辑调色板需要 256 项颜色。", nameof(logicalPalette));
+        var fit = DwgPreviewCoreBeta.Fit(bounds.MinPoint.X, bounds.MinPoint.Y, bounds.MinPoint.Z,
+            bounds.MaxPoint.X, bounds.MaxPoint.Y, bounds.MaxPoint.Z, pixelWidth, pixelHeight);
+        var drawables = new List<Entity>(entityIds.Count);
+        foreach (var id in entityIds)
+        {
+            if (id.IsNull || !id.IsValid || id.IsErased || !ReferenceEquals(id.Database, sourceDatabase))
+                throw new ArgumentException("实体 ID 必须属于有效的来源数据库。", nameof(entityIds));
+            if (transaction.GetObject(id, OpenMode.ForRead) is not Entity entity)
+                throw new ArgumentException("输入 ID 必须指向实体。", nameof(entityIds));
+            drawables.Add(entity);
+        }
+        if (drawables.Count == 0) throw new InvalidOperationException("没有选定可绘制实体。");
+        Bitmap? result = null;
         try
         {
-            using var device = manager.CreateAutoCADOffScreenDevice(kernel);
+            RenderBitmap(graphicsDocument, drawables, pixelWidth, pixelHeight, view =>
+            {
+                view.SetView(new Point3d(fit.CenterX, fit.CenterY, fit.EyeZ),
+                    new Point3d(fit.CenterX, fit.CenterY, fit.CenterZ), Vector3d.YAxis, pixelWidth, pixelHeight);
+                view.ZoomExtents(bounds.MinPoint, bounds.MaxPoint);
+                view.Zoom(0.9);
+            }, bitmap => result = bitmap.Clone(new Rectangle(0, 0, pixelWidth, pixelHeight), PixelFormat.Format32bppArgb),
+                backgroundColor, logicalPalette);
+            return result!;
+        }
+        catch
+        {
+            result?.Dispose();
+            throw;
+        }
+    }
+
+    private static void ValidateGraphicsDocument(Document graphicsDocument)
+    {
+        if (graphicsDocument is null) throw new ArgumentNullException(nameof(graphicsDocument));
+        if (!ReferenceEquals(graphicsDocument, CadApp.DocumentManager.MdiActiveDocument))
+            throw new ArgumentException("必须使用当前活动文档的图形管理器。", nameof(graphicsDocument));
+    }
+
+    // 所有图片消费者都在 drawable 解绑前完成工作，设备截图的寿命不会越过本方法。
+    private static void RenderBitmap(Document graphicsDocument, IReadOnlyList<Entity> drawables,
+        int pixelWidth, int pixelHeight, Action<CadGS.View> configureView, Action<Bitmap> consumeBitmap,
+        DrawingColor? backgroundColor = null, DrawingColor[]? logicalPalette = null)
+    {
+        var manager = graphicsDocument.GraphicsManager;
+        CadGS.GraphicsKernel? kernel = null;
+        CadGS.Device? device = null;
+        CadGS.Model? model = null;
+        CadGS.View? view = null;
+        var attached = false;
+        Exception? failure = null;
+        try
+        {
+            using var descriptor = new CadGS.KernelDescriptor();
+            descriptor.addRequirement(CadUniqueString.Intern("3D Drawing"));
+            kernel = CadGS.Manager.AcquireGraphicsKernel(descriptor);
+            if (kernel is null) throw new InvalidOperationException("AutoCAD 未提供所需的图形内核。");
+            device = manager.CreateAutoCADOffScreenDevice(kernel);
             if (device is null)
                 throw new InvalidOperationException("无法创建离屏图形设备。");
+            if (backgroundColor.HasValue) device.BackgroundColor = backgroundColor.Value;
+            if (logicalPalette != null) device.SetLogicalPalette(logicalPalette);
             device.OnSize(new Size(pixelWidth, pixelHeight));
-            using var model = manager.CreateAutoCADModel(kernel);
+            model = manager.CreateAutoCADModel(kernel);
             if (model is null)
                 throw new InvalidOperationException("无法创建图形模型。");
-            using var view = new CadGS.View();
-            var attached = false;
-            try
-            {
-                if (!device.Add(view))
-                    throw new InvalidOperationException("无法将离屏视图关联到设备。");
-                attached = true;
-                foreach (var entity in drawables)
-                    if (!view.Add(entity, model))
-                        throw new InvalidOperationException("无法将源图形加入离屏视图。");
-                view.SetView(new Point3d(fit.CenterX, fit.CenterY, fit.EyeZ),
-                    new Point3d(fit.CenterX, fit.CenterY, fit.CenterZ), Vector3d.YAxis,
-                    fit.FieldWidth, fit.FieldHeight);
-                view.Invalidate();
-                device.Update();
-                using var bitmap = device.GetSnapshot(new Rectangle(0, 0, pixelWidth, pixelHeight));
-                if (bitmap is null || bitmap.Width != pixelWidth || bitmap.Height != pixelHeight)
-                    throw new InvalidOperationException("图形系统返回了无效尺寸的截图。");
-                SaveNewPng(bitmap, request.OutputPath);
-            }
-            finally
-            {
-                // 先解除 drawable 引用，再从设备解绑视图；清空失败也要尝试解绑。
-                // 随后 using 逆序释放 View、Model、Device，最外层才归还内核并关闭源数据库。
-                try { view.EraseAll(); }
-                finally { if (attached) device.Erase(view); }
-            }
+            view = new CadGS.View();
+            if (!device.Add(view)) throw new InvalidOperationException("无法将离屏视图关联到设备。");
+            attached = true;
+            foreach (var entity in drawables)
+                if (!view.Add(entity, model)) throw new InvalidOperationException("无法将源图形加入离屏视图。");
+            configureView(view);
+            view.Invalidate();
+            device.Update();
+            using var bitmap = device.GetSnapshot(new Rectangle(0, 0, pixelWidth, pixelHeight));
+            if (bitmap is null || bitmap.Width != pixelWidth || bitmap.Height != pixelHeight)
+                throw new InvalidOperationException("图形系统返回了无效尺寸的截图。");
+            consumeBitmap(bitmap);
         }
+        catch (Exception error) { failure = error; throw; }
         finally
         {
-            // Acquire 增加图形内核引用计数，应与 Release 配对，不能把借到的内核再次 native delete。
-            CadGS.Manager.ReleaseGraphicsKernel(kernel);
+            List<Exception>? cleanupErrors = null;
+            void Cleanup(Action release)
+            {
+                try { release(); }
+                catch (Exception error) { (cleanupErrors ??= new List<Exception>()).Add(error); }
+            }
+            if (view != null) Cleanup(view.EraseAll);
+            if (attached && device != null && view != null) Cleanup(() => device.Erase(view));
+            if (view != null) Cleanup(view.Dispose);
+            if (model != null) Cleanup(model.Dispose);
+            if (device != null) Cleanup(device.Dispose);
+            if (kernel != null) Cleanup(() => CadGS.Manager.ReleaseGraphicsKernel(kernel));
+            if (cleanupErrors != null)
+            {
+                var cleanupFailure = new AggregateException("GS 资源释放失败。", cleanupErrors);
+                if (failure == null) throw cleanupFailure;
+                failure.Data["Fs.Fox.Cad.GraphicsCleanup"] = cleanupFailure;
+                Debug.WriteLine(cleanupFailure);
+            }
         }
     }
 
